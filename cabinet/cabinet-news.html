@@ -245,7 +245,7 @@
       <div class="form-panel panel">
         <div class="panel-head">
           <div class="panel-title">
-            <span class="icon">✏️</span>
+            <ph-pencil-simple class="icon" weight="duotone"></ph-pencil-simple>
             Yangi yangilik qo'shish
           </div>
         </div>
@@ -282,7 +282,7 @@
       <div class="list-panel panel">
         <div class="panel-head">
           <div class="panel-title">
-            <span class="icon">📋</span>
+            <ph-clipboard-text class="icon" weight="duotone"></ph-clipboard-text>
             Mavjud yangiliklar
           </div>
           <button class="panel-action" type="button" id="refreshBtn">Yangilash</button>
@@ -408,7 +408,7 @@
           var delBtn = document.createElement('button');
           delBtn.className = 'btn-del';
           delBtn.title = 'O\'chirish';
-          delBtn.textContent = '🗑';
+          delBtn.innerHTML = '<ph-trash weight="bold"></ph-trash>';
           delBtn.addEventListener('click', function () {
             if (!confirm('"' + item.title + '" ni o\'chirishni tasdiqlaysizmi?')) return;
             delBtn.disabled = true;

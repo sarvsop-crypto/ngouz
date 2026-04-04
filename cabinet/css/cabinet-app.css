@@ -199,10 +199,14 @@ button {
 }
 
 .nav-icon {
+  font-size: 18px;
   width: 18px;
   height: 18px;
   flex-shrink: 0;
   opacity: .78;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-item.active .nav-icon {
