@@ -1,64 +1,53 @@
 [
   {
     "id": "grant-play4nature-2025",
-    "status": "active",
+    "status": "closed",
     "title": "PLAY FOR NATURE 2025",
-    "description": "Biologik xilma-xillikni muhofaza qilish bo'yicha faoliyat yurituvchi tashkilotlarga moliyaviy yordam dasturi. Atrof-muhitni muhofaza qilish sohasida ishlayotgan NNTlar arizalarini topshirishlari mumkin.",
-    "amount": null,
-    "deadline": null,
-    "deadlineLabel": "Arizalar qabul qilinmoqda",
+    "description": "Fransuz biologik xilma-xillikni muhofaza qilish tashkiloti Play for Nature (IUCN a'zosi) biologik xilma-xillikni muhofaza qilishga bag'ishlangan tashkilotlarga moliyaviy yordam ko'rsatish maqsadida yillik loyiha tanlovini o'tkazdi. Dastur 2013-yildan beri butun dunyo bo'ylab muhofaza qilish harakatlarini qo'llab-quvvatladi. Ikki moliyalashtirish yo'nalishi: 1. Biodiv'World — an'anaviy muhofaza loyihalari: yo'qolib borayotgan turlar va ekotizimlarni himoya qilish; flora va faunani ilmiy monitoring qilish; ekotizimlarni tiklash; ekologik ta'lim; turlarni qayta ko'chirish dasturlari. 2. Biodiv'Sport — sport tashabbuslar orqali tabiatni muhofaza qilish: ekologik maqsadlarni targ'ib etuvchi sport tadbirlari; sport orqali atrof-muhit xabardorligini oshirish; mahalliy jamoatlarni jalb etish. Maqsadli foydalanuvchilar: tabiatni muhofaza qilish sohasida faoliyat yurituvchi NNTlar, assotsiatsiyalar va fondlar.",
+    "amount": "5 000 — 15 000 yevro",
+    "deadline": "2025-08-25",
+    "deadlineLabel": "25 avgust 2025",
     "category": "Ekologiya",
-    "organizer": "Xalqaro ekologiya tashkiloti"
+    "organizer": "Play for Nature (Fransiya)"
   },
   {
-    "id": "grant-state-democracy-2020",
+    "id": "grant-mcw-young-leaders-2021",
     "status": "closed",
-    "title": "Demokratik institutlar va qonun ustuvorligini qo'llab-quvvatlash bo'yicha davlat granti",
-    "description": "Parlament fondi tomonidan demokratik institutlarni rivojlantirish va qonun ustuvorligini mustahkamlash bo'yicha loyihalar uchun grant.",
-    "amount": null,
-    "deadline": null,
-    "deadlineLabel": "Yopilgan",
-    "category": "Demokratiya va huquq",
-    "organizer": "O'zbekiston Respublikasi Oliy Majlisi fondi"
-  },
-  {
-    "id": "grant-state-youth-2020",
-    "status": "closed",
-    "title": "Yoshlar ta'limi va milliy sadoqat bo'yicha davlat granti",
-    "description": "Yoshlarni vatanparvarlik ruhida tarbiyalash va ta'lim sifatini yaxshilashga qaratilgan loyihalar uchun grant.",
-    "amount": null,
-    "deadline": null,
-    "deadlineLabel": "Yopilgan",
-    "category": "Yoshlar",
-    "organizer": "O'zbekiston Respublikasi Oliy Majlisi fondi"
-  },
-  {
-    "id": "grant-state-civil-2020",
-    "status": "closed",
-    "title": "Fuqarolik jamiyatini rivojlantirish bo'yicha davlat granti",
-    "description": "Fuqarolik jamiyatini rivojlantirish va ijtimoiy-ma'naviy salomatlikni mustahkamlashga qaratilgan NNT loyihalari uchun grant.",
-    "amount": null,
-    "deadline": null,
-    "deadlineLabel": "Yopilgan",
-    "category": "Fuqarolik jamiyati",
-    "organizer": "O'zbekiston Respublikasi Oliy Majlisi fondi"
-  },
-  {
-    "id": "grant-young-leaders-2021",
-    "status": "closed",
-    "title": "Yosh liderlar dasturi (Young Leaders Program)",
-    "description": "Yoshlar uchun mo'ljallangan liderlik salohiyatini rivojlantirish dasturi. Xalqaro tashkilotlar bilan hamkorlikda amalga oshiriladi.",
+    "title": "MCW Global Yosh Liderlar Kirish Dasturi 2021",
+    "description": "Dastur «liderlikni, global fuqarolikni, o'z-o'zini anglashni va vizion rejalashtirish»ni rivojlantirish orqali kelajak liderlarini tarbiyalashga mo'ljallangan. Ishtirokchilar yil davomida hamkor jamoa bilan jamoatga yo'naltirilgan loyihalarni amalga oshiradi. Dastur tuzilmasi: Boshlang'ich bosqich: ikki oylik jamoat ehtiyojlarini baholash va xaritalash. O'quv bosqichi: uch oylik intensiv virtual dastur. Amalga oshirish bosqichi: mentor yordamida yetti oylik harakat rejasini ishlab chiqish. Maqsadli auditoriya: jamoatlarida o'zgarishlar yaratmoqchi bo'lgan 18–26 yoshli yoshlar. Dastur muddati: bir yil.",
     "amount": null,
     "deadline": null,
     "deadlineLabel": "Yopilgan",
     "category": "Yoshlar rivojlanishi",
-    "organizer": "Xalqaro hamkor tashkilotlar"
+    "organizer": "MCW Global"
   },
   {
-    "id": "grant-100-innovative-2017",
+    "id": "grant-parliament-fund-4-2020",
+    "status": "closed",
+    "title": "Oliy Majlis huzuridagi Jamoat fondi — 4-davlat granti tanlovi",
+    "description": "Tanlov ijtimoiy ahamiyatga molik loyihalarni qo'llab-quvvatlaydi: inson huquqlarini himoya qilish va monitoring; konstitutsiyaviy va huquqiy ustuvorlikni targ'ib etish; jamoatchilik nazoratini kuchaytirish; shaffoflik va axborot erkinligi tamoyillari; huquqiy savodxonlik va fuqarolik madaniyatini rivojlantirish; yoshlar jinoyatchiligini oldini olish; ommaviy axborot va raqamli platformalar orqali adolat targ'iboti. Maqsadli foydalanuvchilar: nohukumat notijorat tashkilotlar, ommaviy axborot vositalari va boshqa fuqarolik jamiyati institutlari. Kerakli hujjatlar: tashkilot rahbariyatidan maktub (muhr va imzo bilan), fundngo.uz veb-saytida to'ldirilgan grant arizasi, tashkilot nizomi nusxasi, davlat ro'yxatidan o'tganlik guvohnomasi nusxasi. Aloqa: (0-371) 239-26-76, 239-26-86. Qo'shimcha ma'lumot: www.fundngo.uz",
+    "amount": "40 million so'mgacha",
+    "deadline": "2020-07-25",
+    "deadlineLabel": "25 iyul 2020",
+    "category": "Demokratiya va huquq",
+    "organizer": "O'zbekiston Respublikasi Oliy Majlisi huzuridagi Jamoat fondi"
+  },
+  {
+    "id": "grant-parliament-fund-youth-2020",
+    "status": "closed",
+    "title": "«Milliy tiklanishdan milliy yuksalishga» — yoshlar rivojlanishi bo'yicha davlat granti tanlovi",
+    "description": "Tanlov quyidagi sohalardagi yoshlar tashabbuslarini qo'llab-quvvatlaydi: yoshlarning ma'naviy va ta'limiy rivojlanishi; zamonaviy bilim olish va madaniy yuksalish; nogironligi bo'lgan yoshlarni bandlikka ko'maklashish; xalqaro mehnat bozori standartlariga mos chuqur ta'lim; axloqiy fazilatlarni shakllantirish va intellektual salohiyat; o'qish madaniyatini targ'ib etish va ajdodlar merosini avlodlarga yetkazish; chegara va uzoq hududlardagi kutubxonalarni rivojlantirish; madaniyat markazlarini faollashtirish; sog'lom turmush tarzi va ommaviy sport; moliyaviy savodxonlik va yoshlar tadbirkorligi; yoshlar huquqbuzarliklarining oldini olish.",
+    "amount": "40 million so'mgacha",
+    "deadline": "2020-07-25",
+    "deadlineLabel": "25 iyul 2020",
+    "category": "Yoshlar",
+    "organizer": "O'zbekiston Respublikasi Oliy Majlisi huzuridagi Jamoat fondi"
+  },
+  {
+    "id": "grant-100-innovative-women-2017",
     "status": "closed",
     "title": "«100 ta eng yaxshi innovatsion loyiha» milliy tanlovi",
-    "description": "Iqtidorli ayollar uchun innovatsion loyihalar bo'yicha milliy tanlov. Ayollar qo'mitasi va Ayollar innovatorlar assotsiatsiyasi tashkil etgan.",
+    "description": "Iqtidorli ayollar uchun innovatsion loyihalar bo'yicha milliy tanlov. Ayollar qo'mitasi va Ayollar innovatorlar assotsiatsiyasi tomonidan tashkil etilgan. Tanlov fandagi, sanoatdagi va ijtimoiy sohadagi innovatsion g'oyalar bilan ayollarga o'z salohiyatini namoyon etish imkoniyatini berdi.",
     "amount": null,
     "deadline": null,
     "deadlineLabel": "Yopilgan",
@@ -66,14 +55,14 @@
     "organizer": "Ayollar qo'mitasi / Ayollar innovatorlar assotsiatsiyasi"
   },
   {
-    "id": "grant-5th-state-2016",
+    "id": "grant-5th-state-independence-2016",
     "status": "closed",
-    "title": "5-davlat grant tanlovi — Mustaqillikning 25 yilligi",
-    "description": "O'zbekiston Respublikasi mustaqilligining 25 yilligiga bag'ishlangan ijtimoiy loyihalar uchun 5-davlat grant tanlovi.",
+    "title": "5-davlat granti tanlovi — Mustaqillikning 25 yilligi",
+    "description": "O'zbekiston Respublikasi mustaqilligining 25 yilligiga bag'ishlangan ijtimoiy ahamiyatga molik loyihalar uchun 5-davlat grant tanlovi. Mustaqillik sanasini nishonlash va fuqarolik jamiyatini rivojlantirishga qaratilgan loyihalar qo'llab-quvvatlandi.",
     "amount": null,
     "deadline": null,
     "deadlineLabel": "Yopilgan",
     "category": "Ijtimoiy loyihalar",
-    "organizer": "O'zbekiston Respublikasi Oliy Majlisi fondi"
+    "organizer": "O'zbekiston Respublikasi Oliy Majlisi huzuridagi Jamoat fondi"
   }
 ]
