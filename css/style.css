@@ -313,6 +313,9 @@ body.a11y-grayscale { filter: grayscale(1); }
 .split-inline { display:flex; align-items:center; justify-content:space-between; gap:16px; }
 .not-found { text-align:center; padding:120px 0; }
 .not-found .code { font-size:220px; line-height:1; color:var(--green-500); font-weight:700; margin:0; }
+.not-found h1 { margin:0 0 14px; font-size:clamp(36px,6vw,64px); line-height:1.2; color:#fff; font-weight:700; }
+.not-found .sub { margin:0 0 28px; font-size:18px; line-height:1.6; color:rgba(180,220,255,.82); }
+.not-found .btn { font-size:15px; padding:13px 24px; }
 
 .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:26px; }
 .team-card { background:linear-gradient(160deg,#fff 60%,rgba(238,245,250,.6)); border:1px solid var(--neutral-200); box-shadow:0 4px 24px rgba(0,100,160,.08); padding:18px; }
