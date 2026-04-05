@@ -489,8 +489,7 @@ body.a11y-grayscale { filter: grayscale(1); }
    ============================================================ */
 .admin-section {
   background: var(--bg-light);
-  padding-top: 42px;
-  padding-bottom: 50px;
+  padding: 42px 24px 50px;
 }
 
 .admin-shell {
