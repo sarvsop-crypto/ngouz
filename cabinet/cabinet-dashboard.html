@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="uz">
 <head>
   <meta charset="utf-8" />
@@ -11,29 +11,142 @@
   <main class="main">
     <div class="page-heading">
       <h1>Bosh sahifa</h1>
-      <div class="date-chip" id="js-date">2026-yil, 5-aprel</div>
+      <div class="date-chip" id="js-date"></div>
     </div>
-    <p class="page-sub">A'zolik shartnomasi bo'yicha joriy holat.</p>
+    <p class="page-sub">A'zolik shartnomasi bo'yicha joriy holat va faoliyat.</p>
 
-    <div class="grid-2">
-      <article class="card">
-        <h3>Joriy bosqich</h3>
-        <ul class="event-list list-reset">
-          <li class="event-item"><h4>Ariza topshirildi</h4><p>02.04.2026</p></li>
-          <li class="event-item"><h4>Hujjatlar tekshiruvda</h4><p>Ko'rib chiqilmoqda</p></li>
-          <li class="event-item"><h4>Shartnoma tasdiqlanishi</h4><p>Kutilmoqda</p></li>
-        </ul>
-      </article>
+    <!-- KPI row -->
+    <div class="kpis">
+      <div class="kpi">
+        <span>Holat</span>
+        <strong style="font-size:clamp(14px,1.6vw,20px);color:var(--warn)">Ko'rib chiqilmoqda</strong>
+      </div>
+      <div class="kpi">
+        <span>Bosqich</span>
+        <strong>2 / 4</strong>
+      </div>
+      <div class="kpi">
+        <span>Topshirilgan</span>
+        <strong style="font-size:clamp(15px,1.6vw,22px)">02.04.2026</strong>
+      </div>
+      <div class="kpi">
+        <span>A'zolik</span>
+        <strong style="font-size:clamp(14px,1.6vw,20px);color:var(--neutral-400)">Kutilmoqda</strong>
+      </div>
+    </div>
 
+    <!-- Step tracker -->
+    <article class="card">
+      <h3>Ariza bosqichlari</h3>
+      <div class="step-track">
+        <div class="step-item done">
+          <div class="step-dot">✓</div>
+          <span class="step-lbl">Ariza<br>topshirildi</span>
+        </div>
+        <div class="step-item curr">
+          <div class="step-dot">2</div>
+          <span class="step-lbl">Hujjatlar<br>tekshiruvi</span>
+        </div>
+        <div class="step-item">
+          <div class="step-dot">3</div>
+          <span class="step-lbl">Shartnoma<br>imzosi</span>
+        </div>
+        <div class="step-item">
+          <div class="step-dot">4</div>
+          <span class="step-lbl">A'zolik<br>tasdiqlandi</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- Lower grid: activity + sidebar -->
+    <div class="lower-grid">
+
+      <!-- Activity stream -->
       <article class="card">
-        <h3>Tezkor amallar</h3>
-        <div class="filters filters-single">
-          <a class="btn" href="cabinet-applications.html">Ariza holatini ko'rish</a>
-          <a class="btn btn-secondary" href="cabinet-documents.html">Shartnoma fayllarini ochish</a>
-          <a class="btn btn-secondary" href="cabinet-support.html">Murojaat yuborish</a>
+        <h3>So'nggi harakatlar</h3>
+        <div class="cab-stream">
+          <div class="cab-stream-item">
+            <div class="cab-stream-icon">📋</div>
+            <div class="cab-stream-body">
+              <p class="cab-stream-title">Ariza muvaffaqiyatli yuborildi</p>
+              <span class="cab-stream-date">02.04.2026 · ARZ-2026-0418</span>
+            </div>
+          </div>
+          <div class="cab-stream-item">
+            <div class="cab-stream-icon">🔍</div>
+            <div class="cab-stream-body">
+              <p class="cab-stream-title">Hujjatlar tekshiruv bosqichiga o'tdi</p>
+              <span class="cab-stream-date">03.04.2026 · Admin tomonidan</span>
+            </div>
+          </div>
+          <div class="cab-stream-item">
+            <div class="cab-stream-icon">📎</div>
+            <div class="cab-stream-body">
+              <p class="cab-stream-title">Qo'shimcha hujjat so'raldi: Ustav yangi tahrir</p>
+              <span class="cab-stream-date">04.04.2026 · Ijro muddati: 10.04.2026</span>
+            </div>
+          </div>
+          <div class="cab-stream-item">
+            <div class="cab-stream-icon">📄</div>
+            <div class="cab-stream-body">
+              <p class="cab-stream-title">Shartnoma loyihasi tayyorlandi — ko'rib chiqish mumkin</p>
+              <span class="cab-stream-date">05.04.2026</span>
+            </div>
+          </div>
         </div>
       </article>
+
+      <!-- Right column -->
+      <div class="right-col">
+
+        <!-- Quick actions -->
+        <article class="card">
+          <h3>Tezkor amallar</h3>
+          <div class="actions-grid" style="padding:0;margin-top:10px">
+            <a class="action-btn" href="cabinet-documents.html">
+              <div class="action-icon">📄</div>
+              <span class="action-label">Hujjat yuklash</span>
+            </a>
+            <a class="action-btn" href="cabinet-support.html">
+              <div class="action-icon">✉</div>
+              <span class="action-label">Murojaat yuborish</span>
+            </a>
+            <a class="action-btn" href="cabinet-applications.html">
+              <div class="action-icon">📊</div>
+              <span class="action-label">Ariza holati</span>
+            </a>
+            <a class="action-btn" href="cabinet-documents.html">
+              <div class="action-icon">✍</div>
+              <span class="action-label">Shartnomani ko'rish</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- News -->
+        <article class="card">
+          <h3>Yangiliklar</h3>
+          <div>
+            <div class="news-item">
+              <span class="news-tag">YANGILIK</span>
+              <span class="news-title">O'zNNTMA 2026-yil a'zolik shartlari yangilandi</span>
+              <span class="news-meta">01.04.2026</span>
+            </div>
+            <div class="news-item">
+              <span class="news-tag">TADBIR</span>
+              <span class="news-title">Seminar: NGO faoliyat standartlari · 15.04.2026</span>
+              <span class="news-meta">Toshkent, O'zNNTMA markazi</span>
+            </div>
+            <div class="news-item">
+              <span class="news-tag">YANGILIK</span>
+              <span class="news-title">Yangi a'zolik bo'limiga murojaat tartibi haqida</span>
+              <span class="news-meta">20.03.2026</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
     </div>
+
   </main>
 </div>
 <script src="js/cabinet-app.js"></script>
