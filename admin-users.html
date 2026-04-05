@@ -1,263 +1,184 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Foydalanuvchilar - O'zNNTMA Admin</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/ds.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Foydalanuvchilar — O‘zNNTMA Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/pacta-tokens.css">
+  <link rel="stylesheet" href="css/pacta-team.page.css">
+  <link rel="stylesheet" href="css/pacta-sidebar.css">
+  <link rel="stylesheet" href="css/pacta-topbar.css">
+  <link rel="stylesheet" href="css/pacta-notifications.css">
+  <link rel="stylesheet" href="css/pacta-app.css">
+  <link rel="stylesheet" href="css/pacta-foundation.css">
 </head>
 <body>
-<header class="site-header">
-  <div class="utility-bar">
-    <div class="container utility-row">
-      <div class="utility-left topbar-left">
-        <span class="topbar-note">tel: (+998 55) 503-05-12</span>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar__header">
+        <div class="u-inline-stack">
+          <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">N</div>
+          <span class="sidebar__title">O‘zNNTMA Admin</span>
+        </div>
+        <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
       </div>
-      <div class="utility-right topbar-right">
-        <span class="topbar-note">Imkoniyati cheklangan shaxslar uchun</span>
-        <a href="#">O'z</a>
-        <a href="#">Rus</a>
-        <a href="#">Eng</a>
+      <div class="sidebar__search" id="sidebarSearchTrigger">
+        <span class="sidebar__nav-icon" aria-hidden="true">&#128269;</span>
+        <input type="text" placeholder="Qidirish" aria-label="Qidirish" />
       </div>
-    </div>
-  </div>
-  <div class="container nav">
-    <a class="brand" href="index.html"><span class="brand-dot">NGO</span>ngo.uz</a>
-    <nav class="menu">
-      <a href="admin-dashboard.html">Boshqaruv</a>
-      <a href="admin-membership-requests.html">A'zolik shartnomalari</a>
-      <a href="admin-registry.html">Ro'yxat</a>
-      <a href="admin-reports.html">Hisobotlar</a>
-      <a href="admin-users.html">Foydalanuvchilar</a>
-    </nav>
-    <a class="contact-btn" href="cabinet/cabinet-login.html">Chiqish</a>
-  </div>
-</header>
-<div class="ds-frame">
-
-  <aside class="ds-sidebar">
-    <div>
-      <a class="ds-logo" href="admin-dashboard.html">O'z<span>NNTMA</span></a>
-      <nav class="ds-nav">
-        <a href="admin-dashboard.html"><span class="ds-nav-icon">◻</span>Boshqaruv</a>
-        <a href="admin-membership-requests.html"><span class="ds-nav-icon">◎</span>A'zolik shartnomalari</a>
-        <a href="admin-registry.html"><span class="ds-nav-icon">◫</span>Ro'yxat</a>
-        <a href="admin-reports.html"><span class="ds-nav-icon">◈</span>Hisobotlar</a>
-        <a href="admin-users.html" class="active"><span class="ds-nav-icon">◉</span>Foydalanuvchilar</a>
+      <nav class="sidebar__nav">
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">ASOSIY MENYU</div>
+          <a href="admin-dashboard.html" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon">&#9635;</span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
+          <a href="admin-membership-requests.html" class="sidebar__nav-link" title="A‘zolik arizalari"><span class="sidebar__nav-icon">&#9675;</span><span class="sidebar__nav-link-text">A‘zolik arizalari</span></a>
+          <a href="admin-registry.html" class="sidebar__nav-link" title="NNT Ro‘yxati"><span class="sidebar__nav-icon">&#9672;</span><span class="sidebar__nav-link-text">NNT Ro‘yxati</span></a>
+          <a href="admin-users.html" class="sidebar__nav-link is-active" title="Foydalanuvchilar"><span class="sidebar__nav-icon">&#128101;</span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
+          <a href="admin-reports.html" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon">&#9636;</span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
+          <a href="admin-settings.html" class="sidebar__nav-link" title="Sozlamalar"><span class="sidebar__nav-icon">&#9881;</span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
+        </div>
+        <div class="sidebar__nav-section u-mt-auto">
+          <a href="#" class="sidebar__nav-link logout" id="logoutTrigger" title="Chiqish"><span class="sidebar__nav-icon">&#9099;</span><span class="sidebar__nav-link-text">Chiqish</span></a>
+        </div>
       </nav>
-    </div>
-    <div class="ds-sidebar-bottom">
-      <nav class="ds-nav">
-        <a href="admin-settings.html"><span class="ds-nav-icon">⚙</span>Sozlamalar</a>
-        <a href="#"><span class="ds-nav-icon">?</span>Yordam</a>
-      </nav>
-    </div>
-  </aside>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>Foydalanuvchilar</span></div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-notifications">
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true">&#128276;</button>
+            <span class="topbar-notifications-badge" aria-hidden="true"></span>
+          </div>
+          <div class="topbar-divider" aria-hidden="true"></div>
+          <div class="main__profile">
+            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;" class="main__profile-avatar">A</div>
+            <div>
+              <div class="main__profile-name">Administrator</div>
+              <div class="main__profile-role">Bosh admin</div>
+            </div>
+          </div>
+        </div>
+      </header>
 
-  <main class="ds-main">
-
-    <div class="ds-header">
-      <div>
-        <h1>Foydalanuvchilar</h1>
-        <p class="ds-header-sub">Admin paneli foydalanuvchilari va ruxsatlar</p>
+      <div class="main__header">
+        <h1 class="main__title">Foydalanuvchilar</h1>
+        <div class="main__btns">
+          <button type="button" class="btn btn--secondary">&#8595; Eksport</button>
+          <button type="button" class="btn btn--primary">+ Foydalanuvchi qo&rsquo;shish</button>
+        </div>
       </div>
-      <div class="ds-header-right">
-        <div class="ds-search">🔍 <input placeholder="Qidirish..." /></div>
-        <div class="ds-user">
-          <div class="ds-avatar">A</div>
-          <div><p class="ds-user-name">Admin</p><p class="ds-user-role">Bosh admin</p></div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card__head"><div class="card__icon">&#128101;</div><span class="card__info">&#9432;</span></div>
+          <div class="card__body"><div><p class="card__label">Jami foydalanuvchilar</p><p class="card__value">12</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--success">&#10003;</div><span class="card__info">&#9432;</span></div>
+          <div class="card__body"><div><p class="card__label">Faol</p><p class="card__value">10</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon">&#128274;</div><span class="card__info">&#9432;</span></div>
+          <div class="card__body"><div><p class="card__label">Admin</p><p class="card__value">3</p></div></div>
+        </div>
+      </div>
+
+      <section class="table-section">
+        <div class="table-section__head">
+          <h2 class="table-section__title">Foydalanuvchilar jadvali</h2>
+          <div class="table-section__tools">
+            <input type="search" class="table-section__search" placeholder="Qidirish..." aria-label="Qidirish" />
+          </div>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" /></th>
+              <th>Ism-familiya</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Oxirgi kirish</th>
+              <th>Holat</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td><div class="table__counterparty"><span class="table__avatar">AN</span><span class="table__company">Azizova Nodira</span></div></td>
+              <td>azizova@uznntma.uz</td><td>Admin</td><td>05.04.2026</td>
+              <td><span class="badge badge--active"><span class="badge__dot"></span>Faol</span></td>
+              <td><button type="button" data-action="row-menu">&#8942;</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td><div class="table__counterparty"><span class="table__avatar">TA</span><span class="table__company">Toshmatov Akbar</span></div></td>
+              <td>toshmatov@uznntma.uz</td><td>Moderator</td><td>04.04.2026</td>
+              <td><span class="badge badge--active"><span class="badge__dot"></span>Faol</span></td>
+              <td><button type="button" data-action="row-menu">&#8942;</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td><div class="table__counterparty"><span class="table__avatar">XG</span><span class="table__company">Xolmatova Gulnora</span></div></td>
+              <td>xolmatova@uznntma.uz</td><td>Moderator</td><td>03.04.2026</td>
+              <td><span class="badge badge--active"><span class="badge__dot"></span>Faol</span></td>
+              <td><button type="button" data-action="row-menu">&#8942;</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td><div class="table__counterparty"><span class="table__avatar">RB</span><span class="table__company">Rahimov Bobur</span></div></td>
+              <td>rahimov@uznntma.uz</td><td>Ko&rsquo;ruvchi</td><td>01.04.2026</td>
+              <td><span class="badge badge--active"><span class="badge__dot"></span>Faol</span></td>
+              <td><button type="button" data-action="row-menu">&#8942;</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+    <div class="notifications-panel__header">
+      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
+    </div>
+    <div class="notifications-panel__list">
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon">&#128203;</div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Yangi ariza kelib tushdi <span class="notifications-panel__dot"></span></p>
+          <p class="notifications-panel__item-body">Yangi Nafas NNT &mdash; ARZ-2026-0418 ko&rsquo;rib chiqilishi kerak.</p>
+          <p class="notifications-panel__item-time">2 daqiqa oldin</p>
+        </div>
+      </div>
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon">&#128206;</div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Hujjat yuklandi <span class="notifications-panel__dot"></span></p>
+          <p class="notifications-panel__item-body">Umid Istiqbol NNT yangi hujjat yukladi.</p>
+          <p class="notifications-panel__item-time">15 daqiqa oldin</p>
+        </div>
+      </div>
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon">&#10003;</div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Ariza tasdiqlandi</p>
+          <p class="notifications-panel__item-body">Mehr-Shafqat NNT arizasi tasdiqlandi.</p>
+          <p class="notifications-panel__item-time">1 soat oldin</p>
         </div>
       </div>
     </div>
-
-    <article class="ds-card">
-
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
-        <div class="ds-search" style="width:320px;">🔍 <input placeholder="Ism yoki email bo'yicha qidirish..." /></div>
-        <button class="ds-btn ds-btn-primary">+ Yangi foydalanuvchi</button>
-      </div>
-
-      <div class="ds-table-wrap">
-        <table class="ds-table">
-          <thead>
-            <tr>
-              <th style="width:36px;"><input type="checkbox" /></th>
-              <th>Foydalanuvchi</th>
-              <th>Email</th>
-              <th>Lavozim</th>
-              <th>Oxirgi kirish</th>
-              <th>Holat</th>
-              <th>Amal</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>
-                <div style="display:flex;align-items:center;gap:10px;">
-                  <div class="ds-avatar" style="width:32px;height:32px;font-size:13px;background:#c9e8f9;color:#1e40af;">AB</div>
-                  <strong>Admin Abdullayev Bobur</strong>
-                </div>
-              </td>
-              <td style="color:#5a5a5a;font-size:13px;">admin@uznntma.uz</td>
-              <td>Bosh admin</td>
-              <td style="font-size:13px;color:#5a5a5a;">05.04.2026 09:14</td>
-              <td><span class="ds-badge-ok">Faol</span></td>
-              <td>
-                <div style="display:flex;gap:6px;">
-                  <button class="ds-btn" style="font-size:12px;padding:4px 10px;">Tahrir</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>
-                <div style="display:flex;align-items:center;gap:10px;">
-                  <div class="ds-avatar" style="width:32px;height:32px;font-size:13px;background:#caeccc;color:#166534;">QJ</div>
-                  <strong>Qodirov Jasur</strong>
-                </div>
-              </td>
-              <td style="color:#5a5a5a;font-size:13px;">j.qodirov@uznntma.uz</td>
-              <td>Moderator</td>
-              <td style="font-size:13px;color:#5a5a5a;">04.04.2026 16:22</td>
-              <td><span class="ds-badge-ok">Faol</span></td>
-              <td>
-                <div style="display:flex;gap:6px;">
-                  <button class="ds-btn" style="font-size:12px;padding:4px 10px;">Tahrir</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>
-                <div style="display:flex;align-items:center;gap:10px;">
-                  <div class="ds-avatar" style="width:32px;height:32px;font-size:13px;background:#fef9c3;color:#92400e;">NF</div>
-                  <strong>Nazarova Feruza</strong>
-                </div>
-              </td>
-              <td style="color:#5a5a5a;font-size:13px;">f.nazarova@uznntma.uz</td>
-              <td>Inspektor</td>
-              <td style="font-size:13px;color:#5a5a5a;">03.04.2026 11:05</td>
-              <td><span class="ds-badge-ok">Faol</span></td>
-              <td>
-                <div style="display:flex;gap:6px;">
-                  <button class="ds-btn" style="font-size:12px;padding:4px 10px;">Tahrir</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>
-                <div style="display:flex;align-items:center;gap:10px;">
-                  <div class="ds-avatar" style="width:32px;height:32px;font-size:13px;background:#f1f5f9;color:#64748b;">TA</div>
-                  <strong>Toshmatov Anvar</strong>
-                </div>
-              </td>
-              <td style="color:#5a5a5a;font-size:13px;">a.toshmatov@uznntma.uz</td>
-              <td>Moderator</td>
-              <td style="font-size:13px;color:#5a5a5a;">28.03.2026 09:00</td>
-              <td><span class="ds-badge-dim">Nofaol</span></td>
-              <td>
-                <div style="display:flex;gap:6px;">
-                  <button class="ds-btn" style="font-size:12px;padding:4px 10px;">Tahrir</button>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td>
-                <div style="display:flex;align-items:center;gap:10px;">
-                  <div class="ds-avatar" style="width:32px;height:32px;font-size:13px;background:#f1f5f9;color:#64748b;">YSh</div>
-                  <strong>Yusupova Shahnoza</strong>
-                </div>
-              </td>
-              <td style="color:#5a5a5a;font-size:13px;">sh.yusupova@uznntma.uz</td>
-              <td>Inspektor</td>
-              <td style="font-size:13px;color:#5a5a5a;">15.03.2026 14:30</td>
-              <td><span class="ds-badge-dim">Nofaol</span></td>
-              <td>
-                <div style="display:flex;gap:6px;">
-                  <button class="ds-btn" style="font-size:12px;padding:4px 10px;">Tahrir</button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-    </article>
-
-    <!-- Permissions matrix -->
-    <article class="ds-card ds-mt-16">
-      <div class="ds-sec-head">
-        <h2 class="ds-sec-title">Ruxsatlar matritsasi</h2>
-      </div>
-      <div class="ds-table-wrap">
-        <table class="ds-table">
-          <thead>
-            <tr>
-              <th>Lavozim</th>
-              <th style="text-align:center;">Ko'rish</th>
-              <th style="text-align:center;">Tahrirlash</th>
-              <th style="text-align:center;">O'chirish</th>
-              <th style="text-align:center;">Qaror</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>Bosh admin</strong></td>
-              <td style="text-align:center;"><span class="ds-badge-ok">✓</span></td>
-              <td style="text-align:center;"><span class="ds-badge-ok">✓</span></td>
-              <td style="text-align:center;"><span class="ds-badge-ok">✓</span></td>
-              <td style="text-align:center;"><span class="ds-badge-ok">✓</span></td>
-            </tr>
-            <tr>
-              <td><strong>Moderator</strong></td>
-              <td style="text-align:center;"><span class="ds-badge-ok">✓</span></td>
-              <td style="text-align:center;"><span class="ds-badge-ok">✓</span></td>
-              <td style="text-align:center;"><span class="ds-badge-dim">—</span></td>
-              <td style="text-align:center;"><span class="ds-badge-warn">Cheklangan</span></td>
-            </tr>
-            <tr>
-              <td><strong>Inspektor</strong></td>
-              <td style="text-align:center;"><span class="ds-badge-ok">✓</span></td>
-              <td style="text-align:center;"><span class="ds-badge-dim">—</span></td>
-              <td style="text-align:center;"><span class="ds-badge-dim">—</span></td>
-              <td style="text-align:center;"><span class="ds-badge-dim">—</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </article>
-
-  </main>
-</div>
-<footer class="site-footer">
-  <div class="container footer-top">
-    <div class="footer-info">
-      <h4>Tezkor havolalar</h4>
-      <a href="about.html">Biz haqimizda</a>
-      <a href="news.html">Yangiliklar</a>
-      <a href="events.html">Tadbirlarimiz</a>
-      <a href="membership.html">A'zo bo'lish</a>
-      <h4>Bog'lanish</h4>
-      <p>Tel: (+998 55) 503-05-12</p>
-      <p>1A, Furqat ko'chasi, Shayxontohur t., Toshkent, 100170</p>
-      <h4>Ijtimoiy tarmoqlar</h4>
-      <a href="https://facebook.com/uznntma1" target="_blank" rel="noopener noreferrer">Facebook — @uznntma1</a>
-      <a href="https://instagram.com/uznntma" target="_blank" rel="noopener noreferrer">Instagram — @uznntma</a>
-      <a href="https://t.me/UzNNTMA1" target="_blank" rel="noopener noreferrer">Telegram — @UzNNTMA1</a>
-    </div>
-    <div class="footer-map-col">
-      <iframe src="https://yandex.uz/map-widget/v1/?ll=69.240568%2C41.312565&z=17&pt=69.240568%2C41.312565%2Cpm2rdm" frameborder="0" allowfullscreen loading="lazy" title="Manzil xaritasi"></iframe>
+    <div class="notifications-panel__footer">
+      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
+      <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>
-  <div class="container footer-bottom">
-    <span>© COPYRIGHT 2019-2026 O'zNNTMA</span>
-    <a href="index.html" style="color:var(--neutral-300)">ngo.uz</a>
-  </div>
-</footer>
-<script src="js/main.js"></script>
+  <script src="js/pacta-foundation.js" defer></script>
+  <script src="js/pacta-notifications.js"></script>
+  <script src="js/pacta-app.js"></script>
 </body>
 </html>

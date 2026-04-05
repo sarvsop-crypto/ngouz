@@ -1,276 +1,228 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hisobotlar - O'zNNTMA Admin</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="css/ds.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hisobotlar — O‘zNNTMA Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/pacta-tokens.css">
+  <link rel="stylesheet" href="css/pacta-report.page.css">
+  <link rel="stylesheet" href="css/pacta-sidebar.css">
+  <link rel="stylesheet" href="css/pacta-topbar.css">
+  <link rel="stylesheet" href="css/pacta-notifications.css">
+  <link rel="stylesheet" href="css/pacta-app.css">
+  <link rel="stylesheet" href="css/pacta-foundation.css">
 </head>
 <body>
-<header class="site-header">
-  <div class="utility-bar">
-    <div class="container utility-row">
-      <div class="utility-left topbar-left">
-        <span class="topbar-note">tel: (+998 55) 503-05-12</span>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar__header">
+        <div class="u-inline-stack">
+          <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">N</div>
+          <span class="sidebar__title">O‘zNNTMA Admin</span>
+        </div>
+        <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
       </div>
-      <div class="utility-right topbar-right">
-        <span class="topbar-note">Imkoniyati cheklangan shaxslar uchun</span>
-        <a href="#">O'z</a>
-        <a href="#">Rus</a>
-        <a href="#">Eng</a>
+      <div class="sidebar__search" id="sidebarSearchTrigger">
+        <span class="sidebar__nav-icon" aria-hidden="true">&#128269;</span>
+        <input type="text" placeholder="Qidirish" aria-label="Qidirish" />
       </div>
-    </div>
-  </div>
-  <div class="container nav">
-    <a class="brand" href="index.html"><span class="brand-dot">NGO</span>ngo.uz</a>
-    <nav class="menu">
-      <a href="admin-dashboard.html">Boshqaruv</a>
-      <a href="admin-membership-requests.html">A'zolik shartnomalari</a>
-      <a href="admin-registry.html">Ro'yxat</a>
-      <a href="admin-reports.html">Hisobotlar</a>
-      <a href="admin-users.html">Foydalanuvchilar</a>
-    </nav>
-    <a class="contact-btn" href="cabinet/cabinet-login.html">Chiqish</a>
-  </div>
-</header>
-<div class="ds-frame">
-
-  <aside class="ds-sidebar">
-    <div>
-      <a class="ds-logo" href="admin-dashboard.html">O'z<span>NNTMA</span></a>
-      <nav class="ds-nav">
-        <a href="admin-dashboard.html"><span class="ds-nav-icon">◻</span>Boshqaruv</a>
-        <a href="admin-membership-requests.html"><span class="ds-nav-icon">◎</span>A'zolik shartnomalari</a>
-        <a href="admin-registry.html"><span class="ds-nav-icon">◫</span>Ro'yxat</a>
-        <a href="admin-reports.html" class="active"><span class="ds-nav-icon">◈</span>Hisobotlar</a>
-        <a href="admin-users.html"><span class="ds-nav-icon">◉</span>Foydalanuvchilar</a>
+      <nav class="sidebar__nav">
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">ASOSIY MENYU</div>
+          <a href="admin-dashboard.html" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon">&#9635;</span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
+          <a href="admin-membership-requests.html" class="sidebar__nav-link" title="A‘zolik arizalari"><span class="sidebar__nav-icon">&#9675;</span><span class="sidebar__nav-link-text">A‘zolik arizalari</span></a>
+          <a href="admin-registry.html" class="sidebar__nav-link" title="NNT Ro‘yxati"><span class="sidebar__nav-icon">&#9672;</span><span class="sidebar__nav-link-text">NNT Ro‘yxati</span></a>
+          <a href="admin-users.html" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon">&#128101;</span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
+          <a href="admin-reports.html" class="sidebar__nav-link is-active" title="Hisobotlar"><span class="sidebar__nav-icon">&#9636;</span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
+          <a href="admin-settings.html" class="sidebar__nav-link" title="Sozlamalar"><span class="sidebar__nav-icon">&#9881;</span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
+        </div>
+        <div class="sidebar__nav-section u-mt-auto">
+          <a href="#" class="sidebar__nav-link logout" id="logoutTrigger" title="Chiqish"><span class="sidebar__nav-icon">&#9099;</span><span class="sidebar__nav-link-text">Chiqish</span></a>
+        </div>
       </nav>
-    </div>
-    <div class="ds-sidebar-bottom">
-      <nav class="ds-nav">
-        <a href="admin-settings.html"><span class="ds-nav-icon">⚙</span>Sozlamalar</a>
-        <a href="#"><span class="ds-nav-icon">?</span>Yordam</a>
-      </nav>
-    </div>
-  </aside>
-
-  <main class="ds-main">
-
-    <div class="ds-header">
-      <div>
-        <h1>Hisobotlar</h1>
-        <p class="ds-header-sub">A'zolik jarayonlari bo'yicha statistika va tahlil</p>
-      </div>
-      <div class="ds-header-right">
-        <div class="ds-search">🔍 <input placeholder="Qidirish..." /></div>
-        <div class="ds-user">
-          <div class="ds-avatar">A</div>
-          <div><p class="ds-user-name">Admin</p><p class="ds-user-role">Bosh admin</p></div>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>Hisobotlar</span></div>
         </div>
-      </div>
-    </div>
-
-    <!-- KPI cards -->
-    <div class="ds-stats">
-      <article class="ds-kpi" style="background:#c9e8f9;">
-        <div class="ds-kpi-body">
-          <div class="ds-kpi-row"><span class="ds-kpi-label">Jami arizalar</span><span class="ds-kpi-chip" style="background:#9fd0ee;">▲ 12%</span></div>
-          <div class="ds-kpi-value">247</div>
-        </div>
-        <div class="ds-kpi-foot">Yangilandi: 05.04.2026</div>
-      </article>
-      <article class="ds-kpi" style="background:#caeccc;">
-        <div class="ds-kpi-body">
-          <div class="ds-kpi-row"><span class="ds-kpi-label">Faol a'zolar</span><span class="ds-kpi-chip" style="background:#a8d9ab;">▲ 8%</span></div>
-          <div class="ds-kpi-value">94</div>
-        </div>
-        <div class="ds-kpi-foot">Yangilandi: 05.04.2026</div>
-      </article>
-      <article class="ds-kpi" style="background:#ffc697;">
-        <div class="ds-kpi-body">
-          <div class="ds-kpi-row"><span class="ds-kpi-label">Ko'rib chiqilmoqda</span><span class="ds-kpi-chip" style="background:#e9a975;">▲ 3%</span></div>
-          <div class="ds-kpi-value">61</div>
-        </div>
-        <div class="ds-kpi-foot">Yangilandi: 05.04.2026</div>
-      </article>
-      <article class="ds-kpi" style="background:#caacf4;">
-        <div class="ds-kpi-body">
-          <div class="ds-kpi-row"><span class="ds-kpi-label">Qaytarilgan</span><span class="ds-kpi-chip" style="background:#ae8de0;">▼ 2%</span></div>
-          <div class="ds-kpi-value">18</div>
-        </div>
-        <div class="ds-kpi-foot">Yangilandi: 05.04.2026</div>
-      </article>
-    </div>
-
-    <!-- Chart row -->
-    <div class="ds-grid-2 ds-mt-16">
-
-      <article class="ds-card">
-        <div class="ds-sec-head">
-          <h2 class="ds-sec-title">Oylik statistika</h2>
-          <button class="ds-btn ds-btn-primary" style="font-size:12px;padding:5px 14px;">↓ Export</button>
-        </div>
-        <div style="background:linear-gradient(to bottom,rgba(56,59,254,.15),rgba(56,59,254,.03));border-radius:14px;position:relative;overflow:hidden;">
-          <svg viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;">
-            <defs>
-              <linearGradient id="areaFadeR" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stop-color="#00b4d8" stop-opacity="0.4"/>
-                <stop offset="100%" stop-color="#00b4d8" stop-opacity="0.03"/>
-              </linearGradient>
-            </defs>
-            <g stroke="#d8d8d8" stroke-width="1" stroke-dasharray="3 3">
-              <line x1="40" y1="15" x2="510" y2="15"/>
-              <line x1="40" y1="50" x2="510" y2="50"/>
-              <line x1="40" y1="85" x2="510" y2="85"/>
-              <line x1="40" y1="120" x2="510" y2="120"/>
-              <line x1="40" y1="155" x2="510" y2="155"/>
-            </g>
-            <g font-size="9" fill="#a1a1a1" text-anchor="end">
-              <text x="36" y="18">40</text>
-              <text x="36" y="53">30</text>
-              <text x="36" y="88">20</text>
-              <text x="36" y="123">10</text>
-              <text x="36" y="158">0</text>
-            </g>
-            <polygon fill="url(#areaFadeR)" points="40,113 79,102 118,92 157,106 196,99 235,78 275,88 314,68 353,92 392,57 431,43 470,22 510,71 510,155 40,155"/>
-            <polyline fill="none" stroke="#00b4d8" stroke-width="2.5" stroke-linejoin="round" points="40,113 79,102 118,92 157,106 196,99 235,78 275,88 314,68 353,92 392,57 431,43 470,22 510,71"/>
-            <g fill="#00b4d8">
-              <circle cx="40" cy="113" r="3.5"/><circle cx="79" cy="102" r="3.5"/><circle cx="118" cy="92" r="3.5"/><circle cx="157" cy="106" r="3.5"/><circle cx="196" cy="99" r="3.5"/><circle cx="235" cy="78" r="3.5"/><circle cx="275" cy="88" r="3.5"/><circle cx="314" cy="68" r="3.5"/><circle cx="353" cy="92" r="3.5"/><circle cx="392" cy="57" r="3.5"/><circle cx="431" cy="43" r="3.5"/><circle cx="470" cy="22" r="3.5"/><circle cx="510" cy="71" r="3.5"/>
-            </g>
-          </svg>
-        </div>
-        <div style="display:flex;justify-content:space-between;padding:8px 4px 0;font-size:10.5px;color:#a1a1a1;">
-          <span>Apr</span><span>May</span><span>Iyn</span><span>Iyl</span><span>Avg</span><span>Sen</span><span>Okt</span><span>Noy</span><span>Dek</span><span>Yan</span><span>Fev</span><span>Mar</span><span>Apr</span>
-        </div>
-      </article>
-
-      <article class="ds-card">
-        <div class="ds-sec-head">
-          <h2 class="ds-sec-title">Holat taqsimoti</h2>
-        </div>
-        <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
-          <div style="width:140px;height:140px;border-radius:50%;background:conic-gradient(#28b061 0 38%,#d97706 38% 62%,#00b4d8 62% 92%,#ef4444 92% 100%);display:grid;place-items:center;">
-            <div style="width:90px;height:90px;border-radius:50%;background:#fff;display:grid;place-items:center;text-align:center;">
-              <div><strong style="font-size:22px;font-weight:700;">247</strong><br><span style="font-size:11px;color:#a1a1a1;">Jami</span></div>
+        <div class="topbar-right">
+          <div class="topbar-notifications">
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true">&#128276;</button>
+            <span class="topbar-notifications-badge" aria-hidden="true"></span>
+          </div>
+          <div class="topbar-divider" aria-hidden="true"></div>
+          <div class="main__profile">
+            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;" class="main__profile-avatar">A</div>
+            <div>
+              <div class="main__profile-name">Administrator</div>
+              <div class="main__profile-role">Bosh admin</div>
             </div>
           </div>
-          <div style="width:100%;font-size:13px;">
-            <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #dfdfdf;"><span style="width:12px;height:12px;border-radius:3px;background:#28b061;flex-shrink:0;"></span><span style="flex:1;">Tasdiqlangan</span><strong>94 (38%)</strong></div>
-            <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #dfdfdf;"><span style="width:12px;height:12px;border-radius:3px;background:#d97706;flex-shrink:0;"></span><span style="flex:1;">Ko'rib chiqilmoqda</span><strong>61 (25%)</strong></div>
-            <div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid #dfdfdf;"><span style="width:12px;height:12px;border-radius:3px;background:#00b4d8;flex-shrink:0;"></span><span style="flex:1;">Yangi</span><strong>74 (30%)</strong></div>
-            <div style="display:flex;align-items:center;gap:8px;padding:6px 0;"><span style="width:12px;height:12px;border-radius:3px;background:#ef4444;flex-shrink:0;"></span><span style="flex:1;">Qaytarilgan</span><strong>18 (7%)</strong></div>
+        </div>
+      </header>
+
+      <div class="report-header">
+        <h1 class="report-header__title">Hisobotlar</h1>
+        <div class="report-header__btns">
+          <button type="button" class="btn btn--secondary">+ Yangi hisobot</button>
+          <button type="button" class="btn btn--primary" data-action="export" data-export-title="Hisobot eksport">Eksport</button>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-card chart-card--line">
+          <div class="chart-card__head">
+            <h2 class="chart-card__title">A&rsquo;zolik dinamikasi</h2>
+            <div class="chart-card__controls">
+              <button type="button" class="chart-card__dropdown">Oylik &#9660;</button>
+            </div>
+          </div>
+          <div class="chart-card__body">
+            <div class="chart-line__stats">
+              <div class="u-inline-stack-wrap">
+                <span class="chart-line__amount">247 NNT</span>
+                <span class="chart-line__trend">&#8593; 12.4%</span>
+                <span class="chart-line__period">yanvar &mdash; dekabr</span>
+              </div>
+              <div class="chart-line__legend">
+                <span class="chart-line__legend-item"><span class="chart-line__legend-dot u-bg-primary-500"></span> Yangi arizalar</span>
+                <span class="chart-line__legend-item"><span class="chart-line__legend-dot u-bg-secondary-500"></span> Tasdiqlangan</span>
+              </div>
+            </div>
+            <div class="chart-line__area" style="height:160px;background:linear-gradient(180deg,rgba(15,106,87,.12) 0%,rgba(15,106,87,0) 100%);border-radius:8px;position:relative;overflow:hidden;">
+              <svg viewBox="0 0 600 160" width="100%" height="100%" preserveAspectRatio="none">
+                <polyline fill="none" stroke="var(--primary-500)" stroke-width="2.5" points="0,120 50,110 100,100 150,90 200,95 250,80 300,70 350,75 400,60 450,55 500,45 550,40 600,35"/>
+                <polygon fill="rgba(15,106,87,.12)" points="0,120 50,110 100,100 150,90 200,95 250,80 300,70 350,75 400,60 450,55 500,45 550,40 600,35 600,160 0,160"/>
+                <polyline fill="none" stroke="var(--secondary-500)" stroke-width="2" stroke-dasharray="4 3" points="0,140 50,135 100,130 150,120 200,125 250,115 300,110 350,112 400,100 450,95 500,85 550,78 600,72"/>
+              </svg>
+            </div>
+            <div class="chart-line__xaxis" style="display:flex;justify-content:space-between;font-size:12px;color:var(--grey-400);margin-top:8px;">
+              <span>Yan</span><span>Fev</span><span>Mar</span><span>Apr</span><span>May</span><span>Iyn</span><span>Iyl</span><span>Avg</span><span>Sen</span><span>Okt</span><span>Noy</span><span>Dek</span>
+            </div>
           </div>
         </div>
-      </article>
+        <div class="chart-card chart-card--donut">
+          <div class="chart-card__head">
+            <h2 class="chart-card__title">Holat bo&rsquo;yicha taqsimot</h2>
+          </div>
+          <div class="chart-donut__inner">
+            <div class="chart-donut__img-wrap" style="position:relative;width:160px;height:160px;margin:0 auto;">
+              <svg width="160" height="160" viewBox="0 0 160 160">
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#dfe1e7" stroke-width="22"/>
+                <circle cx="80" cy="80" r="60" fill="none" stroke="var(--primary-500)" stroke-width="22" stroke-dasharray="143 234" stroke-linecap="round" transform="rotate(-90 80 80)"/>
+                <circle cx="80" cy="80" r="60" fill="none" stroke="var(--secondary-500)" stroke-width="22" stroke-dasharray="91 286" stroke-linecap="round" transform="rotate(129 80 80)"/>
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#dc2626" stroke-width="22" stroke-dasharray="27 350" stroke-linecap="round" transform="rotate(219 80 80)"/>
+              </svg>
+              <div class="chart-donut__center" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
+                <span class="chart-donut__center-label" style="font-size:11px;color:var(--grey-400);display:block;">Jami</span>
+                <span class="chart-donut__center-value" style="font-size:20px;font-weight:700;color:var(--grey-900);">247</span>
+              </div>
+            </div>
+            <div class="chart-donut__legend" style="margin-top:16px;">
+              <span class="chart-donut__legend-item"><span class="chart-donut__legend-dot u-bg-primary-500"></span> Tasdiqlangan: 94</span>
+              <span class="chart-donut__legend-item"><span class="chart-donut__legend-dot u-bg-secondary-500"></span> Ko&rsquo;rib chiqilmoqda: 61</span>
+              <span class="chart-donut__legend-item"><span class="chart-donut__legend-dot" style="background:#dc2626;display:inline-block;width:10px;height:10px;border-radius:50%;"></span> Qaytarilgan: 18</span>
+              <span class="chart-donut__legend-item"><span class="chart-donut__legend-dot" style="background:var(--grey-200);display:inline-block;width:10px;height:10px;border-radius:50%;"></span> Yangi: 74</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
+      <section class="table-section">
+        <div class="table-section__head">
+          <h2 class="table-section__title">Hisobotlar jadvali</h2>
+          <div class="table-section__tools">
+            <input type="search" class="table-section__search" placeholder="Qidirish..." aria-label="Qidirish" />
+          </div>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th><input type="checkbox" /></th>
+              <th>Hisobot nomi</th>
+              <th>Turi</th>
+              <th>Davr</th>
+              <th>Yaratildi</th>
+              <th>Holat</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td><a href="#" class="doc-link">2026 Q1 A&rsquo;zolik hisoboti</a></td>
+              <td>Choraklik</td><td>Yan &mdash; Mar 2026</td><td>01.04.2026</td>
+              <td><span class="badge badge--success"><span class="badge__dot"></span>Tayyor</span></td>
+              <td><button type="button" data-action="row-menu">&#8942;</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td><a href="#" class="doc-link">2025 Yillik hisobot</a></td>
+              <td>Yillik</td><td>Yan &mdash; Dek 2025</td><td>15.01.2026</td>
+              <td><span class="badge badge--success"><span class="badge__dot"></span>Tayyor</span></td>
+              <td><button type="button" data-action="row-menu">&#8942;</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td><a href="#" class="doc-link">Hududiy taqsimot 2026</a></td>
+              <td>Analitik</td><td>2026-yil</td><td>05.04.2026</td>
+              <td><span class="badge badge--pending"><span class="badge__dot"></span>Tayyorlanmoqda</span></td>
+              <td><button type="button" data-action="row-menu">&#8942;</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" /></td>
+              <td><a href="#" class="doc-link">A&rsquo;zolik faolligi monitoring</a></td>
+              <td>Monitoring</td><td>Mar 2026</td><td>31.03.2026</td>
+              <td><span class="badge badge--success"><span class="badge__dot"></span>Tayyor</span></td>
+              <td><button type="button" data-action="row-menu">&#8942;</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+    <div class="notifications-panel__header">
+      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
     </div>
-
-    <!-- Bottom row: regional table + recent applications -->
-    <div class="ds-grid-2 ds-mt-16">
-
-      <article class="ds-card">
-        <div class="ds-sec-head">
-          <h2 class="ds-sec-title">Viloyatlar kesimida</h2>
+    <div class="notifications-panel__list">
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon">&#128203;</div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Yangi ariza kelib tushdi <span class="notifications-panel__dot"></span></p>
+          <p class="notifications-panel__item-body">Yangi Nafas NNT &mdash; ARZ-2026-0418 ko&rsquo;rib chiqilishi kerak.</p>
+          <p class="notifications-panel__item-time">2 daqiqa oldin</p>
         </div>
-        <div class="ds-table-wrap">
-          <table class="ds-table">
-            <thead>
-              <tr>
-                <th>Viloyat</th>
-                <th style="text-align:center;">Jami</th>
-                <th style="text-align:center;">Faol</th>
-                <th style="text-align:center;">Ko'rib chiqilmoqda</th>
-                <th style="text-align:center;">%</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Toshkent shahri</td><td style="text-align:center;">48</td><td style="text-align:center;">41</td><td style="text-align:center;">7</td><td style="text-align:center;">51%</td></tr>
-              <tr><td>Toshkent viloyati</td><td style="text-align:center;">22</td><td style="text-align:center;">18</td><td style="text-align:center;">4</td><td style="text-align:center;">23%</td></tr>
-              <tr><td>Samarqand viloyati</td><td style="text-align:center;">18</td><td style="text-align:center;">14</td><td style="text-align:center;">4</td><td style="text-align:center;">19%</td></tr>
-              <tr><td>Farg'ona viloyati</td><td style="text-align:center;">16</td><td style="text-align:center;">13</td><td style="text-align:center;">3</td><td style="text-align:center;">17%</td></tr>
-              <tr><td>Andijon viloyati</td><td style="text-align:center;">14</td><td style="text-align:center;">11</td><td style="text-align:center;">3</td><td style="text-align:center;">15%</td></tr>
-              <tr><td>Namangan viloyati</td><td style="text-align:center;">12</td><td style="text-align:center;">9</td><td style="text-align:center;">3</td><td style="text-align:center;">13%</td></tr>
-              <tr><td>Buxoro viloyati</td><td style="text-align:center;">10</td><td style="text-align:center;">8</td><td style="text-align:center;">2</td><td style="text-align:center;">11%</td></tr>
-              <tr><td>Qolgan viloyatlar</td><td style="text-align:center;">107</td><td style="text-align:center;">82</td><td style="text-align:center;">25</td><td style="text-align:center;"><span class="ds-badge-dim">—</span></td></tr>
-            </tbody>
-          </table>
+      </div>
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon">&#128206;</div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Hujjat yuklandi <span class="notifications-panel__dot"></span></p>
+          <p class="notifications-panel__item-body">Umid Istiqbol NNT yangi hujjat yukladi.</p>
+          <p class="notifications-panel__item-time">15 daqiqa oldin</p>
         </div>
-      </article>
-
-      <article class="ds-card">
-        <div class="ds-sec-head">
-          <h2 class="ds-sec-title">So'nggi 10 ariza</h2>
+      </div>
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon">&#10003;</div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Ariza tasdiqlandi</p>
+          <p class="notifications-panel__item-body">Mehr-Shafqat NNT arizasi tasdiqlandi.</p>
+          <p class="notifications-panel__item-time">1 soat oldin</p>
         </div>
-        <div class="ds-table-wrap">
-          <table class="ds-table">
-            <thead>
-              <tr>
-                <th>Ariza</th>
-                <th>Tashkilot</th>
-                <th>Holat</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td style="font-family:monospace;font-size:12px;">ARZ-2026-0418</td>
-                <td>Yangi Nafas NNT</td>
-                <td><span class="ds-badge-warn">Ko'rib chiqilmoqda</span></td>
-              </tr>
-              <tr>
-                <td style="font-family:monospace;font-size:12px;">ARZ-2026-0417</td>
-                <td>Mehr va Oqibat</td>
-                <td><span class="ds-badge-info">Yangi</span></td>
-              </tr>
-              <tr>
-                <td style="font-family:monospace;font-size:12px;">ARZ-2026-0415</td>
-                <td>Saxovat Plus</td>
-                <td><span class="ds-badge-ok">Tasdiqlangan</span></td>
-              </tr>
-              <tr>
-                <td style="font-family:monospace;font-size:12px;">ARZ-2026-0412</td>
-                <td>Nur Yo'l Jamiyati</td>
-                <td><span class="ds-badge-bad">Qaytarilgan</span></td>
-              </tr>
-              <tr>
-                <td style="font-family:monospace;font-size:12px;">ARZ-2026-0409</td>
-                <td>Sog'lom Avlod</td>
-                <td><span class="ds-badge-ok">Tasdiqlangan</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </article>
-
+      </div>
     </div>
-
-  </main>
-</div>
-<footer class="site-footer">
-  <div class="container footer-top">
-    <div class="footer-info">
-      <h4>Tezkor havolalar</h4>
-      <a href="about.html">Biz haqimizda</a>
-      <a href="news.html">Yangiliklar</a>
-      <a href="events.html">Tadbirlarimiz</a>
-      <a href="membership.html">A'zo bo'lish</a>
-      <h4>Bog'lanish</h4>
-      <p>Tel: (+998 55) 503-05-12</p>
-      <p>1A, Furqat ko'chasi, Shayxontohur t., Toshkent, 100170</p>
-      <h4>Ijtimoiy tarmoqlar</h4>
-      <a href="https://facebook.com/uznntma1" target="_blank" rel="noopener noreferrer">Facebook — @uznntma1</a>
-      <a href="https://instagram.com/uznntma" target="_blank" rel="noopener noreferrer">Instagram — @uznntma</a>
-      <a href="https://t.me/UzNNTMA1" target="_blank" rel="noopener noreferrer">Telegram — @UzNNTMA1</a>
-    </div>
-    <div class="footer-map-col">
-      <iframe src="https://yandex.uz/map-widget/v1/?ll=69.240568%2C41.312565&z=17&pt=69.240568%2C41.312565%2Cpm2rdm" frameborder="0" allowfullscreen loading="lazy" title="Manzil xaritasi"></iframe>
+    <div class="notifications-panel__footer">
+      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
+      <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>
-  <div class="container footer-bottom">
-    <span>© COPYRIGHT 2019-2026 O'zNNTMA</span>
-    <a href="index.html" style="color:var(--neutral-300)">ngo.uz</a>
-  </div>
-</footer>
-<script src="js/main.js"></script>
+  <script src="js/pacta-foundation.js" defer></script>
+  <script src="js/pacta-notifications.js"></script>
+  <script src="js/pacta-app.js"></script>
 </body>
 </html>

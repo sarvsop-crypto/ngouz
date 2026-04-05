@@ -1,0 +1,78 @@
+/* Notifications panel – open via topbar bell on all Pacta screens. */
+
+.notifications-panel {
+  position: fixed;
+  top: 64px;
+  right: 24px;
+  width: 400px;
+  max-height: calc(100vh - 96px);
+  background: var(--grey-0, #fff);
+  border: 1px solid var(--grey-100, #e5e7eb);
+  border-radius: 16px;
+  box-shadow: 0 16px 32px -1px rgba(128, 136, 151, 0.2);
+  z-index: 500;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+.notifications-panel.is-open { display: flex; }
+
+.notifications-panel__header {
+  height: 72px;
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--grey-100);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+}
+.notifications-panel__title { font-size: 20px; font-weight: 600; color: var(--grey-900); margin: 0; }
+.notifications-panel__menu { width: 20px; height: 20px; flex-shrink: 0; cursor: pointer; border: none; background: none; padding: 0; }
+.notifications-panel__menu img { width: 100%; height: 100%; object-fit: contain; }
+
+.notifications-panel__list {
+  padding: 16px 24px;
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+}
+.notifications-panel__item {
+  display: flex;
+  gap: 12px;
+  padding: 16px 0;
+  align-items: flex-start;
+}
+.notifications-panel__item:last-child { border-bottom: none; }
+.notifications-panel__icon {
+  width: 36px; height: 36px;
+  flex-shrink: 0;
+  background: var(--grey-50, #eceff3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.notifications-panel__icon img { width: 20px; height: 20px; object-fit: contain; }
+.notifications-panel__content { flex: 1; min-width: 0; }
+.notifications-panel__item-title { font-size: 14px; font-weight: 600; color: var(--grey-900); margin: 0 0 2px; display: flex; align-items: center; gap: 8px; }
+.notifications-panel__item-body { font-size: 12px; font-weight: 400; color: var(--grey-900); line-height: 1.5; margin: 0; }
+.notifications-panel__item-time { font-size: 12px; color: var(--grey-400); margin-top: 4px; }
+.notifications-panel__dot { width: 8px; height: 8px; flex-shrink: 0; border-radius: 50%; background: var(--error-100, #df1c41); }
+
+.notifications-panel__footer {
+  border-top: 1px solid var(--grey-100);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.notifications-panel__mark-read {
+  flex: 1;
+  font-size: 14px; font-weight: 600; color: var(--primary-500);
+  background: none; border: none; cursor: pointer;
+  font-family: inherit;
+  text-align: left;
+  padding: 0;
+}
+.notifications-panel__mark-read:hover { text-decoration: underline; }

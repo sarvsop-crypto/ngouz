@@ -1,214 +1,166 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="uz">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Sozlamalar - A'zo Kabinet</title>
-  <link rel="stylesheet" href="../css/style.css" />
-  <link rel="stylesheet" href="../css/ds.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sozlamalar — A‘zo Kabinet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/pacta-tokens.css">
+  <link rel="stylesheet" href="../css/pacta-settings-account.page.css">
+  <link rel="stylesheet" href="../css/pacta-sidebar.css">
+  <link rel="stylesheet" href="../css/pacta-topbar.css">
+  <link rel="stylesheet" href="../css/pacta-notifications.css">
+  <link rel="stylesheet" href="../css/pacta-app.css">
+  <link rel="stylesheet" href="../css/pacta-foundation.css">
 </head>
 <body>
-<header class="site-header">
-  <div class="utility-bar">
-    <div class="container utility-row">
-      <div class="utility-left topbar-left">
-        <span class="topbar-note">tel: (+998 55) 503-05-12</span>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar__header">
+        <div class="u-inline-stack">
+          <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">A</div>
+          <span class="sidebar__title">A‘zo Kabinet</span>
+        </div>
+        <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
       </div>
-      <div class="utility-right topbar-right">
-        <span class="topbar-note">Imkoniyati cheklangan shaxslar uchun</span>
-        <a href="#">O'z</a>
-        <a href="#">Rus</a>
-        <a href="#">Eng</a>
+      <div class="sidebar__search" id="sidebarSearchTrigger">
+        <span class="sidebar__nav-icon" aria-hidden="true">&#128269;</span>
+        <input type="text" placeholder="Qidirish" aria-label="Qidirish" />
       </div>
-    </div>
-  </div>
-  <div class="container nav">
-    <a class="brand" href="../index.html"><span class="brand-dot">NGO</span>ngo.uz</a>
-    <nav class="menu">
-      <a href="cabinet-dashboard.html">Bosh sahifa</a>
-      <a href="cabinet-applications.html">Ariza holati</a>
-      <a href="cabinet-documents.html">Hujjatlar</a>
-      <a href="cabinet-support.html">Murojaat</a>
-      <a href="cabinet-settings.html">Sozlamalar</a>
-    </nav>
-    <a class="contact-btn" href="cabinet-login.html">Chiqish</a>
-  </div>
-</header>
-<div class="ds-frame">
-
-  <aside class="ds-sidebar">
-    <div>
-      <a class="ds-logo" href="cabinet-dashboard.html">A'zo<span>Kabinet</span></a>
-      <nav class="ds-nav">
-        <a href="cabinet-dashboard.html"><span class="ds-nav-icon">◻</span>Bosh sahifa</a>
-        <a href="cabinet-applications.html"><span class="ds-nav-icon">◎</span>A'zolik arizasi</a>
-        <a href="cabinet-documents.html"><span class="ds-nav-icon">▣</span>Hujjatlar</a>
-        <a href="cabinet-support.html"><span class="ds-nav-icon">✉</span>Murojaat</a>
+      <nav class="sidebar__nav">
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">ASOSIY</div>
+          <a href="cabinet-dashboard.html" class="sidebar__nav-link" title="Bosh sahifa"><span class="sidebar__nav-icon">&#9635;</span><span class="sidebar__nav-link-text">Bosh sahifa</span></a>
+          <a href="cabinet-applications.html" class="sidebar__nav-link" title="Ariza holati"><span class="sidebar__nav-icon">&#9675;</span><span class="sidebar__nav-link-text">Ariza holati</span></a>
+          <a href="cabinet-documents.html" class="sidebar__nav-link" title="Hujjatlar"><span class="sidebar__nav-icon">&#9643;</span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
+          <a href="cabinet-support.html" class="sidebar__nav-link" title="Murojaat"><span class="sidebar__nav-icon">&#9993;</span><span class="sidebar__nav-link-text">Murojaat</span></a>
+          <a href="cabinet-settings.html" class="sidebar__nav-link is-active" title="Sozlamalar"><span class="sidebar__nav-icon">&#9881;</span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
+        </div>
+        <div class="sidebar__nav-section u-mt-auto">
+          <a href="cabinet-login.html" class="sidebar__nav-link logout" title="Chiqish"><span class="sidebar__nav-icon">&#9099;</span><span class="sidebar__nav-link-text">Chiqish</span></a>
+        </div>
       </nav>
-    </div>
-    <div class="ds-sidebar-bottom">
-      <nav class="ds-nav">
-        <a href="cabinet-settings.html" class="active"><span class="ds-nav-icon">⚙</span>Sozlamalar</a>
-        <a href="cabinet-login.html"><span class="ds-nav-icon">→</span>Chiqish</a>
-      </nav>
-    </div>
-  </aside>
+    </aside>
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumbs"><a href="cabinet-dashboard.html">Bosh sahifa</a> / <span>Sozlamalar</span></div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-notifications">
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true">&#128276;</button>
+            <span class="topbar-notifications-badge" aria-hidden="true"></span>
+          </div>
+          <div class="topbar-divider" aria-hidden="true"></div>
+          <div class="main__profile">
+            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;" class="main__profile-avatar">K</div>
+            <div>
+              <div class="main__profile-name">Kamolov Sanjar</div>
+              <div class="main__profile-role">Yangi Nafas NNT</div>
+            </div>
+          </div>
+        </div>
+      </header>
 
-  <main class="ds-main">
-
-    <div class="ds-header">
-      <div>
-        <h1>Sozlamalar</h1>
-        <p class="ds-header-sub">Mas'ul shaxs ma'lumotlari, xabarnomalar va tashkilot profili</p>
+      <div class="main__header">
+        <h1 class="main__title">Sozlamalar</h1>
       </div>
-      <div class="ds-header-right">
-        <div class="ds-user">
-          <div class="ds-avatar">K</div>
-          <div><p class="ds-user-name">Kamolov Sanjar</p><p class="ds-user-role">Yangi Nafas NNT</p></div>
+
+      <div class="settings-layout" style="display:grid;grid-template-columns:220px 1fr;gap:24px;">
+        <nav style="display:flex;flex-direction:column;gap:4px;">
+          <a href="#profile" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;">Profil</a>
+          <a href="#org" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;">Tashkilot</a>
+          <a href="#security" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;">Xavfsizlik</a>
+          <a href="#notifications" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;">Bildirishnomalar</a>
+        </nav>
+        <div>
+          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
+            <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Shaxsiy ma&rsquo;lumotlar</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Ism</label><input type="text" value="Kamolov Sanjar" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Email</label><input type="email" value="kamolov@yanginafas.uz" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Telefon</label><input type="tel" value="+998 90 123 45 67" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Lavozim</label><input type="text" value="Tashkilot rahbari" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+            </div>
+            <div style="margin-top:20px;display:flex;gap:12px;">
+              <button type="button" class="btn btn--primary">Saqlash</button>
+              <button type="button" class="btn btn--secondary">Bekor qilish</button>
+            </div>
+          </div>
+
+          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
+            <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Tashkilot ma&rsquo;lumotlari</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Tashkilot nomi</label><input type="text" value="Yangi Nafas NNT" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">INN</label><input type="text" value="302 456 789" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Viloyat</label>
+                <select style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);">
+                  <option selected>Toshkent shahri</option>
+                  <option>Toshkent viloyati</option>
+                  <option>Samarqand</option>
+                </select>
+              </div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Manzil</label><input type="text" value="Yunusobod, 7-mavze" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+            </div>
+            <div style="margin-top:20px;display:flex;gap:12px;">
+              <button type="button" class="btn btn--primary">Saqlash</button>
+            </div>
+          </div>
+
+          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
+            <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Parolni o&rsquo;zgartirish</h2>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Joriy parol</label><input type="password" placeholder="Joriy parol" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Yangi parol</label><input type="password" placeholder="Yangi parol" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+            </div>
+            <div style="margin-top:20px;">
+              <button type="button" class="btn btn--primary">Yangilash</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+    <div class="notifications-panel__header">
+      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
+    </div>
+    <div class="notifications-panel__list">
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon">&#128203;</div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Yangi ariza kelib tushdi <span class="notifications-panel__dot"></span></p>
+          <p class="notifications-panel__item-body">Yangi Nafas NNT &mdash; ARZ-2026-0418 ko&rsquo;rib chiqilishi kerak.</p>
+          <p class="notifications-panel__item-time">2 daqiqa oldin</p>
+        </div>
+      </div>
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon">&#128206;</div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Hujjat yuklandi <span class="notifications-panel__dot"></span></p>
+          <p class="notifications-panel__item-body">Umid Istiqbol NNT yangi hujjat yukladi.</p>
+          <p class="notifications-panel__item-time">15 daqiqa oldin</p>
+        </div>
+      </div>
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon">&#10003;</div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Ariza tasdiqlandi</p>
+          <p class="notifications-panel__item-body">Mehr-Shafqat NNT arizasi tasdiqlandi.</p>
+          <p class="notifications-panel__item-time">1 soat oldin</p>
         </div>
       </div>
     </div>
-
-    <!-- Top row -->
-    <div class="ds-grid-2">
-
-      <article class="ds-card">
-        <div class="ds-sec-head">
-          <h2 class="ds-sec-title">Mas'ul shaxs</h2>
-        </div>
-        <div class="ds-field">
-          <label class="ds-label">F.I.Sh.</label>
-          <input class="ds-input" type="text" value="Kamolov Sanjar Ibrohimovich" />
-        </div>
-        <div class="ds-field">
-          <label class="ds-label">Telefon</label>
-          <input class="ds-input" type="tel" value="+998 90 123 45 67" />
-        </div>
-        <div class="ds-field">
-          <label class="ds-label">Email</label>
-          <input class="ds-input" type="email" value="s.kamolov@yanginafas.uz" />
-        </div>
-        <div style="margin-top:8px;">
-          <button class="ds-btn ds-btn-primary">Saqlash</button>
-        </div>
-      </article>
-
-      <article class="ds-card">
-        <div class="ds-sec-head">
-          <h2 class="ds-sec-title">Xabarnoma sozlamalari</h2>
-        </div>
-        <label class="ds-check-row">
-          <input type="checkbox" checked /> Email orqali xabar olish
-        </label>
-        <label class="ds-check-row">
-          <input type="checkbox" checked /> Ariza holati o'zgarsa
-        </label>
-        <label class="ds-check-row">
-          <input type="checkbox" /> SMS orqali xabarnoma
-        </label>
-        <label class="ds-check-row">
-          <input type="checkbox" checked /> Hujjat so'ralsa
-        </label>
-        <div style="margin-top:16px;">
-          <button class="ds-btn ds-btn-primary">Saqlash</button>
-        </div>
-      </article>
-
-    </div>
-
-    <!-- Bottom row -->
-    <div class="ds-grid-2 ds-mt-16">
-
-      <article class="ds-card">
-        <div class="ds-sec-head">
-          <h2 class="ds-sec-title">Tashkilot profili</h2>
-        </div>
-        <div class="ds-info-row">
-          <span class="ds-info-label">NGO nomi</span>
-          <span class="ds-info-val">Yangi Nafas NNT</span>
-        </div>
-        <div class="ds-info-row">
-          <span class="ds-info-label">STIR</span>
-          <span class="ds-info-val" style="font-family:monospace;">302 841 567</span>
-        </div>
-        <div class="ds-info-row">
-          <span class="ds-info-label">Viloyat</span>
-          <span class="ds-info-val">Toshkent shahri</span>
-        </div>
-        <div class="ds-info-row">
-          <span class="ds-info-label">Manzil</span>
-          <span class="ds-info-val">Yunusobod t., Amir Temur 15</span>
-        </div>
-        <div class="ds-info-row">
-          <span class="ds-info-label">Davlat ro'yxati</span>
-          <span class="ds-info-val">15.03.2021</span>
-        </div>
-        <div class="ds-info-row">
-          <span class="ds-info-label">Faoliyat yo'nalishi</span>
-          <span class="ds-info-val">Ijtimoiy yordam</span>
-        </div>
-        <a href="#" style="display:inline-block;margin-top:14px;font-size:13px;color:#00b4d8;text-decoration:none;">Ma'lumotlarni yangilash →</a>
-      </article>
-
-      <article class="ds-card">
-        <div class="ds-sec-head">
-          <h2 class="ds-sec-title">Hisob faoliyati</h2>
-        </div>
-        <div class="ds-info-row">
-          <span class="ds-info-label">Oxirgi kirish</span>
-          <span class="ds-info-val">05.04.2026 09:14</span>
-        </div>
-        <div class="ds-info-row">
-          <span class="ds-info-label">Joriy ariza</span>
-          <span class="ds-info-val" style="font-family:monospace;">ARZ-2026-0418</span>
-        </div>
-        <div class="ds-info-row">
-          <span class="ds-info-label">Topshirilgan</span>
-          <span class="ds-info-val">02.04.2026</span>
-        </div>
-        <div class="ds-info-row">
-          <span class="ds-info-label">A'zolik holati</span>
-          <span class="ds-info-val"><span class="ds-badge-warn">Ko'rib chiqilmoqda</span></span>
-        </div>
-        <div class="ds-info-row">
-          <span class="ds-info-label">Hujjatlar</span>
-          <span class="ds-info-val">3 / 5 tasdiq</span>
-        </div>
-        <div class="ds-info-row">
-          <span class="ds-info-label">Murojaatlar</span>
-          <span class="ds-info-val">1 ta faol</span>
-        </div>
-      </article>
-
-    </div>
-
-  </main>
-</div>
-<footer class="site-footer">
-  <div class="container footer-top">
-    <div class="footer-info">
-      <h4>Tezkor havolalar</h4>
-      <a href="../about.html">Biz haqimizda</a>
-      <a href="../news.html">Yangiliklar</a>
-      <a href="../events.html">Tadbirlarimiz</a>
-      <a href="../membership.html">A'zo bo'lish</a>
-      <h4>Bog'lanish</h4>
-      <p>Tel: (+998 55) 503-05-12</p>
-      <p>1A, Furqat ko'chasi, Shayxontohur t., Toshkent, 100170</p>
-      <h4>Ijtimoiy tarmoqlar</h4>
-      <a href="https://facebook.com/uznntma1" target="_blank" rel="noopener noreferrer">Facebook — @uznntma1</a>
-      <a href="https://instagram.com/uznntma" target="_blank" rel="noopener noreferrer">Instagram — @uznntma</a>
-      <a href="https://t.me/UzNNTMA1" target="_blank" rel="noopener noreferrer">Telegram — @UzNNTMA1</a>
-    </div>
-    <div class="footer-map-col">
-      <iframe src="https://yandex.uz/map-widget/v1/?ll=69.240568%2C41.312565&z=17&pt=69.240568%2C41.312565%2Cpm2rdm" frameborder="0" allowfullscreen loading="lazy" title="Manzil xaritasi"></iframe>
+    <div class="notifications-panel__footer">
+      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
+      <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>
-  <div class="container footer-bottom">
-    <span>© COPYRIGHT 2019-2026 O'zNNTMA</span>
-    <a href="../index.html" style="color:var(--neutral-300)">ngo.uz</a>
-  </div>
-</footer>
-<script src="../js/main.js"></script>
+  <script src="../js/pacta-foundation.js" defer></script>
+  <script src="../js/pacta-notifications.js"></script>
+  <script src="../js/pacta-app.js"></script>
 </body>
 </html>
