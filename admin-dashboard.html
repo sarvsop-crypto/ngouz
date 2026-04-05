@@ -55,101 +55,113 @@
 
         <div class="uzb-map-wrap">
           <div class="uzb-map-svg">
-            <svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg">
-              <rect width="720" height="360" rx="8" fill="#e2f2f8"/>
+            <svg viewBox="0 0 720 380" xmlns="http://www.w3.org/2000/svg">
+              <rect width="720" height="380" rx="8" fill="#ddeef7"/>
 
-              <!-- Uzbekistan outline -->
-              <path d="M40 98 L160 70 L260 82 L334 62 L445 74 L563 58 L650 104 L623 154 L675 198 L636 251 L556 286 L486 306 L388 291 L312 319 L221 300 L166 262 L102 254 L74 206 L42 172 L55 132 Z"
-                    fill="#b6dced" stroke="#5aaac8" stroke-width="2"/>
+              <!--
+                Uzbekistan border traced from real coordinates:
+                lon 56–73 E, lat 37–46 N → x=(lon-56)*35+40, y=(46-lat)*35+15
+                Key features:
+                  – Wide NW: Qoraqalpog'iston extending north to Orol dengizi
+                  – Middle-north concavity: Qozog'iston pushing south (~lon 65°)
+                  – NE thumb: Farg'ona vodiysi (Namangan/Andijon/Farg'ona)
+                  – Roughly straight southern border with Turkmaniston/Tojikiston
+              -->
+              <path d="
+                M 93,68
+                L 145,15
+                L 215,57
+                L 268,102
+                L 320,155
+                L 373,197
+                L 425,190
+                L 460,172
+                L 513,155
+                L 540,148
+                L 582,140
+                L 625,152
+                L 660,172
+                L 680,208
+                L 680,248
+                L 650,268
+                L 610,278
+                L 583,260
+                L 530,278
+                L 478,313
+                L 443,330
+                L 355,330
+                L 285,313
+                L 198,295
+                L 93,278
+                L 75,225
+                L 75,155
+                L 75,103
+                Z"
+                fill="#b2d9eb" stroke="#5aacc8" stroke-width="2"/>
 
-              <!-- Bubbles: color by count | ≤10=#9ddde9 dark-text | 11–20=#00b4d8 | 21–30=#007a94 | 31–40=#005f78 | 41+=#003d52 -->
+              <!-- ── Bubble chart: circle size ∝ count, colour by density band ──
+                   ≤10 = #9ddde9 (dark text)  |  11–20 = #00b4d8
+                   21–30 = #007a94  |  31–40 = #005f78  |  41+ = #003d52       -->
 
-              <!-- Qoraqalpog'iston: 16 -->
               <g class="uzb-dot"><title>Qoraqalpog'iston — 16 NGO</title>
-                <circle cx="100" cy="128" r="18" fill="#00b4d8" stroke="#fff" stroke-width="2"/>
-                <text x="100" y="133" text-anchor="middle" dominant-baseline="auto" font-family="DM Sans,sans-serif" font-size="12" font-weight="800" fill="#fff">16</text>
+                <circle cx="163" cy="108" r="17" fill="#00b4d8" stroke="#fff" stroke-width="2"/>
+                <text x="163" y="113" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="800" fill="#fff">16</text>
               </g>
-
-              <!-- Xorazm: 10 -->
               <g class="uzb-dot"><title>Xorazm — 10 NGO</title>
-                <circle cx="122" cy="212" r="14" fill="#9ddde9" stroke="#fff" stroke-width="2"/>
-                <text x="122" y="217" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="800" fill="#005f78">10</text>
+                <circle cx="198" cy="160" r="13" fill="#9ddde9" stroke="#fff" stroke-width="2"/>
+                <text x="198" y="165" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="800" fill="#005f78">10</text>
               </g>
-
-              <!-- Buxoro: 14 -->
               <g class="uzb-dot"><title>Buxoro — 14 NGO</title>
-                <circle cx="218" cy="254" r="16" fill="#00b4d8" stroke="#fff" stroke-width="2"/>
-                <text x="218" y="259" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="800" fill="#fff">14</text>
+                <circle cx="298" cy="243" r="16" fill="#00b4d8" stroke="#fff" stroke-width="2"/>
+                <text x="298" y="248" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="800" fill="#fff">14</text>
               </g>
-
-              <!-- Navoiy: 11 -->
               <g class="uzb-dot"><title>Navoiy — 11 NGO</title>
-                <circle cx="305" cy="196" r="15" fill="#00b4d8" stroke="#fff" stroke-width="2"/>
-                <text x="305" y="201" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="800" fill="#fff">11</text>
+                <circle cx="355" cy="225" r="15" fill="#00b4d8" stroke="#fff" stroke-width="2"/>
+                <text x="355" y="230" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="800" fill="#fff">11</text>
               </g>
-
-              <!-- Samarqand: 28 -->
               <g class="uzb-dot"><title>Samarqand — 28 NGO</title>
-                <circle cx="392" cy="240" r="20" fill="#005f78" stroke="#fff" stroke-width="2"/>
-                <text x="392" y="245" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="12" font-weight="800" fill="#fff">28</text>
+                <circle cx="422" cy="236" r="19" fill="#005f78" stroke="#fff" stroke-width="2"/>
+                <text x="422" y="241" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="12" font-weight="800" fill="#fff">28</text>
               </g>
-
-              <!-- Qashqadaryo: 12 -->
               <g class="uzb-dot"><title>Qashqadaryo — 12 NGO</title>
-                <circle cx="434" cy="284" r="15" fill="#00b4d8" stroke="#fff" stroke-width="2"/>
-                <text x="434" y="289" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="800" fill="#fff">12</text>
+                <circle cx="390" cy="278" r="14" fill="#00b4d8" stroke="#fff" stroke-width="2"/>
+                <text x="390" y="283" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="800" fill="#fff">12</text>
               </g>
-
-              <!-- Surxondaryo: 7 -->
               <g class="uzb-dot"><title>Surxondaryo — 7 NGO</title>
-                <circle cx="514" cy="272" r="13" fill="#9ddde9" stroke="#fff" stroke-width="2"/>
-                <text x="514" y="277" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="800" fill="#005f78">7</text>
+                <circle cx="443" cy="302" r="12" fill="#9ddde9" stroke="#fff" stroke-width="2"/>
+                <text x="443" y="307" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="800" fill="#005f78">7</text>
               </g>
-
-              <!-- Jizzax: 9 -->
               <g class="uzb-dot"><title>Jizzax — 9 NGO</title>
-                <circle cx="428" cy="167" r="14" fill="#9ddde9" stroke="#fff" stroke-width="2"/>
-                <text x="428" y="172" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="800" fill="#005f78">9</text>
+                <circle cx="443" cy="202" r="13" fill="#9ddde9" stroke="#fff" stroke-width="2"/>
+                <text x="443" y="207" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="800" fill="#005f78">9</text>
               </g>
-
-              <!-- Sirdaryo: 8 -->
               <g class="uzb-dot"><title>Sirdaryo — 8 NGO</title>
-                <circle cx="485" cy="150" r="13" fill="#9ddde9" stroke="#fff" stroke-width="2"/>
-                <text x="485" y="155" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="800" fill="#005f78">8</text>
+                <circle cx="478" cy="191" r="12" fill="#9ddde9" stroke="#fff" stroke-width="2"/>
+                <text x="478" y="196" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="800" fill="#005f78">8</text>
               </g>
-
-              <!-- Toshkent viloyati: 32 -->
               <g class="uzb-dot"><title>Toshkent viloyati — 32 NGO</title>
-                <circle cx="530" cy="126" r="19" fill="#005f78" stroke="#fff" stroke-width="2"/>
-                <text x="530" y="131" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="12" font-weight="800" fill="#fff">32</text>
+                <circle cx="524" cy="175" r="14" fill="#005f78" stroke="#fff" stroke-width="2"/>
+                <text x="524" y="180" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="800" fill="#fff">32</text>
               </g>
-
-              <!-- Toshkent shahri: 45 (largest) -->
               <g class="uzb-dot"><title>Toshkent shahri — 45 NGO</title>
-                <circle cx="575" cy="141" r="21" fill="#003d52" stroke="#fff" stroke-width="2"/>
-                <text x="575" y="146" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="12" font-weight="800" fill="#fff">45</text>
+                <circle cx="505" cy="160" r="18" fill="#003d52" stroke="#fff" stroke-width="2"/>
+                <text x="505" y="165" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="800" fill="#fff">45</text>
               </g>
-
-              <!-- Namangan: 15 -->
               <g class="uzb-dot"><title>Namangan — 15 NGO</title>
-                <circle cx="619" cy="117" r="16" fill="#00b4d8" stroke="#fff" stroke-width="2"/>
-                <text x="619" y="122" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="800" fill="#fff">15</text>
+                <circle cx="582" cy="168" r="14" fill="#00b4d8" stroke="#fff" stroke-width="2"/>
+                <text x="582" y="173" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="10" font-weight="800" fill="#fff">15</text>
               </g>
-
-              <!-- Farg'ona: 22 -->
               <g class="uzb-dot"><title>Farg'ona — 22 NGO</title>
-                <circle cx="605" cy="178" r="18" fill="#007a94" stroke="#fff" stroke-width="2"/>
-                <text x="605" y="183" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="800" fill="#fff">22</text>
+                <circle cx="574" cy="196" r="17" fill="#007a94" stroke="#fff" stroke-width="2"/>
+                <text x="574" y="201" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="800" fill="#fff">22</text>
               </g>
-
-              <!-- Andijon: 18 -->
               <g class="uzb-dot"><title>Andijon — 18 NGO</title>
-                <circle cx="648" cy="184" r="17" fill="#007a94" stroke="#fff" stroke-width="2"/>
-                <text x="648" y="189" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="800" fill="#fff">18</text>
+                <circle cx="618" cy="184" r="16" fill="#007a94" stroke="#fff" stroke-width="2"/>
+                <text x="618" y="189" text-anchor="middle" font-family="DM Sans,sans-serif" font-size="11" font-weight="800" fill="#fff">18</text>
               </g>
 
               <!-- Legend -->
-              <g transform="translate(14,336)">
+              <g transform="translate(14,356)">
                 <text x="0" y="10" font-family="DM Sans,sans-serif" font-size="9" fill="#587585" font-weight="700">NGO soni:</text>
                 <rect x="62" y="0" width="11" height="11" fill="#9ddde9" rx="2"/>
                 <text x="76" y="10" font-family="DM Sans,sans-serif" font-size="9" fill="#587585">≤10</text>
