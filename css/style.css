@@ -1043,3 +1043,18 @@ body.a11y-grayscale { filter: grayscale(1); }
 .adm-act-body { flex:1; }
 .adm-act-title { font-size:13px; font-weight:600; color:var(--neutral-900); }
 .adm-act-meta { font-size:11px; color:var(--neutral-400); margin-top:2px; }
+
+/* Filter chips */
+.adm-chips { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+.adm-chip { display:inline-flex; align-items:center; gap:5px; padding:5px 12px; border:1px solid var(--neutral-200); border-radius:20px; font-size:12.5px; font-weight:600; color:var(--neutral-500); background:#fff; cursor:pointer; transition:all .15s; }
+.adm-chip:hover { border-color:var(--green-500); color:var(--green-500); }
+.adm-chip.active { background:var(--green-500); border-color:var(--green-500); color:#fff; }
+.adm-chip-count { font-size:11px; font-weight:700; background:rgba(255,255,255,.25); padding:1px 5px; border-radius:10px; }
+.adm-chip:not(.active) .adm-chip-count { background:var(--neutral-100); color:var(--neutral-500); }
+
+/* Mini progress bars (table column) */
+.adm-mini-bar-wrap { display:flex; align-items:center; gap:6px; min-width:72px; }
+.adm-mini-bar { height:6px; border-radius:3px; background:var(--green-500); flex-shrink:0; }
+.adm-mini-bar.ok { background:#24733a; }
+.adm-mini-bar.warn { background:#d97706; }
+.adm-mini-label { font-size:11px; font-weight:700; color:var(--neutral-500); white-space:nowrap; }
