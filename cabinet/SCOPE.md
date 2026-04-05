@@ -33,7 +33,7 @@ Separate member/subscriber portal for NGOs (`cabinet.ngo.uz`) with private conte
 ## Phase 2 modules
 - E-signature integration (ERI)
 - Billing/subscription (if needed)
-- Ticketing/support chat
+- Murojaat/support chat
 - Mobile app API profile
 
 ## Suggested first screens to build

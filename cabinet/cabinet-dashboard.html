@@ -1,157 +1,39 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="uz">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Asosiy sahifa — O'zNNTMA Boshqaruv Tizimi</title>
+  <title>Bosh sahifa - O'zNNTMA A'zo kabineti</title>
   <link rel="stylesheet" href="css/cabinet-app.css" />
-  <style>
-    /* ── Pipeline stages ── */
-    .stages-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-    .stage-card {
-      background: var(--navy-card);
-      border: 1px solid var(--navy-border);
-      border-radius: var(--radius-lg);
-      padding: 20px 18px;
-      display: flex; flex-direction: column; gap: 6px;
-      cursor: pointer;
-      transition: transform .18s, border-color .18s, box-shadow .18s;
-      animation: fadeUp .4s ease both;
-    }
-    .stage-card:nth-child(2){animation-delay:.06s} .stage-card:nth-child(3){animation-delay:.12s} .stage-card:nth-child(4){animation-delay:.18s}
-    .stage-card:hover { transform: translateY(-2px); border-color: rgba(0,180,216,.4); box-shadow: var(--shadow); }
-    .stage-icon { font-size: 20px; margin-bottom: 4px; }
-    .stage-num { font-size: 38px; font-weight: 800; line-height: 1; }
-    .stage-num.cyan  { color: var(--accent); }
-    .stage-num.warn  { color: var(--warn); }
-    .stage-num.ok    { color: var(--ok); }
-    .stage-num.white { color: #fff; }
-    .stage-label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; }
-    .stage-link  { font-size: 11.5px; color: var(--accent); font-weight: 600; margin-top: 2px; }
-
-    /* ── Two-col lower grid ── */
-    .lower-grid { display:grid; grid-template-columns:1fr 340px; gap:20px; align-items:start; }
-    .right-col   { display:flex; flex-direction:column; gap:20px; }
-
-    /* ── Top-5 regions (compact) ── */
-    .region-row { display:flex; align-items:center; gap:10px; padding:11px 18px; border-bottom:1px solid rgba(0,180,216,.07); }
-    .region-row:last-child { border-bottom:0; }
-    .region-row:hover { background:rgba(0,180,216,.05); }
-    .region-rank  { font-size:11px; color:var(--text-dim); width:18px; flex-shrink:0; }
-    .region-name  { flex:1; font-size:13px; font-weight:600; color:#d8eef8; }
-    .region-count { font-size:13px; font-weight:700; color:#fff; width:28px; text-align:right; }
-    .region-bar   { width:80px; height:5px; background:rgba(0,180,216,.12); border-radius:3px; overflow:hidden; flex-shrink:0; }
-    .region-bar-fill { height:100%; border-radius:3px; background:var(--accent); }
-
-    /* ── News ── */
-    .news-item { display:flex; flex-direction:column; gap:4px; padding:14px 18px; border-bottom:1px solid rgba(0,180,216,.07); transition:background .13s; }
-    .news-item:last-child { border-bottom:0; }
-    .news-item:hover { background:rgba(0,180,216,.05); }
-    .news-tag   { font-size:10px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); }
-    .news-title { font-size:13px; font-weight:600; color:#d8eef8; line-height:1.45; }
-    .news-meta  { font-size:11px; color:var(--text-dim); margin-top:2px; }
-
-    /* ── Quick actions ── */
-    .actions-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; padding:16px; }
-    .action-btn { display:flex; flex-direction:column; align-items:flex-start; gap:6px; padding:14px 13px; border-radius:var(--radius-md); border:1px solid var(--navy-border); background:var(--navy-panel); color:var(--text-muted); transition:border-color .15s, background .15s, color .15s, transform .15s; text-align:left; }
-    .action-btn:hover { border-color:rgba(0,180,216,.4); background:rgba(0,180,216,.09); color:#9dd8ea; transform:translateY(-1px); }
-    .action-icon  { width:32px; height:32px; border-radius:8px; background:var(--accent-dim); border:1px solid rgba(0,180,216,.2); display:grid; place-items:center; color:var(--accent); font-size:15px; }
-    .action-label { font-size:12px; font-weight:700; line-height:1.3; }
-
-    .lower-grid .panel:nth-child(2){ animation-delay:.08s; }
-    .right-col .panel:nth-child(2) { animation-delay:.12s; }
-
-    @media(max-width:1160px){ .lower-grid{grid-template-columns:1fr} .right-col{display:grid;grid-template-columns:1fr 1fr;gap:20px} }
-    @media(max-width:960px) { .stages-grid{grid-template-columns:repeat(2,1fr)} }
-    @media(max-width:780px) { .right-col{grid-template-columns:1fr} }
-    @media(max-width:480px) { .stages-grid{grid-template-columns:1fr 1fr} .actions-grid{grid-template-columns:1fr} }
-  </style>
 </head>
 <body>
 <div class="app">
   <main class="main">
-
     <div class="page-heading">
-      <h1>Asosiy <span>sahifa</span></h1>
-      <div class="date-chip" id="js-date">2026-yil, 4-aprel</div>
+      <h1>Bosh sahifa</h1>
+      <div class="date-chip" id="js-date">2026-yil, 5-aprel</div>
     </div>
+    <p class="page-sub">A'zolik shartnomasi bo'yicha joriy holat.</p>
 
-    <!-- Pipeline — the only numbers on this page -->
-    <div class="stages-grid">
-      <div class="stage-card" onclick="location.href='cabinet-applications.html'">
-        <div class="stage-icon"><ph-clipboard-text weight="duotone"></ph-clipboard-text></div>
-        <div class="stage-num white">24</div>
-        <div class="stage-label">Ko'rib chiqilmoqda</div>
-        <div class="stage-link">Ko'rish →</div>
-      </div>
-      <div class="stage-card" onclick="location.href='cabinet-approvals.html'">
-        <div class="stage-icon"><ph-hourglass weight="duotone"></ph-hourglass></div>
-        <div class="stage-num warn">11</div>
-        <div class="stage-label">Tasdiqlash kutilmoqda</div>
-        <div class="stage-link">Tasdiqlash →</div>
-      </div>
-      <div class="stage-card" onclick="location.href='cabinet-nnt-data.html'">
-        <div class="stage-icon"><ph-file-text weight="duotone"></ph-file-text></div>
-        <div class="stage-num cyan">35</div>
-        <div class="stage-label">Hisobot kutilmoqda</div>
-        <div class="stage-link">Eslatma yuborish →</div>
-      </div>
-      <div class="stage-card" onclick="location.href='cabinet-statistics.html'">
-        <div class="stage-icon"><ph-check-circle weight="duotone"></ph-check-circle></div>
-        <div class="stage-num ok">78</div>
-        <div class="stage-label">Yakunlangan</div>
-        <div class="stage-link">Statistikaga o'tish →</div>
-      </div>
+    <div class="grid-2">
+      <article class="card">
+        <h3>Joriy bosqich</h3>
+        <ul class="event-list list-reset">
+          <li class="event-item"><h4>Ariza topshirildi</h4><p>02.04.2026</p></li>
+          <li class="event-item"><h4>Hujjatlar tekshiruvda</h4><p>Ko'rib chiqilmoqda</p></li>
+          <li class="event-item"><h4>Shartnoma tasdiqlanishi</h4><p>Kutilmoqda</p></li>
+        </ul>
+      </article>
+
+      <article class="card">
+        <h3>Tezkor amallar</h3>
+        <div class="filters filters-single">
+          <a class="btn" href="cabinet-applications.html">Ariza holatini ko'rish</a>
+          <a class="btn btn-secondary" href="cabinet-documents.html">Shartnoma fayllarini ochish</a>
+          <a class="btn btn-secondary" href="cabinet-support.html">Murojaat yuborish</a>
+        </div>
+      </article>
     </div>
-
-    <!-- Lower two-col -->
-    <div class="lower-grid">
-
-      <!-- Top-5 regions — compact, links to statistics for full data -->
-      <div class="panel">
-        <div class="panel-head">
-          <div class="panel-title"><ph-map-trifold class="icon" weight="duotone"></ph-map-trifold>Faol hududlar — Top 5</div>
-          <a class="panel-action" href="cabinet-statistics.html">Batafsil →</a>
-        </div>
-        <div>
-          <div class="region-row"><span class="region-rank">1</span><span class="region-name">Toshkent shahri</span><span class="region-count">28</span><div class="region-bar"><div class="region-bar-fill" style="width:100%"></div></div><span class="badge ok">Faol</span></div>
-          <div class="region-row"><span class="region-rank">2</span><span class="region-name">Toshkent viloyati</span><span class="region-count">18</span><div class="region-bar"><div class="region-bar-fill" style="width:64%"></div></div><span class="badge ok">Faol</span></div>
-          <div class="region-row"><span class="region-rank">3</span><span class="region-name">Samarqand</span><span class="region-count">14</span><div class="region-bar"><div class="region-bar-fill" style="width:50%"></div></div><span class="badge ok">Faol</span></div>
-          <div class="region-row"><span class="region-rank">4</span><span class="region-name">Farg'ona</span><span class="region-count">13</span><div class="region-bar"><div class="region-bar-fill" style="width:46%"></div></div><span class="badge ok">Faol</span></div>
-          <div class="region-row"><span class="region-rank">5</span><span class="region-name">Namangan</span><span class="region-count">11</span><div class="region-bar"><div class="region-bar-fill" style="width:39%"></div></div><span class="badge warn">Hisobot kutilmoqda</span></div>
-        </div>
-      </div>
-
-      <div class="right-col">
-        <!-- News -->
-        <div class="panel">
-          <div class="panel-head">
-            <div class="panel-title"><ph-newspaper class="icon" weight="duotone"></ph-newspaper>Yangiliklar va e'lonlar</div>
-            <a class="panel-action" href="cabinet-notifications.html">Hammasi →</a>
-          </div>
-          <div>
-            <div class="news-item"><div class="news-tag">Muhim</div><div class="news-title">I-chorak hisobotlarini topshirish muddati uzaytirildi</div><div class="news-meta">2026-yil 1-aprel · Markaziy idora</div></div>
-            <div class="news-item"><div class="news-tag">Yangi qoidalar</div><div class="news-title">NNTlar ro'yxatdan o'tkazish tartibiga o'zgartishlar kiritildi</div><div class="news-meta">2026-yil 25-mart · Huquqiy bo'lim</div></div>
-            <div class="news-item"><div class="news-tag">Tadbir</div><div class="news-title">Hududiy koordinatorlar uchun onlayn seminar: 15-aprel 14:00</div><div class="news-meta">2026-yil 20-mart · O'quv markazi</div></div>
-          </div>
-        </div>
-
-        <!-- Quick actions -->
-        <div class="panel">
-          <div class="panel-head">
-            <div class="panel-title"><ph-lightning class="icon" weight="duotone"></ph-lightning>Tezkor amallar</div>
-          </div>
-          <div class="actions-grid">
-            <a class="action-btn" href="cabinet-nnt-data.html"><div class="action-icon"><ph-plus weight="bold"></ph-plus></div><div class="action-label">Yangi NNT qo'shish</div></a>
-            <a class="action-btn" href="cabinet-nnt-data.html"><div class="action-icon"><ph-file-text weight="duotone"></ph-file-text></div><div class="action-label">Hisobot yuborish</div></a>
-            <a class="action-btn" href="cabinet-applications.html"><div class="action-icon"><ph-clipboard-text weight="duotone"></ph-clipboard-text></div><div class="action-label">A'zolik so'rovi</div></a>
-            <a class="action-btn" href="cabinet-statistics.html"><div class="action-icon"><ph-trend-up weight="duotone"></ph-trend-up></div><div class="action-label">Statistika ko'rish</div></a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
   </main>
 </div>
 <script src="js/cabinet-app.js"></script>

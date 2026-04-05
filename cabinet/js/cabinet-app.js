@@ -31,13 +31,14 @@
     return (
       '<footer class="cab-footer">' +
         '<div class="container">' +
-          '<span>© 2019–2026 O\'zNNTMA</span>' +
+          '<span>© 2019-2026 O\'zNNTMA</span>' +
           '<a href="../contact.html">Bog\'lanish</a>' +
           '<a href="../index.html">Asosiy sayt ↗</a>' +
         '</div>' +
       '</footer>'
     );
   }
+
   function getSubtopContent() {
     var heading = document.querySelector('.page-heading h1');
     var subtitle = document.querySelector('.page-sub');
@@ -48,7 +49,7 @@
 
     var subText = subtitle
       ? subtitle.textContent.replace(/\s+/g, ' ').trim()
-      : "O'zNNTMA a'zosi bo'lgan NNTlar uchun shaxsiy kabinet.";
+      : "A'zolik arizasi va shartnoma jarayoni uchun soddalashtirilgan kabinet.";
 
     return { title: titleText, subtitle: subText };
   }
@@ -77,6 +78,7 @@
       pageHeading.remove();
     }
   }
+
   function initHeaderFooter() {
     if (!document.querySelector('.site-header')) {
       document.body.insertAdjacentHTML('afterbegin', buildSiteHeader());
@@ -97,38 +99,11 @@
   }
 
   var NAV = [
-    {
-      label: 'Asosiy',
-      items: [
-        { href: 'cabinet-dashboard.html', label: 'Bosh sahifa' },
-        { href: 'cabinet-organization.html', label: 'Mening tashkilotim' },
-        { href: 'cabinet-applications.html', label: 'Arizalar' },
-        { href: 'cabinet-approvals.html', label: 'Tasdiqlashlar' }
-      ]
-    },
-    {
-      label: 'Hujjatlar',
-      items: [
-        { href: 'cabinet-documents.html', label: 'Hujjatlar' },
-        { href: 'cabinet-reports.html', label: 'Hisobotlar' },
-        { href: 'cabinet-esignature.html', label: 'Elektron imzo' }
-      ]
-    },
-    {
-      label: 'Muloqot',
-      items: [
-        { href: 'cabinet-notifications.html', label: 'Bildirishnomalar' },
-        { href: 'cabinet-support.html', label: 'Murojaatlar' }
-      ]
-    },
-    {
-      label: 'Tizim',
-      items: [
-        { href: 'cabinet-calendar.html', label: 'Kalendar' },
-        { href: 'cabinet-knowledge.html', label: 'Yordam markazi' },
-        { href: 'cabinet-settings.html', label: 'Sozlamalar' }
-      ]
-    }
+    { href: 'cabinet-dashboard.html', label: 'Bosh sahifa' },
+    { href: 'cabinet-applications.html', label: 'A\'zolik arizasi' },
+    { href: 'cabinet-documents.html', label: 'Shartnoma hujjatlari' },
+    { href: 'cabinet-support.html', label: 'Murojaat' },
+    { href: 'cabinet-settings.html', label: 'Sozlamalar' }
   ];
 
   function getCurrentPage() {
@@ -141,12 +116,9 @@
       '<h3>Kabinet bo\'limlari</h3>' +
       '<nav class="cab-menu">';
 
-    NAV.forEach(function (section) {
-      html += '<div class="cab-menu-group">' + section.label + '</div>';
-      section.items.forEach(function (item) {
-        var active = item.href === currentPage ? ' active' : '';
-        html += '<a class="' + active.trim() + '" href="' + item.href + '">' + item.label + '</a>';
-      });
+    NAV.forEach(function (item) {
+      var active = item.href === currentPage ? ' active' : '';
+      html += '<a class="' + active.trim() + '" href="' + item.href + '">' + item.label + '</a>';
     });
 
     html += '</nav></aside>';
@@ -204,4 +176,3 @@
     init();
   }
 })();
-

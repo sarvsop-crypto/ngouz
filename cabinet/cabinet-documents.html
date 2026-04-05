@@ -1,43 +1,35 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="uz">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Documents — O'zNNTMA Boshqaruv Tizimi</title>
+  <title>Shartnoma hujjatlari - O'zNNTMA A'zo kabineti</title>
   <link rel="stylesheet" href="css/cabinet-app.css" />
-  
 </head>
 <body>
 <div class="app">
   <main class="main">
-    <div class="page-heading">
-      <h1>Documents</h1>
-    </div>
-    <p class="page-sub">Shaxsiy hujjatlar ombori: yuklash, versiyalash va timeline kuzatuvi.</p>
-    <div class="grid-2">
-          <article class="card">
-            <h3>Yangi hujjat yuklash</h3>
-            <p>Fayl tanlang va yuboring. (demo flow)</p>
-            <div class="mt-10">
-              <input id="doc-file" class="input" type="file" />
-            </div>
-            <div class="mt-10"><button id="doc-upload" class="btn" type="button">Yuklash</button></div>
-          </article>
-          <article class="card">
-            <h3>Holat</h3>
-            <p id="doc-status">Fayl tanlanmagan</p>
-            <div id="doc-progress" class="mt-8">-</div>
-          </article>
-        </div>
+    <div class="page-heading"><h1>Shartnoma hujjatlari</h1></div>
+    <p class="page-sub">A'zolik shartnomasi uchun kerakli hujjatlar va imzo holati.</p>
 
-        <article class="card mt-12">
-          <h3>Hujjatlar timeline</h3>
-          <ul id="doc-timeline" class="event-list list-reset">
-            <li class="event-item"><h4>Guvohnoma.pdf</h4><p>20.03.2026 · Tasdiqlangan</p></li>
-            <li class="event-item"><h4>Ustav-v2.pdf</h4><p>18.03.2026 · Yangi versiya yuklangan</p></li>
-            <li class="event-item"><h4>Rahbar-vakolati.docx</h4><p>11.01.2026 · Yangilash talab qilinadi</p></li>
-          </ul>
-        </article>
+    <div class="grid-2">
+      <article class="card">
+        <h3>Yuklash</h3>
+        <div class="filters filters-single">
+          <input class="input" type="file" />
+          <button class="btn" type="button">Yuklash</button>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Holat</h3>
+        <ul class="event-list list-reset">
+          <li class="event-item"><h4>Ustav.pdf</h4><p>Tasdiqlangan</p></li>
+          <li class="event-item"><h4>Guvohnoma.pdf</h4><p>Tasdiqlangan</p></li>
+          <li class="event-item"><h4>Shartnoma.pdf</h4><p>Imzo kutilmoqda</p></li>
+        </ul>
+      </article>
+    </div>
   </main>
 </div>
 <script src="js/cabinet-app.js"></script>

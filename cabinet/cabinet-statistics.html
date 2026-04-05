@@ -1,151 +1,24 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="uz">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Statistika — O'zNNTMA Boshqaruv Tizimi</title>
+  <title>statistics - O'zNNTMA A'zo kabineti</title>
   <link rel="stylesheet" href="css/cabinet-app.css" />
-  <style>
-    .heading-right { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-    .period-select { background:var(--navy-panel); border:1px solid var(--navy-border); color:#fff; font:inherit; font-size:13px; font-weight:600; padding:7px 12px; border-radius:var(--radius-sm); cursor:pointer; outline:none; transition:border-color .15s; }
-    .period-select:focus { border-color:var(--accent); }
-    .period-select option { background:#071526; }
-    .btn-export { display:inline-flex; align-items:center; gap:6px; padding:7px 14px; border-radius:var(--radius-sm); font:inherit; font-size:12.5px; font-weight:700; cursor:pointer; transition:background .15s, border-color .15s; }
-    .btn-excel { background:rgba(34,197,94,.1); border:1px solid rgba(34,197,94,.3); color:#4ade80; }
-    .btn-excel:hover { background:rgba(34,197,94,.18); border-color:rgba(34,197,94,.5); }
-    .btn-pdf { background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.3); color:#f87171; }
-    .btn-pdf:hover { background:rgba(239,68,68,.18); border-color:rgba(239,68,68,.5); }
-
-    .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; }
-    .stat-card { background:var(--navy-card); border:1px solid var(--navy-border); border-radius:var(--radius-md); padding:18px 16px; position:relative; overflow:hidden; animation:fadeUp .35s ease both; }
-    .stat-card::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,var(--accent),transparent); }
-    .stat-card:nth-child(2){animation-delay:.05s} .stat-card:nth-child(3){animation-delay:.1s} .stat-card:nth-child(4){animation-delay:.15s}
-    .stat-label { font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--text-dim); margin-bottom:8px; }
-    .stat-value { font-size:34px; font-weight:800; color:#fff; line-height:1; }
-    .stat-delta { font-size:11.5px; color:var(--ok); margin-top:6px; font-weight:600; }
-    .stat-delta.warn { color:var(--warn); }
-    .stat-sub { font-size:11.5px; color:var(--text-muted); margin-top:6px; }
-
-    .charts-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-    .bar-chart-list { padding:16px 20px; display:flex; flex-direction:column; gap:10px; }
-    .bc-item { display:flex; align-items:center; gap:10px; }
-    .bc-label { font-size:12.5px; color:var(--text-muted); width:130px; flex-shrink:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-    .bc-track { flex:1; height:20px; background:rgba(0,180,216,.08); border:1px solid rgba(0,180,216,.1); border-radius:4px; overflow:hidden; }
-    .bc-fill { height:100%; background:linear-gradient(90deg,rgba(0,180,216,.85),rgba(0,180,216,.4)); }
-    .bc-val { font-size:12px; font-weight:700; color:var(--accent); width:36px; text-align:right; flex-shrink:0; }
-
-    .regions-table { width:100%; border-collapse:collapse; font-size:13px; }
-    .regions-table th { padding:10px 16px; text-align:left; background:rgba(0,180,216,.06); color:var(--text-muted); font-size:10.5px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; border-bottom:1px solid var(--navy-border); white-space:nowrap; }
-    .regions-table td { padding:11px 16px; border-bottom:1px solid rgba(0,180,216,.07); vertical-align:middle; }
-    .regions-table tbody tr:last-child td { border-bottom:0; }
-    .regions-table tbody tr:hover { background:rgba(0,180,216,.06); }
-    .region-name { font-weight:600; color:#d8eef8; }
-    .td-num { text-align:right; font-variant-numeric:tabular-nums; font-weight:600; color:#fff; }
-    .foiz-cell { display:flex; align-items:center; gap:8px; }
-    .foiz-bar { flex:1; height:6px; background:rgba(0,180,216,.12); border-radius:3px; overflow:hidden; min-width:50px; }
-    .foiz-fill { height:100%; border-radius:3px; background:linear-gradient(90deg,var(--accent),rgba(0,180,216,.5)); }
-    .foiz-fill.warn { background:linear-gradient(90deg,var(--warn),rgba(245,166,35,.4)); }
-    .foiz-fill.bad  { background:linear-gradient(90deg,var(--bad),rgba(240,82,82,.4)); }
-    .foiz-val { font-size:12px; font-weight:700; color:var(--accent); min-width:36px; text-align:right; }
-    .foiz-val.warn { color:var(--warn); } .foiz-val.bad { color:var(--bad); }
-    .total-row td { background:rgba(0,180,216,.07) !important; font-weight:700; border-top:1px solid rgba(0,180,216,.2) !important; }
-
-    .summary-row { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
-    .summary-card { background:var(--navy-card); border:1px solid var(--navy-border); border-radius:var(--radius-md); padding:20px; animation:fadeUp .35s ease both; }
-    .summary-card:nth-child(2){animation-delay:.06s} .summary-card:nth-child(3){animation-delay:.12s}
-    .sc-label { font-size:11px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; color:var(--text-dim); margin-bottom:8px; }
-    .sc-value { font-size:38px; font-weight:800; color:var(--accent); line-height:1; }
-    .sc-track { margin-top:10px; height:6px; background:rgba(0,180,216,.12); border-radius:3px; overflow:hidden; }
-    .sc-fill { height:100%; border-radius:3px; background:var(--accent); }
-    .sc-fill.warn { background:var(--warn); }
-    .sc-sub { font-size:12px; color:var(--text-muted); margin-top:8px; }
-
-    @media(max-width:1160px){ .stats-grid{grid-template-columns:repeat(2,1fr)} .charts-row{grid-template-columns:1fr} .summary-row{grid-template-columns:repeat(2,1fr)} }
-    @media(max-width:480px)  { .stats-grid{grid-template-columns:1fr} .summary-row{grid-template-columns:1fr} .heading-right{width:100%} }
-  </style>
 </head>
 <body>
 <div class="app">
   <main class="main">
+    <div class="page-heading"><h1>Bo'lim soddalashtirildi</h1></div>
+    <p class="page-sub">Bu ekran endi ishlatilmaydi. Kabinet faqat a'zolik arizasi va shartnoma jarayoniga moslab qisqartirildi.</p>
 
-    <div class="page-heading">
-      <h1>Statistika va <span>hisobotlar</span></h1>
-      <div class="heading-right">
-        <select class="period-select">
-          <option>2026 — I chorak</option><option>2025 — IV chorak</option>
-          <option>2025 — III chorak</option><option>2025 — II chorak</option>
-        </select>
-        <button class="btn-export btn-excel" type="button">
-          <ph-download-simple weight="bold"></ph-download-simple>Excel
-        </button>
-        <button class="btn-export btn-pdf" type="button">
-          <ph-file-pdf weight="bold"></ph-file-pdf>PDF
-        </button>
+    <article class="card">
+      <h3>Davom etish</h3>
+      <div class="filters filters-single">
+        <a class="btn" href="cabinet-applications.html">A'zolik arizasiga o'tish</a>
+        <a class="btn btn-secondary" href="cabinet-dashboard.html">Bosh sahifaga qaytish</a>
       </div>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-label">Jami NNTlar</div><div class="stat-value">152</div><div class="stat-delta"><ph-arrow-up weight="bold"></ph-arrow-up> +4 bu chorakda</div></div>
-      <div class="stat-card"><div class="stat-label">Faol NNTlar</div><div class="stat-value">127</div><div class="stat-delta">83.6% faollik darajasi</div></div>
-      <div class="stat-card"><div class="stat-label">Hisobot topshirganlar</div><div class="stat-value">98</div><div class="stat-delta warn">64.5% intizom darajasi</div></div>
-      <div class="stat-card"><div class="stat-label">Yangi a'zolar</div><div class="stat-value">12</div><div class="stat-sub">2026 I chorakda qo'shildi</div></div>
-    </div>
-
-    <div class="charts-row">
-      <div class="panel">
-        <div class="panel-header"><div><h2>NNT soni — Top 5 hudud</h2><p>Eng ko'p NNT ro'yxatga olingan hududlar</p></div></div>
-        <div class="bar-chart-list">
-          <div class="bc-item"><span class="bc-label">Toshkent shahri</span><div class="bc-track"><div class="bc-fill" style="width:100%"></div></div><span class="bc-val">28</span></div>
-          <div class="bc-item"><span class="bc-label">Toshkent viloyati</span><div class="bc-track"><div class="bc-fill" style="width:64%"></div></div><span class="bc-val">18</span></div>
-          <div class="bc-item"><span class="bc-label">Samarqand</span><div class="bc-track"><div class="bc-fill" style="width:50%"></div></div><span class="bc-val">14</span></div>
-          <div class="bc-item"><span class="bc-label">Farg'ona</span><div class="bc-track"><div class="bc-fill" style="width:46%"></div></div><span class="bc-val">13</span></div>
-          <div class="bc-item"><span class="bc-label">Andijon</span><div class="bc-track"><div class="bc-fill" style="width:39%"></div></div><span class="bc-val">11</span></div>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-header"><div><h2>Hisobot intizomi — Top 5</h2><p>Hisobot topshirish foizi bo'yicha yetakchilar</p></div></div>
-        <div class="bar-chart-list">
-          <div class="bc-item"><span class="bc-label">Toshkent shahri</span><div class="bc-track"><div class="bc-fill" style="width:100%"></div></div><span class="bc-val">75%</span></div>
-          <div class="bc-item"><span class="bc-label">Toshkent viloyati</span><div class="bc-track"><div class="bc-fill" style="width:96%"></div></div><span class="bc-val">72%</span></div>
-          <div class="bc-item"><span class="bc-label">Samarqand</span><div class="bc-track"><div class="bc-fill" style="width:85%"></div></div><span class="bc-val">64%</span></div>
-          <div class="bc-item"><span class="bc-label">Andijon</span><div class="bc-track"><div class="bc-fill" style="width:85%"></div></div><span class="bc-val">64%</span></div>
-          <div class="bc-item"><span class="bc-label">Farg'ona</span><div class="bc-track"><div class="bc-fill" style="width:82%"></div></div><span class="bc-val">62%</span></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <div class="panel-header"><div><h2>Hududiy ko'rsatkichlar</h2><p>2026 I chorak — barcha 14 hudud bo'yicha</p></div><span class="panel-badge">14 / 14 HUDUD</span></div>
-      <div style="overflow-x:auto">
-        <table class="regions-table">
-          <thead><tr><th>#</th><th>Hudud</th><th style="text-align:right">Jami</th><th style="text-align:right">Faol</th><th style="text-align:right">Hisobot</th><th style="min-width:160px">Faollik %</th><th>Holat</th></tr></thead>
-          <tbody>
-            <tr><td style="color:var(--text-dim)">1</td><td class="region-name">Toshkent shahri</td><td class="td-num">28</td><td class="td-num">25</td><td class="td-num">21</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill" style="width:89%"></div></div><span class="foiz-val">89%</span></div></td><td><span class="badge ok">A'lo</span></td></tr>
-            <tr><td style="color:var(--text-dim)">2</td><td class="region-name">Toshkent viloyati</td><td class="td-num">18</td><td class="td-num">16</td><td class="td-num">13</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill" style="width:89%"></div></div><span class="foiz-val">89%</span></div></td><td><span class="badge ok">A'lo</span></td></tr>
-            <tr><td style="color:var(--text-dim)">3</td><td class="region-name">Samarqand viloyati</td><td class="td-num">14</td><td class="td-num">12</td><td class="td-num">9</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill" style="width:86%"></div></div><span class="foiz-val">86%</span></div></td><td><span class="badge ok">A'lo</span></td></tr>
-            <tr><td style="color:var(--text-dim)">4</td><td class="region-name">Farg'ona viloyati</td><td class="td-num">13</td><td class="td-num">11</td><td class="td-num">8</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill" style="width:85%"></div></div><span class="foiz-val">85%</span></div></td><td><span class="badge ok">A'lo</span></td></tr>
-            <tr><td style="color:var(--text-dim)">5</td><td class="region-name">Andijon viloyati</td><td class="td-num">11</td><td class="td-num">9</td><td class="td-num">7</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill warn" style="width:82%"></div></div><span class="foiz-val warn">82%</span></div></td><td><span class="badge warn">O'rta</span></td></tr>
-            <tr><td style="color:var(--text-dim)">6</td><td class="region-name">Namangan viloyati</td><td class="td-num">10</td><td class="td-num">8</td><td class="td-num">6</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill warn" style="width:80%"></div></div><span class="foiz-val warn">80%</span></div></td><td><span class="badge warn">O'rta</span></td></tr>
-            <tr><td style="color:var(--text-dim)">7</td><td class="region-name">Buxoro viloyati</td><td class="td-num">9</td><td class="td-num">7</td><td class="td-num">5</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill warn" style="width:78%"></div></div><span class="foiz-val warn">78%</span></div></td><td><span class="badge warn">O'rta</span></td></tr>
-            <tr><td style="color:var(--text-dim)">8</td><td class="region-name">Qashqadaryo viloyati</td><td class="td-num">9</td><td class="td-num">7</td><td class="td-num">5</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill warn" style="width:78%"></div></div><span class="foiz-val warn">78%</span></div></td><td><span class="badge warn">O'rta</span></td></tr>
-            <tr><td style="color:var(--text-dim)">9</td><td class="region-name">Surxondaryo viloyati</td><td class="td-num">8</td><td class="td-num">6</td><td class="td-num">4</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill warn" style="width:75%"></div></div><span class="foiz-val warn">75%</span></div></td><td><span class="badge warn">O'rta</span></td></tr>
-            <tr><td style="color:var(--text-dim)">10</td><td class="region-name">Xorazm viloyati</td><td class="td-num">8</td><td class="td-num">6</td><td class="td-num">4</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill warn" style="width:75%"></div></div><span class="foiz-val warn">75%</span></div></td><td><span class="badge warn">O'rta</span></td></tr>
-            <tr><td style="color:var(--text-dim)">11</td><td class="region-name">Jizzax viloyati</td><td class="td-num">7</td><td class="td-num">5</td><td class="td-num">4</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill warn" style="width:71%"></div></div><span class="foiz-val warn">71%</span></div></td><td><span class="badge warn">O'rta</span></td></tr>
-            <tr><td style="color:var(--text-dim)">12</td><td class="region-name">Sirdaryo viloyati</td><td class="td-num">6</td><td class="td-num">4</td><td class="td-num">3</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill bad" style="width:67%"></div></div><span class="foiz-val bad">67%</span></div></td><td><span class="badge bad">Past</span></td></tr>
-            <tr><td style="color:var(--text-dim)">13</td><td class="region-name">Navoiy viloyati</td><td class="td-num">6</td><td class="td-num">4</td><td class="td-num">3</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill bad" style="width:67%"></div></div><span class="foiz-val bad">67%</span></div></td><td><span class="badge bad">Past</span></td></tr>
-            <tr><td style="color:var(--text-dim)">14</td><td class="region-name">Qoraqalpog'iston Resp.</td><td class="td-num">5</td><td class="td-num">3</td><td class="td-num">2</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill bad" style="width:60%"></div></div><span class="foiz-val bad">60%</span></div></td><td><span class="badge bad">Past</span></td></tr>
-            <tr class="total-row"><td colspan="2" style="color:#e0f0fa">Jami</td><td class="td-num" style="color:#fff">152</td><td class="td-num" style="color:var(--ok)">127</td><td class="td-num" style="color:var(--warn)">98</td><td><div class="foiz-cell"><div class="foiz-bar"><div class="foiz-fill" style="width:83.6%"></div></div><span class="foiz-val">83.6%</span></div></td><td></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="summary-row">
-      <div class="summary-card"><div class="sc-label">Faollik indeksi</div><div class="sc-value">83.6%</div><div class="sc-track"><div class="sc-fill" style="width:83.6%"></div></div><div class="sc-sub">127 ta NNT 152 tadan faol holda</div></div>
-      <div class="summary-card"><div class="sc-label">Hisobot intizomi</div><div class="sc-value" style="color:var(--warn)">64.5%</div><div class="sc-track"><div class="sc-fill warn" style="width:64.5%"></div></div><div class="sc-sub">98 ta NNT o'z vaqtida hisobot topshirdi</div></div>
-      <div class="summary-card"><div class="sc-label">Hududiy qamrov</div><div class="sc-value">14/14</div><div class="sc-track"><div class="sc-fill" style="width:100%"></div></div><div class="sc-sub">Barcha viloyat va shaharlar qamrab olingan</div></div>
-    </div>
-
+    </article>
   </main>
 </div>
 <script src="js/cabinet-app.js"></script>

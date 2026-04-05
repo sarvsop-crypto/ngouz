@@ -1,64 +1,40 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="uz">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Support Tickets — O'zNNTMA Boshqaruv Tizimi</title>
+  <title>Murojaat - O'zNNTMA A'zo kabineti</title>
   <link rel="stylesheet" href="css/cabinet-app.css" />
-  
 </head>
 <body>
 <div class="app">
   <main class="main">
-    <div class="page-heading">
-      <h1>Support Tickets</h1>
-    </div>
-    <p class="page-sub">Texnik va tashkiliy savollar bo'yicha murojaat yuborish va javoblarni kuzatish.</p>
+    <div class="page-heading"><h1>Murojaat</h1></div>
+    <p class="page-sub">A'zolik arizasi yoki shartnoma bo'yicha savol yuborish.</p>
+
     <div class="grid-2">
-          <article class="card">
-            <h3>Yangi ticket</h3>
-            <div class="filters filters-single">
-              <input class="input" placeholder="Mavzu: masalan, Hisobot yuklanmadi" />
-              <select class="select">
-                <option>Yo'nalish</option>
-                <option>Hisobotlar</option>
-                <option>A'zolik</option>
-                <option>Hujjatlar</option>
-                <option>Texnik xato</option>
-              </select>
-              <select class="select">
-                <option>Ustuvorlik</option>
-                <option>Yuqori</option>
-                <option>O'rta</option>
-                <option>Past</option>
-              </select>
-              <input class="input" placeholder="Qisqa tavsif" />
-              <button class="btn" type="button">Ticket yuborish</button>
-            </div>
-          </article>
-
-          <article class="card">
-            <h3>Kontakt oynasi</h3>
-            <p>Qo'llab-quvvatlash vaqti: 09:00-18:00</p>
-            <p>Telefon: +998 71 000 00 00</p>
-            <p>Email: support@ngo.uz</p>
-            <p>O'rtacha javob vaqti: 4 soat</p>
-          </article>
+      <article class="card">
+        <h3>Yangi murojaat</h3>
+        <div class="filters filters-single">
+          <input class="input" placeholder="Mavzu" />
+          <input class="input" placeholder="Qisqa tavsif" />
+          <button class="btn" type="button">Murojaat yuborish</button>
         </div>
+      </article>
 
-        <article class="card mt-12">
-          <h3>Mening ticketlarim</h3>
-          <div class="table-wrap">
-            <table class="table">
-              <thead><tr><th>ID</th><th>Mavzu</th><th>Yuborilgan</th><th>Holat</th><th>Oxirgi javob</th></tr></thead>
-              <tbody>
-                <tr><td><strong>TIC-2026-1112</strong></td><td>Hisobot fayli qabul bo'lmadi</td><td>02.04.2026</td><td><span class="badge warn">Jarayonda</span></td><td>Texnik mutaxassis tekshirmoqda</td></tr>
-                <tr><td><strong>TIC-2026-1099</strong></td><td>Profil STIR xatosi</td><td>29.03.2026</td><td><span class="badge ok">Yopildi</span></td><td>Ma'lumot yangilandi</td></tr>
-                <tr><td><strong>TIC-2026-1071</strong></td><td>A'zolik status izohi</td><td>25.03.2026</td><td><span class="badge ok">Yopildi</span></td><td>Rasmiy javob yuborildi</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </article>
+      <article class="card">
+        <h3>Mening murojaatlarim</h3>
+        <div class="table-wrap">
+          <table class="table">
+            <thead><tr><th>ID</th><th>Sana</th><th>Holat</th></tr></thead>
+            <tbody>
+              <tr><td><strong>MUR-2026-0112</strong></td><td>02.04.2026</td><td><span class="badge warn">Jarayonda</span></td></tr>
+              <tr><td><strong>MUR-2026-0099</strong></td><td>29.03.2026</td><td><span class="badge ok">Yakunlandi</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </article>
+    </div>
   </main>
 </div>
 <script src="js/cabinet-app.js"></script>

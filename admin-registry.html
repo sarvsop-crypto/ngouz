@@ -1,12 +1,9 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="uz">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>NNTlar Reyestri - Admin</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>NNTlar Reyestri - Soddalashtirilgan</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -21,147 +18,27 @@
   </div>
 </header>
 
-<section class="grid-bg">
-  <div class="container hero center">
-    <h1>NNTlar Reyestri</h1>
-    <p class="sub">Ro'yxatdan o'tgan tashkilotlar bo'yicha filtrlash, ko'rish va nazorat oynasi.</p>
-  </div>
-</section>
+<section class="grid-bg"><div class="container hero center"><h1>NNTlar reyestri</h1><p class="sub">Bu bo'lim soddalashtirish doirasida asosiy jarayondan chiqarildi.</p></div></section>
 
 <section class="section admin-section">
   <div class="container admin-shell">
     <aside class="admin-nav-panel card">
       <h3>Boshqaruv bo'limlari</h3>
       <nav class="admin-menu">
-        <a href="admin-dashboard.html">Dashboard</a>
-        <a class="active" href="admin-registry.html">NNTlar reyestri</a>
-        <a href="admin-membership-requests.html">A'zolik arizalari</a>
-        <a href="admin-reports.html">Hisobotlar</a>
-        <a href="admin-notifications.html">Xabarnomalar</a>
-        <a href="cabinet/cabinet-news.html">Yangiliklar</a>
-        <a href="cabinet/cabinet-events.html">Tadbirlar</a>
-        <a href="cabinet/cabinet-grants.html">Grantlar</a>
-        <a href="cabinet/cabinet-statistics.html">Statistika</a>
-        <a href="admin-users.html">Xodimlar</a>
+        <a href="admin-dashboard.html">Boshqaruv</a>
+        <a class="active" href="admin-membership-requests.html">A'zolik shartnomalari</a>
         <a href="admin-settings.html">Sozlamalar</a>
       </nav>
     </aside>
-
-    <div>
-      <div class="admin-toolbar">
-        <h2>Ro'yxat boshqaruvi</h2>
-        <a class="btn" href="#">Yangi NNT qo'shish</a>
-      </div>
-
-      <div class="admin-filters">
-        <input class="admin-input" placeholder="Tashkilot nomi bo'yicha qidirish" />
-        <select class="admin-select"><option>Barcha hududlar</option><option>Toshkent shahri</option><option>Samarqand viloyati</option><option>Farg'ona viloyati</option></select>
-        <select class="admin-select"><option>Barcha statuslar</option><option>Faol</option><option>Ko'rib chiqilmoqda</option><option>To'xtatilgan</option></select>
-        <select class="admin-select"><option>Barcha yo'nalishlar</option><option>Ta'lim</option><option>Ijtimoiy himoya</option><option>Ekologiya</option></select>
-      </div>
-
-      <div class="admin-table-wrap">
-        <table class="admin-table">
-          <thead>
-            <tr>
-              <th>Tashkilot</th>
-              <th>Hudud</th>
-              <th>STIR</th>
-              <th>Status</th>
-              <th>Oxirgi hisobot</th>
-              <th>Amal</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>"Yangi Nafas" NNT</strong><small>Yo'nalish: Yoshlar bilan ishlash</small></td>
-              <td>Toshkent shahri</td>
-              <td>309 456 781</td>
-              <td><span class="admin-badge ok">Faol</span></td>
-              <td>15.03.2026</td>
-              <td><a href="#">Ko'rish</a></td>
-            </tr>
-            <tr>
-              <td><strong>"Mehr" jamg'armasi</strong><small>Yo'nalish: Ijtimoiy yordam</small></td>
-              <td>Samarqand viloyati</td>
-              <td>301 982 220</td>
-              <td><span class="admin-badge warn">Ko'rib chiqilmoqda</span></td>
-              <td>12.03.2026</td>
-              <td><a href="#">Ko'rish</a></td>
-            </tr>
-            <tr>
-              <td><strong>"Rivoj" fondi</strong><small>Yo'nalish: Ayollar bandligi</small></td>
-              <td>Andijon viloyati</td>
-              <td>305 770 442</td>
-              <td><span class="admin-badge bad">To'xtatilgan</span></td>
-              <td>28.02.2026</td>
-              <td><a href="#">Ko'rish</a></td>
-            </tr>
-            <tr>
-              <td><strong>"Kelajak Sari" NNT</strong><small>Yo'nalish: Ekologiya</small></td>
-              <td>Farg'ona viloyati</td>
-              <td>308 115 093</td>
-              <td><span class="admin-badge ok">Faol</span></td>
-              <td>11.03.2026</td>
-              <td><a href="#">Ko'rish</a></td>
-            </tr>
-            <tr>
-              <td><strong>"Saxovat Plus" NNT</strong><small>Yo'nalish: Nogironligi bo'lgan shaxslar qo'llovi</small></td>
-              <td>Buxoro viloyati</td>
-              <td>300 211 563</td>
-              <td><span class="admin-badge ok">Faol</span></td>
-              <td>09.03.2026</td>
-              <td><a href="#">Ko'rish</a></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="admin-pager">
-        <span>Jami: 9,245 ta tashkilotdan 1-25 ko'rsatilmoqda</span>
-        <div class="admin-page-btns">
-          <button class="active" type="button">1</button>
-          <button type="button">2</button>
-          <button type="button">3</button>
-          <button type="button">Keyingi</button>
-        </div>
+    <div class="admin-card">
+      <h3>Faol qolgan jarayon</h3>
+      <p>Hozirda faqat a'zolik arizasi va shartnoma tasdiqlash jarayoni ishlatiladi.</p>
+      <div class="flow-wrap mt-12">
+        <a class="btn" href="admin-membership-requests.html">A'zolik shartnomalariga o'tish</a>
+        <a class="btn btn-secondary" href="admin-dashboard.html">Boshqaruvga qaytish</a>
       </div>
     </div>
   </div>
 </section>
-
-<section class="dark-cta">
-  <div class="container row">
-    <h2>Rasmiy murojaat, hamkorlik va ma'lumot olish uchun biz bilan bog'laning.</h2>
-    <a class="btn" href="contact.html">Bog'lanish</a>
-  </div>
-</section>
-<footer class="site-footer">
-  <div class="container footer-top">
-    <div class="footer-info">
-      <h4>Tezkor havolalar</h4>
-      <a href="about.html">Biz haqimizda</a>
-      <a href="news.html">Yangiliklar</a>
-      <a href="events.html">Tadbirlarimiz</a>
-      <a href="membership.html">A'zo bo'lish</a>
-      <a href="projects.html">Grant va tanlovlar</a>
-      <h4>Bog'lanish</h4>
-      <p>Tel: (+998 55) 503-05-12</p>
-      <p>1A, Furqat ko'chasi, Shayxontohur t., Toshkent, 100170</p>
-      <h4>Ijtimoiy tarmoqlar</h4>
-      <a href="https://facebook.com/uznntma1" target="_blank" rel="noopener noreferrer">Facebook — @uznntma1</a>
-      <a href="https://instagram.com/uznntma" target="_blank" rel="noopener noreferrer">Instagram — @uznntma</a>
-      <a href="https://t.me/UzNNTMA1" target="_blank" rel="noopener noreferrer">Telegram — @UzNNTMA1</a>
-      <a href="https://youtube.com/@uznntma" target="_blank" rel="noopener noreferrer">YouTube — @uznntma</a>
-    </div>
-    <div class="footer-map-col">
-      <iframe src="https://yandex.uz/map-widget/v1/?ll=69.240568%2C41.312565&z=17&pt=69.240568%2C41.312565%2Cpm2rdm" frameborder="0" allowfullscreen loading="lazy" title="Manzil xaritasi"></iframe>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <span>© COPYRIGHT 2019-2026 O'zNNTMA</span>
-    <a href="https://yandex.com/maps/?text=41.312565,69.240568&si=grwyen5zr7arv86fckt25k4vmw" target="_blank" rel="noopener noreferrer" style="color:var(--neutral-300)">Manzil: 1A, Furqat ko'chasi, Shayxontohur t., Toshkent, 100170</a>
-  </div>
-</footer>
 </body>
 </html>

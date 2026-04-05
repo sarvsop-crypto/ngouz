@@ -1,50 +1,24 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="uz">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mobile API Profile — O'zNNTMA Boshqaruv Tizimi</title>
+  <title>api - O'zNNTMA A'zo kabineti</title>
   <link rel="stylesheet" href="css/cabinet-app.css" />
-  
 </head>
 <body>
 <div class="app">
   <main class="main">
-    <div class="page-heading">
-      <h1>Mobile API Profile</h1>
-    </div>
-    <p class="page-sub">A'zo mobil ilovasi yoki ichki tizimlar uchun API kalitlari va webhook boshqaruvi.</p>
-    <div class="grid-2">
-          <article class="card">
-            <h3>API kalitlari</h3>
-            <p>Aktiv kalit: <code>ngo_live_2f43b7c0f9</code></p>
-            <p>Oxirgi aylantirish: 28.03.2026</p>
-            <div class="flow-wrap mt-12">
-              <button class="btn" type="button">Yangi kalit yaratish</button>
-              <button class="btn btn-secondary" type="button">Kalitni bekor qilish</button>
-            </div>
-          </article>
-          <article class="card">
-            <h3>Ruxsatlar</h3>
-            <p>Scopes: <code>reports.read</code>, <code>documents.write</code>, <code>events.read</code></p>
-            <p>Rate limit: 120 req/min</p>
-            <p>Status: <span class="badge ok">Faol</span></p>
-          </article>
-        </div>
+    <div class="page-heading"><h1>Bo'lim soddalashtirildi</h1></div>
+    <p class="page-sub">Bu ekran endi ishlatilmaydi. Kabinet faqat a'zolik arizasi va shartnoma jarayoniga moslab qisqartirildi.</p>
 
-        <article class="card mt-12">
-          <h3>Webhook endpointlar</h3>
-          <div class="table-wrap">
-            <table class="table">
-              <thead><tr><th>Endpoint</th><th>Event</th><th>So'nggi yuborish</th><th>Holat</th><th>Natija</th></tr></thead>
-              <tbody>
-                <tr><td><strong>https://app.ngo.uz/hooks/report</strong></td><td>report.submitted</td><td>02.04.2026 11:09</td><td><span class="badge ok">Faol</span></td><td>200 OK</td></tr>
-                <tr><td><strong>https://app.ngo.uz/hooks/document</strong></td><td>document.approved</td><td>01.04.2026 18:52</td><td><span class="badge ok">Faol</span></td><td>200 OK</td></tr>
-                <tr><td><strong>https://app.ngo.uz/hooks/signature</strong></td><td>signature.completed</td><td>30.03.2026 14:10</td><td><span class="badge warn">Tekshiruv</span></td><td>302 Redirect</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </article>
+    <article class="card">
+      <h3>Davom etish</h3>
+      <div class="filters filters-single">
+        <a class="btn" href="cabinet-applications.html">A'zolik arizasiga o'tish</a>
+        <a class="btn btn-secondary" href="cabinet-dashboard.html">Bosh sahifaga qaytish</a>
+      </div>
+    </article>
   </main>
 </div>
 <script src="js/cabinet-app.js"></script>

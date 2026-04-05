@@ -1,12 +1,9 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="uz">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Foydalanuvchilar - Admin</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <title>Xodimlar - Soddalashtirilgan</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -21,90 +18,27 @@
   </div>
 </header>
 
-<section class="grid-bg"><div class="container hero center"><h1>Xodimlar</h1><p class="sub">Tizim xodimlarini ko'rish, qo'shish va boshqarish.</p></div></section>
+<section class="grid-bg"><div class="container hero center"><h1>Xodimlar</h1><p class="sub">Bu bo'lim soddalashtirish doirasida olib tashlandi.</p></div></section>
 
 <section class="section admin-section">
   <div class="container admin-shell">
     <aside class="admin-nav-panel card">
       <h3>Boshqaruv bo'limlari</h3>
       <nav class="admin-menu">
-        <a href="admin-dashboard.html">Dashboard</a>
-        <a href="admin-registry.html">NNTlar reyestri</a>
-        <a href="admin-membership-requests.html">A'zolik arizalari</a>
-        <a href="admin-reports.html">Hisobotlar</a>
-        <a href="admin-notifications.html">Xabarnomalar</a>
-        <a href="cabinet/cabinet-news.html">Yangiliklar</a>
-        <a href="cabinet/cabinet-events.html">Tadbirlar</a>
-        <a href="cabinet/cabinet-grants.html">Grantlar</a>
-        <a href="cabinet/cabinet-statistics.html">Statistika</a>
-        <a class="active" href="admin-users.html">Xodimlar</a>
-        <a href="admin-settings.html">Sozlamalar</a>
+        <a href="admin-dashboard.html">Boshqaruv</a>
+        <a href="admin-membership-requests.html">A'zolik shartnomalari</a>
+        <a class="active" href="admin-settings.html">Sozlamalar</a>
       </nav>
     </aside>
-
-    <div>
-      <div class="admin-stats">
-        <article class="admin-stat"><span>Jami xodimlar</span><strong>12</strong></article>
-        <article class="admin-stat"><span>Faol</span><strong>9</strong></article>
-        <article class="admin-stat"><span>Bloklangan</span><strong>3</strong></article>
+    <div class="admin-card">
+      <h3>Faol qolgan jarayon</h3>
+      <p>Hozirda faqat a'zolik arizalari va shartnoma jarayoni qolgan.</p>
+      <div class="flow-wrap mt-12">
+        <a class="btn" href="admin-membership-requests.html">A'zolik shartnomalariga o'tish</a>
+        <a class="btn btn-secondary" href="admin-settings.html">Sozlamalarga o'tish</a>
       </div>
-
-      <div class="admin-toolbar">
-        <h2>Xodimlar</h2>
-        <a class="btn" href="#">Yangi xodim qo'shish</a>
-      </div>
-
-      <div class="admin-filters">
-        <input class="admin-input" placeholder="Ism yoki email bo'yicha qidirish" />
-        <select class="admin-select"><option>Barcha holatlar</option><option>Faol</option><option>Bloklangan</option></select>
-      </div>
-
-      <div class="admin-table-wrap">
-        <table class="admin-table">
-          <thead>
-            <tr><th>Xodim</th><th>Oxirgi kirish</th><th>Holat</th><th>Amal</th></tr>
-          </thead>
-          <tbody>
-            <tr><td><strong>Akmal Xasanov</strong><small>akmal.x@ngo.uz</small></td><td>02.04.2026 11:02</td><td><span class="admin-badge ok">Faol</span></td><td><a href="#">Tahrirlash</a></td></tr>
-            <tr><td><strong>Dilnoza Karimova</strong><small>d.karimova@ngo.uz</small></td><td>02.04.2026 10:41</td><td><span class="admin-badge ok">Faol</span></td><td><a href="#">Tahrirlash</a></td></tr>
-            <tr><td><strong>Otabek Usmonov</strong><small>otabek.u@ngo.uz</small></td><td>01.04.2026 17:16</td><td><span class="admin-badge warn">Cheklangan</span></td><td><a href="#">Tahrirlash</a></td></tr>
-            <tr><td><strong>Shohida Jo'rayeva</strong><small>s.jurayeva@ngo.uz</small></td><td>25.03.2026 09:08</td><td><span class="admin-badge bad">Bloklangan</span></td><td><a href="#">Tiklash</a></td></tr>
-          </tbody>
-        </table>
-      </div>
-
     </div>
   </div>
 </section>
-
-<section class="dark-cta"><div class="container row"><h2>Rasmiy murojaat, hamkorlik va ma'lumot olish uchun biz bilan bog'laning.</h2><a class="btn" href="contact.html">Bog'lanish</a></div></section>
-<footer class="site-footer">
-  <div class="container footer-top">
-    <div class="footer-info">
-      <h4>Tezkor havolalar</h4>
-      <a href="about.html">Biz haqimizda</a>
-      <a href="news.html">Yangiliklar</a>
-      <a href="events.html">Tadbirlarimiz</a>
-      <a href="membership.html">A'zo bo'lish</a>
-      <a href="projects.html">Grant va tanlovlar</a>
-      <h4>Bog'lanish</h4>
-      <p>Tel: (+998 55) 503-05-12</p>
-      <p>1A, Furqat ko'chasi, Shayxontohur t., Toshkent, 100170</p>
-      <h4>Ijtimoiy tarmoqlar</h4>
-      <a href="https://facebook.com/uznntma1" target="_blank" rel="noopener noreferrer">Facebook — @uznntma1</a>
-      <a href="https://instagram.com/uznntma" target="_blank" rel="noopener noreferrer">Instagram — @uznntma</a>
-      <a href="https://t.me/UzNNTMA1" target="_blank" rel="noopener noreferrer">Telegram — @UzNNTMA1</a>
-      <a href="https://youtube.com/@uznntma" target="_blank" rel="noopener noreferrer">YouTube — @uznntma</a>
-    </div>
-    <div class="footer-map-col">
-      <iframe src="https://yandex.uz/map-widget/v1/?ll=69.240568%2C41.312565&z=17&pt=69.240568%2C41.312565%2Cpm2rdm" frameborder="0" allowfullscreen loading="lazy" title="Manzil xaritasi"></iframe>
-    </div>
-  </div>
-  <div class="container footer-bottom">
-    <span>© COPYRIGHT 2019-2026 O'zNNTMA</span>
-    <a href="https://yandex.com/maps/?text=41.312565,69.240568&si=grwyen5zr7arv86fckt25k4vmw" target="_blank" rel="noopener noreferrer" style="color:var(--neutral-300)">Manzil: 1A, Furqat ko'chasi, Shayxontohur t., Toshkent, 100170</a>
-  </div>
-</footer>
 </body>
 </html>
-
