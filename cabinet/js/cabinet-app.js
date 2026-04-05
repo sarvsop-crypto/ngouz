@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   var iconsScript = document.createElement('script');
   iconsScript.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1';
   document.head.appendChild(iconsScript);
@@ -94,16 +94,48 @@
           '</div>' +
         '</div>' +
         '<div class="container footer-bottom">' +
-          '<span>� COPYRIGHT 2019-2026 O\'zNNTMA</span>' +
+          '<span>© COPYRIGHT 2019-2026 O\'zNNTMA</span>' +
           '<a href="https://yandex.com/maps/?text=41.312565,69.240568&si=grwyen5zr7arv86fckt25k4vmw" target="_blank" rel="noopener noreferrer" style="color:var(--neutral-300)">Manzil: 1A, Furqat ko\'chasi, Shayxontohur t., Toshkent, 100170</a>' +
         '</div>' +
       '</footer>'
     );
   }
+  function getSubtopContent() {
+    var heading = document.querySelector('.page-heading h1');
+    var subtitle = document.querySelector('.page-sub');
 
+    var titleText = heading
+      ? heading.textContent.replace(/\s+/g, ' ').trim()
+      : 'Kabinet boshqaruvi';
+
+    var subText = subtitle
+      ? subtitle.textContent.replace(/\s+/g, ' ').trim()
+      : "NNT a'zolari va tashkilotlar uchun yagona boshqaruv muhiti.";
+
+    return { title: titleText, subtitle: subText };
+  }
+
+  function buildSubtopBar() {
+    var subtop = getSubtopContent();
+    return (
+      '<section class="grid-bg cabinet-subtop">' +
+        '<div class="container hero center">' +
+          '<h1>' + subtop.title + '</h1>' +
+          '<p class="sub">' + subtop.subtitle + '</p>' +
+        '</div>' +
+      '</section>'
+    );
+  }
   function initHeaderFooter() {
     if (!document.querySelector('.site-header')) {
       document.body.insertAdjacentHTML('afterbegin', buildSiteHeader());
+    }
+
+    if (!document.querySelector('.cabinet-subtop')) {
+      var header = document.querySelector('.site-header');
+      if (header) {
+        header.insertAdjacentHTML('afterend', buildSubtopBar());
+      }
     }
 
     var app = document.querySelector('.app');
@@ -259,3 +291,4 @@
     init();
   }
 })();
+
