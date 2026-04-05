@@ -1,4 +1,4 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="uz">
 <head>
   <meta charset="utf-8" />
@@ -6,7 +6,7 @@
   <title>Boshqaruv Paneli - ngo.uz</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -24,7 +24,7 @@
 <section class="grid-bg">
   <div class="container hero center">
     <h1>A'zolik shartnomalari boshqaruvi</h1>
-    <p class="sub">Faqat ariza va shartnoma jarayonini boshqarish uchun soddalashtirilgan panel.</p>
+    <p class="sub">Faqat ariza va shartnoma jarayoni uchun soddalashtirilgan admin dashboard.</p>
   </div>
 </section>
 
@@ -40,191 +40,53 @@
     </aside>
 
     <div>
-
-      <!-- KPI row -->
       <div class="admin-stats">
-        <article class="admin-stat">
-          <span>Jami a'zo NGOlar</span>
-          <strong>247</strong>
-          <small class="admin-stat-sub ok">↑ 12 bu oy</small>
-        </article>
-        <article class="admin-stat">
-          <span>Yangi arizalar</span>
-          <strong>24</strong>
-          <small class="admin-stat-sub warn">Ko'rib chiqilmagan</small>
-        </article>
-        <article class="admin-stat">
-          <span>Jarayonda</span>
-          <strong>15</strong>
-          <small class="admin-stat-sub">Imzo tekshiruvi</small>
-        </article>
-        <article class="admin-stat">
-          <span>Tasdiqlangan (oy)</span>
-          <strong>9</strong>
-          <small class="admin-stat-sub ok">↑ Aprel 2026</small>
-        </article>
+        <article class="admin-stat"><span>Jami arizalar</span><strong>247</strong></article>
+        <article class="admin-stat"><span>Yangi</span><strong>24</strong></article>
+        <article class="admin-stat"><span>Ko'rib chiqilmoqda</span><strong>15</strong></article>
+        <article class="admin-stat"><span>Tasdiqlangan</span><strong>9</strong></article>
       </div>
 
-      <!-- Charts row: bar chart + donut -->
-      <div class="admin-charts-row">
-
-        <!-- Monthly dynamics bar chart -->
-        <article class="admin-card">
-          <div class="admin-card-top">
-            <h3>A'zolik dinamikasi</h3>
-            <small>2026-yil, oylar bo'yicha yangi arizalar soni</small>
-          </div>
-          <div class="adm-bc">
-            <div class="adm-bc-bars">
-              <div class="adm-bc-col"><span class="adm-bc-num">11</span><div class="adm-bc-bar" style="height:50px"></div></div>
-              <div class="adm-bc-col"><span class="adm-bc-num">14</span><div class="adm-bc-bar" style="height:64px"></div></div>
-              <div class="adm-bc-col"><span class="adm-bc-num">17</span><div class="adm-bc-bar" style="height:78px"></div></div>
-              <div class="adm-bc-col adm-bc-col--hi"><span class="adm-bc-num">24</span><div class="adm-bc-bar" style="height:110px"></div></div>
-              <div class="adm-bc-col adm-bc-col--dim"><span class="adm-bc-num dim">—</span><div class="adm-bc-bar" style="height:20px"></div></div>
-              <div class="adm-bc-col adm-bc-col--dim"><span class="adm-bc-num dim">—</span><div class="adm-bc-bar" style="height:20px"></div></div>
-              <div class="adm-bc-col adm-bc-col--dim"><span class="adm-bc-num dim">—</span><div class="adm-bc-bar" style="height:20px"></div></div>
-              <div class="adm-bc-col adm-bc-col--dim"><span class="adm-bc-num dim">—</span><div class="adm-bc-bar" style="height:20px"></div></div>
-              <div class="adm-bc-col adm-bc-col--dim"><span class="adm-bc-num dim">—</span><div class="adm-bc-bar" style="height:20px"></div></div>
-              <div class="adm-bc-col adm-bc-col--dim"><span class="adm-bc-num dim">—</span><div class="adm-bc-bar" style="height:20px"></div></div>
-              <div class="adm-bc-col adm-bc-col--dim"><span class="adm-bc-num dim">—</span><div class="adm-bc-bar" style="height:20px"></div></div>
-              <div class="adm-bc-col adm-bc-col--dim"><span class="adm-bc-num dim">—</span><div class="adm-bc-bar" style="height:20px"></div></div>
-            </div>
-            <div class="adm-bc-lbls">
-              <span>Yan</span><span>Fev</span><span>Mar</span><span>Apr</span><span>May</span><span>Iyn</span><span>Iyl</span><span>Avg</span><span>Sen</span><span>Okt</span><span>Noy</span><span>Dek</span>
-            </div>
-          </div>
-        </article>
-
-        <!-- Status donut -->
-        <article class="admin-card">
-          <div class="admin-card-top">
-            <h3>Holat taqsimoti</h3>
-            <small>Barcha arizalar · 247 ta</small>
-          </div>
-          <div class="adm-donut-wrap">
-            <div class="adm-donut" style="background:conic-gradient(#24733a 0% 37.2%,#d97706 37.2% 56.6%,#dc2626 56.6% 69.2%,#94a3b8 69.2% 100%)">
-              <div class="adm-donut-hole">
-                <strong>247</strong>
-                <span>Jami</span>
-              </div>
-            </div>
-            <div class="adm-legend">
-              <div class="adm-legend-row"><span class="adm-legend-dot" style="background:#24733a"></span><span class="adm-legend-name">Tasdiqlangan</span><span class="adm-legend-n">92</span></div>
-              <div class="adm-legend-row"><span class="adm-legend-dot" style="background:#d97706"></span><span class="adm-legend-name">Ko'rib chiqilmoqda</span><span class="adm-legend-n">48</span></div>
-              <div class="adm-legend-row"><span class="adm-legend-dot" style="background:#dc2626"></span><span class="adm-legend-name">Qaytarilgan</span><span class="adm-legend-n">31</span></div>
-              <div class="adm-legend-row"><span class="adm-legend-dot" style="background:#94a3b8"></span><span class="adm-legend-name">Yangi</span><span class="adm-legend-n">76</span></div>
-            </div>
-          </div>
-        </article>
-
-      </div>
-
-      <!-- Uzbekistan map -->
-      <article class="admin-card" style="margin-bottom:12px">
+      <article class="admin-card" style="margin-bottom:12px;">
         <div class="admin-card-top">
-          <h3>O'zbekiston: viloyatlar bo'yicha a'zo NGOlar</h3>
-          <small>Tasdiqlangan a'zoliklar soni · Toshkent sh. yig'indiga kiritilmagan</small>
+          <h3>O'zbekiston bo'yicha a'zo NGOlar</h3>
+          <small>Hududlar kesimida joriy holat</small>
         </div>
+
         <div class="uzb-map-wrap">
-
           <div class="uzb-map-svg">
-            <svg viewBox="0 0 580 322" xmlns="http://www.w3.org/2000/svg">
-              <!-- Ocean/background -->
-              <rect width="580" height="322" fill="#d8ecf4" rx="3"/>
+            <svg viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" aria-label="Uzbekistan map overview">
+              <rect x="0" y="0" width="720" height="360" rx="14" fill="#e8f6fb"/>
 
-              <!-- Qoraqalpog'iston (NW large) — 16 NGOs -->
-              <polygon points="10,15 230,12 235,110 192,175 120,195 55,200 10,180" fill="#00b4d8" class="uzb-region"/>
-              <text x="108" y="92" class="uzb-region-text">Qoraqalpog'</text>
-              <text x="108" y="103" class="uzb-region-text">iston</text>
-              <text x="108" y="118" class="uzb-region-text" style="font-size:10px;font-weight:800">16</text>
+              <path d="M40 98 L160 70 L260 82 L334 62 L445 74 L563 58 L650 104 L623 154 L675 198 L636 251 L556 286 L486 306 L388 291 L312 319 L221 300 L166 262 L102 254 L74 206 L42 172 L55 132 Z"
+                    fill="#9edcec" stroke="#4fa8bf" stroke-width="3"/>
 
-              <!-- Xorazm (small NW) — 10 NGOs -->
-              <polygon points="55,200 120,195 128,235 60,242" fill="#9ddde9" class="uzb-region"/>
-              <text x="89" y="215" class="uzb-region-text" style="font-size:7px">Xorazm</text>
-              <text x="89" y="225" class="uzb-region-text" style="font-size:8px;font-weight:800">10</text>
-
-              <!-- Buxoro (large SW) — 14 NGOs -->
-              <polygon points="60,242 128,235 178,258 272,262 274,310 62,310" fill="#9ddde9" class="uzb-region"/>
-              <text x="160" y="276" class="uzb-region-text">Buxoro</text>
-              <text x="160" y="288" class="uzb-region-text" style="font-size:9px;font-weight:800">14</text>
-
-              <!-- Navoiy (large center) — 11 NGOs -->
-              <polygon points="192,175 335,155 355,235 267,260 178,258 128,235 120,195" fill="#9ddde9" class="uzb-region"/>
-              <text x="245" y="205" class="uzb-region-text">Navoiy</text>
-              <text x="245" y="217" class="uzb-region-text" style="font-size:9px;font-weight:800">11</text>
-
-              <!-- Samarqand — 28 NGOs -->
-              <polygon points="267,260 355,235 378,270 360,300 278,305 272,262" fill="#007a94" class="uzb-region"/>
-              <text x="318" y="270" class="uzb-region-text">Samarqand</text>
-              <text x="318" y="282" class="uzb-region-text" style="font-size:9px;font-weight:800">28</text>
-
-              <!-- Qashqadaryo (thin south strip) — 12 NGOs -->
-              <polygon points="278,305 360,300 385,316 280,318" fill="#66d4e8" class="uzb-region"/>
-              <text x="325" y="313" class="uzb-region-text" style="font-size:7px">Qashqadaryo · 12</text>
-
-              <!-- Surxondaryo (SE) — 7 NGOs -->
-              <polygon points="360,300 408,280 430,310 408,318 385,318" fill="#ccedf5" class="uzb-region"/>
-              <text x="393" y="298" class="uzb-region-text dark" style="font-size:7px">Surx.</text>
-              <text x="393" y="308" class="uzb-region-text dark" style="font-size:8px;font-weight:800">7</text>
-
-              <!-- Jizzax — 9 NGOs -->
-              <polygon points="335,155 393,145 403,200 382,220 362,237 355,235" fill="#9ddde9" class="uzb-region"/>
-              <text x="368" y="183" class="uzb-region-text">Jizzax</text>
-              <text x="368" y="194" class="uzb-region-text" style="font-size:8px;font-weight:800">9</text>
-
-              <!-- Sirdaryo (narrow) — 8 NGOs -->
-              <polygon points="393,145 433,135 443,175 423,190 403,200" fill="#9ddde9" class="uzb-region"/>
-              <text x="418" y="160" class="uzb-region-text" style="font-size:7px">Sir.</text>
-              <text x="418" y="170" class="uzb-region-text" style="font-size:7.5px;font-weight:800">8</text>
-
-              <!-- Toshkent viloyat — 32 NGOs -->
-              <polygon points="433,135 483,120 493,175 465,195 443,175" fill="#007a94" class="uzb-region"/>
-              <text x="460" y="152" class="uzb-region-text" style="font-size:7px">Toshk.v.</text>
-              <text x="460" y="162" class="uzb-region-text" style="font-size:8px;font-weight:800">32</text>
-
-              <!-- Namangan (Ferghana N) — 15 NGOs -->
-              <polygon points="483,120 532,108 543,155 514,170 493,175" fill="#00b4d8" class="uzb-region"/>
-              <text x="512" y="135" class="uzb-region-text" style="font-size:7px">Namangan</text>
-              <text x="512" y="146" class="uzb-region-text" style="font-size:8px;font-weight:800">15</text>
-
-              <!-- Andijon (Ferghana SE) — 18 NGOs -->
-              <polygon points="532,108 568,118 572,163 552,180 514,170 543,155" fill="#00b4d8" class="uzb-region"/>
-              <text x="548" y="140" class="uzb-region-text" style="font-size:7px">Andijon</text>
-              <text x="548" y="151" class="uzb-region-text" style="font-size:8px;font-weight:800">18</text>
-
-              <!-- Farg'ona (Ferghana S) — 22 NGOs -->
-              <polygon points="465,195 493,175 514,170 552,180 548,213 507,220 465,210" fill="#00b4d8" class="uzb-region"/>
-              <text x="510" y="196" class="uzb-region-text" style="font-size:7px">Farg'ona</text>
-              <text x="510" y="207" class="uzb-region-text" style="font-size:8px;font-weight:800">22</text>
-
-              <!-- Toshkent shahri (enclave) — 45 NGOs -->
-              <rect x="451" y="131" width="24" height="19" fill="#005570" class="uzb-region" rx="2"/>
-              <text x="463" y="143" class="uzb-region-text" style="font-size:8px;font-weight:800">45</text>
-
-              <!-- Color legend -->
-              <g transform="translate(10,292)">
-                <rect x="0" y="0" width="10" height="10" fill="#ccedf5"/>
-                <text x="13" y="9" style="font-size:8px;fill:#587585;font-family:DM Sans,sans-serif">1–10</text>
-                <rect x="45" y="0" width="10" height="10" fill="#9ddde9"/>
-                <text x="58" y="9" style="font-size:8px;fill:#587585;font-family:DM Sans,sans-serif">11–20</text>
-                <rect x="100" y="0" width="10" height="10" fill="#00b4d8"/>
-                <text x="113" y="9" style="font-size:8px;fill:#587585;font-family:DM Sans,sans-serif">21–30</text>
-                <rect x="155" y="0" width="10" height="10" fill="#007a94"/>
-                <text x="168" y="9" style="font-size:8px;fill:#587585;font-family:DM Sans,sans-serif">31–40</text>
-                <rect x="210" y="0" width="10" height="10" fill="#005570"/>
-                <text x="223" y="9" style="font-size:8px;fill:#587585;font-family:DM Sans,sans-serif">41+</text>
+              <g fill="#005f78" font-family="DM Sans, sans-serif" font-size="12" font-weight="700">
+                <circle cx="108" cy="112" r="6" fill="#005f78" /><text x="120" y="116">Qoraqalpog'iston - 16</text>
+                <circle cx="112" cy="218" r="6" fill="#00b4d8" /><text x="124" y="222">Xorazm - 10</text>
+                <circle cx="216" cy="250" r="6" fill="#00b4d8" /><text x="228" y="254">Buxoro - 14</text>
+                <circle cx="300" cy="198" r="6" fill="#00b4d8" /><text x="312" y="202">Navoiy - 11</text>
+                <circle cx="390" cy="242" r="6" fill="#007a94" /><text x="402" y="246">Samarqand - 28</text>
+                <circle cx="432" cy="286" r="6" fill="#00b4d8" /><text x="444" y="290">Qashqadaryo - 12</text>
+                <circle cx="516" cy="276" r="6" fill="#9edcec" /><text x="528" y="280">Surxondaryo - 7</text>
+                <circle cx="432" cy="170" r="6" fill="#00b4d8" /><text x="444" y="174">Jizzax - 9</text>
+                <circle cx="492" cy="154" r="6" fill="#00b4d8" /><text x="504" y="158">Sirdaryo - 8</text>
+                <circle cx="546" cy="136" r="6" fill="#007a94" /><text x="558" y="140">Toshkent vil. - 32</text>
+                <circle cx="588" cy="136" r="6" fill="#005570" /><text x="600" y="140">Toshkent sh. - 45</text>
+                <circle cx="590" cy="182" r="6" fill="#00b4d8" /><text x="602" y="186">Farg'ona - 22</text>
+                <circle cx="635" cy="147" r="6" fill="#00b4d8" /><text x="647" y="151">Namangan - 15</text>
+                <circle cx="654" cy="176" r="6" fill="#00b4d8" /><text x="666" y="180">Andijon - 18</text>
               </g>
             </svg>
           </div>
 
-          <!-- Region list sorted by count -->
           <div class="uzb-reg-list">
             <div class="uzb-reg-row"><span class="uzb-reg-name">Toshkent shahri</span><div class="uzb-reg-bar" style="width:120px"></div><span class="uzb-reg-count">45</span></div>
-            <div class="uzb-reg-row"><span class="uzb-reg-name">Toshkent v.</span><div class="uzb-reg-bar" style="width:85px"></div><span class="uzb-reg-count">32</span></div>
+            <div class="uzb-reg-row"><span class="uzb-reg-name">Toshkent viloyati</span><div class="uzb-reg-bar" style="width:85px"></div><span class="uzb-reg-count">32</span></div>
             <div class="uzb-reg-row"><span class="uzb-reg-name">Samarqand</span><div class="uzb-reg-bar" style="width:75px"></div><span class="uzb-reg-count">28</span></div>
             <div class="uzb-reg-row"><span class="uzb-reg-name">Farg'ona</span><div class="uzb-reg-bar" style="width:59px"></div><span class="uzb-reg-count">22</span></div>
             <div class="uzb-reg-row"><span class="uzb-reg-name">Andijon</span><div class="uzb-reg-bar" style="width:48px"></div><span class="uzb-reg-count">18</span></div>
-            <div class="uzb-reg-row"><span class="uzb-reg-name">Qoraqalpog'</span><div class="uzb-reg-bar" style="width:43px"></div><span class="uzb-reg-count">16</span></div>
+            <div class="uzb-reg-row"><span class="uzb-reg-name">Qoraqalpog'iston</span><div class="uzb-reg-bar" style="width:43px"></div><span class="uzb-reg-count">16</span></div>
             <div class="uzb-reg-row"><span class="uzb-reg-name">Namangan</span><div class="uzb-reg-bar" style="width:40px"></div><span class="uzb-reg-count">15</span></div>
             <div class="uzb-reg-row"><span class="uzb-reg-name">Buxoro</span><div class="uzb-reg-bar" style="width:37px"></div><span class="uzb-reg-count">14</span></div>
             <div class="uzb-reg-row"><span class="uzb-reg-name">Qashqadaryo</span><div class="uzb-reg-bar" style="width:32px"></div><span class="uzb-reg-count">12</span></div>
@@ -234,94 +96,28 @@
             <div class="uzb-reg-row"><span class="uzb-reg-name">Sirdaryo</span><div class="uzb-reg-bar" style="width:21px"></div><span class="uzb-reg-count">8</span></div>
             <div class="uzb-reg-row"><span class="uzb-reg-name">Surxondaryo</span><div class="uzb-reg-bar" style="width:19px"></div><span class="uzb-reg-count">7</span></div>
           </div>
-
         </div>
       </article>
 
-      <!-- Bottom: latest applications + events/news -->
-      <div class="admin-bottom-2">
-
-        <!-- Latest applications -->
+      <div class="admin-bottom admin-bottom--spaced">
         <article class="admin-card">
-          <div class="admin-card-top">
-            <h3>So'nggi arizalar</h3>
-            <small><a href="admin-membership-requests.html">Hammasini ko'rish →</a></small>
-          </div>
-          <div class="admin-table-wrap">
-            <table class="admin-table">
-              <thead>
-                <tr><th>Ariza</th><th>Tashkilot</th><th>Sana</th><th>Holat</th></tr>
-              </thead>
-              <tbody>
-                <tr><td><strong>ARZ-2026-0418</strong></td><td>Yangi Nafas NNT</td><td>02.04.2026</td><td><span class="admin-badge warn">Ko'rib chiqilmoqda</span></td></tr>
-                <tr><td><strong>ARZ-2026-0417</strong></td><td>Mehr jamg'armasi</td><td>02.04.2026</td><td><span class="admin-badge warn">Yangi</span></td></tr>
-                <tr><td><strong>ARZ-2026-0415</strong></td><td>Saxovat Plus NNT</td><td>01.04.2026</td><td><span class="admin-badge ok">Tasdiqlangan</span></td></tr>
-                <tr><td><strong>ARZ-2026-0412</strong></td><td>Kelajak Sari NNT</td><td>31.03.2026</td><td><span class="admin-badge bad">Qaytarilgan</span></td></tr>
-                <tr><td><strong>ARZ-2026-0409</strong></td><td>Umid va Hayot NNT</td><td>29.03.2026</td><td><span class="admin-badge ok">Tasdiqlangan</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-        </article>
-
-        <!-- Events & news feed -->
-        <article class="admin-card">
-          <div class="admin-card-top">
-            <h3>So'nggi tadbirlar va yangiliklar</h3>
-          </div>
-          <ul class="adm-feed">
-            <li class="adm-feed-item">
-              <div class="adm-feed-dot" style="background:#007a94"></div>
-              <div class="adm-feed-body">
-                <span class="adm-feed-tag">Yangilik</span>
-                <p class="adm-feed-title">A'zolik shartnomalari yangi tahrir qabul qilindi — v2.1</p>
-                <span class="adm-feed-date">05.04.2026</span>
-              </div>
-            </li>
-            <li class="adm-feed-item">
-              <div class="adm-feed-dot" style="background:#24733a"></div>
-              <div class="adm-feed-body">
-                <span class="adm-feed-tag">Ariza</span>
-                <p class="adm-feed-title">ARZ-2026-0415 tasdiqlandi: Saxovat Plus NNT</p>
-                <span class="adm-feed-date">01.04.2026</span>
-              </div>
-            </li>
-            <li class="adm-feed-item">
-              <div class="adm-feed-dot" style="background:#d97706"></div>
-              <div class="adm-feed-body">
-                <span class="adm-feed-tag">Tadbir</span>
-                <p class="adm-feed-title">Seminar: NGO hisobot topshirish qoidalari · 15.04.2026</p>
-                <span class="adm-feed-date">Toshkent, O'zNNTMA markazi</span>
-              </div>
-            </li>
-            <li class="adm-feed-item">
-              <div class="adm-feed-dot" style="background:#24733a"></div>
-              <div class="adm-feed-body">
-                <span class="adm-feed-tag">Ariza</span>
-                <p class="adm-feed-title">ARZ-2026-0409 tasdiqlandi: Umid va Hayot NNT</p>
-                <span class="adm-feed-date">29.03.2026</span>
-              </div>
-            </li>
-            <li class="adm-feed-item">
-              <div class="adm-feed-dot" style="background:#d97706"></div>
-              <div class="adm-feed-body">
-                <span class="adm-feed-tag">Tadbir</span>
-                <p class="adm-feed-title">NGO nazorat bo'yicha vazirlik anjumani</p>
-                <span class="adm-feed-date">25.03.2026 · Toshkent</span>
-              </div>
-            </li>
-            <li class="adm-feed-item">
-              <div class="adm-feed-dot" style="background:#007a94"></div>
-              <div class="adm-feed-body">
-                <span class="adm-feed-tag">Yangilik</span>
-                <p class="adm-feed-title">O'zNNTMA rahbari matbuot anjumani o'tkazdi</p>
-                <span class="adm-feed-date">28.03.2026</span>
-              </div>
-            </li>
+          <h3>So'nggi arizalar</h3>
+          <ul class="admin-list">
+            <li><span>ARZ-2026-0418 - Yangi Nafas NNT</span><span class="admin-badge warn">Ko'rib chiqilmoqda</span></li>
+            <li><span>ARZ-2026-0417 - Mehr jamg'armasi</span><span class="admin-badge warn">Yangi</span></li>
+            <li><span>ARZ-2026-0415 - Saxovat Plus NNT</span><span class="admin-badge ok">Tasdiqlangan</span></li>
           </ul>
         </article>
 
+        <article class="admin-card">
+          <h3>Tezkor o'tish</h3>
+          <ul class="admin-list">
+            <li><a href="admin-membership-requests.html">Ariza va shartnomalarni ochish</a></li>
+            <li><a href="admin-membership-requests.html">Qaytarilganlarni tekshirish</a></li>
+            <li><a href="admin-settings.html">Shartnoma matnini tahrirlash</a></li>
+          </ul>
+        </article>
       </div>
-
     </div>
   </div>
 </section>
