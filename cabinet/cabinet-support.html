@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Murojaat — A‘zo Kabinet</title>
+  <title>Murojaat — A'zo Kabinet</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
@@ -22,7 +22,7 @@
       <div class="sidebar__header">
         <div class="u-inline-stack">
           <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">A</div>
-          <span class="sidebar__title">A‘zo Kabinet</span>
+          <span class="sidebar__title">A'zo Kabinet</span>
         </div>
         <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
       </div>
@@ -44,6 +44,7 @@
         </div>
       </nav>
     </aside>
+
     <main class="main">
       <header class="topbar">
         <div class="topbar-left">
@@ -66,56 +67,109 @@
       </header>
 
       <div class="help-header">
-        <h1 class="help-header__title">Murojaat &amp; Yordam</h1>
+        <div>
+          <h1 class="help-header__title">Murojaat &amp; Yordam</h1>
+          <p style="font-size:14px;color:var(--grey-400);margin:4px 0 0;">Ko&rsquo;p so&rsquo;raladigan savollarga javob toping yoki bizga yozing.</p>
+        </div>
         <button type="button" class="btn btn--primary"><i class="ph ph-plus"></i> Yangi murojaat</button>
       </div>
 
-      <div class="cards">
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-phone"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Telefon</p><p class="card__value" style="font-size:16px;">(+998 55) 503-05-12</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-envelope"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Email</p><p class="card__value" style="font-size:16px;">info@uznntma.uz</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-map-pin"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Manzil</p><p class="card__value" style="font-size:14px;">1A, Furqat ko&rsquo;chasi, Toshkent</p></div></div></div>
-      </div>
+      <div style="display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:24px;align-items:start;">
 
-      <div class="faq-grid">
-        <div class="faq-row">
-          <article class="faq-card" id="faq-1">
-            <button type="button" class="faq-card__head" aria-expanded="true" aria-controls="faq-1-body"><span class="faq-card__title">A&rsquo;zolik arizasi qancha vaqt ko&rsquo;rib chiqiladi?</span><span class="faq-card__chevron" aria-hidden="true"><i class="ph ph-caret-down"></i></span></button>
-            <p class="faq-card__body" id="faq-1-body">Ariza odatda 10&ndash;15 ish kuni ichida ko&rsquo;rib chiqiladi. Hujjatlar to&rsquo;liq va to&rsquo;g&rsquo;ri topshirilganda jarayon tezroq kechadi.</p>
-          </article>
-          <article class="faq-card" id="faq-2">
-            <button type="button" class="faq-card__head" aria-expanded="false" aria-controls="faq-2-body"><span class="faq-card__title">Qanday hujjatlar talab qilinadi?</span><span class="faq-card__chevron" aria-hidden="true"><i class="ph ph-caret-down"></i></span></button>
-            <p class="faq-card__body" id="faq-2-body" hidden>NGO Ustavi, Davlat ro&rsquo;yxatidan o&rsquo;tish guvohnomasi, Rahbar haqida ma&rsquo;lumotnoma, Soliq organidan ma&rsquo;lumotnoma majburiy hisoblanadi.</p>
-          </article>
-          <article class="faq-card" id="faq-3">
-            <button type="button" class="faq-card__head" aria-expanded="false" aria-controls="faq-3-body"><span class="faq-card__title">Hujjat qaytarilsa nima qilish kerak?</span><span class="faq-card__chevron" aria-hidden="true"><i class="ph ph-caret-down"></i></span></button>
-            <p class="faq-card__body" id="faq-3-body" hidden>Admin qaytarish sababini ko&rsquo;rsatadi. Tuzatishlar kiritib, hujjatni qayta yuklashingiz mumkin.</p>
-          </article>
+        <!-- Left: FAQ accordion -->
+        <div>
+          <p style="font-size:12px;font-weight:500;color:var(--grey-300);letter-spacing:0.24px;margin:0 0 12px;">KO&rsquo;P SO&rsquo;RALADIGAN SAVOLLAR</p>
+          <div class="faq-grid" style="padding-bottom:0;">
+            <div class="faq-row" style="flex-direction:column;">
+              <article class="faq-card" id="faq-1">
+                <button type="button" class="faq-card__head" aria-expanded="true" aria-controls="faq-1-body"><span class="faq-card__title">A&rsquo;zolik arizasi qancha vaqt ko&rsquo;rib chiqiladi?</span><span class="faq-card__chevron" aria-hidden="true"><i class="ph ph-caret-down"></i></span></button>
+                <p class="faq-card__body" id="faq-1-body">Ariza odatda 10&ndash;15 ish kuni ichida ko&rsquo;rib chiqiladi. Hujjatlar to&rsquo;liq va to&rsquo;g&rsquo;ri topshirilganda jarayon tezroq kechadi.</p>
+              </article>
+              <article class="faq-card" id="faq-2">
+                <button type="button" class="faq-card__head" aria-expanded="false" aria-controls="faq-2-body"><span class="faq-card__title">Qanday hujjatlar talab qilinadi?</span><span class="faq-card__chevron" aria-hidden="true"><i class="ph ph-caret-down"></i></span></button>
+                <p class="faq-card__body" id="faq-2-body" hidden>NGO Ustavi, Davlat ro&rsquo;yxatidan o&rsquo;tish guvohnomasi, Rahbar haqida ma&rsquo;lumotnoma, Soliq organidan ma&rsquo;lumotnoma majburiy hisoblanadi.</p>
+              </article>
+              <article class="faq-card" id="faq-3">
+                <button type="button" class="faq-card__head" aria-expanded="false" aria-controls="faq-3-body"><span class="faq-card__title">Hujjat qaytarilsa nima qilish kerak?</span><span class="faq-card__chevron" aria-hidden="true"><i class="ph ph-caret-down"></i></span></button>
+                <p class="faq-card__body" id="faq-3-body" hidden>Admin qaytarish sababini ko&rsquo;rsatadi. Tuzatishlar kiritib, hujjatni qayta yuklashingiz mumkin.</p>
+              </article>
+              <article class="faq-card" id="faq-4">
+                <button type="button" class="faq-card__head" aria-expanded="false" aria-controls="faq-4-body"><span class="faq-card__title">Shartnoma qanday imzolanadi?</span><span class="faq-card__chevron" aria-hidden="true"><i class="ph ph-caret-down"></i></span></button>
+                <p class="faq-card__body" id="faq-4-body" hidden>Shartnoma loyihasi tayyorlanganida siz elektron pochta orqali xabardor qilinasiz. Imzolash kabinet ichida amalga oshiriladi.</p>
+              </article>
+              <article class="faq-card" id="faq-5">
+                <button type="button" class="faq-card__head" aria-expanded="false" aria-controls="faq-5-body"><span class="faq-card__title">A&rsquo;zolik badali qancha?</span><span class="faq-card__chevron" aria-hidden="true"><i class="ph ph-caret-down"></i></span></button>
+                <p class="faq-card__body" id="faq-5-body" hidden>A&rsquo;zolik badali tashkilot turi va hajmiga qarab belgilanadi. Batafsil ma&rsquo;lumot uchun aloqa orqali murojaat qiling.</p>
+              </article>
+              <article class="faq-card" id="faq-6">
+                <button type="button" class="faq-card__head" aria-expanded="false" aria-controls="faq-6-body"><span class="faq-card__title">Parolni unutsam nima qilaman?</span><span class="faq-card__chevron" aria-hidden="true"><i class="ph ph-caret-down"></i></span></button>
+                <p class="faq-card__body" id="faq-6-body" hidden>Kirish sahifasida &ldquo;Parolni unutdim&rdquo; havolasini bosing. Email manzilingizga yangilash havolasi yuboriladi.</p>
+              </article>
+            </div>
+          </div>
         </div>
-        <div class="faq-row">
-          <article class="faq-card" id="faq-4">
-            <button type="button" class="faq-card__head" aria-expanded="false" aria-controls="faq-4-body"><span class="faq-card__title">Shartnoma qanday imzolanadi?</span><span class="faq-card__chevron" aria-hidden="true"><i class="ph ph-caret-down"></i></span></button>
-            <p class="faq-card__body" id="faq-4-body" hidden>Shartnoma loyihasi tayyorlanganida siz elektron pochta orqali xabardor qilinasiz.</p>
-          </article>
-          <article class="faq-card" id="faq-5">
-            <button type="button" class="faq-card__head" aria-expanded="false" aria-controls="faq-5-body"><span class="faq-card__title">A&rsquo;zolik badali qancha?</span><span class="faq-card__chevron" aria-hidden="true"><i class="ph ph-caret-down"></i></span></button>
-            <p class="faq-card__body" id="faq-5-body" hidden>A&rsquo;zolik badali tashkilot turi va hajmiga qarab belgilanadi. Batafsil ma&rsquo;lumot uchun aloqa orqali murojaat qiling.</p>
-          </article>
-          <article class="faq-card" id="faq-6">
-            <button type="button" class="faq-card__head" aria-expanded="false" aria-controls="faq-6-body"><span class="faq-card__title">Parolni unutsam nima qilaman?</span><span class="faq-card__chevron" aria-hidden="true"><i class="ph ph-caret-down"></i></span></button>
-            <p class="faq-card__body" id="faq-6-body" hidden>Kirish sahifasida &ldquo;Parolni unutdim&rdquo; havolasini bosing. Email manzilingizga yangilash havolasi yuboriladi.</p>
-          </article>
-        </div>
-      </div>
 
-      <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-top:8px;">
-        <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;"><i class="ph ph-chat-circle-text"></i> Murojaat yuborish</h2>
-        <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;">Savolingiz javobini topa olmadingizmi? Bizga yozing.</p>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-          <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Mavzu</label><select style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option>Hujjatlar bo&rsquo;yicha</option><option>Ariza holati</option><option>Texnik muammo</option><option>Boshqa</option></select></div>
-          <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Muhimlik darajasi</label><select style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option>Oddiy</option><option>O&rsquo;rta</option><option>Shoshilinch</option></select></div>
+        <!-- Right: Contact info + Form -->
+        <div style="display:flex;flex-direction:column;gap:16px;">
+
+          <!-- Contact info card -->
+          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:16px;padding:20px;">
+            <p style="font-size:12px;font-weight:500;color:var(--grey-300);letter-spacing:0.24px;margin:0 0 16px;">BOG&rsquo;LANISH</p>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div style="width:36px;height:36px;border-radius:10px;background:var(--primary-50);color:var(--primary-500);display:grid;place-items:center;flex-shrink:0;font-size:16px;"><i class="ph ph-phone"></i></div>
+                <div>
+                  <div style="font-size:11px;color:var(--grey-400);margin-bottom:2px;">Telefon</div>
+                  <div style="font-size:14px;font-weight:500;color:var(--grey-900);">(+998 55) 503-05-12</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div style="width:36px;height:36px;border-radius:10px;background:var(--primary-50);color:var(--primary-500);display:grid;place-items:center;flex-shrink:0;font-size:16px;"><i class="ph ph-envelope"></i></div>
+                <div>
+                  <div style="font-size:11px;color:var(--grey-400);margin-bottom:2px;">Email</div>
+                  <div style="font-size:14px;font-weight:500;color:var(--grey-900);">info@uznntma.uz</div>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div style="width:36px;height:36px;border-radius:10px;background:var(--primary-50);color:var(--primary-500);display:grid;place-items:center;flex-shrink:0;font-size:16px;"><i class="ph ph-map-pin"></i></div>
+                <div>
+                  <div style="font-size:11px;color:var(--grey-400);margin-bottom:2px;">Manzil</div>
+                  <div style="font-size:14px;font-weight:500;color:var(--grey-900);">1A, Furqat ko&rsquo;chasi, Toshkent</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Submit form card -->
+          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:16px;padding:20px;">
+            <p style="font-size:12px;font-weight:500;color:var(--grey-300);letter-spacing:0.24px;margin:0 0 16px;">MUROJAAT YUBORISH</p>
+            <div style="display:flex;flex-direction:column;gap:14px;">
+              <div>
+                <label style="font-size:13px;color:var(--grey-500);display:block;margin-bottom:6px;">Mavzu</label>
+                <select style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;">
+                  <option>Hujjatlar bo&rsquo;yicha</option>
+                  <option>Ariza holati</option>
+                  <option>Texnik muammo</option>
+                  <option>Boshqa</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:13px;color:var(--grey-500);display:block;margin-bottom:6px;">Muhimlik darajasi</label>
+                <select style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;">
+                  <option>Oddiy</option>
+                  <option>O&rsquo;rta</option>
+                  <option>Shoshilinch</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size:13px;color:var(--grey-500);display:block;margin-bottom:6px;">Xabar</label>
+                <textarea rows="4" placeholder="Muammoingizni batafsil yozing..." style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;resize:vertical;box-sizing:border-box;"></textarea>
+              </div>
+              <button type="button" class="btn btn--primary" style="align-self:flex-start;"><i class="ph ph-paper-plane-tilt"></i> Yuborish</button>
+            </div>
+          </div>
+
         </div>
-        <div style="margin-bottom:16px;"><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Xabar</label><textarea rows="4" placeholder="Muammoingizni batafsil yozing..." style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;resize:vertical;box-sizing:border-box;"></textarea></div>
-        <button type="button" class="btn btn--primary"><i class="ph ph-paper-plane-tilt"></i> Yuborish</button>
       </div>
     </main>
   </div>
