@@ -126,6 +126,19 @@
       '</section>'
     );
   }
+
+  function removeDuplicateInlineHeading() {
+    var heading = document.querySelector('.page-heading h1');
+    var subtitle = document.querySelector('.page-sub');
+    var pageHeading = document.querySelector('.page-heading');
+
+    if (heading) heading.remove();
+    if (subtitle) subtitle.remove();
+
+    if (pageHeading && pageHeading.textContent.replace(/\s+/g, '').length === 0) {
+      pageHeading.remove();
+    }
+  }
   function initHeaderFooter() {
     if (!document.querySelector('.site-header')) {
       document.body.insertAdjacentHTML('afterbegin', buildSiteHeader());
@@ -135,6 +148,7 @@
       var header = document.querySelector('.site-header');
       if (header) {
         header.insertAdjacentHTML('afterend', buildSubtopBar());
+        removeDuplicateInlineHeading();
       }
     }
 
