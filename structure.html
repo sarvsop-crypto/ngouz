@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tuzilma — O'zNNTMA | ngo.uz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    /* ── Org chart ─────────────────────────────────────── */
+    .org-wrap { overflow-x: auto; padding-bottom: 8px; }
+
+    .org-tree {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0; min-width: 640px;
+    }
+
+    /* Connector line downward */
+    .org-connector {
+      width: 2px; height: 32px;
+      background: var(--green-500, #2e7d52);
+      flex-shrink: 0; margin: 0 auto;
+    }
+
+    /* Horizontal bar connecting siblings */
+    .org-hbar-wrap {
+      display: flex; align-items: flex-start; gap: 0;
+      position: relative; width: 100%;
+      justify-content: center;
+    }
+    .org-hbar-wrap::before {
+      content: '';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      height: 2px; background: var(--green-500, #2e7d52);
+      /* width set per instance via style */
+      width: var(--bar-w, 60%);
+    }
+
+    .org-branch {
+      display: flex; flex-direction: column; align-items: center;
+      flex: 1;
+    }
+    .org-branch > .org-connector { height: 24px; }
+
+    /* Node boxes */
+    .org-node {
+      border-radius: 10px; padding: 12px 18px;
+      font-size: 13px; font-weight: 500; line-height: 1.4;
+      text-align: center; border: 1.5px solid;
+      max-width: 200px; width: 100%;
+    }
+    .org-node--head {
+      background: var(--green-500, #2e7d52); color: #fff;
+      border-color: var(--green-600, #255f40);
+      font-size: 14px; font-weight: 700;
+      max-width: 280px; padding: 16px 24px;
+    }
+    .org-node--deputy {
+      background: #e8f5ef; color: var(--green-700, #1a4a30);
+      border-color: var(--green-500, #2e7d52);
+      font-weight: 600; max-width: 220px;
+    }
+    .org-node--staff {
+      background: #f8fbf9; color: var(--grey-700, #3f4354);
+      border-color: #c5d9cd;
+      max-width: 190px;
+    }
+    .org-node--dept {
+      background: #fff; color: var(--grey-800, #1e2229);
+      border-color: #d1e4d8;
+      text-align: left; max-width: 240px;
+      font-size: 12px;
+    }
+    .org-node--regional {
+      background: #f0f7f4; color: var(--green-700, #1a4a30);
+      border-color: var(--green-500, #2e7d52);
+      font-weight: 600; max-width: 220px;
+    }
+
+    /* Side staff (advisor + PR) float beside the head */
+    .org-top-row {
+      display: flex; align-items: flex-start;
+      justify-content: center; gap: 24px; width: 100%;
+    }
+    .org-top-side {
+      display: flex; flex-direction: column; align-items: center;
+      padding-top: 16px; gap: 8px;
+    }
+    .org-top-side .org-hline {
+      width: 40px; height: 2px;
+      background: var(--green-500, #2e7d52);
+    }
+
+    /* Dept list under a deputy */
+    .org-dept-list {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0; width: 100%;
+    }
+
+    /* Stats bar */
+    .struct-stats {
+      display: flex; flex-wrap: wrap; gap: 16px;
+      background: #f0f7f4; border-radius: 12px;
+      padding: 20px 24px; margin-bottom: 32px;
+    }
+    .struct-stat {
+      display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 140px;
+    }
+    .struct-stat__num {
+      font-size: 28px; font-weight: 700; color: var(--green-500, #2e7d52);
+    }
+    .struct-stat__label { font-size: 13px; color: var(--grey-600, #4b5563); }
+
+    /* Two-column layout for deputies */
+    .org-deputies {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; width: 100%; max-width: 760px;
+      margin-top: 0;
+    }
+    .org-deputy-col {
+      display: flex; flex-direction: column; align-items: center; gap: 0;
+    }
+    .org-deputy-col .org-node--dept { max-width: 100%; width: 100%; box-sizing: border-box; }
+
+    /* Bottom row (regional + fund) */
+    .org-bottom-row {
+      display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;
+    }
+
+    @media (max-width: 680px) {
+      .org-deputies { grid-template-columns: 1fr; }
+      .org-node { max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<header class="site-header">
+  <div class="utility-bar">
+    <div class="container utility-row">
+      <div class="utility-left">
+        <span>Toshkent sh., Shayxontohur t., Furqat ko'chasi, 1A</span>
+        <a href="tel:+998555030512">(+998 55) 503-05-12</a>
+      </div>
+      <div class="utility-right">
+        <a href="#">O'zbekcha</a>
+        <a href="#">Русский</a>
+        <a href="#">English</a>
+        <button type="button" class="vis-btn">Ko'z ojizlar uchun</button>
+      </div>
+    </div>
+  </div>
+  <div class="container nav">
+    <a class="brand" href="index.html"><span class="brand-dot">NGO</span>ngo.uz</a>
+    <nav class="menu">
+  <div class="nav-item has-dropdown">
+    <a data-page="about.html" href="about.html">Biz haqimizda <ph-caret-down weight="bold" aria-hidden="true"></ph-caret-down></a>
+    <div class="dropdown">
+      <a href="who-we-are.html">Tashkilot haqida</a>
+      <a href="leadership.html">Rahbariyat</a>
+      <a href="structure.html">Tuzilma</a>
+      <a href="nnt-school.html">NNTlar maktabi</a>
+      <a href="online-library.html">Onlayn kutubxona</a>
+    </div>
+  </div>
+  <a data-page="news.html" href="news.html">Yangiliklar</a>
+  <a data-page="events.html" href="events.html">Tadbirlar</a>
+  <div class="nav-item has-dropdown">
+    <a data-page="services.html" href="services.html">Xizmatlar <ph-caret-down weight="bold" aria-hidden="true"></ph-caret-down></a>
+    <div class="dropdown">
+      <a href="official-docs.html">Rasmiy hujjatlar</a>
+      <a href="reporting-forms.html">Hisobot shakllari</a>
+      <a href="faq.html">Savol-javob</a>
+      <a href="service-request.html">Murojaat yuborish</a>
+    </div>
+  </div>
+  <a data-page="awards.html" href="awards.html">Hamkorlar</a>
+</nav>
+<button class="hamburger" id="hamburgerBtn" type="button" aria-label="Menyu">
+  <span></span><span></span><span></span>
+</button>
+<a class="contact-btn" href="membership.html">A'zo bo'lish</a>
+  </div>
+</header>
+
+<section class="grid-bg">
+  <div class="container hero center">
+    <h1>Ijro etuvchi devon tuzilmasi</h1>
+    <p class="sub">O'zNNTMA Ijro etuvchi devonining tashkiliy tuzilmasi — 27.10.2022 yil holati.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+
+    <!-- Stats -->
+    <div class="struct-stats">
+      <div class="struct-stat">
+        <span class="struct-stat__num">44</span>
+        <span class="struct-stat__label">Jami boshqaruv xodimlari</span>
+      </div>
+      <div class="struct-stat">
+        <span class="struct-stat__num">16</span>
+        <span class="struct-stat__label">Markaziy apparat xodimlari</span>
+      </div>
+      <div class="struct-stat">
+        <span class="struct-stat__num">28</span>
+        <span class="struct-stat__label">Hududiy bo'linmalar xodimlari</span>
+      </div>
+      <div class="struct-stat" style="min-width:260px;">
+        <span class="struct-stat__num" style="font-size:14px;font-weight:600;color:var(--grey-600);">Me'yor bo'yicha</span>
+        <span class="struct-stat__label">Yordamchi va texnik xodimlar soni tasdiqlangan me'yorlarga muvofiq belgilanadi</span>
+      </div>
+    </div>
+
+    <!-- Org chart -->
+    <div class="org-wrap">
+      <div class="org-tree">
+
+        <!-- Head -->
+        <div class="org-node org-node--head">Ijro etuvchi devon rahbari</div>
+
+        <!-- Side staff beside head + connector down -->
+        <div style="display:flex;align-items:flex-start;justify-content:center;gap:0;width:100%;max-width:760px;margin:0 auto;">
+          <!-- Left side: advisor -->
+          <div style="flex:1;display:flex;flex-direction:column;align-items:flex-end;padding-top:20px;gap:6px;">
+            <div style="display:flex;align-items:center;gap:0;">
+              <div class="org-node org-node--staff" style="margin-right:0;">Rahbar maslahatchisi</div>
+              <div style="width:32px;height:2px;background:var(--green-500,#2e7d52);flex-shrink:0;"></div>
+            </div>
+          </div>
+          <!-- Center connector -->
+          <div style="flex-shrink:0;display:flex;flex-direction:column;align-items:center;">
+            <div class="org-connector" style="height:48px;"></div>
+          </div>
+          <!-- Right side: PR specialist -->
+          <div style="flex:1;display:flex;flex-direction:column;align-items:flex-start;padding-top:20px;gap:6px;">
+            <div style="display:flex;align-items:center;gap:0;">
+              <div style="width:32px;height:2px;background:var(--green-500,#2e7d52);flex-shrink:0;"></div>
+              <div class="org-node org-node--staff">Jamoatchilik va OAV bilan ishlash bo'yicha bosh mutaxassis</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Horizontal bar to two deputies -->
+        <div style="width:100%;max-width:760px;margin:0 auto;position:relative;height:2px;background:var(--green-500,#2e7d52);"></div>
+
+        <!-- Two deputies row -->
+        <div class="org-deputies">
+
+          <!-- First deputy column -->
+          <div class="org-deputy-col">
+            <div class="org-connector" style="height:24px;"></div>
+            <div class="org-node org-node--deputy">Ijro etuvchi devon rahbarining birinchi o'rinbosari</div>
+            <div class="org-connector"></div>
+            <div class="org-node org-node--dept">Axborot-tahlil va ijro intizomi nazorati bo'limi</div>
+            <div class="org-connector"></div>
+            <div class="org-node org-node--dept">Hududiy bo'linmalar faoliyatini muvofiqlashtirish, a'zolar va mahalliy NNT bilan hamkorlik qilish bo'limi</div>
+            <div class="org-connector"></div>
+            <div class="org-node org-node--dept">Nodavlat sektorini huquqiy ta'minlash va salohiyatini rivojlantirish bo'limi</div>
+          </div>
+
+          <!-- Second deputy column -->
+          <div class="org-deputy-col">
+            <div class="org-connector" style="height:24px;"></div>
+            <div class="org-node org-node--deputy">Ijro etuvchi devon rahbarining o'rinbosari</div>
+            <div class="org-connector"></div>
+            <div class="org-node org-node--dept">Kadrlar va yuridik masalalar bo'yicha</div>
+            <div class="org-connector"></div>
+            <div class="org-node org-node--dept">Bosh buxgalter</div>
+            <div class="org-connector"></div>
+            <div class="org-node org-node--dept">Ijtimoiy sheriklik, jamoatchilik nazorati, loyiha va dasturlar samaradorligini oshirish bo'limi</div>
+            <div class="org-connector"></div>
+            <div class="org-node org-node--dept">Xalqaro hamkorlikni rivojlantirish va xorijiy donorlarni jalb qilish bo'limi</div>
+          </div>
+
+        </div>
+
+        <!-- Bottom row: regional + fund -->
+        <div style="width:100%;max-width:760px;margin:0 auto;position:relative;height:2px;background:var(--green-500,#2e7d52);margin-top:0;"></div>
+        <div class="org-bottom-row" style="width:100%;max-width:760px;margin:0 auto;">
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;">
+            <div class="org-connector" style="height:24px;"></div>
+            <div class="org-node org-node--regional">Hududiy bo'linmalar<br><small style="font-weight:400;font-size:11px;">28 nafar xodim</small></div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;">
+            <div class="org-connector" style="height:24px;"></div>
+            <div class="org-node org-node--regional">O'zbekiston NNTlarini qo'llab-quvvatlash jamoat fondi</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <p style="margin-top:32px;font-size:13px;color:var(--grey-400,#9ca3af);text-align:center;">
+      Manba: O'zNNTMA Ijro etuvchi devonining tuzilmasi, 27.10.2022 yil.
+    </p>
+
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container footer-top">
+    <div class="footer-info">
+      <h4>Tezkor havolalar</h4>
+      <a href="about.html">Biz haqimizda</a>
+      <a href="news.html">Yangiliklar</a>
+      <a href="events.html">Tadbirlarimiz</a>
+      <a href="membership.html">A'zo bo'lish</a>
+      <a href="projects.html">Grant va tanlovlar</a>
+      <h4>Bog'lanish</h4>
+      <p>Tel: (+998 55) 503-05-12</p>
+      <p>Email: <a href="mailto:info@ngo.uz" style="color:inherit;">info@ngo.uz</a></p>
+      <p>1A, Furqat ko'chasi, Shayxontohur t., Toshkent, 100170</p>
+      <h4>Ijtimoiy tarmoqlar</h4>
+      <a href="https://facebook.com/uznntma1" target="_blank" rel="noopener noreferrer">Facebook — @uznntma1</a>
+      <a href="https://instagram.com/uznntma" target="_blank" rel="noopener noreferrer">Instagram — @uznntma</a>
+      <a href="https://t.me/UzNNTMA1" target="_blank" rel="noopener noreferrer">Telegram — @UzNNTMA1</a>
+      <a href="https://youtube.com/@uznntma" target="_blank" rel="noopener noreferrer">YouTube — @uznntma</a>
+    </div>
+    <div class="footer-map-col">
+      <iframe src="https://yandex.uz/map-widget/v1/?ll=69.240568%2C41.312565&z=17&pt=69.240568%2C41.312565%2Cpm2rdm" frameborder="0" allowfullscreen loading="lazy" title="Manzil xaritasi"></iframe>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <span>© COPYRIGHT 2019-2026 O'zNNTMA</span>
+    <a href="mailto:info@ngo.uz" style="color:var(--neutral-300)">info@ngo.uz</a>
+    <a href="https://yandex.com/maps/?text=41.312565,69.240568" target="_blank" rel="noopener noreferrer" style="color:var(--neutral-300)">Manzil: 1A, Furqat ko'chasi, Shayxontohur t., Toshkent, 100170</a>
+  </div>
+</footer>
+<script src="js/main.js"></script>
+<script src="js/content.js"></script>
+</body>
+</html>
