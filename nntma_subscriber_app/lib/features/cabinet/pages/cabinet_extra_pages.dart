@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 
 import '../../../core/app_tokens.dart';
 import '../../../widgets/adaptive_grid.dart';
@@ -9,15 +9,58 @@ class CabinetOrganizationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _SimpleInfoPage(
+    return CabinetPageScaffold(
       eyebrow: 'Tashkilot',
-      title: 'NNT profil kartasi va huquqiy holat',
-      section: 'Tashkilot malumotlari',
-      rows: [
-        ('Nomi', 'Yangi Nafas NNT'),
-        ('STIR', '309001223'),
-        ('Holat', 'Faol'),
-        ('Keyingi yangilash', '2026-09-14'),
+      title: 'Mening tashkilotim',
+      children: [
+        const CabinetSectionTitle('Tashkilot kartasi'),
+        const SizedBox(height: AppSpace.md),
+        const CabinetCard(
+          child: Column(
+            children: [
+              _InfoRow(label: 'Nomi', value: 'Yangi Nafas NNT'),
+              Divider(height: AppSpace.lg),
+              _InfoRow(label: 'STIR', value: '309001223'),
+              Divider(height: AppSpace.lg),
+              _InfoRow(label: 'Royxatga olingan sana', value: '14.09.2021'),
+              Divider(height: AppSpace.lg),
+              _InfoRow(label: 'Rahbar', value: 'Kamolov Sanjar'),
+              Divider(height: AppSpace.lg),
+              _InfoRow(label: 'Holat', value: 'Faol'),
+            ],
+          ),
+        ),
+        const SizedBox(height: AppSpace.lg),
+        AdaptiveGrid(
+          minCardWidth: 280,
+          maxColumns: 2,
+          children: const [
+            CabinetCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Huquqiy hujjatlar', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                  SizedBox(height: AppSpace.md),
+                  _DocStatusLine('NNT Ustavi', 'Tasdiqlangan', Color(0xFF0F7B4B)),
+                  _DocStatusLine('Guvohnoma', 'Tasdiqlangan', Color(0xFF0F7B4B)),
+                  _DocStatusLine('Ustav yangi tahrir', 'Muddatli', Color(0xFFB45309)),
+                ],
+              ),
+            ),
+            CabinetCard(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Yangilash muddatlari', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+                  SizedBox(height: AppSpace.md),
+                  _DocStatusLine('Ustav yangi tahrir', '10.04.2026', Color(0xFFB45309)),
+                  _DocStatusLine('Yillik tasdiq', '20.12.2026', AppTokens.textMuted),
+                  _DocStatusLine('Hisobot topshirish', '25.04.2026', AppTokens.primaryDark),
+                ],
+              ),
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -42,6 +85,19 @@ class CabinetReportsPage extends StatelessWidget {
             _ActionCard('Qaytarilganlar', 'Izoh asosida tuzatib qayta yuborish'),
             _ActionCard('Arxiv', 'Oldingi topshirilgan hisobotlarni korish'),
           ],
+        ),
+        const SizedBox(height: AppSpace.lg),
+        const CabinetCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Songgi hisobotlar', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+              SizedBox(height: AppSpace.md),
+              _DocStatusLine('2026-Q1 faoliyat hisoboti', 'Korib chiqilmoqda', Color(0xFFB45309)),
+              _DocStatusLine('2025-yil yillik hisoboti', 'Tasdiqlangan', Color(0xFF0F7B4B)),
+              _DocStatusLine('2025-Q4 moliyaviy ilova', 'Qaytarilgan', Color(0xFFBE123C)),
+            ],
+          ),
         ),
       ],
     );
@@ -71,15 +127,110 @@ class CabinetNotificationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _SimpleListPage(
+    return CabinetPageScaffold(
       eyebrow: 'Bildirishnomalar',
       title: 'Segmentlangan xabarlar markazi',
-      section: 'Songgi xabarlar',
-      items: [
-        'Yangi grant oynasi ochildi',
-        'Hisobot topshirish muddati eslatmasi',
-        'Profil malumotini tasdiqlash sorovi',
+      children: [
+        const Wrap(
+          spacing: AppSpace.sm,
+          children: [
+            _NotificationFilter('Barchasi', true),
+            _NotificationFilter('Yangi', false),
+            _NotificationFilter('Muhim', false),
+          ],
+        ),
+        const SizedBox(height: AppSpace.md),
+        const CabinetCard(
+          padding: EdgeInsets.zero,
+          child: Column(
+            children: [
+              _NotificationRow('Yangi ariza kelib tushdi', 'Yangi Nafas NNT - ARZ-2026-0418', '2 daqiqa oldin', true),
+              Divider(height: 1),
+              _NotificationRow('Hujjat yuklandi', 'Umid Istiqbol NNT yangi hujjat yukladi', '15 daqiqa oldin', true),
+              Divider(height: 1),
+              _NotificationRow('Ariza tasdiqlandi', 'Mehr-Shafqat NNT arizasi tasdiqlandi', '1 soat oldin', false),
+            ],
+          ),
+        ),
       ],
+    );
+  }
+}
+
+class _DocStatusLine extends StatelessWidget {
+  final String title;
+  final String status;
+  final Color color;
+
+  const _DocStatusLine(this.title, this.status, this.color);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpace.sm),
+      child: Row(
+        children: [
+          Expanded(child: Text(title)),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: AppSpace.sm, vertical: 4),
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(999)),
+            child: Text(status, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w700)),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _NotificationFilter extends StatelessWidget {
+  final String label;
+  final bool active;
+
+  const _NotificationFilter(this.label, this.active);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpace.md, vertical: AppSpace.sm),
+      decoration: BoxDecoration(
+        color: active ? AppTokens.primaryDark : Colors.white,
+        borderRadius: BorderRadius.circular(999),
+        border: Border.all(color: active ? AppTokens.primaryDark : AppTokens.border),
+      ),
+      child: Text(label, style: TextStyle(color: active ? Colors.white : AppTokens.text, fontWeight: FontWeight.w700)),
+    );
+  }
+}
+
+class _NotificationRow extends StatelessWidget {
+  final String title;
+  final String body;
+  final String time;
+  final bool unread;
+
+  const _NotificationRow(this.title, this.body, this.time, this.unread);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: AppSpace.lg, vertical: AppSpace.xs),
+      title: Row(
+        children: [
+          Expanded(child: Text(title, style: const TextStyle(fontWeight: FontWeight.w700))),
+          if (unread) Container(width: 8, height: 8, decoration: const BoxDecoration(shape: BoxShape.circle, color: AppTokens.primary)),
+        ],
+      ),
+      subtitle: Padding(
+        padding: const EdgeInsets.only(top: 4),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(body),
+            const SizedBox(height: 2),
+            Text(time, style: const TextStyle(fontSize: 12, color: AppTokens.textMuted)),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -407,3 +558,4 @@ class _StatCard extends StatelessWidget {
     );
   }
 }
+
