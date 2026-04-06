@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'core/app_routes.dart';
 import 'core/app_theme.dart';
+import 'features/cabinet/cabinet_shell.dart';
 import 'features/shell/main_shell.dart';
 
 void main() => runApp(const NgoApp());
@@ -24,6 +25,13 @@ class NgoApp extends StatelessWidget {
         AppRoutes.events: (_) => const MainShell(initialRoute: AppRoutes.events),
         AppRoutes.services: (_) => const MainShell(initialRoute: AppRoutes.services),
         AppRoutes.contact: (_) => const MainShell(initialRoute: AppRoutes.contact),
+        AppRoutes.cabinetShell: (_) => const CabinetShell(initialRoute: AppRoutes.cabinetDashboard),
+        AppRoutes.cabinetDashboard: (_) => const CabinetShell(initialRoute: AppRoutes.cabinetDashboard),
+        AppRoutes.cabinetApplications: (_) => const CabinetShell(initialRoute: AppRoutes.cabinetApplications),
+        AppRoutes.cabinetDocuments: (_) => const CabinetShell(initialRoute: AppRoutes.cabinetDocuments),
+        AppRoutes.cabinetGrants: (_) => const CabinetShell(initialRoute: AppRoutes.cabinetGrants),
+        AppRoutes.cabinetSupport: (_) => const CabinetShell(initialRoute: AppRoutes.cabinetSupport),
+        AppRoutes.cabinetSettings: (_) => const CabinetShell(initialRoute: AppRoutes.cabinetSettings),
       },
       onUnknownRoute: (_) => MaterialPageRoute(
         builder: (_) => const MainShell(initialRoute: AppRoutes.home),

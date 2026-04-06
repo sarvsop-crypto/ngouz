@@ -106,6 +106,14 @@ class _MainShellState extends State<MainShell> {
             Text('ngo.uz', style: TextStyle(fontWeight: FontWeight.w700)),
           ],
         ),
+        actions: [
+          TextButton.icon(
+            onPressed: () => Navigator.of(context).pushReplacementNamed(AppRoutes.cabinetDashboard),
+            icon: const Icon(Icons.dashboard_customize_outlined, color: Colors.white),
+            label: const Text('Kabinet', style: TextStyle(color: Colors.white)),
+          ),
+          const SizedBox(width: AppSpace.sm),
+        ],
       ),
       drawer: phone
           ? AppDrawer(
