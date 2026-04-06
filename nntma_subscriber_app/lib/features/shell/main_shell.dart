@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../core/app_breakpoints.dart';
 import '../../core/app_routes.dart';
 import '../../core/app_tokens.dart';
 import '../cabinet/pages/cabinet_applications_page.dart';
@@ -15,7 +14,6 @@ import '../pages/events_page.dart';
 import '../pages/home_page.dart';
 import '../pages/news_page.dart';
 import '../pages/services_page.dart';
-import 'app_drawer.dart';
 import 'app_nav_item.dart';
 
 class MainShell extends StatefulWidget {
@@ -141,9 +139,7 @@ class _MainShellState extends State<MainShell> {
 
   @override
   Widget build(BuildContext context) {
-    final bp = breakpointOf(MediaQuery.sizeOf(context).width);
-    final phone = bp == AppBreakpoint.phone;
-    final desktop = bp == AppBreakpoint.desktop;
+    final wide = MediaQuery.sizeOf(context).width >= 1080;
 
     return Scaffold(
       appBar: AppBar(
@@ -154,71 +150,60 @@ class _MainShellState extends State<MainShell> {
             Text('ngo.uz', style: TextStyle(fontWeight: FontWeight.w700)),
           ],
         ),
-      ),
-      drawer: phone
-          ? AppDrawer(
-              items: pages,
-              activeIndex: _index,
-              onSelect: (i) {
-                _selectIndex(i);
-                Navigator.pop(context);
-              },
-            )
-          : null,
-      body: phone
-          ? pages[_index].page
-          : Row(
-              children: [
-                SizedBox(
-                  width: desktop ? 288 : 256,
-                  child: Material(
-                    color: Colors.white,
-                    child: ListView(
-                      padding: const EdgeInsets.symmetric(vertical: AppSpace.md),
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: AppSpace.lg),
-                          child: Text(
-                            'Sayt bolimlari',
-                            style: TextStyle(fontSize: 12, color: AppTokens.textMuted, fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        const SizedBox(height: AppSpace.sm),
-                        for (var i = 0; i < pages.length; i++)
-                          if (!pages[i].route.startsWith('/cabinet'))
-                            ListTile(
-                              leading: Icon(pages[i].icon),
-                              title: Text(pages[i].title),
-                              selected: i == _index,
-                              selectedTileColor: const Color(0xFFE7F7FB),
-                              onTap: () => _selectIndex(i),
-                            ),
-                        const Divider(height: AppSpace.xl),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: AppSpace.lg),
-                          child: Text(
-                            "Azolar kabineti",
-                            style: TextStyle(fontSize: 12, color: AppTokens.textMuted, fontWeight: FontWeight.w600),
-                          ),
-                        ),
-                        const SizedBox(height: AppSpace.sm),
-                        for (var i = 0; i < pages.length; i++)
-                          if (pages[i].route.startsWith('/cabinet'))
-                            ListTile(
-                              leading: Icon(pages[i].icon),
-                              title: Text(pages[i].title),
-                              selected: i == _index,
-                              selectedTileColor: const Color(0xFFE7F7FB),
-                              onTap: () => _selectIndex(i),
-                            ),
-                      ],
+        actions: [
+          if (wide)
+            for (var i = 0; i < pages.length; i++)
+              if (!pages[i].route.startsWith('/cabinet') && i < 6)
+                TextButton(
+                  onPressed: () => _selectIndex(i),
+                  child: Text(
+                    pages[i].shortTitle,
+                    style: TextStyle(
+                      color: i == _index ? Colors.white : const Color(0xFFB8CCD8),
+                      fontWeight: i == _index ? FontWeight.w700 : FontWeight.w500,
                     ),
                   ),
                 ),
-                const VerticalDivider(width: 1),
-                Expanded(child: pages[_index].page),
-              ],
-            ),
+          PopupMenuButton<int>(
+            tooltip: 'Bolimlar',
+            icon: const Icon(Icons.menu),
+            onSelected: _selectIndex,
+            itemBuilder: (context) => [
+              const PopupMenuItem<int>(enabled: false, value: -1, child: Text('Sayt bolimlari')),
+              for (var i = 0; i < pages.length; i++)
+                if (!pages[i].route.startsWith('/cabinet'))
+                  PopupMenuItem<int>(
+                    value: i,
+                    child: Row(
+                      children: [
+                        Icon(pages[i].icon, size: 18),
+                        const SizedBox(width: AppSpace.sm),
+                        Expanded(child: Text(pages[i].title)),
+                        if (i == _index) const Icon(Icons.check, size: 16, color: AppTokens.primaryDark),
+                      ],
+                    ),
+                  ),
+              const PopupMenuDivider(),
+              const PopupMenuItem<int>(enabled: false, value: -2, child: Text("Azolar kabineti")),
+              for (var i = 0; i < pages.length; i++)
+                if (pages[i].route.startsWith('/cabinet'))
+                  PopupMenuItem<int>(
+                    value: i,
+                    child: Row(
+                      children: [
+                        Icon(pages[i].icon, size: 18),
+                        const SizedBox(width: AppSpace.sm),
+                        Expanded(child: Text(pages[i].title)),
+                        if (i == _index) const Icon(Icons.check, size: 16, color: AppTokens.primaryDark),
+                      ],
+                    ),
+                  ),
+            ],
+          ),
+          const SizedBox(width: AppSpace.sm),
+        ],
+      ),
+      body: pages[_index].page,
     );
   }
 }

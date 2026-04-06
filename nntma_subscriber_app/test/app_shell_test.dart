@@ -15,7 +15,7 @@ void main() {
     expect(find.byType(AppBar), findsOneWidget);
   });
 
-  testWidgets('uses unified sidebar navigation on wide screens', (tester) async {
+  testWidgets('uses top-only navigation on wide screens', (tester) async {
     tester.view.physicalSize = const Size(1600, 1000);
     tester.view.devicePixelRatio = 1.0;
     addTearDown(() {
@@ -28,7 +28,7 @@ void main() {
 
     expect(find.byType(NavigationRail), findsNothing);
     expect(find.byType(NavigationBar), findsNothing);
-    expect(find.text('Sayt bolimlari'), findsOneWidget);
-    expect(find.text("Azolar kabineti"), findsOneWidget);
+    expect(find.byType(Drawer), findsNothing);
+    expect(find.byIcon(Icons.menu), findsOneWidget);
   });
 }
