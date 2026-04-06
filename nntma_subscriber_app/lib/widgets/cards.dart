@@ -5,8 +5,14 @@ import '../core/app_tokens.dart';
 class KpiCard extends StatelessWidget {
   final String value;
   final String label;
+  final bool compact;
 
-  const KpiCard({super.key, required this.value, required this.label});
+  const KpiCard({
+    super.key,
+    required this.value,
+    required this.label,
+    this.compact = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +20,10 @@ class KpiCard extends StatelessWidget {
       container: true,
       label: '$label: $value',
       child: Container(
-        padding: const EdgeInsets.all(AppSpace.md),
+        padding: EdgeInsets.symmetric(
+          horizontal: compact ? AppSpace.sm : AppSpace.md,
+          vertical: compact ? 10 : AppSpace.md,
+        ),
         decoration: BoxDecoration(
           color: AppTokens.surface,
           borderRadius: BorderRadius.circular(AppTokens.radiusMd),
@@ -24,9 +33,26 @@ class KpiCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(value, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: AppTokens.primary, height: 1.1)),
-            const SizedBox(height: 4),
-            Text(label, style: const TextStyle(fontSize: 13, color: AppTokens.textMuted, height: 1.25)),
+            Text(
+              value,
+              style: TextStyle(
+                fontSize: compact ? 21 : 24,
+                fontWeight: FontWeight.w700,
+                color: AppTokens.primary,
+                height: 1.1,
+              ),
+            ),
+            SizedBox(height: compact ? 2 : 4),
+            Text(
+              label,
+              maxLines: compact ? 1 : 2,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontSize: compact ? 12.5 : 13,
+                color: AppTokens.textMuted,
+                height: 1.25,
+              ),
+            ),
           ],
         ),
       ),
@@ -52,7 +78,7 @@ class InfoCard extends StatelessWidget {
       container: true,
       label: badge == null ? title : '$title, $badge',
       child: Container(
-        padding: const EdgeInsets.all(AppSpace.lg),
+        padding: const EdgeInsets.symmetric(horizontal: AppSpace.lg, vertical: 14),
         decoration: BoxDecoration(
           color: AppTokens.surface,
           borderRadius: BorderRadius.circular(AppTokens.radiusMd),
@@ -60,6 +86,7 @@ class InfoCard extends StatelessWidget {
           boxShadow: const [AppTokens.cardShadow],
         ),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (badge != null) ...[
@@ -77,8 +104,13 @@ class InfoCard extends StatelessWidget {
               const SizedBox(height: AppSpace.sm),
             ],
             Text(title, style: const TextStyle(fontSize: 17, fontWeight: FontWeight.w700, height: 1.3)),
-            const SizedBox(height: 6),
-            Text(description, style: const TextStyle(fontSize: 14, color: AppTokens.textMuted, height: 1.45)),
+            const SizedBox(height: 5),
+            Text(
+              description,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+              style: const TextStyle(fontSize: 13.5, color: AppTokens.textMuted, height: 1.4),
+            ),
           ],
         ),
       ),

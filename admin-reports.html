@@ -17,11 +17,12 @@
   <link rel="stylesheet" href="css/pacta-foundation.css">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
         <div class="u-inline-stack">
-          <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">N</div>
+          <div class="sidebar__logo u-logo-badge">N</div>
           <span class="sidebar__title">O‘zNNTMA Admin</span>
         </div>
         <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
@@ -45,7 +46,7 @@
         </div>
       </nav>
     </aside>
-    <main class="main">
+    <main class="main" id="main-content">
       <header class="topbar">
         <div class="topbar-left">
           <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>Hisobotlar</span></div>
@@ -57,7 +58,7 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;" class="main__profile-avatar">A</div>
+            <div class="main__profile-avatar u-avatar-badge-sm">A</div>
             <div>
               <div class="main__profile-name">Administrator</div>
               <div class="main__profile-role">Bosh admin</div>
@@ -94,16 +95,7 @@
                 <span class="chart-line__legend-item"><span class="chart-line__legend-dot u-bg-secondary-500"></span> Tasdiqlangan</span>
               </div>
             </div>
-            <div class="chart-line__area" style="height:160px;background:linear-gradient(180deg,rgba(15,106,87,.12) 0%,rgba(15,106,87,0) 100%);border-radius:8px;position:relative;overflow:hidden;">
-              <svg viewBox="0 0 600 160" width="100%" height="100%" preserveAspectRatio="none">
-                <polyline fill="none" stroke="var(--primary-500)" stroke-width="2.5" points="0,120 50,110 100,100 150,90 200,95 250,80 300,70 350,75 400,60 450,55 500,45 550,40 600,35"/>
-                <polygon fill="rgba(15,106,87,.12)" points="0,120 50,110 100,100 150,90 200,95 250,80 300,70 350,75 400,60 450,55 500,45 550,40 600,35 600,160 0,160"/>
-                <polyline fill="none" stroke="var(--secondary-500)" stroke-width="2" stroke-dasharray="4 3" points="0,140 50,135 100,130 150,120 200,125 250,115 300,110 350,112 400,100 450,95 500,85 550,78 600,72"/>
-              </svg>
-            </div>
-            <div class="chart-line__xaxis" style="display:flex;justify-content:space-between;font-size:12px;color:var(--grey-400);margin-top:8px;">
-              <span>Yan</span><span>Fev</span><span>Mar</span><span>Apr</span><span>May</span><span>Iyn</span><span>Iyl</span><span>Avg</span><span>Sen</span><span>Okt</span><span>Noy</span><span>Dek</span>
-            </div>
+            <div id="reportsLineChart" class="chart-line__area u-line-area-card"></div>
           </div>
         </div>
         <div class="chart-card chart-card--donut">
@@ -111,47 +103,25 @@
             <h2 class="chart-card__title">Holat bo&rsquo;yicha taqsimot</h2>
           </div>
           <div class="chart-donut__inner">
-            <div class="chart-donut__img-wrap" style="position:relative;width:160px;height:160px;margin:0 auto;">
-              <svg width="160" height="160" viewBox="0 0 160 160">
-                <!-- C=2π×60≈377. 4 gaps×4=16. Available=361. Segs: 94/247×361=137, 61/247×361=89, 18/247×361=26, 74/247×361=109 -->
-                <circle cx="80" cy="80" r="60" fill="none" stroke="#e5e7eb" stroke-width="22"/>
-                <circle cx="80" cy="80" r="60" fill="none" stroke="var(--primary-500)" stroke-width="22" stroke-dasharray="137 240" stroke-linecap="butt" transform="rotate(-90 80 80)"/>
-                <circle cx="80" cy="80" r="60" fill="none" stroke="var(--secondary-500)" stroke-width="22" stroke-dasharray="89 288" stroke-linecap="butt" transform="rotate(45 80 80)"/>
-                <circle cx="80" cy="80" r="60" fill="none" stroke="#dc2626" stroke-width="22" stroke-dasharray="26 351" stroke-linecap="butt" transform="rotate(134 80 80)"/>
-                <circle cx="80" cy="80" r="60" fill="none" stroke="#94a3b8" stroke-width="22" stroke-dasharray="109 268" stroke-linecap="butt" transform="rotate(163 80 80)"/>
-              </svg>
-              <div class="chart-donut__center" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;">
-                <span class="chart-donut__center-label" style="font-size:11px;color:var(--grey-400);display:block;">Jami</span>
-                <span class="chart-donut__center-value" style="font-size:20px;font-weight:700;color:var(--grey-900);">247</span>
-              </div>
-            </div>
-            <div class="chart-donut__legend" style="margin-top:16px;">
-              <span class="chart-donut__legend-item"><span class="chart-donut__legend-dot u-bg-primary-500"></span> Tasdiqlangan: 94</span>
-              <span class="chart-donut__legend-item"><span class="chart-donut__legend-dot u-bg-secondary-500"></span> Ko&rsquo;rib chiqilmoqda: 61</span>
-              <span class="chart-donut__legend-item"><span class="chart-donut__legend-dot" style="background:#dc2626;display:inline-block;width:10px;height:10px;border-radius:50%;"></span> Qaytarilgan: 18</span>
-              <span class="chart-donut__legend-item"><span class="chart-donut__legend-dot" style="background:#94a3b8;display:inline-block;width:10px;height:10px;border-radius:50%;"></span> Yangi: 74</span>
-            </div>
+            <div id="reportsDonutChart"></div>
           </div>
         </div>
       </div>
 
-      <section class="table-section">
+      <section class="table-section" aria-labelledby="reportTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title">Hisobotlar jadvali</h2>
+          <h2 class="table-section__title" id="reportTableTitle">Hisobotlar jadvali</h2>
           <div class="table-section__tools">
-            <input type="search" class="table-section__search" placeholder="Qidirish..." aria-label="Qidirish" />
+            <label for="reportSearch" class="u-visually-hidden">Hisobot bo'yicha qidirish</label>
+            <input id="reportSearch" type="search" class="table-section__search" placeholder="Qidirish..." aria-label="Qidirish" />
           </div>
         </div>
         <table class="table">
+          <caption class="u-visually-hidden">Hisobotlar ro'yxati va holati</caption>
           <thead>
-            <tr><th><input type="checkbox" /></th><th>Hisobot nomi</th><th>Turi</th><th>Davr</th><th>Yaratildi</th><th>Holat</th><th></th></tr>
+            <tr><th scope="col"><input type="checkbox" aria-label="Barchasini tanlash" /></th><th scope="col">Hisobot nomi</th><th scope="col">Turi</th><th scope="col">Davr</th><th scope="col">Yaratildi</th><th scope="col">Holat</th><th scope="col"></th></tr>
           </thead>
-          <tbody>
-            <tr><td><input type="checkbox" /></td><td><a href="#" class="doc-link">2026 Q1 A&rsquo;zolik hisoboti</a></td><td>Choraklik</td><td>Yan &mdash; Mar 2026</td><td>01.04.2026</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tayyor</span></td><td><button type="button" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button></td></tr>
-            <tr><td><input type="checkbox" /></td><td><a href="#" class="doc-link">2025 Yillik hisobot</a></td><td>Yillik</td><td>Yan &mdash; Dek 2025</td><td>15.01.2026</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tayyor</span></td><td><button type="button" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button></td></tr>
-            <tr><td><input type="checkbox" /></td><td><a href="#" class="doc-link">Hududiy taqsimot 2026</a></td><td>Analitik</td><td>2026-yil</td><td>05.04.2026</td><td><span class="badge badge--pending"><span class="badge__dot"></span>Tayyorlanmoqda</span></td><td><button type="button" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button></td></tr>
-            <tr><td><input type="checkbox" /></td><td><a href="#" class="doc-link">A&rsquo;zolik faolligi monitoring</a></td><td>Monitoring</td><td>Mar 2026</td><td>31.03.2026</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tayyor</span></td><td><button type="button" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button></td></tr>
-          </tbody>
+          <tbody id="reportRows"></tbody>
         </table>
       </section>
     </main>
@@ -194,6 +164,7 @@
   </div>
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
+  <script src="js/admin-seed.js"></script>
   <script src="js/pacta-app.js"></script>
 </body>
 </html>

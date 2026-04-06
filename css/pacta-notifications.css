@@ -3,8 +3,8 @@
 .notifications-panel {
   position: fixed;
   top: 64px;
-  right: 24px;
-  width: 400px;
+  right: 12px;
+  width: min(400px, calc(100vw - 24px));
   max-height: calc(100vh - 96px);
   background: var(--grey-0, #fff);
   border: 1px solid var(--grey-100, #e5e7eb);
@@ -18,7 +18,7 @@
 .notifications-panel.is-open { display: flex; }
 
 .notifications-panel__header {
-  height: 72px;
+  min-height: 64px;
   padding: 16px 24px;
   border-bottom: 1px solid var(--grey-100);
   display: flex;
@@ -76,3 +76,16 @@
   padding: 0;
 }
 .notifications-panel__mark-read:hover { text-decoration: underline; }
+
+@media (max-width: 720px) {
+  .notifications-panel {
+    top: 56px;
+    max-height: calc(100vh - 68px);
+  }
+  .notifications-panel__header,
+  .notifications-panel__list,
+  .notifications-panel__footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

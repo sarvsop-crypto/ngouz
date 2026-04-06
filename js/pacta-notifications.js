@@ -30,7 +30,7 @@
   function getFocusable() {
     var selectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
     return Array.prototype.slice.call(panel.querySelectorAll(selectors)).filter(function (el) {
-      return !el.disabled && el.offsetParent !== null;
+      return !el.disabled && !el.hasAttribute('hidden') && el.getAttribute('aria-hidden') !== 'true';
     });
   }
 
@@ -90,6 +90,10 @@
       e.preventDefault();
       first.focus();
     }
+  });
+
+  panel.addEventListener('click', function (e) {
+    e.stopPropagation();
   });
 
   document.addEventListener('click', function (e) {

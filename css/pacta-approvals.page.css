@@ -73,9 +73,25 @@
     .table-section__title { font-size: 16px; font-weight: 600; color: var(--grey-900); margin: 0; }
     .table-section__tools { display: flex; gap: 8px; align-items: center; }
     .table-section__search { height: 32px; padding: 0 16px; border: 1px solid var(--grey-100); border-radius: 8px; font: 500 12px Archivo; min-width: 120px; }
-    .table { width: 100%; border-collapse: collapse; }
-    .table th { background: var(--grey-25); height: 40px; padding: 0 12px; text-align: left; font-size: 14px; font-weight: 500; color: var(--grey-500); }
-    .table td { height: 64px; padding: 0 12px; border-bottom: 1px solid var(--grey-100); font-size: 14px; color: var(--grey-900); vertical-align: middle; }
+    .table { width: 100%; border-collapse: collapse; table-layout: auto; }
+    .table th {
+      background: var(--grey-25);
+      padding: 10px 12px;
+      text-align: left;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--grey-500);
+      line-height: 1.3;
+      vertical-align: middle;
+    }
+    .table td {
+      padding: 12px;
+      border-bottom: 1px solid var(--grey-100);
+      font-size: 14px;
+      color: var(--grey-900);
+      line-height: 1.4;
+      vertical-align: middle;
+    }
     .doc-link { color: var(--primary-600); text-decoration: none; font-weight: 500; }
     .doc-link:hover { text-decoration: underline; }
 

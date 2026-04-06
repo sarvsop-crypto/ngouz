@@ -22,7 +22,7 @@
     <aside class="sidebar">
       <div class="sidebar__header">
         <div class="u-inline-stack">
-          <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">A</div>
+          <div class="sidebar__logo u-logo-initial">A</div>
           <span class="sidebar__title">A'zo Kabinet</span>
         </div>
       </div>
@@ -57,7 +57,7 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;" class="main__profile-avatar">K</div>
+            <div class="main__profile-avatar u-profile-avatar-initial">K</div>
             <div>
               <div class="main__profile-name">Kamolov Sanjar</div>
               <div class="main__profile-role">Yangi Nafas NNT</div>
@@ -70,45 +70,51 @@
         <h1 class="main__title">Sozlamalar</h1>
       </div>
 
-      <div class="settings-layout" style="display:grid;grid-template-columns:220px 1fr;gap:24px;">
-        <nav style="display:flex;flex-direction:column;gap:4px;">
-          <a href="cabinet-settings.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-user"></i> Profil</a>
-          <a href="cabinet-settings-org.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-buildings"></i> Tashkilot</a>
-          <a href="cabinet-settings-security.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
-          <a href="cabinet-settings-notifications.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-bell"></i> Bildirishnomalar</a>
+      <div class="settings-layout">
+        <nav class="settings-side-nav">
+          <a href="cabinet-settings.html" class="settings-side-link"><i class="ph ph-user"></i> Profil</a>
+          <a href="cabinet-settings-org.html" class="settings-side-link"><i class="ph ph-buildings"></i> Tashkilot</a>
+          <a href="cabinet-settings-security.html" class="settings-side-link is-active"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
+          <a href="cabinet-settings-notifications.html" class="settings-side-link"><i class="ph ph-bell"></i> Bildirishnomalar</a>
         </nav>
         <div>
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Parolni o&rsquo;zgartirish</h2>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Joriy parol</label><input type="password" placeholder="Joriy parol" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+          <div class="settings-panel">
+            <h2 class="settings-section-title">Parolni o&rsquo;zgartirish</h2>
+            <div class="settings-grid-two">
+              <div><label class="settings-form-label">Joriy parol</label><input class="settings-form-control" type="password" placeholder="Joriy parol" /></div>
               <div></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Yangi parol</label><input type="password" placeholder="Yangi parol" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Yangi parolni tasdiqlang</label><input type="password" placeholder="Takrorlab kiriting" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+              <div><label class="settings-form-label">Yangi parol</label><input class="settings-form-control" type="password" placeholder="Yangi parol" /></div>
+              <div><label class="settings-form-label">Yangi parolni tasdiqlang</label><input class="settings-form-control" type="password" placeholder="Takrorlab kiriting" /></div>
             </div>
-            <div style="margin-top:20px;"><button type="button" class="btn btn--primary"><i class="ph ph-lock-key"></i> Yangilash</button></div>
+            <div class="settings-actions-row"><button type="button" class="btn btn--primary"><i class="ph ph-lock-key"></i> Yangilash</button></div>
           </div>
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">Ikki bosqichli tasdiqlash</h2>
-            <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;">Hisobingizni qo&rsquo;shimcha himoya bilan ta&rsquo;minlang</p>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--grey-25);border-radius:8px;">
-              <div style="display:flex;align-items:center;gap:12px;">
-                <i class="ph ph-shield-check" style="font-size:20px;color:var(--primary-500);"></i>
-                <div><p style="font-size:14px;font-weight:500;color:var(--grey-900);margin:0 0 2px;">Autentifikator ilovasi</p><p style="font-size:13px;color:var(--grey-400);margin:0;">Google Authenticator yoki Authy orqali</p></div>
-              </div>
-              <button type="button" class="btn btn--secondary" style="font-size:13px;">Yoqish</button>
-            </div>
-          </div>
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">Faol seanslar</h2>
-            <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;">Hozirda tizimga kirgan qurilmalar</p>
-            <div style="display:flex;flex-direction:column;gap:12px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--grey-100);border-radius:8px;">
-                <div style="display:flex;align-items:center;gap:12px;">
-                  <i class="ph ph-monitor" style="font-size:20px;color:var(--grey-400);"></i>
-                  <div><p style="font-size:14px;font-weight:500;color:var(--grey-900);margin:0 0 2px;">Windows · Chrome</p><p style="font-size:13px;color:var(--grey-400);margin:0;">Toshkent &mdash; Joriy seans</p></div>
+          <div class="settings-panel">
+            <h2 class="settings-section-title settings-section-title--tight">Ikki bosqichli tasdiqlash</h2>
+            <p class="settings-section-sub">Hisobingizni qo&rsquo;shimcha himoya bilan ta&rsquo;minlang</p>
+            <div class="security-feature">
+              <div class="security-feature__left">
+                <i class="ph ph-shield-check security-feature__icon"></i>
+                <div>
+                  <p class="security-feature__title">Autentifikator ilovasi</p>
+                  <p class="security-feature__desc">Google Authenticator yoki Authy orqali</p>
                 </div>
-                <span style="font-size:12px;color:var(--primary-500);font-weight:600;background:var(--primary-50);padding:4px 10px;border-radius:20px;">Joriy</span>
+              </div>
+              <button type="button" class="btn btn--secondary btn--text-sm">Yoqish</button>
+            </div>
+          </div>
+          <div class="settings-panel">
+            <h2 class="settings-section-title settings-section-title--tight">Faol seanslar</h2>
+            <p class="settings-section-sub">Hozirda tizimga kirgan qurilmalar</p>
+            <div class="settings-stack">
+              <div class="session-item">
+                <div class="session-item__left">
+                  <i class="ph ph-monitor session-item__icon"></i>
+                  <div>
+                    <p class="session-item__title">Windows · Chrome</p>
+                    <p class="session-item__meta">Toshkent &mdash; Joriy seans</p>
+                  </div>
+                </div>
+                <span class="session-pill">Joriy</span>
               </div>
             </div>
           </div>

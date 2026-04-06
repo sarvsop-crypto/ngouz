@@ -17,11 +17,12 @@
   <link rel="stylesheet" href="css/pacta-foundation.css">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
         <div class="u-inline-stack">
-          <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">N</div>
+          <div class="sidebar__logo u-logo-badge">N</div>
           <span class="sidebar__title">O‘zNNTMA Admin</span>
         </div>
         <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
@@ -45,7 +46,7 @@
         </div>
       </nav>
     </aside>
-    <main class="main">
+    <main class="main" id="main-content">
       <header class="topbar">
         <div class="topbar-left">
           <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>Boshqaruv paneli</span></div>
@@ -57,7 +58,7 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;" class="main__profile-avatar">A</div>
+            <div class="main__profile-avatar u-avatar-badge-sm">A</div>
             <div>
               <div class="main__profile-name">Administrator</div>
               <div class="main__profile-role">Bosh admin</div>
@@ -111,39 +112,7 @@
               <span class="chart-card__legend-item"><span class="chart-card__legend-dot u-bg-primary-500"></span> Yangi arizalar</span>
               <span class="chart-card__legend-item"><span class="chart-card__legend-dot u-bg-secondary-500"></span> Tasdiqlangan</span>
             </div>
-            <svg width="100%" height="160" viewBox="0 0 520 160" preserveAspectRatio="none" style="display:block;margin-top:8px;">
-              <!-- grid lines: y=0→136, y=10→97, y=20→57, y=30→18 -->
-              <line x1="32" y1="18"  x2="512" y2="18"  stroke="#e5e7eb" stroke-width="1"/>
-              <line x1="32" y1="57"  x2="512" y2="57"  stroke="#e5e7eb" stroke-width="1"/>
-              <line x1="32" y1="97"  x2="512" y2="97"  stroke="#e5e7eb" stroke-width="1"/>
-              <line x1="32" y1="136" x2="512" y2="136" stroke="#e5e7eb" stroke-width="1"/>
-              <!-- y-axis labels -->
-              <text x="28" y="21"  text-anchor="end" font-size="10" fill="#818898" font-family="Archivo,sans-serif">30</text>
-              <text x="28" y="60"  text-anchor="end" font-size="10" fill="#818898" font-family="Archivo,sans-serif">20</text>
-              <text x="28" y="100" text-anchor="end" font-size="10" fill="#818898" font-family="Archivo,sans-serif">10</text>
-              <text x="28" y="139" text-anchor="end" font-size="10" fill="#818898" font-family="Archivo,sans-serif">0</text>
-              <!-- area fills -->
-              <!-- Yangi arizalar: 8,12,10,15,18,14,16,20,22,25,19,24 -->
-              <polygon points="32,136 32,105 76,89 120,97 163,77 207,65 250,81 294,73 337,57 381,49 425,38 468,61 512,42 512,136" fill="#12987b" opacity="0.08"/>
-              <!-- Tasdiqlangan: 5,8,9,11,13,12,14,16,18,20,17,22 -->
-              <polygon points="32,136 32,116 76,105 120,101 163,93 207,85 250,89 294,81 337,73 381,65 425,57 468,69 512,49 512,136" fill="#f6c03c" opacity="0.15"/>
-              <!-- lines -->
-              <polyline points="32,105 76,89 120,97 163,77 207,65 250,81 294,73 337,57 381,49 425,38 468,61 512,42" fill="none" stroke="#12987b" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-              <polyline points="32,116 76,105 120,101 163,93 207,85 250,89 294,81 337,73 381,65 425,57 468,69 512,49" fill="none" stroke="#f6c03c" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-              <!-- x-axis labels -->
-              <text x="32"  y="155" text-anchor="middle" font-size="10" fill="#818898" font-family="Archivo,sans-serif">Yan</text>
-              <text x="76"  y="155" text-anchor="middle" font-size="10" fill="#818898" font-family="Archivo,sans-serif">Fev</text>
-              <text x="120" y="155" text-anchor="middle" font-size="10" fill="#818898" font-family="Archivo,sans-serif">Mar</text>
-              <text x="163" y="155" text-anchor="middle" font-size="10" fill="#818898" font-family="Archivo,sans-serif">Apr</text>
-              <text x="207" y="155" text-anchor="middle" font-size="10" fill="#818898" font-family="Archivo,sans-serif">May</text>
-              <text x="250" y="155" text-anchor="middle" font-size="10" fill="#818898" font-family="Archivo,sans-serif">Iyn</text>
-              <text x="294" y="155" text-anchor="middle" font-size="10" fill="#818898" font-family="Archivo,sans-serif">Iyl</text>
-              <text x="337" y="155" text-anchor="middle" font-size="10" fill="#818898" font-family="Archivo,sans-serif">Avg</text>
-              <text x="381" y="155" text-anchor="middle" font-size="10" fill="#818898" font-family="Archivo,sans-serif">Sen</text>
-              <text x="425" y="155" text-anchor="middle" font-size="10" fill="#818898" font-family="Archivo,sans-serif">Okt</text>
-              <text x="468" y="155" text-anchor="middle" font-size="10" fill="#818898" font-family="Archivo,sans-serif">Noy</text>
-              <text x="512" y="155" text-anchor="middle" font-size="10" fill="#818898" font-family="Archivo,sans-serif">Dek</text>
-            </svg>
+            <div id="dashboardLineChart"></div>
           </div>
         </div>
         <div class="chart-card chart-card--narrow">
@@ -151,21 +120,7 @@
             <h2 class="chart-card__title">Ariza holati taqsimoti</h2>
           </div>
           <div class="chart-donut">
-            <svg width="160" height="160" viewBox="0 0 160 160" style="display:block;margin:0 auto;">
-              <circle cx="80" cy="80" r="60" fill="none" stroke="#e5e7eb" stroke-width="22"/>
-              <circle cx="80" cy="80" r="60" fill="none" stroke="var(--primary-500)" stroke-width="22" stroke-dasharray="198 179" stroke-linecap="butt" transform="rotate(-90 80 80)"/>
-              <circle cx="80" cy="80" r="60" fill="none" stroke="var(--secondary-500)" stroke-width="22" stroke-dasharray="129 248" stroke-linecap="butt" transform="rotate(103 80 80)"/>
-              <circle cx="80" cy="80" r="60" fill="none" stroke="#dc2626" stroke-width="22" stroke-dasharray="38 339" stroke-linecap="butt" transform="rotate(230 80 80)"/>
-            </svg>
-            <div style="text-align:center;margin-top:8px;">
-              <div style="font-size:13px;color:var(--grey-400);">Jami arizalar</div>
-              <div style="font-size:22px;font-weight:700;color:var(--grey-900);">247</div>
-            </div>
-            <div class="chart-card__legend u-mt-0" style="margin-top:12px;">
-              <span class="chart-card__legend-item"><span class="chart-card__legend-dot u-bg-primary-500"></span> Tasdiqlangan: 94</span>
-              <span class="chart-card__legend-item"><span class="chart-card__legend-dot u-bg-secondary-500"></span> Ko&rsquo;rib chiqilmoqda: 61</span>
-              <span class="chart-card__legend-item"><span class="chart-card__legend-dot" style="background:#dc2626;display:inline-block;width:10px;height:10px;border-radius:50%;"></span> Qaytarilgan: 18</span>
-            </div>
+            <div id="dashboardDonutChart"></div>
           </div>
         </div>
       </div>
@@ -176,40 +131,7 @@
             <h3 class="card-title">Muddatli arizalar</h3>
             <a href="admin-membership-requests.html" class="btn--ghost">Barchasi</a>
           </div>
-          <ul class="alert-list">
-            <li class="alert-item">
-              <span class="alert-dot critical"></span>
-              <div class="alert-text">
-                <div class="alert-title">Yangi Nafas NNT &mdash; hujjat muddati tugayapti</div>
-                <div class="alert-meta">ARZ-2026-0418 &mdash; Ustav yangi tahrir kerak</div>
-              </div>
-              <span class="alert-time">10.04.2026</span>
-            </li>
-            <li class="alert-item">
-              <span class="alert-dot high"></span>
-              <div class="alert-text">
-                <div class="alert-title">Mehr-Shafqat NNT &mdash; shartnoma imzo kutmoqda</div>
-                <div class="alert-meta">ARZ-2026-0411 &mdash; 3-bosqich</div>
-              </div>
-              <span class="alert-time">12.04.2026</span>
-            </li>
-            <li class="alert-item">
-              <span class="alert-dot medium"></span>
-              <div class="alert-text">
-                <div class="alert-title">Umid Istiqbol NNT &mdash; qo&rsquo;shimcha hujjat kerak</div>
-                <div class="alert-meta">ARZ-2026-0405 &mdash; Soliq ma&rsquo;lumotnomasi</div>
-              </div>
-              <span class="alert-time">15.04.2026</span>
-            </li>
-            <li class="alert-item">
-              <span class="alert-dot medium"></span>
-              <div class="alert-text">
-                <div class="alert-title">Yoshlar Ittifoqi &mdash; hujjatlar to&rsquo;liq emas</div>
-                <div class="alert-meta">ARZ-2026-0398 &mdash; 2-bosqich</div>
-              </div>
-              <span class="alert-time">18.04.2026</span>
-            </li>
-          </ul>
+          <ul class="alert-list" id="dashboardDeadlines"></ul>
         </div>
         <div class="card u-overflow-hidden">
           <div class="card-header">
@@ -218,62 +140,26 @@
           </div>
           <div class="u-overflow-x-auto">
             <table class="table">
+              <caption class="u-visually-hidden">So'nggi a'zolik arizalari ro'yxati</caption>
               <thead>
-                <tr><th>Ariza #</th><th>Tashkilot</th><th>Viloyat</th><th>Bosqich</th><th>Holat</th><th>Sana</th></tr>
+                <tr><th scope="col">Ariza #</th><th scope="col">Tashkilot</th><th scope="col">Viloyat</th><th scope="col">Bosqich</th><th scope="col">Holat</th><th scope="col">Sana</th></tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td><a href="admin-membership-requests.html" class="row-link">ARZ-2026-0418</a></td>
-                  <td>Yangi Nafas NNT</td><td>Toshkent</td><td>2 / 4</td>
-                  <td><span class="badge badge--warning"><span class="badge__dot"></span>Ko&rsquo;rib chiqilmoqda</span></td>
-                  <td>02.04.2026</td>
-                </tr>
-                <tr>
-                  <td><a href="admin-membership-requests.html" class="row-link">ARZ-2026-0415</a></td>
-                  <td>Mehr-Shafqat NNT</td><td>Samarqand</td><td>3 / 4</td>
-                  <td><span class="badge badge--warning"><span class="badge__dot"></span>Imzo kutilmoqda</span></td>
-                  <td>01.04.2026</td>
-                </tr>
-                <tr>
-                  <td><a href="admin-membership-requests.html" class="row-link">ARZ-2026-0411</a></td>
-                  <td>Umid Istiqbol NNT</td><td>Farg&rsquo;ona</td><td>4 / 4</td>
-                  <td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span></td>
-                  <td>29.03.2026</td>
-                </tr>
-                <tr>
-                  <td><a href="admin-membership-requests.html" class="row-link">ARZ-2026-0408</a></td>
-                  <td>Yoshlar Ittifoqi</td><td>Buxoro</td><td>1 / 4</td>
-                  <td><span class="badge badge--pending"><span class="badge__dot"></span>Qabul qilindi</span></td>
-                  <td>28.03.2026</td>
-                </tr>
-                <tr>
-                  <td><a href="admin-membership-requests.html" class="row-link">ARZ-2026-0403</a></td>
-                  <td>Ekologiya Markazi</td><td>Namangan</td><td>2 / 4</td>
-                  <td><span class="badge badge--warning"><span class="badge__dot"></span>Ko&rsquo;rib chiqilmoqda</span></td>
-                  <td>27.03.2026</td>
-                </tr>
-              </tbody>
+              <tbody id="dashboardRecentRows"></tbody>
             </table>
           </div>
         </div>
       </div>
 
-      <section class="table-section">
+      <section class="table-section" aria-labelledby="regionTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title">Hududlar bo&rsquo;yicha NNT taqsimoti</h2>
+          <h2 class="table-section__title" id="regionTableTitle">Hududlar bo&rsquo;yicha NNT taqsimoti</h2>
         </div>
         <table class="table">
+          <caption class="u-visually-hidden">Hududlar bo'yicha NNT taqsimoti</caption>
           <thead>
-            <tr><th>Viloyat</th><th>Jami NNT</th><th>Faol</th><th>Yangi (2026)</th><th>Ulush</th></tr>
+            <tr><th scope="col">Viloyat</th><th scope="col">Jami NNT</th><th scope="col">Faol</th><th scope="col">Yangi (2026)</th><th scope="col">Ulush</th></tr>
           </thead>
-          <tbody>
-            <tr><td>Toshkent shahri</td><td>52</td><td>48</td><td>7</td><td><div style="display:flex;align-items:center;gap:8px;"><div style="flex:1;height:6px;background:var(--grey-100);border-radius:3px;overflow:hidden;"><div style="width:52%;height:100%;background:var(--primary-500);border-radius:3px;"></div></div><span style="font-size:13px;color:var(--grey-400);">21.1%</span></div></td></tr>
-            <tr><td>Toshkent viloyati</td><td>31</td><td>28</td><td>4</td><td><div style="display:flex;align-items:center;gap:8px;"><div style="flex:1;height:6px;background:var(--grey-100);border-radius:3px;overflow:hidden;"><div style="width:31%;height:100%;background:var(--primary-500);border-radius:3px;"></div></div><span style="font-size:13px;color:var(--grey-400);">12.6%</span></div></td></tr>
-            <tr><td>Samarqand</td><td>28</td><td>25</td><td>3</td><td><div style="display:flex;align-items:center;gap:8px;"><div style="flex:1;height:6px;background:var(--grey-100);border-radius:3px;overflow:hidden;"><div style="width:28%;height:100%;background:var(--primary-500);border-radius:3px;"></div></div><span style="font-size:13px;color:var(--grey-400);">11.3%</span></div></td></tr>
-            <tr><td>Farg&rsquo;ona</td><td>24</td><td>22</td><td>2</td><td><div style="display:flex;align-items:center;gap:8px;"><div style="flex:1;height:6px;background:var(--grey-100);border-radius:3px;overflow:hidden;"><div style="width:24%;height:100%;background:var(--primary-500);border-radius:3px;"></div></div><span style="font-size:13px;color:var(--grey-400);">9.7%</span></div></td></tr>
-            <tr><td>Buxoro</td><td>19</td><td>17</td><td>2</td><td><div style="display:flex;align-items:center;gap:8px;"><div style="flex:1;height:6px;background:var(--grey-100);border-radius:3px;overflow:hidden;"><div style="width:19%;height:100%;background:var(--primary-500);border-radius:3px;"></div></div><span style="font-size:13px;color:var(--grey-400);">7.7%</span></div></td></tr>
-            <tr><td>Qolgan viloyatlar</td><td>93</td><td>76</td><td>12</td><td><div style="display:flex;align-items:center;gap:8px;"><div style="flex:1;height:6px;background:var(--grey-100);border-radius:3px;overflow:hidden;"><div style="width:93%;height:100%;background:var(--secondary-500);border-radius:3px;"></div></div><span style="font-size:13px;color:var(--grey-400);">37.7%</span></div></td></tr>
-          </tbody>
+          <tbody id="dashboardRegionRows"></tbody>
         </table>
       </section>
     </main>
@@ -316,6 +202,7 @@
   </div>
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
+  <script src="js/admin-seed.js"></script>
   <script src="js/pacta-app.js"></script>
 </body>
 </html>

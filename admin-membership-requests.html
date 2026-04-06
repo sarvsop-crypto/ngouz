@@ -18,11 +18,12 @@
   <link rel="stylesheet" href="css/pacta-modal.css">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
         <div class="u-inline-stack">
-          <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">N</div>
+          <div class="sidebar__logo u-logo-badge">N</div>
           <span class="sidebar__title">O‘zNNTMA Admin</span>
         </div>
         <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
@@ -46,7 +47,7 @@
         </div>
       </nav>
     </aside>
-    <main class="main">
+    <main class="main" id="main-content">
       <header class="topbar">
         <div class="topbar-left">
           <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>A‘zolik arizalari</span></div>
@@ -58,7 +59,7 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;" class="main__profile-avatar">A</div>
+            <div class="main__profile-avatar u-avatar-badge-sm">A</div>
             <div>
               <div class="main__profile-name">Administrator</div>
               <div class="main__profile-role">Bosh admin</div>
@@ -93,20 +94,22 @@
         </div>
       </div>
 
-      <section class="table-section">
+      <section class="table-section" aria-labelledby="membershipTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title">Arizalar va holati</h2>
+          <h2 class="table-section__title" id="membershipTableTitle">Arizalar va holati</h2>
           <div class="table-section__tools">
             <button type="button" class="btn btn--secondary"><i class="ph ph-download-simple"></i> Eksport (CSV)</button>
           </div>
         </div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:12px 0;">
-          <input type="search" class="table-section__search" placeholder="Ariza raqami, tashkilot nomi..." aria-label="Qidirish" style="width:260px;" />
+        <form class="u-filter-row" role="search" aria-label="Arizalarni filtrlash">
+          <label for="membershipSearch" class="u-visually-hidden">Ariza raqami yoki tashkilot bo'yicha qidirish</label>
+          <input id="membershipSearch" type="search" class="table-section__search u-search-260" placeholder="Ariza raqami, tashkilot nomi..." aria-label="Qidirish" />
           <button type="button" class="filter-chip is-active" data-filter="all">Barchasi <span class="filter-chip__count">247</span></button>
           <button type="button" class="filter-chip" data-filter="review">Ko&rsquo;rib chiqilmoqda <span class="filter-chip__count">61</span></button>
           <button type="button" class="filter-chip" data-filter="approved">Tasdiqlangan <span class="filter-chip__count">94</span></button>
           <button type="button" class="filter-chip" data-filter="returned">Qaytarilgan <span class="filter-chip__count">18</span></button>
-          <select class="table-section__search" aria-label="Viloyat" style="width:160px;">
+          <label for="membershipRegion" class="u-visually-hidden">Viloyat bo'yicha filter</label>
+          <select id="membershipRegion" class="table-section__search u-search-160" aria-label="Viloyat">
             <option value="">Barcha viloyatlar</option>
             <option>Toshkent shahri</option><option>Toshkent viloyati</option><option>Samarqand</option>
             <option>Farg&rsquo;ona</option><option>Buxoro</option><option>Namangan</option>
@@ -114,25 +117,17 @@
             <option>Xorazm</option><option>Jizzax</option><option>Sirdaryo</option>
             <option>Navoiy</option><option>Qoraqalpog&rsquo;iston</option>
           </select>
-        </div>
+        </form>
         <table class="table">
+          <caption class="u-visually-hidden">A'zolik arizalari jadvali</caption>
           <thead>
             <tr>
-              <th><input type="checkbox" aria-label="Barchasini tanlash" /></th>
-              <th>Ariza #</th><th>Tashkilot nomi</th><th>Viloyat</th>
-              <th>Topshirilgan sana</th><th>Bosqich</th><th>Holat</th><th>Mas&rsquo;ul</th><th></th>
+              <th scope="col"><input type="checkbox" aria-label="Barchasini tanlash" /></th>
+              <th scope="col">Ariza #</th><th scope="col">Tashkilot nomi</th><th scope="col">Viloyat</th>
+              <th scope="col">Topshirilgan sana</th><th scope="col">Bosqich</th><th scope="col">Holat</th><th scope="col">Mas&rsquo;ul</th><th scope="col"></th>
             </tr>
           </thead>
-          <tbody>
-            <tr><td><input type="checkbox" /></td><td><a href="#" class="row-link">ARZ-2026-0418</a></td><td><div class="table__counterparty"><span class="table__avatar">YN</span><span class="table__company">Yangi Nafas NNT</span></div></td><td>Toshkent</td><td>02.04.2026</td><td>2 / 4</td><td><span class="badge badge--warning"><span class="badge__dot"></span>Ko&rsquo;rib chiqilmoqda</span></td><td>Azizova N.</td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item" data-modal-open="reviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item" style="color:#059669" data-modal-open="approveModal"><i class="ph ph-check-circle"></i> Tasdiqlash</button><button type="button" class="row-menu__item" data-modal-open="returnModal"><i class="ph ph-arrow-counter-clockwise"></i> Qaytarish</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><a href="#" class="row-link">ARZ-2026-0415</a></td><td><div class="table__counterparty"><span class="table__avatar">MS</span><span class="table__company">Mehr-Shafqat NNT</span></div></td><td>Samarqand</td><td>01.04.2026</td><td>3 / 4</td><td><span class="badge badge--warning"><span class="badge__dot"></span>Imzo kutilmoqda</span></td><td>Toshmatov A.</td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item" data-modal-open="reviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item" style="color:#059669" data-modal-open="approveModal"><i class="ph ph-check-circle"></i> Tasdiqlash</button><button type="button" class="row-menu__item" data-modal-open="returnModal"><i class="ph ph-arrow-counter-clockwise"></i> Qaytarish</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><a href="#" class="row-link">ARZ-2026-0411</a></td><td><div class="table__counterparty"><span class="table__avatar">UI</span><span class="table__company">Umid Istiqbol NNT</span></div></td><td>Farg&rsquo;ona</td><td>29.03.2026</td><td>4 / 4</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span></td><td>Xolmatova G.</td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item" data-modal-open="reviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item" style="color:#059669" data-modal-open="approveModal"><i class="ph ph-check-circle"></i> Tasdiqlash</button><button type="button" class="row-menu__item" data-modal-open="returnModal"><i class="ph ph-arrow-counter-clockwise"></i> Qaytarish</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><a href="#" class="row-link">ARZ-2026-0408</a></td><td><div class="table__counterparty"><span class="table__avatar">YI</span><span class="table__company">Yoshlar Ittifoqi</span></div></td><td>Buxoro</td><td>28.03.2026</td><td>1 / 4</td><td><span class="badge badge--pending"><span class="badge__dot"></span>Qabul qilindi</span></td><td>Rahimov B.</td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item" data-modal-open="reviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item" style="color:#059669" data-modal-open="approveModal"><i class="ph ph-check-circle"></i> Tasdiqlash</button><button type="button" class="row-menu__item" data-modal-open="returnModal"><i class="ph ph-arrow-counter-clockwise"></i> Qaytarish</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><a href="#" class="row-link">ARZ-2026-0403</a></td><td><div class="table__counterparty"><span class="table__avatar">EM</span><span class="table__company">Ekologiya Markazi</span></div></td><td>Namangan</td><td>27.03.2026</td><td>2 / 4</td><td><span class="badge badge--warning"><span class="badge__dot"></span>Ko&rsquo;rib chiqilmoqda</span></td><td>Azizova N.</td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item" data-modal-open="reviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item" style="color:#059669" data-modal-open="approveModal"><i class="ph ph-check-circle"></i> Tasdiqlash</button><button type="button" class="row-menu__item" data-modal-open="returnModal"><i class="ph ph-arrow-counter-clockwise"></i> Qaytarish</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><a href="#" class="row-link">ARZ-2026-0397</a></td><td><div class="table__counterparty"><span class="table__avatar">HM</span><span class="table__company">Hayot va Madaniyat</span></div></td><td>Andijon</td><td>25.03.2026</td><td>4 / 4</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span></td><td>Toshmatov A.</td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item" data-modal-open="reviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item" style="color:#059669" data-modal-open="approveModal"><i class="ph ph-check-circle"></i> Tasdiqlash</button><button type="button" class="row-menu__item" data-modal-open="returnModal"><i class="ph ph-arrow-counter-clockwise"></i> Qaytarish</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><a href="#" class="row-link">ARZ-2026-0391</a></td><td><div class="table__counterparty"><span class="table__avatar">SP</span><span class="table__company">Sport va Rivojlanish</span></div></td><td>Qashqadaryo</td><td>22.03.2026</td><td>2 / 4</td><td><span class="badge badge--danger"><span class="badge__dot"></span>Qaytarilgan</span></td><td>Xolmatova G.</td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item" data-modal-open="reviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item" style="color:#059669" data-modal-open="approveModal"><i class="ph ph-check-circle"></i> Tasdiqlash</button><button type="button" class="row-menu__item" data-modal-open="returnModal"><i class="ph ph-arrow-counter-clockwise"></i> Qaytarish</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><a href="#" class="row-link">ARZ-2026-0385</a></td><td><div class="table__counterparty"><span class="table__avatar">BF</span><span class="table__company">Baxtli Oila Fondi</span></div></td><td>Xorazm</td><td>20.03.2026</td><td>3 / 4</td><td><span class="badge badge--warning"><span class="badge__dot"></span>Ko&rsquo;rib chiqilmoqda</span></td><td>Rahimov B.</td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item" data-modal-open="reviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item" style="color:#059669" data-modal-open="approveModal"><i class="ph ph-check-circle"></i> Tasdiqlash</button><button type="button" class="row-menu__item" data-modal-open="returnModal"><i class="ph ph-arrow-counter-clockwise"></i> Qaytarish</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-          </tbody>
+          <tbody id="membershipRequestRows"></tbody>
         </table>
       </section>
     </main>
@@ -175,41 +170,41 @@
   </div>
   <!-- Review Application Modal -->
   <div class="modal-overlay" id="reviewModal" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle">
-    <div class="modal" style="max-width:600px;">
+    <div class="modal u-modal-max-600">
       <div class="modal__head">
         <h2 class="modal__title" id="reviewModalTitle">Ariza tafsilotlari</h2>
         <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
       </div>
       <div class="modal__body">
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+        <div class="u-modal-grid-2">
           <div class="modal__field">
             <label class="modal__label">Ariza raqami</label>
-            <div style="font-size:14px;font-weight:600;color:var(--grey-900);padding:10px 0;">ARZ-2026-0418</div>
+            <div class="u-modal-value u-modal-value-strong">ARZ-2026-0418</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Topshirilgan sana</label>
-            <div style="font-size:14px;color:var(--grey-900);padding:10px 0;">02.04.2026</div>
+            <div class="u-modal-value">02.04.2026</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Tashkilot nomi</label>
-            <div style="font-size:14px;font-weight:500;color:var(--grey-900);padding:10px 0;">Yangi Nafas NNT</div>
+            <div class="u-modal-value u-modal-value-medium">Yangi Nafas NNT</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Viloyat / Shahar</label>
-            <div style="font-size:14px;color:var(--grey-900);padding:10px 0;">Toshkent shahri</div>
+            <div class="u-modal-value">Toshkent shahri</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Mas&rsquo;ul shaxs</label>
-            <div style="font-size:14px;color:var(--grey-900);padding:10px 0;">Azizova Nodira</div>
+            <div class="u-modal-value">Azizova Nodira</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Bosqich</label>
-            <div style="font-size:14px;color:var(--grey-900);padding:10px 0;">2 / 4</div>
+            <div class="u-modal-value">2 / 4</div>
           </div>
         </div>
         <div class="modal__field">
           <label class="modal__label">Holat</label>
-          <div style="padding:8px 0;"><span class="badge badge--warning"><span class="badge__dot"></span>Ko&rsquo;rib chiqilmoqda</span></div>
+          <div class="u-modal-status-row"><span class="badge badge--warning"><span class="badge__dot"></span>Ko&rsquo;rib chiqilmoqda</span></div>
         </div>
         <div class="modal__field">
           <label class="modal__label">Izoh qo&rsquo;shish</label>
@@ -218,7 +213,7 @@
       </div>
       <div class="modal__foot">
         <button type="button" class="btn btn--secondary" data-modal-close>Yopish</button>
-        <button type="button" class="btn" style="background:#059669;color:#fff;border-color:#047857;" data-modal-close data-modal-open="approveModal"><i class="ph ph-check-circle"></i> Tasdiqlash</button>
+        <button type="button" class="btn u-btn-success" data-modal-close data-modal-open="approveModal"><i class="ph ph-check-circle"></i> Tasdiqlash</button>
         <button type="button" class="btn btn--danger" data-modal-close data-modal-open="returnModal"><i class="ph ph-arrow-counter-clockwise"></i> Qaytarish</button>
       </div>
     </div>
@@ -226,13 +221,13 @@
 
   <!-- Approve Modal -->
   <div class="modal-overlay" id="approveModal" role="dialog" aria-modal="true" aria-labelledby="approveModalTitle">
-    <div class="modal" style="max-width:440px;">
+    <div class="modal u-modal-max-440">
       <div class="modal__head">
         <h2 class="modal__title" id="approveModalTitle">Arizani tasdiqlash</h2>
         <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
       </div>
       <div class="modal__body">
-        <p style="margin:0;font-size:14px;color:var(--grey-600);">Siz <strong>Yangi Nafas NNT</strong> (ARZ-2026-0418) arizasini tasdiqlayapsiz. Bu tashkilot a&rsquo;zolik ro&rsquo;yxatiga qo&rsquo;shiladi.</p>
+        <p class="u-modal-text">Siz <strong>Yangi Nafas NNT</strong> (ARZ-2026-0418) arizasini tasdiqlayapsiz. Bu tashkilot a&rsquo;zolik ro&rsquo;yxatiga qo&rsquo;shiladi.</p>
         <div class="modal__field">
           <label class="modal__label">Tasdiqlash izohi (ixtiyoriy)</label>
           <textarea class="modal__textarea" placeholder="Tasdiqlash sababini kiriting..."></textarea>
@@ -240,22 +235,22 @@
       </div>
       <div class="modal__foot">
         <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
-        <button type="button" class="btn" style="background:#059669;color:#fff;border-color:#047857;" data-modal-close><i class="ph ph-check-circle"></i> Ha, tasdiqlash</button>
+        <button type="button" class="btn u-btn-success" data-modal-close><i class="ph ph-check-circle"></i> Ha, tasdiqlash</button>
       </div>
     </div>
   </div>
 
   <!-- Return Modal -->
   <div class="modal-overlay" id="returnModal" role="dialog" aria-modal="true" aria-labelledby="returnModalTitle">
-    <div class="modal modal--danger" style="max-width:440px;">
+    <div class="modal modal--danger u-modal-max-440">
       <div class="modal__head">
         <h2 class="modal__title" id="returnModalTitle">Arizani qaytarish</h2>
         <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
       </div>
       <div class="modal__body">
-        <p style="margin:0;font-size:14px;color:var(--grey-600);">Siz <strong>Yangi Nafas NNT</strong> (ARZ-2026-0418) arizasini qaytaryapsiz. Arizachiga sabab ko&rsquo;rsatiladi.</p>
+        <p class="u-modal-text">Siz <strong>Yangi Nafas NNT</strong> (ARZ-2026-0418) arizasini qaytaryapsiz. Arizachiga sabab ko&rsquo;rsatiladi.</p>
         <div class="modal__field">
-          <label class="modal__label">Qaytarish sababi <span style="color:#dc2626">*</span></label>
+          <label class="modal__label">Qaytarish sababi <span class="u-text-danger">*</span></label>
           <textarea class="modal__textarea" placeholder="Qaytarish sababini batafsil kiriting..." required></textarea>
         </div>
       </div>
@@ -268,6 +263,7 @@
 
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
+  <script src="js/admin-seed.js"></script>
   <script src="js/pacta-app.js"></script>
 </body>
 </html>

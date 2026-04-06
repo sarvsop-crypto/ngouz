@@ -22,7 +22,7 @@
     <aside class="sidebar">
       <div class="sidebar__header">
         <div class="u-inline-stack">
-          <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">A</div>
+          <div class="sidebar__logo u-logo-initial">A</div>
           <span class="sidebar__title">A‘zo Kabinet</span>
         </div>
         <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
@@ -58,7 +58,7 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;" class="main__profile-avatar">K</div>
+            <div class="main__profile-avatar u-profile-avatar-initial">K</div>
             <div>
               <div class="main__profile-name">Kamolov Sanjar</div>
               <div class="main__profile-role">Yangi Nafas NNT</div>
@@ -71,23 +71,23 @@
         <h1 class="main__title">Sozlamalar</h1>
       </div>
 
-      <div class="settings-layout" style="display:grid;grid-template-columns:220px 1fr;gap:24px;">
-        <nav style="display:flex;flex-direction:column;gap:4px;">
-          <a href="cabinet-settings.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ph ph-user"></i> Profil</a>
-          <a href="cabinet-settings-org.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-buildings"></i> Tashkilot</a>
-          <a href="cabinet-settings-security.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
-          <a href="cabinet-settings-notifications.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-bell"></i> Bildirishnomalar</a>
+      <div class="settings-layout">
+        <nav class="settings-side-nav">
+          <a href="cabinet-settings.html" class="settings-side-link is-active"><i class="ph ph-user"></i> Profil</a>
+          <a href="cabinet-settings-org.html" class="settings-side-link"><i class="ph ph-buildings"></i> Tashkilot</a>
+          <a href="cabinet-settings-security.html" class="settings-side-link"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
+          <a href="cabinet-settings-notifications.html" class="settings-side-link"><i class="ph ph-bell"></i> Bildirishnomalar</a>
         </nav>
         <div>
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Shaxsiy ma&rsquo;lumotlar</h2>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Ism</label><input type="text" value="Kamolov Sanjar" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Email</label><input type="email" value="kamolov@yanginafas.uz" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Telefon</label><input type="tel" value="+998 90 123 45 67" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Lavozim</label><input type="text" value="Tashkilot rahbari" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+          <div class="settings-panel">
+            <h2 class="settings-section-title">Shaxsiy ma&rsquo;lumotlar</h2>
+            <div class="settings-grid-two">
+              <div><label class="settings-form-label">Ism</label><input class="settings-form-control" type="text" value="Kamolov Sanjar" /></div>
+              <div><label class="settings-form-label">Email</label><input class="settings-form-control" type="email" value="kamolov@yanginafas.uz" /></div>
+              <div><label class="settings-form-label">Telefon</label><input class="settings-form-control" type="tel" value="+998 90 123 45 67" /></div>
+              <div><label class="settings-form-label">Lavozim</label><input class="settings-form-control" type="text" value="Tashkilot rahbari" /></div>
             </div>
-            <div style="margin-top:20px;display:flex;gap:12px;">
+            <div class="settings-actions-row">
               <button type="button" class="btn btn--primary"><i class="ph ph-floppy-disk"></i> Saqlash</button>
               <button type="button" class="btn btn--secondary">Bekor qilish</button>
             </div>

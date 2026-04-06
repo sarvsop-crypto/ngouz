@@ -70,11 +70,20 @@ class _KpiGrid extends StatelessWidget {
         final state = controller.state == LoadState.idle ? LoadState.loading : controller.state;
         return SectionStateView(
           state: state,
+          onRetry: controller.load,
           readyChild: AdaptiveGrid(
             minCardWidth: 150,
             maxColumns: 6,
+            maxCardWidth: 220,
+            stretchChildren: false,
+            spacing: 10,
             children: [
-              for (final item in controller.items) KpiCard(value: item.value, label: item.label),
+              for (final item in controller.items)
+                KpiCard(
+                  value: item.value,
+                  label: item.label,
+                  compact: true,
+                ),
             ],
           ),
         );

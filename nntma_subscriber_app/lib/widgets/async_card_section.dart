@@ -14,7 +14,7 @@ class AsyncCardSection extends StatelessWidget {
   const AsyncCardSection({
     super.key,
     required this.controller,
-    this.minCardWidth = 260,
+    this.minCardWidth = 220,
   });
 
   @override
@@ -25,8 +25,12 @@ class AsyncCardSection extends StatelessWidget {
         final state = controller.state == LoadState.idle ? LoadState.loading : controller.state;
         return SectionStateView(
           state: state,
+          onRetry: controller.load,
           readyChild: AdaptiveGrid(
             minCardWidth: minCardWidth,
+            maxCardWidth: 360,
+            stretchChildren: false,
+            spacing: 10,
             children: [
               for (final item in controller.items)
                 InfoCard(

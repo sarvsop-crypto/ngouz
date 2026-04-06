@@ -22,7 +22,7 @@
     <aside class="sidebar">
       <div class="sidebar__header">
         <div class="u-inline-stack">
-          <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">A</div>
+          <div class="sidebar__logo u-logo-initial">A</div>
           <span class="sidebar__title">A'zo Kabinet</span>
         </div>
       </div>
@@ -57,7 +57,7 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;" class="main__profile-avatar">K</div>
+            <div class="main__profile-avatar u-profile-avatar-initial">K</div>
             <div>
               <div class="main__profile-name">Kamolov Sanjar</div>
               <div class="main__profile-role">Yangi Nafas NNT</div>
@@ -70,40 +70,40 @@
         <h1 class="main__title">Sozlamalar</h1>
       </div>
 
-      <div class="settings-layout" style="display:grid;grid-template-columns:220px 1fr;gap:24px;">
-        <nav style="display:flex;flex-direction:column;gap:4px;">
-          <a href="cabinet-settings.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-user"></i> Profil</a>
-          <a href="cabinet-settings-org.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ph ph-buildings"></i> Tashkilot</a>
-          <a href="cabinet-settings-security.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
-          <a href="cabinet-settings-notifications.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-bell"></i> Bildirishnomalar</a>
+      <div class="settings-layout">
+        <nav class="settings-side-nav">
+          <a href="cabinet-settings.html" class="settings-side-link"><i class="ph ph-user"></i> Profil</a>
+          <a href="cabinet-settings-org.html" class="settings-side-link is-active"><i class="ph ph-buildings"></i> Tashkilot</a>
+          <a href="cabinet-settings-security.html" class="settings-side-link"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
+          <a href="cabinet-settings-notifications.html" class="settings-side-link"><i class="ph ph-bell"></i> Bildirishnomalar</a>
         </nav>
         <div>
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Tashkilot ma&rsquo;lumotlari</h2>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Tashkilot nomi</label><input type="text" value="Yangi Nafas NNT" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">INN</label><input type="text" value="302 456 789" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Ro&rsquo;yxatdan o&rsquo;tish raqami</label><input type="text" value="NNT-2024-00312" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Tashkilot turi</label><select style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>Nodavlat notijorat tashkiloti</option><option>Jamoat birlashmasi</option><option>Xayriya jamg'armasi</option></select></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Viloyat</label><select style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>Toshkent shahri</option><option>Toshkent viloyati</option><option>Samarqand</option><option>Buxoro</option><option>Namangan</option><option>Andijon</option><option>Farg&rsquo;ona</option></select></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Manzil</label><input type="text" value="Yunusobod, 7-mavze" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div style="grid-column:1/-1;"><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Faoliyat yo&rsquo;nalishi</label><input type="text" value="Ijtimoiy yordam, yoshlar taraqqiyoti" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div style="grid-column:1/-1;"><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Veb-sayt</label><input type="url" placeholder="https://example.uz" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+          <div class="settings-panel">
+            <h2 class="settings-section-title">Tashkilot ma&rsquo;lumotlari</h2>
+            <div class="settings-grid-two">
+              <div><label class="settings-form-label">Tashkilot nomi</label><input class="settings-form-control" type="text" value="Yangi Nafas NNT" /></div>
+              <div><label class="settings-form-label">INN</label><input class="settings-form-control" type="text" value="302 456 789" /></div>
+              <div><label class="settings-form-label">Ro&rsquo;yxatdan o&rsquo;tish raqami</label><input class="settings-form-control" type="text" value="NNT-2024-00312" /></div>
+              <div><label class="settings-form-label">Tashkilot turi</label><select class="settings-form-control"><option selected>Nodavlat notijorat tashkiloti</option><option>Jamoat birlashmasi</option><option>Xayriya jamg'armasi</option></select></div>
+              <div><label class="settings-form-label">Viloyat</label><select class="settings-form-control"><option selected>Toshkent shahri</option><option>Toshkent viloyati</option><option>Samarqand</option><option>Buxoro</option><option>Namangan</option><option>Andijon</option><option>Farg&rsquo;ona</option></select></div>
+              <div><label class="settings-form-label">Manzil</label><input class="settings-form-control" type="text" value="Yunusobod, 7-mavze" /></div>
+              <div class="settings-span-2"><label class="settings-form-label">Faoliyat yo&rsquo;nalishi</label><input class="settings-form-control" type="text" value="Ijtimoiy yordam, yoshlar taraqqiyoti" /></div>
+              <div class="settings-span-2"><label class="settings-form-label">Veb-sayt</label><input class="settings-form-control" type="url" placeholder="https://example.uz" /></div>
             </div>
-            <div style="margin-top:20px;display:flex;gap:12px;">
+            <div class="settings-actions-row">
               <button type="button" class="btn btn--primary"><i class="ph ph-floppy-disk"></i> Saqlash</button>
               <button type="button" class="btn btn--secondary">Bekor qilish</button>
             </div>
           </div>
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">Bank rekvizitlari</h2>
-            <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;">Grant va moliyaviy operatsiyalar uchun</p>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Bank nomi</label><input type="text" placeholder="Bank nomi" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Hisob raqami</label><input type="text" placeholder="20208000000000000000" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">MFO</label><input type="text" placeholder="00000" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+          <div class="settings-panel">
+            <h2 class="settings-section-title settings-section-title--tight">Bank rekvizitlari</h2>
+            <p class="settings-section-sub">Grant va moliyaviy operatsiyalar uchun</p>
+            <div class="settings-grid-two">
+              <div><label class="settings-form-label">Bank nomi</label><input class="settings-form-control" type="text" placeholder="Bank nomi" /></div>
+              <div><label class="settings-form-label">Hisob raqami</label><input class="settings-form-control" type="text" placeholder="20208000000000000000" /></div>
+              <div><label class="settings-form-label">MFO</label><input class="settings-form-control" type="text" placeholder="00000" /></div>
             </div>
-            <div style="margin-top:20px;">
+            <div class="settings-actions-row">
               <button type="button" class="btn btn--primary"><i class="ph ph-floppy-disk"></i> Saqlash</button>
             </div>
           </div>
