@@ -51,8 +51,16 @@ class CabinetPageScaffold extends StatelessWidget {
             ),
           ),
         ),
-        const SliverToBoxAdapter(child: DarkCta()),
-        const SliverToBoxAdapter(child: AppFooter()),
+        const SliverFillRemaining(
+          hasScrollBody: false,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              DarkCta(),
+              AppFooter(),
+            ],
+          ),
+        ),
       ],
     );
   }
