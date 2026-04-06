@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/style.css" />
   <style>
     /* ── Org chart ─────────────────────────────────────────────────── */
-    .org-wrap { overflow-x: auto; padding-bottom: 16px; }
+    .org-wrap { overflow-x: hidden; padding-bottom: 16px; }
 
     /*
       3-column outer grid:
@@ -20,10 +20,13 @@
     */
     .org-layout {
       display: grid;
-      grid-template-columns: 1fr 32px 210px;
+      --org-mid-col: 32px;
+      grid-template-columns: minmax(620px, 820px) 32px 230px;
       grid-template-rows: auto auto;
       align-items: start;
-      min-width: 680px;
+      min-width: 882px;
+      width: max-content;
+      margin: 0 auto;
     }
 
     /* ── Head: col 1, row 1 ── */
@@ -36,11 +39,22 @@
 
     /* ── Horizontal connector: col 2, row 1 ── */
     .org-h-conn {
-      grid-column: 2;
+      grid-column: 1 / 3;
       grid-row: 1;
       height: 2px;
-      background: var(--green-500, #00b4d8);
       margin-top: 24px; /* align with vertical center of head box */
+      align-self: start;
+      position: relative;
+      pointer-events: none;
+    }
+    .org-h-conn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: calc(50% - (var(--org-mid-col) / 2)); /* center of col-1 inside (col-1 + col-2) */
+      right: 0;
+      height: 2px;
+      background: var(--green-500, #00b4d8);
     }
 
     /* ── Staff column: col 3, spans rows 1–2 ── */
@@ -64,11 +78,11 @@
     }
 
     /* ── Deputies 2-col grid with H-bar via ::before ── */
-    .org-deputies {
+        .org-deputies {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 20px;
-      width: 100%;
+      width: min(100%, 760px);
       position: relative;
     }
 
@@ -197,10 +211,69 @@
     .struct-stat__label { font-size: 13px; color: var(--neutral-500, #587585); }
 
     /* ── Mobile: deputies stack ── */
-    @media (max-width: 720px) {
-      .org-deputies { grid-template-columns: 1fr; gap: 0; }
-      .org-deputies::before { display: none; }
-      .org-layout { grid-template-columns: 1fr 24px 175px; }
+        @media (max-width: 720px) {
+      .org-layout {
+        --org-mid-col: 28px;
+        grid-template-columns: 620px 28px 210px;
+        min-width: 858px;
+      }
+      .org-deputies {
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        width: 100%;
+      }
+      .org-deputies::before {
+        left: calc((100% - 14px) / 4);
+        right: calc((100% - 14px) / 4);
+      }
+      .org-node { padding: 9px 12px; }
+      .org-node--head { max-width: 250px; }
+    }
+  
+    /* SVG org chart (stable connectors on all screens) */
+    .org-svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    .svg-node {
+      fill: #fff;
+      stroke: #aad4e2;
+      stroke-width: 2;
+      rx: 10;
+      ry: 10;
+    }
+    .svg-node-head {
+      fill: var(--green-500, #00b4d8);
+      stroke: var(--green-800, #007a94);
+    }
+    .svg-node-deputy,
+    .svg-node-regional,
+    .svg-node-staff {
+      fill: #d9f0f7;
+      stroke: var(--green-500, #00b4d8);
+    }
+    .svg-node-fund {
+      fill: #f5fbfe;
+      stroke: #7fc2d8;
+      stroke-dasharray: 6 5;
+    }
+    .svg-label {
+      font-family: "DM Sans", sans-serif;
+      font-size: 14px;
+      fill: #1e2229;
+    }
+    .svg-label-sm { font-size: 12px; }
+    .svg-label-center { text-anchor: middle; }
+    .svg-label-light { fill: #fff; font-weight: 700; }
+    .svg-line {
+      stroke: var(--green-500, #00b4d8);
+      stroke-width: 2.5;
+      fill: none;
+      stroke-linecap: round;
     }
   </style>
 </head>
@@ -284,78 +357,94 @@
     </div>
 
     <!-- Org chart -->
-    <div class="org-wrap">
-      <div class="org-layout">
+            <div class="org-wrap">
+      <svg class="org-svg" viewBox="0 0 1320 610" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Ijro etuvchi devon tuzilmasi">
+        <line class="svg-line" x1="490" y1="78" x2="490" y2="112" />
+        <line class="svg-line" x1="290" y1="112" x2="690" y2="112" />
+        <line class="svg-line" x1="290" y1="112" x2="290" y2="132" />
+        <line class="svg-line" x1="690" y1="112" x2="690" y2="132" />
 
-        <!-- ── Col 1, Row 1: Head ── -->
-        <div class="org-head-cell">
-          <div class="org-node org-node--head">Ijro etuvchi devon rahbari</div>
-        </div>
+        <line class="svg-line" x1="290" y1="202" x2="290" y2="242" />
+        <line class="svg-line" x1="290" y1="332" x2="290" y2="362" />
+        <line class="svg-line" x1="690" y1="202" x2="690" y2="242" />
+        <line class="svg-line" x1="690" y1="332" x2="690" y2="362" />
 
-        <!-- ── Col 2, Row 1: Horizontal connector → staff panel ── -->
-        <div class="org-h-conn"></div>
+        <line class="svg-line" x1="620" y1="48" x2="920" y2="48" />
+        <line class="svg-line" x1="1080" y1="84" x2="1080" y2="120" />
+        <line class="svg-line" x1="1080" y1="190" x2="1080" y2="206" />
+        <line class="svg-line" x1="1080" y1="276" x2="1080" y2="292" />
+        <line class="svg-line" x1="1080" y1="350" x2="1080" y2="370" />
+        <line class="svg-line" x1="1080" y1="442" x2="1080" y2="462" />
 
-        <!-- ── Col 3, Rows 1–2: Right staff panel ── -->
-        <div class="org-staff-col">
-          <div class="org-node org-node--staff">Rahbar maslahatchisi &mdash; jamoatchilik va OAV bilan ishlash bo&rsquo;yicha bosh mutaxassis</div>
-          <div class="org-vconn"></div>
-          <div class="org-node org-node--dept">Axborot-tahlil va ijro intizomi nazorati bo&rsquo;limi <span class="dept-n">2</span></div>
-          <div class="org-vconn"></div>
-          <div class="org-node org-node--dept">Kadrlar va yuridik masalalar bo&rsquo;yicha bosh mutaxassis</div>
-          <div class="org-vconn"></div>
-          <div class="org-node org-node--dept">Bosh buxgalter</div>
-          <div class="org-vconn"></div>
-          <div class="org-node org-node--regional">Hududiy bo&rsquo;linmalar<br><small style="font-weight:400;font-size:11px;">28 nafar xodim</small></div>
-          <div class="org-vconn"></div>
-          <div class="org-node org-node--fund">O&rsquo;zbekiston nodavlat notijorat tashkilotlarini qo&rsquo;llab-quvvatlash jamoat fondi</div>
-        </div>
+        <rect class="svg-node svg-node-head" x="360" y="20" width="260" height="58" />
+        <text class="svg-label svg-label-center svg-label-light" x="490" y="54">Ijro etuvchi devon rahbari</text>
 
-        <!-- ── Col 1, Row 2: Main hierarchy below Head ── -->
-        <div class="org-main-below">
-          <div class="org-vconn"></div>
+        <rect class="svg-node svg-node-deputy" x="120" y="132" width="340" height="70" />
+        <text class="svg-label svg-label-center" x="290" y="164">
+          <tspan x="290" dy="0">Ijro etuvchi devon rahbarining</tspan>
+          <tspan x="290" dy="18">birinchi o'rinbosari</tspan>
+        </text>
 
-          <!--
-            org-deputies::before draws the H-bar from center-of-col-1 to center-of-col-2.
-            Each dep-col starts with org-vconn--sm (16px) to drop from that bar.
-          -->
-          <div class="org-deputies">
+        <rect class="svg-node svg-node-deputy" x="520" y="132" width="340" height="70" />
+        <text class="svg-label svg-label-center" x="690" y="173">Ijro etuvchi devon rahbari o'rinbosari</text>
 
-            <!-- 1st Deputy (Birinchi o'rinbosar) -->
-            <div class="org-dep-col">
-              <div class="org-vconn org-vconn--sm"></div>
-              <div class="org-node org-node--deputy">Ijro etuvchi devon rahbarining birinchi o&rsquo;rinbosari</div>
-              <div class="org-vconn"></div>
-              <div class="org-node org-node--dept">
-                Hududiy bo&rsquo;linmalar faoliyatini muvofiqlashtirish, a&rsquo;zolar va mahalliy NNT bilan hamkorlik qilish bo&rsquo;limi
-                <span class="dept-n">2</span>
-              </div>
-              <div class="org-vconn"></div>
-              <div class="org-node org-node--dept">
-                Xalqaro hamkorlikni rivojlantirish va xorijiy donorlarni jalb qilish bo&rsquo;limi
-                <span class="dept-n">2</span>
-              </div>
-            </div>
+        <rect class="svg-node" x="120" y="242" width="340" height="90" />
+        <text class="svg-label svg-label-sm" x="138" y="266">
+          <tspan x="138" dy="0">Hududiy bo'linmalar faoliyatini muvofiqlashtirish,</tspan>
+          <tspan x="138" dy="19">a'zolar va mahalliy NNT bilan hamkorlik qilish bo'limi (2)</tspan>
+        </text>
 
-            <!-- Deputy (O'rinbosar) -->
-            <div class="org-dep-col">
-              <div class="org-vconn org-vconn--sm"></div>
-              <div class="org-node org-node--deputy">Ijro etuvchi devon rahbari o&rsquo;rinbosari</div>
-              <div class="org-vconn"></div>
-              <div class="org-node org-node--dept">
-                Nodavlat sektorini huquqiy ta&rsquo;minlash va salohiyatini rivojlantirish bo&rsquo;limi
-                <span class="dept-n">2</span>
-              </div>
-              <div class="org-vconn"></div>
-              <div class="org-node org-node--dept">
-                Ijtimoiy sheriklik, jamoatchilik nazorati, loyiha va dasturlar samaradorligini oshirish bo&rsquo;limi
-                <span class="dept-n">2</span>
-              </div>
-            </div>
+        <rect class="svg-node" x="120" y="362" width="340" height="90" />
+        <text class="svg-label svg-label-sm" x="138" y="386">
+          <tspan x="138" dy="0">Xalqaro hamkorlikni rivojlantirish va xorijiy donorlarni</tspan>
+          <tspan x="138" dy="19">jalb qilish bo'limi (2)</tspan>
+        </text>
 
-          </div><!-- .org-deputies -->
-        </div><!-- .org-main-below -->
+        <rect class="svg-node" x="520" y="242" width="340" height="90" />
+        <text class="svg-label svg-label-sm" x="538" y="266">
+          <tspan x="538" dy="0">Nodavlat sektorini huquqiy ta'minlash va</tspan>
+          <tspan x="538" dy="19">salohiyatini rivojlantirish bo'limi (2)</tspan>
+        </text>
 
-      </div><!-- .org-layout -->
+        <rect class="svg-node" x="520" y="362" width="340" height="90" />
+        <text class="svg-label svg-label-sm" x="538" y="386">
+          <tspan x="538" dy="0">Ijtimoiy sheriklik, jamoatchilik nazorati, loyiha va dasturlar</tspan>
+          <tspan x="538" dy="19">samaradorligini oshirish bo'limi (2)</tspan>
+        </text>
+
+        <rect class="svg-node svg-node-staff" x="920" y="12" width="320" height="72" />
+        <text class="svg-label svg-label-sm svg-label-center" x="1080" y="38">
+          <tspan x="1080" dy="0">Rahbar maslahatchisi - jamoatchilik va OAV bilan</tspan>
+          <tspan x="1080" dy="18">ishlash bo'yicha bosh mutaxassis</tspan>
+        </text>
+
+        <rect class="svg-node" x="920" y="120" width="320" height="70" />
+        <text class="svg-label svg-label-sm svg-label-center" x="1080" y="151">
+          <tspan x="1080" dy="0">Axborot-tahlil va ijro intizomi</tspan>
+          <tspan x="1080" dy="17">nazorati bo'limi (2)</tspan>
+        </text>
+
+        <rect class="svg-node" x="920" y="206" width="320" height="70" />
+        <text class="svg-label svg-label-sm svg-label-center" x="1080" y="237">
+          <tspan x="1080" dy="0">Kadrlar va yuridik masalalar</tspan>
+          <tspan x="1080" dy="17">bo'yicha bosh mutaxassis</tspan>
+        </text>
+
+        <rect class="svg-node" x="920" y="292" width="320" height="58" />
+        <text class="svg-label svg-label-sm svg-label-center" x="1080" y="327">Bosh buxgalter</text>
+
+        <rect class="svg-node svg-node-regional" x="920" y="370" width="320" height="72" />
+        <text class="svg-label svg-label-sm svg-label-center" x="1080" y="400">
+          <tspan x="1080" dy="0">Hududiy bo'linmalar</tspan>
+          <tspan x="1080" dy="18">28 nafar xodim</tspan>
+        </text>
+
+        <rect class="svg-node svg-node-fund" x="920" y="462" width="320" height="90" />
+        <text class="svg-label svg-label-sm svg-label-center" x="1080" y="495">
+          <tspan x="1080" dy="0">O'zbekiston nodavlat notijorat tashkilotlarini</tspan>
+          <tspan x="1080" dy="18">qo'llab-quvvatlash jamoat fondi</tspan>
+        </text>
+      </svg>
     </div><!-- .org-wrap -->
 
     <p style="margin-top:28px;font-size:13px;color:var(--neutral-400,#9ca3af);text-align:center;">
@@ -398,3 +487,6 @@
 <script src="js/content.js"></script>
 </body>
 </html>
+
+
+
