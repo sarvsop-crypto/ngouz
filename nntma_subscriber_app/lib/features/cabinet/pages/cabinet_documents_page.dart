@@ -130,41 +130,43 @@ class _DocumentsTable extends StatelessWidget {
         child: DataTable(
           headingRowHeight: 42,
           dataRowMinHeight: 48,
+          dataRowMaxHeight: 56,
+          columnSpacing: 24,
           columns: const [
-            DataColumn(label: Text('Hujjat nomi')),
-            DataColumn(label: Text('Turi')),
-            DataColumn(label: Text('Muddat')),
-            DataColumn(label: Text('Holat')),
-            DataColumn(label: Text('Amal')),
+            DataColumn(label: _NoWrap('Hujjat nomi')),
+            DataColumn(label: _NoWrap('Turi')),
+            DataColumn(label: _NoWrap('Muddat')),
+            DataColumn(label: _NoWrap('Holat')),
+            DataColumn(label: _NoWrap('Amal')),
           ],
           rows: const [
             DataRow(cells: [
-              DataCell(Text('NGO Ustavi')),
-              DataCell(Text('Majburiy')),
-              DataCell(Text('01.04.2026')),
+              DataCell(_NoWrap('NGO Ustavi')),
+              DataCell(_NoWrap('Majburiy')),
+              DataCell(_NoWrap('01.04.2026')),
               DataCell(_StatusPill('Tasdiqlangan', Color(0xFF0F7B4B))),
-              DataCell(Text('Korish')),
+              DataCell(_NoWrap('Korish')),
             ]),
             DataRow(cells: [
-              DataCell(Text('Davlat royxatidan otish guvohnomasi')),
-              DataCell(Text('Majburiy')),
-              DataCell(Text('01.04.2026')),
+              DataCell(_NoWrap('Davlat royxatidan otish guvohnomasi')),
+              DataCell(_NoWrap('Majburiy')),
+              DataCell(_NoWrap('01.04.2026')),
               DataCell(_StatusPill('Tasdiqlangan', Color(0xFF0F7B4B))),
-              DataCell(Text('Korish')),
+              DataCell(_NoWrap('Korish')),
             ]),
             DataRow(cells: [
-              DataCell(Text('Ustav yangi tahrir (2026-yil)')),
-              DataCell(Text('Majburiy')),
-              DataCell(Text('10.04.2026')),
+              DataCell(_NoWrap('Ustav yangi tahrir (2026-yil)')),
+              DataCell(_NoWrap('Majburiy')),
+              DataCell(_NoWrap('10.04.2026')),
               DataCell(_StatusPill('Muddatli', Color(0xFFB45309))),
-              DataCell(Text('Yuklash')),
+              DataCell(_NoWrap('Yuklash')),
             ]),
             DataRow(cells: [
-              DataCell(Text('Soliq organidan malumotnoma')),
-              DataCell(Text('Majburiy')),
-              DataCell(Text('-')),
+              DataCell(_NoWrap('Soliq organidan malumotnoma')),
+              DataCell(_NoWrap('Majburiy')),
+              DataCell(_NoWrap('-')),
               DataCell(_StatusPill('Yuklanmagan', AppTokens.textMuted)),
-              DataCell(Text('Yuklash')),
+              DataCell(_NoWrap('Yuklash')),
             ]),
           ],
         ),
@@ -184,8 +186,19 @@ class _StatusPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSpace.sm, vertical: 4),
       decoration: BoxDecoration(color: color.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
-      child: Text(text, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w700)),
+      child: Text(text, maxLines: 1, overflow: TextOverflow.ellipsis, softWrap: false, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w700)),
     );
+  }
+}
+
+class _NoWrap extends StatelessWidget {
+  final String text;
+
+  const _NoWrap(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text, maxLines: 1, overflow: TextOverflow.ellipsis, softWrap: false);
   }
 }
 

@@ -6,7 +6,6 @@ import '../../core/app_tokens.dart';
 import '../cabinet/pages/cabinet_applications_page.dart';
 import '../cabinet/pages/cabinet_dashboard_page.dart';
 import '../cabinet/pages/cabinet_documents_page.dart';
-import '../cabinet/pages/cabinet_extra_pages.dart';
 import '../cabinet/pages/cabinet_grants_page.dart';
 import '../cabinet/pages/cabinet_settings_page.dart';
 import '../cabinet/pages/cabinet_support_page.dart';
@@ -113,104 +112,6 @@ class _MainShellState extends State<MainShell> {
       shortTitle: 'Profil',
       icon: Icons.settings_outlined,
       page: CabinetSettingsPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetOrganization,
-      title: 'Mening tashkilotim',
-      shortTitle: 'Tashkilot',
-      icon: Icons.apartment_outlined,
-      page: CabinetOrganizationPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetReports,
-      title: 'Hisobotlar',
-      shortTitle: 'Hisobot',
-      icon: Icons.summarize_outlined,
-      page: CabinetReportsPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetEvents,
-      title: 'Yopiq tadbirlar',
-      shortTitle: 'Tadbir',
-      icon: Icons.event_available_outlined,
-      page: CabinetEventsPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetNotifications,
-      title: 'Bildirishnomalar',
-      shortTitle: 'Xabar',
-      icon: Icons.notifications_outlined,
-      page: CabinetNotificationsPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetApprovals,
-      title: 'Tasdiqlar',
-      shortTitle: 'Tasdiq',
-      icon: Icons.how_to_reg_outlined,
-      page: CabinetApprovalsPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetStatistics,
-      title: 'Statistika',
-      shortTitle: 'Stat',
-      icon: Icons.query_stats_outlined,
-      page: CabinetStatisticsPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetSubscription,
-      title: 'Obuna',
-      shortTitle: 'Obuna',
-      icon: Icons.card_membership_outlined,
-      page: CabinetSubscriptionPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetApi,
-      title: 'API va integratsiya',
-      shortTitle: 'API',
-      icon: Icons.api_outlined,
-      page: CabinetApiPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetAudit,
-      title: 'Audit log',
-      shortTitle: 'Audit',
-      icon: Icons.history_edu_outlined,
-      page: CabinetAuditPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetEsignature,
-      title: 'Elektron imzo',
-      shortTitle: 'E-imzo',
-      icon: Icons.draw_outlined,
-      page: CabinetEsignaturePage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetFeedback,
-      title: 'Fikr-mulohaza',
-      shortTitle: 'Fikr',
-      icon: Icons.rate_review_outlined,
-      page: CabinetFeedbackPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetKnowledge,
-      title: 'Bilim bazasi',
-      shortTitle: 'Bilim',
-      icon: Icons.menu_book_outlined,
-      page: CabinetKnowledgePage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetNntData,
-      title: 'NNT malumotlari',
-      shortTitle: 'Reyestr',
-      icon: Icons.dataset_outlined,
-      page: CabinetNntDataPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetNews,
-      title: 'Kabinet yangiliklari',
-      shortTitle: 'Yangilik',
-      icon: Icons.campaign_outlined,
-      page: CabinetNewsPage(),
     ),
   ];
 

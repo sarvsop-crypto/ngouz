@@ -133,7 +133,7 @@ class _ApplicationStages extends StatelessWidget {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    i == 0 ? '?' : '${i + 1}',
+                    i == 0 ? '1' : '${i + 1}',
                     style: TextStyle(color: i <= 1 ? Colors.white : AppTokens.textMuted, fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -174,40 +174,42 @@ class _HistoryTable extends StatelessWidget {
             child: DataTable(
               headingRowHeight: 42,
               dataRowMinHeight: 48,
+              dataRowMaxHeight: 56,
+              columnSpacing: 24,
               columns: const [
-                DataColumn(label: Text('Tadbir')),
-                DataColumn(label: Text('Tavsif')),
-                DataColumn(label: Text('Sana')),
-                DataColumn(label: Text('Kim')),
-                DataColumn(label: Text('Holat')),
+                DataColumn(label: _NoWrap('Tadbir')),
+                DataColumn(label: _NoWrap('Tavsif')),
+                DataColumn(label: _NoWrap('Sana')),
+                DataColumn(label: _NoWrap('Kim')),
+                DataColumn(label: _NoWrap('Holat')),
               ],
               rows: const [
                 DataRow(cells: [
-                  DataCell(Text('Ariza yuborildi')),
-                  DataCell(Text('Azolik arizasi muvaffaqiyatli yuborildi')),
-                  DataCell(Text('02.04.2026')),
-                  DataCell(Text('Kamolov Sanjar')),
+                  DataCell(_NoWrap('Ariza yuborildi')),
+                  DataCell(_NoWrap('Azolik arizasi muvaffaqiyatli yuborildi')),
+                  DataCell(_NoWrap('02.04.2026')),
+                  DataCell(_NoWrap('Kamolov Sanjar')),
                   DataCell(_StatusPill('Bajarildi', Color(0xFF0F7B4B))),
                 ]),
                 DataRow(cells: [
-                  DataCell(Text('Tekshiruv boshlandi')),
-                  DataCell(Text('Hujjatlar tekshiruv bosqichiga otkazildi')),
-                  DataCell(Text('03.04.2026')),
-                  DataCell(Text('Admin')),
+                  DataCell(_NoWrap('Tekshiruv boshlandi')),
+                  DataCell(_NoWrap('Hujjatlar tekshiruv bosqichiga otkazildi')),
+                  DataCell(_NoWrap('03.04.2026')),
+                  DataCell(_NoWrap('Admin')),
                   DataCell(_StatusPill('Bajarildi', Color(0xFF0F7B4B))),
                 ]),
                 DataRow(cells: [
-                  DataCell(Text('Hujjat soraldi')),
-                  DataCell(Text('Ustav yangi tahrir soraldi')),
-                  DataCell(Text('04.04.2026')),
-                  DataCell(Text('Admin')),
+                  DataCell(_NoWrap('Hujjat soraldi')),
+                  DataCell(_NoWrap('Ustav yangi tahrir soraldi')),
+                  DataCell(_NoWrap('04.04.2026')),
+                  DataCell(_NoWrap('Admin')),
                   DataCell(_StatusPill('Kutilmoqda', Color(0xFFB45309))),
                 ]),
                 DataRow(cells: [
-                  DataCell(Text('Shartnoma loyihasi')),
-                  DataCell(Text('Azolik shartnomasi loyihasi tayyorlandi')),
-                  DataCell(Text('05.04.2026')),
-                  DataCell(Text('Admin')),
+                  DataCell(_NoWrap('Shartnoma loyihasi')),
+                  DataCell(_NoWrap('Azolik shartnomasi loyihasi tayyorlandi')),
+                  DataCell(_NoWrap('05.04.2026')),
+                  DataCell(_NoWrap('Admin')),
                   DataCell(_StatusPill('Imzo kutilmoqda', AppTokens.textMuted)),
                 ]),
               ],
@@ -230,8 +232,19 @@ class _StatusPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSpace.sm, vertical: 4),
       decoration: BoxDecoration(color: color.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
-      child: Text(text, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w700)),
+      child: Text(text, maxLines: 1, overflow: TextOverflow.ellipsis, softWrap: false, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w700)),
     );
+  }
+}
+
+class _NoWrap extends StatelessWidget {
+  final String text;
+
+  const _NoWrap(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text, maxLines: 1, overflow: TextOverflow.ellipsis, softWrap: false);
   }
 }
 

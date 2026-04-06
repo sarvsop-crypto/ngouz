@@ -150,20 +150,22 @@ class _GrantsTable extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: DataTable(
               headingRowHeight: 42,
+              dataRowMaxHeight: 56,
+              columnSpacing: 24,
               columns: const [
-                DataColumn(label: Text('Grant nomi')),
-                DataColumn(label: Text('Donor')),
-                DataColumn(label: Text('Summa')),
-                DataColumn(label: Text('Sana')),
-                DataColumn(label: Text('Holat')),
+                DataColumn(label: _NoWrap('Grant nomi')),
+                DataColumn(label: _NoWrap('Donor')),
+                DataColumn(label: _NoWrap('Summa')),
+                DataColumn(label: _NoWrap('Sana')),
+                DataColumn(label: _NoWrap('Holat')),
               ],
               rows: [
                 for (final row in rows)
                   DataRow(cells: [
-                    DataCell(Text(row.$1)),
-                    DataCell(Text(row.$2)),
-                    DataCell(Text(row.$3)),
-                    DataCell(Text(row.$4)),
+                    DataCell(_NoWrap(row.$1)),
+                    DataCell(_NoWrap(row.$2)),
+                    DataCell(_NoWrap(row.$3)),
+                    DataCell(_NoWrap(row.$4)),
                     DataCell(_StatusPill(row.$5, row.$6)),
                   ]),
               ],
@@ -186,8 +188,19 @@ class _StatusPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: AppSpace.sm, vertical: 4),
       decoration: BoxDecoration(color: color.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
-      child: Text(text, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w700)),
+      child: Text(text, maxLines: 1, overflow: TextOverflow.ellipsis, softWrap: false, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w700)),
     );
+  }
+}
+
+class _NoWrap extends StatelessWidget {
+  final String text;
+
+  const _NoWrap(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(text, maxLines: 1, overflow: TextOverflow.ellipsis, softWrap: false);
   }
 }
 
