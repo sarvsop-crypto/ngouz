@@ -360,23 +360,24 @@
       .clients-controls { flex-wrap: wrap; }
     }
   </style>
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
 </head>
 <body>
   <main class="frame" data-node-id="14876:24986">
     <aside class="sidebar" data-node-id="14876:24989">
       <div>
         <div class="logo">ClientoX</div>
-        <div class="menu-item active"><div class="icon">◻</div><span>Dashboard</span></div>
-        <div class="menu-item"><div class="icon">◫</div><span>Projects</span></div>
-        <div class="menu-item"><div class="icon">◉</div><span>Team</span></div>
-        <div class="menu-item"><div class="icon">◎</div><span>Clients</span></div>
-        <div class="menu-item"><div class="icon">✎</div><span>Tasks</span></div>
-        <div class="menu-item"><div class="icon">◷</div><span>Calendar</span></div>
-        <div class="menu-item"><div class="icon">▣</div><span>Files</span></div>
+        <div class="menu-item active"><div class="icon"><i class="ph ph-squares-four"></i></div><span>Dashboard</span></div>
+        <div class="menu-item"><div class="icon"><i class="ph ph-folder-simple"></i></div><span>Projects</span></div>
+        <div class="menu-item"><div class="icon"><i class="ph ph-users-three"></i></div><span>Team</span></div>
+        <div class="menu-item"><div class="icon"><i class="ph ph-address-book"></i></div><span>Clients</span></div>
+        <div class="menu-item"><div class="icon"><i class="ph ph-pencil"></i></div><span>Tasks</span></div>
+        <div class="menu-item"><div class="icon"><i class="ph ph-calendar"></i></div><span>Calendar</span></div>
+        <div class="menu-item"><div class="icon"><i class="ph ph-files"></i></div><span>Files</span></div>
       </div>
 
       <div>
-        <div class="menu-item"><div class="icon">⚙</div><span>Settings</span></div>
+        <div class="menu-item"><div class="icon"><i class="ph ph-gear"></i></div><span>Settings</span></div>
         <div class="menu-item"><div class="icon">?</div><span>Help Center</span></div>
         <div class="mode-toggle">
           <button class="mode-btn active">Light</button>
@@ -390,7 +391,7 @@
         <h1 class="title">Dashboard</h1>
         <div class="header-right">
           <div class="search">Search</div>
-          <div>🔔</div>
+          <div><i class="ph ph-bell"></i></div>
           <div style="display:flex;align-items:center;gap:8px;">
             <div class="avatar"></div>
             <div>
@@ -406,34 +407,34 @@
           <h2 class="section-title">CRM Quick Statistics</h2>
           <div style="display:flex;gap:16px;">
             <button class="btn">This Month</button>
-            <button class="btn">↻</button>
+            <button class="btn"><i class="ph ph-arrow-clockwise"></i></button>
           </div>
         </div>
         <div class="stats">
           <article class="card" style="background:#ffb2c8;">
             <div class="card-main">
-              <div class="meta"><span>Total Revenue</span><span class="chip" style="background:#e67d9a;">▲ 15%</span></div>
+              <div class="meta"><span>Total Revenue</span><span class="chip" style="background:#e67d9a;"><i class="ph ph-trend-up" style="vertical-align:middle;"></i> 15%</span></div>
               <div class="big">$820,490</div>
             </div>
             <div class="card-foot">Update: November 23, 2025</div>
           </article>
           <article class="card" style="background:#dde594;">
             <div class="card-main">
-              <div class="meta"><span>Total Projects</span><span class="chip" style="background:#c0cc50;">▲ 10%</span></div>
+              <div class="meta"><span>Total Projects</span><span class="chip" style="background:#c0cc50;"><i class="ph ph-trend-up" style="vertical-align:middle;"></i> 10%</span></div>
               <div class="big">10,264</div>
             </div>
             <div class="card-foot">Update: November 23, 2025</div>
           </article>
           <article class="card" style="background:#caacf4;">
             <div class="card-main">
-              <div class="meta"><span>Total Clients</span><span class="chip" style="background:#a77ee1;">▲ 8%</span></div>
+              <div class="meta"><span>Total Clients</span><span class="chip" style="background:#a77ee1;"><i class="ph ph-trend-up" style="vertical-align:middle;"></i> 8%</span></div>
               <div class="big">4,720</div>
             </div>
             <div class="card-foot">Update: November 23, 2025</div>
           </article>
           <article class="card" style="background:#ffc697;">
             <div class="card-main">
-              <div class="meta"><span>Total Teams</span><span class="chip" style="background:#dfa371;">▼ 2%</span></div>
+              <div class="meta"><span>Total Teams</span><span class="chip" style="background:#dfa371;"><i class="ph ph-trend-down" style="vertical-align:middle;"></i> 2%</span></div>
               <div class="big">450</div>
             </div>
             <div class="card-foot">Update: November 23, 2025</div>
@@ -525,14 +526,14 @@
             </tr>
           </thead>
           <tbody>
-            <tr><td><input type="checkbox" /></td><td>#881019</td><td>Darlene Robertson</td><td>(702) 555-0122</td><td>darlene.r@example.com</td><td><span class="status active">Active</span></td><td><div class="actions"><span class="act">👁</span><span class="act">✎</span><span class="act" style="color:#ff6666;">🗑</span></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td>#810298</td><td>Bessie Cooper</td><td>(209) 555-0104</td><td>bessie.c@example.com</td><td><span class="status active">Active</span></td><td><div class="actions"><span class="act">👁</span><span class="act">✎</span><span class="act" style="color:#ff6666;">🗑</span></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td>#817266</td><td>Ronald Richards</td><td>(219) 555-0114</td><td>ronald.r@example.com</td><td><span class="status inactive">In Active</span></td><td><div class="actions"><span class="act">👁</span><span class="act">✎</span><span class="act" style="color:#ff6666;">🗑</span></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td>#881229</td><td>Dianne Russell</td><td>(704) 555-0127</td><td>dianne.r@example.com</td><td><span class="status active">Active</span></td><td><div class="actions"><span class="act">👁</span><span class="act">✎</span><span class="act" style="color:#ff6666;">🗑</span></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td>#801293</td><td>Leslie Alexander</td><td>(319) 555-0115</td><td>leslie.a@example.com</td><td><span class="status active">Active</span></td><td><div class="actions"><span class="act">👁</span><span class="act">✎</span><span class="act" style="color:#ff6666;">🗑</span></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td>#802736</td><td>Guy Hawkins</td><td>(302) 555-0107</td><td>guy.h@example.com</td><td><span class="status active">Active</span></td><td><div class="actions"><span class="act">👁</span><span class="act">✎</span><span class="act" style="color:#ff6666;">🗑</span></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td>#856152</td><td>Cameron Williamson</td><td>(270) 555-0117</td><td>cameron.w@example.com</td><td><span class="status active">Active</span></td><td><div class="actions"><span class="act">👁</span><span class="act">✎</span><span class="act" style="color:#ff6666;">🗑</span></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td>#868192</td><td>Courtney Henry</td><td>(201) 555-0124</td><td>courtney.h@example.com</td><td><span class="status inactive">In Active</span></td><td><div class="actions"><span class="act">👁</span><span class="act">✎</span><span class="act" style="color:#ff6666;">🗑</span></div></td></tr>
+            <tr><td><input type="checkbox" /></td><td>#881019</td><td>Darlene Robertson</td><td>(702) 555-0122</td><td>darlene.r@example.com</td><td><span class="status active">Active</span></td><td><div class="actions"><span class="act"><i class="ph ph-eye"></i></span><span class="act"><i class="ph ph-pencil"></i></span><span class="act" style="color:#ff6666;"><i class="ph ph-trash"></i></span></div></td></tr>
+            <tr><td><input type="checkbox" /></td><td>#810298</td><td>Bessie Cooper</td><td>(209) 555-0104</td><td>bessie.c@example.com</td><td><span class="status active">Active</span></td><td><div class="actions"><span class="act"><i class="ph ph-eye"></i></span><span class="act"><i class="ph ph-pencil"></i></span><span class="act" style="color:#ff6666;"><i class="ph ph-trash"></i></span></div></td></tr>
+            <tr><td><input type="checkbox" /></td><td>#817266</td><td>Ronald Richards</td><td>(219) 555-0114</td><td>ronald.r@example.com</td><td><span class="status inactive">In Active</span></td><td><div class="actions"><span class="act"><i class="ph ph-eye"></i></span><span class="act"><i class="ph ph-pencil"></i></span><span class="act" style="color:#ff6666;"><i class="ph ph-trash"></i></span></div></td></tr>
+            <tr><td><input type="checkbox" /></td><td>#881229</td><td>Dianne Russell</td><td>(704) 555-0127</td><td>dianne.r@example.com</td><td><span class="status active">Active</span></td><td><div class="actions"><span class="act"><i class="ph ph-eye"></i></span><span class="act"><i class="ph ph-pencil"></i></span><span class="act" style="color:#ff6666;"><i class="ph ph-trash"></i></span></div></td></tr>
+            <tr><td><input type="checkbox" /></td><td>#801293</td><td>Leslie Alexander</td><td>(319) 555-0115</td><td>leslie.a@example.com</td><td><span class="status active">Active</span></td><td><div class="actions"><span class="act"><i class="ph ph-eye"></i></span><span class="act"><i class="ph ph-pencil"></i></span><span class="act" style="color:#ff6666;"><i class="ph ph-trash"></i></span></div></td></tr>
+            <tr><td><input type="checkbox" /></td><td>#802736</td><td>Guy Hawkins</td><td>(302) 555-0107</td><td>guy.h@example.com</td><td><span class="status active">Active</span></td><td><div class="actions"><span class="act"><i class="ph ph-eye"></i></span><span class="act"><i class="ph ph-pencil"></i></span><span class="act" style="color:#ff6666;"><i class="ph ph-trash"></i></span></div></td></tr>
+            <tr><td><input type="checkbox" /></td><td>#856152</td><td>Cameron Williamson</td><td>(270) 555-0117</td><td>cameron.w@example.com</td><td><span class="status active">Active</span></td><td><div class="actions"><span class="act"><i class="ph ph-eye"></i></span><span class="act"><i class="ph ph-pencil"></i></span><span class="act" style="color:#ff6666;"><i class="ph ph-trash"></i></span></div></td></tr>
+            <tr><td><input type="checkbox" /></td><td>#868192</td><td>Courtney Henry</td><td>(201) 555-0124</td><td>courtney.h@example.com</td><td><span class="status inactive">In Active</span></td><td><div class="actions"><span class="act"><i class="ph ph-eye"></i></span><span class="act"><i class="ph ph-pencil"></i></span><span class="act" style="color:#ff6666;"><i class="ph ph-trash"></i></span></div></td></tr>
           </tbody>
         </table>
       </section>
