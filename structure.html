@@ -50,6 +50,8 @@
       display: flex;
       flex-direction: column;
       align-items: stretch;
+      /* push first item down so it aligns with the h-conn line */
+      padding-top: 24px;
     }
 
     /* ── Main hierarchy below head: col 1, row 2 ── */
@@ -70,13 +72,15 @@
       position: relative;
     }
 
-    /* H-bar drawn between the centers of the two deputy columns */
+    /* H-bar: from center-of-left-col to center-of-right-col
+       With grid-template-columns:1fr 1fr; gap:20px →
+       each col center = (100% - 20px) / 4 from its edge */
     .org-deputies::before {
       content: '';
       position: absolute;
       top: 0;
-      left: 25%;
-      right: 25%;
+      left: calc((100% - 20px) / 4);
+      right: calc((100% - 20px) / 4);
       height: 2px;
       background: var(--green-500, #00b4d8);
       pointer-events: none;
