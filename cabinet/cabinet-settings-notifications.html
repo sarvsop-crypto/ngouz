@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sozlamalar — A‘zo Kabinet</title>
+  <title>Bildirishnomalar — A'zo Kabinet</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
@@ -23,9 +23,8 @@
       <div class="sidebar__header">
         <div class="u-inline-stack">
           <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">A</div>
-          <span class="sidebar__title">A‘zo Kabinet</span>
+          <span class="sidebar__title">A'zo Kabinet</span>
         </div>
-        <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
       </div>
       <div class="sidebar__search" id="sidebarSearchTrigger">
         <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>
@@ -49,7 +48,7 @@
     <main class="main">
       <header class="topbar">
         <div class="topbar-left">
-          <div class="breadcrumbs"><a href="cabinet-dashboard.html">Bosh sahifa</a> / <span>Sozlamalar</span></div>
+          <div class="breadcrumbs"><a href="cabinet-dashboard.html">Bosh sahifa</a> / <a href="cabinet-settings.html">Sozlamalar</a> / <span>Bildirishnomalar</span></div>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
@@ -73,23 +72,41 @@
 
       <div class="settings-layout" style="display:grid;grid-template-columns:220px 1fr;gap:24px;">
         <nav style="display:flex;flex-direction:column;gap:4px;">
-          <a href="cabinet-settings.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ph ph-user"></i> Profil</a>
+          <a href="cabinet-settings.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-user"></i> Profil</a>
           <a href="cabinet-settings-org.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-buildings"></i> Tashkilot</a>
           <a href="cabinet-settings-security.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
-          <a href="cabinet-settings-notifications.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-bell"></i> Bildirishnomalar</a>
+          <a href="cabinet-settings-notifications.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ph ph-bell"></i> Bildirishnomalar</a>
         </nav>
         <div>
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Shaxsiy ma&rsquo;lumotlar</h2>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Ism</label><input type="text" value="Kamolov Sanjar" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Email</label><input type="email" value="kamolov@yanginafas.uz" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Telefon</label><input type="tel" value="+998 90 123 45 67" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Lavozim</label><input type="text" value="Tashkilot rahbari" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
+            <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">Bildirishnoma kanallari</h2>
+            <p style="font-size:14px;color:var(--grey-400);margin:0 0 20px;">Qaysi kanallar orqali xabarlar olishni tanlang</p>
+            <div style="display:flex;flex-direction:column;gap:0;">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--grey-50);">
+                <div><p style="font-size:14px;font-weight:500;color:var(--grey-900);margin:0 0 2px;display:flex;align-items:center;gap:8px;"><i class="ph ph-envelope"></i> Email bildirishnomalar</p><p style="font-size:13px;color:var(--grey-400);margin:0;">Ariza holati va muhim xabarlar emailga yuboriladi</p></div>
+                <input type="checkbox" checked style="width:18px;height:18px;cursor:pointer;" />
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--grey-50);">
+                <div><p style="font-size:14px;font-weight:500;color:var(--grey-900);margin:0 0 2px;display:flex;align-items:center;gap:8px;"><i class="ph ph-device-mobile"></i> SMS bildirishnomalar</p><p style="font-size:13px;color:var(--grey-400);margin:0;">Muhim xabarlar telefon raqamingizga yuboriladi</p></div>
+                <input type="checkbox" style="width:18px;height:18px;cursor:pointer;" />
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;">
+                <div><p style="font-size:14px;font-weight:500;color:var(--grey-900);margin:0 0 2px;display:flex;align-items:center;gap:8px;"><i class="ph ph-paper-plane-tilt"></i> Telegram bildirishnomalar</p><p style="font-size:13px;color:var(--grey-400);margin:0;">Telegram bot orqali tezkor xabarlar</p></div>
+                <input type="checkbox" checked style="width:18px;height:18px;cursor:pointer;" />
+              </div>
             </div>
-            <div style="margin-top:20px;display:flex;gap:12px;">
+          </div>
+          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
+            <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Xabarnoma turlari</h2>
+            <div style="display:flex;flex-direction:column;gap:12px;">
+              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-clipboard-text"></i> Ariza holati o&rsquo;zgarganda</span><input type="checkbox" checked style="width:18px;height:18px;" /></label>
+              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-trophy"></i> Yangi grant e&rsquo;loni</span><input type="checkbox" checked style="width:18px;height:18px;" /></label>
+              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-calendar"></i> Tadbir eslatmalari</span><input type="checkbox" checked style="width:18px;height:18px;" /></label>
+              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-file-text"></i> Hisobot muddati eslatmasi</span><input type="checkbox" checked style="width:18px;height:18px;" /></label>
+              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-newspaper"></i> Yangiliklar va e&rsquo;lonlar</span><input type="checkbox" style="width:18px;height:18px;" /></label>
+            </div>
+            <div style="margin-top:20px;">
               <button type="button" class="btn btn--primary"><i class="ph ph-floppy-disk"></i> Saqlash</button>
-              <button type="button" class="btn btn--secondary">Bekor qilish</button>
             </div>
           </div>
         </div>
@@ -98,34 +115,9 @@
   </div>
 
   <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
-    <div class="notifications-panel__header">
-      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
-    </div>
+    <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2></div>
     <div class="notifications-panel__list">
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-clipboard-text"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Yangi ariza kelib tushdi <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">Yangi Nafas NNT &mdash; ARZ-2026-0418 ko&rsquo;rib chiqilishi kerak.</p>
-          <p class="notifications-panel__item-time">2 daqiqa oldin</p>
-        </div>
-      </div>
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-paperclip"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Hujjat yuklandi <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">Umid Istiqbol NNT yangi hujjat yukladi.</p>
-          <p class="notifications-panel__item-time">15 daqiqa oldin</p>
-        </div>
-      </div>
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-check-circle"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Ariza tasdiqlandi</p>
-          <p class="notifications-panel__item-body">Mehr-Shafqat NNT arizasi tasdiqlandi.</p>
-          <p class="notifications-panel__item-time">1 soat oldin</p>
-        </div>
-      </div>
+      <div class="notifications-panel__item"><div class="notifications-panel__icon"><i class="ph ph-clipboard-text"></i></div><div class="notifications-panel__content"><p class="notifications-panel__item-title">Ariza holati o&rsquo;zgardi <span class="notifications-panel__dot"></span></p><p class="notifications-panel__item-body">ARZ-2026-0312 arizangiz ko&rsquo;rib chiqilmoqda.</p><p class="notifications-panel__item-time">1 soat oldin</p></div></div>
     </div>
     <div class="notifications-panel__footer">
       <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
