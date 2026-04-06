@@ -1,51 +1,58 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/app_tokens.dart';
-import '../../../widgets/content_container.dart';
+import '../widgets/cabinet_page_scaffold.dart';
 
 class CabinetApplicationsPage extends StatelessWidget {
   const CabinetApplicationsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ContentContainer(
-      padding: const EdgeInsets.all(AppSpace.xl),
-      child: Container(
-        decoration: BoxDecoration(
-          color: AppTokens.surface,
-          border: Border.all(color: AppTokens.border),
-          borderRadius: BorderRadius.circular(AppTokens.radiusMd),
+    return CabinetPageScaffold(
+      eyebrow: 'Arizalar',
+      title: 'Barcha yuborilgan arizalar holatini kuzating',
+      children: const [
+        CabinetSectionTitle('Ariza holati'),
+        SizedBox(height: AppSpace.md),
+        CabinetCard(
+          padding: EdgeInsets.zero,
+          child: Column(
+            children: [
+              _ApplicationRow('ARZ-2026-0418', 'Azolik arizasi', 'Korib chiqilmoqda', AppTokens.primaryDark),
+              Divider(height: 1),
+              _ApplicationRow('ARZ-2026-0412', 'Grant arizasi', 'Tasdiqlangan', Color(0xFF0F7B4B)),
+              Divider(height: 1),
+              _ApplicationRow('ARZ-2026-0399', 'Hisobot yuborish', 'Qayta ishlash kerak', Color(0xFFB45309)),
+            ],
+          ),
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            Padding(
-              padding: EdgeInsets.all(AppSpace.lg),
-              child: Text('Ariza holati', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
-            ),
-            Divider(height: 1),
-            _Row('ARZ-2026-0418', 'A\'zolik arizasi', 'Ko\'rib chiqilmoqda'),
-            _Row('ARZ-2026-0412', 'Grant arizasi', 'Tasdiqlangan'),
-            _Row('ARZ-2026-0399', 'Hisobot yuborish', 'Qayta ishlash kerak'),
-          ],
-        ),
-      ),
+      ],
     );
   }
 }
 
-class _Row extends StatelessWidget {
+class _ApplicationRow extends StatelessWidget {
   final String id;
   final String title;
   final String status;
-  const _Row(this.id, this.title, this.status);
+  final Color statusColor;
+
+  const _ApplicationRow(this.id, this.title, this.status, this.statusColor);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text('$id - $title'),
-      subtitle: Text(status),
-      trailing: const Icon(Icons.chevron_right),
+      contentPadding: const EdgeInsets.symmetric(horizontal: AppSpace.lg, vertical: AppSpace.xs),
+      title: Text(title, style: const TextStyle(fontWeight: FontWeight.w600)),
+      subtitle: Text(id, style: const TextStyle(color: AppTokens.textMuted)),
+      trailing: Container(
+        padding: const EdgeInsets.symmetric(horizontal: AppSpace.md, vertical: 6),
+        decoration: BoxDecoration(
+          color: statusColor.withValues(alpha: 0.12),
+          borderRadius: BorderRadius.circular(999),
+        ),
+        child: Text(status, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600, color: statusColor)),
+      ),
     );
   }
 }
