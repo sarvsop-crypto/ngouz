@@ -66,6 +66,22 @@
     .table td:last-child { width: 40px; }
     .doc-link { color: var(--primary-600); text-decoration: none; font-weight: 500; }
     .doc-link:hover { text-decoration: underline; }
+    .doc-progress-card { background: var(--grey-0); border: 1px solid var(--grey-100); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+    .doc-progress-row { display: flex; align-items: center; gap: 24px; margin-bottom: 20px; }
+    .doc-progress-chart { position: relative; width: 100px; height: 100px; flex-shrink: 0; }
+    .doc-progress-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+    .doc-progress-sub { font-size: 13px; color: var(--grey-400); margin-bottom: 8px; }
+    .doc-progress-legend { display: flex; gap: 16px; font-size: 13px; flex-wrap: wrap; }
+    .doc-progress-legend-item { display: flex; align-items: center; gap: 6px; }
+    .doc-progress-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+    .table-row-warning { background: var(--warning-0); }
+    .text-warning-strong { color: var(--warning-700); }
+    .doc-upload-panel { background: var(--grey-0); border: 1px solid var(--grey-100); border-radius: 12px; padding: 24px; margin-top: 16px; }
+    .doc-upload-title { font-size: 16px; font-weight: 600; margin: 0 0 16px; }
+    .doc-upload-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: end; }
+    .doc-form-label { font-size: 13px; color: var(--grey-400); display: block; margin-bottom: 6px; }
+    .doc-form-control { width: 100%; padding: 10px 12px; border: 1px solid var(--grey-100); border-radius: 8px; font-size: 14px; font-family: inherit; background: var(--grey-0); box-sizing: border-box; }
+    .doc-upload-actions { margin-top: 16px; }
 
     .badge { display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 5px; font-size: 12px; font-weight: 500; font-family: 'Inter Tight', sans-serif; }
     .badge--active { background: var(--success-0); border: 1px solid var(--success-25); color: var(--success-700); }
@@ -88,6 +104,11 @@
     .pagination__btn + .pagination__btn { margin-left: -1px; }
     .pagination__btn.is-active { background: var(--primary-500); color: var(--grey-0); border-color: var(--primary-500); }
     .pagination__btn:hover:not(.is-active) { background: var(--grey-25); }
+
+    @media (max-width: 900px) {
+      .doc-progress-row { flex-direction: column; align-items: flex-start; }
+      .doc-upload-grid { grid-template-columns: 1fr; }
+    }
   
 
 

@@ -22,7 +22,7 @@
     <aside class="sidebar">
       <div class="sidebar__header">
         <div class="u-inline-stack">
-          <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">A</div>
+          <div class="sidebar__logo u-logo-initial">A</div>
           <span class="sidebar__title">A‘zo Kabinet</span>
         </div>
         <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
@@ -58,7 +58,7 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;" class="main__profile-avatar">K</div>
+            <div class="main__profile-avatar u-profile-avatar-initial">K</div>
             <div>
               <div class="main__profile-name">Kamolov Sanjar</div>
               <div class="main__profile-role">Yangi Nafas NNT</div>
@@ -81,9 +81,9 @@
         <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-files"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Jami</p><p class="card__value">7</p></div></div></div>
       </div>
 
-      <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
-        <div style="display:flex;align-items:center;gap:24px;margin-bottom:20px;">
-          <div style="position:relative;width:100px;height:100px;flex-shrink:0;">
+      <div class="doc-progress-card">
+        <div class="doc-progress-row">
+          <div class="doc-progress-chart">
             <svg width="100" height="100" viewBox="0 0 120 120">
               <!-- C=2π×45≈283. 3 gaps×4=12. Available=271. Segs: 3/7×271≈116, 1/7×271≈39, 3/7×271≈116 -->
               <circle cx="60" cy="60" r="45" fill="none" stroke="#e5e7eb" stroke-width="10"/>
@@ -95,12 +95,12 @@
             </svg>
           </div>
           <div>
-            <div style="font-size:20px;font-weight:700;margin-bottom:4px;">3 / 7 hujjat qabul qilindi</div>
-            <div style="font-size:13px;color:var(--grey-400);margin-bottom:8px;">1 ta muddatli &middot; 3 ta kutilmoqda</div>
-            <div style="display:flex;gap:16px;font-size:13px;flex-wrap:wrap;">
-              <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:#059669;border-radius:50%;display:inline-block;"></span>Tasdiqlangan: 3</span>
-              <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:var(--secondary-500);border-radius:50%;display:inline-block;"></span>Muddatli: 1</span>
-              <span style="display:flex;align-items:center;gap:6px;"><span style="width:10px;height:10px;background:#94a3b8;border-radius:50%;display:inline-block;"></span>Kutilmoqda: 3</span>
+            <div class="doc-progress-title">3 / 7 hujjat qabul qilindi</div>
+            <div class="doc-progress-sub">1 ta muddatli &middot; 3 ta kutilmoqda</div>
+            <div class="doc-progress-legend">
+              <span class="doc-progress-legend-item"><span class="doc-progress-dot u-bg-green-600"></span>Tasdiqlangan: 3</span>
+              <span class="doc-progress-legend-item"><span class="doc-progress-dot u-bg-secondary-500"></span>Muddatli: 1</span>
+              <span class="doc-progress-legend-item"><span class="doc-progress-dot u-bg-grey-500"></span>Kutilmoqda: 3</span>
             </div>
           </div>
         </div>
@@ -119,7 +119,7 @@
             <tr><td><a href="#" class="doc-link"><i class="ph ph-file-pdf"></i> NGO Ustavi</a></td><td>Majburiy</td><td>01.04.2026</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
             <tr><td><a href="#" class="doc-link"><i class="ph ph-file-pdf"></i> Davlat ro&rsquo;yxatidan o&rsquo;tish guvohnomasi</a></td><td>Majburiy</td><td>01.04.2026</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
             <tr><td><a href="#" class="doc-link"><i class="ph ph-file-pdf"></i> Rahbar haqida ma&rsquo;lumotnoma</a></td><td>Majburiy</td><td>01.04.2026</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
-            <tr style="background:var(--warning-0);"><td><i class="ph ph-warning"></i> Ustav yangi tahrir (2026-yil)</td><td>Majburiy</td><td><strong style="color:var(--warning-700);">10.04.2026</strong></td><td><span class="badge badge--warning"><span class="badge__dot"></span>Muddatli</span></td><td><button type="button" class="btn btn--sm btn--primary"><i class="ph ph-upload-simple"></i> Yuklash</button></td></tr>
+            <tr class="table-row-warning"><td><i class="ph ph-warning"></i> Ustav yangi tahrir (2026-yil)</td><td>Majburiy</td><td><strong class="text-warning-strong">10.04.2026</strong></td><td><span class="badge badge--warning"><span class="badge__dot"></span>Muddatli</span></td><td><button type="button" class="btn btn--sm btn--primary"><i class="ph ph-upload-simple"></i> Yuklash</button></td></tr>
             <tr><td><i class="ph ph-clock"></i> Soliq organidan ma&rsquo;lumotnoma</td><td>Majburiy</td><td>&mdash;</td><td><span class="badge badge--pending"><span class="badge__dot"></span>Yuklanmagan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-upload-simple"></i> Yuklash</button></td></tr>
             <tr><td><a href="#" class="doc-link"><i class="ph ph-file-text"></i> A&rsquo;zolik shartnomasi</a></td><td>Majburiy</td><td>&mdash;</td><td><span class="badge badge--warning"><span class="badge__dot"></span>Imzo kutilmoqda</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
             <tr><td><i class="ph ph-clock"></i> Tashkilot nizomi</td><td>Ixtiyoriy</td><td>&mdash;</td><td><span class="badge badge--pending"><span class="badge__dot"></span>Yuklanmagan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-upload-simple"></i> Yuklash</button></td></tr>
@@ -127,12 +127,12 @@
         </table>
       </section>
 
-      <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-top:16px;">
-        <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;"><i class="ph ph-upload-simple"></i> Yangi hujjat yuklash</h2>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:end;">
+      <div class="doc-upload-panel">
+        <h2 class="doc-upload-title"><i class="ph ph-upload-simple"></i> Yangi hujjat yuklash</h2>
+        <div class="doc-upload-grid">
           <div>
-            <label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Hujjat turi</label>
-            <select style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;">
+            <label class="doc-form-label">Hujjat turi</label>
+            <select class="doc-form-control">
               <option value="">Hujjat turini tanlang</option>
               <option>Ustav yangi tahrir (2026-yil)</option>
               <option>Soliq organidan ma&rsquo;lumotnoma</option>
@@ -141,11 +141,11 @@
             </select>
           </div>
           <div>
-            <label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Fayl (PDF, DOC &mdash; maks. 10 MB)</label>
-            <input type="file" accept=".pdf,.doc,.docx" style="width:100%;padding:9px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" />
+            <label class="doc-form-label">Fayl (PDF, DOC &mdash; maks. 10 MB)</label>
+            <input class="doc-form-control" type="file" accept=".pdf,.doc,.docx" />
           </div>
         </div>
-        <div style="margin-top:16px;">
+        <div class="doc-upload-actions">
           <button type="button" class="btn btn--primary"><i class="ph ph-upload-simple"></i> Yuklash</button>
         </div>
       </div>

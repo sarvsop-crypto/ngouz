@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Xavfsizlik â€” O'zNNTMA Admin</title>
+  <title>Xavfsizlik — O'zNNTMA Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
@@ -21,7 +21,7 @@
     <aside class="sidebar">
       <div class="sidebar__header">
         <div class="u-inline-stack">
-          <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">N</div>
+          <div class="sidebar__logo u-logo-initial">N</div>
           <span class="sidebar__title">O'zNNTMA Admin</span>
         </div>
       </div>
@@ -56,7 +56,7 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;" class="main__profile-avatar">A</div>
+            <div class="main__profile-avatar u-profile-avatar-initial">A</div>
             <div>
               <div class="main__profile-name">Administrator</div>
               <div class="main__profile-role">Bosh admin</div>
@@ -69,58 +69,69 @@
         <h1 class="main__title">Sozlamalar</h1>
       </div>
 
-      <div class="settings-layout" style="display:grid;grid-template-columns:220px 1fr;gap:24px;">
-        <nav style="display:flex;flex-direction:column;gap:4px;">
-          <a href="admin-settings.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-user"></i> Profil</a>
-          <a href="admin-settings-notifications.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-bell"></i> Bildirishnomalar</a>
-          <a href="admin-settings-security.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
-          <a href="admin-settings-system.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-sliders"></i> Tizim</a>
+      <div class="settings-layout">
+        <nav class="settings-side-nav">
+          <a href="admin-settings.html" class="settings-side-link"><i class="ph ph-user"></i> Profil</a>
+          <a href="admin-settings-notifications.html" class="settings-side-link"><i class="ph ph-bell"></i> Bildirishnomalar</a>
+          <a href="admin-settings-security.html" class="settings-side-link is-active"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
+          <a href="admin-settings-system.html" class="settings-side-link"><i class="ph ph-sliders"></i> Tizim</a>
         </nav>
         <div>
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Parolni o&rsquo;zgartirish</h2>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Joriy parol</label><input type="password" placeholder="Joriy parolni kiriting" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+          <div class="settings-panel">
+            <h2 class="settings-section-title">Parolni o'zgartirish</h2>
+            <div class="settings-grid-two">
+              <div><label class="settings-form-label">Joriy parol</label><input class="settings-form-control" type="password" placeholder="Joriy parolni kiriting" /></div>
               <div></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Yangi parol</label><input type="password" placeholder="Yangi parolni kiriting" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Yangi parolni tasdiqlang</label><input type="password" placeholder="Takrorlab kiriting" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+              <div><label class="settings-form-label">Yangi parol</label><input class="settings-form-control" type="password" placeholder="Yangi parolni kiriting" /></div>
+              <div><label class="settings-form-label">Yangi parolni tasdiqlang</label><input class="settings-form-control" type="password" placeholder="Takrorlab kiriting" /></div>
             </div>
-            <div style="margin-top:20px;">
+            <div class="settings-actions-row">
               <button type="button" class="btn btn--primary"><i class="ph ph-lock-key"></i> Parolni yangilash</button>
             </div>
           </div>
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">Ikki bosqichli tasdiqlash</h2>
-            <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;">Hisobingizni qo&rsquo;shimcha himoya qatlami bilan himoya qiling</p>
-            <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:var(--grey-25);border-radius:8px;">
-              <div style="display:flex;align-items:center;gap:12px;">
-                <i class="ph ph-shield-check" style="font-size:20px;color:var(--primary-500);"></i>
-                <div><p style="font-size:14px;font-weight:500;color:var(--grey-900);margin:0 0 2px;">Autentifikator ilovasi</p><p style="font-size:13px;color:var(--grey-400);margin:0;">Google Authenticator yoki Authy orqali</p></div>
+
+          <div class="settings-panel">
+            <h2 class="settings-section-title settings-section-title--tight">Ikki bosqichli tasdiqlash</h2>
+            <p class="settings-section-sub">Hisobingizni qo'shimcha himoya qatlami bilan himoya qiling</p>
+            <div class="security-feature">
+              <div class="security-feature__left">
+                <i class="ph ph-shield-check security-feature__icon"></i>
+                <div>
+                  <p class="security-feature__title">Autentifikator ilovasi</p>
+                  <p class="security-feature__desc">Google Authenticator yoki Authy orqali</p>
+                </div>
               </div>
-              <button type="button" class="btn btn--secondary" style="font-size:13px;">Yoqish</button>
+              <button type="button" class="btn btn--secondary btn--text-sm">Yoqish</button>
             </div>
           </div>
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">Faol seanslar</h2>
-            <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;">Hozirda tizimga kirgan qurilmalar</p>
-            <div style="display:flex;flex-direction:column;gap:12px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--grey-100);border-radius:8px;">
-                <div style="display:flex;align-items:center;gap:12px;">
-                  <i class="ph ph-monitor" style="font-size:20px;color:var(--grey-400);"></i>
-                  <div><p style="font-size:14px;font-weight:500;color:var(--grey-900);margin:0 0 2px;">Windows Â· Chrome</p><p style="font-size:13px;color:var(--grey-400);margin:0;">Toshkent, O'zbekiston &mdash; Joriy seans</p></div>
+
+          <div class="settings-panel">
+            <h2 class="settings-section-title settings-section-title--tight">Faol seanslar</h2>
+            <p class="settings-section-sub">Hozirda tizimga kirgan qurilmalar</p>
+            <div class="settings-stack">
+              <div class="session-item">
+                <div class="session-item__left">
+                  <i class="ph ph-monitor session-item__icon"></i>
+                  <div>
+                    <p class="session-item__title">Windows · Chrome</p>
+                    <p class="session-item__meta">Toshkent, O'zbekiston — Joriy seans</p>
+                  </div>
                 </div>
-                <span style="font-size:12px;color:var(--primary-500);font-weight:600;background:var(--primary-50);padding:4px 10px;border-radius:20px;">Joriy</span>
+                <span class="session-pill">Joriy</span>
               </div>
-              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--grey-100);border-radius:8px;">
-                <div style="display:flex;align-items:center;gap:12px;">
-                  <i class="ph ph-device-mobile" style="font-size:20px;color:var(--grey-400);"></i>
-                  <div><p style="font-size:14px;font-weight:500;color:var(--grey-900);margin:0 0 2px;">Android Â· Chrome Mobile</p><p style="font-size:13px;color:var(--grey-400);margin:0;">Kecha 18:42 &mdash; Toshkent</p></div>
+              <div class="session-item">
+                <div class="session-item__left">
+                  <i class="ph ph-device-mobile session-item__icon"></i>
+                  <div>
+                    <p class="session-item__title">Android · Chrome Mobile</p>
+                    <p class="session-item__meta">Kecha 18:42 — Toshkent</p>
+                  </div>
                 </div>
-                <button type="button" class="btn btn--secondary" style="font-size:13px;">Tugatish</button>
+                <button type="button" class="btn btn--secondary btn--text-sm">Tugatish</button>
               </div>
             </div>
-            <div style="margin-top:16px;">
-              <button type="button" class="btn btn--danger" style="font-size:13px;background:transparent;border:1px solid #ef4444;color:#ef4444;padding:8px 16px;border-radius:8px;cursor:pointer;"><i class="ph ph-sign-out"></i> Barcha seanslarni tugatish</button>
+            <div class="settings-actions-row">
+              <button type="button" class="btn btn--danger btn--danger-outline"><i class="ph ph-sign-out"></i> Barcha seanslarni tugatish</button>
             </div>
           </div>
         </div>
@@ -131,10 +142,10 @@
   <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2></div>
     <div class="notifications-panel__list">
-      <div class="notifications-panel__item"><div class="notifications-panel__icon"><i class="ph ph-clipboard-text"></i></div><div class="notifications-panel__content"><p class="notifications-panel__item-title">Yangi ariza kelib tushdi <span class="notifications-panel__dot"></span></p><p class="notifications-panel__item-body">Yangi Nafas NNT &mdash; ARZ-2026-0418 ko&rsquo;rib chiqilishi kerak.</p><p class="notifications-panel__item-time">2 daqiqa oldin</p></div></div>
+      <div class="notifications-panel__item"><div class="notifications-panel__icon"><i class="ph ph-clipboard-text"></i></div><div class="notifications-panel__content"><p class="notifications-panel__item-title">Yangi ariza kelib tushdi <span class="notifications-panel__dot"></span></p><p class="notifications-panel__item-body">Yangi Nafas NNT — ARZ-2026-0418 ko'rib chiqilishi kerak.</p><p class="notifications-panel__item-time">2 daqiqa oldin</p></div></div>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
+      <button type="button" class="notifications-panel__mark-read">Barchasini o'qildi deb belgilash</button>
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>
