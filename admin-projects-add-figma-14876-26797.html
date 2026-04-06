@@ -1,0 +1,310 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClientoX Add New Project - Figma 14876:26797</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f7f7;
+      --panel: #fff;
+      --line: #dfdfdf;
+      --text: #060c13;
+      --muted: #a1a1a1;
+      --muted2: #7b7b7b;
+      --primary: #383bfe;
+      --primary50: #ebf2ff;
+      --radius32: 32px;
+      --radius24: 24px;
+      --radius16: 16px;
+      --radius12: 12px;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #eaeaea; font-family: "Open Sans", sans-serif; color: var(--text); }
+
+    .frame {
+      width: 1440px;
+      min-height: 1024px;
+      margin: 0 auto;
+      background: var(--bg);
+      border-radius: 32px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 280px 1096px;
+      gap: 16px;
+    }
+
+    .sidebar {
+      min-height: 976px;
+      border-radius: var(--radius32);
+      background: var(--panel);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 36px;
+      font-weight: 700;
+      margin-bottom: 32px;
+      letter-spacing: -0.7px;
+      color: #1a2535;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px;
+      border-radius: 999px;
+      margin-bottom: 4px;
+      font-size: 16px;
+      letter-spacing: -0.32px;
+      line-height: 1.5;
+    }
+
+    .menu-item .icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--primary50);
+      display: grid;
+      place-items: center;
+      color: var(--primary);
+      font-size: 15px;
+    }
+
+    .menu-item.active {
+      background: var(--primary);
+      border-radius: 16px;
+      color: #fff;
+    }
+
+    .menu-item.active .icon {
+      background: rgba(255,255,255,.1);
+      color: #fff;
+    }
+
+    .mode { display: grid; grid-template-columns: 1fr 1fr; border-radius: 16px; overflow: hidden; }
+    .mode button {
+      height: 48px;
+      border: none;
+      background: #dbe7ff;
+      color: var(--text);
+      font: 400 16px/1.5 "Open Sans", sans-serif;
+      letter-spacing: -0.32px;
+    }
+    .mode .active { background: var(--primary); color: #fff; font-weight: 600; }
+
+    .main { display: grid; grid-template-rows: 80px 392px; gap: 16px; }
+
+    .header {
+      border-radius: var(--radius24);
+      background: var(--panel);
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .title { margin: 0; font-size: 24px; line-height: 1.32; letter-spacing: -0.48px; font-weight: 700; }
+    .crumb { margin: 6px 0 0; color: var(--muted2); font-size: 14px; line-height: 1.4; letter-spacing: -0.28px; }
+
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .search {
+      width: 260px;
+      height: 40px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+      letter-spacing: -0.28px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .avatar { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(145deg,#8f6950,#e3b892); }
+    .admin-name { margin: 0; font-size: 16px; line-height: 1.5; letter-spacing: -0.32px; font-weight: 600; }
+    .admin-role { margin: 0; color: var(--muted2); font-size: 12px; line-height: 1.3; letter-spacing: -0.24px; }
+
+    .card {
+      border-radius: var(--radius32);
+      background: var(--panel);
+      padding: 16px;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      gap: 16px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 524px);
+      column-gap: 16px;
+      row-gap: 16px;
+    }
+
+    .field label {
+      display: block;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.4;
+      letter-spacing: -0.28px;
+      margin-bottom: 4px;
+    }
+
+    .input {
+      height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px 16px;
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: -0.32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--text);
+      background: #fff;
+    }
+
+    .radio-wrap {
+      height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--text);
+      font-size: 16px;
+      letter-spacing: -0.32px;
+    }
+
+    .radio {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 1px solid #c8c8c8;
+      display: inline-grid;
+      place-items: center;
+    }
+
+    .dot.active { border-color: var(--primary); }
+    .dot.active::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--primary);
+      display: block;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--text);
+      height: 40px;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font: 400 14px/1.4 "Open Sans", sans-serif;
+      letter-spacing: -0.28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn.primary { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    .actions { display: flex; justify-content: flex-end; gap: 16px; }
+
+    @media (max-width: 1450px) {
+      body { background: var(--bg); }
+      .frame { width: 100%; border-radius: 0; grid-template-columns: 1fr; min-height: 100vh; }
+      .main { grid-template-rows: auto; }
+      .form-grid { grid-template-columns: 1fr; }
+      .actions { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <main class="frame" data-node-id="14876:26797">
+    <aside class="sidebar" data-node-id="14876:26800">
+      <div>
+        <div class="logo">ClientoX</div>
+        <div class="menu-item"><div class="icon">◻</div><span>Dashboard</span></div>
+        <div class="menu-item active"><div class="icon">◫</div><span>Projects</span></div>
+        <div class="menu-item"><div class="icon">◉</div><span>Team</span></div>
+        <div class="menu-item"><div class="icon">◎</div><span>Clients</span></div>
+        <div class="menu-item"><div class="icon">✎</div><span>Tasks</span></div>
+        <div class="menu-item"><div class="icon">◷</div><span>Calendar</span></div>
+        <div class="menu-item"><div class="icon">▣</div><span>Files</span></div>
+      </div>
+
+      <div>
+        <div class="menu-item"><div class="icon">⚙</div><span>Settings</span></div>
+        <div class="menu-item"><div class="icon">?</div><span>Help Center</span></div>
+        <div class="mode">
+          <button class="active">Light</button>
+          <button>Dark</button>
+        </div>
+      </div>
+    </aside>
+
+    <section class="main" data-node-id="14876:26801">
+      <header class="header" data-node-id="14876:26802">
+        <div>
+          <h1 class="title">Add New Project</h1>
+          <p class="crumb">Projects &nbsp;›&nbsp; Add New Project</p>
+        </div>
+        <div class="header-right">
+          <div class="search">◯ Search</div>
+          <div>🔔</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="avatar"></div>
+            <div>
+              <p class="admin-name">Shane Watson</p>
+              <p class="admin-role">Admin</p>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <section class="card" data-node-id="14876:26803">
+        <div class="form-grid" data-node-id="14876:26804">
+          <div class="field"><label>Project Name</label><div class="input">SaaS HRMS Website Design</div></div>
+          <div class="field"><label>Category</label><div class="input">UI/UX Design <span>▾</span></div></div>
+          <div class="field"><label>Type</label><div class="input">Website <span>▾</span></div></div>
+          <div class="field"><label>Start Date</label><div class="input">Nov 23, 2025 <span>◷</span></div></div>
+          <div class="field"><label>Amount</label><div class="input">$12,500.00 <span>◔</span></div></div>
+          <div class="field">
+            <label>Status</label>
+            <div class="radio-wrap">
+              <span class="radio"><span class="dot active"></span>In Progress</span>
+              <span class="radio"><span class="dot"></span>Completed</span>
+            </div>
+          </div>
+          <div class="field" style="grid-column:1 / span 2;">
+            <button class="btn primary">⊞ Add Team Members</button>
+          </div>
+        </div>
+
+        <div class="actions" data-node-id="14876:26819">
+          <button class="btn">Cancel</button>
+          <button class="btn primary">Add</button>
+        </div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

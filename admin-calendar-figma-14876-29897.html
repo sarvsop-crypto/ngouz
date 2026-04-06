@@ -1,0 +1,127 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ClientoX Calendar - Figma 14876:29897</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root { --bg:#f7f7f7; --panel:#fff; --line:#dfdfdf; --text:#060c13; --muted:#a1a1a1; --muted2:#7b7b7b; --primary:#383bfe; --primary50:#ebf2ff; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#ececec; font-family:"Open Sans",sans-serif; color:var(--text); }
+    .frame { width:1440px; min-height:1024px; margin:0 auto; background:var(--bg); border-radius:32px; padding:24px; display:grid; grid-template-columns:280px 1096px; gap:16px; }
+    .sidebar { background:var(--panel); border-radius:32px; padding:16px; display:flex; flex-direction:column; justify-content:space-between; min-height:976px; }
+    .logo { width:124px; margin-bottom:32px; }
+    .menu-item { display:flex; align-items:center; gap:8px; padding:4px; border-radius:999px; margin-bottom:4px; font-size:16px; }
+    .icon { width:40px; height:40px; border-radius:12px; background:var(--primary50); color:var(--primary); display:grid; place-items:center; }
+    .menu-item.active { background:var(--primary); color:#fff; border-radius:16px; font-weight:600; }
+    .menu-item.active .icon { background:rgba(255,255,255,.1); color:#fff; }
+    .mode { display:grid; grid-template-columns:1fr 1fr; overflow:hidden; border-radius:16px; }
+    .mode button { height:48px; border:0; background:#dbe7ff; font:400 16px/1.5 "Open Sans"; }
+    .mode .active { background:var(--primary); color:#fff; font-weight:600; }
+
+    .main { display:grid; grid-template-rows:80px 876px; gap:16px; }
+    .header { background:var(--panel); border-radius:24px; padding:20px 24px; display:flex; justify-content:space-between; align-items:center; }
+    h1 { margin:0; font-size:35px; }
+    .right { display:flex; align-items:center; gap:16px; }
+    .search { width:260px; height:40px; border:1px solid var(--line); border-radius:12px; padding:10px 12px; color:var(--muted); font-size:14px; display:flex; align-items:center; gap:8px; }
+    .avatar { width:40px; height:40px; border-radius:12px; object-fit:cover; }
+    .admin { display:flex; align-items:center; gap:8px; }
+    .admin p { margin:0; }
+    .admin small { color:var(--muted2); }
+
+    .calendar-card { background:var(--panel); border-radius:32px; padding:12px; }
+    .tools { display:flex; justify-content:space-between; margin-bottom:12px; }
+    .btn { height:40px; border:1px solid var(--line); border-radius:12px; background:#fff; padding:0 12px; font:400 14px/1 "Open Sans"; color:var(--text); }
+
+    .grid { border:1px solid var(--line); border-radius:24px; overflow:hidden; }
+    .weekdays, .row { display:grid; grid-template-columns:repeat(7, 1fr); }
+    .weekdays div { height:32px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); color:var(--muted2); font-size:16px; display:grid; place-items:center; }
+    .weekdays div:last-child { border-right:0; }
+    .cell { height:114px; border-right:1px solid var(--line); border-bottom:1px solid var(--line); padding:10px; display:flex; flex-direction:column; justify-content:space-between; align-items:flex-end; }
+    .row .cell:last-child { border-right:0; }
+    .event { align-self:flex-start; font-size:14px; line-height:1.35; border-radius:16px; padding:6px 8px; max-width:100%; }
+    .blue { background:#ebf2ff; color:#383bfe; }
+    .purple { background:#f4f2ff; color:#864cff; }
+    .green { background:#f0fdf4; color:#22c55e; }
+    .dim { color:var(--muted); }
+  </style>
+</head>
+<body>
+  <main class="frame" data-node-id="14876:29897">
+    <aside class="sidebar">
+      <div>
+        <img class="logo" src="https://www.figma.com/api/mcp/asset/63ce0411-0620-4f7f-8b15-e2f8c4a181ef" alt="ClientoX" />
+        <div class="menu-item"><div class="icon">◻</div>Dashboard</div>
+        <div class="menu-item"><div class="icon">◫</div>Projects</div>
+        <div class="menu-item"><div class="icon">◉</div>Team</div>
+        <div class="menu-item"><div class="icon">◎</div>Clients</div>
+        <div class="menu-item"><div class="icon">✎</div>Tasks</div>
+        <div class="menu-item active"><div class="icon">◷</div>Calendar</div>
+        <div class="menu-item"><div class="icon">▣</div>Files</div>
+      </div>
+      <div>
+        <div class="menu-item"><div class="icon">⚙</div>Settings</div>
+        <div class="menu-item"><div class="icon">?</div>Help Center</div>
+        <div class="mode"><button class="active">Light</button><button>Dark</button></div>
+      </div>
+    </aside>
+
+    <section class="main">
+      <header class="header">
+        <h1>Calendar</h1>
+        <div class="right">
+          <div class="search">◯ Search</div>
+          <span>◌</span>
+          <div class="admin">
+            <img class="avatar" src="https://www.figma.com/api/mcp/asset/f44cfcff-61f5-4ac8-a8b0-e4a7d9c2d9c6" alt="Shane" />
+            <div><p><b>Shane Watson</b></p><small>Admin</small></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="calendar-card">
+        <div class="tools">
+          <div class="search" style="width:184px">◯ Search</div>
+          <button class="btn">⌁ Filter</button>
+        </div>
+
+        <div class="grid">
+          <div class="weekdays">
+            <div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div><div>Sun</div>
+          </div>
+          <div class="row">
+            <div class="cell"><span class="dim">26</span></div>
+            <div class="cell"><span class="dim">27</span></div>
+            <div class="cell"><span class="dim">28</span></div>
+            <div class="cell"><span class="dim">29</span></div>
+            <div class="cell"><span class="dim">30</span></div>
+            <div class="cell"><span class="dim">31</span><span class="event purple">Review Meeting for Mobile App</span></div>
+            <div class="cell"><span>1</span></div>
+          </div>
+          <div class="row">
+            <div class="cell"><span>2</span></div><div class="cell"><span>3</span></div><div class="cell"><span>4</span></div>
+            <div class="cell"><span>5</span><span class="event blue">Digital Agency Website Client Call</span></div>
+            <div class="cell"><span>6</span></div><div class="cell"><span>7</span></div>
+            <div class="cell"><span>8</span><span class="event green">BA Discussion for Jewelry Project</span></div>
+          </div>
+          <div class="row">
+            <div class="cell"><span>9</span></div><div class="cell"><span>10</span></div><div class="cell"><span>11</span></div><div class="cell"><span>12</span></div><div class="cell"><span>13</span></div><div class="cell"><span>14</span></div><div class="cell"><span>15</span></div>
+          </div>
+          <div class="row">
+            <div class="cell"><span>16</span><span class="event blue">Review Meeting for Mobile App</span></div>
+            <div class="cell"><span>17</span></div><div class="cell"><span>18</span></div><div class="cell"><span>19</span></div>
+            <div class="cell"><span>20</span><span class="event purple">New Project Discovery Discussion</span></div>
+            <div class="cell"><span>21</span></div><div class="cell"><span>22</span></div>
+          </div>
+          <div class="row">
+            <div class="cell"><span>23</span></div><div class="cell"><span>24</span></div><div class="cell"><span>25</span></div><div class="cell"><span>26</span></div><div class="cell"><span>27</span></div><div class="cell"><span>28</span></div><div class="cell"><span>29</span></div>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+</body>
+</html>

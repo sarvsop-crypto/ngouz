@@ -1,0 +1,47 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Figma Node 14876:27008</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; background: #111; }
+    .stage {
+      position: relative;
+      width: 1440px;
+      height: 1072px;
+      margin: 0 auto;
+      overflow: hidden;
+      border-radius: 32px;
+    }
+    .stage img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.2);
+      pointer-events: none;
+    }
+    @media (max-width: 1450px) {
+      .stage {
+        width: 100vw;
+        height: calc(100vw * 1072 / 1440);
+        border-radius: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="stage" data-node-id="14876:27008">
+    <img src="https://www.figma.com/api/mcp/asset/ff0b9bbe-8bbd-4cc8-b900-6262f23fb7f9" alt="Figma 14876:27008" />
+    <div class="overlay"></div>
+  </main>
+</body>
+</html>
