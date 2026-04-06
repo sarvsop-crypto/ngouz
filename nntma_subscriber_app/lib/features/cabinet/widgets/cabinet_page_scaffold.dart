@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/app_tokens.dart';
 import '../../../widgets/content_container.dart';
+import '../../../widgets/footer_sections.dart';
 
 class CabinetPageScaffold extends StatelessWidget {
   final String eyebrow;
@@ -50,6 +51,8 @@ class CabinetPageScaffold extends StatelessWidget {
             ),
           ),
         ),
+        const SliverToBoxAdapter(child: DarkCta()),
+        const SliverToBoxAdapter(child: AppFooter()),
       ],
     );
   }
