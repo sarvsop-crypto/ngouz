@@ -48,7 +48,10 @@ class AppDrawer extends StatelessWidget {
                 title: Text(items[i].title),
                 selected: i == activeIndex,
                 selectedTileColor: const Color(0xFFE7F7FB),
-                onTap: () => onSelect(i),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  onSelect(i);
+                },
               ),
             const Divider(height: AppSpace.xl),
             const Padding(
@@ -62,7 +65,10 @@ class AppDrawer extends StatelessWidget {
                 title: Text(items[i].title),
                 selected: i == activeIndex,
                 selectedTileColor: const Color(0xFFE7F7FB),
-                onTap: () => onSelect(i),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  onSelect(i);
+                },
               ),
           ],
         ),

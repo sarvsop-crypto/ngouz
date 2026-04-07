@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/app_tokens.dart';
 import '../../../widgets/adaptive_grid.dart';
@@ -12,6 +13,7 @@ class CabinetDocumentsPage extends StatelessWidget {
     return CabinetPageScaffold(
       eyebrow: 'Hujjatlar',
       title: 'Hujjatlar toplami va yuklash',
+      subtitle: 'Talab qilinadigan hujjatlar, yuklash va tasdiq holati.',
       children: [
         AdaptiveGrid(
           minCardWidth: 180,
@@ -23,13 +25,13 @@ class CabinetDocumentsPage extends StatelessWidget {
             _KpiCard('Jami', '7', AppTokens.primaryDark),
           ],
         ),
-        const SizedBox(height: AppSpace.lg),
+        const SizedBox(height: AppSpace.xl),
         const _ProgressCard(),
-        const SizedBox(height: AppSpace.lg),
+        const SizedBox(height: AppSpace.xl),
         const CabinetSectionTitle('Hujjatlar toplami'),
-        const SizedBox(height: AppSpace.md),
-        const _DocumentsTable(),
         const SizedBox(height: AppSpace.lg),
+        const _DocumentsTable(),
+        const SizedBox(height: AppSpace.xl),
         const _UploadPanel(),
       ],
     );
@@ -84,7 +86,7 @@ class _ProgressCard extends StatelessWidget {
               children: [
                 Text('3 / 7 hujjat qabul qilindi', style: TextStyle(fontWeight: FontWeight.w700)),
                 SizedBox(height: AppSpace.xs),
-                Text('1 ta muddatli · 3 ta kutilmoqda', style: TextStyle(color: AppTokens.textMuted)),
+                Text('1 ta muddatli Â· 3 ta kutilmoqda', style: TextStyle(color: AppTokens.textMuted)),
                 SizedBox(height: AppSpace.sm),
                 _LegendLine('Tasdiqlangan: 3', Color(0xFF0F7B4B)),
                 _LegendLine('Muddatli: 1', Color(0xFFB45309)),
@@ -211,7 +213,7 @@ class _UploadPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Yangi hujjat yuklash', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+          const CabinetCardTitle('Yangi hujjat yuklash'),
           const SizedBox(height: AppSpace.md),
           AdaptiveGrid(
             minCardWidth: 280,
@@ -230,7 +232,7 @@ class _UploadPanel extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpace.md),
-          FilledButton.icon(onPressed: () {}, icon: const Icon(Icons.upload_file_outlined), label: const Text('Yuklash')),
+          FilledButton.icon(onPressed: () {}, icon: const PhosphorIcon(PhosphorIconsRegular.uploadSimple), label: const Text('Yuklash')),
         ],
       ),
     );
@@ -255,3 +257,4 @@ class _LabeledField extends StatelessWidget {
     );
   }
 }
+

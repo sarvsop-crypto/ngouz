@@ -22,20 +22,24 @@ class ResponsiveSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final bp = breakpointOf(MediaQuery.sizeOf(context).width);
     final hPad = bp == AppBreakpoint.phone ? AppSpace.lg : AppSpace.xl;
+    final sectionSubtitle = subtitle;
 
     return Container(
       color: light ? AppTokens.surface : AppTokens.bg,
       child: ContentContainer(
-        padding: EdgeInsets.fromLTRB(hPad, AppSpace.lg, hPad, AppSpace.lg),
+        padding: EdgeInsets.fromLTRB(hPad, 60, hPad, 60),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(title, style: TextStyle(fontSize: bp == AppBreakpoint.phone ? 20 : 24, fontWeight: FontWeight.w700)),
-            if (subtitle != null) ...[
+            Text(
+              title,
+              style: TextStyle(fontSize: bp == AppBreakpoint.phone ? 28 : 34, fontWeight: FontWeight.w700, height: 1.2),
+            ),
+            if (sectionSubtitle != null) ...[
               const SizedBox(height: AppSpace.sm),
-              Text(subtitle!, style: const TextStyle(color: AppTokens.textMuted, fontSize: 14, height: 1.45)),
+              Text(sectionSubtitle, style: const TextStyle(color: AppTokens.textMuted, fontSize: 16, height: 1.6)),
             ],
-            const SizedBox(height: AppSpace.md),
+            const SizedBox(height: 24),
             child,
           ],
         ),

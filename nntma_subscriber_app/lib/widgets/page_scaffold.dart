@@ -1,6 +1,5 @@
 ﻿import 'package:flutter/material.dart';
 
-import '../core/app_tokens.dart';
 import 'app_hero.dart';
 import 'footer_sections.dart';
 
@@ -22,17 +21,13 @@ class PageScaffold extends StatelessWidget {
       slivers: [
         SliverToBoxAdapter(child: AppHero(title: heroTitle, sub: heroSub)),
         SliverList(delegate: SliverChildListDelegate(children)),
-        const SliverFillRemaining(
-          hasScrollBody: false,
-          child: ColoredBox(
-            color: AppTokens.bg,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                DarkCta(),
-                AppFooter(),
-              ],
-            ),
+        const SliverToBoxAdapter(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DarkCta(),
+              AppFooter(),
+            ],
           ),
         ),
       ],

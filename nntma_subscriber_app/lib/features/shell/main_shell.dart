@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../core/app_routes.dart';
 import '../../core/app_tokens.dart';
 import '../cabinet/pages/cabinet_applications_page.dart';
-import '../cabinet/pages/cabinet_dashboard_page.dart';
-import '../cabinet/pages/cabinet_documents_page.dart';
 import '../cabinet/pages/cabinet_grants_page.dart';
 import '../cabinet/pages/cabinet_settings_page.dart';
-import '../cabinet/pages/cabinet_support_page.dart';
 import '../pages/about_page.dart';
+import '../pages/awards_page.dart';
 import '../pages/contact_page.dart';
 import '../pages/events_page.dart';
 import '../pages/home_page.dart';
 import '../pages/news_page.dart';
+import '../pages/projects_page.dart';
 import '../pages/services_page.dart';
 import 'app_nav_item.dart';
 
@@ -27,93 +27,21 @@ class MainShell extends StatefulWidget {
 
 class _MainShellState extends State<MainShell> {
   static const pages = <AppNavItem>[
-    AppNavItem(
-      route: AppRoutes.home,
-      title: 'Bosh sahifa',
-      shortTitle: 'Bosh',
-      icon: Icons.home_outlined,
-      page: HomePage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.about,
-      title: 'Biz haqimizda',
-      shortTitle: 'Haqida',
-      icon: Icons.info_outline,
-      page: AboutPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.news,
-      title: 'Yangiliklar',
-      shortTitle: 'News',
-      icon: Icons.newspaper_outlined,
-      page: NewsPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.events,
-      title: 'Tadbirlar',
-      shortTitle: 'Event',
-      icon: Icons.event_outlined,
-      page: EventsPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.services,
-      title: 'Xizmatlar',
-      shortTitle: 'Xizmat',
-      icon: Icons.build_outlined,
-      page: ServicesPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.contact,
-      title: 'Boglanish',
-      shortTitle: 'Aloqa',
-      icon: Icons.call_outlined,
-      page: ContactPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetDashboard,
-      title: 'Kabinet boshqaruvi',
-      shortTitle: 'Kabinet',
-      icon: Icons.dashboard_customize_outlined,
-      page: CabinetDashboardPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetApplications,
-      title: 'Murojaatlarim',
-      shortTitle: 'Ariza',
-      icon: Icons.assignment_outlined,
-      page: CabinetApplicationsPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetDocuments,
-      title: 'Hujjatlar',
-      shortTitle: 'Hujjat',
-      icon: Icons.folder_open_outlined,
-      page: CabinetDocumentsPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetGrants,
-      title: 'Grantlar',
-      shortTitle: 'Grant',
-      icon: Icons.volunteer_activism_outlined,
-      page: CabinetGrantsPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetSupport,
-      title: 'Boglanish va murojaat',
-      shortTitle: 'Yordam',
-      icon: Icons.support_agent_outlined,
-      page: CabinetSupportPage(),
-    ),
-    AppNavItem(
-      route: AppRoutes.cabinetSettings,
-      title: 'Profil sozlamalari',
-      shortTitle: 'Profil',
-      icon: Icons.settings_outlined,
-      page: CabinetSettingsPage(),
-    ),
+    AppNavItem(route: AppRoutes.home, title: 'Bosh sahifa', shortTitle: 'Bosh', icon: PhosphorIconsRegular.house, page: HomePage()),
+    AppNavItem(route: AppRoutes.about, title: 'Biz haqimizda', shortTitle: 'About', icon: PhosphorIconsRegular.info, page: AboutPage()),
+    AppNavItem(route: AppRoutes.projects, title: 'Loyihalar', shortTitle: 'Loyiha', icon: PhosphorIconsRegular.kanban, page: ProjectsPage()),
+    AppNavItem(route: AppRoutes.news, title: 'Yangiliklar', shortTitle: 'Yangi', icon: PhosphorIconsRegular.newspaper, page: NewsPage()),
+    AppNavItem(route: AppRoutes.events, title: 'Tadbirlar', shortTitle: 'Tadbir', icon: PhosphorIconsRegular.calendarDots, page: EventsPage()),
+    AppNavItem(route: AppRoutes.services, title: 'Xizmatlar', shortTitle: 'Xizmat', icon: PhosphorIconsRegular.stack, page: ServicesPage()),
+    AppNavItem(route: AppRoutes.awards, title: 'Mukofotlar', shortTitle: 'Award', icon: PhosphorIconsRegular.trophy, page: AwardsPage()),
+    AppNavItem(route: AppRoutes.contact, title: 'Boglanish', shortTitle: 'Aloqa', icon: PhosphorIconsRegular.phoneCall, page: ContactPage()),
+    AppNavItem(route: AppRoutes.cabinetApplications, title: 'Kabinet', shortTitle: 'Kabinet', icon: PhosphorIconsRegular.squaresFour, page: CabinetApplicationsPage()),
+    AppNavItem(route: AppRoutes.cabinetGrants, title: 'Grantlar', shortTitle: 'Grant', icon: PhosphorIconsRegular.medal, page: CabinetGrantsPage()),
+    AppNavItem(route: AppRoutes.cabinetSettings, title: 'Sozlamalar', shortTitle: 'Sozla', icon: PhosphorIconsRegular.gear, page: CabinetSettingsPage()),
   ];
 
   late int _index;
+  bool _menuOpen = false;
 
   @override
   void initState() {
@@ -127,8 +55,12 @@ class _MainShellState extends State<MainShell> {
   }
 
   void _selectIndex(int i) {
-    if (i == _index) return;
-    setState(() => _index = i);
+    setState(() {
+      _menuOpen = false;
+      if (i != _index) {
+        _index = i;
+      }
+    });
 
     final target = pages[i].route;
     final current = ModalRoute.of(context)?.settings.name;
@@ -139,7 +71,7 @@ class _MainShellState extends State<MainShell> {
 
   @override
   Widget build(BuildContext context) {
-    final wide = MediaQuery.sizeOf(context).width >= 1080;
+    final mobileNav = MediaQuery.sizeOf(context).width <= 900;
 
     return Scaffold(
       appBar: AppBar(
@@ -150,60 +82,206 @@ class _MainShellState extends State<MainShell> {
             Text('ngo.uz', style: TextStyle(fontWeight: FontWeight.w700)),
           ],
         ),
-        actions: [
-          if (wide)
-            for (var i = 0; i < pages.length; i++)
-              if (!pages[i].route.startsWith('/cabinet') && i < 6)
-                TextButton(
-                  onPressed: () => _selectIndex(i),
-                  child: Text(
-                    pages[i].shortTitle,
-                    style: TextStyle(
-                      color: i == _index ? Colors.white : const Color(0xFFB8CCD8),
-                      fontWeight: i == _index ? FontWeight.w700 : FontWeight.w500,
-                    ),
+        actions: mobileNav
+            ? [
+                IconButton(
+                  onPressed: () => setState(() => _menuOpen = !_menuOpen),
+                  icon: PhosphorIcon(_menuOpen ? PhosphorIconsRegular.x : PhosphorIconsRegular.list),
+                  tooltip: 'Menu',
+                ),
+              ]
+            : null,
+        bottom: mobileNav
+            ? null
+            : PreferredSize(
+                preferredSize: const Size.fromHeight(48),
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  height: 48,
+                  padding: const EdgeInsets.only(left: AppSpace.sm, right: AppSpace.sm, bottom: AppSpace.xs),
+                  child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: pages.length,
+                    separatorBuilder: (_, index) => const SizedBox(width: AppSpace.xs),
+                    itemBuilder: (context, i) {
+                      final selected = i == _index;
+                      final isCabinet = pages[i].route.startsWith('/cabinet');
+                      return TextButton.icon(
+                        onPressed: () => _selectIndex(i),
+                        icon: PhosphorIcon(pages[i].icon, size: 16, color: selected ? Colors.white : AppTokens.textMuted),
+                        label: Text(
+                          isCabinet ? 'Kabinet - ${pages[i].shortTitle}' : pages[i].shortTitle,
+                          style: TextStyle(color: selected ? Colors.white : AppTokens.textMuted, fontWeight: selected ? FontWeight.w700 : FontWeight.w500),
+                        ),
+                        style: TextButton.styleFrom(
+                          padding: const EdgeInsets.symmetric(horizontal: AppSpace.md),
+                          backgroundColor: selected ? AppTokens.primary : Colors.transparent,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(999)),
+                        ),
+                      );
+                    },
                   ),
                 ),
-          PopupMenuButton<int>(
-            tooltip: 'Bolimlar',
-            icon: const Icon(Icons.menu),
-            onSelected: _selectIndex,
-            itemBuilder: (context) => [
-              const PopupMenuItem<int>(enabled: false, value: -1, child: Text('Sayt bolimlari')),
-              for (var i = 0; i < pages.length; i++)
-                if (!pages[i].route.startsWith('/cabinet'))
-                  PopupMenuItem<int>(
-                    value: i,
-                    child: Row(
-                      children: [
-                        Icon(pages[i].icon, size: 18),
-                        const SizedBox(width: AppSpace.sm),
-                        Expanded(child: Text(pages[i].title)),
-                        if (i == _index) const Icon(Icons.check, size: 16, color: AppTokens.primaryDark),
-                      ],
-                    ),
-                  ),
-              const PopupMenuDivider(),
-              const PopupMenuItem<int>(enabled: false, value: -2, child: Text("Azolar kabineti")),
-              for (var i = 0; i < pages.length; i++)
-                if (pages[i].route.startsWith('/cabinet'))
-                  PopupMenuItem<int>(
-                    value: i,
-                    child: Row(
-                      children: [
-                        Icon(pages[i].icon, size: 18),
-                        const SizedBox(width: AppSpace.sm),
-                        Expanded(child: Text(pages[i].title)),
-                        if (i == _index) const Icon(Icons.check, size: 16, color: AppTokens.primaryDark),
-                      ],
-                    ),
-                  ),
-            ],
-          ),
-          const SizedBox(width: AppSpace.sm),
+              ),
+      ),
+      body: Stack(
+        children: [
+          pages[_index].page,
+          if (mobileNav)
+            _MobileOverlayMenu(
+              open: _menuOpen,
+              items: pages,
+              activeIndex: _index,
+              onClose: () => setState(() => _menuOpen = false),
+              onSelect: _selectIndex,
+            ),
         ],
       ),
-      body: pages[_index].page,
+    );
+  }
+}
+
+class _MobileOverlayMenu extends StatelessWidget {
+  final bool open;
+  final List<AppNavItem> items;
+  final int activeIndex;
+  final VoidCallback onClose;
+  final ValueChanged<int> onSelect;
+
+  const _MobileOverlayMenu({
+    required this.open,
+    required this.items,
+    required this.activeIndex,
+    required this.onClose,
+    required this.onSelect,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final panelWidth = width.clamp(280.0, 390.0) * 0.9;
+
+    final siteItems = <int>[];
+    final cabinetItems = <int>[];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].route.startsWith('/cabinet')) {
+        cabinetItems.add(i);
+      } else {
+        siteItems.add(i);
+      }
+    }
+
+    return IgnorePointer(
+      ignoring: !open,
+      child: Stack(
+        children: [
+          AnimatedOpacity(
+            opacity: open ? 1 : 0,
+            duration: const Duration(milliseconds: 180),
+            child: GestureDetector(
+              onTap: onClose,
+              child: Container(color: const Color(0x66000000)),
+            ),
+          ),
+          AnimatedPositioned(
+            duration: const Duration(milliseconds: 220),
+            curve: Curves.easeOutCubic,
+            top: 0,
+            bottom: 0,
+            right: open ? 0 : -panelWidth - 24,
+            child: Container(
+              width: panelWidth,
+              decoration: const BoxDecoration(
+                color: AppTokens.bg,
+                border: Border(left: BorderSide(color: AppTokens.border)),
+                boxShadow: [BoxShadow(color: Color(0x22000000), blurRadius: 24, offset: Offset(-2, 0))],
+              ),
+              child: SafeArea(
+                child: ListView(
+                  padding: const EdgeInsets.fromLTRB(AppSpace.lg, AppSpace.lg, AppSpace.lg, AppSpace.xl),
+                  children: [
+                    const Text(
+                      'Navigation',
+                      style: TextStyle(color: AppTokens.textMuted, fontSize: 12, fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(height: AppSpace.md),
+                    for (final i in siteItems)
+                      _OverlayMenuTile(
+                        item: items[i],
+                        selected: i == activeIndex,
+                        onTap: () => onSelect(i),
+                      ),
+                    const SizedBox(height: AppSpace.lg),
+                    const Divider(height: 1, color: AppTokens.border),
+                    const SizedBox(height: AppSpace.lg),
+                    const Text(
+                      'Cabinet',
+                      style: TextStyle(color: AppTokens.textMuted, fontSize: 12, fontWeight: FontWeight.w700),
+                    ),
+                    const SizedBox(height: AppSpace.md),
+                    for (final i in cabinetItems)
+                      _OverlayMenuTile(
+                        item: items[i],
+                        selected: i == activeIndex,
+                        onTap: () => onSelect(i),
+                      ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _OverlayMenuTile extends StatelessWidget {
+  final AppNavItem item;
+  final bool selected;
+  final VoidCallback onTap;
+
+  const _OverlayMenuTile({
+    required this.item,
+    required this.selected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          decoration: BoxDecoration(
+            color: selected ? AppTokens.primary : Colors.white,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: selected ? AppTokens.primary : AppTokens.border),
+          ),
+          child: Row(
+            children: [
+              Icon(
+                item.icon,
+                size: 18,
+                color: selected ? Colors.white : AppTokens.primaryDark,
+              ),
+              const SizedBox(width: 10),
+              Expanded(
+                child: Text(
+                  item.title,
+                  style: TextStyle(
+                    color: selected ? Colors.white : AppTokens.text,
+                    fontWeight: selected ? FontWeight.w700 : FontWeight.w600,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -214,11 +292,21 @@ class _BrandDot extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 28,
-      height: 28,
-      decoration: const BoxDecoration(color: AppTokens.primary, shape: BoxShape.circle),
+      width: 30,
+      height: 30,
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [AppTokens.primary, AppTokens.primaryDark],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
       alignment: Alignment.center,
-      child: const Text('NGO', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.w700)),
+      child: const Text(
+        'N',
+        style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800, height: 1),
+      ),
     );
   }
 }

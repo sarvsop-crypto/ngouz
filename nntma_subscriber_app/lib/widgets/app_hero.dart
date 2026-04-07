@@ -13,25 +13,40 @@ class AppHero extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bp = breakpointOf(MediaQuery.sizeOf(context).width);
-    final fs = bp == AppBreakpoint.phone ? 28.0 : 34.0;
+    final fs = bp == AppBreakpoint.phone ? 40.0 : 52.0;
 
     return Container(
       width: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF040C1A), Color(0xFF0A1B33)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
+      color: AppTokens.bg,
       child: ContentContainer(
-        padding: const EdgeInsets.fromLTRB(AppSpace.xl, AppSpace.xl, AppSpace.xl, AppSpace.xl),
+        padding: const EdgeInsets.fromLTRB(AppSpace.xl, 60, AppSpace.xl, 56),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(title, style: TextStyle(color: Colors.white, fontSize: fs, fontWeight: FontWeight.w700, height: 1.15)),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppTokens.text,
+                fontSize: fs,
+                fontWeight: FontWeight.w700,
+                height: 1.2,
+              ),
+            ),
             const SizedBox(height: AppSpace.sm),
-            Text(sub, style: const TextStyle(color: Color(0xFFB4DCFF), fontSize: 16, height: 1.45)),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 760),
+              child: Text(
+                sub,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  color: AppTokens.textMuted,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  height: 1.4,
+                ),
+              ),
+            ),
           ],
         ),
       ),

@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/app_tokens.dart';
 import '../../../widgets/adaptive_grid.dart';
@@ -12,16 +13,13 @@ class CabinetSupportPage extends StatelessWidget {
     return CabinetPageScaffold(
       eyebrow: 'Murojaat',
       title: 'Murojaat va Yordam',
+      subtitle: "Ko'p so'raladigan savollarga javob toping yoki bizga yozing.",
       children: [
-        Row(
-          children: [
-            const Expanded(
-              child: Text('Kop soraladigan savollarga javob toping yoki bizga yozing.', style: TextStyle(color: AppTokens.textMuted)),
-            ),
-            FilledButton.icon(onPressed: () {}, icon: const Icon(Icons.add), label: const Text('Yangi murojaat')),
-          ],
+        Align(
+          alignment: Alignment.centerRight,
+          child: FilledButton.icon(onPressed: () {}, icon: const PhosphorIcon(PhosphorIconsRegular.plus), label: const Text('Yangi murojaat')),
         ),
-        const SizedBox(height: AppSpace.lg),
+        const SizedBox(height: AppSpace.xl),
         AdaptiveGrid(
           minCardWidth: 360,
           maxColumns: 2,
@@ -52,7 +50,7 @@ class _FaqPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Kop soraladigan savollar', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+          const CabinetCardTitle('Kop soraladigan savollar'),
           const SizedBox(height: AppSpace.md),
           for (var i = 0; i < faqs.length; i++) ...[
             ExpansionTile(
@@ -85,11 +83,11 @@ class _SupportSidePanel extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Boglanish', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+              CabinetCardTitle('Boglanish'),
               SizedBox(height: AppSpace.md),
-              _ContactRow(Icons.phone_outlined, 'Telefon', '(+998 55) 503-05-12'),
-              _ContactRow(Icons.mail_outline, 'Email', 'info@uznntma.uz'),
-              _ContactRow(Icons.location_on_outlined, 'Manzil', '1A, Furqat kochasi, Toshkent'),
+              _ContactRow(PhosphorIconsRegular.phone, 'Telefon', '(+998 55) 503-05-12'),
+              _ContactRow(PhosphorIconsRegular.envelope, 'Email', 'info@uznntma.uz'),
+              _ContactRow(PhosphorIconsRegular.mapPin, 'Manzil', '1A, Furqat kochasi, Toshkent'),
             ],
           ),
         ),
@@ -98,7 +96,7 @@ class _SupportSidePanel extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Murojaat yuborish', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+              const CabinetCardTitle('Murojaat yuborish'),
               const SizedBox(height: AppSpace.md),
               _LabeledInput('Mavzu', DropdownButtonFormField<String>(
                 items: [
@@ -125,7 +123,7 @@ class _SupportSidePanel extends StatelessWidget {
                 decoration: InputDecoration(border: OutlineInputBorder(), hintText: 'Muammoingizni batafsil yozing...'),
               )),
               const SizedBox(height: AppSpace.md),
-              SizedBox(width: double.infinity, child: FilledButton.icon(onPressed: null, icon: const Icon(Icons.send_outlined), label: const Text('Yuborish'))),
+              SizedBox(width: double.infinity, child: FilledButton.icon(onPressed: null, icon: const PhosphorIcon(PhosphorIconsRegular.paperPlaneTilt), label: const Text('Yuborish'))),
             ],
           ),
         ),
@@ -152,7 +150,7 @@ class _ContactRow extends StatelessWidget {
             height: 34,
             decoration: const BoxDecoration(color: Color(0xFFEAF2F7), shape: BoxShape.circle),
             alignment: Alignment.center,
-            child: Icon(icon, size: 18, color: AppTokens.primaryDark),
+            child: PhosphorIcon(icon, size: 18, color: AppTokens.primaryDark),
           ),
           const SizedBox(width: AppSpace.md),
           Expanded(

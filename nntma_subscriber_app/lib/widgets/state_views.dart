@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../core/app_tokens.dart';
 import '../core/load_state.dart';
@@ -37,14 +38,14 @@ class SectionStateView extends StatelessWidget {
         );
       case LoadState.empty:
         return _StatePanel(
-          icon: Icons.inbox_outlined,
+          icon: PhosphorIconsRegular.tray,
           text: 'Hozircha malumot yoq',
           onRetry: onRetry,
           compact: isNarrow,
         );
       case LoadState.error:
         return _StatePanel(
-          icon: Icons.error_outline,
+          icon: PhosphorIconsRegular.warningCircle,
           text: 'Yuklashda xatolik yuz berdi',
           onRetry: onRetry,
           compact: isNarrow,
@@ -81,14 +82,14 @@ class _StatePanel extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, color: AppTokens.textMuted),
+          PhosphorIcon(icon, color: AppTokens.textMuted),
           const SizedBox(height: AppSpace.sm),
           Text(text, style: const TextStyle(color: AppTokens.textMuted)),
           if (onRetry != null) ...[
             const SizedBox(height: AppSpace.md),
             OutlinedButton.icon(
               onPressed: onRetry,
-              icon: const Icon(Icons.refresh),
+              icon: const PhosphorIcon(PhosphorIconsRegular.arrowsClockwise),
               label: const Text('Qayta yuklash'),
             ),
           ],

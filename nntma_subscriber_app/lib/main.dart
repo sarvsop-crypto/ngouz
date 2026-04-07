@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'core/app_routes.dart';
 import 'core/app_theme.dart';
+import 'features/pages/not_found_page.dart';
 import 'features/shell/main_shell.dart';
 
 void main() => runApp(const NgoApp());
@@ -20,10 +21,13 @@ class NgoApp extends StatelessWidget {
         AppRoutes.shell: (_) => const MainShell(initialRoute: AppRoutes.home),
         AppRoutes.home: (_) => const MainShell(initialRoute: AppRoutes.home),
         AppRoutes.about: (_) => const MainShell(initialRoute: AppRoutes.about),
+        AppRoutes.projects: (_) => const MainShell(initialRoute: AppRoutes.projects),
         AppRoutes.news: (_) => const MainShell(initialRoute: AppRoutes.news),
         AppRoutes.events: (_) => const MainShell(initialRoute: AppRoutes.events),
         AppRoutes.services: (_) => const MainShell(initialRoute: AppRoutes.services),
+        AppRoutes.awards: (_) => const MainShell(initialRoute: AppRoutes.awards),
         AppRoutes.contact: (_) => const MainShell(initialRoute: AppRoutes.contact),
+        AppRoutes.notFound: (_) => const NotFoundPage(),
         AppRoutes.cabinetShell: (_) => const MainShell(initialRoute: AppRoutes.cabinetDashboard),
         AppRoutes.cabinetDashboard: (_) => const MainShell(initialRoute: AppRoutes.cabinetDashboard),
         AppRoutes.cabinetApplications: (_) => const MainShell(initialRoute: AppRoutes.cabinetApplications),
@@ -33,7 +37,7 @@ class NgoApp extends StatelessWidget {
         AppRoutes.cabinetSettings: (_) => const MainShell(initialRoute: AppRoutes.cabinetSettings),
       },
       onUnknownRoute: (_) => MaterialPageRoute(
-        builder: (_) => const MainShell(initialRoute: AppRoutes.home),
+        builder: (_) => const NotFoundPage(),
       ),
     );
   }

@@ -29,6 +29,7 @@ void main() {
     expect(find.byType(NavigationRail), findsNothing);
     expect(find.byType(NavigationBar), findsNothing);
     expect(find.byType(Drawer), findsNothing);
-    expect(find.byIcon(Icons.menu), findsOneWidget);
+    expect(find.byType(PopupMenuButton<int>), findsNothing);
+    expect(find.text('Bosh'), findsOneWidget);
   });
 }

@@ -1,4 +1,5 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 import '../../../core/app_tokens.dart';
 import '../../../widgets/adaptive_grid.dart';
@@ -12,11 +13,12 @@ class CabinetDashboardPage extends StatelessWidget {
     return CabinetPageScaffold(
       eyebrow: 'Azo kabineti',
       title: 'Bosh sahifa',
+      subtitle: 'Azolik ariza jarayoni va hujjatlar holati.',
       children: [
         const _HeaderActions(),
-        const SizedBox(height: AppSpace.md),
+        const SizedBox(height: AppSpace.lg),
         const _WarningBanner(),
-        const SizedBox(height: AppSpace.md),
+        const SizedBox(height: AppSpace.xl),
         AdaptiveGrid(
           minCardWidth: 220,
           maxColumns: 4,
@@ -27,7 +29,7 @@ class CabinetDashboardPage extends StatelessWidget {
             _StatusCard('Azolik', 'Kutilmoqda', 'Hali tasdiqlanmagan', AppTokens.textMuted),
           ],
         ),
-        const SizedBox(height: AppSpace.lg),
+        const SizedBox(height: AppSpace.xl),
         AdaptiveGrid(
           minCardWidth: 320,
           maxColumns: 2,
@@ -36,7 +38,7 @@ class CabinetDashboardPage extends StatelessWidget {
             _DocumentStatusCard(),
           ],
         ),
-        const SizedBox(height: AppSpace.lg),
+        const SizedBox(height: AppSpace.xl),
         AdaptiveGrid(
           minCardWidth: 320,
           maxColumns: 2,
@@ -61,9 +63,9 @@ class _HeaderActions extends StatelessWidget {
           child: Text('Azo arizasi jarayoni va hujjatlar holati', style: TextStyle(fontSize: 15, color: AppTokens.textMuted)),
         ),
         const SizedBox(width: AppSpace.md),
-        OutlinedButton.icon(onPressed: () {}, icon: const Icon(Icons.folder_outlined), label: const Text('Hujjatlar')),
+        OutlinedButton.icon(onPressed: () {}, icon: const PhosphorIcon(PhosphorIconsRegular.folder), label: const Text('Hujjatlar')),
         const SizedBox(width: AppSpace.sm),
-        FilledButton.icon(onPressed: () {}, icon: const Icon(Icons.assignment_outlined), label: const Text('Ariza holatim')),
+        FilledButton.icon(onPressed: () {}, icon: const PhosphorIcon(PhosphorIconsRegular.clipboardText), label: const Text('Ariza holatim')),
       ],
     );
   }
@@ -83,7 +85,7 @@ class _WarningBanner extends StatelessWidget {
       ),
       child: const Row(
         children: [
-          Icon(Icons.warning_amber_rounded, color: Color(0xFF92400E)),
+          PhosphorIcon(PhosphorIconsRegular.warning, color: Color(0xFF92400E)),
           SizedBox(width: AppSpace.sm),
           Expanded(
             child: Text(
@@ -113,7 +115,7 @@ class _StatusCard extends StatelessWidget {
         children: [
           Text(label, style: const TextStyle(fontSize: 13, color: AppTokens.textMuted)),
           const SizedBox(height: AppSpace.sm),
-          Text(value, style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700, color: valueColor)),
+          Text(value, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: valueColor, height: 1.1)),
           const SizedBox(height: AppSpace.xs),
           Text(note, style: const TextStyle(fontSize: 12, color: AppTokens.textMuted)),
         ],
@@ -138,7 +140,7 @@ class _StagesCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Ariza bosqichlari', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+          const CabinetCardTitle('Ariza bosqichlari'),
           const SizedBox(height: AppSpace.md),
           for (var i = 0; i < steps.length; i++) ...[
             Row(
@@ -152,7 +154,7 @@ class _StagesCard extends StatelessWidget {
                   ),
                   alignment: Alignment.center,
                   child: Text(
-                    steps[i].$2 ? '?' : '${i + 1}',
+                    steps[i].$2 ? '1' : '${i + 1}',
                     style: TextStyle(color: steps[i].$2 || steps[i].$3 ? Colors.white : AppTokens.textMuted, fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -187,7 +189,7 @@ class _DocumentStatusCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
-          Text('Hujjatlar holati', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+          CabinetCardTitle('Hujjatlar holati'),
           SizedBox(height: AppSpace.md),
           _DocLine('NGO Ustavi', 'Tasdiqlangan', Color(0xFF0F7B4B)),
           _DocLine('Guvohnoma', 'Tasdiqlangan', Color(0xFF0F7B4B)),
@@ -240,7 +242,7 @@ class _RecentActionsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Songgi harakatlar', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+          const CabinetCardTitle('Songgi harakatlar'),
           const SizedBox(height: AppSpace.md),
           for (final action in actions)
             Padding(
@@ -283,7 +285,7 @@ class _NewsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Yangiliklar', style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+          const CabinetCardTitle('Yangiliklar'),
           const SizedBox(height: AppSpace.md),
           for (var i = 0; i < news.length; i++) ...[
             Row(
@@ -313,4 +315,5 @@ class _NewsCard extends StatelessWidget {
     );
   }
 }
+
 

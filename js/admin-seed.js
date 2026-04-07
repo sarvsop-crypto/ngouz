@@ -61,13 +61,42 @@
       })
       .join('');
 
+    function buildSmoothPath(coords) {
+      if (!coords.length) return '';
+      if (coords.length === 1) {
+        return 'M ' + padValue(coords[0].x) + ' ' + padValue(coords[0].y);
+      }
+
+      var d = 'M ' + padValue(coords[0].x) + ' ' + padValue(coords[0].y);
+      for (var i = 1; i < coords.length - 1; i += 1) {
+        var xc = (coords[i].x + coords[i + 1].x) / 2;
+        var yc = (coords[i].y + coords[i + 1].y) / 2;
+        d +=
+          ' Q ' + padValue(coords[i].x) + ' ' + padValue(coords[i].y) +
+          ' ' + padValue(xc) + ' ' + padValue(yc);
+      }
+
+      var last = coords.length - 1;
+      d +=
+        ' Q ' + padValue(coords[last - 1].x) + ' ' + padValue(coords[last - 1].y) +
+        ' ' + padValue(coords[last].x) + ' ' + padValue(coords[last].y);
+      return d;
+    }
+
     var paths = lines
       .map(function (line) {
-        var points = line.data
+        var coords = line.data
           .map(function (value, idx) {
-            return padValue(xPos(idx)) + ',' + padValue(yPos(value));
+            return { x: xPos(idx), y: yPos(value) };
+          });
+
+        var points = coords
+          .map(function (pt) {
+            return padValue(pt.x) + ',' + padValue(pt.y);
           })
           .join(' ');
+
+        var smoothPath = buildSmoothPath(coords);
 
         var area = '';
         if (line.fill) {
@@ -80,9 +109,9 @@
         }
 
         var dash = line.dashed ? ' stroke-dasharray="4 3"' : '';
-        var polyline =
-          '<polyline points="' + points + '" fill="none" stroke="' + esc(line.color) + '" stroke-width="' + esc(line.strokeWidth || 2) + '"' + dash + ' stroke-linejoin="round" stroke-linecap="round"/>';
-        return area + polyline;
+        var curve =
+          '<path d="' + smoothPath + '" fill="none" stroke="' + esc(line.color) + '" stroke-width="' + esc(line.strokeWidth || 2) + '"' + dash + ' stroke-linejoin="round" stroke-linecap="round"/>';
+        return area + curve;
       })
       .join('');
 

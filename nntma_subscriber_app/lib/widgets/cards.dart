@@ -39,7 +39,7 @@ class KpiCard extends StatelessWidget {
                 fontSize: compact ? 21 : 24,
                 fontWeight: FontWeight.w700,
                 color: AppTokens.primary,
-                height: 1.1,
+                height: 1.2,
               ),
             ),
             SizedBox(height: compact ? 2 : 4),
@@ -51,7 +51,7 @@ class KpiCard extends StatelessWidget {
               style: TextStyle(
                 fontSize: compact ? 12.5 : 13,
                 color: AppTokens.textMuted,
-                height: 1.25,
+                height: 1.4,
               ),
             ),
           ],
@@ -75,6 +75,7 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final badgeText = badge;
     return Semantics(
       container: true,
       label: badge == null ? title : '$title, $badge',
@@ -90,7 +91,7 @@ class InfoCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (badge != null) ...[
+            if (badgeText != null) ...[
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
@@ -98,7 +99,7 @@ class InfoCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(999),
                 ),
                 child: Text(
-                  badge!,
+                  badgeText,
                   style: const TextStyle(fontSize: 12, color: AppTokens.primaryDark, fontWeight: FontWeight.w700),
                 ),
               ),

@@ -24,13 +24,15 @@ class ContactCards extends StatelessWidget {
             ],
           );
         }
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(child: left),
-            const SizedBox(width: AppSpace.md),
-            Expanded(child: right),
-          ],
+        return IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(child: left),
+              const SizedBox(width: AppSpace.md),
+              Expanded(child: right),
+            ],
+          ),
         );
       },
     );
@@ -63,7 +65,8 @@ class _ContactFormState extends State<ContactForm> {
   }
 
   Future<void> _submit() async {
-    if (!_formKey.currentState!.validate()) return;
+    final formState = _formKey.currentState;
+    if (formState == null || !formState.validate()) return;
     setState(() {
       _isSubmitting = true;
       _statusMessage = null;
@@ -74,7 +77,7 @@ class _ContactFormState extends State<ContactForm> {
       _isSubmitting = false;
       _statusMessage = 'Murojaat yuborildi';
     });
-    _formKey.currentState!.reset();
+    formState.reset();
     _name.clear();
     _email.clear();
     _subject.clear();

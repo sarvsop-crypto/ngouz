@@ -28,8 +28,6 @@ class AsyncCardSection extends StatelessWidget {
           onRetry: controller.load,
           readyChild: AdaptiveGrid(
             minCardWidth: minCardWidth,
-            maxCardWidth: 360,
-            stretchChildren: false,
             spacing: 10,
             children: [
               for (final item in controller.items)

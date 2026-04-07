@@ -19,6 +19,7 @@ class _CabinetGrantsPageState extends State<CabinetGrantsPage> {
     return CabinetPageScaffold(
       eyebrow: 'Grantlar',
       title: 'Ariza yuborilgan va erishilgan grantlar',
+      subtitle: "Ariza yuborilgan va qo'lga kiritilgan grantlar ro'yxati.",
       children: [
         Row(
           children: [
@@ -27,7 +28,7 @@ class _CabinetGrantsPageState extends State<CabinetGrantsPage> {
             _TabChip(label: 'Erishilgan', count: '2', active: !_showApplied, onTap: () => setState(() => _showApplied = false)),
           ],
         ),
-        const SizedBox(height: AppSpace.md),
+        const SizedBox(height: AppSpace.xl),
         if (_showApplied) ...[
           AdaptiveGrid(
             minCardWidth: 200,
@@ -39,7 +40,7 @@ class _CabinetGrantsPageState extends State<CabinetGrantsPage> {
               _MetricCard('Rad etildi', '1', Color(0xFFBE123C)),
             ],
           ),
-          const SizedBox(height: AppSpace.lg),
+          const SizedBox(height: AppSpace.xl),
           const _GrantsTable(
             title: 'Ariza yuborilgan grantlar',
             rows: [
@@ -59,7 +60,7 @@ class _CabinetGrantsPageState extends State<CabinetGrantsPage> {
               _MetricCard('Jami jalb etilgan', '\$18,500', AppTokens.primaryDark),
             ],
           ),
-          const SizedBox(height: AppSpace.lg),
+          const SizedBox(height: AppSpace.xl),
           const _GrantsTable(
             title: 'Erishilgan grantlar',
             rows: [
@@ -144,7 +145,7 @@ class _GrantsTable extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(title, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700)),
+          CabinetCardTitle(title),
           const SizedBox(height: AppSpace.md),
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
@@ -203,4 +204,5 @@ class _NoWrap extends StatelessWidget {
     return Text(text, maxLines: 1, overflow: TextOverflow.ellipsis, softWrap: false);
   }
 }
+
 
