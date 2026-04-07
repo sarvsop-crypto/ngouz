@@ -12,6 +12,11 @@ class NgoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final shellRoutes = <String, WidgetBuilder>{
+      for (final route in AppRoutes.shellRoutes)
+        route: (_) => MainShell(initialRoute: route),
+    };
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ngo.uz',
@@ -19,22 +24,9 @@ class NgoApp extends StatelessWidget {
       initialRoute: AppRoutes.home,
       routes: {
         AppRoutes.shell: (_) => const MainShell(initialRoute: AppRoutes.home),
-        AppRoutes.home: (_) => const MainShell(initialRoute: AppRoutes.home),
-        AppRoutes.about: (_) => const MainShell(initialRoute: AppRoutes.about),
-        AppRoutes.projects: (_) => const MainShell(initialRoute: AppRoutes.projects),
-        AppRoutes.news: (_) => const MainShell(initialRoute: AppRoutes.news),
-        AppRoutes.events: (_) => const MainShell(initialRoute: AppRoutes.events),
-        AppRoutes.services: (_) => const MainShell(initialRoute: AppRoutes.services),
-        AppRoutes.awards: (_) => const MainShell(initialRoute: AppRoutes.awards),
-        AppRoutes.contact: (_) => const MainShell(initialRoute: AppRoutes.contact),
+        ...shellRoutes,
         AppRoutes.notFound: (_) => const NotFoundPage(),
         AppRoutes.cabinetShell: (_) => const MainShell(initialRoute: AppRoutes.cabinetDashboard),
-        AppRoutes.cabinetDashboard: (_) => const MainShell(initialRoute: AppRoutes.cabinetDashboard),
-        AppRoutes.cabinetApplications: (_) => const MainShell(initialRoute: AppRoutes.cabinetApplications),
-        AppRoutes.cabinetDocuments: (_) => const MainShell(initialRoute: AppRoutes.cabinetDocuments),
-        AppRoutes.cabinetGrants: (_) => const MainShell(initialRoute: AppRoutes.cabinetGrants),
-        AppRoutes.cabinetSupport: (_) => const MainShell(initialRoute: AppRoutes.cabinetSupport),
-        AppRoutes.cabinetSettings: (_) => const MainShell(initialRoute: AppRoutes.cabinetSettings),
       },
       onUnknownRoute: (_) => MaterialPageRoute(
         builder: (_) => const NotFoundPage(),

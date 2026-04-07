@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../core/app_tokens.dart';
-import '../../core/async_list_controller.dart';
-import '../../data/content_models.dart';
-import '../../data/content_repository.dart';
 import '../../widgets/adaptive_grid.dart';
-import '../../widgets/async_card_section.dart';
 import '../../widgets/cards.dart';
 import '../../widgets/page_scaffold.dart';
 import '../../widgets/responsive_section.dart';
@@ -18,115 +14,115 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
-  late final AsyncListController<CardData> _newsController;
-  late final AsyncListController<CardData> _eventsController;
   int _tab = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _newsController = AsyncListController<CardData>(loader: contentRepository.fetchNewsCards)..load();
-    _eventsController = AsyncListController<CardData>(loader: contentRepository.fetchEventCards)..load();
-  }
-
-  @override
-  void dispose() {
-    _newsController.dispose();
-    _eventsController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
     return PageScaffold(
-      heroTitle: 'Yangiliklar va Tadbirlar',
-      heroSub: "So'nggi xabarlar, seminar va tadbir jadvallari.",
+      heroTitle: 'Yangiliklar va tadbirlar',
+      heroSub: "Songgi xabarlar, seminarlar va hududiy uchrashuvlar.",
       children: [
         ResponsiveSection(
-          title: _tab == 0 ? "So'nggi e'lonlar" : 'Yaqin tadbirlar',
+          title: _tab == 0 ? 'Songgi elonlar' : 'Yaqin tadbirlar',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _TabRow(active: _tab, onSelect: (i) => setState(() => _tab = i)),
               const SizedBox(height: AppSpace.md),
               if (_tab == 0)
-                AsyncCardSection(controller: _newsController)
+                const AdaptiveGrid(
+                  minCardWidth: 240,
+                  maxColumns: 2,
+                  children: [
+                    InfoCard(badge: 'Yangilik', title: 'NNTlar haftaligi dasturi elon qilindi', description: 'Haftalik doirasida forum, seminar va ochiq muloqot tadbirlari rejalashtirildi.'),
+                    InfoCard(badge: 'Elon', title: 'Grant hujjatlari boyicha bepul konsultatsiya', description: 'Hududiy bolimlarda loyiha hujjatlarini tayyorlash boyicha amaliy qabul kunlari boshlandi.'),
+                    InfoCard(badge: 'Yangilik', title: 'NNTlar uchun raqamli platforma imkoniyatlari kengaydi', description: 'Ariza va hujjatlar holatini kuzatish uchun yangi funksiyalar qoshildi.'),
+                  ],
+                )
               else
-                AsyncCardSection(controller: _eventsController),
+                const AdaptiveGrid(
+                  minCardWidth: 240,
+                  maxColumns: 2,
+                  children: [
+                    InfoCard(badge: 'Tadbir', title: 'Toshkent: Grant yozish seminari', description: '24-aprel, 10:00-13:00, OZNNTMA markaziy ofisi.'),
+                    InfoCard(badge: 'Tadbir', title: 'Samarqand: Loyiha boshqaruvi treningi', description: '30-aprel, 14:00-17:00, Hududiy bolinma ofisi.'),
+                    InfoCard(badge: 'Tadbir', title: 'Andijon: Jamoatchilik nazorati muloqoti', description: '6-may, 11:00-13:30, NNTlar uyi.'),
+                  ],
+                ),
             ],
           ),
         ),
         const ResponsiveSection(
           light: false,
-          title: 'Media center',
-          subtitle: 'Figma News dizaynidagi media center blokiga mos.',
+          title: 'Media markaz',
+          subtitle: 'Press-reliz, intervyu va mavzuli materiallar toplami.',
           child: AdaptiveGrid(
             minCardWidth: 240,
             maxColumns: 2,
             children: [
               InfoCard(
-                badge: 'News • Feb 10, 2025',
-                title: 'Cybersecurity policies announced globally',
-                description: 'Governments announced updated cybersecurity policy frameworks.',
+                badge: 'Press reliz',
+                title: 'NNTlar haftaligi boyicha rasmiy bayonot',
+                description: 'Haftalik doirasidagi tadbirlar, hamkorlar va asosiy natijalar yoritildi.',
               ),
               InfoCard(
-                badge: 'News • Dec 19, 2025',
-                title: 'New trade agreements and policy changes',
-                description: 'International relations and business outcomes expected to improve.',
+                badge: 'Intervyu',
+                title: 'Hududiy bolinmalar faoliyati yuzasidan suhbat',
+                description: 'Viloyatlardagi konsultatsiya amaliyoti va yechimlar muhokama qilindi.',
               ),
               InfoCard(
-                badge: 'News • Dec 18, 2025',
-                title: 'Additional healthcare infrastructure funding',
-                description: 'Budget and delivery expansion for public health services.',
+                badge: 'Tahlil',
+                title: 'NNTlar uchun grant ekotizimidagi ozgarishlar',
+                description: 'Yangi tanlovlar, talablardagi ozgarishlar va ariza topshirish tavsiyalari.',
               ),
             ],
           ),
         ),
         const ResponsiveSection(
-          title: 'Policy updates',
+          title: 'Siyosiy-huquqiy yangilanishlar',
           child: AdaptiveGrid(
             minCardWidth: 240,
             maxColumns: 2,
             children: [
               InfoCard(
-                badge: 'Update • Feb 13, 2025',
-                title: 'New healthcare policy updates announced',
-                description: 'Expanded access and service quality measures in current policy package.',
+                badge: 'Yangilanish',
+                title: 'Hisobot topshirish tartibidagi muhim eslatmalar',
+                description: 'Muddatlar, shakllar va elektron topshirish talablari boyicha yangilangan korsatma.',
               ),
               InfoCard(
-                badge: 'Notice • Feb 11, 2025',
-                title: 'Property tax payment deadline reminder',
-                description: 'Deadline is February 28, 2025.',
+                badge: 'Bildirishnoma',
+                title: 'NNTlar uchun navbatdagi konsultatsiya qabul kunlari',
+                description: 'Hududiy bolimlarda qabul jadvali va oldindan royxatdan otish tartibi.',
               ),
               InfoCard(
-                badge: 'Notice • Jan 29, 2025',
-                title: 'Scheduled water service interruption',
-                description: 'Temporary interruption for maintenance work on February 5, 2025.',
+                badge: 'Bildirishnoma',
+                title: 'Jamoatchilik eshituvi uchun takliflar qabul qilinmoqda',
+                description: 'Mavzular boyicha NNTlardan taklif va ekspert xulosalari yigimoqda.',
               ),
             ],
           ),
         ),
         const ResponsiveSection(
           light: false,
-          title: 'Success stories',
+          title: 'Muvaffaqiyat hikoyalari',
           child: AdaptiveGrid(
             minCardWidth: 240,
             maxColumns: 2,
             children: [
               InfoCard(
-                badge: 'News • Feb 18, 2025',
-                title: 'Community recycling program achieved record success',
-                description: 'Recycling rates improved significantly with measurable landfill reduction.',
+                badge: 'Amaliy natija',
+                title: 'Hududiy tashabbus orqali ijtimoiy xizmat sifati yaxshilandi',
+                description: 'NNT va mahalliy idora hamkorligida xizmat qamrovi sezilarli kengaydi.',
               ),
               InfoCard(
-                badge: 'News • Feb 10, 2025',
-                title: 'Local business grant program boosted economic growth',
-                description: 'Small business support created new jobs and local momentum.',
+                badge: 'Amaliy natija',
+                title: 'Kichik grant dasturi yangi ish orinlarini yaratdi',
+                description: 'Mahalliy tashabbuslar orqali bandlik va ijtimoiy faollik oshdi.',
               ),
               InfoCard(
-                badge: 'News • Jan 30, 2024',
-                title: 'Public health campaign improved vaccination rates',
-                description: 'Better immunization coverage and disease-prevention outcomes.',
+                badge: 'Amaliy natija',
+                title: 'Mahalla darajasida ochiq muloqot mexanizmi yoga qoyildi',
+                description: 'Fuqarolar, NNT va idoralar ortasidagi aloqa kanallari mustahkamlandi.',
               ),
             ],
           ),

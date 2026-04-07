@@ -12,61 +12,61 @@ class AwardsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PageScaffold(
       heroTitle: 'Mukofotlar',
-      heroSub: 'Boshqaruv, innovatsiya va jamiyatga taʼsir yonalishidagi yutuqlarni etirof etamiz.',
+      heroSub: 'NNTlar faoliyati, hamkorlik va ijtimoiy tasir yonalishidagi yutuqlar etirof etiladi.',
       children: [
         ResponsiveSection(
-          title: 'Awards categories',
-          subtitle: 'Figma Awards sahifasidagi kategoriya bloklari asosida.',
+          title: 'Mukofot kategoriyalari',
+          subtitle: 'Yillik natijalar va amaliy tasir korsatkichlari asosida baholanadi.',
           child: AdaptiveGrid(
             minCardWidth: 240,
             maxColumns: 2,
             children: const [
-              InfoCard(title: 'Government Excellence Award', description: 'Public service excellence and measurable civic impact.'),
-              InfoCard(title: 'Digital Innovation Award', description: 'Technology-led transformation and service improvements.'),
-              InfoCard(title: 'Sustainability Award', description: 'Environmental leadership and long-term impact initiatives.'),
-              InfoCard(title: 'Community Impact Award', description: 'Programs that significantly improve local communities.'),
-              InfoCard(title: 'Best AI Communication', description: 'Responsible AI use in public communication and outreach.'),
+              InfoCard(title: 'Yilning eng faol NNT tashabbusi', description: 'Jamoa uchun aniq natija bergan ijtimoiy loyiha.'),
+              InfoCard(title: 'Hududiy hamkorlik yutugi', description: 'Mahalliy hamkorlik va sheriklik modelini samarali yoga qoygan tashabbus.'),
+              InfoCard(title: 'Raqamli yechim mukofoti', description: 'Jarayonlarni soddalashtirgan va qamrovni oshirgan raqamli loyiha.'),
+              InfoCard(title: 'Ijtimoiy inklyuziya mukofoti', description: 'Zaif qatlamlar bilan ishlashda barqaror natija korsatgan amaliyot.'),
+              InfoCard(title: 'Yoshlar tashabbusi mukofoti', description: 'Yoshlar yetakchiligidagi muvaffaqiyatli NNT loyihalari etirofi.'),
             ],
           ),
         ),
         ResponsiveSection(
           light: false,
-          title: 'Previous winners',
+          title: 'Avvalgi gOliblar (siz toldirasiz)',
           child: AdaptiveGrid(
             minCardWidth: 260,
             maxColumns: 2,
             children: const [
               InfoCard(
-                badge: '2024',
-                title: 'Government Excellence Award',
-                description: 'Recognized for nationwide service digitization and transparency metrics.',
+                badge: '2025',
+                title: 'NNT nomi - toldiriladi',
+                description: 'Loyiha natijalari va erishilgan korsatkichlar shu yerga kiritiladi.',
               ),
               InfoCard(
-                badge: '2023',
-                title: 'Digital Innovation Award',
-                description: 'Honored for end-to-end e-service delivery model and user adoption.',
+                badge: '2024',
+                title: 'NNT nomi - toldiriladi',
+                description: 'Loyiha natijalari va erishilgan korsatkichlar shu yerga kiritiladi.',
               ),
             ],
           ),
         ),
         ResponsiveSection(
-          title: 'Frequently asked question',
-          subtitle: 'Figma sahifasidagi FAQ bolimiga mos asosiy savollar.',
+          title: 'Kop soraladigan savollar',
+          subtitle: 'Mukofot dasturi boyicha asosiy savollar.',
           child: const Column(
             children: [
               _FaqTile(
-                question: 'Who can participate in the awards?',
-                answer: 'Davlat idoralari, hamkor tashkilotlar va ijtimoiy tashabbus jamoalari ishtirok etishi mumkin.',
+                question: 'Mukofotlarda kimlar ishtirok etishi mumkin?',
+                answer: 'Assotsiatsiya azolari va hamkor NNTlar belgilangan mezonlar asosida ishtirok etadi.',
               ),
               SizedBox(height: 12),
               _FaqTile(
-                question: 'What are the submission requirements?',
-                answer: 'Loyiha tavsifi, natijalar korsatkichlari va dalillovchi materiallar yuklanadi.',
+                question: 'Ariza uchun qanday materiallar kerak?',
+                answer: 'Loyiha tavsifi, natija korsatkichlari va tasdiqlovchi ilovalar talab etiladi.',
               ),
               SizedBox(height: 12),
               _FaqTile(
-                question: 'How are winners selected?',
-                answer: 'Mustaqil hayʼat baholash mezonlari asosida bir necha bosqichli saralash olib boradi.',
+                question: 'Goliblar qanday aniqlanadi?',
+                answer: 'Mustaqil ekspertlar hayati baholash mezonlari asosida koP bosqichli tanlov otkazadi.',
               ),
             ],
           ),
