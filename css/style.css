@@ -1174,9 +1174,9 @@ body.a11y-grayscale { filter: grayscale(1); }
 .site-search-form input { font-size: 16px; }
 .site-search-form button { font-size: 15px; }
 
-.menu { font-size: 15px; }
+.menu { font-size: 20px; }
 .contact-btn { font-size: 16px; }
-.dropdown a { font-size: 15px; }
+.dropdown a { font-size: 17px; }
 .mobile-nav-label { font-size: 12px; }
 .mobile-nav a { font-size: 18px; }
 .mobile-nav-sub a { font-size: 16px; }
