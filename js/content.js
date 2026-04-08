@@ -93,18 +93,67 @@
     container.innerHTML = html;
   }
 
+  function coverGradient(key) {
+    var map = {
+      'TADBIR':   'linear-gradient(135deg,#1a3a5c 0%,#2563eb 100%)',
+      'TAHLIL':   'linear-gradient(135deg,#3b1a5c 0%,#7c3aed 100%)',
+      "E'LON":    'linear-gradient(135deg,#5c3a1a 0%,#d97706 100%)',
+      'PRESS':    'linear-gradient(135deg,#1a4a5c 0%,#0891b2 100%)',
+      'upcoming': 'linear-gradient(135deg,#1a3a5c 0%,#2563eb 100%)',
+    };
+    return map[key] || 'linear-gradient(135deg,#1a5c35 0%,#2e7d52 100%)';
+  }
+
+  function shareButtons(pageUrl, title) {
+    var u = encodeURIComponent(pageUrl);
+    var t = encodeURIComponent(title);
+    var fb = 'https://www.facebook.com/sharer/sharer.php?u=' + u;
+    var tg = 'https://t.me/share/url?url=' + u + '&text=' + t;
+    var tw = 'https://twitter.com/intent/tweet?url=' + u + '&text=' + t;
+    return '<div class="detail-share-row">'
+      + '<span class="detail-share-label">Ulashish:</span>'
+      + '<a href="' + fb + '" target="_blank" rel="noopener noreferrer" class="detail-share-btn" aria-label="Facebook">'
+      + '<svg width="15" height="15" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>'
+      + '<a href="' + tg + '" target="_blank" rel="noopener noreferrer" class="detail-share-btn" aria-label="Telegram">'
+      + '<svg width="15" height="15" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239-92.1c11.1-4 20.8 2.7 17.3 19.4z"/></svg></a>'
+      + '<a href="' + tw + '" target="_blank" rel="noopener noreferrer" class="detail-share-btn" aria-label="X / Twitter">'
+      + '<svg width="14" height="14" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>'
+      + '</div>';
+  }
+
   function renderNewsDetail(items, container, id) {
     var item = id ? items.find(function (n) { return n.id === id; }) : null;
     if (!item) item = items[0];
-    if (!item) { container.innerHTML = '<p style="color:rgba(180,220,255,.5)">Yangilik topilmadi.</p>'; return; }
+    if (!item) { container.innerHTML = '<p>Yangilik topilmadi.</p>'; return; }
 
     document.title = item.title + ' - ngo.uz';
-    container.innerHTML = '<div class="content-shell">'
-      + '<p class="breadcrumbs"><a href="index.html">Bosh sahifa</a> / <a href="news.html">Yangiliklar</a> / ' + item.category + '</p>'
-      + '<h1>' + item.title + '</h1>'
-      + '<p class="meta-line">' + fmtDate(item.date) + ' · ' + item.category + ' · Admin</p>'
-      + '<div class="article-cover"></div>'
-      + '<div class="article-content">' + bodyToHTML(item.body || item.excerpt) + '</div>'
+    var cat = item.category || '';
+    var pageUrl = window.location.href;
+
+    var others = items.filter(function (n) { return n !== item; }).slice(0, 8);
+    var sidebar = '<aside class="detail-sidebar"><p class="detail-sidebar-heading">Boshqa yangiliklar</p>';
+    others.forEach(function (n) {
+      sidebar += '<a href="news-detail.html?id=' + n.id + '" class="detail-sidebar-item">'
+        + '<p class="detail-sidebar-item-date">' + fmtDate(n.date) + ' · ' + (n.category || '') + '</p>'
+        + '<p class="detail-sidebar-item-title">' + n.title + '</p>'
+        + '</a>';
+    });
+    sidebar += '</aside>';
+
+    container.innerHTML = '<div class="detail-layout">'
+      + '<div class="detail-paper">'
+      + '<div class="detail-top-bar">'
+      + '<p class="detail-breadcrumbs"><a href="index.html">Bosh sahifa</a><span class="detail-bc-sep">›</span><a href="news.html">Yangiliklar</a><span class="detail-bc-sep">›</span><span>' + cat + '</span></p>'
+      + '<button class="detail-print-btn" onclick="window.print()" aria-label="Chop etish"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>'
+      + '</div>'
+      + '<h1 class="detail-title">' + item.title + '</h1>'
+      + '<p class="detail-meta"><span>' + fmtDate(item.date) + '</span><span class="detail-meta-sep">/</span><a href="news.html">' + cat + '</a></p>'
+      + '<div class="detail-cover" style="background:' + coverGradient(cat) + '"></div>'
+      + '<div class="detail-body">' + bodyToHTML(item.body || item.excerpt) + '</div>'
+      + '<div class="detail-tags"><a href="news.html" class="detail-tag">' + cat + '</a></div>'
+      + shareButtons(pageUrl, item.title)
+      + '</div>'
+      + sidebar
       + '</div>';
   }
 
@@ -153,22 +202,42 @@
   function renderEventDetail(items, container, id) {
     var item = id ? items.find(function (e) { return e.id === id; }) : null;
     if (!item) item = items[0];
-    if (!item) { container.innerHTML = '<p style="color:rgba(180,220,255,.5)">Tadbir topilmadi.</p>'; return; }
+    if (!item) { container.innerHTML = '<p>Tadbir topilmadi.</p>'; return; }
 
     document.title = item.title + ' - ngo.uz';
-    var metaParts = [item.dateLabel];
-    if (item.location) metaParts.push(item.location);
+    var pageUrl = window.location.href;
+    var statusKey = item.status || '';
+    var statusLabel = statusKey === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
 
-    container.innerHTML = '<div class="content-shell">'
-      + '<p class="breadcrumbs"><a href="index.html">Bosh sahifa</a> / <a href="events.html">Tadbirlar</a> / Tadbir tafsiloti</p>'
-      + '<h1>' + item.title + '</h1>'
-      + '<p class="meta-line">' + metaParts.join(' · ') + '</p>'
-      + '<div class="article-cover"></div>'
-      + '<div class="article-content">'
-      + bodyToHTML(item.description)
-      + (item.participants ? '<p><strong>Ishtirokchilar:</strong> ' + item.participants + '</p>' : '')
-      + (item.deadline ? '<p style="color:#00b4d8">Ariza muddati: ' + item.deadlineLabel + '</p>' : '')
+    var body = bodyToHTML(item.description)
+      + (item.location ? '<p><strong>Joyi:</strong> ' + item.location + '</p>' : '')
+      + (item.participants ? '<p><strong>Ishtirokchilar:</strong> ' + item.participants + ' kishi</p>' : '')
+      + (item.deadline ? '<p><strong>Ariza muddati:</strong> ' + item.deadlineLabel + '</p>' : '');
+
+    var others = items.filter(function (e) { return e !== item; }).slice(0, 8);
+    var sidebar = '<aside class="detail-sidebar"><p class="detail-sidebar-heading">Boshqa tadbirlar</p>';
+    others.forEach(function (e) {
+      sidebar += '<a href="event-detail.html?id=' + e.id + '" class="detail-sidebar-item">'
+        + '<p class="detail-sidebar-item-date">' + e.dateLabel + '</p>'
+        + '<p class="detail-sidebar-item-title">' + e.title + '</p>'
+        + '</a>';
+    });
+    sidebar += '</aside>';
+
+    container.innerHTML = '<div class="detail-layout">'
+      + '<div class="detail-paper">'
+      + '<div class="detail-top-bar">'
+      + '<p class="detail-breadcrumbs"><a href="index.html">Bosh sahifa</a><span class="detail-bc-sep">›</span><a href="events.html">Tadbirlar</a><span class="detail-bc-sep">›</span><span>' + statusLabel + '</span></p>'
+      + '<button class="detail-print-btn" onclick="window.print()" aria-label="Chop etish"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>'
       + '</div>'
+      + '<h1 class="detail-title">' + item.title + '</h1>'
+      + '<p class="detail-meta"><span>' + item.dateLabel + '</span><span class="detail-meta-sep">/</span><a href="events.html">' + statusLabel + '</a></p>'
+      + '<div class="detail-cover" style="background:' + coverGradient(statusKey) + '"></div>'
+      + '<div class="detail-body">' + body + '</div>'
+      + '<div class="detail-tags"><a href="events.html" class="detail-tag">Tadbir</a><a href="events.html" class="detail-tag">' + statusLabel + '</a></div>'
+      + shareButtons(pageUrl, item.title)
+      + '</div>'
+      + sidebar
       + '</div>';
   }
 
