@@ -266,7 +266,9 @@ body.a11y-contrast .a11y-panel h4 {
   color:#000 !important;
 }
 body.a11y-grayscale { filter: grayscale(1); }
-.nav { position:relative; display:grid; grid-template-columns:auto 1fr auto; align-items:center; gap:12px; min-height:72px; padding:8px 16px; }
+.nav { position:relative; display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:12px; min-height:72px; padding:8px 16px; }
+.topbar-building { justify-self:start; }
+.topbar-controls { justify-self:end; }
 .brand { display:flex; align-items:center; gap:12px; flex-shrink:0; font-size:22px; font-weight:700; letter-spacing:.01em; color:var(--neutral-900); text-transform:none; }
 .brand .brand-name { display:flex; flex-direction:column; gap:1px; }
 .brand .brand-name-main { font-size:20px; font-weight:700; color:var(--green-500); line-height:1.1; letter-spacing:.01em; }
@@ -465,8 +467,20 @@ body.a11y-grayscale { filter: grayscale(1); }
 .home-page .menu a { color: rgba(255,255,255,0.82); border-bottom-color: transparent; }
 .home-page .menu a:hover,
 .home-page .menu a.active { color: #fff; border-bottom-color: rgba(255,255,255,0.6); }
-.home-page .topbar-lang { color: rgba(255,255,255,0.7); }
-.home-page .topbar-lang:hover { color: #fff; }
+.home-page .topbar-lang-trigger {
+  color: rgba(255,255,255,0.85);
+  border-color: rgba(255,255,255,0.25);
+}
+.home-page .topbar-lang-trigger:hover,
+.home-page .topbar-lang-drop.open .topbar-lang-trigger { color: #fff; border-color: rgba(255,255,255,0.6); }
+.home-page .topbar-lang-menu {
+  background: #0b2535;
+  border-color: rgba(255,255,255,0.12);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+}
+.home-page .topbar-lang { color: rgba(255,255,255,0.8); }
+.home-page .topbar-lang:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.home-page .topbar-lang.active-lang { color: #00c9dd; }
 .home-page .vis-btn { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.25); color: #fff; }
 .home-page .hero-cinematic { min-height: 100vh; }
 .home-page .dropdown {
@@ -856,7 +870,7 @@ body.a11y-grayscale { filter: grayscale(1); }
   .a11y-panel { top:110px; right:8px; width:calc(100% - 16px); }
   .menu { display:none !important; }
   .hamburger { display:flex; grid-column:3; }
-  .nav { grid-template-columns: auto 1fr auto; }
+  .nav { grid-template-columns: 1fr auto 1fr; }
   .hero-cinematic { min-height:auto; }
   .hero-cinematic-inner { min-height:auto; grid-template-columns:1fr; padding:96px 0 130px; }
   .hero-cinematic-copy h1 { font-size:clamp(34px,9vw,48px); }
