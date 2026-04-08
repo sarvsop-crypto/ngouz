@@ -76,19 +76,24 @@
     { title: "A'zolik yo'riqnomasi", url: "membership-guide.html", summary: "O'zNNTMAga a'zo bo'lish bo'yicha bosqichma-bosqich yo'riqnoma.", keywords: "azoliq yuriqnoma bosqich hujjat" }
   ];
 
-  var initSiteSearch = function () {
-    var utilityRight = document.querySelector(".utility-right");
-    if (!utilityRight || utilityRight.querySelector(".site-search-form")) return;
-    var form = document.createElement("form");
-    form.className = "site-search-form";
-    form.setAttribute("action", "search-results.html");
-    form.setAttribute("method", "get");
-    form.innerHTML =
-      "<input type=\"search\" name=\"q\" placeholder=\"Sayt bo'yicha qidirish\" aria-label=\"Sayt bo'yicha qidirish\">" +
-      "<button type=\"submit\">Qidirish</button>";
-    utilityRight.insertBefore(form, utilityRight.firstChild);
-  };
-  initSiteSearch();
+  /* Topbar live clock (GMT+5) */
+  var topbarClock = document.getElementById("topbarClock");
+  if (topbarClock) {
+    function updateClock() {
+      var now = new Date();
+      var utc = now.getTime() + now.getTimezoneOffset() * 60000;
+      var gmt5 = new Date(utc + 5 * 3600000);
+      var hh = String(gmt5.getHours()).padStart(2, "0");
+      var mm = String(gmt5.getMinutes()).padStart(2, "0");
+      var ss = String(gmt5.getSeconds()).padStart(2, "0");
+      var dd = String(gmt5.getDate()).padStart(2, "0");
+      var mo = String(gmt5.getMonth() + 1).padStart(2, "0");
+      var yyyy = gmt5.getFullYear();
+      topbarClock.textContent = hh + ":" + mm + ":" + ss + " (GMT+5) " + dd + "." + mo + "." + yyyy;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  }
 
   var applyLang = function (langCode) {
     var lang = i18nDict[langCode] ? langCode : "uz";
@@ -104,8 +109,8 @@
     var contactBtn = document.querySelector(".contact-btn");
     if (contactBtn) contactBtn.textContent = t.contactBtn;
 
-    var a11yBtnText = document.querySelector(".vis-btn");
-    if (a11yBtnText) a11yBtnText.textContent = t.a11y;
+    var a11yBtn = document.querySelector(".vis-btn");
+    if (a11yBtn) a11yBtn.setAttribute("aria-label", t.a11y);
 
     var ctaBtn = document.querySelector(".dark-cta .btn");
     if (ctaBtn) ctaBtn.textContent = t.ctaBtn;
@@ -116,8 +121,8 @@
     if (footerTitles[2]) footerTitles[2].textContent = t.footerSocial;
     if (footerTitles[3]) footerTitles[3].textContent = t.footerServices;
 
-    var langLinks = document.querySelectorAll(".utility-right a[data-lang]");
-    langLinks.forEach(function (a, idx) {
+    var langLinks = document.querySelectorAll(".topbar-lang[data-lang]");
+    langLinks.forEach(function (a) {
       var code = a.getAttribute("data-lang");
       a.classList.toggle("active-lang", code === lang);
     });
@@ -136,13 +141,12 @@
   } catch (e) {}
   applyLang(initialLang);
 
-  var languageLinks = Array.prototype.slice.call(document.querySelectorAll(".utility-right a"));
-  languageLinks.slice(0, 3).forEach(function (a, idx) {
-    a.classList.add("lang-link");
+  var languageLinks = Array.prototype.slice.call(document.querySelectorAll(".topbar-lang"));
+  languageLinks.forEach(function (a, idx) {
     var code = idx === 0 ? "uz" : idx === 1 ? "ru" : "en";
     a.setAttribute("data-lang", code);
   });
-  languageLinks = document.querySelectorAll(".utility-right a[data-lang]");
+  languageLinks = document.querySelectorAll(".topbar-lang[data-lang]");
   var currentFile = (location.pathname.split("/").pop() || "index.html").toLowerCase();
   if (currentFile.indexOf(".html") === -1) currentFile = "index.html";
   languageLinks.forEach(function (a, idx) {
