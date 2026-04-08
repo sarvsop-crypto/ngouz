@@ -177,26 +177,43 @@
   }
 
   function renderEventsPage(items, container) {
-    if (!items.length) { container.innerHTML = '<p style="color:rgba(180,220,255,.5)">Tadbirlar topilmadi.</p>'; return; }
+    if (!items.length) { container.innerHTML = '<p>Tadbirlar topilmadi.</p>'; return; }
     var upcoming = items.filter(function (e) { return e.status === 'upcoming'; });
     var past     = items.filter(function (e) { return e.status === 'past'; });
 
-    function sectionHTML(arr, label) {
-      if (!arr.length) return '';
-      var rows = arr.map(function (e) {
-        return '<article class="card">'
-          + '<span class="tag">' + e.dateLabel + (e.status === 'upcoming' ? ' · Rejalashtirilgan' : ' · Bo\'lib o\'tdi') + '</span>'
-          + '<h3>' + e.title + '</h3>'
-          + '<p>' + e.description + '</p>'
-          + (e.location ? '<p style="font-size:13px;color:rgba(180,220,255,.5);margin-top:6px"><ph-map-pin weight="fill" style="font-size:13px"></ph-map-pin> ' + e.location + '</p>' : '')
-          + (e.deadline ? '<p style="font-size:13px;color:#00b4d8;margin-top:4px">Ariza muddati: ' + e.deadlineLabel + '</p>' : '')
-          + '<a class="btn" href="event-detail.html?id=' + e.id + '" style="margin-top:14px;display:inline-block">Batafsil</a>'
-          + '</article>';
-      }).join('');
-      return '<h2 class="section-title" style="margin-top:32px">' + label + '</h2><div class="cards">' + rows + '</div>';
+    function eventCardHTML(e) {
+      var url = 'event-detail.html?id=' + e.id;
+      var cat = e.status || 'past';
+      var label = cat === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
+      return '<article class="gov-news-card" data-cat="' + cat + '">'
+        + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
+        + '<div class="gov-news-img-inner"></div>'
+        + '<div class="gov-news-overlay"></div>'
+        + '</a>'
+        + '<div class="gov-news-content">'
+        + '<div class="gov-news-header">'
+        + '<div class="gov-news-date"><b>' + dateDay(e.date) + '</b><span>' + dateMonthAbbr(e.date) + '</span></div>'
+        + '<a href="' + url + '" class="gov-news-title">' + e.title + '</a>'
+        + '</div>'
+        + '<a href="' + url + '" class="gov-news-excerpt">' + e.description + '</a>'
+        + '<div class="gov-news-footer">'
+        + '<span>' + e.dateLabel + '</span>'
+        + '<a href="' + url + '">' + label + '</a>'
+        + '</div>'
+        + '</div>'
+        + '</article>';
     }
 
-    container.innerHTML = sectionHTML(upcoming, 'Rejalashtirilgan tadbirlar') + sectionHTML(past, 'Bo\'lib o\'tgan tadbirlar');
+    function sectionHTML(arr, label) {
+      if (!arr.length) return '';
+      return '<h2 class="gov-news-section-label">' + label + '</h2>'
+        + '<div class="gov-news-grid" style="margin-bottom:3rem">'
+        + arr.map(eventCardHTML).join('')
+        + '</div>';
+    }
+
+    container.innerHTML = sectionHTML(upcoming, 'Rejalashtirilgan tadbirlar')
+      + sectionHTML(past, "Bo'lib o'tgan tadbirlar");
   }
 
   function renderEventDetail(items, container, id) {
