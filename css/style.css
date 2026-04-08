@@ -1846,6 +1846,75 @@ body.a11y-grayscale { filter: grayscale(1); }
 }
 .detail-sidebar-item:hover .detail-sidebar-item-title { color: var(--green-600, #255f40); }
 
+/* ── Gov-style inner page layout (rahbariyat, mission, etc.) ────── */
+.gov-page-wrap { background: #f2f4f6; min-height: 60vh; padding-bottom: 64px; }
+.gov-breadcrumb { display:flex; align-items:center; flex-wrap:wrap; gap:5px; padding:16px 0 14px; font-size:13px; color:#999; }
+.gov-breadcrumb a { color:var(--green-500); text-decoration:none; font-weight:600; }
+.gov-breadcrumb a:hover { text-decoration:underline; }
+.gov-breadcrumb .bc-sep { color:#ccc; font-size:.85em; }
+.gov-main { background:#fff; border:1px solid #e0e3e5; padding:36px 44px 40px; }
+.gov-page-title { font-size:1.625rem; font-weight:700; color:#023347; margin:0 0 24px; padding-bottom:18px; border-bottom:2px solid #e4e7e7; line-height:1.25; }
+
+/* Leader cards */
+.leader-card { display:flex; gap:30px; padding:30px 0; border-bottom:1px solid #eaedef; }
+.leader-card:first-of-type { padding-top:0; }
+.leader-card:last-of-type { border-bottom:0; padding-bottom:0; }
+.leader-photo-col { flex-shrink:0; }
+.leader-photo {
+  width:158px; height:190px;
+  background:#dde3e6;
+  border-radius:4px;
+  overflow:hidden;
+  display:flex; align-items:center; justify-content:center;
+}
+.leader-photo svg { color:#b0bdc2; }
+.leader-photo img { width:100%; height:100%; object-fit:cover; }
+.leader-info { flex:1; min-width:0; }
+.leader-name { font-size:1.2rem; font-weight:700; color:#023347; margin:0 0 5px; line-height:1.3; }
+.leader-role { font-size:.9375rem; color:var(--green-500); font-weight:600; margin:0 0 18px; line-height:1.4; }
+.leader-detail { border-top:1px solid #eaedef; }
+.leader-detail summary {
+  padding:11px 0;
+  font-size:.875rem; font-weight:700; color:#1a2e35;
+  cursor:pointer; list-style:none;
+  display:flex; justify-content:space-between; align-items:center;
+  user-select:none;
+}
+.leader-detail summary::-webkit-details-marker { display:none; }
+.leader-detail summary::after { content:'+'; font-size:1.15rem; color:var(--green-500); transition:transform .18s; font-weight:400; }
+.leader-detail[open] summary::after { content:'−'; }
+.leader-detail-body { padding:2px 0 14px; font-size:.875rem; color:#444; line-height:1.7; }
+.leader-detail-body p { margin:0 0 .6rem; }
+.leader-detail-body p:last-child { margin:0; }
+.leader-contacts { display:flex; flex-wrap:wrap; gap:6px 20px; margin-top:14px; padding-top:14px; border-top:1px solid #eaedef; }
+.leader-contact-item { display:flex; align-items:center; gap:6px; font-size:.84rem; color:#555; text-decoration:none; transition:color .13s; }
+.leader-contact-item:hover { color:var(--green-500); }
+.leader-contact-item svg { color:var(--green-500); flex-shrink:0; }
+
+/* Article body (mission/vazifa page) */
+.gov-article-body { font-size:.9875rem; line-height:1.8; color:#333; }
+.gov-article-body p { margin:0 0 1rem; }
+.gov-article-body h3 { font-size:1.05rem; font-weight:700; color:#023347; margin:1.6rem 0 .6rem; }
+.gov-article-body ol, .gov-article-body ul { padding-left:1.4rem; margin:0 0 1rem; }
+.gov-article-body li { margin-bottom:.55rem; }
+.gov-article-body strong { color:#023347; }
+
+.gov-article-meta { display:flex; gap:24px; flex-wrap:wrap; font-size:.8rem; color:#aaa; margin-top:28px; padding-top:16px; border-top:1px solid #eaedef; }
+
+/* Share row */
+.gov-share-row { display:flex; align-items:center; gap:8px; margin-top:28px; padding-top:20px; border-top:1px solid #eaedef; font-size:.8125rem; color:#aaa; }
+.gov-share-btn { display:inline-flex; align-items:center; gap:5px; padding:6px 13px; border-radius:4px; font-size:.8rem; font-weight:700; text-decoration:none; color:#fff; transition:opacity .14s; }
+.gov-share-btn:hover { opacity:.85; }
+.gov-share-fb { background:#1877f2; }
+.gov-share-tg { background:#229ed9; }
+.gov-share-x { background:#111; }
+
+@media (max-width: 640px) {
+  .gov-main { padding:22px 18px 28px; }
+  .leader-card { flex-direction:column; gap:18px; }
+  .leader-photo { width:100%; height:200px; }
+}
+
 /* ── Membership modal ───────────────────────────────────────────── */
 .membership-overlay {
   display: none;
