@@ -228,6 +228,7 @@
 </footer>
 <script src="js/main.js"></script>
 <script src="js/content.js"></script>
+<script src="js/uzmap.js"></script>
 <script>
 (function(){
   var data = {
@@ -271,40 +272,34 @@
       '</div>';
   }
 
-  fetch('img/uzbekistan.svg')
-    .then(function(r){ return r.text(); })
-    .then(function(txt){
-      var box = document.getElementById('mapBox');
-      if (!box) return;
-      box.innerHTML = txt;
-      var svg = box.querySelector('svg');
-      if (!svg) return;
-      svg.removeAttribute('width');
-      svg.removeAttribute('height');
-      svg.setAttribute('viewBox', '0 0 792 517');
+  (function initMap(){
+    var box = document.getElementById('mapBox');
+    if (!box || typeof UZ_MAP_SVG === 'undefined') return;
+    box.innerHTML = UZ_MAP_SVG;
+    var svg = box.querySelector('svg');
+    if (!svg) return;
+    svg.removeAttribute('width');
+    svg.removeAttribute('height');
+    svg.setAttribute('viewBox', '0 0 792 517');
 
-      var active = null;
-      Object.keys(data).forEach(function(id){
-        var path = svg.querySelector('#' + id);
-        if (!path) return;
-        path.addEventListener('mouseenter', function(){
-          this.classList.add('hovered');
-        });
-        path.addEventListener('mouseleave', function(){
-          this.classList.remove('hovered');
-        });
-        path.addEventListener('click', function(){
-          if (active) active.classList.remove('active');
-          active = this;
-          this.classList.add('active');
-          showRegion(id);
-        });
+    var active = null;
+    Object.keys(data).forEach(function(id){
+      var path = svg.querySelector('#' + id);
+      if (!path) return;
+      path.addEventListener('mouseenter', function(){
+        this.classList.add('hovered');
       });
-    })
-    .catch(function(){
-      document.getElementById('mapBox').innerHTML =
-        '<p style="color:rgba(255,255,255,.4);text-align:center;padding:40px">Xarita yuklanmadi</p>';
+      path.addEventListener('mouseleave', function(){
+        this.classList.remove('hovered');
+      });
+      path.addEventListener('click', function(){
+        if (active) active.classList.remove('active');
+        active = this;
+        this.classList.add('active');
+        showRegion(id);
+      });
     });
+  })();
 })();
 </script>
 
