@@ -2178,8 +2178,8 @@ body.a11y-grayscale { filter: grayscale(1); }
   transform: translate(-50%, -50%);
   background: rgba(5, 22, 38, 0.78);
   border: 1px solid rgba(0, 201, 221, 0.28);
-  border-radius: 4px;
-  padding: 4px 7px 5px;
+  border-radius: 3px;
+  padding: 2px 4px 3px;
   pointer-events: none;
   white-space: nowrap;
   font-family: inherit;
@@ -2193,20 +2193,20 @@ body.a11y-grayscale { filter: grayscale(1); }
 }
 .ml-nnt {
   display: block;
-  font-size: .78rem;
+  font-size: .46rem;
   font-weight: 700;
   color: #00c9dd;
   letter-spacing: .01em;
 }
 .ml-members {
   display: block;
-  font-size: .68rem;
+  font-size: .4rem;
   color: rgba(255,255,255,.75);
   margin-top: 1px;
 }
 .ml-name {
   display: block;
-  font-size: .58rem;
+  font-size: .36rem;
   color: rgba(255,255,255,.4);
   margin-top: 3px;
   border-top: 1px solid rgba(255,255,255,.08);
