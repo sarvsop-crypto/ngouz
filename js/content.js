@@ -41,27 +41,25 @@
 
   /* ── News ─────────────────────────────────────────────────── */
   function renderNewsHome(items, container) {
-    var featured = items.find(function (n) { return n.featured; }) || items[0];
-    var rest = items.filter(function (n) { return n !== featured; }).slice(0, 3);
-
-    var html = '<div class="top-story-grid">'
-      + '<article class="top-story-main">'
-      + '<span class="tag">' + featured.category + ' · ' + fmtDate(featured.date) + '</span>'
-      + '<h3>' + featured.title + '</h3>'
-      + '<p>' + featured.excerpt + '</p>'
-      + '<a class="btn" href="news-detail.html?id=' + featured.id + '">Batafsil o\'qish</a>'
-      + '</article>'
-      + '<div class="top-story-list">';
-
-    rest.forEach(function (n) {
-      html += '<a class="news-item" href="news-detail.html?id=' + n.id + '">'
-        + '<span class="tag">' + n.category + ' · ' + fmtDate(n.date) + '</span>'
-        + '<h4>' + n.title + '</h4>'
-        + '<p>' + n.excerpt + '</p>'
-        + '</a>';
+    var latest = items.slice(0, 4);
+    if (!latest.length) return;
+    var html = '<div class="gov-news-grid">';
+    latest.forEach(function (n) {
+      var url = 'news-detail.html?id=' + n.id;
+      var cat = n.category || '';
+      html += '<article class="gov-news-card" data-cat="' + cat + '">'
+        + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
+        + '<div class="gov-news-img-inner"></div><div class="gov-news-overlay"></div></a>'
+        + '<div class="gov-news-content">'
+        + '<div class="gov-news-header">'
+        + '<div class="gov-news-date"><b>' + dateDay(n.date) + '</b><span>' + dateMonthAbbr(n.date) + '</span></div>'
+        + '<a href="' + url + '" class="gov-news-title">' + n.title + '</a>'
+        + '</div>'
+        + '<a href="' + url + '" class="gov-news-excerpt">' + n.excerpt + '</a>'
+        + '<div class="gov-news-footer"><span>' + fmtDate(n.date) + '</span><a href="' + url + '">' + cat + '</a></div>'
+        + '</div></article>';
     });
-
-    html += '</div></div>';
+    html += '</div>';
     container.innerHTML = html;
   }
 
@@ -158,22 +156,28 @@
   }
 
   /* ── Events ───────────────────────────────────────────────── */
-  function renderEventsHome(items, upcomingEl, pastEl) {
-    var upcoming = items.filter(function (e) { return e.status === 'upcoming'; });
-    var past     = items.filter(function (e) { return e.status === 'past'; });
-
-    function listHTML(arr) {
-      return arr.map(function (e) {
-        return '<a class="item" href="event-detail.html?id=' + e.id + '">'
-          + '<h4>' + e.title + '</h4>'
-          + '<p>' + e.dateLabel + (e.location ? ' · ' + e.location : '')
-          + (e.participants ? ' · ' + e.participants + ' ishtirokchi' : '')
-          + (e.deadline ? ' · Ariza: ' + e.deadlineLabel : '') + '</p></a>';
-      }).join('');
-    }
-
-    if (upcomingEl) upcomingEl.innerHTML = listHTML(upcoming);
-    if (pastEl)     pastEl.innerHTML     = listHTML(past);
+  function renderEventsHome(items, container) {
+    var latest = items.slice(0, 4);
+    if (!latest.length) return;
+    var html = '<div class="gov-news-grid">';
+    latest.forEach(function (e) {
+      var url = 'event-detail.html?id=' + e.id;
+      var cat = e.status || 'past';
+      var label = cat === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
+      html += '<article class="gov-news-card" data-cat="' + cat + '">'
+        + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
+        + '<div class="gov-news-img-inner"></div><div class="gov-news-overlay"></div></a>'
+        + '<div class="gov-news-content">'
+        + '<div class="gov-news-header">'
+        + '<div class="gov-news-date"><b>' + dateDay(e.date) + '</b><span>' + dateMonthAbbr(e.date) + '</span></div>'
+        + '<a href="' + url + '" class="gov-news-title">' + e.title + '</a>'
+        + '</div>'
+        + '<a href="' + url + '" class="gov-news-excerpt">' + e.description + '</a>'
+        + '<div class="gov-news-footer"><span>' + e.dateLabel + '</span><a href="' + url + '">' + label + '</a></div>'
+        + '</div></article>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
   }
 
   function renderEventsPage(items, container) {
@@ -283,9 +287,8 @@
     if (newsHomeEl) fetchJSON('news', function (items) { renderNewsHome(items, newsHomeEl); });
 
     // Home page — events
-    var upcomingEl = document.getElementById('dynamic-events-upcoming');
-    var pastEl     = document.getElementById('dynamic-events-past');
-    if (upcomingEl || pastEl) fetchJSON('events', function (items) { renderEventsHome(items, upcomingEl, pastEl); });
+    var eventsHomeEl = document.getElementById('dynamic-events-home');
+    if (eventsHomeEl) fetchJSON('events', function (items) { renderEventsHome(items, eventsHomeEl); });
 
     // news.html full page
     var newsPageEl = document.getElementById('dynamic-news-page');
