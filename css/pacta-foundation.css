@@ -63,10 +63,15 @@ h2,
 h3,
 h4,
 h5,
-h6,
-td,
-th {
+h6 {
   overflow-wrap: anywhere;
+}
+
+/* Keep admin/data table cells stable; avoid forced mid-word wrapping. */
+th,
+td {
+  overflow-wrap: normal;
+  word-break: normal;
 }
 
 /* Keep chart labels horizontal/readable even under narrow layouts. */
