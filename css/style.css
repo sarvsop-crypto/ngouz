@@ -1862,25 +1862,8 @@ body.a11y-grayscale { filter: grayscale(1); }
 /* Page title */
 .gov-page-title { font-size:1.25rem; font-weight:800; color:var(--green-500); text-transform:uppercase; letter-spacing:.04em; margin:20px 0 18px; }
 
-/* 2-col layout */
-.gov-layout { display:grid; grid-template-columns:1fr 272px; gap:24px; align-items:start; padding-top:24px; }
-
-/* Sidebar */
-.gov-sidebar { border:1px solid #e0e3e5; background:#fff; }
-.gov-sidebar-link {
-  display:flex; align-items:center; gap:0;
-  padding:12px 16px;
-  border-bottom:1px solid #eaecee;
-  font-size:.875rem; color:#333;
-  text-decoration:none;
-  transition:background .13s;
-  line-height:1.35;
-}
-.gov-sidebar-link:last-child { border-bottom:0; }
-.gov-sidebar-link:hover { background:#f4f6f8; }
-.gov-sidebar-link.active { background:#013d8c; color:#fff; font-weight:600; }
-.gov-sidebar-link .sb-arrow { font-size:.75rem; margin-right:8px; color:#aaa; flex-shrink:0; }
-.gov-sidebar-link.active .sb-arrow { color:rgba(255,255,255,.7); }
+/* layout */
+.gov-layout { padding-top:24px; }
 
 /* Leader cards */
 .leader-card {
@@ -1948,8 +1931,6 @@ body.a11y-grayscale { filter: grayscale(1); }
 .gov-share-x { background:#111; }
 
 @media (max-width:860px) {
-  .gov-layout { grid-template-columns:1fr; }
-  .gov-sidebar { order:-1; }
   .leader-card-body { flex-wrap:wrap; }
   .leader-contacts-col { width:100%; padding-left:0; border-left:0; border-top:1px solid #eaecee; padding-top:12px; }
 }
