@@ -300,6 +300,7 @@
       plugins: {
         legend: { display: false },
         tooltip: {
+          filter: function(item){ return item.datasetIndex !== 0; },
           callbacks: {
             label: function(ctx){ return ' ' + ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString(); }
           }
