@@ -10,26 +10,59 @@
 <link href="css/style.css" rel="stylesheet"/>
 <style>
 .registry-regions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin: 28px 0 24px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 10px;
+  margin: 28px 0 28px;
 }
 .region-btn {
-  padding: 8px 16px;
-  border-radius: 20px;
-  border: 1.5px solid #b8dce8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 10px 14px;
+  border-radius: 12px;
+  border: 1.5px solid #d4eaf2;
   background: #fff;
-  color: #023347;
+  color: #2c4a52;
   font-family: Montserrat, sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  transition: background .18s, color .18s, border-color .18s;
-  white-space: nowrap;
+  text-align: center;
+  line-height: 1.3;
+  transition: background .18s, color .18s, border-color .18s, box-shadow .18s, transform .15s;
+  box-shadow: 0 1px 4px rgba(2,51,71,.05);
 }
-.region-btn:hover { background: #e0f4f8; border-color: #2a8e9e; }
-.region-btn.active { background: #2a8e9e; color: #fff; border-color: #2a8e9e; }
+.region-btn .ricon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #e8f5fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background .18s;
+}
+.region-btn .ricon svg { display: block; }
+.region-btn:hover {
+  background: #f0fafd;
+  border-color: #2a8e9e;
+  box-shadow: 0 4px 14px rgba(42,142,158,.13);
+  transform: translateY(-2px);
+}
+.region-btn.active {
+  background: #2a8e9e;
+  color: #fff;
+  border-color: #2a8e9e;
+  box-shadow: 0 4px 16px rgba(42,142,158,.30);
+  transform: translateY(-2px);
+}
+.region-btn.active .ricon { background: rgba(255,255,255,.22); }
+@media(max-width:1100px){ .registry-regions{ grid-template-columns: repeat(4,1fr); } }
+@media(max-width:640px) { .registry-regions{ grid-template-columns: repeat(2,1fr); } }
 .registry-table-wrap {
   overflow-x: auto;
   border-radius: 10px;
@@ -282,10 +315,12 @@ function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
+var PIN_SVG = '<svg fill="none" height="15" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="15"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
+
 regions.forEach(function(reg) {
   var btn = document.createElement('button');
   btn.className = 'region-btn' + (reg === activeRegion ? ' active' : '');
-  btn.textContent = reg;
+  btn.innerHTML = '<span class="ricon">' + PIN_SVG + '</span>' + esc(reg);
   btn.addEventListener('click', function() {
     activeRegion = reg;
     document.querySelectorAll('.region-btn').forEach(function(b){ b.classList.remove('active'); });
