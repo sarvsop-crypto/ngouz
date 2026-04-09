@@ -277,7 +277,7 @@
 
   var labels = ['2020 й.','2021 й.','2022 й.','2023 й.','2024 й.','2025 й.'];
   var member = [532, 990, 1482, 1843, 2143, 2382];
-  var drawn  = false;
+  var chartInstance = null;
 
   function buildChart() {
     var c = canvas.getContext('2d');
@@ -286,7 +286,8 @@
     grad.addColorStop(0.6, '#0e7490');
     grad.addColorStop(1, '#1a7a8a');
 
-    new Chart(canvas, {
+    if(chartInstance) { chartInstance.destroy(); }
+    chartInstance = new Chart(canvas, {
       type: 'bar',
       data: {
         labels: labels,
@@ -389,12 +390,13 @@
   }
 
   var io = new IntersectionObserver(function(entries){
-    if(entries[0].isIntersecting && !drawn){
-      drawn = true;
+    if(entries[0].isIntersecting){
       buildChart();
       wrap.style.opacity = '1';
       wrap.style.transform = 'translateX(0)';
-      io.disconnect();
+    } else {
+      wrap.style.opacity = '0';
+      wrap.style.transform = 'translateX(-60px)';
     }
   }, { threshold: 0.2 });
 
