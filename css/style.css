@@ -847,7 +847,7 @@ body.a11y-grayscale { filter: grayscale(1); }
   width: 100%;
   aspect-ratio: 4 / 3;
   min-height: clamp(170px, 24vw, 240px);
-  background: linear-gradient(135deg,#b8d8e8,#9acad8);
+  background: #fff;
   margin-bottom: 12px;
 }
 .team-card h3 { margin:0 0 4px; font-size:24px; }
@@ -2007,7 +2007,7 @@ body.a11y-grayscale { filter: grayscale(1); }
 .leader-card-body { display:flex; align-items:center; gap:32px; padding:32px 36px; }
 .leader-photo {
   width:160px; height:160px; border-radius:50%;
-  background:#d8e0e4;
+  background:#fff;
   flex-shrink:0;
   overflow:hidden;
   display:flex; align-items:center; justify-content:center;
