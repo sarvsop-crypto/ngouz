@@ -332,6 +332,7 @@
       afterDatasetsDraw: function(chart){
         var ctx2 = chart.ctx;
         chart.data.datasets.forEach(function(dataset, i){
+          if(i === 0) return;
           var meta = chart.getDatasetMeta(i);
           meta.data.forEach(function(bar, idx){
             var val = dataset.data[idx];
