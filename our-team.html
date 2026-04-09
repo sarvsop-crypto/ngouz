@@ -34,18 +34,18 @@
 <a href="about.html">Assotsiatsiya haqida <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
 <div class="dropdown">
 <a href="about.html">Assotsiatsiya haqida</a>
-<a href="mission.html">Vazifalar va funksiyalar</a>
+<a href="mission.html">Maqsad va vazifalar</a>
+<a href="board-of-experts.html">Kengash a'zolari</a>
 <a href="leadership.html">Rahbariyat</a>
+<a href="our-team.html">Bizning jamoa</a>
+<a href="hududiy-bolinmalar.html">Hududiy bo'linmalar</a>
 <a href="structure.html">Assotsiatsiya tuzilmasi</a>
-<a href="our-team.html">Markaziy apparat</a>
-<a href="hududiy-bolinmalar.html">Hududiy boʼlinmalar</a>
-<a href="board-of-experts.html">Kengash aʼzolari</a>
 </div>
 </div>
 <div class="nav-item has-dropdown">
 <a href="#">NNTlar reyestri <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
 <div class="dropdown">
-<a href="nntlar.html">NNTlar</a>
+<a href="nntlar.html">Assotsiatsiyaga a'zo NNTlar</a>
 <a href="sustainability-index.html">NNTlar barqarorlik indeksi</a>
 <a href="sustainability-cert.html">“Barqaror NNT” sertifikatiga ega NNTlar</a>
 </div>
@@ -95,17 +95,15 @@
 <section class="section">
 <div class="container">
 <div class="team-meta-bar">
-<span class="team-chip">Jami: 19 pozitsiya</span>
+<span class="team-chip">Jami: 19 xodim</span>
 <span class="team-chip">Rahbariyat: 3</span>
-<span class="team-chip">Xodimlar: 13</span>
-<span class="team-chip">Vakansiya: 1</span>
+<span class="team-chip">Xodimlar: 16</span>
 </div>
 <div class="team-controls">
 <input aria-label="Xodim qidiruvi" class="team-search" id="teamSearch" placeholder="Ism yoki lavozim bo'yicha qidiring" type="search"/>
 <button class="team-filter active" data-filter="all" type="button">Barchasi</button>
 <button class="team-filter" data-filter="leadership" type="button">Rahbariyat</button>
 <button class="team-filter" data-filter="central" type="button">Xodimlar</button>
-<button class="team-filter" data-filter="vacancy" type="button">Vakansiya</button>
 </div>
 <div class="team-grid" id="teamGrid" style="grid-template-columns:repeat(auto-fit,minmax(360px,1fr))"></div>
 <div aria-live="polite" class="team-empty" id="teamEmpty" role="status">Qidiruv bo'yicha natija topilmadi.</div>
@@ -152,25 +150,25 @@
 </footer>
 <script>
   const teamData = [
-    {name:"Ishanxodjayev Kamolitdin Nuritdinovich", role:"Assotsiatsiya kengashi raisi, Ijro etuvchi devon rahbari", group:"leadership", phone:"90-186-40-90", email:"kamalitdinishanxodjayev@gmail.com"},
-    {name:"Jo'raboyev Ibrohimjon Ilhomjon o'g'li", role:"Assotsiatsiya kengashi raisining birinchi o'rinbosari, Ijro etuvchi devon rahbarining birinchi o'rinbosari", group:"leadership", phone:"94-678-92-91", email:"ibrokhimjuraboev1998@gmail.com"},
-    {name:"Ismoilov Samandar Abdixakim o'g'li", role:"Assotsiatsiya kengashi raisining o'rinbosari, Ijro etuvchi devon rahbarining o'rinbosari", group:"leadership", phone:"97-926-12-13", email:"Lawyer.ismoilov@gmail.com"},
-    {name:"Faxriddinov Farrux Faxriddin o'g'li", role:"Axborot-tahlil va ijro intizomi nazorati bo'limi boshlig'i", group:"central", phone:"90-322-37-52", email:"farruxfaxriddinov258@gmail.com"},
-    {name:"Kamilova Xalima Daniyarovna", role:"Axborot-tahlil va ijro intizomi nazorati bo'limi bosh mutaxassisi", group:"central", phone:"94-615-35-52", email:"limakamilova@gmail.com"},
-    {name:"Mamatkulov Rustam Amriddinovich", role:"Kadrlar va yuridik masalalar bo'yicha bosh mutaxassis", group:"central", phone:"95-168-01-50", email:"vamatkulovrustam1980@gmail.com"},
-    {name:"Asranova Sayyora Kayumjanovna", role:"Rais maslahatchisi - jamoatchilik va OAV bilan ishlash bo'yicha bosh mutaxassis", group:"central", phone:"90-127-27-00", email:"asranovasayyora@gmail.com"},
-    {name:"Mirxodjayev Davron Miafzolovich", role:"Bosh buxgalter (0.5 st.)", group:"central", phone:"90-121-33-38", email:"mirdavron1979@gmail.com"},
-    {name:"Mamanov Sarvar Maman o'g'li", role:"Hududiy bo'linmalar faoliyatini muvofiqlashtirish bo'limi boshlig'i", group:"central", phone:"93-180-40-50", email:"mamanovsr@gmail.com"},
-    {name:"Nurbekov Asqar Muratovich", role:"Hududiy bo'linmalar faoliyatini muvofiqlashtirish bo'limi bosh mutaxassisi", group:"central", phone:"90-174-96-69", email:"nurbekovaskar0601@gmail.com"},
-    {name:"Azimova Nigora Anvarovna", role:"Xalqaro hamkorlikni rivojlantirish va xorijiy donorlarni jalb qilish bo'limi boshlig'i", group:"central", phone:"90-972-38-81", email:"Nigarji@gmail.com"},
-    {name:"Nasriddinov Muxiddin Zoir o'g'li", role:"Xalqaro hamkorlikni rivojlantirish bo'limi bosh mutaxassisi", group:"central", phone:"88-010-09-65", email:"nasriddinovmukhiddin16@gmail.com"},
-    {name:"Shodmonov Normurod Xoshimovich", role:"Nodavlat sektorini huquqiy ta'minlash va salohiyatini rivojlantirish bo'limi boshlig'i", group:"central", phone:"99-811-48-70", email:"normurodshodmonov1@gmail.com"},
-    {name:"Holmatov Alisher Nimatovich", role:"Nodavlat sektorini huquqiy ta'minlash va salohiyatini rivojlantirish bo'limi bosh mutaxassisi", group:"central", phone:"97-445-81-88", email:"alisherholmatov68@gmail.com"},
-    {name:"Djamalova Nigora Xabibullayevna", role:"Ijtimoiy sheriklik va loyiha samaradorligi bo'limi boshlig'i", group:"central", phone:"99-327-30-81", email:"nigoradjamalova445@gmail.com"},
-    {name:"Abduxamidova Xilolaxon Alisherjonovna", role:"Ijtimoiy sheriklik va loyiha samaradorligi bo'limi bosh mutaxassisi", group:"central", phone:"93-867-66-36", email:"abduhamidovahilola150@gmail.com"},
-    {name:"Vakant", role:"Xo'jalik mudiri", group:"vacancy", region:"Markaziy apparat"},
-    {name:"Abdurayimov Xumoyiddin Xujamurod o'g'li", role:"Ish yurituvchi", group:"central", phone:"90-814-98-99", email:"abdurayimovxumoyiddin@gmail.com"},
-    {name:"Yakubov G'ulom O'tkurovich", role:"Haydovchi", group:"central", phone:"94-606-80-12", email:"gulomjon3082@icloud.com"}
+    {name:"Ishanxodjayev Kamolitdin Nuritdinovich", role:"Assotsiatsiya kengashi raisi, Ijro etuvchi devon rahbari", group:"leadership", photo:"staff-01.png", email:"kamalitdinishanxodjayev@gmail.com"},
+    {name:"Jo'raboyev Ibrohimjon Ilhomjon o'g'li", role:"Assotsiatsiya kengashi raisining birinchi o'rinbosari, Ijro etuvchi devon rahbarining birinchi o'rinbosari", group:"leadership", photo:"staff-02.png", email:"ibrokhimjuraboev1998@gmail.com"},
+    {name:"Ismoilov Samandar Abdixakim o'g'li", role:"Assotsiatsiya kengashi raisining o'rinbosari, Ijro etuvchi devon rahbarining o'rinbosari", group:"leadership", photo:"staff-03.jpg", email:"Lawyer.ismoilov@gmail.com"},
+    {name:"Faxriddinov Farrux Faxriddin o'g'li", role:"Axborot-tahlil va ijro intizomi nazorati bo'limi boshlig'i", group:"central", photo:"staff-04.png", email:"farruxfaxriddinov258@gmail.com"},
+    {name:"Kamilova Xalima Daniyarovna", role:"Axborot-tahlil va ijro intizomi nazorati bo'limi bosh mutaxassisi", group:"central", photo:"staff-05.png", email:"limakamilova@gmail.com"},
+    {name:"Mamatkulov Rustam Amriddinovich", role:"Kadrlar va yuridik masalalar bo'yicha bosh mutaxassis", group:"central", photo:"staff-06.png", email:"vamatkulovrustam1980@gmail.com"},
+    {name:"Asranova Sayyora Kayumjanovna", role:"Rais maslahatchisi – jamoatchilik va OAV bilan ishlash bo'yicha bosh mutaxassis", group:"central", photo:"staff-07.png", email:"asranovasayyora@gmail.com"},
+    {name:"Mirxodjayev Davron Miafzolovich", role:"Bosh buxgalter (0.5 st.)", group:"central", photo:"staff-08.png", email:"mirdavron1979@gmail.com"},
+    {name:"Mamanov Sarvar Maman o'g'li", role:"Hududiy bo'linmalar faoliyatini muvofiqlashtirish bo'limi boshlig'i", group:"central", photo:"staff-09.png", email:"mamanovsr@gmail.com"},
+    {name:"Nurbekov Asqar Muratovich", role:"Hududiy bo'linmalar faoliyatini muvofiqlashtirish bo'limi bosh mutaxassisi", group:"central", photo:"staff-10.png", email:"nurbekovaskar0601@gmail.com"},
+    {name:"Azimova Nigora Anvarovna", role:"Xalqaro hamkorlikni rivojlantirish va xorijiy donorlarni jalb qilish bo'limi boshlig'i", group:"central", photo:"staff-11.png", email:"Nigarji@gmail.com"},
+    {name:"Nasriddinov Muxiddin Zoir o'g'li", role:"Xalqaro hamkorlikni rivojlantirish bo'limi bosh mutaxassisi", group:"central", photo:"staff-12.png", email:"nasriddinovmukhiddin16@gmail.com"},
+    {name:"Shodmonov Normurod Xoshimovich", role:"Nodavlat sektorini huquqiy ta'minlash va salohiyatini rivojlantirish bo'limi boshlig'i", group:"central", photo:"staff-13.png", email:"normurodshodmonov1@gmail.com"},
+    {name:"Holmatov Alisher Nimatovich", role:"Nodavlat sektorini huquqiy ta'minlash va salohiyatini rivojlantirish bo'limi bosh mutaxassisi", group:"central", photo:"staff-14.png", email:"alisherholmatov68@gmail.com"},
+    {name:"Djamalova Nigora Xabibullayevna", role:"Ijtimoiy sheriklik va loyiha samaradorligi bo'limi boshlig'i", group:"central", photo:"staff-15.png", email:"nigoradjamalova445@gmail.com"},
+    {name:"Abduxamidova Xilolaxon Alisherjonovna", role:"Ijtimoiy sheriklik va loyiha samaradorligi bo'limi bosh mutaxassisi", group:"central", photo:"staff-16.png", email:"abduhamidovahilola150@gmail.com"},
+    {name:"Jumanov Shokir Maxmudovich", role:"Xo'jalik mudiri", group:"central", photo:"staff-17.jpg", email:"jumanovshakir36@gmail.com"},
+    {name:"Abdurayimov Xumoyiddin Xujamurod o'g'li", role:"Ish yurituvchi", group:"central", photo:"staff-18.png", email:"abdurayimovxumoyiddin@gmail.com"},
+    {name:"Yakubov G'ulom O'tkurovich", role:"Haydovchi", group:"central", photo:"staff-19.png", email:"gulomjon3082@icloud.com"}
   ];
 
   const grid = document.getElementById('teamGrid');
@@ -184,12 +182,11 @@
     const isVacancy = item.group === 'vacancy' || /^vakant$/i.test(item.name);
     card.className = 'team-card' + (isVacancy ? ' vacancy' : '');
     card.innerHTML =
-      '<div class="team-photo"></div>' +
+      '<div class="team-photo">' + (item.photo ? '<img src="img/staff/' + item.photo + '" alt="' + item.name + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">' : '') + '</div>' +
       '<h3>' + item.name + '</h3>' +
       '<p class="team-role">' + item.role + '</p>' +
       (item.region ? '<p class="team-region">' + item.region + '</p>' : '') +
       '<div class="team-meta">' +
-      (item.phone ? '<span>Tel: <a href="tel:+998' + item.phone.replace(/[^0-9]/g,'') + '">' + item.phone + '</a></span>' : '') +
       (item.email ? '<span>Email: <a href="mailto:' + item.email + '">' + item.email + '</a></span>' : '') +
       (isVacancy ? '<span style="color:#be123c;font-weight:700">Vakansiya</span>' : '') +
       '</div>';
