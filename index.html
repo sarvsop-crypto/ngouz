@@ -138,6 +138,19 @@
 </div>
 </div>
 </section>
+<section class="map-section nnt-chart-section">
+<div class="container">
+<h2 class="section-title">Нодавлат нотижорат ташкилотлар динамикаси (2020–2025 йй.)</h2>
+<p class="section-sub">O'zbekistondagi NNTlar soni va O'zNNTMA a'zolari dinamikasi yillar kesimida.</p>
+<div class="nnt-chart-wrap">
+<canvas id="nntChart"></canvas>
+</div>
+<div class="map-legend" style="justify-content:center;margin-top:16px;">
+<div class="map-legend-item"><div class="map-legend-dot" style="background:#2a8e9e;border:none;"></div>Жами NNTлар сони</div>
+<div class="map-legend-item"><div class="map-legend-dot" style="background:#e07830;border:none;"></div>ЎзNNТMAга аъзо NNTлар</div>
+</div>
+</div>
+</section>
 <section class="section section-tight">
 <div class="container">
 <div class="section-header-row">
@@ -248,6 +261,92 @@
 </div>
 </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<script>
+(function(){
+  var ctx = document.getElementById('nntChart');
+  if(!ctx) return;
+  var labels = ['2020 й.','2021 й.','2022 й.','2023 й.','2024 й.','2025 й.'];
+  var total  = [9161, 9204, 9285, 9132, 9373, 9627];
+  var member = [532,  990,  1482, 1843, 2143, 2382];
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Жами NNTлар сони',
+          data: total,
+          backgroundColor: '#2a8e9e',
+          borderRadius: 4,
+          barPercentage: 0.42,
+          categoryPercentage: 0.8
+        },
+        {
+          label: 'ЎзNNТMAга аъзо NNTлар',
+          data: member,
+          backgroundColor: '#e07830',
+          borderRadius: 4,
+          barPercentage: 0.42,
+          categoryPercentage: 0.8
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: function(ctx){ return ' ' + ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString(); }
+          }
+        },
+        datalabels: false
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { color: '#023347', font: { family: 'Montserrat', size: 13, weight: '600' } },
+          border: { color: '#b8dce8' }
+        },
+        y: {
+          beginAtZero: true,
+          max: 12000,
+          grid: { color: 'rgba(2,51,71,0.08)' },
+          ticks: {
+            color: '#2c4a52',
+            font: { family: 'Montserrat', size: 12 },
+            stepSize: 2000,
+            callback: function(v){ return v.toLocaleString(); }
+          },
+          border: { color: '#b8dce8' }
+        }
+      },
+      animation: { duration: 900, easing: 'easeOutQuart' }
+    },
+    plugins: [{
+      id: 'dataLabels',
+      afterDatasetsDraw: function(chart){
+        var ctx2 = chart.ctx;
+        chart.data.datasets.forEach(function(dataset, i){
+          var meta = chart.getDatasetMeta(i);
+          meta.data.forEach(function(bar, idx){
+            var val = dataset.data[idx];
+            ctx2.save();
+            ctx2.font = '600 11px Montserrat, sans-serif';
+            ctx2.fillStyle = '#023347';
+            ctx2.textAlign = 'center';
+            ctx2.textBaseline = 'bottom';
+            ctx2.fillText(val.toLocaleString(), bar.x, bar.y - 4);
+            ctx2.restore();
+          });
+        });
+      }
+    }]
+  });
+})();
+</script>
 <script src="js/main.js"></script>
 <script src="js/content.js"></script>
 <script src="js/uzmap.js"></script>
