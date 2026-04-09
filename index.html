@@ -148,8 +148,9 @@
 <div class="nnt-chart-wrap">
 <canvas id="nntChart"></canvas>
 </div>
-<div class="map-legend" style="justify-content:center;margin-top:16px;">
+<div class="map-legend" style="justify-content:center;margin-top:16px;gap:24px;">
 <div class="map-legend-item"><div class="map-legend-dot" style="background:#0e7490;border:none;"></div>ЎзNNТMAга аъзо NNTлар</div>
+<div class="map-legend-item"><div style="width:22px;height:3px;background:#e07830;border-radius:2px;flex-shrink:0;"></div>O'sish tendensiyasi</div>
 </div>
 </div>
 </section>
@@ -271,8 +272,8 @@
 
   var wrap = canvas.closest('.nnt-chart-wrap');
   wrap.style.opacity = '0';
-  wrap.style.transform = 'translateY(60px)';
-  wrap.style.transition = 'opacity .75s ease, transform .75s ease';
+  wrap.style.transform = 'translateX(-60px)';
+  wrap.style.transition = 'opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1)';
 
   var labels = ['2020 й.','2021 й.','2022 й.','2023 й.','2024 й.','2025 й.'];
   var member = [532, 990, 1482, 1843, 2143, 2382];
@@ -280,27 +281,48 @@
 
   function buildChart() {
     var c = canvas.getContext('2d');
-    var grad = c.createLinearGradient(0, 0, 0, 320);
-    grad.addColorStop(0, '#0e7490');
-    grad.addColorStop(1, '#cce7f5');
+    var grad = c.createLinearGradient(0, 0, 0, 340);
+    grad.addColorStop(0, '#155e75');
+    grad.addColorStop(0.6, '#0e7490');
+    grad.addColorStop(1, '#1a7a8a');
 
     new Chart(canvas, {
       type: 'bar',
       data: {
         labels: labels,
-        datasets: [{
-          label: 'ЎзNNТMAга аъзо NNTлар',
-          data: member,
-          backgroundColor: grad,
-          borderRadius: 10,
-          borderSkipped: false,
-          barPercentage: 0.55,
-          categoryPercentage: 0.65
-        }]
+        datasets: [
+          {
+            type: 'bar',
+            label: 'ЎзNNТMAга аъзо NNTлар',
+            data: member,
+            backgroundColor: grad,
+            borderRadius: 10,
+            borderSkipped: false,
+            barPercentage: 0.52,
+            categoryPercentage: 0.65,
+            order: 2
+          },
+          {
+            type: 'line',
+            label: 'O\'sish tendensiyasi',
+            data: member,
+            borderColor: '#e07830',
+            borderWidth: 2.5,
+            pointBackgroundColor: '#fff',
+            pointBorderColor: '#e07830',
+            pointBorderWidth: 2,
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            tension: 0.45,
+            fill: false,
+            order: 1
+          }
+        ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: true,
+        interaction: { mode: 'index', intersect: false },
         plugins: {
           legend: { display: false },
           tooltip: {
@@ -309,7 +331,10 @@
             bodyColor: '#fff',
             padding: 10,
             callbacks: {
-              label: function(ctx){ return '  ' + ctx.parsed.y.toLocaleString() + ' ta NNT'; }
+              label: function(ctx){
+                if(ctx.datasetIndex === 0) return '  A\'zo NNTlar: ' + ctx.parsed.y.toLocaleString();
+                return null;
+              }
             }
           }
         },
@@ -332,7 +357,16 @@
             border: { color: '#b8dce8' }
           }
         },
-        animation: { duration: 1400, easing: 'easeOutBounce' }
+        animation: {
+          duration: 700,
+          easing: 'easeOutQuart',
+          delay: function(ctx){
+            if(ctx.type === 'data' && ctx.mode === 'default'){
+              return ctx.dataIndex * 160;
+            }
+            return 0;
+          }
+        }
       },
       plugins: [{
         id: 'dataLabels',
@@ -346,7 +380,7 @@
             c2.fillStyle = '#023347';
             c2.textAlign = 'center';
             c2.textBaseline = 'bottom';
-            c2.fillText(val.toLocaleString(), bar.x, bar.y - 6);
+            c2.fillText(val.toLocaleString(), bar.x, bar.y - 8);
             c2.restore();
           });
         }
@@ -359,10 +393,10 @@
       drawn = true;
       buildChart();
       wrap.style.opacity = '1';
-      wrap.style.transform = 'translateY(0)';
+      wrap.style.transform = 'translateX(0)';
       io.disconnect();
     }
-  }, { threshold: 0.25 });
+  }, { threshold: 0.2 });
 
   io.observe(canvas.closest('.nnt-chart-section'));
 })();
