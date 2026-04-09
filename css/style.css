@@ -729,7 +729,7 @@ body.a11y-grayscale { filter: grayscale(1); }
   display: block;
   font-size: .7rem;
   font-weight: 500;
-  color: rgba(2,51,71,.6);
+  color: rgba(255,255,255,.65);
   text-transform: uppercase;
   letter-spacing: .06em;
   margin-top: 6px;
