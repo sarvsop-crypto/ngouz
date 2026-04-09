@@ -40,6 +40,8 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
+  table-layout: fixed;
+  min-width: 1100px;
 }
 .registry-table th {
   background: #e8f5fb;
@@ -48,8 +50,17 @@
   padding: 11px 14px;
   text-align: left;
   border-bottom: 2px solid #b8dce8;
-  white-space: nowrap;
+  white-space: normal;
+  word-wrap: break-word;
 }
+.registry-table col.c-num   { width: 46px; }
+.registry-table col.c-nom   { width: 240px; }
+.registry-table col.c-royxat{ width: 120px; }
+.registry-table col.c-rahbar{ width: 150px; }
+.registry-table col.c-manzil{ width: 170px; }
+.registry-table col.c-shakl { width: 120px; }
+.registry-table col.c-azo   { width: 130px; }
+.registry-table col.c-soha  { width: 120px; }
 .registry-table td {
   padding: 10px 14px;
   border-bottom: 1px solid #e8f0f3;
@@ -145,6 +156,11 @@
 <p class="registry-count" id="registryCount"></p>
 <div class="registry-table-wrap">
 <table class="registry-table">
+<colgroup>
+<col class="c-num"/><col class="c-nom"/><col class="c-royxat"/>
+<col class="c-rahbar"/><col class="c-manzil"/><col class="c-shakl"/>
+<col class="c-azo"/><col class="c-soha"/>
+</colgroup>
 <thead>
 <tr>
 <th>№</th>
