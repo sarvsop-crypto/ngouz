@@ -765,55 +765,28 @@ body.a11y-grayscale { filter: grayscale(1); }
 .footer-inner {
   width: min(1200px, calc(100% - 32px));
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 360px;
 }
 
-/* Left column — stacks footer-grid then bottom bar */
-.footer-left { display: flex; flex-direction: column; }
-
-/* Four-column content grid */
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.8fr 1fr 1fr 1fr;
-  gap: 48px;
-  padding: 52px 48px 44px 0;
-  flex: 1;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 56px;
+  padding: 56px 0 48px;
 }
-.footer-col-brand .footer-logo-img { height: 72px; width: auto; display: block; }
+.footer-col-brand .footer-logo-img { height: 72px; width: auto; display: block; margin-bottom: 8px; }
 .footer-col-title { color: #023347; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; margin: 0 0 16px; }
 .footer-col a, .footer-col p { display: block; font-size: 14px; color: #3a6670; text-decoration: none; margin: 0 0 10px; line-height: 1.5; }
 .footer-col a:hover { color: #023347; }
 
 /* Copyright bar */
-.footer-bottom-bar { border-top: 1px solid #b8dce8; margin-top: auto; }
-.footer-bottom-info { display: flex; gap: 20px; flex-wrap: wrap; padding: 14px 48px 14px 0; font-size: 13px; color: #6a9aaa; }
+.footer-bottom-bar { border-top: 1px solid #b8dce8; }
+.footer-bottom-info { display: flex; gap: 20px; flex-wrap: wrap; padding: 16px 0; font-size: 13px; color: #6a9aaa; }
 .footer-bottom-info a { color: #6a9aaa; text-decoration: none; }
 .footer-bottom-info a:hover { color: #023347; }
 
-/* Right column — map fills the full grid-row height */
-.footer-map-wrap {
-  border-left: 1px solid #b8dce8;
-  display: flex;          /* flex column so iframe stretches */
-  flex-direction: column;
-}
-.footer-map-wrap iframe {
-  flex: 1;                /* grows to fill all available height */
-  display: block;
-  width: 100%;
-  border: 0;
-  min-height: 300px;      /* safety floor */
-}
-
 /* ── Responsive ─────────────────────────────────────────── */
-@media (max-width: 1024px) {
-  .footer-inner { grid-template-columns: 1fr 300px; }
-}
 @media (max-width: 860px) {
-  .footer-inner { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; padding: 40px 0 28px; }
-  .footer-map-wrap { border-left: none; border-top: 1px solid #b8dce8; min-height: 220px; }
-  .footer-map-wrap iframe { min-height: 220px; }
   .footer-bottom-info { padding: 14px 0; }
 }
 @media (max-width: 520px) {
