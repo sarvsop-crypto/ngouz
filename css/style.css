@@ -897,9 +897,10 @@ body.a11y-grayscale { filter: grayscale(1); }
   gap: 14px;
   margin-top: 22px;
 }
-.useful-link-card { background:#fff; border:1px solid var(--neutral-200); box-shadow:0 3px 6px rgba(100,100,100,.2); padding:20px; border-radius:8px; text-decoration:none; display:block; transition:border-color .18s, box-shadow .18s, transform .18s; }
+.useful-link-card { background:#fff; border:1px solid var(--neutral-200); box-shadow:0 3px 6px rgba(100,100,100,.2); padding:20px; border-radius:8px; text-decoration:none; display:flex; flex-direction:column; gap:12px; transition:border-color .18s, box-shadow .18s, transform .18s; }
 .useful-link-card:hover { border-color:var(--green-500); box-shadow:0 6px 18px rgba(42,142,158,.18); transform:translateY(-2px); }
-.useful-link-card h4 { margin:0; font-size:18px; color:var(--neutral-900); line-height:1.4; }
+.useful-link-card .ul-icon { font-size:36px; color:var(--green-500); display:block; }
+.useful-link-card h4 { margin:0; font-size:16px; color:var(--neutral-900); line-height:1.45; }
 .useful-link-card p { margin:0; color:var(--neutral-500); line-height:1.5; }
 .search-results { display:grid; gap:12px; margin-top:20px; }
 .search-item { background:#fff; border:1px solid var(--neutral-200); box-shadow:0 3px 6px rgba(100,100,100,.2); padding:16px; border-radius:8px; }
