@@ -36,7 +36,7 @@ a { color: inherit; text-decoration: none; }
 .container { width:min(1200px, calc(100% - 32px)); margin:0 auto; }
 .container-narrow { width:min(860px, calc(100% - 32px)); margin:0 auto; }
 .grid-bg {
-  background: #2a9e91;
+  background: #2a8e9e;
   position: relative;
   overflow: hidden;
   color: #fff;
@@ -758,7 +758,7 @@ body.a11y-grayscale { filter: grayscale(1); }
   background: #1b5c67;
 }
 /* ── Footer ─────────────────────────────────────────────── */
-.site-footer { background: #2a9e91; color: rgba(255,255,255,.65); border-top: 1px solid rgba(255,255,255,.1); }
+.site-footer { background: #2a8e9e; color: rgba(255,255,255,.65); border-top: 1px solid rgba(255,255,255,.1); }
 
 /* Two-column grid: left = all content, right = map */
 .footer-inner {
