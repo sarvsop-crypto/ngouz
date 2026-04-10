@@ -31,9 +31,9 @@
     .org-svg {
       display: block;
       width: 100%;
-      min-width: 880px;   /* below this, text becomes < 9px ? scroll instead */
+      min-width: 1100px;
       height: auto;
-      max-width: 1320px;
+      max-width: 1900px;
       margin: 0 auto;
     }
 
@@ -61,15 +61,15 @@
     }
     .svg-label {
       font-family: "Montserrat", sans-serif;
-      font-size: 15px;
+      font-size: 20px;
       fill: #1e2229;
     }
-    .svg-label-sm { font-size: 13px; }
+    .svg-label-sm { font-size: 20px; }
     .svg-label-center { text-anchor: middle; }
     .svg-label-light { fill: #fff; font-weight: 700; }
     .svg-line {
       stroke: var(--green-500, #00b4d8);
-      stroke-width: 2.5;
+      stroke-width: 3;
       fill: none;
       stroke-linecap: round;
     }
@@ -176,84 +176,99 @@
 </div>
 <!-- Org chart -->
 <div class="org-wrap anim-target" style="transition-delay:.1s">
-<svg aria-label="Ijro etuvchi devon tuzilmasi" class="org-svg" role="img" viewbox="0 0 1320 610" xmlns="http://www.w3.org/2000/svg">
-<line class="svg-line" x1="490" x2="490" y1="78" y2="112"></line>
-<line class="svg-line" x1="290" x2="690" y1="112" y2="112"></line>
-<line class="svg-line" x1="290" x2="290" y1="112" y2="132"></line>
-<line class="svg-line" x1="690" x2="690" y1="112" y2="132"></line>
-<line class="svg-line" x1="290" x2="290" y1="202" y2="242"></line>
-<line class="svg-line" x1="290" x2="290" y1="332" y2="362"></line>
-<line class="svg-line" x1="690" x2="690" y1="202" y2="242"></line>
-<line class="svg-line" x1="690" x2="690" y1="332" y2="362"></line>
-<!-- bus from head right-side to vertical rail, then branch to each of the 5 boxes -->
-<line class="svg-line" x1="620" x2="880" y1="49" y2="49"></line>
-<line class="svg-line" x1="880" x2="880" y1="49" y2="507"></line>
-<line class="svg-line" x1="880" x2="920" y1="155" y2="155"></line>
-<line class="svg-line" x1="880" x2="920" y1="241" y2="241"></line>
-<line class="svg-line" x1="880" x2="920" y1="321" y2="321"></line>
-<line class="svg-line" x1="880" x2="920" y1="406" y2="406"></line>
-<line class="svg-line" x1="880" x2="920" y1="507" y2="507"></line>
-<rect class="svg-node svg-node-head" height="58" width="260" x="360" y="20"></rect>
-<text class="svg-label svg-label-center svg-label-light" x="490" y="54">Ijro etuvchi devon rahbari</text>
-<rect class="svg-node svg-node-deputy" height="70" width="340" x="120" y="132"></rect>
-<text class="svg-label svg-label-center" x="290" y="164">
-<tspan dy="0" x="290">Ijro etuvchi devon rahbarining</tspan>
-<tspan dy="18" x="290">birinchi o'rinbosari</tspan>
+<svg aria-label="Ijro etuvchi devon tuzilmasi" class="org-svg" role="img" viewbox="0 0 1860 740" xmlns="http://www.w3.org/2000/svg">
+<!-- Head bottom → horizontal bar -->
+<line class="svg-line" x1="525" x2="525" y1="94" y2="128"></line>
+<line class="svg-line" x1="270" x2="780" y1="128" y2="128"></line>
+<!-- Bar → deputies -->
+<line class="svg-line" x1="270" x2="270" y1="128" y2="140"></line>
+<line class="svg-line" x1="780" x2="780" y1="128" y2="140"></line>
+<!-- Deputy1 → DeptA → DeptB -->
+<line class="svg-line" x1="270" x2="270" y1="232" y2="252"></line>
+<line class="svg-line" x1="270" x2="270" y1="372" y2="402"></line>
+<!-- Deputy2 → DeptC → DeptD -->
+<line class="svg-line" x1="780" x2="780" y1="232" y2="252"></line>
+<line class="svg-line" x1="780" x2="780" y1="372" y2="402"></line>
+<!-- Head right → vertical rail → branches -->
+<line class="svg-line" x1="695" x2="1080" y1="54" y2="54"></line>
+<line class="svg-line" x1="1080" x2="1080" y1="54" y2="634"></line>
+<line class="svg-line" x1="1080" x2="1110" y1="80" y2="80"></line>
+<line class="svg-line" x1="1080" x2="1110" y1="202" y2="202"></line>
+<line class="svg-line" x1="1080" x2="1110" y1="310" y2="310"></line>
+<line class="svg-line" x1="1080" x2="1110" y1="406" y2="406"></line>
+<line class="svg-line" x1="1080" x2="1110" y1="502" y2="502"></line>
+<line class="svg-line" x1="1080" x2="1110" y1="634" y2="634"></line>
+
+<!-- HEAD -->
+<rect class="svg-node svg-node-head" height="74" rx="12" ry="12" width="350" x="350" y="20"></rect>
+<text class="svg-label svg-label-center svg-label-light" x="525" y="64">Ijro etuvchi devon rahbari</text>
+
+<!-- DEPUTIES -->
+<rect class="svg-node svg-node-deputy" height="92" rx="12" ry="12" width="460" x="40" y="140"></rect>
+<text class="svg-label svg-label-center" x="270" y="172">
+<tspan dy="0" x="270">Ijro etuvchi devon rahbarining</tspan>
+<tspan dy="28" x="270">birinchi o'rinbosari</tspan>
 </text>
-<rect class="svg-node svg-node-deputy" height="70" width="340" x="520" y="132"></rect>
-<text class="svg-label svg-label-center" x="690" y="173">Ijro etuvchi devon rahbari o'rinbosari</text>
-<rect class="svg-node" height="90" width="340" x="120" y="242"></rect>
-<text class="svg-label svg-label-sm" x="138" y="262">
-<tspan dy="0" x="138">Hududiy bo'linmalar faoliyatini</tspan>
-<tspan dy="16" x="138">muvofiqlashtirish, a'zolar va</tspan>
-<tspan dy="16" x="138">mahalliy NNT bilan hamkorlik (2)</tspan>
+<rect class="svg-node svg-node-deputy" height="92" rx="12" ry="12" width="460" x="550" y="140"></rect>
+<text class="svg-label svg-label-center" x="780" y="186">Ijro etuvchi devon rahbari o'rinbosari</text>
+
+<!-- DEPARTMENTS LEFT -->
+<rect class="svg-node" height="120" rx="12" ry="12" width="460" x="40" y="252"></rect>
+<text class="svg-label svg-label-center" x="270" y="284">
+<tspan dy="0" x="270">Hududiy bo'linmalar faoliyatini</tspan>
+<tspan dy="28" x="270">muvofiqlashtirish, a'zolar va</tspan>
+<tspan dy="28" x="270">mahalliy NNT bilan hamkorlik (2)</tspan>
 </text>
-<rect class="svg-node" height="90" width="340" x="120" y="362"></rect>
-<text class="svg-label svg-label-sm" x="138" y="382">
-<tspan dy="0" x="138">Xalqaro hamkorlikni rivojlantirish</tspan>
-<tspan dy="16" x="138">va xorijiy donorlarni jalb qilish</tspan>
-<tspan dy="16" x="138">bo'limi (2)</tspan>
+<rect class="svg-node" height="120" rx="12" ry="12" width="460" x="40" y="402"></rect>
+<text class="svg-label svg-label-center" x="270" y="434">
+<tspan dy="0" x="270">Xalqaro hamkorlikni rivojlantirish</tspan>
+<tspan dy="28" x="270">va xorijiy donorlarni jalb qilish</tspan>
+<tspan dy="28" x="270">bo'limi (2)</tspan>
 </text>
-<rect class="svg-node" height="90" width="340" x="520" y="242"></rect>
-<text class="svg-label svg-label-sm" x="538" y="262">
-<tspan dy="0" x="538">Nodavlat sektorini huquqiy</tspan>
-<tspan dy="16" x="538">ta'minlash va salohiyatini</tspan>
-<tspan dy="16" x="538">rivojlantirish bo'limi (2)</tspan>
+
+<!-- DEPARTMENTS RIGHT -->
+<rect class="svg-node" height="120" rx="12" ry="12" width="460" x="550" y="252"></rect>
+<text class="svg-label svg-label-center" x="780" y="284">
+<tspan dy="0" x="780">Nodavlat sektorini huquqiy</tspan>
+<tspan dy="28" x="780">ta'minlash va salohiyatini</tspan>
+<tspan dy="28" x="780">rivojlantirish bo'limi (2)</tspan>
 </text>
-<rect class="svg-node" height="90" width="340" x="520" y="362"></rect>
-<text class="svg-label svg-label-sm" x="538" y="382">
-<tspan dy="0" x="538">Ijtimoiy sheriklik, jamoatchilik</tspan>
-<tspan dy="16" x="538">nazorati, loyiha va dasturlar</tspan>
-<tspan dy="16" x="538">samaradorligini oshirish bo'limi (2)</tspan>
+<rect class="svg-node" height="120" rx="12" ry="12" width="460" x="550" y="402"></rect>
+<text class="svg-label svg-label-center" x="780" y="434">
+<tspan dy="0" x="780">Ijtimoiy sheriklik, jamoatchilik</tspan>
+<tspan dy="28" x="780">nazorati, loyiha va dasturlar</tspan>
+<tspan dy="28" x="780">samaradorligini oshirish bo'limi (2)</tspan>
 </text>
-<rect class="svg-node svg-node-staff" height="72" width="320" x="920" y="12"></rect>
-<text class="svg-label svg-label-sm svg-label-center" x="1080" y="34">
-<tspan dy="0" x="1080">Rahbar maslahatchisi -</tspan>
-<tspan dy="16" x="1080">jamoatchilik va OAV bilan</tspan>
-<tspan dy="16" x="1080">ishlash bo'yicha bosh mutaxassis</tspan>
+
+<!-- STAFF COLUMN -->
+<rect class="svg-node svg-node-staff" height="120" rx="12" ry="12" width="440" x="1110" y="20"></rect>
+<text class="svg-label svg-label-center" x="1330" y="52">
+<tspan dy="0" x="1330">Rahbar maslahatchisi —</tspan>
+<tspan dy="28" x="1330">jamoatchilik va OAV bilan</tspan>
+<tspan dy="28" x="1330">ishlash bo'yicha bosh mutaxassis</tspan>
 </text>
-<rect class="svg-node" height="70" width="320" x="920" y="120"></rect>
-<text class="svg-label svg-label-sm svg-label-center" x="1080" y="151">
-<tspan dy="0" x="1080">Axborot-tahlil va ijro intizomi</tspan>
-<tspan dy="17" x="1080">nazorati bo'limi (2)</tspan>
+<rect class="svg-node" height="92" rx="12" ry="12" width="440" x="1110" y="156"></rect>
+<text class="svg-label svg-label-center" x="1330" y="188">
+<tspan dy="0" x="1330">Axborot-tahlil va ijro intizomi</tspan>
+<tspan dy="28" x="1330">nazorati bo'limi (2)</tspan>
 </text>
-<rect class="svg-node" height="70" width="320" x="920" y="206"></rect>
-<text class="svg-label svg-label-sm svg-label-center" x="1080" y="237">
-<tspan dy="0" x="1080">Kadrlar va yuridik masalalar</tspan>
-<tspan dy="17" x="1080">bo'yicha bosh mutaxassis</tspan>
+<rect class="svg-node" height="92" rx="12" ry="12" width="440" x="1110" y="264"></rect>
+<text class="svg-label svg-label-center" x="1330" y="296">
+<tspan dy="0" x="1330">Kadrlar va yuridik masalalar</tspan>
+<tspan dy="28" x="1330">bo'yicha bosh mutaxassis</tspan>
 </text>
-<rect class="svg-node" height="58" width="320" x="920" y="292"></rect>
-<text class="svg-label svg-label-sm svg-label-center" x="1080" y="327">Bosh buxgalter</text>
-<rect class="svg-node svg-node-regional" height="72" width="320" x="920" y="370"></rect>
-<text class="svg-label svg-label-sm svg-label-center" x="1080" y="400">
-<tspan dy="0" x="1080">Hududiy bo'linmalar</tspan>
-<tspan dy="18" x="1080">28 nafar xodim</tspan>
+<rect class="svg-node" height="74" rx="12" ry="12" width="440" x="1110" y="372"></rect>
+<text class="svg-label svg-label-center" x="1330" y="409">Bosh buxgalter</text>
+<rect class="svg-node svg-node-regional" height="92" rx="12" ry="12" width="440" x="1110" y="462"></rect>
+<text class="svg-label svg-label-center" x="1330" y="494">
+<tspan dy="0" x="1330">Hududiy bo'linmalar</tspan>
+<tspan dy="28" x="1330">28 nafar xodim</tspan>
 </text>
-<rect class="svg-node svg-node-fund" height="90" width="320" x="920" y="462"></rect>
-<text class="svg-label svg-label-sm svg-label-center" x="1080" y="491">
-<tspan dy="0" x="1080">O'zbekiston nodavlat notijorat</tspan>
-<tspan dy="16" x="1080">tashkilotlarini qo'llab-quvvatlash</tspan>
-<tspan dy="16" x="1080">jamoat fondi</tspan>
+<rect class="svg-node svg-node-fund" height="120" rx="12" ry="12" width="440" x="1110" y="574"></rect>
+<text class="svg-label svg-label-center" x="1330" y="606">
+<tspan dy="0" x="1330">O'zbekiston nodavlat notijorat</tspan>
+<tspan dy="28" x="1330">tashkilotlarini qo'llab-quvvatlash</tspan>
+<tspan dy="28" x="1330">jamoat fondi</tspan>
 </text>
 </svg>
 </div><!-- .org-wrap -->
