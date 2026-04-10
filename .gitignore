@@ -11,3 +11,4 @@ nntma_subscriber_app/.flutter-plugins-dependencies
 nntma_subscriber_app/.packages
 nntma_subscriber_app/pubspec.lock
 nntma_subscriber_app/**/.DS_Store
+*.pth
