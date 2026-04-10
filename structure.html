@@ -73,6 +73,17 @@
       fill: none;
       stroke-linecap: round;
     }
+
+    /* scroll animation */
+    .anim-target {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity .75s cubic-bezier(.22,.61,.36,1), transform .75s cubic-bezier(.22,.61,.36,1);
+    }
+    .anim-target.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </link></head>
 <body>
@@ -118,6 +129,7 @@
 <a href="multimedia-room.html">Media</a>
 <a href="events.html">Tadbirlar</a>
 <a href="reporting-forms.html">Hisobotlar</a>
+<a href="dayjestlar.html">Dayjestlar</a>
 <a href="vacancies.html">Bo'sh ish o'rinlari</a>
 <a href="talim-rivojlanish.html">Ta'lim va rivojlanish</a>
 <a href="stajirovka-volontyorlik.html">Stajirovka va volontyorlik</a>
@@ -144,14 +156,14 @@
 <section class="section">
 <div class="container">
 <!-- Stats bar -->
-<div class="struct-stats">
+<div class="struct-stats anim-target">
 <div class="struct-stat">
 <span class="struct-stat__num">44</span>
 <span class="struct-stat__label">Jami boshqaruv xodimlari</span>
 </div>
 <div class="struct-stat">
 <span class="struct-stat__num">16</span>
-<span class="struct-stat__label">Markaziy apparat xodimlari</span>
+<span class="struct-stat__label">Ijro etuvchi devon xodimlari</span>
 </div>
 <div class="struct-stat">
 <span class="struct-stat__num">28</span>
@@ -163,7 +175,7 @@
 </div>
 </div>
 <!-- Org chart -->
-<div class="org-wrap">
+<div class="org-wrap anim-target" style="transition-delay:.1s">
 <svg aria-label="Ijro etuvchi devon tuzilmasi" class="org-svg" role="img" viewbox="0 0 1320 610" xmlns="http://www.w3.org/2000/svg">
 <line class="svg-line" x1="490" x2="490" y1="78" y2="112"></line>
 <line class="svg-line" x1="290" x2="690" y1="112" y2="112"></line>
@@ -280,5 +292,16 @@
 </footer>
 <script src="js/main.js"></script>
 <script src="js/content.js"></script>
+<script>
+(function(){
+  var targets = document.querySelectorAll('.anim-target');
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      entry.target.classList.toggle('in-view', entry.isIntersecting);
+    });
+  }, { threshold: 0.12 });
+  targets.forEach(function(el) { io.observe(el); });
+})();
+</script>
 </body>
 </html>

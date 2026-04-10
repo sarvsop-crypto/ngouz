@@ -68,6 +68,7 @@
 <a href="multimedia-room.html">Media</a>
 <a href="events.html">Tadbirlar</a>
 <a href="reporting-forms.html">Hisobotlar</a>
+<a href="dayjestlar.html">Dayjestlar</a>
 <a href="vacancies.html">Bo'sh ish o'rinlari</a>
 <a href="talim-rivojlanish.html">Ta'lim va rivojlanish</a>
 <a href="stajirovka-volontyorlik.html">Stajirovka va volontyorlik</a>
@@ -102,7 +103,7 @@
 <button class="team-filter active" data-filter="all" type="button">Barchasi</button>
 <button class="team-filter" data-filter="central" type="button">Xodimlar</button>
 </div>
-<div class="team-grid" id="teamGrid" style="grid-template-columns:repeat(auto-fit,minmax(360px,1fr))"></div>
+<div class="team-grid" id="teamGrid"></div>
 <div aria-live="polite" class="team-empty" id="teamEmpty" role="status">Qidiruv bo'yicha natija topilmadi.</div>
 </div>
 </section>
@@ -166,7 +167,7 @@
     const isVacancy = item.group === 'vacancy' || /^vakant$/i.test(item.name);
     card.className = 'team-card' + (isVacancy ? ' vacancy' : '');
     card.innerHTML =
-      '<div class="team-photo">' + (item.photo ? '<img src="img/staff/' + item.photo + '" alt="' + item.name + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block">' : '') + '</div>' +
+      '<div class="team-photo">' + (item.photo ? '<img src="img/staff/' + item.photo + '" alt="' + item.name + '" loading="lazy">' : '') + '</div>' +
       '<h3>' + item.name + '</h3>' +
       '<p class="team-role">' + item.role + '</p>' +
       (item.region ? '<p class="team-region">' + item.region + '</p>' : '') +

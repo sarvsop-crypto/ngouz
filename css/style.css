@@ -871,20 +871,20 @@ body.a11y-grayscale { filter: grayscale(1); }
 .not-found .sub { margin:0 0 28px; font-size:18px; line-height:1.6; color:var(--neutral-500); }
 .not-found .btn { font-size:15px; padding:13px 24px; }
 
-.team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:26px; }
-.team-card { background:#fff; border:1px solid var(--neutral-200); box-shadow:0 3px 6px rgba(100,100,100,.2); padding:18px; border-radius:8px; }
+.team-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; margin-top:26px; }
+.team-card { background:#fff; border:1px solid var(--neutral-200); box-shadow:0 3px 10px rgba(100,100,100,.15); padding:28px 16px 20px; border-radius:14px; display:flex; flex-direction:column; align-items:center; text-align:center; }
 .team-photo {
-  width: 100%;
-  aspect-ratio: 3 / 4;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
   overflow: hidden;
-  border-radius: 12px;
-  margin-bottom: 16px;
+  flex-shrink: 0;
+  margin: 0 auto 16px;
   background: linear-gradient(145deg, #e8f5fb 0%, #cce0ea 100%);
-  position: relative;
   box-shadow:
     0 0 0 3px #fff,
     0 0 0 5px rgba(2,51,71,0.13),
-    0 8px 28px rgba(2,51,71,0.10);
+    0 6px 18px rgba(2,51,71,0.12);
 }
 .team-photo img {
   width: 100%;
@@ -895,8 +895,9 @@ body.a11y-grayscale { filter: grayscale(1); }
   transition: transform .35s ease;
 }
 .team-card:hover .team-photo img { transform: scale(1.05); }
-.team-card h3 { margin:0 0 4px; font-size:24px; }
-.team-role { margin:0 0 10px; color:var(--green-500); font-weight:700; font-size:15px; }
+.team-card h3 { margin:0 0 4px; font-size:16px; font-weight:700; line-height:1.35; }
+.team-role { margin:0 0 10px; color:var(--green-500); font-weight:600; font-size:13px; line-height:1.4; }
+.team-meta { margin-top:10px; display:grid; gap:5px; color:var(--neutral-500); font-size:13px; word-break:break-all; }
 .team-card p { margin:0; color:var(--neutral-500); line-height:1.6; }
 .team-meta { margin-top:12px; display:grid; gap:6px; color:var(--neutral-900); font-size:15px; font-weight:600; }
 .team-departments .item h4 { font-size:18px; }
@@ -2413,11 +2414,69 @@ body.a11y-grayscale { filter: grayscale(1); }
 
 /* ── NNT dynamics chart ──────────────────────────────────── */
 .nnt-chart-section { padding-top: 32px; }
+.nnt-chart-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(2,51,71,.10);
+  padding: 28px 32px 24px;
+}
+.nnt-chart-stats {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.nnt-stat-box {
+  flex: 1;
+  min-width: 140px;
+  background: #f9fbfc;
+  border-left: 3px solid #378ADD;
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+.nnt-stat-box.nnt-stat--purple { border-left-color: #9b8fd4; }
+.nnt-stat-label { font-size: 11px; color: #6b7c85; margin: 0 0 4px; display: block; }
+.nnt-stat-value { font-size: 24px; font-weight: 700; color: #1a2e3a; display: block; }
+.nnt-chart-legend {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 6px;
+}
+.nnt-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2c4a52;
+}
+.nnt-legend-sq { width: 13px; height: 13px; background: #378ADD; border-radius: 3px; flex-shrink: 0; }
+.nnt-legend-ln { width: 22px; height: 2.5px; background: #1D9E75; border-radius: 2px; flex-shrink: 0; }
 .nnt-chart-wrap {
   position: relative;
   max-width: 100%;
-  margin: 28px 0 0;
+  margin: 0;
 }
+.nnt-chart-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+}
+.nnt-dl-btn {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: #fff;
+  border: 1.5px solid #c8dde6;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: #378ADD;
+  font-size: 17px;
+  transition: background .2s, border-color .2s;
+}
+.nnt-dl-btn:hover { background: #EAF6F6; border-color: #378ADD; }
+.nnt-chart-source { font-size: 11px; color: #8fa5af; font-style: italic; }
 
 /* ── Contact page ────────────────────────────────────────── */
 .contact-grid {

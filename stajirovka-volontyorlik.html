@@ -53,6 +53,7 @@
 <a href="multimedia-room.html">Media</a>
 <a href="events.html">Tadbirlar</a>
 <a href="reporting-forms.html">Hisobotlar</a>
+<a href="dayjestlar.html">Dayjestlar</a>
 <a href="vacancies.html">Bo'sh ish o'rinlari</a>
 <a href="talim-rivojlanish.html">Ta'lim va rivojlanish</a>
 <a href="stajirovka-volontyorlik.html">Stajirovka va volontyorlik</a>
@@ -79,14 +80,13 @@
 </section>
 <section class="section">
 <div class="container">
-<div class="cards">
+<div class="cards" style="grid-template-columns:repeat(2,1fr)">
 <article class="card">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
 <svg fill="none" height="28" stroke="var(--green-500)" stroke-width="1.8" viewbox="0 0 24 24" width="28"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
 <h3 style="margin:0;">Stajirovka dasturlari</h3>
 </div>
 <p>Oliy ta'lim muassasalari talabalari uchun tashkil etiladigan amaliyot (stajirovka) dasturlari. NNT sektori, loyiha boshqaruvi, huquq va kommunikatsiya yo'nalishlarida haqiqiy ish tajribasi orttirish imkoniyati. Arizalar yil davomida qabul qilinadi.</p>
-<div class="card-action"><a class="btn" href="qayta-aloqa.html">Ariza topshirish</a></div>
 </article>
 <article class="card">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
@@ -94,19 +94,88 @@
 <h3 style="margin:0;">Volontyorlik faoliyati</h3>
 </div>
 <p>Assotsiatsiyada amalga oshirilayotgan volontyorlik dasturlari haqida to'liq ma'lumot. Tadbirlarni tashkil etish, NNT sektori rivojiga hissa qo'shish va fuqarolik jamiyati qurishda faol ishtirok etish imkoniyatlari.</p>
-<div class="card-action"><a class="btn" href="qayta-aloqa.html">Batafsil ma'lumot</a></div>
-</article>
-<article class="card">
-<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-<svg fill="none" height="28" stroke="var(--green-500)" stroke-width="1.8" viewbox="0 0 24 24" width="28"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-<h3 style="margin:0;">Onlayn ariza topshirish</h3>
-</div>
-<p>Volontyorlik faoliyatida ishtirok etish istagi bo'lgan shaxslar uchun onlayn ariza topshirish imkoniyati. Arizangizni to'ldiring — mutaxassislarimiz siz bilan bog'lanadi va mos yo'nalish bo'yicha yo'naltiradi.</p>
-<div class="card-action"><a class="btn" href="qayta-aloqa.html">Ariza topshirish</a></div>
 </article>
 </div>
 </div>
 </section>
+<section class="section" style="padding-top:0">
+<div class="container">
+<div class="card" style="max-width:720px;margin:0 auto">
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+<svg fill="none" height="28" stroke="var(--green-500)" stroke-width="1.8" viewbox="0 0 24 24" width="28"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line></svg>
+<h3 style="margin:0;">Onlayn ariza topshirish</h3>
+</div>
+<form id="stajirovkaForm" novalidate="">
+<div class="form-grid">
+<div class="form-field">
+<label class="form-label" for="st-name">Ism Familiya *</label>
+<input autocomplete="name" id="st-name" name="name" placeholder="To'liq ismingiz" required=""/>
+</div>
+<div class="form-field">
+<label class="form-label" for="st-phone">Telefon</label>
+<input autocomplete="tel" id="st-phone" inputmode="tel" name="phone" placeholder="+998 __ ___ __ __"/>
+</div>
+<div class="form-field">
+<label class="form-label" for="st-email">Email</label>
+<input autocomplete="email" id="st-email" name="email" placeholder="email@example.com" type="email"/>
+</div>
+<div class="form-field">
+<label class="form-label" for="st-yunalish">Yo'nalish *</label>
+<select id="st-yunalish" name="yunalish" required="">
+<option value="">Tanlang…</option>
+<option>Stajirovka</option>
+<option>Volontyorlik</option>
+</select>
+</div>
+<div class="form-field form-field--full">
+<label class="form-label" for="st-muassasa">Tahsil olayotgan ta'lim muassasangiz nomi *</label>
+<input id="st-muassasa" name="muassasa" placeholder="Masalan: Toshkent davlat yuridik universiteti" required=""/>
+</div>
+<div class="form-field form-field--full">
+<label class="form-label" for="st-message">Motivatsiya xati</label>
+<textarea id="st-message" name="message" placeholder="Nima uchun ishtirok etmoqchisiz?" rows="4"></textarea>
+</div>
+<div class="form-field form-field--full">
+<label class="form-label" for="st-resume">Resume biriktirish</label>
+<input accept=".pdf,.doc,.docx" id="st-resume" name="resume" type="file"/>
+</div>
+</div>
+<div class="form-actions">
+<button class="btn" type="submit">
+<svg aria-hidden="true" fill="currentColor" height="16" style="margin-right:6px;vertical-align:middle" viewbox="0 0 24 24" width="16"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.75a2.25 2.25 0 0 0 .126 4.238l3.918 1.176 1.77 5.522a.75.75 0 0 0 1.317.209l2.352-2.938 4.552 3.31a2.25 2.25 0 0 0 3.478-1.464l2.25-15.75a2.25 2.25 0 0 0-2.241-2.268z"></path></svg>
+            Ariza yuborish
+          </button>
+</div>
+</form>
+</div>
+</div>
+</section>
+<script>
+document.getElementById('stajirovkaForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  var name     = document.getElementById('st-name').value.trim();
+  var phone    = document.getElementById('st-phone').value.trim();
+  var email    = document.getElementById('st-email').value.trim();
+  var yunalish = document.getElementById('st-yunalish').value;
+  var muassasa = document.getElementById('st-muassasa').value.trim();
+  var message  = document.getElementById('st-message').value.trim();
+  var resumeEl = document.getElementById('st-resume');
+  var resume   = resumeEl.files.length ? resumeEl.files[0].name : '';
+  if (!name || !yunalish || !muassasa) {
+    alert("Iltimos, majburiy maydonlarni to'ldiring.");
+    return;
+  }
+  var subject = 'Ariza: ' + yunalish + ' — ' + name;
+  var body = 'Ism Familiya: ' + name
+    + '\nTelefon: ' + (phone || '—')
+    + '\nEmail: ' + (email || '—')
+    + '\nYo\'nalish: ' + yunalish
+    + '\nTa\'lim muassasasi: ' + muassasa
+    + (message ? '\n\nMotivatsiya xati:\n' + message : '')
+    + (resume ? '\n\nResume fayl nomi: ' + resume + '\n(Iltimos, faylni qo\'shimcha sifatida biriktiring)' : '');
+  window.location.href = 'mailto:info@ngo.uz?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+});
+</script>
 </main>
 <footer class="site-footer">
 <div class="footer-inner">
