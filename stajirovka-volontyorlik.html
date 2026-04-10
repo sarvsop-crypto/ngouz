@@ -9,6 +9,34 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="css/style.css" rel="stylesheet">
+<style>
+  .file-drop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    border: 2px dashed var(--neutral-200, #d1dbe3);
+    border-radius: 10px;
+    padding: 28px 20px;
+    text-align: center;
+    cursor: default;
+    transition: border-color .2s, background .2s;
+  }
+  .file-drop.drag-over {
+    border-color: var(--green-500);
+    background: #f0fbf7;
+  }
+  .file-drop__hint { margin: 0; font-size: 14px; color: var(--neutral-500, #587585); }
+  .file-drop__types { margin: 0; font-size: 13px; color: var(--neutral-400, #9ca3af); }
+  .file-drop__name {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--green-500);
+    word-break: break-all;
+  }
+  .btn--sm { font-size: 14px; padding: 8px 18px; cursor: pointer; }
+</style>
 </link></head>
 <body>
 <header class="site-header">
@@ -136,8 +164,15 @@
 <textarea id="st-message" name="message" placeholder="Nima uchun ishtirok etmoqchisiz?" rows="4"></textarea>
 </div>
 <div class="form-field form-field--full">
-<label class="form-label" for="st-resume">Resume biriktirish</label>
-<input accept=".pdf,.doc,.docx" id="st-resume" name="resume" type="file"/>
+<label class="form-label">Resume biriktirish</label>
+<div class="file-drop" id="fileDropZone">
+  <svg fill="none" height="32" stroke="var(--green-500)" stroke-width="1.6" viewbox="0 0 24 24" width="32"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+  <p class="file-drop__hint">Faylni shu yerga tashlang yoki</p>
+  <label class="btn btn--sm file-drop__btn" for="st-resume">Fayl tanlash</label>
+  <p class="file-drop__types">PDF, DOC, DOCX · 5 MB gacha</p>
+  <p class="file-drop__name" id="fileDropName" style="display:none"></p>
+</div>
+<input accept=".pdf,.doc,.docx" id="st-resume" name="resume" style="display:none" type="file"/>
 </div>
 </div>
 <div class="form-actions">
@@ -175,6 +210,44 @@ document.getElementById('stajirovkaForm').addEventListener('submit', function(e)
     + (resume ? '\n\nResume fayl nomi: ' + resume + '\n(Iltimos, faylni qo\'shimcha sifatida biriktiring)' : '');
   window.location.href = 'mailto:info@ngo.uz?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 });
+
+// File drop zone
+(function(){
+  var zone = document.getElementById('fileDropZone');
+  var input = document.getElementById('st-resume');
+  var nameEl = document.getElementById('fileDropName');
+
+  function showName(file) {
+    nameEl.textContent = '📎 ' + file.name;
+    nameEl.style.display = 'block';
+  }
+
+  input.addEventListener('change', function(){
+    if (input.files.length) showName(input.files[0]);
+  });
+
+  zone.addEventListener('dragover', function(e){
+    e.preventDefault();
+    zone.classList.add('drag-over');
+  });
+  zone.addEventListener('dragleave', function(){
+    zone.classList.remove('drag-over');
+  });
+  zone.addEventListener('drop', function(e){
+    e.preventDefault();
+    zone.classList.remove('drag-over');
+    var files = e.dataTransfer.files;
+    if (files.length) {
+      // Transfer to the hidden input via DataTransfer
+      try {
+        var dt = new DataTransfer();
+        dt.items.add(files[0]);
+        input.files = dt.files;
+      } catch(ex) {}
+      showName(files[0]);
+    }
+  });
+})();
 </script>
 </main>
 <footer class="site-footer">
