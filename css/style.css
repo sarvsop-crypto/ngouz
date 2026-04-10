@@ -773,9 +773,9 @@ body.a11y-grayscale { filter: grayscale(1); }
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 56px;
-  padding: 56px 0 48px;
+  grid-template-columns: 1.6fr 1fr 1fr 1.4fr;
+  gap: 40px;
+  padding: 32px 0 24px;
 }
 .footer-col-brand .footer-logo-img { height: 72px; width: auto; display: block; margin-bottom: 8px; }
 .footer-col-title { color: #023347; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; margin: 0 0 16px; }
@@ -783,23 +783,21 @@ body.a11y-grayscale { filter: grayscale(1); }
 .footer-col a:hover { color: #023347; }
 
 /* ── Social links ──────────────────────────────────────── */
-.social-links { display: flex; flex-direction: column; gap: 8px; margin-top: 2px; }
+.social-links { display: flex; flex-direction: row; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
 .social-link {
-  display: flex; align-items: center; gap: 11px;
-  padding: 10px 16px; border-radius: 12px;
-  background: rgba(255,255,255,0.72);
-  border: 1px solid rgba(2,51,71,0.09);
-  color: #023347; text-decoration: none;
-  font-size: 13px; font-weight: 600; white-space: nowrap;
-  transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+  display: flex; align-items: center; justify-content: center;
+  width: 46px; height: 46px; border-radius: 50%;
+  background: var(--sc); color: #fff; text-decoration: none;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+  flex-shrink: 0;
 }
-.social-link svg { width: 26px; height: 26px; flex-shrink: 0; display: block; color: var(--sc); }
-.social-link span { display: block; line-height: 1; }
+.social-link svg { width: 22px; height: 22px; display: block; color: #fff; }
+.social-link span { display: none; }
 .social-link:hover {
-  background: rgba(255,255,255,0.95);
-  transform: translateX(5px);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
-  color: #023347;
+  transform: translateY(-3px) scale(1.1); color: #fff;
+  filter: brightness(1.12);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.22);
 }
 
 /* Copyright bar */
