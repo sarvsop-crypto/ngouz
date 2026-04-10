@@ -2405,7 +2405,7 @@ body.a11y-grayscale { filter: grayscale(1); }
 .nnt-chart-section { padding-top: 32px; }
 .nnt-chart-wrap {
   position: relative;
-  max-width: 860px;
+  max-width: 100%;
   margin: 28px 0 0;
 }
 
