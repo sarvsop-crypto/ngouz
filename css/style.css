@@ -426,6 +426,44 @@ body.a11y-grayscale { filter: grayscale(1); }
 .hero-member-btn svg { color: #0e7490; flex-shrink: 0; }
 .hero-member-btn .btn-label { display: flex; flex-direction: column; text-align: left; line-height: 1.15; }
 .hero-member-btn .btn-label-sub { font-size: .72rem; font-weight: 500; color: #0e7490; letter-spacing: .04em; text-transform: uppercase; margin-top: 1px; }
+.hero-benefits-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  background: #fff;
+  color: #023347;
+  border: none;
+  border-radius: 6px;
+  padding: 16px 30px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: .01em;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 6px 32px rgba(0,0,0,.28), 0 2px 8px rgba(0,0,0,.18);
+  transition: background .18s, color .18s, box-shadow .18s, transform .12s;
+  position: relative;
+  overflow: hidden;
+}
+.hero-benefits-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(42,142,158,.10) 100%);
+  opacity: 0;
+  transition: opacity .22s;
+}
+.hero-benefits-btn:hover {
+  background: #e8f6f8;
+  color: #023347;
+  box-shadow: 0 10px 40px rgba(0,0,0,.32), 0 3px 10px rgba(42,142,158,.18);
+  transform: translateY(-2px);
+}
+.hero-benefits-btn:hover::after { opacity: 1; }
+.hero-benefits-btn:active { transform: translateY(0); box-shadow: 0 4px 18px rgba(0,0,0,.22); }
+.hero-benefits-btn svg { color: #0e7490; flex-shrink: 0; }
+.hero-benefits-btn .btn-label { display: flex; flex-direction: column; text-align: left; line-height: 1.15; }
 .hero-cinematic-panel { border:1px solid rgba(200,207,208,.38); background:linear-gradient(160deg, rgba(2,51,71,.84), rgba(27,92,103,.66)); backdrop-filter:blur(8px); box-shadow:0 18px 42px rgba(0,0,0,.34); padding:18px; }
 .hero-cinematic-panel h3 { margin:0 0 12px; font-size:24px; }
 .hero-mini-kpis { display:grid; gap:10px; margin-bottom:10px; }

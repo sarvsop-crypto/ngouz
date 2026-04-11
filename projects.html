@@ -1,5 +1,4 @@
-﻿<!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="uz">
 <head>
 <meta charset="utf-8"/>
@@ -7,10 +6,231 @@
 <title>Loyihalar - ngo.uz</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="css/style.css" rel="stylesheet">
-</link></head>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="css/style.css" rel="stylesheet"/>
+<style>
+/* ── Filter pills ── */
+.proj-filter-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+.proj-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  border-radius: 999px;
+  border: 1.5px solid rgba(2,51,71,.22);
+  background: rgba(255,255,255,.65);
+  color: #023347;
+  cursor: pointer;
+  transition: background .17s, border-color .17s, color .17s, box-shadow .17s;
+  white-space: nowrap;
+}
+.proj-pill:hover {
+  background: #fff;
+  border-color: #0e7490;
+  box-shadow: 0 2px 10px rgba(14,116,144,.15);
+}
+.proj-pill.active {
+  background: #023347;
+  border-color: #023347;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(2,51,71,.22);
+}
+.proj-pill .pill-n {
+  font-size: 12px;
+  font-weight: 700;
+  background: rgba(2,51,71,.12);
+  border-radius: 999px;
+  padding: 1px 7px;
+  line-height: 1.6;
+}
+.proj-pill.active .pill-n {
+  background: rgba(255,255,255,.18);
+}
+
+/* ── View switching ── */
+.proj-view { display: none; }
+.proj-view.active { display: block; }
+
+/* ── Unified view header ── */
+.proj-view-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.proj-view-head h2 {
+  margin: 0 0 6px;
+  font-size: clamp(24px,4vw,36px);
+  font-weight: 700;
+  color: #023347;
+  line-height: 1.2;
+}
+.proj-view-head p {
+  margin: 0;
+  color: #798384;
+  font-size: 16px;
+  line-height: 1.5;
+}
+.proj-total {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0e7490;
+  background: #E8F5FB;
+  border: 1px solid #b8dce8;
+  border-radius: 999px;
+  padding: 5px 14px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  align-self: flex-start;
+}
+
+/* ── Accordion container ── */
+.proj-accordion {
+  background: #fff;
+  border: 1px solid #c8cfd0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 20px rgba(2,51,71,.07);
+}
+
+/* ── Category divider row (inside accordion) ── */
+.proj-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  background: #f0f6fa;
+  border-bottom: 1px solid #d6e6ef;
+}
+.proj-divider-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: #023347;
+  color: #fff;
+  border-radius: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.proj-divider-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #023347;
+  flex: 1;
+}
+.proj-divider-count {
+  font-size: 11px;
+  font-weight: 600;
+  color: #0e7490;
+  background: #fff;
+  border: 1px solid #b8dce8;
+  border-radius: 999px;
+  padding: 2px 9px;
+}
+
+/* ── Project row ── */
+.proj-item {
+  border-bottom: 1px solid #e4e7e7;
+}
+.proj-item:last-child { border-bottom: none; }
+
+.proj-item > summary {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 15px 18px;
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  transition: background .14s;
+}
+.proj-item > summary::-webkit-details-marker { display: none; }
+.proj-item > summary:hover  { background: #f5f9fb; }
+.proj-item[open] > summary  { background: #eef6fb; }
+
+.proj-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 3px 9px;
+  white-space: nowrap;
+  line-height: 1;
+}
+.proj-status.s-amaldagi   { background: #d1fae5; color: #065f46; }
+.proj-status.s-rejadagi   { background: #dbeafe; color: #1e40af; }
+.proj-status.s-yakunlangan { background: #e5e7eb; color: #374151; }
+
+.proj-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  background: #f1f8f8;
+  border: 1px solid #c8cfd0;
+  font-size: 11px;
+  font-weight: 700;
+  color: #798384;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.proj-title {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+  color: #171a1b;
+  line-height: 1.45;
+}
+
+.proj-chevron {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  color: #929c9d;
+  margin-top: 3px;
+  transition: transform .2s;
+}
+.proj-item[open] .proj-chevron { transform: rotate(180deg); }
+
+.proj-body {
+  padding: 12px 18px 16px calc(18px + 22px + 12px);
+  background: #f7fafc;
+  border-top: 1px solid #e4e7e7;
+  font-size: 14px;
+  color: #798384;
+  line-height: 1.75;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .proj-body { padding-left: 18px; }
+  .proj-title { font-size: 14px; }
+  .proj-divider-label { font-size: 12px; }
+}
+</style>
+</head>
 <body>
+
 <header class="site-header">
 <div class="container nav">
 <a class="topbar-building" href="index.html"><img alt="OʼZNNTMA" src="img/logo-oznntma.png"/></a>
@@ -32,7 +252,7 @@
 <div class="dropdown">
 <a href="nntlar.html">Assotsiatsiyaga a'zo NNTlar</a>
 <a href="sustainability-index.html">NNTlar barqarorlik indeksi</a>
-<a href="sustainability-cert.html">“Barqaror NNT” sertifikatiga ega NNTlar</a>
+<a href="sustainability-cert.html">"Barqaror NNT" sertifikatiga ega NNTlar</a>
 </div>
 </div>
 <a href="projects.html">Loyihalar</a>
@@ -78,82 +298,434 @@
 </button>
 </div>
 </header>
+
+<!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
 <section class="grid-bg">
-<div class="container hero split">
-<div>
-<h1>Loyihalar</h1>
-<p class="sub">Assotsiatsiya tomonidan amalga oshirilayotgan va yakunlangan loyiha hamda tadbirlar.</p>
-<div style="margin-top:22px; display:flex; gap:10px; flex-wrap:wrap;">
-<a class="tool-pill" href="#">Barchasi</a>
-<a class="tool-pill" href="#">Amaldagi</a>
-<a class="tool-pill" href="#">Yakunlangan</a>
-<a class="tool-pill" href="#">Rejadagi</a>
-</div>
-</div>
-<div class="card">
-<div class="media" style="height:320px"></div>
-<h3>NNT salohiyatini oshirish dasturi</h3>
-<p>Amaldagi loyiha · Hududiy treninglar va metodik qo‘llab-quvvatlash.</p>
-</div>
-</div>
+  <div class="container hero" style="padding:68px 0 56px; max-width:860px;">
+    <h1>Loyihalar</h1>
+    <p class="sub">Assotsiatsiya tomonidan amalga oshirilayotgan, yakunlangan va rejalashtirilgan loyihalar ro'yxati.</p>
+    <nav class="proj-filter-bar" aria-label="Loyihalarni filtrlash">
+      <button class="proj-pill active" data-filter="barchasi">Barchasi <span class="pill-n">17</span></button>
+      <button class="proj-pill" data-filter="amaldagi">Amaldagi <span class="pill-n">2</span></button>
+      <button class="proj-pill" data-filter="yakunlangan">Yakunlangan <span class="pill-n">1</span></button>
+      <button class="proj-pill" data-filter="rejadagi">Rejadagi <span class="pill-n">14</span></button>
+    </nav>
+  </div>
 </section>
+
+<!-- ══ CONTENT ════════════════════════════════════════════════════════════ -->
 <section class="section">
 <div class="container">
-<h2 class="section-title">Asosiy loyiha yo‘nalishlari</h2>
-<p class="section-sub">Ijtimoiy sheriklik, institutsional rivojlanish va tahliliy ko‘mak bo‘yicha loyiha portfeli.</p>
-<div class="cards">
-<article class="card">
-<div class="media"></div>
-<h3>Hududlarda NNT maktabi</h3>
-<p>NNTlar reyestri amaliy o‘quv dasturlari va mentorlik tizimi.</p>
-</article>
-<article class="card">
-<div class="media"></div>
-<h3>Ijtimoiy buyurtmalar platformasi</h3>
-<p>Mahalliy tashabbuslarni tanlash va moliyalashtirish mexanizmlari.</p>
-</article>
-<article class="card">
-<div class="media"></div>
-<h3>Huquqiy savodxonlik loyihasi</h3>
-<p>NNTlar reyestri huquqiy maslahat va metodik materiallar.</p>
-</article>
-</div>
+
+  <!-- ─── BARCHASI ─────────────────────────────────────────────────────── -->
+  <div class="proj-view active" data-view="barchasi">
+    <div class="proj-view-head">
+      <div>
+        <h2>Barcha loyihalar</h2>
+        <p>Amaldagi, yakunlangan va rejalashtirilgan — loyihalarning to'liq ro'yxati.</p>
+      </div>
+      <span class="proj-total">17 ta loyiha</span>
+    </div>
+    <div class="proj-accordion">
+
+      <!-- Amaldagi group -->
+      <div class="proj-divider">
+        <span class="proj-divider-num" style="background:#065f46;">A</span>
+        <span class="proj-divider-label">Amaldagi loyihalar</span>
+        <span class="proj-divider-count">2 ta</span>
+      </div>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-amaldagi">Amaldagi</span>
+          <span class="proj-title">NNT salohiyatini oshirish dasturi</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">
+          Hudud: Respublika · Davr: 2025–2026. Hududiy treninglar, mentorlik tizimi va metodik qo'llab-quvvatlash orqali NNTlar institutsional salohiyatini mustahkamlash.
+        </div>
+      </details>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-amaldagi">Amaldagi</span>
+          <span class="proj-title">Xalqaro hamkorlikda tajriba almashish</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">
+          Hamkorlar: xalqaro tashkilotlar · Davr: 2025–2027. Institutsional rivojlanish yo'nalishida xorijiy tajribani o'rganish va joriy etish.
+        </div>
+      </details>
+
+      <!-- Yakunlangan group -->
+      <div class="proj-divider">
+        <span class="proj-divider-num" style="background:#374151;">Y</span>
+        <span class="proj-divider-label">Yakunlangan loyihalar</span>
+        <span class="proj-divider-count">1 ta</span>
+      </div>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-yakunlangan">Yakunlangan</span>
+          <span class="proj-title">Jamoatchilik nazorati laboratoriyasi</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">
+          Hudud: 6 ta viloyat · Davr: 2024–2025. Monitoring hisobotlari e'lon qilingan. Davlat dasturlari ijrosi yuzasidan jamoatchilik monitoringi va muhokamalar o'tkazildi.
+        </div>
+      </details>
+
+      <!-- Rejadagi group -->
+      <div class="proj-divider">
+        <span class="proj-divider-num">R</span>
+        <span class="proj-divider-label">Rejadagi loyihalar — 2026</span>
+        <span class="proj-divider-count">14 ta</span>
+      </div>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">"Loyiha Ofisi"ni tashkil etish</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">Xorijiy grantlarni jalb etish va loyiha boshqaruvi salohiyatini oshirishga qaratilgan doimiy tuzilma. Grant monitoringi, donorlar bazasi, M&E tizimi va moliyaviy shaffoflikni ta'minlash bo'yicha metodik yordam beradi.</div>
+      </details>
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">Grant yozish bo'yicha tizimli trening-seminarlar</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">Xorijlik mutaxassislar tomonidan o'tkaziladigan seminarlar. Har yili 500 dan ortiq NNT vakillariga standartlashtirilgan o'quv materiallari asosida ta'lim beriladi.</div>
+      </details>
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">"NNTlar Barqarorlik Indeksi"ni joriy qilish</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">Har yili NNTlarning institutsional, moliyaviy va boshqaruv salohiyatini baholaydigan milliy indeks. Davlat va donorlar uchun qaror qabul qilishda asosiy tahliliy manba.</div>
+      </details>
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">"NNTlar Shaffoflik Standarti" ixtiyoriy sertifikatlash</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">NNTlarning boshqaruvi va moliyaviy hisobdorligini baholab, talablarga javob beruvchilarga ixtiyoriy sertifikat berish. Ochiq reestr orqali donorlar ishonchini oshiradi.</div>
+      </details>
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">"NNT Liderlari Milliy Forumi"ni o'tkazish</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">Yiliga bir marta davlat rahbari ishtirokida respublika miqyosida yirik forum. Eng faol NNTlarni taqdirlash va Assotsiatsiyaning milliy markaz roliini mustahkamlash.</div>
+      </details>
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">Jurnalistika va media talabalar bilan hamkorlik</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">Media yo'nalishidagi talabalar Assotsiatsiya va NNTlar faoliyatini jamoatchilikka yetkazadi. Yoshlarga auditoriya shakllantirish va shaxsiy brend rivojlantirish bo'yicha yordam ko'rsatiladi.</div>
+      </details>
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">"WELCOME-BOX" loyihasi</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">Yangi a'zo NNTlarga maxsus to'plam: a'zolik guvohnomasi, brend mahsulotlari, axborot materiallar va 300 000 so'mlik vaucher. Assotsiatsiya tizimiga integratsiya qilishning ilk bosqichi.</div>
+      </details>
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">"Social Impact &amp; Nonprofit Management" kurslari</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">NNT vakillarining kasbiy va boshqaruv salohiyatini oshiruvchi qisqa muddatli kurslar. Biznes va tadbirkorlik oliy maktabi bilan hamkorlikda. Davlat dasturining 83-maqsad, 262-bandi ijrosi.</div>
+      </details>
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">NNTlar uchun kovorking markazi</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">"NNTlar uyi" binosida zamonaviy kovorking markazi. Doimiy ish xonasiga ega bo'lmagan NNTlar uchun ochiq maydon, seminarlar va treninglar uchun joy.</div>
+      </details>
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">"IMKON" loyihasi</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">O'z tashabbusi bilan ochilgan, yangi yoki chekka hududlardagi Assotsiatsiya a'zo NNTlarni qo'llab-quvvatlash dasturi.</div>
+      </details>
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">Mustaqil NNTlar vakillari hamkorlik dasturi</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">32 nafar hududiy NNT vakili uchun Toshkentda 2 kunlik amaliy va madaniy dastur. Hamkorlik, tajriba almashish va davlat organlari bilan muloqotni rivojlantirish.</div>
+      </details>
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">"ZAKOVAT" intellektual o'yinlari</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">NNT vakillari salohiyatini safarbar etish uchun respublika miqyosida intellektual o'yinlar. 14 hududdan jami 70 ta jamoa (har birida 6 ishtirokchi) qatnashadi.</div>
+      </details>
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">Ijtimoiy-siyosiy islohotlar samaradorligini baholashda jamoatchilik nazorati</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">NNT ishtiroki bilan davlat dasturlari ijrosi yuzasidan monitoring, eshituvlar, ekspertiza va ijtimoiy so'rovlar. Tahliliy xulosalar davlat organlariga kiritiladi.</div>
+      </details>
+      <details class="proj-item">
+        <summary>
+          <span class="proj-status s-rejadagi">Rejadagi</span>
+          <span class="proj-title">"Fuqarolik pozitsiyasi: professional munosabat va konstruktiv tashabbus"</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">NNT vakillarining ijtimoiy-siyosiy voqealarga professional munosabatini shakllantirish va jamoatchilikka yetkazish. Tahliliy brifinglar, ochiq muloqotlar va OAV bilan hamkorlik rejalashtirilgan.</div>
+      </details>
+
+    </div><!-- /accordion -->
+  </div><!-- /barchasi -->
+
+
+  <!-- ─── AMALDAGI ──────────────────────────────────────────────────────── -->
+  <div class="proj-view" data-view="amaldagi">
+    <div class="proj-view-head">
+      <div>
+        <h2>Amaldagi loyihalar</h2>
+        <p>Hozirda faol amalga oshirilayotgan dastur va tashabbuslar.</p>
+      </div>
+      <span class="proj-total">2 ta loyiha</span>
+    </div>
+    <div class="proj-accordion">
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">1</span>
+          <span class="proj-title">NNT salohiyatini oshirish dasturi</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">
+          Hudud: Respublika · Davr: 2025–2026. Hududiy treninglar, mentorlik tizimi va metodik qo'llab-quvvatlash orqali NNTlar institutsional salohiyatini mustahkamlash.
+        </div>
+      </details>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">2</span>
+          <span class="proj-title">Xalqaro hamkorlikda tajriba almashish</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">
+          Hamkorlar: xalqaro tashkilotlar · Davr: 2025–2027. Institutsional rivojlanish yo'nalishida xorijiy tajribani o'rganish va joriy etish.
+        </div>
+      </details>
+
+    </div>
+  </div><!-- /amaldagi -->
+
+
+  <!-- ─── YAKUNLANGAN ───────────────────────────────────────────────────── -->
+  <div class="proj-view" data-view="yakunlangan">
+    <div class="proj-view-head">
+      <div>
+        <h2>Yakunlangan loyihalar</h2>
+        <p>Muvaffaqiyatli yakunlangan dastur va tashabbuslar.</p>
+      </div>
+      <span class="proj-total">1 ta loyiha</span>
+    </div>
+    <div class="proj-accordion">
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">1</span>
+          <span class="proj-title">Jamoatchilik nazorati laboratoriyasi</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">
+          Hudud: 6 ta viloyat · Davr: 2024–2025. Monitoring hisobotlari e'lon qilingan. Davlat dasturlari ijrosi yuzasidan jamoatchilik monitoringi, eshituvlar va muhokamalar o'tkazildi; xulosalar tegishli organlarga topshirildi.
+        </div>
+      </details>
+
+    </div>
+  </div><!-- /yakunlangan -->
+
+
+  <!-- ─── REJADAGI ──────────────────────────────────────────────────────── -->
+  <div class="proj-view" data-view="rejadagi">
+    <div class="proj-view-head">
+      <div>
+        <h2>Rejadagi loyihalar</h2>
+        <p>2026 yilda amalga oshirilishi mo'ljallangan loyihalar — 3 yo'nalish bo'yicha.</p>
+      </div>
+      <span class="proj-total">14 ta loyiha</span>
+    </div>
+    <div class="proj-accordion">
+
+      <!-- Category I -->
+      <div class="proj-divider">
+        <span class="proj-divider-num">I</span>
+        <span class="proj-divider-label">Assotsiatsiya faoliyatini takomillashtirish</span>
+        <span class="proj-divider-count">12 ta</span>
+      </div>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">1</span>
+          <span class="proj-title">"Loyiha Ofisi"ni tashkil etish</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">Xorijiy grantlarni jalb etish va loyiha boshqaruvi salohiyatini oshirishga qaratilgan doimiy tuzilma. Grant monitoringi, donorlar bazasini shakllantirish, standart grant shablonlari, M&E tizimi va moliyaviy shaffoflikni ta'minlash bo'yicha metodik va amaliy yordam beradi. Shuningdek, NNT ochmoqchi bo'lgan fuqarolarga hujjat tayyorlash va tashkil etish bo'yicha yordam ko'rsatadi.</div>
+      </details>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">2</span>
+          <span class="proj-title">Grant yozish bo'yicha tizimli trening-seminarlar</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">Xorijlik mutaxassislar tomonidan o'tkaziladigan o'quv seminarlari. Maqsad — O'zbekistondagi NNTlar uchun loyiha ishlab chiqish va grant yozish salohiyatini oshirish. Seminardan keyin olti oy ichida tayyorgarlikdan o'tgan xodimlar respublika bo'ylab treninglar o'tkazadi va har yili 500 dan ortiq NNT vakillariga ta'lim beradi.</div>
+      </details>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">3</span>
+          <span class="proj-title">"NNTlar Barqarorlik Indeksi"ni joriy qilish</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">Har yili respublika bo'yicha NNTlarning institutsional, moliyaviy, boshqaruv va jamoatchilik bilan ishlash salohiyatini baholaydigan milliy indeks. Davlat va donorlar uchun qaror qabul qilishda asosiy tahliliy manbaga aylanadi va Assotsiatsiyani ekspert platformasi sifatida mustahkamlaydi.</div>
+      </details>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">4</span>
+          <span class="proj-title">"NNTlar Shaffoflik Standarti" ixtiyoriy sertifikatlash tizimi</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">NNTlarning boshqaruvi, moliyaviy hisobdorligi va ochiqligini baholab, talablarga javob beruvchilarga ixtiyoriy sertifikat berish tizimi. Ochiq reestr joriy etilib, donorlar ishonchini oshirish va sektorda sog'lom raqobatni kuchaytirish ko'zlangan.</div>
+      </details>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">5</span>
+          <span class="proj-title">"NNT Liderlari Milliy Forumi"ni o'tkazish</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">Yiliga bir marta respublika miqyosida davlat rahbari ishtirokida Assotsiatsiyaga a'zo NNT rahbarlarini birlashtiruvchi yirik forum. Eng faol NNTlarni taqdirlash amalga oshiriladi va Assotsiatsiyaning milliy markaz sifatidagi roli mustahkamlanadi.</div>
+      </details>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">6</span>
+          <span class="proj-title">Jurnalistika va media talabalar bilan hamkorlik</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">Jurnalistika va media yo'nalishidagi talabalar Assotsiatsiya hamda a'zo NNTlar faoliyatini jamoatchilikka yetkazadi. Yoshlarga auditoriya shakllantirish, shaxsiy brendni rivojlantirish bo'yicha amaliy va institutsional yordam ko'rsatiladi.</div>
+      </details>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">7</span>
+          <span class="proj-title">"WELCOME-BOX" loyihasi</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">Yangi a'zo NNTlarga maxsus to'plam taqdim etish: a'zolik guvohnomasi, brend mahsulotlari, axborot materiallar va 300 000 so'mlik vaucher. Assotsiatsiya tizimiga integratsiya qilishning ilk bosqichi sifatida xizmat qiladi.</div>
+      </details>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">8</span>
+          <span class="proj-title">"Social Impact &amp; Nonprofit Management" malaka oshirish kurslari</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">NNT vakillarining kasbiy, institutsional va boshqaruv salohiyatini tizimli oshirishga qaratilgan qisqa muddatli kurslar. Biznes va tadbirkorlik oliy maktabi bilan hamkorlikda amalga oshiriladi. Davlat dasturining 83-maqsad, 262-bandi ijrosini ta'minlaydi.</div>
+      </details>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">9</span>
+          <span class="proj-title">NNTlar uchun kovorking markazi</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">"NNTlar uyi" binosida zamonaviy kovorking markazi tashkil etilib, doimiy ish xonasiga ega bo'lmagan NNTlar uchun ochiq ish maydoni yaratiladi. Uchrashuvlar, seminarlar va treninglar uchun mushtarak muhit.</div>
+      </details>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">10</span>
+          <span class="proj-title">"IMKON" loyihasi</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">O'z tashabbusi bilan ochilgan, yangi tashkil etilgan yoki chekka hududlarda joylashgan Assotsiatsiyaga a'zo notijorat tashkilotlarini qo'llab-quvvatlash dasturi.</div>
+      </details>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">11</span>
+          <span class="proj-title">Mustaqil NNTlar vakillari o'rtasida hamkorlik va muloqot dasturi</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">Respublika hududlaridan 32 nafar NNT vakili uchun Toshkentda 2 kunlik amaliy va madaniy dastur. Ishtirockchilar o'rtasida hamkorlik, tajriba almashish va davlat organlari bilan muloqotni rivojlantirish.</div>
+      </details>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">12</span>
+          <span class="proj-title">"ZAKOVAT" intellektual o'yinlari</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">NNT vakillari ilmiy, ijtimoiy va madaniy salohiyatini safarbar etish uchun "ZAKOVAT" o'yinlarini respublika miqyosida tashkil etish. 14 hududdan jami 70 ta jamoa (har birida 6 ishtirokchi) qatnashadi.</div>
+      </details>
+
+      <!-- Category II -->
+      <div class="proj-divider">
+        <span class="proj-divider-num">II</span>
+        <span class="proj-divider-label">Jamoatchilik nazorati tadbirlari</span>
+        <span class="proj-divider-count">1 ta</span>
+      </div>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">13</span>
+          <span class="proj-title">Ijtimoiy-siyosiy islohotlar samaradorligini baholashda jamoatchilik nazorati</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">NNT ishtiroki bilan davlat dasturlari va qonunchilik hujjatlari ijrosi yuzasidan jamoatchilik monitoringi, eshituvlar, muhokamalar va ekspertiza tashkil etiladi. Tahliliy xulosalar va tavsiyalar tegishli davlat organlariga kiritiladi.</div>
+      </details>
+
+      <!-- Category III -->
+      <div class="proj-divider">
+        <span class="proj-divider-num">III</span>
+        <span class="proj-divider-label">OAV va NNTlar hamkorligi</span>
+        <span class="proj-divider-count">1 ta</span>
+      </div>
+
+      <details class="proj-item">
+        <summary>
+          <span class="proj-num">14</span>
+          <span class="proj-title">"Fuqarolik pozitsiyasi: professional munosabat va konstruktiv tashabbus"</span>
+          <svg class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </summary>
+        <div class="proj-body">NNT vakillarining muhim ijtimoiy-siyosiy voqealarga professional munosabatini shakllantirish va jamoatchilikka yetkazish. Tahliliy brifinglar, ekspertlar ishtirokida ochiq muloqotlar va OAV bilan hamkorlik mexanizmlari rejalashtirilgan.</div>
+      </details>
+
+    </div><!-- /accordion -->
+  </div><!-- /rejadagi -->
+
 </div>
 </section>
-<section class="section" style="padding-top:0">
-<div class="container">
-<h2 class="section-title">Loyiha reyestri</h2>
-<div class="list">
-<div class="item">
-<h4>NNT salohiyatini oshirish dasturi</h4>
-<p>Holat: Amaldagi · Hudud: Respublika · Davr: 2025–2026 · Batafsil: loyiha pasporti va KPI ko‘rsatkichlari.</p>
-</div>
-<div class="item">
-<h4>Jamoatchilik nazorati laboratoriyasi</h4>
-<p>Holat: Yakunlangan · Hudud: 6 ta viloyat · Davr: 2024–2025 · Natija: monitoring hisobotlari e’lon qilingan.</p>
-</div>
-<div class="item">
-<h4>Yoshlar va NNT inkubatori</h4>
-<p>Holat: Rejadagi · Hudud: Toshkent + hududlar · Davr: 2026 · Yo‘nalish: start tashabbuslar va grantga tayyorlash.</p>
-</div>
-<div class="item">
-<h4>Xalqaro hamkorlikda tajriba almashish</h4>
-<p>Holat: Amaldagi · Hamkorlar: xalqaro tashkilotlar · Davr: 2025–2027 · Yo‘nalish: institutsional rivojlanish.</p>
-</div>
-</div>
-</div>
-</section>
-<section class="section" style="padding-top:0">
-<div class="container">
-<div class="card" style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
-<div>
-<h3 style="margin:0 0 8px">Loyiha tafsilotlari sahifasi</h3>
-<p>Har bir loyiha uchun alohida batafsil sahifa: maqsad, muddat, hudud, hamkorlar, KPI va natijalar.</p>
-</div>
-<a class="btn" href="news.html">Batafsil ko‘rish</a>
-</div>
-</div>
-</section>
+
 <footer class="site-footer">
 <div class="footer-inner">
 <div class="footer-grid">
@@ -161,7 +733,6 @@
 <a class="footer-logo-link" href="index.html">
 <img alt="OʼZNNTMA" class="footer-logo-img" src="img/logo-oznntma.png"/>
 </a>
-
 </div><div class="footer-col">
 <h4 class="footer-col-title">Manzil</h4>
 <p>1A, Furqat koʼchasi, Shayxontohur t., Toshkent, 100170</p>
@@ -179,9 +750,30 @@
 </div>
 </div>
 </div>
-
 </div>
 </footer>
+
 <script src="js/main.js"></script>
+<script>
+(function () {
+  var pills = document.querySelectorAll('.proj-pill');
+  var views = document.querySelectorAll('.proj-view');
+
+  function activate(filter) {
+    pills.forEach(function (p) {
+      p.classList.toggle('active', p.dataset.filter === filter);
+    });
+    views.forEach(function (v) {
+      v.classList.toggle('active', v.dataset.view === filter);
+    });
+  }
+
+  pills.forEach(function (pill) {
+    pill.addEventListener('click', function () {
+      activate(pill.dataset.filter);
+    });
+  });
+}());
+</script>
 </body>
 </html>
