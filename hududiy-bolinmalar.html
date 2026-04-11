@@ -107,14 +107,14 @@
 <span class="team-chip">Hududiy bo'linmalar: 14</span>
 <span class="team-chip">Boshlig'lar: 14</span>
 <span class="team-chip">Mutaxassislar: 11</span>
-<span class="team-chip">Vakansiya: 3</span>
+<span class="team-chip">Bo'sh ish o'rinlari: 3</span>
 </div>
 <div class="team-controls">
 <input aria-label="Xodim qidiruvi" class="team-search" id="teamSearch" placeholder="Ism, viloyat yoki lavozim bo'yicha qidiring" type="search"/>
 <button class="team-filter active" data-filter="all" type="button">Barchasi</button>
 <button class="team-filter" data-filter="head" type="button">Boshlig'lar</button>
 <button class="team-filter" data-filter="specialist" type="button">Mutaxassislar</button>
-<button class="team-filter" data-filter="vacancy" type="button">Vakansiya</button>
+<button class="team-filter" data-filter="vacancy" type="button">Bo'sh ish o'rinlari</button>
 </div>
 <div class="team-grid" id="teamGrid" style="grid-template-columns:repeat(auto-fit,minmax(360px,1fr))"></div>
 <div aria-live="polite" class="team-empty" id="teamEmpty" role="status">Qidiruv bo'yicha natija topilmadi.</div>
@@ -198,7 +198,7 @@
       (item.region ? '<p class="team-region">' + item.region + '</p>' : '') +
       '<div class="team-meta">' +
       (item.email ? '<span>Email: <a href="mailto:' + item.email + '">' + item.email + '</a></span>' : '') +
-      (isVacancy ? '<span style="color:#be123c;font-weight:700">Vakansiya</span>' : '') +
+      (isVacancy ? '<span style="color:#be123c;font-weight:700">Bo\'sh ish o\'rni</span>' : '') +
       '</div>';
     return card;
   }
