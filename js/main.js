@@ -467,4 +467,54 @@
       btn.addEventListener("click", function () { setVideo(btn); });
     });
   }
+
+  /* ── Scroll reveal ─────────────────────────────────────────── */
+  if ('IntersectionObserver' in window) {
+    var revealIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add('is-revealed');
+        revealIO.unobserve(e.target);
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+
+    function revealMark(el, delayMs) {
+      if (el.closest('header, footer, .site-header, .site-footer, nav')) return;
+      el.setAttribute('data-reveal', '');
+      if (delayMs) el.style.setProperty('--reveal-delay', delayMs + 'ms');
+      revealIO.observe(el);
+    }
+
+    /* section-level blocks */
+    document.querySelectorAll('section > .container > *').forEach(function (el) {
+      revealMark(el, 0);
+    });
+
+    /* hero cinematic copy items */
+    document.querySelectorAll('.hero-cinematic-copy > *').forEach(function (el, i) {
+      revealMark(el, i * 90);
+    });
+
+    /* grids whose children should stagger individually */
+    var STAGGER_GRIDS = [
+      '.benefits-grid', '.facts-grid', '.kpi-grid',
+      '.about-intro-grid', '.vazifalar-grid', '.criteria-grid',
+      '.research-grid', '.infographic-grid', '.team-grid',
+      '.partner-grid', '.contact-action-cards', '.contact-grid',
+      '.useful-links-grid', '.nnt-stats', '.hero-stats-row',
+      '.about-reg-row', '.cert-levels', '.level-row',
+    ].join(',');
+
+    document.querySelectorAll(STAGGER_GRIDS).forEach(function (grid) {
+      /* un-mark the container itself so only children animate */
+      grid.removeAttribute('data-reveal');
+      grid.style.removeProperty('--reveal-delay');
+      revealIO.unobserve(grid);
+      Array.from(grid.children).forEach(function (child, i) {
+        revealMark(child, i * 75);
+      });
+    });
+  }
+  /* ── end scroll reveal ─────────────────────────────────────── */
+
 })();
