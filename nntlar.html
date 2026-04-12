@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Assotsiatsiyaga a'zo NNTlar — O'zNNTMA | ngo.uz</title>
+<title>Assotsiatsiyaga a'zo NNTlar — O’zNNTMA | ngo.uz</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -22,13 +22,13 @@
     border: 1px solid #c5ddd2;
     border-radius: 12px;
     padding: 20px 24px;
-    font-size: 14px;
+    font-size: 17px;
     color: #374151;
     text-align: center;
   }
   .nnt-stat strong {
     color: #023347;
-    font-size: 30px;
+    font-size: 40px;
     font-weight: 700;
     display: block;
     margin-bottom: 4px;
@@ -51,11 +51,11 @@
   }
   .nnt-search {
     width: 100%;
-    padding: 12px 16px 12px 44px;
+    padding: 14px 16px 14px 48px;
     border: 1.5px solid #d4e0e8;
     border-radius: 10px;
     font-family: Montserrat, sans-serif;
-    font-size: 14px;
+    font-size: 16px;
     color: #1e2229;
     background: #fff;
     box-sizing: border-box;
@@ -68,28 +68,82 @@
   }
   .nnt-search::placeholder { color: #b0bec5; }
 
-  /* ── Region pills ── */
-  .nnt-region-pills {
+  /* ── Layout ── */
+  .nnt-layout {
     display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 24px;
+    gap: 28px;
+    align-items: flex-start;
   }
-  .rp {
-    padding: 7px 16px;
-    border: 1.5px solid #d4e0e8;
-    border-radius: 20px;
+  .nnt-main { flex: 1; min-width: 0; }
+
+  /* ── Sidebar ── */
+  .nnt-sidebar {
+    width: 256px;
+    flex-shrink: 0;
     background: #fff;
-    color: #2c4a52;
-    font-family: Montserrat, sans-serif;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background .15s, color .15s, border-color .15s;
-    white-space: nowrap;
+    border: 1px solid #dde8e2;
+    border-radius: 14px;
+    overflow: hidden;
+    position: sticky;
+    top: 24px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
   }
-  .rp:hover { background: #f0fafd; border-color: #0e7490; color: #0e7490; }
-  .rp.active { background: #023347; color: #fff; border-color: #023347; }
+  .nnt-sidebar-title {
+    padding: 15px 18px 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    border-bottom: 1px solid #eef3f1;
+    background: #fafcfb;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  .nnt-sidebar-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 12px 18px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: #374151;
+    background: none;
+    border: none;
+    border-left: 3px solid transparent;
+    font-family: Montserrat, sans-serif;
+    text-align: left;
+    transition: background .15s, color .15s, border-color .15s;
+    box-sizing: border-box;
+  }
+  .nnt-sidebar-item:not(:last-child) { border-bottom: 1px solid #f3f7f5; }
+  .nnt-sidebar-item:hover { background: #f0fafd; color: #0e7490; }
+  .nnt-sidebar-item.active {
+    background: #eaf3f8;
+    color: #023347;
+    border-left-color: #023347;
+    font-weight: 600;
+  }
+  .nnt-sidebar-badge {
+    font-size: 12px;
+    font-weight: 700;
+    color: #587585;
+    background: #f0f7f4;
+    padding: 3px 10px;
+    border-radius: 10px;
+    flex-shrink: 0;
+    min-width: 34px;
+    text-align: center;
+  }
+  .nnt-sidebar-item.active .nnt-sidebar-badge {
+    background: #023347;
+    color: #fff;
+  }
 
   /* ── Count bar ── */
   .nnt-count-bar {
@@ -101,7 +155,7 @@
     gap: 8px;
   }
   .nnt-count {
-    font-size: 14px;
+    font-size: 16px;
     color: #587585;
     font-weight: 500;
     margin: 0;
@@ -136,19 +190,19 @@
     align-items: flex-start;
   }
   .nnt-avatar {
-    width: 46px; height: 46px;
+    width: 50px; height: 50px;
     border-radius: 10px;
     background: linear-gradient(135deg, #023347 0%, #0e7490 100%);
     color: #fff;
     display: flex; align-items: center; justify-content: center;
-    font-size: 16px; font-weight: 700;
+    font-size: 18px; font-weight: 700;
     flex-shrink: 0;
     font-family: Montserrat, sans-serif;
     letter-spacing: .03em;
   }
   .nnt-card-meta { flex: 1; min-width: 0; }
   .nnt-card-name {
-    font-size: 13.5px;
+    font-size: 16px;
     font-weight: 600;
     color: #1e2229;
     line-height: 1.45;
@@ -157,8 +211,8 @@
   .nnt-tags { display: flex; flex-wrap: wrap; gap: 6px; }
   .nnt-field-tag {
     display: inline-block;
-    font-size: 11px; font-weight: 600;
-    padding: 3px 10px;
+    font-size: 13px; font-weight: 600;
+    padding: 4px 12px;
     border-radius: 20px;
     background: #e2f0e9;
     color: #255f40;
@@ -167,11 +221,11 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 600;
     color: #023347;
     background: #e0f0f7;
-    padding: 3px 10px;
+    padding: 4px 12px;
     border-radius: 20px;
   }
 
@@ -181,22 +235,22 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 9px;
+    gap: 11px;
     border-top: 1px solid #eef3f1;
   }
   .nnt-row {
     display: flex;
     gap: 10px;
-    font-size: 13px;
+    font-size: 15px;
     color: #374151;
     align-items: flex-start;
     line-height: 1.45;
   }
   .nnt-row-label {
     color: #9ca3af;
-    font-size: 11.5px;
+    font-size: 13px;
     font-weight: 600;
-    min-width: 64px;
+    min-width: 70px;
     flex-shrink: 0;
     padding-top: 1px;
     text-transform: uppercase;
@@ -205,7 +259,7 @@
 
   /* ── Card footer ── */
   .nnt-card-footer {
-    padding: 11px 20px;
+    padding: 13px 20px;
     background: #f8fbf9;
     border-top: 1px solid #eef3f1;
     display: flex;
@@ -213,11 +267,11 @@
     flex-wrap: wrap;
   }
   .nnt-footer-item {
-    font-size: 11.5px;
+    font-size: 13px;
     color: #587585;
     display: flex;
     flex-direction: column;
-    gap: 2px;
+    gap: 3px;
     flex: 1;
     min-width: 120px;
   }
@@ -227,7 +281,7 @@
     margin-left: 14px;
   }
   .nnt-footer-item strong {
-    font-size: 12px;
+    font-size: 14px;
     color: #374151;
     font-weight: 600;
   }
@@ -247,10 +301,19 @@
     margin: 0 auto 16px;
     font-size: 24px; color: #d1d5db;
   }
-  .nnt-empty p { font-size: 15px; margin: 0 0 4px; color: #6b7280; }
-  .nnt-empty small { font-size: 13px; color: #9ca3af; }
+  .nnt-empty p { font-size: 17px; margin: 0 0 4px; color: #6b7280; }
+  .nnt-empty small { font-size: 15px; color: #9ca3af; }
 
-  @media(max-width:900px) { .nnt-stats { grid-template-columns: repeat(2,1fr); } }
+  @media(max-width:960px) {
+    .nnt-stats { grid-template-columns: repeat(2,1fr); }
+    .nnt-layout { flex-direction: column; }
+    .nnt-sidebar { width: 100%; position: static; max-height: none; overflow-y: visible; display: flex; flex-direction: column; }
+    .nnt-sidebar-title { position: static; }
+    .nnt-sidebar-regions { display: flex; flex-wrap: wrap; }
+    .nnt-sidebar-item { border-left: none !important; border-bottom: 3px solid transparent !important; flex: 0 0 auto; white-space: nowrap; }
+    .nnt-sidebar-item.active { border-bottom-color: #023347 !important; background: #eaf3f8; }
+    .nnt-sidebar-item:not(:last-child) { border-bottom: 3px solid transparent !important; }
+  }
   @media(max-width:600px) {
     .nnt-stats { grid-template-columns: repeat(2,1fr); }
     .nnt-cards { grid-template-columns: 1fr; }
@@ -260,7 +323,7 @@
 <body>
 <header class="site-header">
 <div class="container nav">
-<a class="topbar-building" href="index.html"><img alt="OʼZNNTMA" src="img/logo-oznntma.png"/></a>
+<a class="topbar-building" href="index.html"><img alt="O’ZNNTMA" src="img/logo-oznntma.png"/></a>
 <nav aria-label="Asosiy menyu" class="menu">
 <div class="nav-item has-dropdown">
 <a href="about.html">Assotsiatsiya haqida <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
@@ -270,7 +333,7 @@
 <a href="board-of-experts.html">Kengash a'zolari</a>
 <a href="leadership.html">Rahbariyat</a>
 <a href="our-team.html">Bizning jamoa</a>
-<a href="hududiy-bolinmalar.html">Hududiy bo'linmalar</a>
+<a href="hududiy-bolinmalar.html">Hududiy bo’linmalar</a>
 <a href="structure.html">Assotsiatsiya tuzilmasi</a>
 </div>
 </div>
@@ -292,7 +355,7 @@
 </div>
 </div>
 <div class="nav-item has-dropdown">
-<a href="contact.html">Bogʼlanish <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
+<a href="contact.html">Bog’lanish <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
 <div class="dropdown">
 <a href="contact.html">Kontaktlar</a>
 <a href="qayta-aloqa.html">Qayta aloqa</a>
@@ -308,17 +371,17 @@
 <a href="events.html">Tadbirlar</a>
 <a href="reporting-forms.html">Hisobotlar</a>
 <a href="dayjestlar.html">Dayjestlar</a>
-<a href="vacancies.html">Bo'sh ish o'rinlari</a>
+<a href="vacancies.html">Bo’sh ish o’rinlari</a>
 <a href="talim-rivojlanish.html">Ta'lim va rivojlanish</a>
 <a href="stajirovka-volontyorlik.html">Stajirovka va volontyorlik</a>
 </div>
 </div>
 </nav>
 <div class="topbar-controls">
-<a class="topbar-lang" href="#">O'zbekcha</a>
+<a class="topbar-lang" href="#">O’zbekcha</a>
 <a class="topbar-lang" href="#">Русский</a>
 <a class="topbar-lang" href="#">English</a>
-<button aria-label="Ko'rish imkoniyati" class="vis-btn" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="17"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button aria-label="Ko’rish imkoniyati" class="vis-btn" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="17"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
 </div>
 <button aria-label="Menyu" class="hamburger" id="hamburgerBtn" type="button">
 <span></span><span></span><span></span>
@@ -330,7 +393,7 @@
 <section class="grid-bg">
 <div class="container hero center">
 <h1>Assotsiatsiyaga a'zo NNTlar</h1>
-<p class="sub">O'zNNTMAga a'zo nodavlat notijorat tashkilotlarining hududlar bo'yicha to'liq ro'yxati</p>
+<p class="sub">O’zNNTMAga a'zo nodavlat notijorat tashkilotlarining hududlar bo’yicha to’liq ro’yxati</p>
 </div>
 </section>
 
@@ -340,29 +403,41 @@
   <!-- Stats -->
   <div class="nnt-stats">
     <div class="nnt-stat"><strong>2165</strong>Jami a'zo NNTlar</div>
-    <div class="nnt-stat"><strong>14</strong>Viloyat va shaharlar</div>
+    <div class="nnt-stat"><strong>14</strong>Hududlar</div>
     <div class="nnt-stat"><strong>18</strong>Faoliyat sohalari</div>
-    <div class="nnt-stat"><strong>2025</strong>Ro'yxat yangilangan</div>
+    <div class="nnt-stat"><strong>2025</strong>Ro’yxat yangilangan</div>
   </div>
 
-  <!-- Search -->
-  <div class="nnt-search-wrap">
-    <span class="nnt-search-icon">
-      <svg fill="none" height="17" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="17"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    </span>
-    <input class="nnt-search" id="nntSearch" placeholder="NNT nomi, rahbar yoki soha bo'yicha qidiring..." type="text"/>
+  <!-- Layout -->
+  <div class="nnt-layout">
+
+    <!-- Sidebar -->
+    <aside class="nnt-sidebar">
+      <div class="nnt-sidebar-title">Hudud bo’yicha</div>
+      <div class="nnt-sidebar-regions" id="regionPills"></div>
+    </aside>
+
+    <!-- Main -->
+    <div class="nnt-main">
+
+      <!-- Search -->
+      <div class="nnt-search-wrap">
+        <span class="nnt-search-icon">
+          <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </span>
+        <input class="nnt-search" id="nntSearch" placeholder="NNT nomi, rahbar yoki soha bo’yicha qidiring..." type="text"/>
+      </div>
+
+      <!-- Count -->
+      <div class="nnt-count-bar">
+        <p class="nnt-count" id="nntCount"></p>
+      </div>
+
+      <!-- Cards -->
+      <div class="nnt-cards" id="nntCards"></div>
+
+    </div>
   </div>
-
-  <!-- Region pills -->
-  <div class="nnt-region-pills" id="regionPills"></div>
-
-  <!-- Count -->
-  <div class="nnt-count-bar">
-    <p class="nnt-count" id="nntCount"></p>
-  </div>
-
-  <!-- Cards -->
-  <div class="nnt-cards" id="nntCards"></div>
 
 </div>
 </section>
@@ -373,11 +448,11 @@
 <div class="footer-grid">
 <div class="footer-col footer-col-brand">
 <a class="footer-logo-link" href="index.html">
-<img alt="OʼZNNTMA" class="footer-logo-img" src="img/logo-oznntma.png"/>
+<img alt="O’ZNNTMA" class="footer-logo-img" src="img/logo-oznntma.png"/>
 </a>
 </div><div class="footer-col">
 <h4 class="footer-col-title">Manzil</h4>
-<p>1A, Furqat koʼchasi, Shayxontohur t., Toshkent, 100170</p>
+<p>1A, Furqat ko’chasi, Shayxontohur t., Toshkent, 100170</p>
 </div><div class="footer-col">
 <h4 class="footer-col-title">Aloqa</h4>
 <p>Tel: <a href="tel:+998555030512">(+998 55) 503-05-12</a></p>
@@ -432,17 +507,12 @@ var regionList = ['Barchasi'].concat(Object.keys(NNT_DATA));
 
 regionList.forEach(function(reg) {
   var btn = document.createElement('button');
-  btn.className = 'rp' + (reg === activeRegion ? ' active' : '');
-  if (reg === 'Barchasi') {
-    var total = ALL.length;
-    btn.innerHTML = 'Barchasi <strong style="font-size:12px;opacity:.7;margin-left:4px;">' + total + '</strong>';
-  } else {
-    var cnt = NNT_DATA[reg].length;
-    btn.innerHTML = esc(reg) + (cnt ? ' <strong style="font-size:12px;opacity:.7;margin-left:4px;">' + cnt + '</strong>' : '');
-  }
+  btn.className = 'nnt-sidebar-item' + (reg === activeRegion ? ' active' : '');
+  var cnt = reg === 'Barchasi' ? ALL.length : NNT_DATA[reg].length;
+  btn.innerHTML = '<span>' + esc(reg) + '</span><span class="nnt-sidebar-badge">' + cnt + '</span>';
   btn.addEventListener('click', function() {
     activeRegion = reg;
-    document.querySelectorAll('.rp').forEach(function(b){ b.classList.remove('active'); });
+    document.querySelectorAll('.nnt-sidebar-item').forEach(function(b){ b.classList.remove('active'); });
     btn.classList.add('active');
     render();
   });

@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Biz haqimizda — O'zNNTMA | ngo.uz</title>
+<title>Biz haqimizda — O’zNNTMA | ngo.uz</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
@@ -13,7 +13,7 @@
 <body>
 <header class="site-header">
 <div class="container nav">
-<a class="topbar-building" href="index.html"><img alt="OʼZNNTMA" src="img/logo-oznntma.png"/></a>
+<a class="topbar-building" href="index.html"><img alt="O’ZNNTMA" src="img/logo-oznntma.png"/></a>
 <nav aria-label="Asosiy menyu" class="menu">
 <div class="nav-item has-dropdown">
 <a href="about.html">Assotsiatsiya haqida <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
@@ -23,7 +23,7 @@
 <a href="board-of-experts.html">Kengash a'zolari</a>
 <a href="leadership.html">Rahbariyat</a>
 <a href="our-team.html">Bizning jamoa</a>
-<a href="hududiy-bolinmalar.html">Hududiy bo'linmalar</a>
+<a href="hududiy-bolinmalar.html">Hududiy bo’linmalar</a>
 <a href="structure.html">Assotsiatsiya tuzilmasi</a>
 </div>
 </div>
@@ -45,7 +45,7 @@
 </div>
 </div>
 <div class="nav-item has-dropdown">
-<a href="contact.html">Bogʼlanish <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
+<a href="contact.html">Bog’lanish <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
 <div class="dropdown">
 <a href="contact.html">Kontaktlar</a>
 <a href="qayta-aloqa.html">Qayta aloqa</a>
@@ -61,113 +61,290 @@
 <a href="events.html">Tadbirlar</a>
 <a href="reporting-forms.html">Hisobotlar</a>
 <a href="dayjestlar.html">Dayjestlar</a>
-<a href="vacancies.html">Bo'sh ish o'rinlari</a>
+<a href="vacancies.html">Bo’sh ish o’rinlari</a>
 <a href="talim-rivojlanish.html">Ta'lim va rivojlanish</a>
 <a href="stajirovka-volontyorlik.html">Stajirovka va volontyorlik</a>
 </div>
 </div>
 </nav>
 <div class="topbar-controls">
-<a class="topbar-lang" href="#">O'zbekcha</a>
+<a class="topbar-lang" href="#">O’zbekcha</a>
 <a class="topbar-lang" href="#">Русский</a>
 <a class="topbar-lang" href="#">English</a>
-<button aria-label="Ko'rish imkoniyati" class="vis-btn" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="17"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button aria-label="Ko’rish imkoniyati" class="vis-btn" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="17"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
 </div>
 <button aria-label="Menyu" class="hamburger" id="hamburgerBtn" type="button">
 <span></span><span></span><span></span>
 </button>
 </div>
 </header>
+<style>
+  .about-intro-grid {
+    display: grid;
+    grid-template-columns: 1fr 360px;
+    gap: 40px;
+    align-items: start;
+  }
+  .about-intro-text p {
+    font-size: 16px;
+    color: #374151;
+    line-height: 1.8;
+    margin: 0 0 16px;
+  }
+  .about-reg-card {
+    background: #f0f7f4;
+    border: 1px solid #c5ddd2;
+    border-radius: 14px;
+    padding: 28px;
+  }
+  .about-reg-card h4 {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: #9ca3af;
+    margin: 0 0 18px;
+  }
+  .about-reg-row {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    padding: 12px 0;
+    border-bottom: 1px solid #dde8e2;
+  }
+  .about-reg-row:last-child { border-bottom: none; }
+  .about-reg-row span:first-child {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: #9ca3af;
+  }
+  .about-reg-row span:last-child {
+    font-size: 15px;
+    font-weight: 600;
+    color: #023347;
+  }
+
+  .about-goal-block {
+    background: #023347;
+    border-radius: 16px;
+    padding: 44px 52px;
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+  }
+  .about-goal-icon {
+    width: 56px; height: 56px;
+    background: rgba(255,255,255,.1);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    color: #7ecfe0;
+  }
+  .about-goal-block h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 12px;
+  }
+  .about-goal-block p {
+    font-size: 16px;
+    color: #b8d8e4;
+    line-height: 1.8;
+    margin: 0;
+  }
+
+  .vazifalar-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 36px;
+  }
+  .vazifa-card {
+    background: #fff;
+    border: 1px solid #dde8e2;
+    border-radius: 14px;
+    padding: 24px 26px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    transition: box-shadow .2s, transform .2s;
+  }
+  .vazifa-card:hover {
+    box-shadow: 0 6px 24px rgba(2,51,71,.09);
+    transform: translateY(-2px);
+  }
+  .vazifa-num {
+    width: 38px; height: 38px;
+    background: #023347;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-family: Montserrat, sans-serif;
+  }
+  .vazifa-body h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e2229;
+    margin: 0 0 8px;
+  }
+  .vazifa-body p {
+    font-size: 14px;
+    color: #587585;
+    line-height: 1.65;
+    margin: 0;
+  }
+
+  @media(max-width:900px) {
+    .about-intro-grid { grid-template-columns: 1fr; }
+    .about-goal-block { flex-direction: column; padding: 32px 28px; }
+    .vazifalar-grid { grid-template-columns: 1fr; }
+  }
+</style>
+
 <section class="grid-bg">
 <div class="container hero center">
-<h1>O’zNNTMA haqida</h1>
-<p class="sub">O’zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi — 2005 yilda 150 ta etakchi fuqarolik institutlari tashabbusi bilan tashkil topgan.</p>
+<h1>Assotsiatsiya haqida</h1>
+<p class="sub">O’zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi — fuqarolik jamiyatini rivojlantirish va NNTlar salohiyatini oshirishga bag’ishlangan tashkilot.</p>
 </div>
 </section>
-<section class="section" style="padding-bottom:0">
-<div class="container">
-<h2 class="section-title">Biz haqimizda bo'limlari</h2>
-<p class="section-sub">Ko'p pog'onali tuzilma bo'yicha ichki sahifalarga o'ting.</p>
-<div class="page-links">
-<a class="page-link-card" href="who-we-are.html"><h3>O'zNNTMA haqida qisqacha</h3><p>Tashkilot tarixi, mandat va institutsional profil.</p></a>
-<a class="page-link-card" href="leadership.html"><h3>Rahbariyat</h3><p>Kengash raisi va o'rinbosarlari haqida ma'lumot.</p></a>
-<a class="page-link-card" href="our-team.html"><h3>Ijro etuvchi devon</h3><p>Ijro etuvchi devon va hududiy bo'linmalar xodimlari ro'yxati.</p></a>
-<a class="page-link-card" href="structure.html"><h3>Tuzilma</h3><p>Ijro etuvchi devon tashkiliy tuzilmasi va bo'limlari.</p></a>
-<a class="page-link-card" href="nnt-school.html"><h3>NNTlar maktabi</h3><p>NNT rahbarlari va xodimlari uchun o'quv kurslari.</p></a>
-<a class="page-link-card" href="online-library.html"><h3>Onlayn o'quv xonasi</h3><p>Metodik materiallar va hujjatlar kutubxonasi.</p></a>
-<a class="page-link-card" href="multimedia-room.html"><h3>Multimedia xonasi</h3><p>Video darslar va media materiallar.</p></a>
-</div>
-</div>
-</section>
+
 <section class="section">
-<div class="container split">
-<div>
-<h2 class="section-title">Maqsad va vazifalar</h2>
-<p class="section-sub">Fuqarolik jamiyati institutlarini qo‘llab-quvvatlash, NNTlar salohiyatini oshirish va ijtimoiy sheriklikni kuchaytirish.</p>
-<div class="list">
-<div class="item"><h4>NNTlarni qo‘llab-quvvatlash</h4><p>Tashkiliy, huquqiy va axborot ko‘magi orqali NNT faoliyatini rivojlantirish.</p></div>
-<div class="item"><h4>Ijtimoiy sheriklik</h4><p>Davlat organlari, fuqarolik jamiyati va hamkorlar o‘rtasida tizimli muloqotni yo‘lga qo‘yish.</p></div>
-<div class="item"><h4>Tahlil va tashabbus</h4><p>Dolzarb ijtimoiy masalalar bo‘yicha tahliliy materiallar tayyorlash hamda takliflar ishlab chiqish.</p></div>
-</div>
-</div>
-<div class="card">
-<div class="media" style="height:520px"></div>
-<h3>O’zNNTMA missiyasi</h3>
-<p>O’zbekistondagi nodavlat notijorat sektorini barqaror rivojlantirishga ko’maklashish, fuqarolik faolligini oshirish va NNTlarning huquqiy himoyasini ta’minlash.</p>
-</div>
+<div class="container">
+  <div class="about-intro-grid">
+    <div class="about-intro-text">
+      <h2 class="section-title">Tashkilot haqida</h2>
+      <p>O’zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi (O’zNNTMA) 2005-yil 10-iyun kuni O’zbekiston Respublikasi Adliya vazirligi tomonidan 612-son tartib raqami bilan davlat ro’yxatidan o’tkazilgan.</p>
+      <p>Assotsiatsiya O’zbekiston Respublikasining amaldagi qonunchiligiga muvofiq davlat ro’yxatidan o’tgan nodavlat notijorat tashkilotlarining ixtiyoriy birlashmasi bo’lib, nodavlat notijorat tashkilotlari uyushmasi tashkiliy-huquqiy shaklida tuzilgan.</p>
+    </div>
+    <div class="about-reg-card">
+      <h4>Rekvizitlar</h4>
+      <div class="about-reg-row">
+        <span>Ro’yxatga olingan</span>
+        <span>2005-yil 10-iyun</span>
+      </div>
+      <div class="about-reg-row">
+        <span>Tartib raqami</span>
+        <span>612-son</span>
+      </div>
+      <div class="about-reg-row">
+        <span>Tashkiliy shakl</span>
+        <span>NNTlar uyushmasi</span>
+      </div>
+      <div class="about-reg-row">
+        <span>Yuridik manzil</span>
+        <span>Toshkent shahri, Shayxontahur tumani, Furqat ko’chasi, 1A-uy</span>
+      </div>
+    </div>
+  </div>
 </div>
 </section>
+
 <section class="section" style="padding-top:0">
 <div class="container">
-<h2 class="section-title">Tashkiliy tuzilma</h2>
-<p class="section-sub">Ijro etuvchi devon, hududiy bo’linmalar va yo’nalishlar kesimidagi boshqaruv modeli.</p>
-<div class="cards">
-<article class="card">
-<h3>Ijro etuvchi devon</h3>
-<p>Strategik rivojlanish, muvofiqlashtirish, monitoring va metodik ta’minot.</p>
-</article>
-<article class="card">
-<h3>Hududiy bo‘linmalar</h3>
-<p>Joylardagi NNTlar bilan ishlash, loyihalarni amalga oshirish va konsultatsiya.</p>
-</article>
-<article class="card">
-<h3>Funktsional yo‘nalishlar</h3>
-<p>Axborot xizmati, xalqaro hamkorlik, tahliliy faoliyat va a’zolik masalalari.</p>
-</article>
-</div>
+  <div class="about-goal-block">
+    <div class="about-goal-icon">
+      <svg fill="none" height="28" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="28"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+    </div>
+    <div>
+      <h2>Asosiy maqsad</h2>
+      <p>Assotsiatsiyaning asosiy maqsadi — mahalliy nodavlat notijorat tashkilotlarini birlashtirish, ularning faoliyatini muvofiqlashtirish, qo’llab-quvvatlash va rivojlantirish, hamda NNTlar faoliyatining samaradorligi va sifatini oshirishga ko’maklashishdan iborat.</p>
+    </div>
+  </div>
 </div>
 </section>
+
 <section class="section" style="padding-top:0">
 <div class="container">
-<h2 class="section-title">Rahbariyat</h2>
-<p class="section-sub">O’zNNTMA Kengashi tarkibi.</p>
-<div class="cards">
-<article class="card"><div class="media" style="height:220px"></div><h3>Ishanxodjayev Kamoliddin</h3><p style="color:var(--green-500);font-weight:700;margin:6px 0 8px">Kengash raisi</p><p>O’zNNTMA Kengashining raisi, umumiy boshqaruv va strategik yo’nalishlar uchun mas’ul.</p><p><a href="mailto:Ishanxodjayev@ngo.uz" style="font-size:15px;color:var(--green-500);">Ishanxodjayev@ngo.uz</a></p></article>
-<article class="card"><div class="media" style="height:220px"></div><h3>Jo’raboyev Ibroximjon Ilxomjon o’g’li</h3><p style="color:var(--green-500);font-weight:700;margin:6px 0 8px">Kengashning birinchi raisi o’rinbosari</p><p>Kengash faoliyatini muvofiqlashtiradi va raisni almashtiradi.</p><p><a href="mailto:Juraboyev@ngo.uz" style="font-size:15px;color:var(--green-500);">Juraboyev@ngo.uz</a></p></article>
-<article class="card"><div class="media" style="height:220px"></div><h3>Ismoilov Samandar Abdixakim o’g’li</h3><p style="color:var(--green-500);font-weight:700;margin:6px 0 8px">Kengash raisi o’rinbosari</p><p>Hududiy bo’linmalar va hamkorlik yo’nalishlari uchun mas’ul.</p><p><a href="mailto:Ismoiliy@ngo.uz" style="font-size:15px;color:var(--green-500);">Ismoiliy@ngo.uz</a></p></article>
-</div>
-</div>
-</section>
-<section class="section" style="padding-top:0">
-<div class="container">
-<h2 class="section-title">Hududiy bo‘linmalar</h2>
-<p class="section-sub">Hududiy vakolatxonalar orqali NNTlar bilan doimiy aloqa yo‘lga qo‘yilgan.</p>
-<div class="page-links">
-<div class="page-link-card"><h3>Toshkent shahri</h3><p>Hududiy koordinatsiya markazi.</p></div>
-<div class="page-link-card"><h3>Hududiy bo’linmalar</h3><p>NNTlar bilan manzilli ishlash va konsultatsiya.</p></div>
-<div class="page-link-card"><h3>Masofaviy aloqa</h3><p>Onlayn murojaatlar va tezkor javob tizimi.</p></div>
-</div>
-</div>
-</section>
-<section class="section" style="padding-top:0">
-<div class="container">
-<h2 class="section-title">Aloqa ma’lumotlari</h2>
-<div class="facts-grid">
-<div class="fact"><span class="k">Telefon</span><span class="v">(+998 55) 503-05-12</span></div>
-<div class="fact"><span class="k">Tashkil etilgan yil</span><span class="v">2005</span></div>
-<div class="fact"><span class="k">Asos soluvchi institutlar</span><span class="v">150+</span></div>
-<div class="fact"><span class="k">Manzil</span><span class="v">1A, Furqat ko’chasi, Shayxontohur t., Toshkent, 100170</span></div>
-</div>
+  <h2 class="section-title">Asosiy vazifalar</h2>
+  <p class="section-sub">Assotsiatsiya o’z a’zolari va fuqarolik jamiyati manfaatlarini ko’zlab quyidagi yo’nalishlarda faoliyat yuritadi.</p>
+  <div class="vazifalar-grid">
+
+    <div class="vazifa-card">
+      <div class="vazifa-num">1</div>
+      <div class="vazifa-body">
+        <h4>Huquqiy himoya va manfaatlarni ifodalash</h4>
+        <p>NNTlarning huquqlari va qonuniy manfaatlarini davlat organlarida, sudlarda, xalqaro va xorijiy tashkilotlarda ifoda etish hamda himoya qilish.</p>
+      </div>
+    </div>
+
+    <div class="vazifa-card">
+      <div class="vazifa-num">2</div>
+      <div class="vazifa-body">
+        <h4>Hamkorlikni rivojlantirish</h4>
+        <p>NNTlar, tadbirkorlik sub’ektlari, xalqaro va xorijiy tashkilotlar hamda davlat organlari o’rtasida o’zaro manfaatli hamkorlikni rivojlantirishda ishtirok etish.</p>
+      </div>
+    </div>
+
+    <div class="vazifa-card">
+      <div class="vazifa-num">3</div>
+      <div class="vazifa-body">
+        <h4>Qulay muhit yaratish</h4>
+        <p>NNT tashabbuslarini amalga oshirish uchun qulay huquqiy, iqtisodiy va ijtimoiy sharoitlar yaratishga ko’maklashish.</p>
+      </div>
+    </div>
+
+    <div class="vazifa-card">
+      <div class="vazifa-num">4</div>
+      <div class="vazifa-body">
+        <h4>Demokratik jarayonlarni qo’llab-quvvatlash</h4>
+        <p>Mamlakatda demokratik jarayonlarni barqaror rivojlantirish va ilgari surishda a’zolar hamda hamkorlarning sa’y-harakatlarini birlashtirish.</p>
+      </div>
+    </div>
+
+    <div class="vazifa-card">
+      <div class="vazifa-num">5</div>
+      <div class="vazifa-body">
+        <h4>Qonunchilikni takomillashtirish</h4>
+        <p>NNTlarning huquqlari va qonuniy manfaatlariga daxldor bo’lgan normativ-huquqiy hujjatlar loyihalarini ishlab chiqishda ishtirok etish va sohani tartibga soluvchi qonunchilikni takomillashtirish yuzasidan takliflar tayyorlash.</p>
+      </div>
+    </div>
+
+    <div class="vazifa-card">
+      <div class="vazifa-num">6</div>
+      <div class="vazifa-body">
+        <h4>Salohiyatni oshirish</h4>
+        <p>NNT rahbarlari va xodimlarining tashkilotni samarali boshqarish, moliyaviy barqarorlikka erishish, ijtimoiy muhim loyihalarni ishlab chiqish, volontyorlik va xayriya resurslarini jalb qilish yo’nalishlarida bilim va ko’nikmalarini oshirish.</p>
+      </div>
+    </div>
+
+    <div class="vazifa-card">
+      <div class="vazifa-num">7</div>
+      <div class="vazifa-body">
+        <h4>Ta’lim va metodik ta’minot</h4>
+        <p>NNT vakillari uchun qo’llanmalar, o’quv dasturlari va kitoblar hamda mamlakat sharoitiga mos nazariy va amaliy yondashuvlarni ishlab chiqish.</p>
+      </div>
+    </div>
+
+    <div class="vazifa-card">
+      <div class="vazifa-num">8</div>
+      <div class="vazifa-body">
+        <h4>Ijtimoiy sheriklik</h4>
+        <p>Davlat ijtimoiy buyurtmalari va ijtimoiy sheriklik loyihalarining yagona bazasini yuritish; mamlakatni modernizatsiya qilishda iqtisodiy, ijtimoiy va madaniy salohiyatni yuksaltirish.</p>
+      </div>
+    </div>
+
+    <div class="vazifa-card">
+      <div class="vazifa-num">9</div>
+      <div class="vazifa-body">
+        <h4>Ehtiyojmand qatlamlarni qo’llab-quvvatlash</h4>
+        <p>Ayollar, yoshlar, keksalar, nogironligi bo’lgan va hayotda og’ir vaziyatga tushgan fuqarolarni qo’llab-quvvatlashda a’zolarning intellektual, moddiy va moliyaviy resurslarini safarbar qilish.</p>
+      </div>
+    </div>
+
+    <div class="vazifa-card">
+      <div class="vazifa-num">10</div>
+      <div class="vazifa-body">
+        <h4>Xalqaro hamkorlik</h4>
+        <p>Xalqaro va chet el NNTlari, moliya institutlari va xorijiy donorlar bilan hamkorlik aloqalarini mustahkamlash, ularning ijobiy tajribalarini o’rganish.</p>
+      </div>
+    </div>
+
+  </div>
 </div>
 </section>
 <footer class="site-footer">
@@ -175,12 +352,12 @@
 <div class="footer-grid">
 <div class="footer-col footer-col-brand">
 <a class="footer-logo-link" href="index.html">
-<img alt="OʼZNNTMA" class="footer-logo-img" src="img/logo-oznntma.png"/>
+<img alt="O’ZNNTMA" class="footer-logo-img" src="img/logo-oznntma.png"/>
 </a>
 
 </div><div class="footer-col">
 <h4 class="footer-col-title">Manzil</h4>
-<p>1A, Furqat koʼchasi, Shayxontohur t., Toshkent, 100170</p>
+<p>1A, Furqat ko’chasi, Shayxontohur t., Toshkent, 100170</p>
 </div><div class="footer-col">
 <h4 class="footer-col-title">Aloqa</h4>
 <p>Tel: <a href="tel:+998555030512">(+998 55) 503-05-12</a></p>
