@@ -2094,8 +2094,8 @@ body.a11y-grayscale { filter: grayscale(1); }
   transition: transform 0.28s ease, box-shadow 0.28s ease, z-index 0s;
 }
 .leader-card:hover {
-  transform: scale(1.04);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.13);
+  transform: scale(1.10);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.16);
   z-index: 2;
 }
 .leader-card-body { display:flex; align-items:center; gap:32px; padding:32px 36px; }
