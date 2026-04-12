@@ -369,27 +369,48 @@
     mobileNav.className = 'mobile-nav';
     mobileNav.id = 'mobileNav';
     mobileNav.innerHTML =
-      '<span class="mobile-nav-label">Asosiy bo\'limlar</span>' +
-      '<a href="about.html" data-page="about.html">Biz haqimizda</a>' +
+      '<span class="mobile-nav-label">Assotsiatsiya haqida</span>' +
+      '<a href="about.html">Assotsiatsiya haqida</a>' +
       '<div class="mobile-nav-sub">' +
-        '<a href="who-we-are.html">Tashkilot haqida</a>' +
+        '<a href="mission.html">Maqsad va vazifalar</a>' +
+        '<a href="board-of-experts.html">Kengash a\u2019zolari</a>' +
         '<a href="leadership.html">Rahbariyat</a>' +
         '<a href="our-team.html">Bizning jamoa</a>' +
-        '<a href="nnt-school.html">NNTlar maktabi</a>' +
-        '<a href="online-library.html">Onlayn kutubxona</a>' +
+        '<a href="hududiy-bolinmalar.html">Hududiy bo\u2019linmalar</a>' +
+        '<a href="structure.html">Assotsiatsiya tuzilmasi</a>' +
       '</div>' +
-      '<a href="news.html" data-page="news.html">Yangiliklar</a>' +
-      '<a href="events.html" data-page="events.html">Tadbirlar</a>' +
-      '<span class="mobile-nav-label">Xizmatlar</span>' +
-      '<a href="contact.html" data-page="contact.html">Barcha xizmatlar</a>' +
+      '<span class="mobile-nav-label">NNTlar reyestri</span>' +
+      '<a href="nntlar.html">Assotsiatsiyaga a\u2019zo NNTlar</a>' +
       '<div class="mobile-nav-sub">' +
-        '<a href="official-docs.html">Rasmiy hujjatlar</a>' +
-        '<a href="reporting-forms.html">Hisobot shakllari</a>' +
-        '<a href="faq.html">Savol-javob</a>' +
-        '<a href="service-request.html">Murojaat yuborish</a>' +
+        '<a href="sustainability-index.html">NNTlar barqarorlik indeksi</a>' +
+        '<a href="sustainability-cert.html">\u201cBarqaror NNT\u201d sertifikatiga ega NNTlar</a>' +
       '</div>' +
-      '<a href="awards.html" data-page="awards.html">Hamkorlar</a>' +
-      '<a href="membership.html" class="mobile-nav-cta">A\'zo bo\'lish</a>';
+      '<a href="projects.html">Loyihalar</a>' +
+      '<span class="mobile-nav-label">Hamkorlar</span>' +
+      '<a href="awards.html">Xorijiy hamkorlar</a>' +
+      '<div class="mobile-nav-sub">' +
+        '<a href="mahalliy-hamkorlar.html">Mahalliy hamkorlar</a>' +
+        '<a href="jamoatchilik-kengashi.html">Jamoatchilik kengashi a\u2019zolari</a>' +
+      '</div>' +
+      '<span class="mobile-nav-label">Bog\u2019lanish</span>' +
+      '<a href="contact.html">Kontaktlar</a>' +
+      '<div class="mobile-nav-sub">' +
+        '<a href="qayta-aloqa.html">Qayta aloqa</a>' +
+        '<a href="korrupsiya-murojaat.html">Korrupsiyani oldini olish bo\u2019yicha murojat</a>' +
+      '</div>' +
+      '<span class="mobile-nav-label">Ochiq ma\u2019lumotlar</span>' +
+      '<a href="infographics.html">Infografikalar</a>' +
+      '<div class="mobile-nav-sub">' +
+        '<a href="official-docs.html">Normativ-huquqiy hujjatlar</a>' +
+        '<a href="multimedia-room.html">Media</a>' +
+        '<a href="events.html">Tadbirlar</a>' +
+        '<a href="reporting-forms.html">Hisobotlar</a>' +
+        '<a href="dayjestlar.html">Dayjestlar</a>' +
+        '<a href="vacancies.html">Bo\u2019sh ish o\u2019rinlari</a>' +
+        '<a href="talim-rivojlanish.html">Ta\u2019lim va rivojlanish</a>' +
+        '<a href="stajirovka-volontyorlik.html">Stajirovka va volontyorlik</a>' +
+      '</div>' +
+      '<a href="membership.html" class="mobile-nav-cta">A\u2019zo bo\u2019lish</a>';
     document.body.appendChild(mobileNav);
 
     var toggleMobileNav = function (open) {
