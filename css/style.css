@@ -2718,13 +2718,13 @@ body.a11y-grayscale { filter: grayscale(1); }
    ═══════════════════════════════════════════════════ */
 [data-reveal] {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.55s ease, transform 0.55s ease;
+  translate: 0 20px;
+  transition: opacity 0.55s ease, translate 0.55s ease;
   transition-delay: var(--reveal-delay, 0ms);
 }
 [data-reveal].is-revealed {
   opacity: 1;
-  transform: none;
+  translate: 0 0;
 }
 
 /* Dynamic nnt-cards fade in when render() injects them */
