@@ -78,7 +78,7 @@
 
   /* ── Sidebar ── */
   .nnt-sidebar {
-    width: 256px;
+    width: 220px;
     flex-shrink: 0;
     background: #fff;
     border: 1px solid #dde8e2;
@@ -88,6 +88,10 @@
     top: 24px;
     max-height: calc(100vh - 48px);
     overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .nnt-sidebar::-webkit-scrollbar {
+    display: none;
   }
   .nnt-sidebar-title {
     padding: 15px 18px 12px;
@@ -143,6 +147,23 @@
   .nnt-sidebar-item.active .nnt-sidebar-badge {
     background: #023347;
     color: #fff;
+  }
+
+  /* ── Right sidebar (soha) — mirror of left but border on right, hidden scrollbar ── */
+  .nnt-sidebar-right {
+    scrollbar-width: none;
+  }
+  .nnt-sidebar-right::-webkit-scrollbar {
+    display: none;
+  }
+  .nnt-sidebar-right .nnt-sidebar-item {
+    border-left: none;
+    border-right: 3px solid transparent;
+    text-align: left;
+  }
+  .nnt-sidebar-right .nnt-sidebar-item.active {
+    border-left-color: transparent;
+    border-right-color: #023347;
   }
 
   /* ── Count bar ── */
@@ -304,13 +325,18 @@
   .nnt-empty p { font-size: 17px; margin: 0 0 4px; color: #6b7280; }
   .nnt-empty small { font-size: 15px; color: #9ca3af; }
 
+  @media(max-width:1200px) {
+    .nnt-sidebar { width: 190px; }
+  }
   @media(max-width:960px) {
     .nnt-stats { grid-template-columns: repeat(2,1fr); }
     .nnt-layout { flex-direction: column; }
     .nnt-sidebar { width: 100%; position: static; max-height: none; overflow-y: visible; display: flex; flex-direction: column; }
+    .nnt-sidebar-right { order: 2; }
     .nnt-sidebar-title { position: static; }
-    .nnt-sidebar-regions { display: flex; flex-wrap: wrap; }
-    .nnt-sidebar-item { border-left: none !important; border-bottom: 3px solid transparent !important; flex: 0 0 auto; white-space: nowrap; }
+    .nnt-sidebar-regions,
+    .nnt-sidebar-sohas { display: flex; flex-wrap: wrap; }
+    .nnt-sidebar-item { border-left: none !important; border-right: none !important; border-bottom: 3px solid transparent !important; flex: 0 0 auto; white-space: nowrap; }
     .nnt-sidebar-item.active { border-bottom-color: #023347 !important; background: #eaf3f8; }
     .nnt-sidebar-item:not(:last-child) { border-bottom: 3px solid transparent !important; }
   }
@@ -402,7 +428,7 @@
 
   <!-- Stats -->
   <div class="nnt-stats">
-    <div class="nnt-stat"><strong>2165</strong>Jami a'zo NNTlar</div>
+    <div class="nnt-stat"><strong>2361</strong>Jami a'zo NNTlar</div>
     <div class="nnt-stat"><strong>14</strong>Hududlar</div>
     <div class="nnt-stat"><strong>18</strong>Faoliyat sohalari</div>
     <div class="nnt-stat"><strong>2025</strong>Ro’yxat yangilangan</div>
@@ -411,7 +437,7 @@
   <!-- Layout -->
   <div class="nnt-layout">
 
-    <!-- Sidebar -->
+    <!-- Left Sidebar: regions -->
     <aside class="nnt-sidebar">
       <div class="nnt-sidebar-title">Hudud bo’yicha</div>
       <div class="nnt-sidebar-regions" id="regionPills"></div>
@@ -437,6 +463,13 @@
       <div class="nnt-cards" id="nntCards"></div>
 
     </div>
+
+    <!-- Right Sidebar: soha -->
+    <aside class="nnt-sidebar nnt-sidebar-right">
+      <div class="nnt-sidebar-title">Soha bo’yicha</div>
+      <div class="nnt-sidebar-sohas" id="sohaPills"></div>
+    </aside>
+
   </div>
 
 </div>
@@ -499,24 +532,68 @@ Object.keys(NNT_DATA).forEach(function(reg) {
 });
 
 var activeRegion = 'Barchasi';
+var activeSoha   = 'Barchasi';
 var searchTerm   = '';
 
 /* ── build region pills ── */
 var pillWrap = document.getElementById('regionPills');
-var regionList = ['Barchasi'].concat(Object.keys(NNT_DATA));
+var _priority = ['Respublika ahamiyatiga ega', 'Qoraqalpog\u02BBiston Respublikasi'];
+var _rest = Object.keys(NNT_DATA).filter(function(k){ return _priority.indexOf(k) === -1; });
+var regionList = ['Barchasi'].concat(_priority).concat(_rest);
+var regionBarchasi;
 
 regionList.forEach(function(reg) {
   var btn = document.createElement('button');
   btn.className = 'nnt-sidebar-item' + (reg === activeRegion ? ' active' : '');
-  var cnt = reg === 'Barchasi' ? ALL.length : NNT_DATA[reg].length;
+  var cnt = reg === 'Barchasi' ? ALL.length : (NNT_DATA[reg] ? NNT_DATA[reg].length : 0);
   btn.innerHTML = '<span>' + esc(reg) + '</span><span class="nnt-sidebar-badge">' + cnt + '</span>';
+  if (reg === 'Barchasi') regionBarchasi = btn;
   btn.addEventListener('click', function() {
-    activeRegion = reg;
-    document.querySelectorAll('.nnt-sidebar-item').forEach(function(b){ b.classList.remove('active'); });
-    btn.classList.add('active');
+    if (activeRegion === reg && reg !== 'Barchasi') {
+      activeRegion = 'Barchasi';
+      document.querySelectorAll('#regionPills .nnt-sidebar-item').forEach(function(b){ b.classList.remove('active'); });
+      regionBarchasi.classList.add('active');
+    } else {
+      activeRegion = reg;
+      document.querySelectorAll('#regionPills .nnt-sidebar-item').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+    }
     render();
   });
   pillWrap.appendChild(btn);
+});
+
+/* ── build soha pills ── */
+var sohaWrap = document.getElementById('sohaPills');
+var sohaList = ['Barchasi',
+  'Ayollar', 'Ekologiya', 'Favqulodda vaziyatlar', 'Faxriylar',
+  'Huquqiy demokratik institutini rivojlantirish', 'Jurnalistika va OAV',
+  "Ma'naviyat", "Madaniyat, tarix va ma'rifat", 'Milliy madaniy markaz',
+  'Nogironlar', "San'at va ijodkorlik", "Sog\u02BBliqni saqlash", 'Sport',
+  "Ta'lim, fan va texnika", 'Tadbirkorlik', 'Tadbirkorlik va fermerlik',
+  'Xalq hunarmandchiligi', 'Yoshlar'
+];
+var sohaBarchasi;
+
+sohaList.forEach(function(soha) {
+  var btn = document.createElement('button');
+  btn.className = 'nnt-sidebar-item' + (soha === activeSoha ? ' active' : '');
+  var cnt = soha === 'Barchasi' ? ALL.length : ALL.filter(function(n){ return n.soha === soha; }).length;
+  btn.innerHTML = '<span>' + esc(soha) + '</span><span class="nnt-sidebar-badge">' + cnt + '</span>';
+  if (soha === 'Barchasi') sohaBarchasi = btn;
+  btn.addEventListener('click', function() {
+    if (activeSoha === soha && soha !== 'Barchasi') {
+      activeSoha = 'Barchasi';
+      document.querySelectorAll('#sohaPills .nnt-sidebar-item').forEach(function(b){ b.classList.remove('active'); });
+      sohaBarchasi.classList.add('active');
+    } else {
+      activeSoha = soha;
+      document.querySelectorAll('#sohaPills .nnt-sidebar-item').forEach(function(b){ b.classList.remove('active'); });
+      btn.classList.add('active');
+    }
+    render();
+  });
+  sohaWrap.appendChild(btn);
 });
 
 /* ── search ── */
@@ -529,12 +606,13 @@ document.getElementById('nntSearch').addEventListener('input', function() {
 function render() {
   var filtered = ALL.filter(function(nnt) {
     var rMatch = activeRegion === 'Barchasi' || nnt.region === activeRegion;
+    var fMatch = activeSoha   === 'Barchasi' || nnt.soha   === activeSoha;
     var sMatch = !searchTerm ||
       nnt.nom.toLowerCase().includes(searchTerm) ||
       (nnt.rahbar && nnt.rahbar.toLowerCase().includes(searchTerm)) ||
       (nnt.soha   && nnt.soha.toLowerCase().includes(searchTerm)) ||
       (nnt.shakl  && nnt.shakl.toLowerCase().includes(searchTerm));
-    return rMatch && sMatch;
+    return rMatch && fMatch && sMatch;
   });
 
   var countEl = document.getElementById('nntCount');
