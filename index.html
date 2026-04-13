@@ -507,7 +507,8 @@ window.addEventListener('load', function(){
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
-        io.unobserve(entry.target);
+      } else {
+        entry.target.classList.remove('visible');
       }
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
