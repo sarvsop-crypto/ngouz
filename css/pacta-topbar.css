@@ -91,10 +91,18 @@
   flex-shrink: 0;
 }
 .main__profile-avatar {
-  width: 64px;
-  height: 64px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--primary-500, #2563eb);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
 }
 .main__profile-name {
   font-size: 12px;
