@@ -123,10 +123,12 @@
 </div>
 </nav>
 <div class="topbar-controls">
+<img src="img/logo-fond.png" class="topbar-fond-logo" alt=""/>
 <a class="topbar-lang" href="#">O’zbekcha</a>
 <a class="topbar-lang" href="#">Русский</a>
 <a class="topbar-lang" href="#">English</a>
 <button aria-label="Ko’rish imkoniyati" class="vis-btn" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="17"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button aria-label="Qidirish" class="search-btn" id="searchToggle" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24" width="17"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg></button>
 </div>
 <button aria-label="Menyu" class="hamburger" id="hamburgerBtn" type="button">
 <span></span><span></span><span></span>
@@ -458,5 +460,37 @@
 </div>
 </footer>
 <script src="js/main.js"></script>
+
+<div class="search-overlay" id="searchOverlay" role="dialog" aria-label="Qidirish" aria-modal="true" aria-hidden="true">
+  <div class="search-overlay__box">
+    <form class="search-overlay__form" role="search" onsubmit="return false;">
+      <svg aria-hidden="true" fill="none" height="18" stroke="#9ca3af" stroke-width="1.8" viewBox="0 0 24 24" width="18"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg>
+      <input autofocus id="searchInput" placeholder="Sayt bo’ylab qidirish..." type="search"/>
+      <button aria-label="Yopish" class="search-overlay__close" id="searchClose" type="button">&times;</button>
+    </form>
+  </div>
+</div>
+<script>
+(function(){
+  var overlay = document.getElementById('searchOverlay');
+  var toggle = document.getElementById('searchToggle');
+  var close = document.getElementById('searchClose');
+  var input = document.getElementById('searchInput');
+  if (!overlay || !toggle) return;
+  function openSearch() {
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden','false');
+    if (input) setTimeout(function(){ input.focus(); }, 50);
+  }
+  function closeSearch() {
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden','true');
+  }
+  toggle.addEventListener('click', openSearch);
+  if (close) close.addEventListener('click', closeSearch);
+  overlay.addEventListener('click', function(e){ if (e.target === overlay) closeSearch(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeSearch(); });
+})();
+</script>
 </body>
 </html>
