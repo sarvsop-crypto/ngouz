@@ -38,6 +38,12 @@
           <a href="admin-registry.html" class="sidebar__nav-link" title="NNT Ro’yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets"></i></span><span class="sidebar__nav-link-text">NNT Ro’yxati</span></a>
           <a href="admin-users.html" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
           <a href="admin-reports.html" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar"></i></span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
+        </div>
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">KONTENT</div>
+          <a href="admin-news.html" class="sidebar__nav-link" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper"></i></span><span class="sidebar__nav-link-text">Yangiliklar</span></a>
+          <a href="admin-events.html" class="sidebar__nav-link" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank"></i></span><span class="sidebar__nav-link-text">Tadbirlar</span></a>
+          <a href="admin-grants.html" class="sidebar__nav-link" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins"></i></span><span class="sidebar__nav-link-text">Grantlar</span></a>
           <a href="admin-settings.html" class="sidebar__nav-link is-active" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
         </div>
         <div class="sidebar__nav-section u-mt-auto">
@@ -91,9 +97,51 @@
               <button type="button" class="btn btn--secondary">Bekor qilish</button>
             </div>
           </div>
+
+          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-top:24px;">
+            <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">GitHub Nashr Tokeni</h2>
+            <p style="font-size:13px;color:var(--grey-400);margin:0 0 16px;">Yangiliklar, tadbirlar va grantlarni GitHub'ga nashr qilish uchun Personal Access Token (PAT) kiriting. Token faqat brauzeringizda saqlanadi.</p>
+            <div style="display:flex;gap:12px;align-items:flex-end;">
+              <div style="flex:1;">
+                <label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">GitHub Personal Access Token</label>
+                <input type="password" id="githubTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:monospace;box-sizing:border-box;" />
+              </div>
+              <button type="button" id="saveTokenBtn" class="btn btn--primary" style="white-space:nowrap;"><i class="ph ph-key"></i> Saqlash</button>
+              <button type="button" id="clearTokenBtn" class="btn btn--secondary" style="white-space:nowrap;"><i class="ph ph-trash"></i> O'chirish</button>
+            </div>
+            <p id="tokenStatus" style="font-size:13px;margin:10px 0 0;display:none;"></p>
+          </div>
         </div>
       </div>
     </main>
+
+    <script>
+    (function(){
+      var inp = document.getElementById('githubTokenInput');
+      var status = document.getElementById('tokenStatus');
+      var saved = localStorage.getItem('admin_github_token');
+      if (saved) {
+        inp.value = saved;
+        showStatus('Token saqlangan', 'var(--success-600,#16a34a)');
+      }
+      document.getElementById('saveTokenBtn').addEventListener('click', function(){
+        var val = inp.value.trim();
+        if (!val) { showStatus('Token bo\'sh bo\'lishi mumkin emas', '#dc2626'); return; }
+        localStorage.setItem('admin_github_token', val);
+        showStatus('Token muvaffaqiyatli saqlandi', 'var(--success-600,#16a34a)');
+      });
+      document.getElementById('clearTokenBtn').addEventListener('click', function(){
+        localStorage.removeItem('admin_github_token');
+        inp.value = '';
+        showStatus('Token o\'chirildi', '#d97706');
+      });
+      function showStatus(msg, color) {
+        status.textContent = msg;
+        status.style.color = color;
+        status.style.display = 'block';
+      }
+    })();
+    </script>
   </div>
 
   <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yangiliklar — O'zNNTMA Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="css/pacta-tokens.css">
+  <link rel="stylesheet" href="css/pacta-contracts.page.css">
+  <link rel="stylesheet" href="css/pacta-sidebar.css">
+  <link rel="stylesheet" href="css/pacta-topbar.css">
+  <link rel="stylesheet" href="css/pacta-notifications.css">
+  <link rel="stylesheet" href="css/pacta-app.css">
+  <link rel="stylesheet" href="css/pacta-foundation.css">
+  <link rel="stylesheet" href="css/pacta-modal.css">
+  <style>
+    .modal--wide { max-width: 720px; }
+    .modal__grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .modal__input, .modal__select, .modal__textarea {
+      width: 100%; padding: 9px 12px; border: 1px solid var(--grey-100, #dfe1e7);
+      border-radius: 8px; font-size: 14px; font-family: inherit;
+      background: var(--grey-0, #fff); color: var(--grey-900, #0d0d12);
+      transition: border-color .15s;
+    }
+    .modal__input:focus, .modal__select:focus, .modal__textarea:focus {
+      outline: none; border-color: var(--primary-400, #6366f1);
+    }
+    .modal__textarea { resize: vertical; min-height: 90px; }
+    .modal__textarea--tall { min-height: 160px; }
+    .modal__checkbox-row { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--grey-700, #2b2d3a); }
+    .cms-toast {
+      position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+      padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 500;
+      color: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.18);
+      opacity: 0; transform: translateY(10px);
+      transition: opacity .22s, transform .22s; pointer-events: none;
+    }
+    .cms-toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .cms-toast--success { background: #16a34a; }
+    .cms-toast--error   { background: #dc2626; }
+    .cms-toast--info    { background: #0284c7; }
+    .cms-toast--warning { background: #d97706; }
+    .u-td-truncate { max-width: 320px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .btn--ghost-sm { padding: 5px 8px; background: none; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; color: var(--grey-400,#818898); transition: background .12s, color .12s; }
+    .btn--ghost-sm:hover { background: var(--grey-25,#f6f8fa); color: var(--grey-700,#2b2d3a); }
+    .btn--ghost-sm.danger:hover { background: #fef2f2; color: #dc2626; }
+    .u-empty-row td { text-align: center; padding: 40px; color: var(--grey-400,#818898); font-size: 14px; }
+    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle; margin-right: 6px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar__header">
+        <div class="u-inline-stack">
+          <div class="sidebar__logo u-logo-badge">N</div>
+          <span class="sidebar__title">O'zNNTMA Admin</span>
+        </div>
+        <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
+      </div>
+      <div class="sidebar__search" id="sidebarSearchTrigger">
+        <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>
+        <input type="text" placeholder="Qidirish" aria-label="Qidirish" />
+      </div>
+      <nav class="sidebar__nav">
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">ASOSIY MENYU</div>
+          <a href="admin-dashboard.html" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
+          <a href="admin-membership-requests.html" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
+          <a href="admin-registry.html" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
+          <a href="admin-users.html" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
+          <a href="admin-reports.html" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar"></i></span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
+        </div>
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">KONTENT</div>
+          <a href="admin-news.html" class="sidebar__nav-link is-active" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper"></i></span><span class="sidebar__nav-link-text">Yangiliklar</span></a>
+          <a href="admin-events.html" class="sidebar__nav-link" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank"></i></span><span class="sidebar__nav-link-text">Tadbirlar</span></a>
+          <a href="admin-grants.html" class="sidebar__nav-link" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins"></i></span><span class="sidebar__nav-link-text">Grantlar</span></a>
+          <a href="admin-settings.html" class="sidebar__nav-link" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
+        </div>
+        <div class="sidebar__nav-section u-mt-auto">
+          <a href="#" class="sidebar__nav-link logout" id="logoutTrigger" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
+        </div>
+      </nav>
+    </aside>
+
+    <main class="main" id="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>Yangiliklar</span></div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-notifications">
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <span class="topbar-notifications-badge" aria-hidden="true"></span>
+          </div>
+          <div class="topbar-divider" aria-hidden="true"></div>
+          <div class="main__profile">
+            <div class="main__profile-avatar u-avatar-badge-sm">A</div>
+            <div>
+              <div class="main__profile-name">Administrator</div>
+              <div class="main__profile-role">Bosh admin</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main__header">
+        <h1 class="main__title">Yangiliklar</h1>
+        <div class="main__btns">
+          <button type="button" class="btn btn--secondary" id="refreshBtn"><i class="ph ph-arrows-clockwise"></i> Yangilash</button>
+          <button type="button" class="btn btn--secondary" id="exportBtn"><i class="ph ph-download-simple"></i> JSON yuklab olish</button>
+          <button type="button" class="btn btn--secondary" id="publishBtn"><i class="ph ph-cloud-arrow-up"></i> GitHub'ga nashr</button>
+          <button type="button" class="btn btn--primary" id="newItemBtn"><i class="ph ph-plus"></i> Yangi maqola</button>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-newspaper"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Jami maqolalar</p><p class="card__value" id="kpiTotal">—</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-star"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Tavsiya etilgan</p><p class="card__value" id="kpiFeatured">—</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-megaphone"></i></div></div>
+          <div class="card__body"><div><p class="card__label">E'lonlar</p><p class="card__value" id="kpiAnnounce">—</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-chart-line"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Tahlil / Press</p><p class="card__value" id="kpiAnalysis">—</p></div></div>
+        </div>
+      </div>
+
+      <section class="table-section" aria-labelledby="newsTableTitle">
+        <div class="table-section__head">
+          <h2 class="table-section__title" id="newsTableTitle">Maqolalar ro'yxati</h2>
+        </div>
+        <form class="u-filter-row" role="search" aria-label="Maqolalarni filtrlash">
+          <input id="cmsSearch" type="search" class="table-section__search u-search-260" placeholder="Sarlavha yoki matn bo'yicha..." />
+          <button type="button" class="filter-chip is-active" data-cat-filter="all">Barchasi</button>
+          <button type="button" class="filter-chip" data-cat-filter="E'LON">E'lon</button>
+          <button type="button" class="filter-chip" data-cat-filter="TADBIR">Tadbir</button>
+          <button type="button" class="filter-chip" data-cat-filter="TAHLIL">Tahlil</button>
+          <button type="button" class="filter-chip" data-cat-filter="PRESS">Press</button>
+        </form>
+        <table class="table">
+          <caption class="u-visually-hidden">Yangiliklar jadvali</caption>
+          <thead>
+            <tr>
+              <th scope="col"><input type="checkbox" id="selectAll" aria-label="Barchasini tanlash" /></th>
+              <th scope="col">Sarlavha</th>
+              <th scope="col">Sana</th>
+              <th scope="col">Kategoriya</th>
+              <th scope="col">Tavsiya</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody id="newsTableBody">
+            <tr class="u-empty-row"><td colspan="6">Yuklanmoqda...</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <!-- Notifications panel -->
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+    <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2></div>
+    <div class="notifications-panel__list"></div>
+    <div class="notifications-panel__footer">
+      <button type="button" class="notifications-panel__mark-read">Barchasini o'qildi deb belgilash</button>
+    </div>
+  </div>
+
+  <!-- Create / Edit Modal -->
+  <div class="modal-overlay" id="formModal" role="dialog" aria-modal="true" aria-labelledby="formModalTitle" aria-hidden="true">
+    <div class="modal modal--wide">
+      <div class="modal__head">
+        <h2 class="modal__title" id="formModalTitle">Yangi maqola</h2>
+        <button type="button" class="modal__close" id="formModalClose" aria-label="Yopish"><i class="ph ph-x"></i></button>
+      </div>
+      <form id="cmsForm" novalidate>
+        <div class="modal__body">
+          <div class="modal__field">
+            <label class="modal__label" for="fTitle">Sarlavha <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <input id="fTitle" class="modal__input" type="text" required placeholder="Maqola sarlavhasini kiriting" />
+          </div>
+          <div class="modal__grid2">
+            <div class="modal__field">
+              <label class="modal__label" for="fDate">Sana <span aria-hidden="true" style="color:#dc2626">*</span></label>
+              <input id="fDate" class="modal__input" type="date" required />
+            </div>
+            <div class="modal__field">
+              <label class="modal__label" for="fCategory">Kategoriya <span aria-hidden="true" style="color:#dc2626">*</span></label>
+              <select id="fCategory" class="modal__select" required>
+                <option value="">— Tanlang —</option>
+                <option value="E'LON">E'LON</option>
+                <option value="TADBIR">TADBIR</option>
+                <option value="TAHLIL">TAHLIL</option>
+                <option value="PRESS">PRESS</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="fExcerpt">Qisqa matn (excerpt) <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <textarea id="fExcerpt" class="modal__textarea" required placeholder="Maqolaning qisqacha tavsifi (kartochkada ko'rsatiladi)"></textarea>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="fBody">To'liq matn <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <textarea id="fBody" class="modal__textarea modal__textarea--tall" required placeholder="Maqolaning to'liq matni"></textarea>
+          </div>
+          <div class="modal__field">
+            <label class="modal__checkbox-row">
+              <input type="checkbox" id="fFeatured" />
+              Bosh sahifada tavsiya etish (featured)
+            </label>
+          </div>
+          <p id="formError" style="color:#dc2626;font-size:13px;display:none;margin:0;"></p>
+        </div>
+        <div class="modal__foot">
+          <button type="button" class="btn btn--secondary" id="formCancelBtn">Bekor qilish</button>
+          <button type="submit" class="btn btn--primary" id="formSaveBtn"><i class="ph ph-floppy-disk"></i> Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal u-modal-max-440">
+      <div class="modal__head">
+        <h2 class="modal__title" id="deleteModalTitle">Maqolani o'chirish</h2>
+        <button type="button" class="modal__close" id="deleteModalClose" aria-label="Yopish"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="modal__body">
+        <p style="margin:0;font-size:14px;color:var(--grey-700,#2b2d3a);">
+          <strong id="deleteName"></strong> maqolasini o'chirmoqchimisiz?<br>
+          <span style="color:var(--grey-400,#818898)">Bu amalni qaytarib bo'lmaydi.</span>
+        </p>
+      </div>
+      <div class="modal__foot">
+        <button type="button" class="btn btn--secondary" id="deleteCancelBtn">Bekor qilish</button>
+        <button type="button" class="btn btn--danger" id="deleteConfirmBtn"><i class="ph ph-trash"></i> Ha, o'chirish</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cms-toast" id="cmsToast" role="alert" aria-live="polite"></div>
+
+  <script src="js/pacta-app.js"></script>
+  <script src="js/pacta-foundation.js"></script>
+  <script src="js/pacta-notifications.js"></script>
+  <script src="js/admin-cms.js"></script>
+  <script>
+  (function () {
+    var TYPE      = 'news';
+    var items     = [];
+    var editingId = null;
+    var deleteId  = null;
+    var catFilter = 'all';
+    var searchQ   = '';
+
+    var CAT_BADGE = { "E'LON": 'info', 'TADBIR': 'success', 'TAHLIL': 'warning', 'PRESS': 'neutral' };
+
+    // ── modal helpers ─────────────────────────────────────
+    function openModal(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('is-open');
+      el.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('is-open');
+      el.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    // ── toast ─────────────────────────────────────────────
+    var toastTimer;
+    function toast(msg, type) {
+      var el = document.getElementById('cmsToast');
+      el.textContent = msg;
+      el.className = 'cms-toast cms-toast--' + (type || 'info') + ' show';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3500);
+    }
+
+    // ── KPI cards ─────────────────────────────────────────
+    function renderKpi() {
+      document.getElementById('kpiTotal').textContent    = items.length;
+      document.getElementById('kpiFeatured').textContent = items.filter(function (i) { return i.featured; }).length;
+      document.getElementById('kpiAnnounce').textContent = items.filter(function (i) { return i.category === "E'LON"; }).length;
+      document.getElementById('kpiAnalysis').textContent = items.filter(function (i) { return i.category === 'TAHLIL' || i.category === 'PRESS'; }).length;
+    }
+
+    // ── table ─────────────────────────────────────────────
+    function renderTable() {
+      var q = searchQ.toLowerCase();
+      var filtered = items.filter(function (item) {
+        if (catFilter !== 'all' && item.category !== catFilter) return false;
+        if (q && (item.title + ' ' + (item.excerpt || '')).toLowerCase().indexOf(q) === -1) return false;
+        return true;
+      });
+      var tbody = document.getElementById('newsTableBody');
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6">Ma\'lumot topilmadi</td></tr>';
+        return;
+      }
+      tbody.innerHTML = filtered.map(function (item) {
+        var badge = CAT_BADGE[item.category] || 'neutral';
+        var title = AdminCMS.esc(item.title.length > 72 ? item.title.slice(0, 72) + '…' : item.title);
+        return '<tr>' +
+          '<td><input type="checkbox" aria-label="Tanlash" /></td>' +
+          '<td class="u-td-truncate">' + title + '</td>' +
+          '<td>' + AdminCMS.esc(item.date || '') + '</td>' +
+          '<td><span class="badge badge--' + badge + '">' + AdminCMS.esc(item.category) + '</span></td>' +
+          '<td>' + (item.featured ? '<span class="badge badge--success">Ha</span>' : '<span style="color:var(--grey-300,#c3c6cf)">—</span>') + '</td>' +
+          '<td style="white-space:nowrap">' +
+            '<button class="btn--ghost-sm" title="Tahrirlash" onclick="editItem(\'' + item.id + '\')"><i class="ph ph-pencil-simple"></i></button>' +
+            '<button class="btn--ghost-sm danger" title="O\'chirish" onclick="confirmDelete(\'' + item.id + '\')"><i class="ph ph-trash"></i></button>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function reload() { items = AdminCMS.get(TYPE) || []; renderTable(); renderKpi(); }
+
+    // ── form helpers ──────────────────────────────────────
+    function clearForm() {
+      document.getElementById('fTitle').value    = '';
+      document.getElementById('fDate').value     = AdminCMS.today();
+      document.getElementById('fCategory').value = '';
+      document.getElementById('fExcerpt').value  = '';
+      document.getElementById('fBody').value     = '';
+      document.getElementById('fFeatured').checked = false;
+      document.getElementById('formError').style.display = 'none';
+    }
+    function fillForm(item) {
+      document.getElementById('fTitle').value    = item.title    || '';
+      document.getElementById('fDate').value     = item.date     || '';
+      document.getElementById('fCategory').value = item.category || '';
+      document.getElementById('fExcerpt').value  = item.excerpt  || '';
+      document.getElementById('fBody').value     = item.body     || '';
+      document.getElementById('fFeatured').checked = !!item.featured;
+      document.getElementById('formError').style.display = 'none';
+    }
+    function readForm() {
+      return {
+        title   : document.getElementById('fTitle').value.trim(),
+        date    : document.getElementById('fDate').value,
+        category: document.getElementById('fCategory').value,
+        excerpt : document.getElementById('fExcerpt').value.trim(),
+        body    : document.getElementById('fBody').value.trim(),
+        featured: document.getElementById('fFeatured').checked
+      };
+    }
+
+    // ── actions ───────────────────────────────────────────
+    window.editItem = function (id) {
+      var item = items.find(function (i) { return i.id === id; });
+      if (!item) return;
+      editingId = id;
+      document.getElementById('formModalTitle').textContent = 'Maqolani tahrirlash';
+      fillForm(item);
+      openModal('formModal');
+    };
+
+    window.confirmDelete = function (id) {
+      var item = items.find(function (i) { return i.id === id; });
+      deleteId = id;
+      document.getElementById('deleteName').textContent = item ? item.title.slice(0, 60) : id;
+      openModal('deleteModal');
+    };
+
+    // ── events ────────────────────────────────────────────
+    document.getElementById('newItemBtn').addEventListener('click', function () {
+      editingId = null;
+      document.getElementById('formModalTitle').textContent = 'Yangi maqola';
+      clearForm();
+      openModal('formModal');
+    });
+
+    document.getElementById('formModalClose').addEventListener('click', function () { closeModal('formModal'); });
+    document.getElementById('formCancelBtn').addEventListener('click', function () { closeModal('formModal'); });
+    document.getElementById('deleteModalClose').addEventListener('click', function () { closeModal('deleteModal'); });
+    document.getElementById('deleteCancelBtn').addEventListener('click', function () { closeModal('deleteModal'); });
+
+    document.getElementById('cmsForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data  = readForm();
+      var errEl = document.getElementById('formError');
+      if (!data.title || !data.date || !data.category || !data.excerpt || !data.body) {
+        errEl.textContent = 'Iltimos, barcha majburiy maydonlarni to\'ldiring.';
+        errEl.style.display = 'block';
+        return;
+      }
+      errEl.style.display = 'none';
+      if (editingId) {
+        AdminCMS.update(TYPE, editingId, data);
+        toast('Maqola yangilandi', 'success');
+      } else {
+        AdminCMS.create(TYPE, data);
+        toast('Yangi maqola saqlandi', 'success');
+      }
+      closeModal('formModal');
+      reload();
+    });
+
+    document.getElementById('deleteConfirmBtn').addEventListener('click', function () {
+      if (!deleteId) return;
+      AdminCMS.remove(TYPE, deleteId);
+      closeModal('deleteModal');
+      reload();
+      toast('Maqola o\'chirildi', 'info');
+      deleteId = null;
+    });
+
+    document.getElementById('cmsSearch').addEventListener('input', function () {
+      searchQ = this.value;
+      renderTable();
+    });
+
+    document.querySelectorAll('[data-cat-filter]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('[data-cat-filter]').forEach(function (b) { b.classList.remove('is-active'); });
+        this.classList.add('is-active');
+        catFilter = this.dataset.catFilter;
+        renderTable();
+      });
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', function () {
+      AdminCMS.exportJson(TYPE);
+    });
+
+    document.getElementById('refreshBtn').addEventListener('click', function () {
+      var btn = this;
+      btn.disabled = true;
+      AdminCMS.refresh(TYPE, function (err, data) {
+        btn.disabled = false;
+        if (err) { toast('Yuklashda xatolik: ' + err.message, 'error'); return; }
+        items = data || [];
+        renderTable();
+        renderKpi();
+        toast('Ma\'lumotlar yangilandi', 'success');
+      });
+    });
+
+    document.getElementById('publishBtn').addEventListener('click', function () {
+      var token = localStorage.getItem('admin_github_token');
+      if (!token) {
+        toast('GitHub tokeni Sozlamalarda kiritilmagan!', 'warning');
+        return;
+      }
+      var btn = this;
+      btn.innerHTML = '<span class="spinner"></span> Nashr etilmoqda...';
+      btn.disabled  = true;
+      AdminCMS.publish(TYPE, function (err) {
+        btn.innerHTML = '<i class="ph ph-cloud-arrow-up"></i> GitHub\'ga nashr';
+        btn.disabled  = false;
+        if (err) toast('Xatolik: ' + err.message, 'error');
+        else toast('GitHub\'ga muvaffaqiyatli nashr etildi!', 'success');
+      });
+    });
+
+    // close modal on backdrop click
+    document.getElementById('formModal').addEventListener('click',   function (e) { if (e.target === this) closeModal('formModal'); });
+    document.getElementById('deleteModal').addEventListener('click', function (e) { if (e.target === this) closeModal('deleteModal'); });
+
+    // ── init ──────────────────────────────────────────────
+    AdminCMS.load(TYPE, function (err, data) {
+      if (err) toast('Ma\'lumotlarni yuklashda xatolik', 'error');
+      items = data || [];
+      renderTable();
+      renderKpi();
+    });
+
+  })();
+  </script>
+</body>
+</html>
