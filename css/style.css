@@ -630,6 +630,32 @@ body.a11y-grayscale { filter: grayscale(1); }
 .section-tight { padding-top:28px; }
 .hero-cta-row { margin-top:28px; margin-bottom:0; display:flex; justify-content:center; }
 .home-page .hero-cta-row { justify-content:center; }
+
+/* Homepage CTA — bottom-right corner of the video hero */
+.hero-cta-corner {
+  position: absolute;
+  bottom: 130px;   /* sits above the stats bar with breathing room */
+  right: 60px;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 360px;    /* both buttons stretch to this shared width */
+}
+.hero-cta-corner .hero-member-btn,
+.hero-cta-corner .hero-benefits-btn {
+  width: 100%;
+  box-sizing: border-box;
+}
+@media (max-width: 860px) {
+  .hero-cta-corner {
+    position: relative;
+    bottom: auto; right: auto;
+    width: auto; min-width: 280px; max-width: 96vw;
+    padding: 24px 20px 0;
+    align-self: center;
+  }
+}
 .section-action { margin-top:18px; }
 .section-header-row {
   display: flex;
