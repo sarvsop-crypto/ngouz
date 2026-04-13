@@ -2453,8 +2453,31 @@ body.a11y-grayscale { filter: grayscale(1); }
   flex-shrink: 0;
 }
 
-/* Force visibility — overrides any cached scroll-reveal opacity:0 */
-.map-svg-box, .nnt-chart-wrap, .nnt-chart-card { opacity: 1 !important; }
+/* ── Scroll-fade animation ───────────────────────────────────
+   JS adds .ready to start hidden, .visible to animate in.
+   Without JS: elements stay fully visible (no .ready class).
+───────────────────────────────────────────────────────────── */
+.scroll-fade.ready {
+  opacity: 0;
+  transform: translateY(38px);
+  transition: opacity 0.72s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.scroll-fade.ready.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger the 3 stat boxes inside the chart card */
+.nnt-chart-card.ready .nnt-stat-box {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.nnt-chart-card.ready.visible .nnt-stat-box:nth-child(1) { opacity: 1; transform: translateY(0); transition-delay: 0.18s; }
+.nnt-chart-card.ready.visible .nnt-stat-box:nth-child(2) { opacity: 1; transform: translateY(0); transition-delay: 0.30s; }
+.nnt-chart-card.ready.visible .nnt-stat-box:nth-child(3) { opacity: 1; transform: translateY(0); transition-delay: 0.42s; }
 
 /* ── NNT dynamics chart ──────────────────────────────────── */
 .nnt-chart-section { padding-top: 32px; }

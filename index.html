@@ -148,7 +148,7 @@
 </div>
 </section>
 <section class="map-section">
-<div class="container">
+<div class="container scroll-fade">
 <h2 class="section-title">NNTlar ko’rsatkichlari</h2>
 <p class="section-sub">Xududlar kesimida</p>
 <div class="map-svg-box" id="mapBox"></div>
@@ -166,7 +166,7 @@
 </section>
 <section class="map-section nnt-chart-section">
 <div class="container">
-<div class="nnt-chart-card">
+<div class="nnt-chart-card scroll-fade">
 <h2 style="font-size:20px;font-weight:700;color:#1a2e3a;margin:0 0 20px;">Assotsiatsiyaga a'zo nodavlat notijorat tashkilotlari soni</h2>
 <div class="nnt-chart-stats">
 <div class="nnt-stat-box">
@@ -497,6 +497,21 @@ window.addEventListener('load', function(){
       });
     });
   })();
+})();
+</script>
+<script>
+(function(){
+  if (!window.IntersectionObserver) return;
+  var els = document.querySelectorAll('.scroll-fade');
+  var io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(function(el) { el.classList.add('ready'); io.observe(el); });
 })();
 </script>
 <!-- Membership modal -->
