@@ -507,6 +507,12 @@ window.addEventListener('load', function(){
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+        // Re-play Chart.js bar animation every time the chart card enters view
+        if (entry.target.classList.contains('nnt-chart-card')) {
+          var canvas = document.getElementById('nntChart');
+          var chart = canvas && Chart.getChart(canvas);
+          if (chart) { chart.reset(); chart.update(); }
+        }
       } else {
         entry.target.classList.remove('visible');
       }
