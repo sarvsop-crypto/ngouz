@@ -2365,6 +2365,7 @@ body.a11y-grayscale { filter: grayscale(1); }
   position: relative;
   width: 100%;
   margin-top: 28px;
+  min-height: 200px;
 }
 .map-svg-box svg {
   width: 100%;
@@ -2451,6 +2452,9 @@ body.a11y-grayscale { filter: grayscale(1); }
   border-radius: 3px;
   flex-shrink: 0;
 }
+
+/* Force visibility — overrides any cached scroll-reveal opacity:0 */
+.map-svg-box, .nnt-chart-wrap, .nnt-chart-card { opacity: 1 !important; }
 
 /* ── NNT dynamics chart ──────────────────────────────────── */
 .nnt-chart-section { padding-top: 32px; }
@@ -2695,20 +2699,6 @@ body.a11y-grayscale { filter: grayscale(1); }
 }
 @media (max-width: 560px) {
   .infographic-grid { grid-template-columns: 1fr; }
-}
-
-/* ═══════════════════════════════════════════════════
-   Scroll reveal
-   ═══════════════════════════════════════════════════ */
-[data-reveal] {
-  opacity: 0;
-  translate: 0 20px;
-  transition: opacity 0.55s ease, translate 0.55s ease;
-  transition-delay: var(--reveal-delay, 0ms);
-}
-[data-reveal].is-revealed {
-  opacity: 1;
-  translate: 0 0;
 }
 
 /* Dynamic nnt-cards fade in when render() injects them */

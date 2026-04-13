@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="css/style.css" rel="stylesheet">
+<link href="css/style.css?v=3" rel="stylesheet">
 </link></head>
 <body class="home-page">
 <a class="skip-link" href="#main-content">Asosiy kontentga o’tish</a>
@@ -281,16 +281,11 @@
 
 </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+<script src="js/chart.min.js?v=1"></script>
 <script>
-(function(){
+window.addEventListener('load', function(){
   var canvas = document.getElementById('nntChart');
   if(!canvas) return;
-
-  var wrap = canvas.closest('.nnt-chart-wrap');
-  wrap.style.opacity = '0';
-  wrap.style.transform = 'translateX(-60px)';
-  wrap.style.transition = 'opacity .8s cubic-bezier(.22,.61,.36,1), transform .8s cubic-bezier(.22,.61,.36,1)';
 
   var labels = ['2020 й.','2021 й.','2022 й.','2023 й.','2024 й.','2025 й.'];
   var member = [532, 990, 1482, 1843, 2143, 2382];
@@ -384,7 +379,7 @@
       },
       plugins: [
         {
-          id: 'chartBg’,
+          id: 'chartBg',
           beforeDatasetsDraw: function(chart){
             var ctx2 = chart.ctx;
             var a = chart.chartArea;
@@ -417,34 +412,23 @@
 
   document.getElementById('nntDlBtn').addEventListener('click', function(){
     var link = document.createElement('a');
-    link.download = 'nnt-dinamikasi-2020-2025.png’;
-    link.href = canvas.toDataURL('image/png’);
+    link.download = 'nnt-dinamikasi-2020-2025.png';
+    link.href = canvas.toDataURL('image/png');
     link.click();
   });
 
-  var io = new IntersectionObserver(function(entries){
-    if(entries[0].isIntersecting){
-      buildChart();
-      wrap.style.opacity = '1';
-      wrap.style.transform = 'translateX(0)';
-    } else {
-      wrap.style.opacity = '0';
-      wrap.style.transform = 'translateX(-60px)';
-    }
-  }, { threshold: 0.2 });
-
-  io.observe(canvas.closest('.nnt-chart-section'));
-})();
+  buildChart();
+});
 </script>
-<script src="js/main.js"></script>
-<script src="js/content.js"></script>
-<script src="js/uzmap.js"></script>
+<script src="js/main.js?v=3"></script>
+<script src="js/content.js?v=3"></script>
+<script src="js/uzmap.js?v=3"></script>
 <script>
 (function(){
   var VBW = 792, VBH = 517;
   var data = {
     'UZ-QR': { name: "Qoraqalpog\u2018iston\nRespublikasi", nnt: 1839, members: 432  },
-    'UZ-XO’: { name: "Xorazm viloyati",        nnt: 2059, members: 525  },
+    'UZ-XO': { name: "Xorazm viloyati",        nnt: 2059, members: 525  },
     'UZ-NW': { name: "Navoiy viloyati",         nnt: 1640, members: 330  },
     'UZ-BU': { name: "Buxoro viloyati",         nnt: 2287, members: 544  },
     'UZ-JI': { name: "Jizzax viloyati",         nnt: 1065, members: 308  },
@@ -452,9 +436,9 @@
     'UZ-QA': { name: "Qashqadaryo\nviloyati",  nnt: 2830, members: 822  },
     'UZ-SU': { name: "Surxondaryo\nviloyati",  nnt: 5977, members: 724  },
     'UZ-SI': { name: "Sirdaryo viloyati",       nnt:  856, members: 238, lx:-5, ly:-5 },
-    'UZ-TO’: { name: "Toshkent viloyati",       nnt: 2104, members: 1025, lx:-4, ly:-6 },
+    'UZ-TO': { name: "Toshkent viloyati",       nnt: 2104, members: 1025, lx:-4, ly:-6 },
     'UZ-TK': { name: "Toshkent shahri",         nnt: 2504, members: 503,  lx: 6, ly: 4 },
-    'UZ-NG’: { name: "Namangan viloyati",       nnt: 2613, members: 788  },
+    'UZ-NG': { name: "Namangan viloyati",       nnt: 2613, members: 788  },
     'UZ-FA': { name: "Farg\u2018ona viloyati",  nnt: 2837, members: 1062 },
     'UZ-AN': { name: "Andijon viloyati",        nnt: 2320, members: 908,  lx: 4, ly:-4 }
   };
@@ -465,7 +449,7 @@
     var box = document.getElementById('mapBox');
     if (!box || typeof UZ_MAP_SVG === 'undefined') return;
     box.innerHTML = UZ_MAP_SVG;
-    var svg = box.querySelector('svg’);
+    var svg = box.querySelector('svg');
     if (!svg) return;
     svg.removeAttribute('width');
     svg.removeAttribute('height');
@@ -491,7 +475,7 @@
       var lines = d.name.split('\n');
       lbl.innerHTML =
         '<span class="ml-nnt">'     + fmt(d.nnt)                   + '</span>' +
-        '<span class="ml-members">' + fmt(d.members) + ' a\'zo’    + '</span>' +
+        '<span class="ml-members">' + fmt(d.members) + ' a\'zo'    + '</span>' +
         '<span class="ml-name">'    + lines.join('<br>')            + '</span>';
       box.appendChild(lbl);
 
