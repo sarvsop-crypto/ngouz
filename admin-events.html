@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tadbirlar — O’zNNTMA Admin</title>
+  <title>Tadbirlar — O'zNNTMA Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
@@ -49,13 +49,13 @@
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#main-content">Asosiy kontentga o’tish</a>
+  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
         <div class="u-inline-stack">
           <div class="sidebar__logo u-logo-badge">N</div>
-          <span class="sidebar__title">O’zNNTMA Admin</span>
+          <span class="sidebar__title">O'zNNTMA Admin</span>
         </div>
         <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
       </div>
@@ -68,7 +68,7 @@
           <div class="sidebar__nav-label">ASOSIY MENYU</div>
           <a href="admin-dashboard.html" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
           <a href="admin-membership-requests.html" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
-          <a href="admin-registry.html" class="sidebar__nav-link" title="NNT Ro’yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets"></i></span><span class="sidebar__nav-link-text">NNT Ro’yxati</span></a>
+          <a href="admin-registry.html" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
           <a href="admin-users.html" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
           <a href="admin-reports.html" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar"></i></span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
         </div>
@@ -127,7 +127,7 @@
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-check-circle"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Bo’lib o’tgan</p><p class="card__value" id="kpiPast">—</p></div></div>
+          <div class="card__body"><div><p class="card__label">Bo'lib o'tgan</p><p class="card__value" id="kpiPast">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-users-three"></i></div></div>
@@ -137,13 +137,13 @@
 
       <section class="table-section" aria-labelledby="eventsTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="eventsTableTitle">Tadbirlar ro’yxati</h2>
+          <h2 class="table-section__title" id="eventsTableTitle">Tadbirlar ro'yxati</h2>
         </div>
         <form class="u-filter-row" role="search" aria-label="Tadbirlarni filtrlash">
-          <input id="cmsSearch" type="search" class="table-section__search u-search-260" placeholder="Nom yoki joy bo’yicha..." />
+          <input id="cmsSearch" type="search" class="table-section__search u-search-260" placeholder="Nom yoki joy bo'yicha..." />
           <button type="button" class="filter-chip is-active" data-status-filter="all">Barchasi</button>
           <button type="button" class="filter-chip" data-status-filter="upcoming">Rejalashtirilgan</button>
-          <button type="button" class="filter-chip" data-status-filter="past">Bo’lib o’tgan</button>
+          <button type="button" class="filter-chip" data-status-filter="past">Bo'lib o'tgan</button>
         </form>
         <table class="table">
           <caption class="u-visually-hidden">Tadbirlar jadvali</caption>
@@ -170,7 +170,7 @@
     <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2></div>
     <div class="notifications-panel__list"></div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read">Barchasini o’qildi deb belgilash</button>
+      <button type="button" class="notifications-panel__mark-read">Barchasini o'qildi deb belgilash</button>
     </div>
   </div>
 
@@ -196,7 +196,7 @@
               <label class="modal__label" for="fStatus">Holat <span aria-hidden="true" style="color:#dc2626">*</span></label>
               <select id="fStatus" class="modal__select" required>
                 <option value="upcoming">Rejalashtirilgan</option>
-                <option value="past">Bo’lib o’tgan</option>
+                <option value="past">Bo'lib o'tgan</option>
               </select>
             </div>
           </div>
@@ -232,18 +232,18 @@
   <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle" aria-hidden="true">
     <div class="modal u-modal-max-440">
       <div class="modal__head">
-        <h2 class="modal__title" id="deleteModalTitle">Tadbirni o’chirish</h2>
+        <h2 class="modal__title" id="deleteModalTitle">Tadbirni o'chirish</h2>
         <button type="button" class="modal__close" id="deleteModalClose" aria-label="Yopish"><i class="ph ph-x"></i></button>
       </div>
       <div class="modal__body">
         <p style="margin:0;font-size:14px;color:var(--grey-700,#2b2d3a);">
-          <strong id="deleteName"></strong> tadbirini o’chirmoqchimisiz?<br>
-          <span style="color:var(--grey-400,#818898)">Bu amalni qaytarib bo’lmaydi.</span>
+          <strong id="deleteName"></strong> tadbirini o'chirmoqchimisiz?<br>
+          <span style="color:var(--grey-400,#818898)">Bu amalni qaytarib bo'lmaydi.</span>
         </p>
       </div>
       <div class="modal__foot">
         <button type="button" class="btn btn--secondary" id="deleteCancelBtn">Bekor qilish</button>
-        <button type="button" class="btn btn--danger" id="deleteConfirmBtn"><i class="ph ph-trash"></i> Ha, o’chirish</button>
+        <button type="button" class="btn btn--danger" id="deleteConfirmBtn"><i class="ph ph-trash"></i> Ha, o'chirish</button>
       </div>
     </div>
   </div>

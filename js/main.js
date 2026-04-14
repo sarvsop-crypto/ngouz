@@ -373,14 +373,14 @@
       '<a href="about.html">Assotsiatsiya haqida</a>' +
       '<div class="mobile-nav-sub">' +
         '<a href="mission.html">Maqsad va vazifalar</a>' +
-        '<a href="board-of-experts.html">Kengash a\u2019zolari</a>' +
+        '<a href="board-of-experts.html">Kengash a\'zolari</a>' +
         '<a href="leadership.html">Rahbariyat</a>' +
         '<a href="our-team.html">Bizning jamoa</a>' +
-        '<a href="hududiy-bolinmalar.html">Hududiy bo\u2019linmalar</a>' +
+        '<a href="hududiy-bolinmalar.html">Hududiy bo\'linmalar</a>' +
         '<a href="structure.html">Assotsiatsiya tuzilmasi</a>' +
       '</div>' +
       '<span class="mobile-nav-label">NNTlar reyestri</span>' +
-      '<a href="nntlar.html">Assotsiatsiyaga a\u2019zo NNTlar</a>' +
+      '<a href="nntlar.html">Assotsiatsiyaga a\'zo NNTlar</a>' +
       '<div class="mobile-nav-sub">' +
         '<a href="sustainability-index.html">NNTlar barqarorlik indeksi</a>' +
         '<a href="sustainability-cert.html">"Barqaror NNT" sertifikatiga ega NNTlar</a>' +
@@ -390,15 +390,15 @@
       '<a href="awards.html">Xorijiy hamkorlar</a>' +
       '<div class="mobile-nav-sub">' +
         '<a href="mahalliy-hamkorlar.html">Mahalliy hamkorlar</a>' +
-        '<a href="jamoatchilik-kengashi.html">Jamoatchilik kengashi a\u2019zolari</a>' +
+        '<a href="jamoatchilik-kengashi.html">Jamoatchilik kengashi a\'zolari</a>' +
       '</div>' +
-      '<span class="mobile-nav-label">Bog\u2019lanish</span>' +
+      '<span class="mobile-nav-label">Bog\'lanish</span>' +
       '<a href="contact.html">Kontaktlar</a>' +
       '<div class="mobile-nav-sub">' +
         '<a href="qayta-aloqa.html">Qayta aloqa</a>' +
-        '<a href="korrupsiya-murojaat.html">Korrupsiyani oldini olish bo\u2019yicha murojat</a>' +
+        '<a href="korrupsiya-murojaat.html">Korrupsiyani oldini olish bo\'yicha murojat</a>' +
       '</div>' +
-      '<span class="mobile-nav-label">Ochiq ma\u2019lumotlar</span>' +
+      '<span class="mobile-nav-label">Ochiq ma\'lumotlar</span>' +
       '<a href="infographics.html">Infografikalar</a>' +
       '<div class="mobile-nav-sub">' +
         '<a href="official-docs.html">Normativ-huquqiy hujjatlar</a>' +
@@ -406,11 +406,11 @@
         '<a href="events.html">Tadbirlar</a>' +
         '<a href="reporting-forms.html">Hisobotlar</a>' +
         '<a href="dayjestlar.html">Dayjestlar</a>' +
-        '<a href="vacancies.html">Bo\u2019sh ish o\u2019rinlari</a>' +
-        '<a href="talim-rivojlanish.html">Ta\u2019lim va rivojlanish</a>' +
+        '<a href="vacancies.html">Bo\'sh ish o\'rinlari</a>' +
+        '<a href="talim-rivojlanish.html">Ta\'lim va rivojlanish</a>' +
         '<a href="stajirovka-volontyorlik.html">Stajirovka va volontyorlik</a>' +
       '</div>' +
-      '<a href="membership.html" class="mobile-nav-cta">A\u2019zo bo\u2019lish</a>';
+      '<a href="membership.html" class="mobile-nav-cta">A\'zo bo\'lish</a>';
     document.body.appendChild(mobileNav);
 
     var toggleMobileNav = function (open) {
