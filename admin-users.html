@@ -16,13 +16,138 @@
   <link rel="stylesheet" href="css/pacta-app.css">
   <link rel="stylesheet" href="css/pacta-foundation.css">
   <link rel="stylesheet" href="css/pacta-modal.css">
+  <style>
+    /* ── Super Admin card ── */
+    .superadmin-card {
+      background: linear-gradient(135deg, #023347 0%, #0a4f6b 100%);
+      border-radius: 14px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .superadmin-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(255,200,60,.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .superadmin-avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #f6c03c, #f59e0b);
+      color: #7a4a00;
+      display: grid; place-items: center;
+      font-weight: 700; font-size: 20px;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 3px rgba(246,192,60,.3);
+    }
+    .superadmin-info { flex: 1; min-width: 0; }
+    .superadmin-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(246,192,60,.18); border: 1px solid rgba(246,192,60,.35);
+      color: #f6c03c; font-size: 11px; font-weight: 700;
+      border-radius: 20px; padding: 2px 10px;
+      letter-spacing: .06em; margin-bottom: 4px;
+    }
+    .superadmin-name { font-size: 17px; font-weight: 700; color: #fff; margin: 0; }
+    .superadmin-meta { font-size: 13px; color: rgba(255,255,255,.6); margin-top: 2px; }
+    .superadmin-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .btn--ghost-white {
+      background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+      color: #fff; border-radius: 8px; padding: 8px 16px;
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: background .15s;
+    }
+    .btn--ghost-white:hover { background: rgba(255,255,255,.18); }
+
+    /* ── Section header ── */
+    .section-hdr {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .section-hdr h2 { font-size: 15px; font-weight: 600; color: var(--grey-900,#0d0d12); margin: 0; }
+    .section-hdr p  { font-size: 13px; color: var(--grey-400,#818898); margin: 4px 0 0; }
+
+    /* ── Permission toggle (Telegram-style) ── */
+    .perm-group { margin-bottom: 20px; }
+    .perm-group-title {
+      font-size: 11px; font-weight: 700; color: var(--grey-400,#818898);
+      letter-spacing: .08em; text-transform: uppercase;
+      margin: 0 0 10px;
+    }
+    .perm-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--grey-50,#f1f3f5);
+    }
+    .perm-row:last-child { border-bottom: none; }
+    .perm-label { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--grey-800,#1a1d23); }
+    .perm-label i { font-size: 17px; color: var(--grey-400,#818898); flex-shrink: 0; }
+    .perm-sublabel { font-size: 12px; color: var(--grey-400,#818898); margin-top: 1px; }
+    .toggle {
+      position: relative; display: inline-block;
+      width: 44px; height: 24px; flex-shrink: 0;
+    }
+    .toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .toggle-track {
+      position: absolute; inset: 0;
+      background: #d1d5db; border-radius: 24px;
+      cursor: pointer; transition: background .2s;
+    }
+    .toggle-track::before {
+      content: ''; position: absolute;
+      width: 18px; height: 18px; left: 3px; bottom: 3px;
+      background: #fff; border-radius: 50%;
+      transition: transform .2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,.18);
+    }
+    .toggle input:checked + .toggle-track { background: var(--primary-500, #12987b); }
+    .toggle input:checked + .toggle-track::before { transform: translateX(20px); }
+
+    /* ── Region admin table customisation ── */
+    .perm-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+    .perm-chip {
+      background: var(--primary-50,#edfaf6); color: var(--primary-700,#0a5c47);
+      border-radius: 20px; font-size: 11px; font-weight: 600;
+      padding: 2px 8px; white-space: nowrap;
+    }
+    .perm-chip--off {
+      background: var(--grey-50,#f1f3f5); color: var(--grey-400,#818898);
+    }
+    .region-flag {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: #eff6ff; color: #1d4ed8;
+      border-radius: 6px; font-size: 12px; font-weight: 600;
+      padding: 3px 8px;
+    }
+
+    /* ── Modal wide ── */
+    .modal--users { max-width: 560px; }
+    .modal-tabs { display: flex; gap: 0; border-bottom: 2px solid var(--grey-100,#dfe1e7); margin-bottom: 20px; }
+    .modal-tab {
+      padding: 10px 20px; font-size: 14px; font-weight: 500;
+      color: var(--grey-400,#818898); cursor: pointer;
+      border-bottom: 2px solid transparent; margin-bottom: -2px;
+      background: none; border-left: none; border-top: none; border-right: none;
+    }
+    .modal-tab.is-active { color: var(--primary-600,#0a5c47); border-bottom-color: var(--primary-500,#12987b); font-weight: 600; }
+    .modal-tab-panel { display: none; }
+    .modal-tab-panel.is-active { display: block; }
+  </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
         <div class="u-inline-stack">
-          <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">N</div>
+          <div class="sidebar__logo u-logo-badge">N</div>
           <span class="sidebar__title">O'zNNTMA Admin</span>
         </div>
         <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
@@ -57,7 +182,7 @@
       </nav>
     </aside>
 
-    <main class="main">
+    <main class="main" id="main-content">
       <header class="topbar">
         <div class="topbar-left">
           <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>Foydalanuvchilar</span></div>
@@ -69,313 +194,402 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;" class="main__profile-avatar">A</div>
+            <div class="main__profile-avatar u-avatar-badge-sm">A</div>
             <div>
               <div class="main__profile-name">Administrator</div>
-              <div class="main__profile-role">Bosh admin</div>
+              <div class="main__profile-role">Super admin</div>
             </div>
           </div>
         </div>
       </header>
 
-      <div class="page-header-wrap">
-        <div class="page-header">
-          <h1 class="page-header__title">Foydalanuvchilar va rollar</h1>
-          <p class="page-header__desc">Tizim foydalanuvchilarini boshqaring va ruxsatlar tizimini sozlang.</p>
-        </div>
-        <button type="button" class="btn btn--primary" data-modal-open="addUserModal">
-          <i class="ph ph-plus"></i>
-          Foydalanuvchi qo&rsquo;shish
-        </button>
-      </div>
-
-      <div class="invite-section">
-        <h4>Yangi a'zo taklif qilish</h4>
-        <div class="invite-row">
-          <input type="email" placeholder="Email manzilini kiriting..." aria-label="Email" />
-          <select class="select-field u-w-160" aria-label="Rol">
-            <option>Ko&rsquo;ruvchi</option>
-            <option>Moderator</option>
-            <option>Admin</option>
-          </select>
-          <button type="button" class="btn btn--primary">Taklif yuborish</button>
+      <div class="main__header">
+        <h1 class="main__title">Foydalanuvchilar boshqaruvi</h1>
+        <div class="main__btns">
+          <button type="button" class="btn btn--primary" id="addUserBtn"><i class="ph ph-user-plus"></i> Hududiy admin qo&rsquo;shish</button>
         </div>
       </div>
 
-      <div class="team-grid">
-        <div class="card u-p-0">
-          <div class="card-header">
-            <h3>Jamoa a&rsquo;zolari <span class="muted">(4)</span></h3>
-            <select class="select-field u-select-sm" aria-label="Rol bo'yicha filter">
-              <option>Barcha rollar</option>
-              <option>Admin</option>
-              <option>Moderator</option>
-              <option>Ko&rsquo;ruvchi</option>
-            </select>
-          </div>
-
-          <div class="member-card">
-            <div class="member-avatar u-bg-primary-600">AN</div>
-            <div class="member-info">
-              <div class="member-name">Azizova Nodira</div>
-              <div class="member-email">azizova@uznntma.uz</div>
-              <div class="member-meta">
-                <span class="role-badge admin">Admin</span>
-                <span class="member-status"><span class="online-dot active"></span> Online</span>
-              </div>
-            </div>
-            <div class="member-actions">
-              <div class="row-menu-wrap">
-                <button type="button" class="btn btn-ghost btn-sm" data-action="row-menu" aria-label="Menyu"><i class="ph ph-dots-three-vertical"></i></button>
-                <div class="row-menu">
-                  <button type="button" class="row-menu__item" data-modal-open="editUserModal"><i class="ph ph-pencil-simple"></i> Tahrirlash</button>
-                  <button type="button" class="row-menu__item"><i class="ph ph-lock-key"></i> Parolni tiklash</button>
-                  <div class="row-menu__sep"></div>
-                  <button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="member-card">
-            <div class="member-avatar u-bg-purple-500">TA</div>
-            <div class="member-info">
-              <div class="member-name">Toshmatov Akbar</div>
-              <div class="member-email">toshmatov@uznntma.uz</div>
-              <div class="member-meta">
-                <span class="role-badge legal">Moderator</span>
-                <span class="member-status"><span class="online-dot active"></span> Online</span>
-              </div>
-            </div>
-            <div class="member-actions">
-              <div class="row-menu-wrap">
-                <button type="button" class="btn btn-ghost btn-sm" data-action="row-menu" aria-label="Menyu"><i class="ph ph-dots-three-vertical"></i></button>
-                <div class="row-menu">
-                  <button type="button" class="row-menu__item" data-modal-open="editUserModal"><i class="ph ph-pencil-simple"></i> Tahrirlash</button>
-                  <button type="button" class="row-menu__item"><i class="ph ph-lock-key"></i> Parolni tiklash</button>
-                  <div class="row-menu__sep"></div>
-                  <button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="member-card">
-            <div class="member-avatar u-bg-green-600">XG</div>
-            <div class="member-info">
-              <div class="member-name">Xolmatova Gulnora</div>
-              <div class="member-email">xolmatova@uznntma.uz</div>
-              <div class="member-meta">
-                <span class="role-badge legal">Moderator</span>
-                <span class="member-status"><span class="online-dot offline"></span> So&rsquo;nggi: 03.04</span>
-              </div>
-            </div>
-            <div class="member-actions">
-              <div class="row-menu-wrap">
-                <button type="button" class="btn btn-ghost btn-sm" data-action="row-menu" aria-label="Menyu"><i class="ph ph-dots-three-vertical"></i></button>
-                <div class="row-menu">
-                  <button type="button" class="row-menu__item" data-modal-open="editUserModal"><i class="ph ph-pencil-simple"></i> Tahrirlash</button>
-                  <button type="button" class="row-menu__item"><i class="ph ph-lock-key"></i> Parolni tiklash</button>
-                  <div class="row-menu__sep"></div>
-                  <button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="member-card">
-            <div class="member-avatar u-bg-orange-600">RB</div>
-            <div class="member-info">
-              <div class="member-name">Rahimov Bobur</div>
-              <div class="member-email">rahimov@uznntma.uz</div>
-              <div class="member-meta">
-                <span class="role-badge viewer">Ko&rsquo;ruvchi</span>
-                <span class="member-status"><span class="online-dot offline"></span> So&rsquo;nggi: 01.04</span>
-              </div>
-            </div>
-            <div class="member-actions">
-              <div class="row-menu-wrap">
-                <button type="button" class="btn btn-ghost btn-sm" data-action="row-menu" aria-label="Menyu"><i class="ph ph-dots-three-vertical"></i></button>
-                <div class="row-menu">
-                  <button type="button" class="row-menu__item" data-modal-open="editUserModal"><i class="ph ph-pencil-simple"></i> Tahrirlash</button>
-                  <button type="button" class="row-menu__item"><i class="ph ph-lock-key"></i> Parolni tiklash</button>
-                  <div class="row-menu__sep"></div>
-                  <button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button>
-                </div>
-              </div>
-            </div>
-          </div>
+      <!-- KPI cards -->
+      <div class="cards">
+        <div class="card">
+          <div class="card__head"><div class="card__icon" style="background:linear-gradient(135deg,#f6c03c,#f59e0b);color:#7a4a00;"><i class="ph ph-crown-simple"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Super admin</p><p class="card__value">1</p></div></div>
         </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-users"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Hududiy adminlar</p><p class="card__value" id="kpiRegional">—</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Faol hisoblar</p><p class="card__value" id="kpiActive">—</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-map-pin"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Qoplangan hududlar</p><p class="card__value" id="kpiRegions">—</p></div></div>
+        </div>
+      </div>
 
+      <!-- Super Admin profile card -->
+      <div class="superadmin-card">
+        <div class="superadmin-avatar">SA</div>
+        <div class="superadmin-info">
+          <div class="superadmin-badge"><i class="ph ph-crown-simple"></i> SUPER ADMIN</div>
+          <p class="superadmin-name">Sarvarbek Soporboyev</p>
+          <p class="superadmin-meta">admin@uznntma.uz &nbsp;&bull;&nbsp; +998 55 503-05-12 &nbsp;&bull;&nbsp; Barcha hududlar &bull; To&rsquo;liq kirish huquqi</p>
+        </div>
+        <div class="superadmin-actions">
+          <button type="button" class="btn--ghost-white" data-modal-open="changePwModal"><i class="ph ph-lock-key"></i> Parolni o&rsquo;zgartirish</button>
+        </div>
+      </div>
+
+      <!-- Regional admins table -->
+      <div class="section-hdr">
         <div>
-          <div class="card roles-card u-p-20">
-            <h3 class="card-title">Rollar va ruxsatlar</h3>
-
-            <div class="role-card">
-              <div class="role-card-header">
-                <span class="role-card-title u-text-primary-600">Admin</span>
-                <span class="role-card-count">1 foydalanuvchi</span>
-              </div>
-              <ul class="permissions-list">
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-check"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Arizalarni ko&rsquo;rish va tahrirlash</li>
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-check"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Hujjatlarni boshqarish</li>
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-check"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Foydalanuvchilarni boshqarish</li>
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-check"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Sozlamalarni o&rsquo;zgartirish</li>
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-check"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Ma&rsquo;lumotlarni o&rsquo;chirish</li>
-              </ul>
-            </div>
-
-            <div class="role-card">
-              <div class="role-card-header">
-                <span class="role-card-title u-text-purple-500">Moderator</span>
-                <span class="role-card-count">2 foydalanuvchi</span>
-              </div>
-              <ul class="permissions-list">
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-check"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Arizalarni ko&rsquo;rish va tahrirlash</li>
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-check"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Hujjatlarni boshqarish</li>
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-check"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Izohlar qo&rsquo;shish</li>
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-cross"><path d="M4 4l6 6M10 4l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Foydalanuvchilarni boshqarish</li>
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-cross"><path d="M4 4l6 6M10 4l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Ma&rsquo;lumotlarni o&rsquo;chirish</li>
-              </ul>
-            </div>
-
-            <div class="role-card">
-              <div class="role-card-header">
-                <span class="role-card-title u-text-grey-500">Ko&rsquo;ruvchi</span>
-                <span class="role-card-count">1 foydalanuvchi</span>
-              </div>
-              <ul class="permissions-list">
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-check"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Arizalarni ko&rsquo;rish</li>
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-check"><path d="M3 7l3 3 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Hisobotlarni yuklab olish</li>
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-cross"><path d="M4 4l6 6M10 4l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Arizalarni tahrirlash</li>
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-cross"><path d="M4 4l6 6M10 4l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Foydalanuvchilarni boshqarish</li>
-                <li><svg viewBox="0 0 14 14" fill="none" class="perm-cross"><path d="M4 4l6 6M10 4l-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg> Sozlamalarni o&rsquo;zgartirish</li>
-              </ul>
-            </div>
-          </div>
+          <h2>Hududiy adminlar</h2>
+          <p>Har bir hududiy xodimning kirish huquqlarini alohida sozlang</p>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <input type="search" class="table-section__search" placeholder="Qidirish..." aria-label="Qidirish" style="width:200px;" />
+          <select class="table-section__search" style="width:180px;" aria-label="Hudud filter">
+            <option value="">Barcha hududlar</option>
+            <option>Toshkent shahri</option>
+            <option>Toshkent viloyati</option>
+            <option>Samarqand viloyati</option>
+            <option>Farg'ona viloyati</option>
+            <option>Buxoro viloyati</option>
+            <option>Namangan viloyati</option>
+            <option>Andijon viloyati</option>
+            <option>Qashqadaryo viloyati</option>
+            <option>Surxondaryo viloyati</option>
+            <option>Xorazm viloyati</option>
+            <option>Jizzax viloyati</option>
+            <option>Sirdaryo viloyati</option>
+            <option>Navoiy viloyati</option>
+            <option>Qoraqalpog'iston</option>
+          </select>
         </div>
       </div>
+
+      <section class="table-section" style="margin-top:0;">
+        <table class="table">
+          <caption class="u-visually-hidden">Hududiy adminlar jadvali</caption>
+          <thead>
+            <tr>
+              <th scope="col">Xodim</th>
+              <th scope="col">Hudud</th>
+              <th scope="col">Berilgan huquqlar</th>
+              <th scope="col">Holat</th>
+              <th scope="col">Oxirgi kirish</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody id="regionalAdminRows"></tbody>
+        </table>
+      </section>
     </main>
   </div>
 
+  <!-- Notifications panel -->
   <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
-    <div class="notifications-panel__header">
-      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
-    </div>
+    <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2></div>
     <div class="notifications-panel__list">
       <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-clipboard-text"></i></div>
+        <div class="notifications-panel__icon"><i class="ph ph-user-plus"></i></div>
         <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Yangi ariza kelib tushdi <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">Yangi Nafas NNT &mdash; ARZ-2026-0418 ko&rsquo;rib chiqilishi kerak.</p>
-          <p class="notifications-panel__item-time">2 daqiqa oldin</p>
-        </div>
-      </div>
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-paperclip"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Hujjat yuklandi <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">Umid Istiqbol NNT yangi hujjat yukladi.</p>
-          <p class="notifications-panel__item-time">15 daqiqa oldin</p>
-        </div>
-      </div>
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-check-circle"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Ariza tasdiqlandi</p>
-          <p class="notifications-panel__item-body">Mehr-Shafqat NNT arizasi tasdiqlandi.</p>
+          <p class="notifications-panel__item-title">Yangi hududiy admin qo'shildi <span class="notifications-panel__dot"></span></p>
+          <p class="notifications-panel__item-body">Samarqand viloyati uchun Karimov Jasur qo'shildi.</p>
           <p class="notifications-panel__item-time">1 soat oldin</p>
+        </div>
+      </div>
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon"><i class="ph ph-lock-key"></i></div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Huquqlar yangilandi</p>
+          <p class="notifications-panel__item-body">Farg'ona viloyati admini huquqlari o'zgartirildi.</p>
+          <p class="notifications-panel__item-time">3 soat oldin</p>
         </div>
       </div>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
+      <button type="button" class="notifications-panel__mark-read">Barchasini o'qildi deb belgilash</button>
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>
-  <!-- Add User Modal -->
-  <div class="modal-overlay" id="addUserModal" role="dialog" aria-modal="true" aria-labelledby="addUserModalTitle">
-    <div class="modal">
+
+  <!-- ── Add / Edit Regional Admin Modal ── -->
+  <div class="modal-overlay" id="userModal" role="dialog" aria-modal="true" aria-labelledby="userModalTitle" aria-hidden="true">
+    <div class="modal modal--users">
       <div class="modal__head">
-        <h2 class="modal__title" id="addUserModalTitle">Foydalanuvchi qo&rsquo;shish</h2>
-        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
+        <h2 class="modal__title" id="userModalTitle">Hududiy admin qo&rsquo;shish</h2>
+        <button type="button" class="modal__close" id="userModalClose" aria-label="Yopish"><i class="ph ph-x"></i></button>
       </div>
-      <div class="modal__body">
-        <div class="modal__row">
-          <div class="modal__field">
-            <label class="modal__label" for="mu-firstname">Ism <span style="color:#dc2626">*</span></label>
-            <input type="text" id="mu-firstname" class="modal__input" placeholder="Ism" />
+      <div class="modal__body" style="padding-top:0;">
+        <!-- Tabs -->
+        <div class="modal-tabs">
+          <button type="button" class="modal-tab is-active" data-tab="info">Ma&rsquo;lumotlar</button>
+          <button type="button" class="modal-tab" data-tab="perms">Huquqlar <i class="ph ph-shield-check" style="font-size:13px;"></i></button>
+        </div>
+
+        <!-- Tab: Ma'lumotlar -->
+        <div class="modal-tab-panel is-active" id="tab-info">
+          <div class="modal__row">
+            <div class="modal__field">
+              <label class="modal__label" for="u-firstname">Ism <span style="color:#dc2626">*</span></label>
+              <input type="text" id="u-firstname" class="modal__input" placeholder="Ism" />
+            </div>
+            <div class="modal__field">
+              <label class="modal__label" for="u-lastname">Familiya <span style="color:#dc2626">*</span></label>
+              <input type="text" id="u-lastname" class="modal__input" placeholder="Familiya" />
+            </div>
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="mu-lastname">Familiya <span style="color:#dc2626">*</span></label>
-            <input type="text" id="mu-lastname" class="modal__input" placeholder="Familiya" />
+            <label class="modal__label" for="u-email">Email <span style="color:#dc2626">*</span></label>
+            <input type="email" id="u-email" class="modal__input" placeholder="xodim@uznntma.uz" />
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="u-phone">Telefon</label>
+            <input type="tel" id="u-phone" class="modal__input" placeholder="+998 90 000-00-00" />
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="u-region">Hudud <span style="color:#dc2626">*</span></label>
+            <select id="u-region" class="modal__select">
+              <option value="">— Hududni tanlang —</option>
+              <option>Toshkent shahri</option>
+              <option>Toshkent viloyati</option>
+              <option>Samarqand viloyati</option>
+              <option>Farg'ona viloyati</option>
+              <option>Buxoro viloyati</option>
+              <option>Namangan viloyati</option>
+              <option>Andijon viloyati</option>
+              <option>Qashqadaryo viloyati</option>
+              <option>Surxondaryo viloyati</option>
+              <option>Xorazm viloyati</option>
+              <option>Jizzax viloyati</option>
+              <option>Sirdaryo viloyati</option>
+              <option>Navoiy viloyati</option>
+              <option>Qoraqalpog'iston Respublikasi</option>
+            </select>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="u-password">Vaqtinchalik parol <span style="color:#dc2626">*</span></label>
+            <input type="password" id="u-password" class="modal__input" placeholder="Kamida 8 ta belgi" minlength="8" />
           </div>
         </div>
-        <div class="modal__field">
-          <label class="modal__label" for="mu-email">Email manzil <span style="color:#dc2626">*</span></label>
-          <input type="email" id="mu-email" class="modal__input" placeholder="email@uznntma.uz" />
-        </div>
-        <div class="modal__field">
-          <label class="modal__label" for="mu-role">Rol <span style="color:#dc2626">*</span></label>
-          <select id="mu-role" class="modal__select">
-            <option value="">Rolni tanlang</option>
-            <option value="admin">Admin</option>
-            <option value="moderator">Moderator</option>
-            <option value="viewer">Ko&rsquo;ruvchi</option>
-          </select>
-        </div>
-        <div class="modal__field">
-          <label class="modal__label" for="mu-password">Vaqtinchalik parol <span style="color:#dc2626">*</span></label>
-          <input type="password" id="mu-password" class="modal__input" placeholder="Kamida 8 ta belgi" minlength="8" />
+
+        <!-- Tab: Huquqlar -->
+        <div class="modal-tab-panel" id="tab-perms">
+          <p style="font-size:13px;color:var(--grey-400);margin:0 0 18px;">Ushbu hududiy admin faqat <strong>o&rsquo;z hududi</strong> bo&rsquo;yicha ma&rsquo;lumotlarga kiradi. Quyida qaysi bo&rsquo;limlarga kirish huquqi berishni tanlang.</p>
+
+          <div class="perm-group">
+            <p class="perm-group-title">Kontent boshqaruvi</p>
+            <div class="perm-row">
+              <div class="perm-label">
+                <i class="ph ph-newspaper"></i>
+                <div><div>Yangiliklar</div><div class="perm-sublabel">Ko&rsquo;rish, qo&rsquo;shish, tahrirlash</div></div>
+              </div>
+              <label class="toggle"><input type="checkbox" id="p-news" /><span class="toggle-track"></span></label>
+            </div>
+            <div class="perm-row">
+              <div class="perm-label">
+                <i class="ph ph-calendar-blank"></i>
+                <div><div>Tadbirlar</div><div class="perm-sublabel">Ko&rsquo;rish, qo&rsquo;shish, tahrirlash</div></div>
+              </div>
+              <label class="toggle"><input type="checkbox" id="p-events" /><span class="toggle-track"></span></label>
+            </div>
+            <div class="perm-row">
+              <div class="perm-label">
+                <i class="ph ph-hand-coins"></i>
+                <div><div>Grantlar</div><div class="perm-sublabel">Ko&rsquo;rish, qo&rsquo;shish, tahrirlash</div></div>
+              </div>
+              <label class="toggle"><input type="checkbox" id="p-grants" /><span class="toggle-track"></span></label>
+            </div>
+            <div class="perm-row">
+              <div class="perm-label">
+                <i class="ph ph-cloud-arrow-up"></i>
+                <div><div>Kontent nashr qilish</div><div class="perm-sublabel">Saytga chiqarish huquqi</div></div>
+              </div>
+              <label class="toggle"><input type="checkbox" id="p-publish" /><span class="toggle-track"></span></label>
+            </div>
+          </div>
+
+          <div class="perm-group">
+            <p class="perm-group-title">Ma&rsquo;lumotlarga kirish (faqat o&rsquo;z hududi)</p>
+            <div class="perm-row">
+              <div class="perm-label">
+                <i class="ph ph-list-bullets"></i>
+                <div><div>NNT ro&rsquo;yxati</div><div class="perm-sublabel">O&rsquo;z hududidagi NNTlarni ko&rsquo;rish</div></div>
+              </div>
+              <label class="toggle"><input type="checkbox" id="p-registry" checked /><span class="toggle-track"></span></label>
+            </div>
+            <div class="perm-row">
+              <div class="perm-label">
+                <i class="ph ph-file-text"></i>
+                <div><div>Arizalarni ko&rsquo;rish</div><div class="perm-sublabel">O&rsquo;z hududidan kelgan arizalar</div></div>
+              </div>
+              <label class="toggle"><input type="checkbox" id="p-apps-view" checked /><span class="toggle-track"></span></label>
+            </div>
+            <div class="perm-row">
+              <div class="perm-label">
+                <i class="ph ph-pencil-simple"></i>
+                <div><div>Arizalarni boshqarish</div><div class="perm-sublabel">Tasdiqlash, qaytarish, izoh qo&rsquo;shish</div></div>
+              </div>
+              <label class="toggle"><input type="checkbox" id="p-apps-manage" /><span class="toggle-track"></span></label>
+            </div>
+            <div class="perm-row">
+              <div class="perm-label">
+                <i class="ph ph-folder-open"></i>
+                <div><div>Hujjatlar</div><div class="perm-sublabel">Ko&rsquo;rish va yuklash</div></div>
+              </div>
+              <label class="toggle"><input type="checkbox" id="p-docs" /><span class="toggle-track"></span></label>
+            </div>
+            <div class="perm-row">
+              <div class="perm-label">
+                <i class="ph ph-chart-bar"></i>
+                <div><div>Hisobotlar va tahlil</div><div class="perm-sublabel">Ko&rsquo;rish va yuklab olish</div></div>
+              </div>
+              <label class="toggle"><input type="checkbox" id="p-reports" /><span class="toggle-track"></span></label>
+            </div>
+          </div>
+
+          <div class="perm-group">
+            <p class="perm-group-title">Topshiriqlar</p>
+            <div class="perm-row">
+              <div class="perm-label">
+                <i class="ph ph-eye"></i>
+                <div><div>Topshiriqlarni ko&rsquo;rish</div><div class="perm-sublabel">O&rsquo;ziga tayinlangan topshiriqlar</div></div>
+              </div>
+              <label class="toggle"><input type="checkbox" id="p-tasks-view" checked /><span class="toggle-track"></span></label>
+            </div>
+            <div class="perm-row">
+              <div class="perm-label">
+                <i class="ph ph-check-square"></i>
+                <div><div>Topshiriqlar yaratish</div><div class="perm-sublabel">Yangi topshiriq qo&rsquo;shish va boshqarish</div></div>
+              </div>
+              <label class="toggle"><input type="checkbox" id="p-tasks-manage" /><span class="toggle-track"></span></label>
+            </div>
+          </div>
+
+          <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:12px 14px;font-size:13px;color:#92400e;display:flex;gap:8px;align-items:flex-start;">
+            <i class="ph ph-lock" style="font-size:16px;flex-shrink:0;margin-top:1px;"></i>
+            <span>Foydalanuvchilar boshqaruvi va tizim sozlamalari faqat Super Admin uchun. Hududiy admin bu bo&rsquo;limlarga kira olmaydi.</span>
+          </div>
         </div>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
-        <button type="button" class="btn btn--primary"><i class="ph ph-plus"></i> Qo&rsquo;shish</button>
+        <button type="button" class="btn btn--secondary" id="userModalCancel">Bekor qilish</button>
+        <button type="button" class="btn btn--primary" id="userModalSave"><i class="ph ph-floppy-disk"></i> Saqlash</button>
       </div>
     </div>
   </div>
 
-  <!-- Edit User Modal -->
-  <div class="modal-overlay" id="editUserModal" role="dialog" aria-modal="true" aria-labelledby="editUserModalTitle">
-    <div class="modal">
+  <!-- Change Password Modal (Super Admin) -->
+  <div class="modal-overlay" id="changePwModal" role="dialog" aria-modal="true" aria-labelledby="changePwTitle">
+    <div class="modal" style="max-width:400px;">
       <div class="modal__head">
-        <h2 class="modal__title" id="editUserModalTitle">Foydalanuvchini tahrirlash</h2>
+        <h2 class="modal__title" id="changePwTitle">Parolni o&rsquo;zgartirish</h2>
         <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
       </div>
       <div class="modal__body">
-        <div class="modal__row">
-          <div class="modal__field">
-            <label class="modal__label" for="eu-firstname">Ism</label>
-            <input type="text" id="eu-firstname" class="modal__input" placeholder="Ism" />
-          </div>
-          <div class="modal__field">
-            <label class="modal__label" for="eu-lastname">Familiya</label>
-            <input type="text" id="eu-lastname" class="modal__input" placeholder="Familiya" />
-          </div>
+        <div class="modal__field">
+          <label class="modal__label" for="cp-current">Joriy parol <span style="color:#dc2626">*</span></label>
+          <input type="password" id="cp-current" class="modal__input" placeholder="••••••••" />
         </div>
         <div class="modal__field">
-          <label class="modal__label" for="eu-email">Email manzil</label>
-          <input type="email" id="eu-email" class="modal__input" placeholder="email@uznntma.uz" />
+          <label class="modal__label" for="cp-new">Yangi parol <span style="color:#dc2626">*</span></label>
+          <input type="password" id="cp-new" class="modal__input" placeholder="Kamida 8 ta belgi" />
         </div>
         <div class="modal__field">
-          <label class="modal__label" for="eu-role">Rol</label>
-          <select id="eu-role" class="modal__select">
-            <option value="admin">Admin</option>
-            <option value="moderator">Moderator</option>
-            <option value="viewer">Ko&rsquo;ruvchi</option>
-          </select>
+          <label class="modal__label" for="cp-confirm">Yangi parolni tasdiqlang <span style="color:#dc2626">*</span></label>
+          <input type="password" id="cp-confirm" class="modal__input" placeholder="••••••••" />
         </div>
       </div>
       <div class="modal__foot">
         <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
-        <button type="button" class="btn btn--primary"><i class="ph ph-floppy-disk"></i> Saqlash</button>
+        <button type="button" class="btn btn--primary"><i class="ph ph-lock-key"></i> O&rsquo;zgartirish</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete confirm modal -->
+  <div class="modal-overlay" id="deleteUserModal" role="dialog" aria-modal="true" aria-labelledby="deleteUserTitle">
+    <div class="modal modal--danger" style="max-width:400px;">
+      <div class="modal__head">
+        <h2 class="modal__title" id="deleteUserTitle">Hisobni o&rsquo;chirish</h2>
+        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="modal__body">
+        <p style="margin:0;font-size:14px;color:var(--grey-700);">
+          <strong id="deleteUserName"></strong> hisobini o&rsquo;chirmoqchimisiz?<br>
+          <span style="color:var(--grey-400);font-size:13px;">Bu amalni qaytarib bo&rsquo;lmaydi. Xodim tizimga kira olmaydi.</span>
+        </p>
+      </div>
+      <div class="modal__foot">
+        <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
+        <button type="button" class="btn btn--danger" data-modal-close><i class="ph ph-trash"></i> Ha, o&rsquo;chirish</button>
       </div>
     </div>
   </div>
 
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
+  <script src="js/admin-seed.js"></script>
   <script src="js/pacta-app.js"></script>
+  <script>
+  (function () {
+    // ── Tab switching inside modal ──
+    document.querySelectorAll('.modal-tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.modal-tab').forEach(function (t) { t.classList.remove('is-active'); });
+        document.querySelectorAll('.modal-tab-panel').forEach(function (p) { p.classList.remove('is-active'); });
+        tab.classList.add('is-active');
+        var target = document.getElementById('tab-' + tab.dataset.tab);
+        if (target) target.classList.add('is-active');
+      });
+    });
+
+    // ── Open / close Add modal ──
+    function openModal(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.classList.add('is-open');
+      el.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(id) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      el.classList.remove('is-open');
+      el.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('addUserBtn').addEventListener('click', function () {
+      document.getElementById('userModalTitle').textContent = 'Hududiy admin qo\'shish';
+      // reset tab to first
+      document.querySelectorAll('.modal-tab')[0].click();
+      openModal('userModal');
+    });
+    document.getElementById('userModalClose').addEventListener('click', function () { closeModal('userModal'); });
+    document.getElementById('userModalCancel').addEventListener('click', function () { closeModal('userModal'); });
+    document.getElementById('userModal').addEventListener('click', function (e) { if (e.target === this) closeModal('userModal'); });
+
+    document.getElementById('userModalSave').addEventListener('click', function () {
+      closeModal('userModal');
+    });
+
+    // ── Edit / Delete row actions ──
+    window.editRegionalAdmin = function (name) {
+      document.getElementById('userModalTitle').textContent = name + ' — huquqlarni tahrirlash';
+      document.querySelectorAll('.modal-tab')[0].click();
+      openModal('userModal');
+    };
+    window.deleteRegionalAdmin = function (name) {
+      document.getElementById('deleteUserName').textContent = name;
+      openModal('deleteUserModal');
+    };
+    document.getElementById('deleteUserModal').addEventListener('click', function (e) { if (e.target === this) closeModal('deleteUserModal'); });
+  })();
+  </script>
 </body>
 </html>

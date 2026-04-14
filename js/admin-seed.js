@@ -802,6 +802,101 @@
     }).join('');
   }
 
+  function renderRegionalAdmins() {
+    var tbody = document.getElementById('regionalAdminRows');
+    if (!tbody) return;
+
+    var admins = [
+      {
+        initials: 'AN', avatarClass: 'u-bg-primary-600',
+        name: 'Azizova Nodira', email: 'azizova@uznntma.uz',
+        region: 'Toshkent viloyati', regionCode: '01',
+        perms: ['Yangiliklar', 'Tadbirlar', 'Ro\'yxat'],
+        active: true, lastSeen: 'Bugun, 09:41',
+      },
+      {
+        initials: 'TA', avatarClass: 'u-bg-purple-500',
+        name: 'Toshmatov Akbar', email: 'toshmatov@uznntma.uz',
+        region: 'Samarqand viloyati', regionCode: '08',
+        perms: ['Yangiliklar', 'Arizalar', 'Hujjatlar'],
+        active: true, lastSeen: 'Kecha, 17:22',
+      },
+      {
+        initials: 'XG', avatarClass: 'u-bg-green-600',
+        name: 'Xolmatova Gulnora', email: 'xolmatova@uznntma.uz',
+        region: 'Farg\'ona viloyati', regionCode: '06',
+        perms: ['Yangiliklar', 'Tadbirlar'],
+        active: true, lastSeen: '03.04.2026',
+      },
+      {
+        initials: 'RB', avatarClass: 'u-bg-orange-600',
+        name: 'Rahimov Bobur', email: 'rahimov@uznntma.uz',
+        region: 'Buxoro viloyati', regionCode: '03',
+        perms: ['Ro\'yxat', 'Arizalar'],
+        active: false, lastSeen: '01.04.2026',
+      },
+      {
+        initials: 'MJ', avatarClass: 'u-bg-teal-600',
+        name: 'Mirzayev Jasur', email: 'mirzayev@uznntma.uz',
+        region: 'Namangan viloyati', regionCode: '09',
+        perms: ['Yangiliklar', 'Grantlar', 'Ro\'yxat', 'Hisobotlar'],
+        active: true, lastSeen: 'Bugun, 11:05',
+      },
+    ];
+
+    var activeCount = admins.filter(function (a) { return a.active; }).length;
+    var regionCount = new Set(admins.map(function (a) { return a.regionCode; })).size;
+
+    var kpiRegional = document.getElementById('kpiRegional');
+    var kpiActive   = document.getElementById('kpiActive');
+    var kpiRegions  = document.getElementById('kpiRegions');
+    if (kpiRegional) kpiRegional.textContent = admins.length;
+    if (kpiActive)   kpiActive.textContent   = activeCount;
+    if (kpiRegions)  kpiRegions.textContent  = regionCount;
+
+    function rowMenu(name) {
+      return (
+        '<div class="row-menu-wrap">' +
+          '<button type="button" class="btn btn-ghost btn-sm" data-action="row-menu" aria-label="Menyu"><i class="ph ph-dots-three-vertical"></i></button>' +
+          '<div class="row-menu">' +
+            '<button type="button" class="row-menu__item" onclick="editRegionalAdmin(' + JSON.stringify(name) + ')"><i class="ph ph-pencil-simple"></i> Tahrirlash</button>' +
+            '<button type="button" class="row-menu__item"><i class="ph ph-lock-key"></i> Parolni tiklash</button>' +
+            '<button type="button" class="row-menu__item"><i class="ph ph-toggle-left"></i> Faolsizlashtirish</button>' +
+            '<div class="row-menu__sep"></div>' +
+            '<button type="button" class="row-menu__item row-menu__item--danger" onclick="deleteRegionalAdmin(' + JSON.stringify(name) + ')"><i class="ph ph-trash"></i> O\'chirish</button>' +
+          '</div>' +
+        '</div>'
+      );
+    }
+
+    tbody.innerHTML = admins.map(function (a) {
+      var chips = a.perms.map(function (p) {
+        return '<span class="perm-chip">' + esc(p) + '</span>';
+      }).join('');
+      var statusBadge = a.active
+        ? '<span class="badge badge--success"><span class="badge__dot"></span>Faol</span>'
+        : '<span class="badge badge--neutral"><span class="badge__dot"></span>Nofaol</span>';
+      return (
+        '<tr>' +
+          '<td>' +
+            '<div style="display:flex;align-items:center;gap:10px;">' +
+              '<div class="member-avatar ' + esc(a.avatarClass) + '" style="width:34px;height:34px;font-size:12px;flex-shrink:0;">' + esc(a.initials) + '</div>' +
+              '<div>' +
+                '<div style="font-weight:600;color:#111827;font-size:13px;">' + esc(a.name) + '</div>' +
+                '<div style="font-size:11px;color:#6b7280;">' + esc(a.email) + '</div>' +
+              '</div>' +
+            '</div>' +
+          '</td>' +
+          '<td><span class="region-flag">' + esc(a.regionCode) + '</span> ' + esc(a.region) + '</td>' +
+          '<td>' + chips + '</td>' +
+          '<td>' + statusBadge + '</td>' +
+          '<td style="color:#6b7280;font-size:12px;">' + esc(a.lastSeen) + '</td>' +
+          '<td>' + rowMenu(a.name) + '</td>' +
+        '</tr>'
+      );
+    }).join('');
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
       renderDashboard();
@@ -810,6 +905,7 @@
       renderReportsCharts();
       renderReports();
       renderUsers();
+      renderRegionalAdmins();
       renderAnalyticsCharts();
       renderAnalyticsTables();
       renderRegionsTable();
@@ -823,6 +919,7 @@
     renderReportsCharts();
     renderReports();
     renderUsers();
+    renderRegionalAdmins();
     renderAnalyticsCharts();
     renderAnalyticsTables();
     renderRegionsTable();
