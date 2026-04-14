@@ -383,7 +383,7 @@
       '<a href="nntlar.html">Assotsiatsiyaga a\u2019zo NNTlar</a>' +
       '<div class="mobile-nav-sub">' +
         '<a href="sustainability-index.html">NNTlar barqarorlik indeksi</a>' +
-        '<a href="sustainability-cert.html">\u201cBarqaror NNT\u201d sertifikatiga ega NNTlar</a>' +
+        '<a href="sustainability-cert.html">"Barqaror NNT" sertifikatiga ega NNTlar</a>' +
       '</div>' +
       '<a href="projects.html">Loyihalar</a>' +
       '<span class="mobile-nav-label">Hamkorlar</span>' +
