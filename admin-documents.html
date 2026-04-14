@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hujjatlar — O'zNNTMA Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="css/pacta-tokens.css">
+  <link rel="stylesheet" href="css/pacta-contracts.page.css">
+  <link rel="stylesheet" href="css/pacta-sidebar.css">
+  <link rel="stylesheet" href="css/pacta-topbar.css">
+  <link rel="stylesheet" href="css/pacta-notifications.css">
+  <link rel="stylesheet" href="css/pacta-app.css">
+  <link rel="stylesheet" href="css/pacta-foundation.css">
+  <link rel="stylesheet" href="css/pacta-modal.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar__header">
+        <div class="u-inline-stack">
+          <div class="sidebar__logo u-logo-badge">N</div>
+          <span class="sidebar__title">O'zNNTMA Admin</span>
+        </div>
+        <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
+      </div>
+      <div class="sidebar__search" id="sidebarSearchTrigger">
+        <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>
+        <input type="text" placeholder="Qidirish" aria-label="Qidirish" />
+      </div>
+      <nav class="sidebar__nav">
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">ASOSIY MENYU</div>
+          <a href="admin-dashboard.html" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
+          <a href="admin-membership-requests.html" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
+          <a href="admin-registry.html" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
+          <a href="admin-regions.html" class="sidebar__nav-link" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin"></i></span><span class="sidebar__nav-link-text">Hududlar</span></a>
+          <a href="admin-documents.html" class="sidebar__nav-link is-active" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
+          <a href="admin-tasks.html" class="sidebar__nav-link" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square"></i></span><span class="sidebar__nav-link-text">Topshiriqlar</span></a>
+          <a href="admin-users.html" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
+          <a href="admin-reports.html" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar"></i></span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
+          <a href="admin-analytics.html" class="sidebar__nav-link" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up"></i></span><span class="sidebar__nav-link-text">Tahliliy ma'lumotlar</span></a>
+        </div>
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">KONTENT</div>
+          <a href="admin-news.html" class="sidebar__nav-link" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper"></i></span><span class="sidebar__nav-link-text">Yangiliklar</span></a>
+          <a href="admin-events.html" class="sidebar__nav-link" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank"></i></span><span class="sidebar__nav-link-text">Tadbirlar</span></a>
+          <a href="admin-grants.html" class="sidebar__nav-link" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins"></i></span><span class="sidebar__nav-link-text">Grantlar</span></a>
+          <a href="admin-settings.html" class="sidebar__nav-link" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
+        </div>
+        <div class="sidebar__nav-section u-mt-auto">
+          <a href="#" class="sidebar__nav-link logout" id="logoutTrigger" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
+        </div>
+      </nav>
+    </aside>
+    <main class="main" id="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>Hujjatlar</span></div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-notifications">
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <span class="topbar-notifications-badge" aria-hidden="true"></span>
+          </div>
+          <div class="topbar-divider" aria-hidden="true"></div>
+          <div class="main__profile">
+            <div class="main__profile-avatar u-avatar-badge-sm">A</div>
+            <div>
+              <div class="main__profile-name">Administrator</div>
+              <div class="main__profile-role">Bosh admin</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main__header">
+        <h1 class="main__title">Hujjatlar</h1>
+        <div class="main__btns">
+          <button type="button" class="btn btn--secondary"><i class="ph ph-download-simple"></i> Eksport</button>
+          <button type="button" class="btn btn--primary" data-modal-open="uploadDocModal"><i class="ph ph-upload-simple"></i> Hujjat yuklash</button>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-files"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Jami hujjatlar</p><p class="card__value">342</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 8%</span></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Kutilmoqda</p><p class="card__value">47</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 2%</span></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value">281</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 11%</span></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-x-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Qaytarilgan</p><p class="card__value">14</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 4%</span></div>
+        </div>
+      </div>
+
+      <section class="table-section" aria-labelledby="docsTableTitle">
+        <div class="table-section__head">
+          <h2 class="table-section__title" id="docsTableTitle">Hujjatlar jadvali</h2>
+          <div class="table-section__tools">
+            <input type="search" class="table-section__search" placeholder="Hujjat nomi yoki tashkilot..." aria-label="Qidirish" />
+          </div>
+        </div>
+        <form class="u-filter-row" role="search" aria-label="Hujjatlarni filtrlash">
+          <button type="button" class="filter-chip is-active" data-filter="all">Barchasi <span class="filter-chip__count">342</span></button>
+          <button type="button" class="filter-chip" data-filter="pending">Kutilmoqda <span class="filter-chip__count">47</span></button>
+          <button type="button" class="filter-chip" data-filter="approved">Tasdiqlangan <span class="filter-chip__count">281</span></button>
+          <button type="button" class="filter-chip" data-filter="returned">Qaytarilgan <span class="filter-chip__count">14</span></button>
+          <select class="table-section__search u-search-160" aria-label="Hujjat turi">
+            <option value="">Barcha turlar</option>
+            <option>Ustav</option>
+            <option>Ro'yxatga olish guvohnomasi</option>
+            <option>Soliq ma'lumotnomasi</option>
+            <option>Hisobot</option>
+            <option>Shartnoma</option>
+            <option>Boshqa</option>
+          </select>
+        </form>
+        <table class="table">
+          <caption class="u-visually-hidden">Hujjatlar jadvali</caption>
+          <thead>
+            <tr>
+              <th scope="col"><input type="checkbox" aria-label="Barchasini tanlash" /></th>
+              <th scope="col">Hujjat nomi</th>
+              <th scope="col">Turi</th>
+              <th scope="col">Tashkilot</th>
+              <th scope="col">Yuklangan sana</th>
+              <th scope="col">Holat</th>
+              <th scope="col">Mas&rsquo;ul</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody id="documentsTableRows"></tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+    <div class="notifications-panel__header">
+      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
+    </div>
+    <div class="notifications-panel__list">
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon"><i class="ph ph-paperclip"></i></div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Hujjat yuklandi <span class="notifications-panel__dot"></span></p>
+          <p class="notifications-panel__item-body">Umid Istiqbol NNT yangi hujjat yukladi.</p>
+          <p class="notifications-panel__item-time">15 daqiqa oldin</p>
+        </div>
+      </div>
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon"><i class="ph ph-check-circle"></i></div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Hujjat tasdiqlandi</p>
+          <p class="notifications-panel__item-body">Mehr-Shafqat NNT ustavi tasdiqlandi.</p>
+          <p class="notifications-panel__item-time">1 soat oldin</p>
+        </div>
+      </div>
+    </div>
+    <div class="notifications-panel__footer">
+      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
+      <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
+    </div>
+  </div>
+
+  <!-- Upload Document Modal -->
+  <div class="modal-overlay" id="uploadDocModal" role="dialog" aria-modal="true" aria-labelledby="uploadDocTitle">
+    <div class="modal" style="max-width:520px;">
+      <div class="modal__head">
+        <h2 class="modal__title" id="uploadDocTitle">Hujjat yuklash</h2>
+        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="modal__body">
+        <div class="modal__field">
+          <label class="modal__label" for="doc-org">Tashkilot <span style="color:#dc2626">*</span></label>
+          <select id="doc-org" class="modal__select">
+            <option value="">Tashkilotni tanlang</option>
+            <option>Yangi Nafas NNT</option>
+            <option>Mehr-Shafqat NNT</option>
+            <option>Umid Istiqbol NNT</option>
+            <option>Yoshlar Ittifoqi</option>
+            <option>Ekologiya Markazi</option>
+          </select>
+        </div>
+        <div class="modal__row">
+          <div class="modal__field">
+            <label class="modal__label" for="doc-type">Hujjat turi <span style="color:#dc2626">*</span></label>
+            <select id="doc-type" class="modal__select">
+              <option value="">Turini tanlang</option>
+              <option>Ustav</option>
+              <option>Ro'yxatga olish guvohnomasi</option>
+              <option>Soliq ma'lumotnomasi</option>
+              <option>Hisobot</option>
+              <option>Shartnoma</option>
+              <option>Boshqa</option>
+            </select>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="doc-responsible">Mas'ul shaxs</label>
+            <select id="doc-responsible" class="modal__select">
+              <option>Azizova Nodira</option>
+              <option>Toshmatov Akbar</option>
+              <option>Xolmatova Gulnora</option>
+              <option>Rahimov Bobur</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label" for="doc-name">Hujjat nomi <span style="color:#dc2626">*</span></label>
+          <input type="text" id="doc-name" class="modal__input" placeholder="Masalan: Ustav 2024 yangi tahrir" />
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">Fayl yuklash <span style="color:#dc2626">*</span></label>
+          <div style="border:2px dashed #d1d5db;border-radius:8px;padding:24px;text-align:center;color:#6b7280;cursor:pointer;">
+            <i class="ph ph-upload-simple" style="font-size:28px;display:block;margin-bottom:8px;"></i>
+            PDF, DOC, DOCX — max 10MB
+          </div>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label" for="doc-note">Izoh</label>
+          <textarea id="doc-note" class="modal__textarea" placeholder="Qo'shimcha izoh..."></textarea>
+        </div>
+      </div>
+      <div class="modal__foot">
+        <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
+        <button type="button" class="btn btn--primary"><i class="ph ph-upload-simple"></i> Yuklash</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/pacta-foundation.js" defer></script>
+  <script src="js/pacta-notifications.js"></script>
+  <script src="js/admin-seed.js"></script>
+  <script src="js/pacta-app.js"></script>
+</body>
+</html>

@@ -3,18 +3,19 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Boshqaruv paneli — O'zNNTMA Admin</title>
+  <title>Topshiriqlar — O'zNNTMA Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
   <link rel="stylesheet" href="css/pacta-tokens.css">
-  <link rel="stylesheet" href="css/pacta-dashboard.page.css">
+  <link rel="stylesheet" href="css/pacta-contracts.page.css">
   <link rel="stylesheet" href="css/pacta-sidebar.css">
   <link rel="stylesheet" href="css/pacta-topbar.css">
   <link rel="stylesheet" href="css/pacta-notifications.css">
   <link rel="stylesheet" href="css/pacta-app.css">
   <link rel="stylesheet" href="css/pacta-foundation.css">
+  <link rel="stylesheet" href="css/pacta-modal.css">
 </head>
 <body>
   <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
@@ -34,12 +35,12 @@
       <nav class="sidebar__nav">
         <div class="sidebar__nav-section">
           <div class="sidebar__nav-label">ASOSIY MENYU</div>
-          <a href="admin-dashboard.html" class="sidebar__nav-link is-active" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
+          <a href="admin-dashboard.html" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
           <a href="admin-membership-requests.html" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
           <a href="admin-registry.html" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
           <a href="admin-regions.html" class="sidebar__nav-link" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin"></i></span><span class="sidebar__nav-link-text">Hududlar</span></a>
           <a href="admin-documents.html" class="sidebar__nav-link" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
-          <a href="admin-tasks.html" class="sidebar__nav-link" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square"></i></span><span class="sidebar__nav-link-text">Topshiriqlar</span></a>
+          <a href="admin-tasks.html" class="sidebar__nav-link is-active" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square"></i></span><span class="sidebar__nav-link-text">Topshiriqlar</span></a>
           <a href="admin-users.html" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
           <a href="admin-reports.html" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar"></i></span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
           <a href="admin-analytics.html" class="sidebar__nav-link" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up"></i></span><span class="sidebar__nav-link-text">Tahliliy ma'lumotlar</span></a>
@@ -59,7 +60,7 @@
     <main class="main" id="main-content">
       <header class="topbar">
         <div class="topbar-left">
-          <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>Boshqaruv paneli</span></div>
+          <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>Topshiriqlar</span></div>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
@@ -78,98 +79,66 @@
       </header>
 
       <div class="main__header">
-        <h1 class="main__title">Boshqaruv paneli</h1>
+        <h1 class="main__title">Topshiriqlar</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" data-action="export" data-export-title="Hisobot eksport"><i class="ph ph-download-simple"></i> Eksport</button>
-          <a href="admin-membership-requests.html" class="btn btn--primary"><i class="ph ph-plus"></i> Yangi ariza</a>
+          <button type="button" class="btn btn--secondary"><i class="ph ph-download-simple"></i> Eksport</button>
+          <button type="button" class="btn btn--primary" data-modal-open="addTaskModal"><i class="ph ph-plus"></i> Topshiriq qo&rsquo;shish</button>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-buildings"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami NNTlar</p><p class="card__value">247</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 12.4%</span></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-list-checks"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Jami topshiriqlar</p><p class="card__value">64</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value">94</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 8.1%</span></div>
+          <div class="card__body"><div><p class="card__label">Bajarilgan</p><p class="card__value">38</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 59%</span></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Ko&rsquo;rib chiqilmoqda</p><p class="card__value">61</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 3.2%</span></div>
+          <div class="card__body"><div><p class="card__label">Jarayonda</p><p class="card__value">19</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-warning"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Qaytarilgan</p><p class="card__value">18</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 5.0%</span></div>
+          <div class="card__body"><div><p class="card__label">Muddati o&rsquo;tgan</p><p class="card__value">7</p></div><span class="card__trend u-trend-down"><i class="ph ph-arrow-down-right"></i> 3 ta yangi</span></div>
         </div>
       </div>
 
-      <div class="charts">
-        <div class="chart-card chart-card--wide">
-          <div class="chart-card__head">
-            <h2 class="chart-card__title">A&rsquo;zolik dinamikasi (2025&ndash;2026)</h2>
-            <div class="chart-card__controls">
-              <button type="button" class="btn btn--secondary u-btn-period">Oylik <i class="ph ph-caret-down"></i></button>
-            </div>
-          </div>
-          <div class="chart-card__body">
-            <div class="chart-card__stats">
-              <span class="chart-card__amount">247 NNT</span>
-              <span class="card__trend"><i class="ph ph-arrow-up-right"></i> 12.4%</span>
-              <span class="u-text-subtle">yanvar &mdash; dekabr davomida</span>
-            </div>
-            <div class="chart-card__legend">
-              <span class="chart-card__legend-item"><span class="chart-card__legend-dot u-bg-primary-500"></span> Yangi arizalar</span>
-              <span class="chart-card__legend-item"><span class="chart-card__legend-dot u-bg-secondary-500"></span> Tasdiqlangan</span>
-            </div>
-            <div id="dashboardLineChart"></div>
-          </div>
-        </div>
-        <div class="chart-card chart-card--narrow">
-          <div class="chart-card__head">
-            <h2 class="chart-card__title">Ariza holati taqsimoti</h2>
-          </div>
-          <div class="chart-donut">
-            <div id="dashboardDonutChart"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="dash-grid">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Muddatli arizalar</h3>
-            <a href="admin-membership-requests.html" class="btn--ghost">Barchasi</a>
-          </div>
-          <ul class="alert-list" id="dashboardDeadlines"></ul>
-        </div>
-        <div class="card u-overflow-hidden">
-          <div class="card-header">
-            <h3 class="card-title">So&rsquo;nggi arizalar</h3>
-            <a href="admin-membership-requests.html" class="btn--ghost">Barchasi</a>
-          </div>
-          <div class="u-overflow-x-auto">
-            <table class="table">
-              <caption class="u-visually-hidden">So'nggi a'zolik arizalari ro'yxati</caption>
-              <thead>
-                <tr><th scope="col">Ariza #</th><th scope="col">Tashkilot</th><th scope="col">Viloyat</th><th scope="col">Bosqich</th><th scope="col">Holat</th><th scope="col">Sana</th></tr>
-              </thead>
-              <tbody id="dashboardRecentRows"></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <section class="table-section" aria-labelledby="regionTableTitle">
+      <section class="table-section" aria-labelledby="tasksTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="regionTableTitle">Hududlar bo&rsquo;yicha NNT taqsimoti</h2>
+          <h2 class="table-section__title" id="tasksTableTitle">Topshiriqlar jadvali</h2>
+          <div class="table-section__tools">
+            <input type="search" class="table-section__search" placeholder="Topshiriq nomi..." aria-label="Qidirish" />
+          </div>
         </div>
+        <form class="u-filter-row" role="search" aria-label="Topshiriqlarni filtrlash">
+          <button type="button" class="filter-chip is-active" data-filter="all">Barchasi <span class="filter-chip__count">64</span></button>
+          <button type="button" class="filter-chip" data-filter="progress">Jarayonda <span class="filter-chip__count">19</span></button>
+          <button type="button" class="filter-chip" data-filter="done">Bajarilgan <span class="filter-chip__count">38</span></button>
+          <button type="button" class="filter-chip" data-filter="overdue">Muddati o&rsquo;tgan <span class="filter-chip__count">7</span></button>
+          <select class="table-section__search u-search-160" aria-label="Mas'ul">
+            <option value="">Barcha mas'ullar</option>
+            <option>Azizova Nodira</option>
+            <option>Toshmatov Akbar</option>
+            <option>Xolmatova Gulnora</option>
+            <option>Rahimov Bobur</option>
+          </select>
+        </form>
         <table class="table">
-          <caption class="u-visually-hidden">Hududlar bo'yicha NNT taqsimoti</caption>
+          <caption class="u-visually-hidden">Topshiriqlar jadvali</caption>
           <thead>
-            <tr><th scope="col">Viloyat</th><th scope="col">Jami NNT</th><th scope="col">Faol</th><th scope="col">Yangi (2026)</th><th scope="col">Ulush</th></tr>
+            <tr>
+              <th scope="col"><input type="checkbox" aria-label="Barchasini tanlash" /></th>
+              <th scope="col">Topshiriq nomi</th>
+              <th scope="col">Mas&rsquo;ul</th>
+              <th scope="col">Muddat</th>
+              <th scope="col">Ustuvorlik</th>
+              <th scope="col">Holat</th>
+              <th scope="col"></th>
+            </tr>
           </thead>
-          <tbody id="dashboardRegionRows"></tbody>
+          <tbody id="tasksTableRows"></tbody>
         </table>
       </section>
     </main>
@@ -183,25 +152,17 @@
       <div class="notifications-panel__item">
         <div class="notifications-panel__icon"><i class="ph ph-clipboard-text"></i></div>
         <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Yangi ariza kelib tushdi <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">Yangi Nafas NNT &mdash; ARZ-2026-0418 ko&rsquo;rib chiqilishi kerak.</p>
-          <p class="notifications-panel__item-time">2 daqiqa oldin</p>
-        </div>
-      </div>
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-paperclip"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Hujjat yuklandi <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">Umid Istiqbol NNT yangi hujjat yukladi.</p>
-          <p class="notifications-panel__item-time">15 daqiqa oldin</p>
+          <p class="notifications-panel__item-title">Yangi topshiriq qo'shildi <span class="notifications-panel__dot"></span></p>
+          <p class="notifications-panel__item-body">Azizova Nodira yangi topshiriq yaratdi.</p>
+          <p class="notifications-panel__item-time">5 daqiqa oldin</p>
         </div>
       </div>
       <div class="notifications-panel__item">
         <div class="notifications-panel__icon"><i class="ph ph-check-circle"></i></div>
         <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Ariza tasdiqlandi</p>
-          <p class="notifications-panel__item-body">Mehr-Shafqat NNT arizasi tasdiqlandi.</p>
-          <p class="notifications-panel__item-time">1 soat oldin</p>
+          <p class="notifications-panel__item-title">Topshiriq bajarildi</p>
+          <p class="notifications-panel__item-body">Toshmatov Akbar topshiriqni yakunladi.</p>
+          <p class="notifications-panel__item-time">30 daqiqa oldin</p>
         </div>
       </div>
     </div>
@@ -210,6 +171,64 @@
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>
+
+  <!-- Add Task Modal -->
+  <div class="modal-overlay" id="addTaskModal" role="dialog" aria-modal="true" aria-labelledby="addTaskTitle">
+    <div class="modal" style="max-width:540px;">
+      <div class="modal__head">
+        <h2 class="modal__title" id="addTaskTitle">Topshiriq qo&rsquo;shish</h2>
+        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="modal__body">
+        <div class="modal__field">
+          <label class="modal__label" for="task-title">Topshiriq nomi <span style="color:#dc2626">*</span></label>
+          <input type="text" id="task-title" class="modal__input" placeholder="Topshiriq nomini kiriting" />
+        </div>
+        <div class="modal__row">
+          <div class="modal__field">
+            <label class="modal__label" for="task-owner">Mas'ul shaxs <span style="color:#dc2626">*</span></label>
+            <select id="task-owner" class="modal__select">
+              <option value="">Tanlang</option>
+              <option>Azizova Nodira</option>
+              <option>Toshmatov Akbar</option>
+              <option>Xolmatova Gulnora</option>
+              <option>Rahimov Bobur</option>
+            </select>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="task-deadline">Muddat <span style="color:#dc2626">*</span></label>
+            <input type="date" id="task-deadline" class="modal__input" />
+          </div>
+        </div>
+        <div class="modal__row">
+          <div class="modal__field">
+            <label class="modal__label" for="task-priority">Ustuvorlik</label>
+            <select id="task-priority" class="modal__select">
+              <option value="high">Yuqori</option>
+              <option value="medium" selected>O'rta</option>
+              <option value="low">Past</option>
+            </select>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="task-status">Holat</label>
+            <select id="task-status" class="modal__select">
+              <option value="progress">Jarayonda</option>
+              <option value="done">Bajarilgan</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label" for="task-desc">Tavsif</label>
+          <textarea id="task-desc" class="modal__textarea" placeholder="Topshiriq tavsifini kiriting..."></textarea>
+        </div>
+      </div>
+      <div class="modal__foot">
+        <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
+        <button type="button" class="btn btn--primary"><i class="ph ph-plus"></i> Qo&rsquo;shish</button>
+      </div>
+    </div>
+  </div>
+
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
   <script src="js/admin-seed.js"></script>

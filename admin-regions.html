@@ -3,25 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sozlamalar — O'zNNTMA Admin</title>
+  <title>Hududlar — O'zNNTMA Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
   <link rel="stylesheet" href="css/pacta-tokens.css">
-  <link rel="stylesheet" href="css/pacta-settings.page.css">
+  <link rel="stylesheet" href="css/pacta-vendors.page.css">
   <link rel="stylesheet" href="css/pacta-sidebar.css">
   <link rel="stylesheet" href="css/pacta-topbar.css">
   <link rel="stylesheet" href="css/pacta-notifications.css">
   <link rel="stylesheet" href="css/pacta-app.css">
   <link rel="stylesheet" href="css/pacta-foundation.css">
+  <link rel="stylesheet" href="css/pacta-modal.css">
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
         <div class="u-inline-stack">
-          <div class="sidebar__logo" style="background:var(--primary-500);color:#fff;border-radius:8px;width:32px;height:32px;display:grid;place-items:center;font-weight:700;font-size:14px;">N</div>
+          <div class="sidebar__logo u-logo-badge">N</div>
           <span class="sidebar__title">O'zNNTMA Admin</span>
         </div>
         <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
@@ -36,7 +38,7 @@
           <a href="admin-dashboard.html" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
           <a href="admin-membership-requests.html" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
           <a href="admin-registry.html" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
-          <a href="admin-regions.html" class="sidebar__nav-link" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin"></i></span><span class="sidebar__nav-link-text">Hududlar</span></a>
+          <a href="admin-regions.html" class="sidebar__nav-link is-active" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin"></i></span><span class="sidebar__nav-link-text">Hududlar</span></a>
           <a href="admin-documents.html" class="sidebar__nav-link" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
           <a href="admin-tasks.html" class="sidebar__nav-link" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square"></i></span><span class="sidebar__nav-link-text">Topshiriqlar</span></a>
           <a href="admin-users.html" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
@@ -48,17 +50,17 @@
           <a href="admin-news.html" class="sidebar__nav-link" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper"></i></span><span class="sidebar__nav-link-text">Yangiliklar</span></a>
           <a href="admin-events.html" class="sidebar__nav-link" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank"></i></span><span class="sidebar__nav-link-text">Tadbirlar</span></a>
           <a href="admin-grants.html" class="sidebar__nav-link" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins"></i></span><span class="sidebar__nav-link-text">Grantlar</span></a>
-          <a href="admin-settings.html" class="sidebar__nav-link is-active" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
+          <a href="admin-settings.html" class="sidebar__nav-link" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
         </div>
         <div class="sidebar__nav-section u-mt-auto">
           <a href="#" class="sidebar__nav-link logout" id="logoutTrigger" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
         </div>
       </nav>
     </aside>
-    <main class="main">
+    <main class="main" id="main-content">
       <header class="topbar">
         <div class="topbar-left">
-          <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>Sozlamalar</span></div>
+          <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>Hududlar</span></div>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
@@ -67,7 +69,7 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div class="main__profile-avatar">A</div>
+            <div class="main__profile-avatar u-avatar-badge-sm">A</div>
             <div>
               <div class="main__profile-name">Administrator</div>
               <div class="main__profile-role">Bosh admin</div>
@@ -77,75 +79,56 @@
       </header>
 
       <div class="main__header">
-        <h1 class="main__title">Sozlamalar</h1>
-      </div>
-
-      <div class="settings-layout" style="display:grid;grid-template-columns:220px 1fr;gap:24px;">
-        <nav style="display:flex;flex-direction:column;gap:4px;">
-          <a href="admin-settings.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ph ph-user"></i> Profil</a>
-          <a href="admin-settings-notifications.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-bell"></i> Bildirishnomalar</a>
-          <a href="admin-settings-security.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
-          <a href="admin-settings-system.html" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-sliders"></i> Tizim</a>
-        </nav>
-        <div>
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Profil ma&rsquo;lumotlari</h2>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Ism</label><input type="text" value="Administrator" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Email</label><input type="email" value="admin@uznntma.uz" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Telefon</label><input type="tel" value="+998 55 503-05-12" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Rol</label><input type="text" value="Bosh administrator" readonly style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-25);box-sizing:border-box;" /></div>
-            </div>
-            <div style="margin-top:20px;display:flex;gap:12px;">
-              <button type="button" class="btn btn--primary"><i class="ph ph-floppy-disk"></i> Saqlash</button>
-              <button type="button" class="btn btn--secondary">Bekor qilish</button>
-            </div>
-          </div>
-
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-top:24px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">GitHub Nashr Tokeni</h2>
-            <p style="font-size:13px;color:var(--grey-400);margin:0 0 16px;">Yangiliklar, tadbirlar va grantlarni GitHub'ga nashr qilish uchun Personal Access Token (PAT) kiriting. Token faqat brauzeringizda saqlanadi.</p>
-            <div style="display:flex;gap:12px;align-items:flex-end;">
-              <div style="flex:1;">
-                <label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">GitHub Personal Access Token</label>
-                <input type="password" id="githubTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:monospace;box-sizing:border-box;" />
-              </div>
-              <button type="button" id="saveTokenBtn" class="btn btn--primary" style="white-space:nowrap;"><i class="ph ph-key"></i> Saqlash</button>
-              <button type="button" id="clearTokenBtn" class="btn btn--secondary" style="white-space:nowrap;"><i class="ph ph-trash"></i> O'chirish</button>
-            </div>
-            <p id="tokenStatus" style="font-size:13px;margin:10px 0 0;display:none;"></p>
-          </div>
+        <h1 class="main__title">Hududlar</h1>
+        <div class="main__btns">
+          <button type="button" class="btn btn--secondary"><i class="ph ph-download-simple"></i> Eksport</button>
+          <a href="admin-analytics.html" class="btn btn--primary"><i class="ph ph-trend-up"></i> Tahlil</a>
         </div>
       </div>
-    </main>
 
-    <script>
-    (function(){
-      var inp = document.getElementById('githubTokenInput');
-      var status = document.getElementById('tokenStatus');
-      var saved = localStorage.getItem('admin_github_token');
-      if (saved) {
-        inp.value = saved;
-        showStatus('Token saqlangan', 'var(--success-600,#16a34a)');
-      }
-      document.getElementById('saveTokenBtn').addEventListener('click', function(){
-        var val = inp.value.trim();
-        if (!val) { showStatus('Token bo\'sh bo\'lishi mumkin emas', '#dc2626'); return; }
-        localStorage.setItem('admin_github_token', val);
-        showStatus('Token muvaffaqiyatli saqlandi', 'var(--success-600,#16a34a)');
-      });
-      document.getElementById('clearTokenBtn').addEventListener('click', function(){
-        localStorage.removeItem('admin_github_token');
-        inp.value = '';
-        showStatus('Token o\'chirildi', '#d97706');
-      });
-      function showStatus(msg, color) {
-        status.textContent = msg;
-        status.style.color = color;
-        status.style.display = 'block';
-      }
-    })();
-    </script>
+      <div class="cards">
+        <div class="card">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-map-trifold"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Jami hududlar</p><p class="card__value">15</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-buildings"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Jami NNTlar</p><p class="card__value">1 250</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 6.2%</span></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-star"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Eng faol hudud</p><p class="card__value" style="font-size:18px;">Toshkent sh.</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-globe"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Respublika miqyosi</p><p class="card__value">87</p></div></div>
+        </div>
+      </div>
+
+      <section class="table-section" aria-labelledby="regionsTableTitle">
+        <div class="table-section__head">
+          <h2 class="table-section__title" id="regionsTableTitle">Viloyatlar va hududlar ro&rsquo;yxati</h2>
+          <div class="table-section__tools">
+            <input type="search" class="table-section__search" placeholder="Hudud qidirish..." aria-label="Qidirish" />
+          </div>
+        </div>
+        <table class="table">
+          <caption class="u-visually-hidden">Hududlar bo'yicha NNT taqsimoti</caption>
+          <thead>
+            <tr>
+              <th scope="col">Kod</th>
+              <th scope="col">Hudud nomi</th>
+              <th scope="col">Jami NNT</th>
+              <th scope="col">Faol</th>
+              <th scope="col">Yangi (2026)</th>
+              <th scope="col">Ulush</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody id="regionsTableRows"></tbody>
+        </table>
+      </section>
+    </main>
   </div>
 
   <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
@@ -162,14 +145,6 @@
         </div>
       </div>
       <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-paperclip"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Hujjat yuklandi <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">Umid Istiqbol NNT yangi hujjat yukladi.</p>
-          <p class="notifications-panel__item-time">15 daqiqa oldin</p>
-        </div>
-      </div>
-      <div class="notifications-panel__item">
         <div class="notifications-panel__icon"><i class="ph ph-check-circle"></i></div>
         <div class="notifications-panel__content">
           <p class="notifications-panel__item-title">Ariza tasdiqlandi</p>
@@ -183,8 +158,10 @@
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>
+
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
+  <script src="js/admin-seed.js"></script>
   <script src="js/pacta-app.js"></script>
 </body>
 </html>

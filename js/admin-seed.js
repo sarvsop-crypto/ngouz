@@ -533,6 +533,275 @@
       .join('');
   }
 
+  /* ── Analytics page ── */
+  function renderAnalyticsCharts() {
+    var lineMount = document.getElementById('analyticsLineChart');
+    var donutMount = document.getElementById('analyticsDonutChart');
+    if (!lineMount || !donutMount) return;
+
+    lineMount.innerHTML = buildLineChartSvg({
+      width: 520, height: 160, yMax: 1400,
+      labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026'],
+      lines: [
+        { color: '#12987b', fill: '#12987b', fillOpacity: 0.08, data: [740, 820, 890, 980, 1060, 1180, 1250] },
+        { color: '#f6c03c', fill: '#f6c03c', fillOpacity: 0.15, data: [590, 650, 700, 780, 840, 920, 980] },
+      ],
+      ticks: [1400, 1000, 600, 200],
+    });
+
+    var sectors = [
+      { label: 'Ijtimoiy', value: 312, color: 'var(--primary-500)' },
+      { label: "Ta'lim", value: 248, color: 'var(--secondary-500)' },
+      { label: 'Xayriya', value: 186, color: '#f59e0b' },
+      { label: 'Ekologiya', value: 124, color: '#10b981' },
+      { label: 'Yoshlar', value: 98, color: '#8b5cf6' },
+      { label: 'Boshqa', value: 282, color: '#94a3b8' },
+    ];
+
+    donutMount.innerHTML =
+      '<div class="chart-donut__img-wrap">' +
+        donutSvg(sectors, { size: 160, stroke: 22, gap: 4 }) +
+        '<div class="chart-donut__center">' +
+          '<span class="chart-donut__center-label">Jami NNT</span>' +
+          '<span class="chart-donut__center-value">1 250</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="chart-donut__legend">' +
+        sectors.map(function (s) {
+          return '<span class="chart-donut__legend-item"><span class="chart-donut__legend-dot" style="background:' + esc(s.color) + '"></span> ' + esc(s.label) + ': ' + esc(s.value) + '</span>';
+        }).join('') +
+      '</div>';
+  }
+
+  function renderAnalyticsTables() {
+    var regionMount = document.getElementById('analyticsRegionRows');
+    var sectorMount = document.getElementById('analyticsSectorRows');
+
+    if (regionMount) {
+      var regions = [
+        { name: 'Toshkent shahri',          code: '14', total: 263, active: 241, inactive: 22, fresh: 9,  rate: '91.6%', share: '21.0%', w: 263, tone: 'primary' },
+        { name: 'Toshkent viloyati',         code: '11', total: 156, active: 138, inactive: 18, fresh: 5,  rate: '88.5%', share: '12.5%', w: 156, tone: 'primary' },
+        { name: 'Samarqand viloyati',        code: '08', total: 143, active: 127, inactive: 16, fresh: 4,  rate: '88.8%', share: '11.4%', w: 143, tone: 'primary' },
+        { name: "Farg'ona viloyati",         code: '12', total: 121, active: 108, inactive: 13, fresh: 3,  rate: '89.3%', share: '9.7%',  w: 121, tone: 'primary' },
+        { name: 'Buxoro viloyati',           code: '03', total:  98, active:  87, inactive: 11, fresh: 2,  rate: '88.8%', share: '7.8%',  w: 98,  tone: 'primary' },
+        { name: 'Namangan viloyati',         code: '07', total:  88, active:  77, inactive: 11, fresh: 2,  rate: '87.5%', share: '7.0%',  w: 88,  tone: 'secondary' },
+        { name: 'Andijon viloyati',          code: '02', total:  82, active:  71, inactive: 11, fresh: 1,  rate: '86.6%', share: '6.6%',  w: 82,  tone: 'secondary' },
+        { name: 'Qashqadaryo viloyati',      code: '05', total:  67, active:  58, inactive:  9, fresh: 1,  rate: '86.6%', share: '5.4%',  w: 67,  tone: 'secondary' },
+        { name: 'Surxondaryo viloyati',      code: '10', total:  51, active:  44, inactive:  7, fresh: 1,  rate: '86.3%', share: '4.1%',  w: 51,  tone: 'secondary' },
+        { name: 'Xorazm viloyati',           code: '13', total:  48, active:  41, inactive:  7, fresh: 1,  rate: '85.4%', share: '3.8%',  w: 48,  tone: 'secondary' },
+        { name: 'Jizzax viloyati',           code: '04', total:  34, active:  29, inactive:  5, fresh: 0,  rate: '85.3%', share: '2.7%',  w: 34,  tone: 'secondary' },
+        { name: 'Sirdaryo viloyati',         code: '09', total:  24, active:  20, inactive:  4, fresh: 0,  rate: '83.3%', share: '1.9%',  w: 24,  tone: 'secondary' },
+        { name: 'Navoiy viloyati',           code: '06', total:  22, active:  19, inactive:  3, fresh: 0,  rate: '86.4%', share: '1.8%',  w: 22,  tone: 'secondary' },
+        { name: "Qoraqalpog'iston",          code: '01', total:  16, active:  13, inactive:  3, fresh: 0,  rate: '81.3%', share: '1.3%',  w: 16,  tone: 'secondary' },
+        { name: 'Respublika miqyosi NNTlar', code: '15', total:  37, active:  37, inactive:  0, fresh: 2,  rate: '100%',  share: '3.0%',  w: 37,  tone: 'secondary' },
+      ];
+
+      regionMount.innerHTML = regions.map(function (r) {
+        return '<tr>' +
+          '<td style="color:#64748b;font-variant-numeric:tabular-nums;">' + esc(r.code) + '</td>' +
+          '<th scope="row">' + esc(r.name) + '</th>' +
+          '<td>' + esc(r.total) + '</td>' +
+          '<td><span style="color:#059669;font-weight:600;">' + esc(r.active) + '</span></td>' +
+          '<td><span style="color:#94a3b8;">' + esc(r.inactive) + '</span></td>' +
+          '<td>' + esc(r.fresh) + '</td>' +
+          '<td>' +
+            '<div class="u-bar-row">' +
+              '<div class="u-bar-track"><div class="u-bar-fill u-bar-fill-' + esc(r.tone) + ' u-bar-w-' + esc(r.w) + '"></div></div>' +
+              '<span class="u-stat-caption">' + esc(r.rate) + '</span>' +
+            '</div>' +
+          '</td>' +
+          '<td>' +
+            '<div class="u-bar-row"><span class="u-stat-caption">' + esc(r.share) + '</span></div>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    if (sectorMount) {
+      var sectors = [
+        { name: 'Ijtimoiy',   count: 312, share: '24.9%', trend: '+3.2%', up: true },
+        { name: "Ta'lim",     count: 248, share: '19.8%', trend: '+5.1%', up: true },
+        { name: 'Xayriya',    count: 186, share: '14.9%', trend: '+1.8%', up: true },
+        { name: 'Ekologiya',  count: 124, share: '9.9%',  trend: '+7.3%', up: true },
+        { name: 'Yoshlar',    count:  98, share: '7.8%',  trend: '+2.0%', up: true },
+        { name: 'Sog\'liqni saqlash', count: 89, share: '7.1%', trend: '-0.4%', up: false },
+        { name: 'Madaniyat',  count:  72, share: '5.8%',  trend: '+0.9%', up: true },
+        { name: 'Sport',      count:  55, share: '4.4%',  trend: '+1.1%', up: true },
+        { name: 'Boshqa',     count:  66, share: '5.3%',  trend: '+0.5%', up: true },
+      ];
+
+      sectorMount.innerHTML = sectors.map(function (s) {
+        var trendColor = s.up ? '#059669' : '#dc2626';
+        var trendIcon = s.up ? 'ph-arrow-up-right' : 'ph-arrow-down-right';
+        return '<tr>' +
+          '<th scope="row">' + esc(s.name) + '</th>' +
+          '<td><strong>' + esc(s.count) + '</strong></td>' +
+          '<td>' + esc(s.share) + '</td>' +
+          '<td><span style="color:' + trendColor + ';font-weight:600;display:inline-flex;align-items:center;gap:3px;"><i class="ph ' + trendIcon + '"></i> ' + esc(s.trend) + '</span></td>' +
+        '</tr>';
+      }).join('');
+    }
+  }
+
+  /* ── Regions page ── */
+  function renderRegionsTable() {
+    var mount = document.getElementById('regionsTableRows');
+    if (!mount) return;
+
+    var regions = [
+      { code: '01', name: "Qoraqalpog'iston Respublikasi", total:  16, active:  13, fresh: 0, share: '1.3%',  w: 16,  tone: 'secondary' },
+      { code: '02', name: 'Andijon viloyati',               total:  82, active:  71, fresh: 1, share: '6.6%',  w: 82,  tone: 'primary' },
+      { code: '03', name: 'Buxoro viloyati',                total:  98, active:  87, fresh: 2, share: '7.8%',  w: 98,  tone: 'primary' },
+      { code: '04', name: 'Jizzax viloyati',                total:  34, active:  29, fresh: 0, share: '2.7%',  w: 34,  tone: 'secondary' },
+      { code: '05', name: 'Qashqadaryo viloyati',           total:  67, active:  58, fresh: 1, share: '5.4%',  w: 67,  tone: 'secondary' },
+      { code: '06', name: 'Navoiy viloyati',                total:  22, active:  19, fresh: 0, share: '1.8%',  w: 22,  tone: 'secondary' },
+      { code: '07', name: 'Namangan viloyati',              total:  88, active:  77, fresh: 2, share: '7.0%',  w: 88,  tone: 'primary' },
+      { code: '08', name: 'Samarqand viloyati',             total: 143, active: 127, fresh: 4, share: '11.4%', w: 143, tone: 'primary' },
+      { code: '09', name: 'Sirdaryo viloyati',              total:  24, active:  20, fresh: 0, share: '1.9%',  w: 24,  tone: 'secondary' },
+      { code: '10', name: 'Surxondaryo viloyati',           total:  51, active:  44, fresh: 1, share: '4.1%',  w: 51,  tone: 'secondary' },
+      { code: '11', name: 'Toshkent viloyati',              total: 156, active: 138, fresh: 5, share: '12.5%', w: 156, tone: 'primary' },
+      { code: '12', name: "Farg'ona viloyati",              total: 121, active: 108, fresh: 3, share: '9.7%',  w: 121, tone: 'primary' },
+      { code: '13', name: 'Xorazm viloyati',                total:  48, active:  41, fresh: 1, share: '3.8%',  w: 48,  tone: 'secondary' },
+      { code: '14', name: 'Toshkent shahri',                total: 263, active: 241, fresh: 9, share: '21.0%', w: 263, tone: 'primary' },
+      { code: '15', name: 'Respublika miqyosida faoliyat yurituvchi NNTlar', total: 37, active: 37, fresh: 2, share: '3.0%', w: 37, tone: 'secondary' },
+    ];
+
+    function rowMenu() {
+      return '<div class="row-menu-wrap">' +
+        '<button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button>' +
+        '<div class="row-menu">' +
+          '<a href="admin-registry.html" class="row-menu__item"><i class="ph ph-buildings"></i> NNTlarni ko\'rish</a>' +
+          '<button type="button" class="row-menu__item"><i class="ph ph-download-simple"></i> Eksport</button>' +
+          '<button type="button" class="row-menu__item"><i class="ph ph-trend-up"></i> Tahlil</button>' +
+        '</div>' +
+      '</div>';
+    }
+
+    mount.innerHTML = regions.map(function (r) {
+      return '<tr>' +
+        '<td style="color:#64748b;font-variant-numeric:tabular-nums;font-weight:600;">' + esc(r.code) + '</td>' +
+        '<th scope="row">' + esc(r.name) + '</th>' +
+        '<td><strong>' + esc(r.total) + '</strong></td>' +
+        '<td><span style="color:#059669;font-weight:600;">' + esc(r.active) + '</span></td>' +
+        '<td>' + esc(r.fresh) + '</td>' +
+        '<td>' +
+          '<div class="u-bar-row">' +
+            '<div class="u-bar-track"><div class="u-bar-fill u-bar-fill-' + esc(r.tone) + ' u-bar-w-' + esc(r.w) + '"></div></div>' +
+            '<span class="u-stat-caption">' + esc(r.share) + '</span>' +
+          '</div>' +
+        '</td>' +
+        '<td>' + rowMenu() + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  /* ── Documents page ── */
+  function renderDocuments() {
+    var mount = document.getElementById('documentsTableRows');
+    if (!mount) return;
+
+    var docs = [
+      { name: 'Ustav 2024 tahrir',              type: 'Ustav',                      org: 'Yangi Nafas NNT',    date: '08.04.2026', status: 'pending',  owner: 'Azizova N.' },
+      { name: "Ro'yxatga olish guvohnomasi",    type: "Ro'yxatdan o'tish",          org: 'Mehr-Shafqat NNT',  date: '05.04.2026', status: 'approved', owner: 'Toshmatov A.' },
+      { name: 'Soliq ma\'lumotnomasi Q1 2026',  type: "Soliq ma'lumotnomasi",       org: 'Umid Istiqbol NNT', date: '03.04.2026', status: 'approved', owner: 'Xolmatova G.' },
+      { name: 'Hisobot 2025 yillik',            type: 'Yillik hisobot',             org: 'Yoshlar Ittifoqi',  date: '01.04.2026', status: 'approved', owner: 'Rahimov B.' },
+      { name: 'Rahbar pasporti nusxasi',        type: 'Shaxs hujjati',              org: 'Ekologiya Markazi', date: '29.03.2026', status: 'returned', owner: 'Azizova N.' },
+      { name: 'Shartnoma №142',                 type: 'Shartnoma',                  org: 'Baxtli Oila Fondi', date: '28.03.2026', status: 'approved', owner: 'Toshmatov A.' },
+      { name: 'Ustav yangi tahrir (2023)',       type: 'Ustav',                      org: 'Sport va Rivojlanish', date: '26.03.2026', status: 'pending', owner: 'Xolmatova G.' },
+      { name: 'Hisobot 2025 Q4',                type: 'Choraklik hisobot',          org: 'Hayot va Madaniyat', date: '25.03.2026', status: 'approved', owner: 'Rahimov B.' },
+    ];
+
+    function statusMeta(key) {
+      if (key === 'approved') return { cls: 'badge--success', text: 'Tasdiqlangan' };
+      if (key === 'returned') return { cls: 'badge--danger',  text: 'Qaytarilgan' };
+      return { cls: 'badge--warning', text: 'Kutilmoqda' };
+    }
+
+    function rowMenu() {
+      return '<div class="row-menu-wrap">' +
+        '<button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button>' +
+        '<div class="row-menu">' +
+          '<button type="button" class="row-menu__item"><i class="ph ph-eye"></i> Ko\'rish</button>' +
+          '<button type="button" class="row-menu__item"><i class="ph ph-download-simple"></i> Yuklab olish</button>' +
+          '<button type="button" class="row-menu__item u-row-menu-item-approve"><i class="ph ph-check-circle"></i> Tasdiqlash</button>' +
+          '<div class="row-menu__sep"></div>' +
+          '<button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O\'chirish</button>' +
+        '</div>' +
+      '</div>';
+    }
+
+    mount.innerHTML = docs.map(function (d) {
+      var s = statusMeta(d.status);
+      return '<tr>' +
+        '<td><input type="checkbox" /></td>' +
+        '<th scope="row"><span style="display:inline-flex;align-items:center;gap:6px;"><i class="ph ph-file-text" style="color:#64748b;"></i>' + esc(d.name) + '</span></th>' +
+        '<td>' + esc(d.type) + '</td>' +
+        '<td><div class="table__counterparty"><span class="table__company">' + esc(d.org) + '</span></div></td>' +
+        '<td>' + esc(d.date) + '</td>' +
+        '<td><span class="badge ' + esc(s.cls) + '"><span class="badge__dot"></span>' + esc(s.text) + '</span></td>' +
+        '<td>' + esc(d.owner) + '</td>' +
+        '<td>' + rowMenu() + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  /* ── Tasks page ── */
+  function renderTasks() {
+    var mount = document.getElementById('tasksTableRows');
+    if (!mount) return;
+
+    var tasks = [
+      { title: "Yangi Nafas NNT ustavini ko'rib chiqish",     owner: 'Azizova N.',   deadline: '10.04.2026', priority: 'critical', status: 'progress' },
+      { title: 'Mehr-Shafqat shartnomasi imzosini olish',      owner: 'Toshmatov A.', deadline: '12.04.2026', priority: 'high',     status: 'progress' },
+      { title: "2026 Q1 hisobotini tayyorlash",                owner: 'Xolmatova G.', deadline: '15.04.2026', priority: 'medium',   status: 'progress' },
+      { title: "Yoshlar Ittifoqi hujjatlarini tekshirish",     owner: 'Rahimov B.',   deadline: '08.04.2026', priority: 'high',     status: 'overdue' },
+      { title: 'Samarqand viloyati hisobotini yuborish',       owner: 'Azizova N.',   deadline: '01.04.2026', priority: 'medium',   status: 'done' },
+      { title: "Ekologiya Markazi arizasini ko'rib chiqish",   owner: 'Toshmatov A.', deadline: '28.03.2026', priority: 'low',      status: 'done' },
+      { title: "Yillik tahlil hisoboti",                       owner: 'Xolmatova G.', deadline: '05.04.2026', priority: 'high',     status: 'overdue' },
+      { title: 'Foydalanuvchi huquqlarini yangilash',          owner: 'Azizova N.',   deadline: '20.04.2026', priority: 'low',      status: 'progress' },
+    ];
+
+    function priorityMeta(key) {
+      if (key === 'critical') return { cls: 'badge--danger',   text: 'CRITICAL' };
+      if (key === 'high')     return { cls: 'badge--warning',  text: 'Yuqori' };
+      if (key === 'medium')   return { cls: 'badge--pending',  text: "O'rta" };
+      return                         { cls: '',                text: 'Past' };
+    }
+
+    function statusMeta(key) {
+      if (key === 'done')    return { cls: 'badge--success', text: 'Bajarilgan' };
+      if (key === 'overdue') return { cls: 'badge--danger',  text: "Muddati o'tgan" };
+      return                        { cls: 'badge--warning', text: 'Jarayonda' };
+    }
+
+    function rowMenu() {
+      return '<div class="row-menu-wrap">' +
+        '<button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button>' +
+        '<div class="row-menu">' +
+          '<button type="button" class="row-menu__item" data-modal-open="addTaskModal"><i class="ph ph-pencil-simple"></i> Tahrirlash</button>' +
+          '<button type="button" class="row-menu__item u-row-menu-item-approve"><i class="ph ph-check-circle"></i> Bajarildi</button>' +
+          '<div class="row-menu__sep"></div>' +
+          '<button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O\'chirish</button>' +
+        '</div>' +
+      '</div>';
+    }
+
+    mount.innerHTML = tasks.map(function (t) {
+      var p = priorityMeta(t.priority);
+      var s = statusMeta(t.status);
+      var deadlineColor = t.status === 'overdue' ? 'color:#dc2626;font-weight:600;' : '';
+      return '<tr>' +
+        '<td><input type="checkbox" /></td>' +
+        '<th scope="row">' + esc(t.title) + '</th>' +
+        '<td>' + esc(t.owner) + '</td>' +
+        '<td style="' + deadlineColor + '">' + esc(t.deadline) + (t.status === 'overdue' ? ' <i class="ph ph-warning" style="color:#dc2626;"></i>' : '') + '</td>' +
+        '<td><span class="badge ' + esc(p.cls) + '"><span class="badge__dot"></span>' + esc(p.text) + '</span></td>' +
+        '<td><span class="badge ' + esc(s.cls) + '"><span class="badge__dot"></span>' + esc(s.text) + '</span></td>' +
+        '<td>' + rowMenu() + '</td>' +
+      '</tr>';
+    }).join('');
+  }
+
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () {
       renderDashboard();
@@ -541,6 +810,11 @@
       renderReportsCharts();
       renderReports();
       renderUsers();
+      renderAnalyticsCharts();
+      renderAnalyticsTables();
+      renderRegionsTable();
+      renderDocuments();
+      renderTasks();
     });
   } else {
     renderDashboard();
@@ -549,5 +823,10 @@
     renderReportsCharts();
     renderReports();
     renderUsers();
+    renderAnalyticsCharts();
+    renderAnalyticsTables();
+    renderRegionsTable();
+    renderDocuments();
+    renderTasks();
   }
 })();
