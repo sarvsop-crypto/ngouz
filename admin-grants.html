@@ -113,9 +113,7 @@
       <div class="main__header">
         <h1 class="main__title">Grantlar</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" id="refreshBtn"><i class="ph ph-arrows-clockwise"></i> Yangilash</button>
-          <button type="button" class="btn btn--secondary" id="exportBtn"><i class="ph ph-download-simple"></i> JSON yuklab olish</button>
-          <button type="button" class="btn btn--secondary" id="publishBtn"><i class="ph ph-cloud-arrow-up"></i> GitHub'ga nashr</button>
+          <button type="button" class="btn btn--secondary" id="publishBtn"><i class="ph ph-cloud-arrow-up"></i> Nashr qilish</button>
           <button type="button" class="btn btn--primary" id="newItemBtn"><i class="ph ph-plus"></i> Yangi grant</button>
         </div>
       </div>
@@ -440,26 +438,14 @@
       });
     });
 
-    document.getElementById('exportBtn').addEventListener('click', function () { AdminCMS.exportJson(TYPE); });
-
-    document.getElementById('refreshBtn').addEventListener('click', function () {
-      var btn = this; btn.disabled = true;
-      AdminCMS.refresh(TYPE, function (err, data) {
-        btn.disabled = false;
-        if (err) { toast('Xatolik: ' + err.message, 'error'); return; }
-        items = data || []; renderTable(); renderKpi();
-        toast('Ma\'lumotlar yangilandi', 'success');
-      });
-    });
-
     document.getElementById('publishBtn').addEventListener('click', function () {
-      if (!localStorage.getItem('admin_github_token')) { toast('GitHub tokeni Sozlamalarda kiritilmagan!', 'warning'); return; }
+      if (!localStorage.getItem('admin_github_token')) { toast('Nashr qilish sozlanmagan. Tizim administratoriga murojaat qiling.', 'warning'); return; }
       var btn = this;
       btn.innerHTML = '<span class="spinner"></span> Nashr etilmoqda...'; btn.disabled = true;
       AdminCMS.publish(TYPE, function (err) {
-        btn.innerHTML = '<i class="ph ph-cloud-arrow-up"></i> GitHub\'ga nashr'; btn.disabled = false;
-        if (err) toast('Xatolik: ' + err.message, 'error');
-        else toast('GitHub\'ga muvaffaqiyatli nashr etildi!', 'success');
+        btn.innerHTML = '<i class="ph ph-cloud-arrow-up"></i> Nashr qilish'; btn.disabled = false;
+        if (err) toast('Xatolik yuz berdi. Qayta urinib ko\'ring.', 'error');
+        else toast('Sayt muvaffaqiyatli yangilandi!', 'success');
       });
     });
 

@@ -102,50 +102,9 @@
             </div>
           </div>
 
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-top:24px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">GitHub Nashr Tokeni</h2>
-            <p style="font-size:13px;color:var(--grey-400);margin:0 0 16px;">Yangiliklar, tadbirlar va grantlarni GitHub'ga nashr qilish uchun Personal Access Token (PAT) kiriting. Token faqat brauzeringizda saqlanadi.</p>
-            <div style="display:flex;gap:12px;align-items:flex-end;">
-              <div style="flex:1;">
-                <label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">GitHub Personal Access Token</label>
-                <input type="password" id="githubTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:monospace;box-sizing:border-box;" />
-              </div>
-              <button type="button" id="saveTokenBtn" class="btn btn--primary" style="white-space:nowrap;"><i class="ph ph-key"></i> Saqlash</button>
-              <button type="button" id="clearTokenBtn" class="btn btn--secondary" style="white-space:nowrap;"><i class="ph ph-trash"></i> O'chirish</button>
-            </div>
-            <p id="tokenStatus" style="font-size:13px;margin:10px 0 0;display:none;"></p>
-          </div>
         </div>
       </div>
     </main>
-
-    <script>
-    (function(){
-      var inp = document.getElementById('githubTokenInput');
-      var status = document.getElementById('tokenStatus');
-      var saved = localStorage.getItem('admin_github_token');
-      if (saved) {
-        inp.value = saved;
-        showStatus('Token saqlangan', 'var(--success-600,#16a34a)');
-      }
-      document.getElementById('saveTokenBtn').addEventListener('click', function(){
-        var val = inp.value.trim();
-        if (!val) { showStatus('Token bo\'sh bo\'lishi mumkin emas', '#dc2626'); return; }
-        localStorage.setItem('admin_github_token', val);
-        showStatus('Token muvaffaqiyatli saqlandi', 'var(--success-600,#16a34a)');
-      });
-      document.getElementById('clearTokenBtn').addEventListener('click', function(){
-        localStorage.removeItem('admin_github_token');
-        inp.value = '';
-        showStatus('Token o\'chirildi', '#d97706');
-      });
-      function showStatus(msg, color) {
-        status.textContent = msg;
-        status.style.color = color;
-        status.style.display = 'block';
-      }
-    })();
-    </script>
   </div>
 
   <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">

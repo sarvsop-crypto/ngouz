@@ -100,6 +100,19 @@
               <button type="button" class="btn btn--secondary">Bekor qilish</button>
             </div>
           </div>
+          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
+            <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">Nashr integratsiyasi</h2>
+            <p style="font-size:13px;color:var(--grey-400);margin:0 0 16px;">Kontent nashr qilish uchun xizmat kaliti (bir martalik sozlama — faqat texnik xodim tomonidan kiritiladi).</p>
+            <div style="display:flex;gap:12px;align-items:flex-end;">
+              <div style="flex:1;">
+                <label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Xizmat kaliti</label>
+                <input type="password" id="publishTokenInput" placeholder="••••••••••••••••••••" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:monospace;box-sizing:border-box;" />
+              </div>
+              <button type="button" id="savePublishToken" class="btn btn--primary" style="white-space:nowrap;"><i class="ph ph-floppy-disk"></i> Saqlash</button>
+              <button type="button" id="clearPublishToken" class="btn btn--secondary" style="white-space:nowrap;"><i class="ph ph-trash"></i> O'chirish</button>
+            </div>
+            <p id="publishTokenStatus" style="font-size:13px;margin:10px 0 0;display:none;"></p>
+          </div>
           <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
             <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">Tizim parametrlari</h2>
             <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;">Avtomatik jarayonlar va integratsiyalar</p>
@@ -131,5 +144,28 @@
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
   <script src="js/pacta-app.js"></script>
+  <script>
+  (function(){
+    var inp    = document.getElementById('publishTokenInput');
+    var status = document.getElementById('publishTokenStatus');
+    if (!inp) return;
+    var saved = localStorage.getItem('admin_github_token');
+    if (saved) { inp.value = saved; showSt('Xizmat kaliti saqlangan', '#16a34a'); }
+    document.getElementById('savePublishToken').addEventListener('click', function(){
+      var val = inp.value.trim();
+      if (!val) { showSt('Kalit bo\'sh bo\'lishi mumkin emas', '#dc2626'); return; }
+      localStorage.setItem('admin_github_token', val);
+      showSt('Xizmat kaliti saqlandi', '#16a34a');
+    });
+    document.getElementById('clearPublishToken').addEventListener('click', function(){
+      localStorage.removeItem('admin_github_token');
+      inp.value = '';
+      showSt('Xizmat kaliti o\'chirildi', '#d97706');
+    });
+    function showSt(msg, color) {
+      status.textContent = msg; status.style.color = color; status.style.display = 'block';
+    }
+  })();
+  </script>
 </body>
 </html>
