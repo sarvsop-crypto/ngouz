@@ -280,17 +280,17 @@
     function toast(msg, type) {
       var el = document.getElementById('cmsToast');
       el.textContent = msg;
-      el.className = 'cms-toast cms-toast--' + (type || 'info’) + ' show';
+      el.className = 'cms-toast cms-toast--' + (type || 'info') + ' show';
       clearTimeout(toastTimer);
       toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3500);
     }
 
     function renderKpi() {
-      var upcoming = items.filter(function (i) { return i.status === 'upcoming’; });
+      var upcoming = items.filter(function (i) { return i.status === 'upcoming'; });
       var past     = items.filter(function (i) { return i.status === 'past'; });
       var totalP   = items.reduce(function (s, i) { return s + (parseInt(i.participants) || 0); }, 0);
       document.getElementById('kpiTotal').textContent        = items.length;
-      document.getElementById('kpiUpcoming’).textContent     = upcoming.length;
+      document.getElementById('kpiUpcoming').textContent     = upcoming.length;
       document.getElementById('kpiPast').textContent         = past.length;
       document.getElementById('kpiParticipants').textContent = totalP.toLocaleString('ru-RU');
     }
@@ -308,7 +308,7 @@
         return;
       }
       tbody.innerHTML = filtered.map(function (item) {
-        var statusBadge = item.status === 'upcoming’
+        var statusBadge = item.status === 'upcoming'
           ? '<span class="badge badge--success">Rejalashtirilgan</span>'
           : '<span class="badge badge--neutral">Bo\'lib o\'tgan</span>';
         var title = AdminCMS.esc(item.title.length > 60 ? item.title.slice(0, 60) + '…' : item.title);
@@ -332,7 +332,7 @@
     function clearForm() {
       document.getElementById('fTitle').value        = '';
       document.getElementById('fDate').value         = AdminCMS.today();
-      document.getElementById('fStatus').value       = 'upcoming’;
+      document.getElementById('fStatus').value       = 'upcoming';
       document.getElementById('fLocation').value     = '';
       document.getElementById('fParticipants').value = '';
       document.getElementById('fDeadline').value     = '';
@@ -342,7 +342,7 @@
     function fillForm(item) {
       document.getElementById('fTitle').value        = item.title        || '';
       document.getElementById('fDate').value         = item.date         || '';
-      document.getElementById('fStatus').value       = item.status       || 'upcoming’;
+      document.getElementById('fStatus').value       = item.status       || 'upcoming';
       document.getElementById('fLocation').value     = item.location     || '';
       document.getElementById('fParticipants').value = item.participants != null ? item.participants : '';
       document.getElementById('fDeadline').value     = item.deadline     || '';
@@ -410,7 +410,7 @@
       AdminCMS.remove(TYPE, deleteId);
       closeModal('deleteModal');
       reload();
-      toast('Tadbir o\'chirildi', 'info’);
+      toast('Tadbir o\'chirildi', 'info');
       deleteId = null;
     });
 
@@ -438,7 +438,7 @@
     });
 
     document.getElementById('publishBtn').addEventListener('click', function () {
-      if (!localStorage.getItem('admin_github_token')) { toast('GitHub tokeni Sozlamalarda kiritilmagan!', 'warning’); return; }
+      if (!localStorage.getItem('admin_github_token')) { toast('GitHub tokeni Sozlamalarda kiritilmagan!', 'warning'); return; }
       var btn = this;
       btn.innerHTML = '<span class="spinner"></span> Nashr etilmoqda...'; btn.disabled = true;
       AdminCMS.publish(TYPE, function (err) {

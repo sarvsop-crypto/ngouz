@@ -281,7 +281,7 @@
     function toast(msg, type) {
       var el = document.getElementById('cmsToast');
       el.textContent = msg;
-      el.className = 'cms-toast cms-toast--' + (type || 'info’) + ' show';
+      el.className = 'cms-toast cms-toast--' + (type || 'info') + ' show';
       clearTimeout(toastTimer);
       toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3500);
     }
@@ -421,7 +421,7 @@
       AdminCMS.remove(TYPE, deleteId);
       closeModal('deleteModal');
       reload();
-      toast('Grant o\'chirildi', 'info’);
+      toast('Grant o\'chirildi', 'info');
       deleteId = null;
     });
 
@@ -449,7 +449,7 @@
     });
 
     document.getElementById('publishBtn').addEventListener('click', function () {
-      if (!localStorage.getItem('admin_github_token')) { toast('GitHub tokeni Sozlamalarda kiritilmagan!', 'warning’); return; }
+      if (!localStorage.getItem('admin_github_token')) { toast('GitHub tokeni Sozlamalarda kiritilmagan!', 'warning'); return; }
       var btn = this;
       btn.innerHTML = '<span class="spinner"></span> Nashr etilmoqda...'; btn.disabled = true;
       AdminCMS.publish(TYPE, function (err) {

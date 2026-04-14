@@ -268,7 +268,7 @@
     var catFilter = 'all';
     var searchQ   = '';
 
-    var CAT_BADGE = { "E'LON": 'info’, 'TADBIR': 'success', 'TAHLIL': 'warning’, 'PRESS': 'neutral' };
+    var CAT_BADGE = { "E'LON": 'info', 'TADBIR': 'success', 'TAHLIL': 'warning', 'PRESS': 'neutral' };
 
     // ── modal helpers ─────────────────────────────────────
     function openModal(id) {
@@ -291,7 +291,7 @@
     function toast(msg, type) {
       var el = document.getElementById('cmsToast');
       el.textContent = msg;
-      el.className = 'cms-toast cms-toast--' + (type || 'info’) + ' show';
+      el.className = 'cms-toast cms-toast--' + (type || 'info') + ' show';
       clearTimeout(toastTimer);
       toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3500);
     }
@@ -422,7 +422,7 @@
       AdminCMS.remove(TYPE, deleteId);
       closeModal('deleteModal');
       reload();
-      toast('Maqola o\'chirildi', 'info’);
+      toast('Maqola o\'chirildi', 'info');
       deleteId = null;
     });
 
@@ -460,7 +460,7 @@
     document.getElementById('publishBtn').addEventListener('click', function () {
       var token = localStorage.getItem('admin_github_token');
       if (!token) {
-        toast('GitHub tokeni Sozlamalarda kiritilmagan!', 'warning’);
+        toast('GitHub tokeni Sozlamalarda kiritilmagan!', 'warning');
         return;
       }
       var btn = this;
