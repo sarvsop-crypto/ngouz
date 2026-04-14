@@ -373,7 +373,7 @@ window.addEventListener('load', function(){
       },
       plugins: [
         {
-          id: 'chartBg’,
+          id: 'chartBg',
           beforeDatasetsDraw: function(chart){
             var ctx2 = chart.ctx;
             var a = chart.chartArea;
@@ -406,8 +406,8 @@ window.addEventListener('load', function(){
 
   document.getElementById('nntDlBtn').addEventListener('click', function(){
     var link = document.createElement('a');
-    link.download = 'nnt-dinamikasi-2020-2025.png’;
-    link.href = canvas.toDataURL('image/png’);
+    link.download = 'nnt-dinamikasi-2020-2025.png';
+    link.href = canvas.toDataURL('image/png');
     link.click();
   });
 
@@ -432,7 +432,7 @@ window.addEventListener('load', function(){
     'UZ-SI': { name: "Sirdaryo viloyati",       nnt:  856, members: 238, lx:-5, ly:-5 },
     'UZ-TO': { name: "Toshkent viloyati",       nnt: 2104, members: 1025, lx:-4, ly:-6 },
     'UZ-TK': { name: "Toshkent shahri",         nnt: 2504, members: 503,  lx: 6, ly: 4 },
-    'UZ-NG’: { name: "Namangan viloyati",       nnt: 2613, members: 788  },
+    'UZ-NG': { name: "Namangan viloyati",       nnt: 2613, members: 788  },
     'UZ-FA': { name: "Farg\u2018ona viloyati",  nnt: 2837, members: 1062 },
     'UZ-AN': { name: "Andijon viloyati",        nnt: 2320, members: 908,  lx: 4, ly:-4 }
   };
@@ -443,7 +443,7 @@ window.addEventListener('load', function(){
     var box = document.getElementById('mapBox');
     if (!box || typeof UZ_MAP_SVG === 'undefined') return;
     box.innerHTML = UZ_MAP_SVG;
-    var svg = box.querySelector('svg’);
+    var svg = box.querySelector('svg');
     if (!svg) return;
     svg.removeAttribute('width');
     svg.removeAttribute('height');
