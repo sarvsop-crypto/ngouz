@@ -1,2 +1,153 @@
-﻿<!doctype html><html lang='uz'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Cabinet Notifications</title><style>html,body{margin:0;height:100%;background:#0b0d12}.top{height:48px;display:flex;align-items:center;gap:12px;padding:0 14px;background:#111623;color:#fff;font:14px Arial}.top a{color:#8ea1ff;text-decoration:none}iframe{display:block;border:0;width:100%;height:calc(100% - 48px)}</style></head><body><div class='top'><strong>Cabinet · dashboard-ui Figma 1:1</strong><a href='cabinet-figma-25.html'>25 Screens</a><a href='cabinet-dashboard.html'>Dashboard</a></div><iframe src='cabinet-figma-view.html?node=14876%3A31167&name=23%20My%20Profile%20-%20Notifications'></iframe></body></html>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bildirishnomalar — A'zo Kabinet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="../css/pacta-tokens.css">
+  <link rel="stylesheet" href="../css/pacta-approvals.page.css">
+  <link rel="stylesheet" href="../css/pacta-sidebar.css">
+  <link rel="stylesheet" href="../css/pacta-topbar.css">
+  <link rel="stylesheet" href="../css/pacta-notifications.css">
+  <link rel="stylesheet" href="../css/pacta-app.css">
+  <link rel="stylesheet" href="../css/pacta-modal.css">
+  <link rel="stylesheet" href="../css/pacta-foundation.css">
+  <style>
+    .notif-list{display:flex;flex-direction:column;gap:4px;}
+    .notif-item{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;background:var(--grey-0);border:1px solid var(--grey-100);border-radius:10px;transition:background .12s;}
+    .notif-item:hover{background:var(--grey-50);}
+    .notif-item--unread{background:var(--primary-50);border-color:var(--primary-100);}
+    .notif-item--unread:hover{background:#dbeafe;}
+    .notif-icon{width:40px;height:40px;border-radius:10px;background:var(--primary-100);color:var(--primary-600);display:grid;place-items:center;font-size:18px;flex-shrink:0;}
+    .notif-icon--warning{background:var(--secondary-50);color:var(--warning-600);}
+    .notif-icon--success{background:#dcfce7;color:#16a34a;}
+    .notif-icon--error{background:#fee2e2;color:var(--error-600);}
+    .notif-icon--system{background:var(--grey-100);color:var(--grey-500);}
+    .notif-item__content{flex:1;}
+    .notif-item__title{font-size:14px;font-weight:600;color:var(--grey-900);margin:0 0 3px;}
+    .notif-item__body{font-size:13px;color:var(--grey-600);margin:0 0 5px;}
+    .notif-item__time{font-size:12px;color:var(--grey-400);}
+    .notif-item__dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--primary-500);vertical-align:middle;margin-left:4px;}
+    .notif-tabs{margin-bottom:20px;}
+  </style>
+</head>
+<body data-nav-active="notifications">
+  <div class="layout">
+    <div id="cabinet-sidebar-root"></div>
 
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumbs"><a href="cabinet-dashboard.html">Bosh sahifa</a> / <span>Bildirishnomalar</span></div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-notifications">
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <span class="topbar-notifications-badge" aria-hidden="true"></span>
+          </div>
+          <div class="topbar-divider" aria-hidden="true"></div>
+          <div class="main__profile">
+            <div class="main__profile-avatar u-profile-avatar-initial">K</div>
+            <div>
+              <div class="main__profile-name">Kamolov Sanjar</div>
+              <div class="main__profile-role">Yangi Nafas NNT</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main__header">
+        <h1 class="main__title">Bildirishnomalar</h1>
+        <div class="main__btns">
+          <button type="button" class="btn btn--secondary"><i class="ph ph-checks"></i> Barchasini o&rsquo;qildi deb belgilash</button>
+        </div>
+      </div>
+
+      <div class="tabs notif-tabs">
+        <button type="button" class="tab is-active">Hammasi <span class="tab__count">8</span></button>
+        <button type="button" class="tab">O&rsquo;qilmagan <span class="tab__count">3</span></button>
+        <button type="button" class="tab">Tizim <span class="tab__count">2</span></button>
+      </div>
+
+      <div class="notif-list">
+        <div class="notif-item notif-item--unread">
+          <div class="notif-icon notif-icon--warning"><i class="ph ph-file-text"></i></div>
+          <div class="notif-item__content">
+            <div class="notif-item__title">Ustav yangi tahrir so&rsquo;raldi <span class="notif-item__dot"></span></div>
+            <div class="notif-item__body">Arizangiz bo&rsquo;yicha qo&rsquo;shimcha hujjat talab qilinmoqda: Ustav yangi tahrir (2026-yil). Muddat: 10.04.2026.</div>
+            <div class="notif-item__time">04.04.2026 &middot; 15:22</div>
+          </div>
+        </div>
+        <div class="notif-item notif-item--unread">
+          <div class="notif-icon"><i class="ph ph-magnifying-glass"></i></div>
+          <div class="notif-item__content">
+            <div class="notif-item__title">Tekshiruv boshlandi <span class="notif-item__dot"></span></div>
+            <div class="notif-item__body">ARZ-2026-0418 arizangiz hujjatlar tekshiruvi bosqichiga o&rsquo;tkazildi.</div>
+            <div class="notif-item__time">03.04.2026 &middot; 10:05</div>
+          </div>
+        </div>
+        <div class="notif-item notif-item--unread">
+          <div class="notif-icon notif-icon--success"><i class="ph ph-check-circle"></i></div>
+          <div class="notif-item__content">
+            <div class="notif-item__title">Ariza qabul qilindi <span class="notif-item__dot"></span></div>
+            <div class="notif-item__body">A&rsquo;zolik arizangiz (ARZ-2026-0418) muvaffaqiyatli qabul qilindi.</div>
+            <div class="notif-item__time">02.04.2026 &middot; 09:14</div>
+          </div>
+        </div>
+        <div class="notif-item">
+          <div class="notif-icon"><i class="ph ph-calendar"></i></div>
+          <div class="notif-item__content">
+            <div class="notif-item__title">Yangi tadbir: 15-aprel seminari</div>
+            <div class="notif-item__body">NNT vakillari uchun seminar ro&rsquo;yxati ochildi. O&rsquo;rin cheklangan (150 ta).</div>
+            <div class="notif-item__time">01.04.2026 &middot; 12:00</div>
+          </div>
+        </div>
+        <div class="notif-item">
+          <div class="notif-icon notif-icon--error"><i class="ph ph-x-circle"></i></div>
+          <div class="notif-item__content">
+            <div class="notif-item__title">Hisobot qaytarildi</div>
+            <div class="notif-item__body">III chorak hisoboti (2025-yil) moliyaviy ma&rsquo;lumotlar to&rsquo;liq emasligi sababli qaytarildi. Muddat: 20.04.2026.</div>
+            <div class="notif-item__time">28.03.2026 &middot; 16:40</div>
+          </div>
+        </div>
+        <div class="notif-item">
+          <div class="notif-icon notif-icon--success"><i class="ph ph-trophy"></i></div>
+          <div class="notif-item__content">
+            <div class="notif-item__title">Yangi grant e&rsquo;loni</div>
+            <div class="notif-item__body">&laquo;Yoshlar salomatligi&raquo; dasturi bo&rsquo;yicha grant musobaqasi e&rsquo;lon qilindi. Muddat: 30.04.2026.</div>
+            <div class="notif-item__time">25.03.2026 &middot; 09:00</div>
+          </div>
+        </div>
+        <div class="notif-item">
+          <div class="notif-icon notif-icon--system"><i class="ph ph-gear"></i></div>
+          <div class="notif-item__content">
+            <div class="notif-item__title">Tizim yangilandi</div>
+            <div class="notif-item__body">Shaxsiy kabinet yangi imkoniyatlar bilan yangilandi. Hisobot yuklash sahifasi takomillashtirildi.</div>
+            <div class="notif-item__time">20.03.2026 &middot; 08:00</div>
+          </div>
+        </div>
+        <div class="notif-item">
+          <div class="notif-icon notif-icon--system"><i class="ph ph-lock"></i></div>
+          <div class="notif-item__content">
+            <div class="notif-item__title">Xavfsizlik ogohlantirishi</div>
+            <div class="notif-item__body">Hisobingizga yangi qurilmadan kirish aniqlandi. Agar siz bo&rsquo;lmasangiz, parolingizni o&rsquo;zgartiring.</div>
+            <div class="notif-item__time">15.03.2026 &middot; 22:17</div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="cabinet-notifications-root"></div>
+
+  <script src="js/cabinet-chrome.js" defer></script>
+
+  <script src="../js/pacta-foundation.js" defer></script>
+  <script src="../js/pacta-notifications.js"></script>
+  <script src="../js/pacta-app.js"></script>
+</body>
+</html>

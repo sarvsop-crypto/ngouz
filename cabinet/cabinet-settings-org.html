@@ -17,34 +17,10 @@
   <link rel="stylesheet" href="../css/pacta-modal.css">
   <link rel="stylesheet" href="../css/pacta-foundation.css">
 </head>
-<body>
+<body data-nav-active="settings">
   <div class="layout">
-    <aside class="sidebar">
-      <div class="sidebar__header">
-        <div class="u-inline-stack">
-          <div class="sidebar__logo u-logo-initial">A</div>
-          <span class="sidebar__title">A'zo Kabinet</span>
-        </div>
-      </div>
-      <div class="sidebar__search" id="sidebarSearchTrigger">
-        <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>
-        <input type="text" placeholder="Qidirish" aria-label="Qidirish" />
-      </div>
-      <nav class="sidebar__nav">
-        <div class="sidebar__nav-section">
-          <div class="sidebar__nav-label">ASOSIY</div>
-          <a href="cabinet-dashboard.html" class="sidebar__nav-link" title="Bosh sahifa"><span class="sidebar__nav-icon"><i class="ph ph-squares-four"></i></span><span class="sidebar__nav-link-text">Bosh sahifa</span></a>
-          <a href="cabinet-applications.html" class="sidebar__nav-link" title="Ariza holati"><span class="sidebar__nav-icon"><i class="ph ph-clipboard-text"></i></span><span class="sidebar__nav-link-text">Ariza holati</span></a>
-          <a href="cabinet-grants.html" class="sidebar__nav-link" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-trophy"></i></span><span class="sidebar__nav-link-text">Grantlar</span></a>
-          <a href="cabinet-documents.html" class="sidebar__nav-link" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-files"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
-          <a href="cabinet-support.html" class="sidebar__nav-link" title="Murojaat"><span class="sidebar__nav-icon"><i class="ph ph-chat-circle-text"></i></span><span class="sidebar__nav-link-text">Murojaat</span></a>
-          <a href="cabinet-settings.html" class="sidebar__nav-link is-active" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
-        </div>
-        <div class="sidebar__nav-section u-mt-auto">
-          <a href="cabinet-login.html" class="sidebar__nav-link logout" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
-        </div>
-      </nav>
-    </aside>
+    <div id="cabinet-sidebar-root"></div>
+
     <main class="main">
       <header class="topbar">
         <div class="topbar-left">
@@ -112,16 +88,10 @@
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
-    <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2></div>
-    <div class="notifications-panel__list">
-      <div class="notifications-panel__item"><div class="notifications-panel__icon"><i class="ph ph-clipboard-text"></i></div><div class="notifications-panel__content"><p class="notifications-panel__item-title">Yangi ariza kelib tushdi <span class="notifications-panel__dot"></span></p><p class="notifications-panel__item-body">Yangi Nafas NNT &mdash; ARZ-2026-0418 ko&rsquo;rib chiqilishi kerak.</p><p class="notifications-panel__item-time">2 daqiqa oldin</p></div></div>
-    </div>
-    <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
-      <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
-    </div>
-  </div>
+  <div id="cabinet-notifications-root"></div>
+
+  <script src="js/cabinet-chrome.js" defer></script>
+
   <script src="../js/pacta-foundation.js" defer></script>
   <script src="../js/pacta-notifications.js"></script>
   <script src="../js/pacta-app.js"></script>

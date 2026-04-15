@@ -1,2 +1,123 @@
-﻿<!doctype html><html lang='uz'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Cabinet Reports</title><style>html,body{margin:0;height:100%;background:#0b0d12}.top{height:48px;display:flex;align-items:center;gap:12px;padding:0 14px;background:#111623;color:#fff;font:14px Arial}.top a{color:#8ea1ff;text-decoration:none}iframe{display:block;border:0;width:100%;height:calc(100% - 48px)}</style></head><body><div class='top'><strong>Cabinet · dashboard-ui Figma 1:1</strong><a href='cabinet-figma-25.html'>25 Screens</a><a href='cabinet-dashboard.html'>Dashboard</a></div><iframe src='cabinet-figma-view.html?node=14876%3A29136&name=17%20Tasks'></iframe></body></html>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hisobotlar — A'zo Kabinet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="../css/pacta-tokens.css">
+  <link rel="stylesheet" href="../css/pacta-contracts.page.css">
+  <link rel="stylesheet" href="../css/pacta-sidebar.css">
+  <link rel="stylesheet" href="../css/pacta-topbar.css">
+  <link rel="stylesheet" href="../css/pacta-notifications.css">
+  <link rel="stylesheet" href="../css/pacta-app.css">
+  <link rel="stylesheet" href="../css/pacta-modal.css">
+  <link rel="stylesheet" href="../css/pacta-foundation.css">
+</head>
+<body data-nav-active="reports">
+  <div class="layout">
+    <div id="cabinet-sidebar-root"></div>
 
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumbs"><a href="cabinet-dashboard.html">Bosh sahifa</a> / <span>Hisobotlar</span></div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-notifications">
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <span class="topbar-notifications-badge" aria-hidden="true"></span>
+          </div>
+          <div class="topbar-divider" aria-hidden="true"></div>
+          <div class="main__profile">
+            <div class="main__profile-avatar u-profile-avatar-initial">K</div>
+            <div>
+              <div class="main__profile-name">Kamolov Sanjar</div>
+              <div class="main__profile-role">Yangi Nafas NNT</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main__header">
+        <h1 class="main__title">Hisobotlar</h1>
+        <div class="main__btns">
+          <button type="button" class="btn btn--primary" data-modal-open="uploadReportModal"><i class="ph ph-upload-simple"></i> Hisobot yuklash</button>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-chart-bar"></i></div></div><div class="card__body"><div><p class="card__label">Jami hisobotlar</p><p class="card__value">5</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div></div><div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value">2</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div></div><div class="card__body"><div><p class="card__label">Ko&rsquo;rib chiqilmoqda</p><p class="card__value">2</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon" style="background:var(--error-50);color:var(--error-600);"><i class="ph ph-x-circle"></i></div></div><div class="card__body"><div><p class="card__label">Qaytarilgan</p><p class="card__value">1</p></div></div></div>
+      </div>
+
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:18px 20px;margin-bottom:16px;display:flex;gap:12px;align-items:flex-start;">
+        <i class="ph ph-warning" style="color:var(--error-500);font-size:20px;flex-shrink:0;margin-top:1px;"></i>
+        <div>
+          <div style="font-weight:600;font-size:14px;color:var(--error-700);margin-bottom:4px;">III chorak hisoboti qaytarilgan</div>
+          <div style="font-size:13px;color:var(--error-600);">Sababli: Moliyaviy ma&rsquo;lumotlar to&rsquo;liq ko&rsquo;rsatilmagan. 3&ndash;5-bandlardagi raqamlarni to&rsquo;ldirib qayta yuboring.</div>
+          <div style="font-size:12px;color:var(--error-400);margin-top:6px;">Muddat: 20.04.2026 gacha</div>
+        </div>
+      </div>
+
+      <section class="table-section">
+        <div class="table-section__head">
+          <h2 class="table-section__title">Hisobotlar tarixi</h2>
+          <div class="table-section__filters">
+            <button type="button" class="filter-chip is-active">Hammasi</button>
+            <button type="button" class="filter-chip">Yillik</button>
+            <button type="button" class="filter-chip">Choraklik</button>
+          </div>
+        </div>
+        <table class="table">
+          <thead>
+            <tr><th>Hisobot nomi</th><th>Turi</th><th>Davr</th><th>Topshirilgan</th><th>Holat</th><th>Amal</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><i class="ph ph-file-pdf" style="color:var(--error-500);vertical-align:middle;margin-right:6px;"></i>Yillik faoliyat hisoboti 2025</td><td>Yillik</td><td>2025-yil</td><td>15.01.2026</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
+            <tr><td><i class="ph ph-file-pdf" style="color:var(--error-500);vertical-align:middle;margin-right:6px;"></i>Moliyaviy hisobot 2024</td><td>Yillik</td><td>2024-yil</td><td>20.01.2025</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
+            <tr><td><i class="ph ph-file-text" style="color:var(--grey-400);vertical-align:middle;margin-right:6px;"></i>I chorak hisoboti 2026</td><td>Choraklik</td><td>2026 I ch.</td><td>05.04.2026</td><td><span class="badge badge--warning"><span class="badge__dot"></span>Ko&rsquo;rib chiqilmoqda</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
+            <tr><td><i class="ph ph-file-text" style="color:var(--grey-400);vertical-align:middle;margin-right:6px;"></i>IV chorak hisoboti 2025</td><td>Choraklik</td><td>2025 IV ch.</td><td>10.01.2026</td><td><span class="badge badge--warning"><span class="badge__dot"></span>Ko&rsquo;rib chiqilmoqda</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
+            <tr class="table-row-danger"><td><i class="ph ph-warning" style="color:var(--error-500);vertical-align:middle;margin-right:6px;"></i>III chorak hisoboti 2025</td><td>Choraklik</td><td>2025 III ch.</td><td>12.10.2025</td><td><span class="badge badge--error"><span class="badge__dot"></span>Qaytarilgan</span></td><td><button type="button" class="btn btn--sm btn--primary" data-modal-open="uploadReportModal"><i class="ph ph-upload-simple"></i> Qayta yuklash</button></td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="uploadReportModal" role="dialog" aria-label="Hisobot yuklash" aria-modal="true" aria-hidden="true">
+    <div class="modal__backdrop" data-modal-close="uploadReportModal"></div>
+    <div class="modal__panel" style="max-width:480px;">
+      <div class="modal__head">
+        <h2 class="modal__title">Hisobot yuklash</h2>
+        <button type="button" class="modal__close" data-modal-close="uploadReportModal" aria-label="Yopish"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="modal__body">
+        <div style="display:grid;gap:14px;">
+          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Hisobot turi</label><select class="field__input"><option value="">Turini tanlang</option><option>Yillik faoliyat hisoboti</option><option>Moliyaviy hisobot</option><option>Choraklik hisobot</option><option>Boshqa</option></select></div>
+          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Davr</label><select class="field__input"><option>2026 &mdash; I chorak</option><option>2026 &mdash; Yillik</option><option>2025 &mdash; IV chorak</option><option>2025 &mdash; III chorak (qayta)</option></select></div>
+          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Fayl (PDF, DOCX &mdash; maks. 20 MB)</label><input type="file" class="field__input" accept=".pdf,.doc,.docx" /></div>
+          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Izoh (ixtiyoriy)</label><textarea class="field__input" rows="3" placeholder="Qo'shimcha ma'lumot..."></textarea></div>
+        </div>
+      </div>
+      <div class="modal__foot">
+        <button type="button" class="btn btn--secondary" data-modal-close="uploadReportModal">Bekor qilish</button>
+        <button type="button" class="btn btn--primary"><i class="ph ph-upload-simple"></i> Yuborish</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="cabinet-notifications-root"></div>
+
+  <script src="js/cabinet-chrome.js" defer></script>
+
+  <script src="../js/pacta-foundation.js" defer></script>
+  <script src="../js/pacta-notifications.js"></script>
+  <script src="../js/pacta-app.js"></script>
+</body>
+</html>

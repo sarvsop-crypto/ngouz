@@ -1,2 +1,151 @@
-﻿<!doctype html><html lang='uz'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Cabinet News</title><style>html,body{margin:0;height:100%;background:#0b0d12}.top{height:48px;display:flex;align-items:center;gap:12px;padding:0 14px;background:#111623;color:#fff;font:14px Arial}.top a{color:#8ea1ff;text-decoration:none}iframe{display:block;border:0;width:100%;height:calc(100% - 48px)}</style></head><body><div class='top'><strong>Cabinet · dashboard-ui Figma 1:1</strong><a href='cabinet-figma-25.html'>25 Screens</a><a href='cabinet-dashboard.html'>Dashboard</a></div><iframe src='cabinet-figma-view.html?node=14876%3A25989&name=06%20Projects'></iframe></body></html>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yangiliklar — A'zo Kabinet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="../css/pacta-tokens.css">
+  <link rel="stylesheet" href="../css/pacta-dashboard.page.css">
+  <link rel="stylesheet" href="../css/pacta-sidebar.css">
+  <link rel="stylesheet" href="../css/pacta-topbar.css">
+  <link rel="stylesheet" href="../css/pacta-notifications.css">
+  <link rel="stylesheet" href="../css/pacta-app.css">
+  <link rel="stylesheet" href="../css/pacta-modal.css">
+  <link rel="stylesheet" href="../css/pacta-foundation.css">
+  <style>
+    .news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;}
+    .news-card{background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;overflow:hidden;transition:box-shadow .15s;}
+    .news-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);}
+    .news-card__img{height:140px;background:linear-gradient(135deg,var(--primary-100) 0%,var(--primary-200) 100%);display:grid;place-items:center;font-size:40px;color:var(--primary-400);}
+    .news-card__body{padding:16px;}
+    .news-card__cat{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.03em;}
+    .news-card__cat--news{background:var(--primary-50);color:var(--primary-600);}
+    .news-card__cat--event{background:var(--secondary-50);color:var(--warning-700);}
+    .news-card__cat--important{background:#fef9c3;color:#92400e;}
+    .news-card__cat--grant{background:#dcfce7;color:#15803d;}
+    .news-card__title{font-size:14px;font-weight:600;color:var(--grey-900);margin:0 0 8px;line-height:1.4;}
+    .news-card__excerpt{font-size:13px;color:var(--grey-500);margin:0 0 12px;line-height:1.5;}
+    .news-card__footer{display:flex;align-items:center;justify-content:space-between;}
+    .news-card__date{font-size:12px;color:var(--grey-400);}
+    .news-card__link{font-size:13px;color:var(--primary-500);text-decoration:none;}
+    .news-card__img--event{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);color:#d97706;}
+    .news-card__img--grant{background:linear-gradient(135deg,#dcfce7 0%,#bbf7d0 100%);color:#16a34a;}
+    .news-card__img--partner{background:linear-gradient(135deg,#ede9fe 0%,#ddd6fe 100%);color:#7c3aed;}
+    .news-card__img--urgent{background:linear-gradient(135deg,#fce7f3 0%,#fbcfe8 100%);color:#be185d;}
+    .news-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
+  </style>
+</head>
+<body data-nav-active="news">
+  <div class="layout">
+    <div id="cabinet-sidebar-root"></div>
 
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumbs"><a href="cabinet-dashboard.html">Bosh sahifa</a> / <span>Yangiliklar</span></div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-notifications">
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <span class="topbar-notifications-badge" aria-hidden="true"></span>
+          </div>
+          <div class="topbar-divider" aria-hidden="true"></div>
+          <div class="main__profile">
+            <div class="main__profile-avatar u-profile-avatar-initial">K</div>
+            <div>
+              <div class="main__profile-name">Kamolov Sanjar</div>
+              <div class="main__profile-role">Yangi Nafas NNT</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main__header">
+        <h1 class="main__title">Yangiliklar</h1>
+      </div>
+
+      <div class="news-filters">
+        <button type="button" class="filter-chip is-active">Hammasi</button>
+        <button type="button" class="filter-chip">Yangiliklar</button>
+        <button type="button" class="filter-chip">E&rsquo;lonlar</button>
+        <button type="button" class="filter-chip">Tadbirlar</button>
+        <button type="button" class="filter-chip">Grantlar</button>
+      </div>
+
+      <div class="news-grid">
+        <div class="news-card">
+          <div class="news-card__img"><i class="ph ph-newspaper"></i></div>
+          <div class="news-card__body">
+            <span class="news-card__cat news-card__cat--important">MUHIM</span>
+            <h3 class="news-card__title">O&rsquo;zNNTMA 2026-yil a&rsquo;zolik shartlari e&rsquo;lon qilindi</h3>
+            <p class="news-card__excerpt">Yangi a&rsquo;zolik tartibi va majburiy hujjatlar ro&rsquo;yxati tasdiqlandi. Barcha faol a&rsquo;zolarga taalluqli.</p>
+            <div class="news-card__footer"><span class="news-card__date">05.04.2026</span><a href="#" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card__img news-card__img--event"><i class="ph ph-calendar"></i></div>
+          <div class="news-card__body">
+            <span class="news-card__cat news-card__cat--event">TADBIR</span>
+            <h3 class="news-card__title">NNT vakillari uchun seminar: 15.04.2026</h3>
+            <p class="news-card__excerpt">Hisobotlar tayyorlash va topshirish bo&rsquo;yicha amaliy seminar. Ro&rsquo;yxatga olish ochildi.</p>
+            <div class="news-card__footer"><span class="news-card__date">03.04.2026</span><a href="cabinet-events.html" class="news-card__link">Ro&rsquo;yxat <i class="ph ph-arrow-right"></i></a></div>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card__img news-card__img--grant"><i class="ph ph-trophy"></i></div>
+          <div class="news-card__body">
+            <span class="news-card__cat news-card__cat--grant">GRANT</span>
+            <h3 class="news-card__title">&laquo;Yoshlar salomatligi&raquo; grant musobaqasi</h3>
+            <p class="news-card__excerpt">UNICEF va O&rsquo;zNNTMA birgalikda e&rsquo;lon qilgan grant dasturi. Mablag&rsquo;: 50 000 000 so&rsquo;m. Ariza muddati: 30.04.2026.</p>
+            <div class="news-card__footer"><span class="news-card__date">01.04.2026</span><a href="cabinet-grants.html" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card__img"><i class="ph ph-file-text"></i></div>
+          <div class="news-card__body">
+            <span class="news-card__cat news-card__cat--news">YANGILIK</span>
+            <h3 class="news-card__title">Yangi a&rsquo;zolik tartibi va hujjatlar ro&rsquo;yxati</h3>
+            <p class="news-card__excerpt">2026-yildan boshlab a&rsquo;zolikni yangilash uchun yangi hujjat talablari joriy etildi. Eski shakllar qabul qilinmaydi.</p>
+            <div class="news-card__footer"><span class="news-card__date">28.03.2026</span><a href="#" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card__img news-card__img--partner"><i class="ph ph-handshake"></i></div>
+          <div class="news-card__body">
+            <span class="news-card__cat news-card__cat--news">YANGILIK</span>
+            <h3 class="news-card__title">Xalqaro hamkorlik: Germaniya fondi bilan kelishuv</h3>
+            <p class="news-card__excerpt">O&rsquo;zNNTMA va Konrad-Adenauer fondi o&rsquo;rtasida fuqarolik jamiyatini rivojlantirish bo&rsquo;yicha hamkorlik memorandumi imzolandi.</p>
+            <div class="news-card__footer"><span class="news-card__date">20.03.2026</span><a href="#" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>
+          </div>
+        </div>
+
+        <div class="news-card">
+          <div class="news-card__img news-card__img--urgent"><i class="ph ph-megaphone"></i></div>
+          <div class="news-card__body">
+            <span class="news-card__cat news-card__cat--important">MUHIM</span>
+            <h3 class="news-card__title">Elektron hisobot topshirish majburiy bo&rsquo;ladi</h3>
+            <p class="news-card__excerpt">2026-yil 1-iyuldan boshlab barcha a&rsquo;zolar hisobotlarni faqat elektron tarzda kabinet orqali topshirishi shart.</p>
+            <div class="news-card__footer"><span class="news-card__date">15.03.2026</span><a href="#" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="cabinet-notifications-root"></div>
+
+  <script src="js/cabinet-chrome.js" defer></script>
+
+  <script src="../js/pacta-foundation.js" defer></script>
+  <script src="../js/pacta-notifications.js"></script>
+  <script src="../js/pacta-app.js"></script>
+</body>
+</html>

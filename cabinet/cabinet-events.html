@@ -1,2 +1,125 @@
-﻿<!doctype html><html lang='uz'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width, initial-scale=1'><title>Cabinet Events</title><style>html,body{margin:0;height:100%;background:#0b0d12}.top{height:48px;display:flex;align-items:center;gap:12px;padding:0 14px;background:#111623;color:#fff;font:14px Arial}.top a{color:#8ea1ff;text-decoration:none}iframe{display:block;border:0;width:100%;height:calc(100% - 48px)}</style></head><body><div class='top'><strong>Cabinet · dashboard-ui Figma 1:1</strong><a href='cabinet-figma-25.html'>25 Screens</a><a href='cabinet-dashboard.html'>Dashboard</a></div><iframe src='cabinet-figma-view.html?node=14876%3A29850&name=18%20Tasks%20-%20Add%20New%20Task'></iframe></body></html>
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tadbirlar — A'zo Kabinet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="../css/pacta-tokens.css">
+  <link rel="stylesheet" href="../css/pacta-dashboard.page.css">
+  <link rel="stylesheet" href="../css/pacta-sidebar.css">
+  <link rel="stylesheet" href="../css/pacta-topbar.css">
+  <link rel="stylesheet" href="../css/pacta-notifications.css">
+  <link rel="stylesheet" href="../css/pacta-app.css">
+  <link rel="stylesheet" href="../css/pacta-modal.css">
+  <link rel="stylesheet" href="../css/pacta-foundation.css">
+  <style>
+    .event-card{background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:20px;display:flex;gap:18px;align-items:flex-start;margin-bottom:12px;transition:box-shadow .15s;}
+    .event-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.07);}
+    .event-date-badge{background:var(--primary-500);color:#fff;border-radius:10px;min-width:54px;text-align:center;padding:8px 10px;flex-shrink:0;}
+    .event-date-day{font-size:24px;font-weight:700;line-height:1;}
+    .event-date-month{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-top:2px;}
+    .event-detail{font-size:13px;color:var(--grey-500);display:flex;align-items:center;gap:6px;margin-bottom:3px;}
+    .event-actions{display:flex;align-items:center;gap:10px;margin-top:12px;}
+    .event-card--past{opacity:.6;}
+    .event-card--past .event-date-badge{background:var(--grey-300);}
+  </style>
+</head>
+<body data-nav-active="events">
+  <div class="layout">
+    <div id="cabinet-sidebar-root"></div>
 
+    <main class="main">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumbs"><a href="cabinet-dashboard.html">Bosh sahifa</a> / <span>Tadbirlar</span></div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-notifications">
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <span class="topbar-notifications-badge" aria-hidden="true"></span>
+          </div>
+          <div class="topbar-divider" aria-hidden="true"></div>
+          <div class="main__profile">
+            <div class="main__profile-avatar u-profile-avatar-initial">K</div>
+            <div>
+              <div class="main__profile-name">Kamolov Sanjar</div>
+              <div class="main__profile-role">Yangi Nafas NNT</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main__header">
+        <h1 class="main__title">Tadbirlar</h1>
+      </div>
+
+      <div class="cards">
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-calendar"></i></div></div><div class="card__body"><div><p class="card__label">Jami</p><p class="card__value">8</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div></div><div class="card__body"><div><p class="card__label">Qatnashilgan</p><p class="card__value">3</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-calendar-check"></i></div></div><div class="card__body"><div><p class="card__label">Ro&rsquo;yxatga olingan</p><p class="card__value">2</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-clock"></i></div></div><div class="card__body"><div><p class="card__label">Kelayotgan</p><p class="card__value">3</p></div></div></div>
+      </div>
+
+      <div class="tabs" style="margin-bottom:20px;">
+        <button type="button" class="tab is-active">Kelayotgan <span class="tab__count">3</span></button>
+        <button type="button" class="tab">Ro&rsquo;yxatga olingan <span class="tab__count">2</span></button>
+        <button type="button" class="tab">O&rsquo;tib ketgan <span class="tab__count">3</span></button>
+      </div>
+
+      <div class="event-card">
+        <div class="event-date-badge"><div class="event-date-day">15</div><div class="event-date-month">Apr</div></div>
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:600;color:var(--grey-900);margin:0 0 6px;">NNT vakillari uchun seminar: 2026-yil hisobotlari</div>
+          <div class="event-detail"><i class="ph ph-map-pin"></i> Toshkent, O&rsquo;zNNTMA markaziy ofisi</div>
+          <div class="event-detail"><i class="ph ph-clock"></i> 10:00 &ndash; 14:00 &middot; <i class="ph ph-users"></i> 150 o&rsquo;rin &middot; <span style="color:var(--success-600);">47 bo&rsquo;sh joy</span></div>
+          <div class="event-actions">
+            <span class="badge badge--warning"><span class="badge__dot"></span>Ro&rsquo;yxat ochiq</span>
+            <button type="button" class="btn btn--primary btn--sm">Ro&rsquo;yxatdan o&rsquo;tish</button>
+          </div>
+        </div>
+        <span style="background:var(--primary-50);color:var(--primary-600);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;flex-shrink:0;">Offline</span>
+      </div>
+
+      <div class="event-card">
+        <div class="event-date-badge"><div class="event-date-day">22</div><div class="event-date-month">Apr</div></div>
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:600;color:var(--grey-900);margin:0 0 6px;">Grantlar bo&rsquo;yicha vebinar: Xalqaro mablag&rsquo; manbalari</div>
+          <div class="event-detail"><i class="ph ph-monitor"></i> Online &mdash; Zoom orqali</div>
+          <div class="event-detail"><i class="ph ph-clock"></i> 14:00 &ndash; 16:00 &middot; <i class="ph ph-users"></i> 500 o&rsquo;rin &middot; <span style="color:var(--success-600);">241 bo&rsquo;sh joy</span></div>
+          <div class="event-actions">
+            <span class="badge badge--warning"><span class="badge__dot"></span>Ro&rsquo;yxat ochiq</span>
+            <button type="button" class="btn btn--primary btn--sm">Ro&rsquo;yxatdan o&rsquo;tish</button>
+          </div>
+        </div>
+        <span style="background:#e0f2fe;color:#0369a1;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;flex-shrink:0;">Online</span>
+      </div>
+
+      <div class="event-card">
+        <div class="event-date-badge" style="background:var(--secondary-500);"><div class="event-date-day">01</div><div class="event-date-month">May</div></div>
+        <div style="flex:1;">
+          <div style="font-size:15px;font-weight:600;color:var(--grey-900);margin:0 0 6px;">O&rsquo;zNNTMA yillik anjumani 2026</div>
+          <div class="event-detail"><i class="ph ph-map-pin"></i> Toshkent, &laquo;Intercontinental&raquo; mehmonxonasi</div>
+          <div class="event-detail"><i class="ph ph-clock"></i> 09:00 &ndash; 18:00 &middot; <i class="ph ph-users"></i> 300 o&rsquo;rin &middot; <span style="color:var(--error-500);">Faqat 8 joy qoldi</span></div>
+          <div class="event-actions">
+            <span class="badge" style="background:#fef9c3;color:#92400e;"><span class="badge__dot" style="background:#ca8a04;"></span>Shoshiling</span>
+            <button type="button" class="btn btn--primary btn--sm">Ro&rsquo;yxatdan o&rsquo;tish</button>
+          </div>
+        </div>
+        <span style="background:var(--primary-50);color:var(--primary-600);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;flex-shrink:0;">Offline</span>
+      </div>
+    </main>
+  </div>
+
+  <div id="cabinet-notifications-root"></div>
+
+  <script src="js/cabinet-chrome.js" defer></script>
+
+  <script src="../js/pacta-foundation.js" defer></script>
+  <script src="../js/pacta-notifications.js"></script>
+  <script src="../js/pacta-app.js"></script>
+</body>
+</html>
