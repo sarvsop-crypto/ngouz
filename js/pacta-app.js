@@ -286,4 +286,208 @@ document.addEventListener('DOMContentLoaded', function () {
       sidebarToggle.textContent = expanded ? '\u2039' : '\u203a';
     });
   }
+
+  // --- Filter chips: radio-group + dispatch a filter-change event ---
+  document.querySelectorAll('.filter-chip').forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      var group = chip.parentElement.querySelectorAll('.filter-chip');
+      group.forEach(function (c) { c.classList.remove('is-active'); });
+      chip.classList.add('is-active');
+      chip.dispatchEvent(new CustomEvent('pacta:filter-change', { bubbles: true }));
+    });
+  });
+
+  // --- Tabs: radio-group + optional panel show/hide via data-tab ---
+  document.querySelectorAll('.tabs, .modal-tabs').forEach(function (tabBar) {
+    var tabs = tabBar.querySelectorAll('.tab, .modal-tab');
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function (e) {
+        e.preventDefault();
+        tabs.forEach(function (t) { t.classList.remove('is-active'); });
+        tab.classList.add('is-active');
+        var target = tab.getAttribute('data-tab');
+        if (!target) return;
+        var root = tabBar.parentElement || document;
+        root.querySelectorAll('.modal-tab-panel').forEach(function (panel) {
+          panel.classList.toggle('is-active', panel.id === 'tab-' + target);
+        });
+      });
+    });
+  });
+
+  // --- Table row filtering inside <section class="table-section"> ---
+  if (!document.getElementById('pacta-table-empty-style')) {
+    var style = document.createElement('style');
+    style.id = 'pacta-table-empty-style';
+    style.textContent =
+      '.table__empty-row td{padding:36px 18px;text-align:center;color:var(--grey-400,#9ca3af);font-size:13px;}' +
+      '.table__empty-row td i{margin-right:6px;font-size:16px;vertical-align:middle;}';
+    document.head.appendChild(style);
+  }
+
+  // --- Client-side form validation (opt-in via data-validate on <form>) ---
+  if (!document.getElementById('pacta-form-error-style')) {
+    var formStyle = document.createElement('style');
+    formStyle.id = 'pacta-form-error-style';
+    formStyle.textContent =
+      '.is-invalid{border-color:#dc2626 !important;background-color:#fef2f2 !important;}' +
+      '.field-error{color:#dc2626;font-size:12px;margin-top:4px;display:block;line-height:1.4;}' +
+      '.field-error::before{content:"\\26A0";margin-right:4px;}' +
+      '.form-success{background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:14px;}' +
+      '.form-success::before{content:"\\2713";font-weight:700;margin-right:6px;}';
+    document.head.appendChild(formStyle);
+  }
+
+  function clearFieldError(field) {
+    field.classList.remove('is-invalid');
+    var next = field.nextElementSibling;
+    if (next && next.classList && next.classList.contains('field-error')) {
+      next.parentNode.removeChild(next);
+    }
+  }
+
+  function setFieldError(field, message) {
+    field.classList.add('is-invalid');
+    var existing = field.nextElementSibling;
+    if (existing && existing.classList && existing.classList.contains('field-error')) {
+      existing.textContent = message;
+      return;
+    }
+    var span = document.createElement('span');
+    span.className = 'field-error';
+    span.textContent = message;
+    if (field.parentNode) field.parentNode.insertBefore(span, field.nextSibling);
+  }
+
+  document.querySelectorAll('form[data-validate]').forEach(function (form) {
+    var fields = form.querySelectorAll('input, select, textarea');
+
+    fields.forEach(function (field) {
+      if (field.type === 'hidden' || field.type === 'submit' || field.type === 'button') return;
+      field.addEventListener('blur', function () {
+        if (field.value.trim() === '' && !field.required) {
+          clearFieldError(field);
+          return;
+        }
+        if (field.checkValidity && field.checkValidity()) {
+          clearFieldError(field);
+        }
+      });
+      field.addEventListener('input', function () {
+        if (field.classList.contains('is-invalid') && field.checkValidity && field.checkValidity()) {
+          clearFieldError(field);
+        }
+      });
+    });
+
+    form.addEventListener('submit', function (e) {
+      var firstInvalid = null;
+      var hasInvalid = false;
+
+      fields.forEach(function (field) {
+        if (field.type === 'hidden' || field.type === 'submit' || field.type === 'button') return;
+        clearFieldError(field);
+        if (!field.checkValidity || field.checkValidity()) return;
+        hasInvalid = true;
+        var message = field.validationMessage || 'Ushbu maydonni to\'ldiring';
+        if (field.validity && field.validity.valueMissing) message = 'Ushbu maydon majburiy';
+        else if (field.validity && field.validity.typeMismatch && field.type === 'email') message = 'Email manzil noto\'g\'ri';
+        else if (field.validity && field.validity.tooShort) message = 'Juda qisqa (kamida ' + field.minLength + ' ta belgi)';
+        else if (field.validity && field.validity.patternMismatch) message = 'Format noto\'g\'ri';
+        setFieldError(field, message);
+        if (!firstInvalid) firstInvalid = field;
+      });
+
+      if (hasInvalid) {
+        e.preventDefault();
+        if (firstInvalid) firstInvalid.focus();
+        return;
+      }
+
+      // Valid. If the form has an action attribute, let the native submit
+      // take over (it will navigate). Otherwise show an inline success
+      // banner so the user gets feedback without a real backend.
+      if (form.hasAttribute('action')) return;
+
+      e.preventDefault();
+      var existingSuccess = form.querySelector('.form-success');
+      if (existingSuccess) existingSuccess.parentNode.removeChild(existingSuccess);
+      var success = document.createElement('div');
+      success.className = 'form-success';
+      success.textContent = 'Ma\'lumotlaringiz qabul qilindi. Tez orada siz bilan bog\'lanamiz.';
+      form.insertBefore(success, form.firstChild);
+      form.reset();
+      setTimeout(function () {
+        if (success.parentNode) success.parentNode.removeChild(success);
+      }, 6000);
+    });
+  });
+
+  document.querySelectorAll('.table-section').forEach(function (section) {
+    var tbody = section.querySelector('.table tbody');
+    if (!tbody) return;
+    var searchInput = section.querySelector('input.table-section__search[type="search"]');
+    var hasChips = !!section.querySelector('.filter-chip');
+    if (!searchInput && !hasChips) return;
+
+    var emptyRow = null;
+    function ensureEmptyRow() {
+      if (emptyRow) return emptyRow;
+      var colCount = 1;
+      var headerRow = section.querySelector('.table thead tr');
+      if (headerRow) colCount = headerRow.children.length;
+      emptyRow = document.createElement('tr');
+      emptyRow.className = 'table__empty-row';
+      emptyRow.setAttribute('aria-hidden', 'true');
+      emptyRow.innerHTML =
+        '<td colspan="' + colCount + '">' +
+          '<i class="ph ph-magnifying-glass"></i> Hech narsa topilmadi' +
+        '</td>';
+      return emptyRow;
+    }
+
+    function activeFilter() {
+      var active = section.querySelector('.filter-chip.is-active');
+      if (!active) return 'all';
+      return active.getAttribute('data-filter') || 'all';
+    }
+
+    function rowMatches(row, filter, term) {
+      if (filter !== 'all') {
+        var status = row.getAttribute('data-status');
+        if (!status || status !== filter) return false;
+      }
+      if (term && row.textContent.toLowerCase().indexOf(term) === -1) return false;
+      return true;
+    }
+
+    function apply() {
+      var filter = activeFilter();
+      var term = searchInput ? searchInput.value.trim().toLowerCase() : '';
+      var visible = 0;
+      var rows = tbody.querySelectorAll('tr');
+      rows.forEach(function (row) {
+        if (row.classList.contains('table__empty-row')) return;
+        var show = rowMatches(row, filter, term);
+        row.style.display = show ? '' : 'none';
+        if (show) visible += 1;
+      });
+      var emp = ensureEmptyRow();
+      if (visible === 0) {
+        if (!emp.parentNode) tbody.appendChild(emp);
+      } else if (emp.parentNode) {
+        emp.parentNode.removeChild(emp);
+      }
+    }
+
+    section.addEventListener('pacta:filter-change', apply);
+
+    if (searchInput) {
+      var debounce;
+      searchInput.addEventListener('input', function () {
+        clearTimeout(debounce);
+        debounce = setTimeout(apply, 120);
+      });
+    }
+  });
 });

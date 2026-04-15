@@ -3,6 +3,7 @@
 <html lang="uz">
 <head>
 <meta charset="utf-8"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Korrupsiyani oldini olish — O'zNNTMA | ngo.uz</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -105,7 +106,7 @@
 </div>
 </div>
 <div class="card" style="max-width:680px;margin:0 auto">
-<form id="antiCorruptionForm" novalidate="">
+<form id="antiCorruptionForm" novalidate="" data-validate>
 <div class="form-grid">
 <div class="form-field form-field--full">
 <label class="form-label" for="ac-name">Ism (ixtiyoriy — anonim qoldirish mumkin)</label>
@@ -178,6 +179,7 @@ document.getElementById('antiCorruptionForm').addEventListener('submit', functio
 });
 </script>
 <script src="js/main.js"></script>
+<script src="js/pacta-app.js" defer></script>
 
 <div class="search-overlay" id="searchOverlay" role="dialog" aria-label="Qidirish" aria-modal="true" aria-hidden="true">
   <div class="search-overlay__box">

@@ -2,6 +2,7 @@
 <html lang="uz">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Korrupsiya murojaatlari — O'zNNTMA Admin</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -147,7 +148,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr data-status="new">
               <td><input type="checkbox" aria-label="Tanlash" /></td>
               <td><strong>KRP-2026-0042</strong></td>
               <td><span class="badge badge--error"><span class="badge__dot"></span>Anonim</span></td>
@@ -157,7 +158,7 @@
               <td><span class="badge badge--warning"><span class="badge__dot"></span>Yangi</span></td>
               <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="corruptionReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
             </tr>
-            <tr>
+            <tr data-status="review">
               <td><input type="checkbox" aria-label="Tanlash" /></td>
               <td><strong>KRP-2026-0041</strong></td>
               <td>Karimov Javlon</td>
@@ -167,7 +168,7 @@
               <td><span class="badge badge--warning"><span class="badge__dot"></span>Tekshirilmoqda</span></td>
               <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="corruptionReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
             </tr>
-            <tr>
+            <tr data-status="review">
               <td><input type="checkbox" aria-label="Tanlash" /></td>
               <td><strong>KRP-2026-0040</strong></td>
               <td><span class="badge badge--error"><span class="badge__dot"></span>Anonim</span></td>
@@ -177,7 +178,7 @@
               <td><span class="badge badge--warning"><span class="badge__dot"></span>Tekshirilmoqda</span></td>
               <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="corruptionReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
             </tr>
-            <tr>
+            <tr data-status="closed">
               <td><input type="checkbox" aria-label="Tanlash" /></td>
               <td><strong>KRP-2026-0039</strong></td>
               <td>Nazarova Gulnora</td>

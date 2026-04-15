@@ -3,6 +3,7 @@
 <html lang="uz">
 <head>
 <meta charset="utf-8"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>NNT hisobot shakllari - ngo.uz</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -82,7 +83,7 @@
 <main id="main-content">
 <section class="grid-bg"><div class="container hero center"><h1>NNT hisobot shakllari</h1><p class="sub">Hisobot turlari, muddatlar va onlayn yuborish shakli.</p></div></section>
 <section class="section"><div class="container"><div class="doc-table"><div class="doc-row head"><span>Hisobot turi</span><span>Muddati</span><span>Format</span><span>Shakl</span></div><div class="doc-row"><span>Yillik moliyaviy hisobot</span><span>1-fevral</span><span>XLSX/PDF</span><a href="reporting-forms.html">Yuklab olish</a></div><div class="doc-row"><span>Yarim yillik faoliyat hisobot</span><span>15-iyul</span><span>DOCX/PDF</span><a href="reporting-forms.html">Yuklab olish</a></div><div class="doc-row"><span>Grant loyihasi yakuniy hisobot</span><span>30 kun ichida</span><span>DOCX</span><a href="reporting-forms.html">Yuklab olish</a></div></div></div></section>
-<section class="section section-no-top"><div class="container"><h2 class="section-title">Hisobot yuborish</h2><div class="card"><form action="report-status.html" method="get"><div class="form-grid"><div class="form-field"><label class="form-label" for="report-org">Tashkilot nomi</label><input id="report-org" name="org" required=""/></div><div class="form-field"><label class="form-label" for="report-stir">STIR</label><input id="report-stir" name="stir" required=""/></div><div class="form-field"><label class="form-label" for="report-fio">Mas'ul shaxs F.I.Sh.</label><input id="report-fio" name="fio" required=""/></div><div class="form-field"><label class="form-label" for="report-email">Elektron pochta</label><input autocomplete="email" id="report-email" name="email" required="" type="email"/></div><div class="form-field"><label class="form-label" for="report-type">Hisobot turi</label><select id="report-type" name="type" required=""><option value="">Hisobot turini tanlang</option><option>Yillik moliyaviy hisobot</option><option>Yarim yillik faoliyat hisobot</option><option>Grant loyihasi yakuniy hisobot</option></select></div><div class="form-field"><label class="form-label" for="report-period">Hisobot davri</label><input id="report-period" name="period" required=""/></div></div><label class="check-line form-consent"><input id="report-confirm" type="checkbox"/> Ma'lumotlarning to'g'riligini tasdiqlayman.</label><div class="form-actions"><button class="btn" disabled="" id="report-submit" type="submit">Hisobotni yuborish</button></div></form></div></div></section>
+<section class="section section-no-top"><div class="container"><h2 class="section-title">Hisobot yuborish</h2><div class="card"><form action="report-status.html" method="get" novalidate data-validate><div class="form-grid"><div class="form-field"><label class="form-label" for="report-org">Tashkilot nomi</label><input id="report-org" name="org" required=""/></div><div class="form-field"><label class="form-label" for="report-stir">STIR</label><input id="report-stir" name="stir" required=""/></div><div class="form-field"><label class="form-label" for="report-fio">Mas'ul shaxs F.I.Sh.</label><input id="report-fio" name="fio" required=""/></div><div class="form-field"><label class="form-label" for="report-email">Elektron pochta</label><input autocomplete="email" id="report-email" name="email" required="" type="email"/></div><div class="form-field"><label class="form-label" for="report-type">Hisobot turi</label><select id="report-type" name="type" required=""><option value="">Hisobot turini tanlang</option><option>Yillik moliyaviy hisobot</option><option>Yarim yillik faoliyat hisobot</option><option>Grant loyihasi yakuniy hisobot</option></select></div><div class="form-field"><label class="form-label" for="report-period">Hisobot davri</label><input id="report-period" name="period" required=""/></div></div><label class="check-line form-consent"><input id="report-confirm" type="checkbox"/> Ma'lumotlarning to'g'riligini tasdiqlayman.</label><div class="form-actions"><button class="btn" disabled="" id="report-submit" type="submit">Hisobotni yuborish</button></div></form></div></div></section>
 </main>
 <footer class="site-footer">
 <div class="footer-inner">
@@ -115,6 +116,7 @@
 </div>
 </footer>
 <script src="js/main.js"></script>
+<script src="js/pacta-app.js" defer></script>
 
 <div class="search-overlay" id="searchOverlay" role="dialog" aria-label="Qidirish" aria-modal="true" aria-hidden="true">
   <div class="search-overlay__box">

@@ -3,6 +3,7 @@
 <html lang="uz">
 <head>
 <meta charset="utf-8"/>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Qayta aloqa — O'zNNTMA | ngo.uz</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
@@ -96,7 +97,7 @@
 <section class="section">
 <div class="container">
 <div class="card" style="max-width:680px;margin:0 auto">
-<form id="feedbackForm" novalidate="">
+<form id="feedbackForm" novalidate="" data-validate>
 <div class="form-grid">
 <div class="form-field">
 <label class="form-label" for="qa-name">Ism Familiya *</label>
@@ -180,6 +181,7 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
 });
 </script>
 <script src="js/main.js"></script>
+<script src="js/pacta-app.js" defer></script>
 
 <div class="search-overlay" id="searchOverlay" role="dialog" aria-label="Qidirish" aria-modal="true" aria-hidden="true">
   <div class="search-overlay__box">
