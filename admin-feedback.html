@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Qayta aloqa — O'zNNTMA Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="css/pacta-tokens.css">
+  <link rel="stylesheet" href="css/pacta-contracts.page.css">
+  <link rel="stylesheet" href="css/pacta-sidebar.css">
+  <link rel="stylesheet" href="css/pacta-topbar.css">
+  <link rel="stylesheet" href="css/pacta-notifications.css">
+  <link rel="stylesheet" href="css/pacta-app.css">
+  <link rel="stylesheet" href="css/pacta-foundation.css">
+  <link rel="stylesheet" href="css/pacta-modal.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar__header">
+        <div class="u-inline-stack">
+          <div class="sidebar__logo u-logo-badge">N</div>
+          <span class="sidebar__title">O'zNNTMA Admin</span>
+        </div>
+        <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
+      </div>
+      <div class="sidebar__search" id="sidebarSearchTrigger">
+        <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>
+        <input type="text" placeholder="Qidirish" aria-label="Qidirish" />
+      </div>
+      <nav class="sidebar__nav">
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">ASOSIY MENYU</div>
+          <a href="admin-dashboard.html" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
+          <a href="admin-membership-requests.html" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
+          <a href="admin-registry.html" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
+          <a href="admin-regions.html" class="sidebar__nav-link" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin"></i></span><span class="sidebar__nav-link-text">Hududlar</span></a>
+          <a href="admin-documents.html" class="sidebar__nav-link" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
+          <a href="admin-tasks.html" class="sidebar__nav-link" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square"></i></span><span class="sidebar__nav-link-text">Topshiriqlar</span></a>
+          <a href="admin-users.html" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
+          <a href="admin-reports.html" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar"></i></span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
+          <a href="admin-analytics.html" class="sidebar__nav-link" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up"></i></span><span class="sidebar__nav-link-text">Tahliliy ma'lumotlar</span></a>
+        </div>
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">MUROJAATLAR</div>
+          <a href="admin-service-requests.html" class="sidebar__nav-link" title="Xizmat so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-wrench"></i></span><span class="sidebar__nav-link-text">Xizmat so'rovlari</span></a>
+          <a href="admin-corruption-reports.html" class="sidebar__nav-link" title="Korrupsiya murojaatlari"><span class="sidebar__nav-icon"><i class="ph ph-shield-warning"></i></span><span class="sidebar__nav-link-text">Korrupsiya murojaatlari</span></a>
+          <a href="admin-feedback.html" class="sidebar__nav-link is-active" title="Qayta aloqa"><span class="sidebar__nav-icon"><i class="ph ph-chat-dots"></i></span><span class="sidebar__nav-link-text">Qayta aloqa</span></a>
+        </div>
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">KONTENT</div>
+          <a href="admin-news.html" class="sidebar__nav-link" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper"></i></span><span class="sidebar__nav-link-text">Yangiliklar</span></a>
+          <a href="admin-events.html" class="sidebar__nav-link" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank"></i></span><span class="sidebar__nav-link-text">Tadbirlar</span></a>
+          <a href="admin-grants.html" class="sidebar__nav-link" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins"></i></span><span class="sidebar__nav-link-text">Grantlar</span></a>
+          <a href="admin-settings.html" class="sidebar__nav-link" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
+        </div>
+        <div class="sidebar__nav-section u-mt-auto">
+          <a href="#" class="sidebar__nav-link logout" id="logoutTrigger" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
+        </div>
+      </nav>
+    </aside>
+    <main class="main" id="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>Qayta aloqa</span></div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-notifications">
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <span class="topbar-notifications-badge" aria-hidden="true"></span>
+          </div>
+          <div class="topbar-divider" aria-hidden="true"></div>
+          <div class="main__profile">
+            <div class="main__profile-avatar u-avatar-badge-sm">A</div>
+            <div>
+              <div class="main__profile-name">Administrator</div>
+              <div class="main__profile-role">Bosh admin</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main__header">
+        <h1 class="main__title">Qayta aloqa</h1>
+        <div class="main__btns">
+          <button type="button" class="btn btn--secondary" data-action="export" data-export-title="Qayta aloqa eksport"><i class="ph ph-download-simple"></i> Eksport (CSV)</button>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-chat-dots"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Jami xabarlar</p><p class="card__value">312</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 14%</span></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-envelope-simple-open"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">O&rsquo;qilmagan</p><p class="card__value">38</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 7%</span></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Javob berilgan</p><p class="card__value">241</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 10%</span></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon" style="background:#e0f2fe;color:#0369a1;"><i class="ph ph-star"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">O&rsquo;rtacha baho</p><p class="card__value">4.6</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 0.2</span></div>
+        </div>
+      </div>
+
+      <section class="table-section" aria-labelledby="feedbackTableTitle">
+        <div class="table-section__head">
+          <h2 class="table-section__title" id="feedbackTableTitle">Kelib tushgan xabarlar</h2>
+          <div class="table-section__tools">
+            <button type="button" class="btn btn--secondary"><i class="ph ph-download-simple"></i> Eksport (CSV)</button>
+          </div>
+        </div>
+        <form class="u-filter-row" role="search" aria-label="Xabarlarni filtrlash">
+          <label for="feedbackSearch" class="u-visually-hidden">Xabar raqami yoki jo'natuvchi bo'yicha qidirish</label>
+          <input id="feedbackSearch" type="search" class="table-section__search u-search-260" placeholder="Xabar #, ism, mavzu..." aria-label="Qidirish" />
+          <button type="button" class="filter-chip is-active" data-filter="all">Barchasi <span class="filter-chip__count">312</span></button>
+          <button type="button" class="filter-chip" data-filter="unread">O&rsquo;qilmagan <span class="filter-chip__count">38</span></button>
+          <button type="button" class="filter-chip" data-filter="responded">Javob berilgan <span class="filter-chip__count">241</span></button>
+          <button type="button" class="filter-chip" data-filter="closed">Yopilgan <span class="filter-chip__count">33</span></button>
+          <label for="feedbackTopic" class="u-visually-hidden">Mavzu bo'yicha filter</label>
+          <select id="feedbackTopic" class="table-section__search u-search-160" aria-label="Mavzu">
+            <option value="">Barcha mavzular</option>
+            <option>Tashkilot haqida</option>
+            <option>Sayt xatosi</option>
+            <option>Taklif</option>
+            <option>Minnatdorchilik</option>
+            <option>Shikoyat</option>
+            <option>Boshqa</option>
+          </select>
+        </form>
+        <table class="table">
+          <caption class="u-visually-hidden">Qayta aloqa xabarlari jadvali</caption>
+          <thead>
+            <tr>
+              <th scope="col"><input type="checkbox" aria-label="Barchasini tanlash" /></th>
+              <th scope="col">Xabar #</th><th scope="col">Jo&rsquo;natuvchi</th><th scope="col">Mavzu</th>
+              <th scope="col">Turi</th><th scope="col">Topshirilgan</th><th scope="col">Holat</th><th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox" aria-label="Tanlash" /></td>
+              <td><strong>QAL-2026-0512</strong></td>
+              <td>Tursunova Madina<br><span class="u-text-muted-sm">madina@example.uz</span></td>
+              <td>Saytda hisobot yuklash ishlamaydi</td>
+              <td>Sayt xatosi</td>
+              <td>08.04.2026</td>
+              <td><span class="badge badge--warning"><span class="badge__dot"></span>O&rsquo;qilmagan</span></td>
+              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="feedbackReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Tanlash" /></td>
+              <td><strong>QAL-2026-0511</strong></td>
+              <td>Olimov Bekzod<br><span class="u-text-muted-sm">+998 99 887-66-55</span></td>
+              <td>NNT o&rsquo;qitish kursi haqida taklif</td>
+              <td>Taklif</td>
+              <td>07.04.2026</td>
+              <td><span class="badge badge--warning"><span class="badge__dot"></span>O&rsquo;qilmagan</span></td>
+              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="feedbackReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Tanlash" /></td>
+              <td><strong>QAL-2026-0510</strong></td>
+              <td>Yoshlar Kelajagi NNT<br><span class="u-text-muted-sm">Andijon</span></td>
+              <td>Yordam uchun minnatdorchilik</td>
+              <td>Minnatdorchilik</td>
+              <td>06.04.2026</td>
+              <td><span class="badge badge--success"><span class="badge__dot"></span>Javob berilgan</span></td>
+              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="feedbackReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Tanlash" /></td>
+              <td><strong>QAL-2026-0509</strong></td>
+              <td>Karimov Dilshod<br><span class="u-text-muted-sm">dilshod.k@mail.ru</span></td>
+              <td>Grant sharti noaniq ko&rsquo;rsatilgan</td>
+              <td>Shikoyat</td>
+              <td>05.04.2026</td>
+              <td><span class="badge badge--success"><span class="badge__dot"></span>Javob berilgan</span></td>
+              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="feedbackReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+    <div class="notifications-panel__header">
+      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
+    </div>
+    <div class="notifications-panel__list">
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon"><i class="ph ph-chat-dots"></i></div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Yangi qayta aloqa xabari <span class="notifications-panel__dot"></span></p>
+          <p class="notifications-panel__item-body">Tursunova Madina saytda hisobot yuklash xatosini aytdi.</p>
+          <p class="notifications-panel__item-time">30 daqiqa oldin</p>
+        </div>
+      </div>
+    </div>
+    <div class="notifications-panel__footer">
+      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
+      <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="feedbackReviewModal" role="dialog" aria-modal="true" aria-labelledby="feedbackReviewTitle">
+    <div class="modal u-modal-max-600">
+      <div class="modal__head">
+        <h2 class="modal__title" id="feedbackReviewTitle">Xabar tafsilotlari</h2>
+        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="modal__body">
+        <div class="u-modal-grid-2">
+          <div class="modal__field">
+            <label class="modal__label">Xabar raqami</label>
+            <div class="u-modal-value u-modal-value-strong">QAL-2026-0512</div>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label">Topshirilgan</label>
+            <div class="u-modal-value">08.04.2026 &middot; 11:42</div>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label">Jo&rsquo;natuvchi</label>
+            <div class="u-modal-value u-modal-value-medium">Tursunova Madina</div>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label">Aloqa</label>
+            <div class="u-modal-value">madina@example.uz</div>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label">Turi</label>
+            <div class="u-modal-value">Sayt xatosi</div>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label">Holat</label>
+            <div class="u-modal-value"><span class="badge badge--warning"><span class="badge__dot"></span>O&rsquo;qilmagan</span></div>
+          </div>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">Mavzu</label>
+          <div class="u-modal-value u-modal-value-medium">Saytda hisobot yuklash ishlamaydi</div>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">Xabar matni</label>
+          <div class="u-modal-value">Kabinetda 2026-yil I chorak hisobotini yuklamoqchi edim, lekin &ldquo;Yuklash&rdquo; tugmasi bosilmayapti. Brauzer: Chrome 132. Iltimos, tekshirib ko&rsquo;ring.</div>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">Javob matni</label>
+          <textarea class="modal__textarea" placeholder="Foydalanuvchiga javobni kiriting..."></textarea>
+        </div>
+      </div>
+      <div class="modal__foot">
+        <button type="button" class="btn btn--secondary" data-modal-close>Yopish</button>
+        <button type="button" class="btn btn--secondary" data-modal-close><i class="ph ph-archive"></i> Arxivlash</button>
+        <button type="button" class="btn btn--primary" data-modal-close><i class="ph ph-paper-plane-tilt"></i> Javob yuborish</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/pacta-foundation.js" defer></script>
+  <script src="js/pacta-notifications.js"></script>
+  <script src="js/pacta-app.js"></script>
+</body>
+</html>

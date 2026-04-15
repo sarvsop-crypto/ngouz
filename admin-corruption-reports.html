@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Korrupsiya murojaatlari — O'zNNTMA Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Inter+Tight:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+  <link rel="stylesheet" href="css/pacta-tokens.css">
+  <link rel="stylesheet" href="css/pacta-contracts.page.css">
+  <link rel="stylesheet" href="css/pacta-sidebar.css">
+  <link rel="stylesheet" href="css/pacta-topbar.css">
+  <link rel="stylesheet" href="css/pacta-notifications.css">
+  <link rel="stylesheet" href="css/pacta-app.css">
+  <link rel="stylesheet" href="css/pacta-foundation.css">
+  <link rel="stylesheet" href="css/pacta-modal.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar__header">
+        <div class="u-inline-stack">
+          <div class="sidebar__logo u-logo-badge">N</div>
+          <span class="sidebar__title">O'zNNTMA Admin</span>
+        </div>
+        <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>
+      </div>
+      <div class="sidebar__search" id="sidebarSearchTrigger">
+        <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>
+        <input type="text" placeholder="Qidirish" aria-label="Qidirish" />
+      </div>
+      <nav class="sidebar__nav">
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">ASOSIY MENYU</div>
+          <a href="admin-dashboard.html" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
+          <a href="admin-membership-requests.html" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
+          <a href="admin-registry.html" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
+          <a href="admin-regions.html" class="sidebar__nav-link" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin"></i></span><span class="sidebar__nav-link-text">Hududlar</span></a>
+          <a href="admin-documents.html" class="sidebar__nav-link" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
+          <a href="admin-tasks.html" class="sidebar__nav-link" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square"></i></span><span class="sidebar__nav-link-text">Topshiriqlar</span></a>
+          <a href="admin-users.html" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
+          <a href="admin-reports.html" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar"></i></span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
+          <a href="admin-analytics.html" class="sidebar__nav-link" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up"></i></span><span class="sidebar__nav-link-text">Tahliliy ma'lumotlar</span></a>
+        </div>
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">MUROJAATLAR</div>
+          <a href="admin-service-requests.html" class="sidebar__nav-link" title="Xizmat so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-wrench"></i></span><span class="sidebar__nav-link-text">Xizmat so'rovlari</span></a>
+          <a href="admin-corruption-reports.html" class="sidebar__nav-link is-active" title="Korrupsiya murojaatlari"><span class="sidebar__nav-icon"><i class="ph ph-shield-warning"></i></span><span class="sidebar__nav-link-text">Korrupsiya murojaatlari</span></a>
+          <a href="admin-feedback.html" class="sidebar__nav-link" title="Qayta aloqa"><span class="sidebar__nav-icon"><i class="ph ph-chat-dots"></i></span><span class="sidebar__nav-link-text">Qayta aloqa</span></a>
+        </div>
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">KONTENT</div>
+          <a href="admin-news.html" class="sidebar__nav-link" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper"></i></span><span class="sidebar__nav-link-text">Yangiliklar</span></a>
+          <a href="admin-events.html" class="sidebar__nav-link" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank"></i></span><span class="sidebar__nav-link-text">Tadbirlar</span></a>
+          <a href="admin-grants.html" class="sidebar__nav-link" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins"></i></span><span class="sidebar__nav-link-text">Grantlar</span></a>
+          <a href="admin-settings.html" class="sidebar__nav-link" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
+        </div>
+        <div class="sidebar__nav-section u-mt-auto">
+          <a href="#" class="sidebar__nav-link logout" id="logoutTrigger" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
+        </div>
+      </nav>
+    </aside>
+    <main class="main" id="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <div class="breadcrumbs"><a href="admin-dashboard.html">Boshqaruv</a> / <span>Korrupsiya murojaatlari</span></div>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-notifications">
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <span class="topbar-notifications-badge" aria-hidden="true"></span>
+          </div>
+          <div class="topbar-divider" aria-hidden="true"></div>
+          <div class="main__profile">
+            <div class="main__profile-avatar u-avatar-badge-sm">A</div>
+            <div>
+              <div class="main__profile-name">Administrator</div>
+              <div class="main__profile-role">Bosh admin</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main__header">
+        <h1 class="main__title">Korrupsiya murojaatlari</h1>
+        <div class="main__btns">
+          <button type="button" class="btn btn--secondary" data-action="export" data-export-title="Korrupsiya murojaatlari eksport"><i class="ph ph-download-simple"></i> Eksport (CSV)</button>
+        </div>
+      </div>
+
+      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#991b1b;">
+        <i class="ph ph-lock-key" style="font-size:18px;flex-shrink:0;margin-top:1px;"></i>
+        <span>Ushbu bo&rsquo;lim maxfiy ma&rsquo;lumotlarni o&rsquo;z ichiga oladi. Anonim murojaatlar arizachining shaxsini oshkor qilmaydi. Har bir harakat audit jurnaliga yoziladi.</span>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-shield-warning"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Jami murojaatlar</p><p class="card__value">42</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 4%</span></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-envelope-simple-open"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Yangi</p><p class="card__value">7</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 2%</span></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-magnifying-glass"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Tekshirilmoqda</p><p class="card__value">14</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 1%</span></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Yopilgan</p><p class="card__value">21</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 3%</span></div>
+        </div>
+      </div>
+
+      <section class="table-section" aria-labelledby="corruptionTableTitle">
+        <div class="table-section__head">
+          <h2 class="table-section__title" id="corruptionTableTitle">Kelib tushgan murojaatlar</h2>
+          <div class="table-section__tools">
+            <button type="button" class="btn btn--secondary"><i class="ph ph-download-simple"></i> Eksport (CSV)</button>
+          </div>
+        </div>
+        <form class="u-filter-row" role="search" aria-label="Murojaatlarni filtrlash">
+          <label for="corruptionSearch" class="u-visually-hidden">Murojaat raqami yoki mavzu bo'yicha qidirish</label>
+          <input id="corruptionSearch" type="search" class="table-section__search u-search-260" placeholder="Murojaat #, mavzu..." aria-label="Qidirish" />
+          <button type="button" class="filter-chip is-active" data-filter="all">Barchasi <span class="filter-chip__count">42</span></button>
+          <button type="button" class="filter-chip" data-filter="new">Yangi <span class="filter-chip__count">7</span></button>
+          <button type="button" class="filter-chip" data-filter="review">Tekshirilmoqda <span class="filter-chip__count">14</span></button>
+          <button type="button" class="filter-chip" data-filter="closed">Yopilgan <span class="filter-chip__count">21</span></button>
+          <label for="corruptionSeverity" class="u-visually-hidden">Darajasi bo'yicha filter</label>
+          <select id="corruptionSeverity" class="table-section__search u-search-160" aria-label="Darajasi">
+            <option value="">Barcha darajalar</option>
+            <option>Yuqori</option>
+            <option>O&rsquo;rta</option>
+            <option>Past</option>
+          </select>
+        </form>
+        <table class="table">
+          <caption class="u-visually-hidden">Korrupsiya murojaatlari jadvali</caption>
+          <thead>
+            <tr>
+              <th scope="col"><input type="checkbox" aria-label="Barchasini tanlash" /></th>
+              <th scope="col">Murojaat #</th><th scope="col">Arizachi</th><th scope="col">Mavzu</th>
+              <th scope="col">Hudud</th><th scope="col">Darajasi</th><th scope="col">Holat</th><th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox" aria-label="Tanlash" /></td>
+              <td><strong>KRP-2026-0042</strong></td>
+              <td><span class="badge badge--error"><span class="badge__dot"></span>Anonim</span></td>
+              <td>Grant taqsimotida qonunbuzarlik</td>
+              <td>Farg&rsquo;ona</td>
+              <td><span class="u-text-danger u-text-bold">Yuqori</span></td>
+              <td><span class="badge badge--warning"><span class="badge__dot"></span>Yangi</span></td>
+              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="corruptionReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Tanlash" /></td>
+              <td><strong>KRP-2026-0041</strong></td>
+              <td>Karimov Javlon</td>
+              <td>Xizmat ko&rsquo;rsatishda lavozim suiiste&rsquo;moli</td>
+              <td>Toshkent sh.</td>
+              <td><span class="u-text-warning u-text-bold">O&rsquo;rta</span></td>
+              <td><span class="badge badge--warning"><span class="badge__dot"></span>Tekshirilmoqda</span></td>
+              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="corruptionReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Tanlash" /></td>
+              <td><strong>KRP-2026-0040</strong></td>
+              <td><span class="badge badge--error"><span class="badge__dot"></span>Anonim</span></td>
+              <td>Hujjatlarni asossiz rad etish</td>
+              <td>Samarqand</td>
+              <td><span class="u-text-warning u-text-bold">O&rsquo;rta</span></td>
+              <td><span class="badge badge--warning"><span class="badge__dot"></span>Tekshirilmoqda</span></td>
+              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="corruptionReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Tanlash" /></td>
+              <td><strong>KRP-2026-0039</strong></td>
+              <td>Nazarova Gulnora</td>
+              <td>Xayriya mablag&rsquo;larini notog&rsquo;ri taqsimlash</td>
+              <td>Buxoro</td>
+              <td><span class="u-text-muted u-text-bold">Past</span></td>
+              <td><span class="badge badge--success"><span class="badge__dot"></span>Yopilgan</span></td>
+              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="corruptionReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+    <div class="notifications-panel__header">
+      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
+    </div>
+    <div class="notifications-panel__list">
+      <div class="notifications-panel__item">
+        <div class="notifications-panel__icon"><i class="ph ph-shield-warning"></i></div>
+        <div class="notifications-panel__content">
+          <p class="notifications-panel__item-title">Yuqori darajali anonim murojaat <span class="notifications-panel__dot"></span></p>
+          <p class="notifications-panel__item-body">KRP-2026-0042 &mdash; Farg&rsquo;onadan grant taqsimoti bo&rsquo;yicha shikoyat.</p>
+          <p class="notifications-panel__item-time">20 daqiqa oldin</p>
+        </div>
+      </div>
+    </div>
+    <div class="notifications-panel__footer">
+      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
+      <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="corruptionReviewModal" role="dialog" aria-modal="true" aria-labelledby="corruptionReviewTitle">
+    <div class="modal u-modal-max-600">
+      <div class="modal__head">
+        <h2 class="modal__title" id="corruptionReviewTitle">Murojaat tafsilotlari</h2>
+        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="modal__body">
+        <div class="u-modal-grid-2">
+          <div class="modal__field">
+            <label class="modal__label">Murojaat raqami</label>
+            <div class="u-modal-value u-modal-value-strong">KRP-2026-0042</div>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label">Topshirilgan</label>
+            <div class="u-modal-value">08.04.2026 &middot; 09:14</div>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label">Arizachi</label>
+            <div class="u-modal-value"><span class="badge badge--error"><span class="badge__dot"></span>Anonim</span></div>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label">Hudud</label>
+            <div class="u-modal-value">Farg&rsquo;ona viloyati</div>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label">Darajasi</label>
+            <div class="u-modal-value u-text-danger u-text-bold">Yuqori</div>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label">Holat</label>
+            <div class="u-modal-value"><span class="badge badge--warning"><span class="badge__dot"></span>Yangi</span></div>
+          </div>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">Mavzu</label>
+          <div class="u-modal-value u-modal-value-medium">Grant taqsimotida qonunbuzarlik</div>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">Batafsil matn</label>
+          <div class="u-modal-value">Farg&rsquo;ona viloyatida 2026-yil birinchi chorakdagi grantlar taqsimotida bir nechta NNTlar qonunsiz ustunlik olishgan. Hujjatlar va dalillar ilova qilingan.</div>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label">Mas&rsquo;ul tayinlash / Izoh</label>
+          <textarea class="modal__textarea" placeholder="Tekshiruvchi tayinlang yoki izoh qoldiring..."></textarea>
+        </div>
+      </div>
+      <div class="modal__foot">
+        <button type="button" class="btn btn--secondary" data-modal-close>Yopish</button>
+        <button type="button" class="btn btn--secondary" data-modal-close><i class="ph ph-user-plus"></i> Tekshiruvchi tayinlash</button>
+        <button type="button" class="btn btn--primary" data-modal-close><i class="ph ph-check-circle"></i> Tekshirildi deb belgilash</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/pacta-foundation.js" defer></script>
+  <script src="js/pacta-notifications.js"></script>
+  <script src="js/pacta-app.js"></script>
+</body>
+</html>
