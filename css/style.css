@@ -2889,3 +2889,133 @@ body.a11y-grayscale { filter: grayscale(1); }
 .contact-action-card:hover{ transform: scale(1.05); box-shadow: 0 8px 24px rgba(0,180,198,.13);     z-index: 2; }
 .infographic-card:hover   { transform: scale(1.05); box-shadow: 0 8px 24px rgba(0,180,198,.12);     z-index: 2; }
 .research-card:hover      { transform: scale(1.05); box-shadow: 0 8px 24px rgba(0,0,0,.10);         z-index: 2; }
+
+/* ================================================================
+   Responsive fixes — mobile + tablet audit pass 2026-04-16
+   Fills gaps at 768px (iPad), 640px (phablet), 480px (phone),
+   and 360px (narrow phone). Additive overrides only; do not touch
+   existing rules above.
+   ================================================================ */
+
+/* Global overflow guard — prevents any stray absolute element from
+   creating a horizontal scroll on small screens. */
+@media (max-width: 1024px) {
+    html, body { overflow-x: hidden; }
+}
+
+/* ---------- iPad 768px: 3-col grids → 2-col, 2-col splits → 1-col ---------- */
+@media (max-width: 768px) {
+    .cards,
+    .mini-news,
+    .activity-list,
+    .research-grid,
+    .page-links,
+    .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .split-panels,
+    .events-dual,
+    .goal-grid,
+    .split,
+    .media-spotlight-grid,
+    .video-hub,
+    .top-story-grid,
+    .goals-tasks-grid { grid-template-columns: 1fr; }
+
+    /* Doc table: grid can't fit 4 tracks in a narrow viewport — make
+       each row a vertical card. */
+    .doc-row {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 14px 16px;
+    }
+    .doc-row > * { text-align: left; }
+
+    /* Council table and any ad-hoc tables should scroll sideways
+       rather than squeeze. */
+    .council-table-wrap,
+    .table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .council-table { min-width: 640px; }
+
+    /* Collapse the desktop menu earlier — avoid cramped nav at 768. */
+    .menu { display: none !important; }
+    .hamburger { display: flex; }
+}
+
+/* ---------- 640px: hide oversized decorative elements ---------- */
+@media (max-width: 640px) {
+    .orb, .orb-1, .orb-2, .orb-3 { display: none; }
+    .scan, .scan-1, .scan-2 { width: 100%; left: 0; right: 0; }
+
+    /* Hero stats row: prevent cramming at 600-900px by stepping to 2 cols */
+    .hero-stats-row { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    /* Site-header search input: let it shrink with the header */
+    .site-search-form input { width: 100%; max-width: 100%; }
+    .site-search-form { width: 100%; }
+}
+
+/* ---------- 480px: phone layout — force single column on broad grids ---------- */
+@media (max-width: 480px) {
+    .cards,
+    .mini-news,
+    .activity-list,
+    .research-grid,
+    .page-links,
+    .team-grid,
+    .partner-grid,
+    .gov-news-grid { grid-template-columns: 1fr; }
+
+    /* Pull in container padding on phones so content doesn't feel tight */
+    .container { width: min(100%, calc(100% - 24px)); }
+
+    /* Hero CTA buttons: let them stack and fit */
+    .hero-cta-corner {
+        position: static !important;
+        min-width: 0;
+        max-width: 100%;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+    .hero-cta-corner a,
+    .hero-cta-corner button { width: 100%; }
+
+    /* Vertical rhythm: shrink exaggerated section padding */
+    .hero-cinematic-inner,
+    .page-header,
+    .dark-cta,
+    section.container > div { padding-top: clamp(32px, 8vw, 80px); padding-bottom: clamp(32px, 8vw, 80px); }
+
+    /* Typography: force fluid sizes on headlines that didn't already use clamp() */
+    h1, .hero-cinematic-copy h1 { font-size: clamp(24px, 7.5vw, 40px); line-height: 1.18; }
+    h2, .dark-cta h2, .section-title, .page-title { font-size: clamp(22px, 6vw, 32px); line-height: 1.22; }
+    h3 { font-size: clamp(18px, 5vw, 22px); }
+
+    /* Hero stats row: one stat per line on phone */
+    .hero-stats-row { grid-template-columns: 1fr; gap: 12px; }
+    .hero-stat { padding: 16px; }
+
+    /* Tables: let the user scroll sideways rather than word-wrap-crush */
+    table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+    /* Make sure media never forces horizontal overflow */
+    img, video, iframe { max-width: 100%; height: auto; }
+
+    /* Nav dropdown when menu is open: constrain width so it doesn't shoot off */
+    .dropdown, .nav-item .dropdown { min-width: 0; max-width: calc(100vw - 24px); }
+}
+
+/* ---------- 360px: narrow phones — final cleanups ---------- */
+@media (max-width: 360px) {
+    .container { width: min(100%, calc(100% - 16px)); }
+    .topbar-fond-name { display: none; }
+    h1, .hero-cinematic-copy h1 { font-size: clamp(20px, 8vw, 28px); }
+}
+
+/* ---------- Long content safety: prevent URL strings / words from
+     blowing out narrow viewports ---------- */
+@media (max-width: 640px) {
+    p, li, td, th, a, .excerpt, .hero-cinematic-copy p { overflow-wrap: break-word; word-wrap: break-word; }
+    a[href*="://"] { word-break: break-all; }
+}
