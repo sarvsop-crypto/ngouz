@@ -1,26 +1,20 @@
-/* admin-cms.js — CMS engine for news, events, grants
-   Storage : localStorage (instant, offline)
-   Publish : GitHub Contents API (optional – needs token in Settings)
-   Export  : download JSON for manual deploy                         */
+/* admin-cms.js — API-backed CMS engine for news, events, grants.
+   Preserves the public interface of the earlier localStorage+GitHub version
+   so admin-{news,events,grants}.html don't need to change. */
 
 var AdminCMS = (function () {
-
-  var REPO   = 'sarvsop-crypto/ngo';
-  var BRANCH = 'main';
-  var RAW    = 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/data/';
-  var API    = 'https://api.github.com/repos/' + REPO + '/contents/data/';
-
-  var LS = { news: 'admin_cms_news', events: 'admin_cms_events', grants: 'admin_cms_grants' };
 
   var UZ_MONTHS = [
     'yanvar','fevral','mart','aprel','may','iyun',
     'iyul','avgust','sentabr','oktabr','noyabr','dekabr'
   ];
 
+  var cache = { news: [], events: [], grants: [] };
+
   // ── helpers ──────────────────────────────────────────────
 
   function esc(s) {
-    return String(s || '')
+    return String(s == null ? '' : s)
       .replace(/&/g,'&amp;').replace(/</g,'&lt;')
       .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
@@ -38,152 +32,79 @@ var AdminCMS = (function () {
 
   function genId(type) {
     var prefix = { news: 'news', events: 'event', grants: 'grant' }[type] || type;
-    var stamp  = new Date().toISOString().replace(/[-:T]/g,'').slice(0,14);
-    var rand   = Math.random().toString(36).slice(2,6);
+    var stamp  = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14).toLowerCase();
+    var rand   = Math.random().toString(36).slice(2, 6);
     return prefix + '-' + stamp + '-' + rand;
   }
 
-  function getToken() {
-    return localStorage.getItem('admin_github_token') || '';
-  }
-
-  // ── localStorage CRUD ────────────────────────────────────
-
-  function get(type) {
-    try {
-      var raw = localStorage.getItem(LS[type]);
-      return raw ? JSON.parse(raw) : null;
-    } catch (e) { return null; }
-  }
-
-  function set(type, items) {
-    localStorage.setItem(LS[type], JSON.stringify(items));
-  }
-
-  // ── load: localStorage first, then GitHub ────────────────
-
-  function load(type, cb) {
-    var cached = get(type);
-    if (cached) { cb(null, cached); return; }
-    fetch(RAW + type + '.json?_=' + Date.now())
-      .then(function (r) {
-        if (!r.ok) throw new Error('HTTP ' + r.status);
-        return r.json();
-      })
-      .then(function (data) {
-        set(type, data);
-        cb(null, data);
-      })
-      .catch(function (e) { cb(e, []); });
-  }
-
-  // refresh from GitHub (force-overwrite localStorage)
-  function refresh(type, cb) {
-    localStorage.removeItem(LS[type]);
-    load(type, cb);
-  }
-
-  // ── create ───────────────────────────────────────────────
-
-  function create(type, fields) {
-    var items = get(type) || [];
-    var item  = Object.assign({}, fields);
-    item.id   = genId(type);
-    _addDateLabels(type, item);
-    items.unshift(item);
-    set(type, items);
+  function _addDateLabels(type, item) {
+    if (type === 'events') {
+      if (item.date && !item.dateLabel) item.dateLabel = fmtDate(item.date);
+      if (item.deadline && !item.deadlineLabel) item.deadlineLabel = fmtDate(item.deadline);
+    } else if (type === 'grants') {
+      if (item.deadline && !item.deadlineLabel) item.deadlineLabel = fmtDate(item.deadline);
+    }
     return item;
   }
 
-  // ── update ───────────────────────────────────────────────
+  // ── API (loads from api.ngo.uz) ──────────────────────────
+
+  function load(type, cb) {
+    if (!window.NgoApi) { cb(new Error('api_client_not_loaded')); return; }
+    NgoApi.get('/admin/' + type + '?limit=200')
+      .then(function (res) { cache[type] = res.items || []; cb(null, cache[type]); })
+      .catch(function (err) { cache[type] = []; cb(err); });
+  }
+
+  function refresh(type, cb) { return load(type, cb); }
+
+  function get(type) { return cache[type] || []; }
+
+  function set(type, items) { cache[type] = items || []; }
+
+  function create(type, fields) {
+    if (!fields.id) fields.id = genId(type);
+    _addDateLabels(type, fields);
+    return NgoApi.post('/admin/' + type, fields).then(function (res) {
+      if (res && res.item) {
+        cache[type].unshift(res.item);
+      }
+      return res && res.item;
+    });
+  }
 
   function update(type, id, fields) {
-    var items = get(type) || [];
-    var idx   = -1;
-    for (var i = 0; i < items.length; i++) {
-      if (items[i].id === id) { idx = i; break; }
-    }
-    if (idx === -1) return null;
-    items[idx] = Object.assign({}, items[idx], fields);
-    _addDateLabels(type, items[idx]);
-    set(type, items);
-    return items[idx];
+    _addDateLabels(type, fields);
+    return NgoApi.patch('/admin/' + type + '/' + encodeURIComponent(id), fields).then(function (res) {
+      if (res && res.item) {
+        for (var i = 0; i < cache[type].length; i++) {
+          if (cache[type][i].id === id) { cache[type][i] = res.item; break; }
+        }
+      }
+      return res && res.item;
+    });
   }
-
-  // ── remove ───────────────────────────────────────────────
 
   function remove(type, id) {
-    var items = (get(type) || []).filter(function (i) { return i.id !== id; });
-    set(type, items);
+    return NgoApi.del('/admin/' + type + '/' + encodeURIComponent(id)).then(function () {
+      cache[type] = cache[type].filter(function (x) { return x.id !== id; });
+      return true;
+    });
   }
 
-  // ── date-label helpers ───────────────────────────────────
-
-  function _addDateLabels(type, item) {
-    if (type === 'events') {
-      if (item.date)     item.dateLabel     = fmtDate(item.date);
-      if (item.deadline) item.deadlineLabel = fmtDate(item.deadline);
-      else               item.deadlineLabel = null;
-    }
-    if (type === 'grants') {
-      if (item.deadline) item.deadlineLabel = fmtDate(item.deadline);
-      else               item.deadlineLabel = null;
-    }
-  }
-
-  // ── publish via GitHub API ────────────────────────────────
-
-  function publish(type, cb) {
-    var token = getToken();
-    if (!token) { cb(new Error('no_token')); return; }
-
-    var items   = get(type) || [];
-    var json    = JSON.stringify(items, null, 2);
-    var encoded = btoa(unescape(encodeURIComponent(json)));
-    var url     = API + type + '.json';
-    var headers = {
-      Authorization : 'token ' + token,
-      Accept        : 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json'
-    };
-
-    // GET current file to obtain its SHA (required for PUT)
-    fetch(url, { headers: headers })
-      .then(function (r) { return r.json(); })
-      .then(function (meta) {
-        if (!meta.sha) throw new Error(meta.message || 'Fayl topilmadi');
-        return fetch(url, {
-          method  : 'PUT',
-          headers : headers,
-          body    : JSON.stringify({
-            message : 'Update ' + type + '.json via admin CMS [' + today() + ']',
-            content : encoded,
-            sha     : meta.sha,
-            branch  : BRANCH
-          })
-        });
-      })
-      .then(function (r) { return r.json(); })
-      .then(function (res) {
-        if (res.content || res.commit) cb(null, res);
-        else throw new Error(res.message || 'API xatoligi');
-      })
-      .catch(cb);
-  }
-
-  // ── export JSON download ──────────────────────────────────
+  // ── publish() retained as a no-op for backward compatibility.
+  // In the new world every create/update/remove already persists to the API.
+  function publish(type, cb) { if (cb) setTimeout(function () { cb(null); }, 0); }
 
   function exportJson(type) {
-    var items = get(type) || [];
-    var blob  = new Blob([JSON.stringify(items, null, 2)], { type: 'application/json' });
-    var a     = document.createElement('a');
-    a.href     = URL.createObjectURL(blob);
+    var blob = new Blob([JSON.stringify(cache[type] || [], null, 2)], { type: 'application/json' });
+    var url  = URL.createObjectURL(blob);
+    var a    = document.createElement('a');
+    a.href   = url;
     a.download = type + '.json';
-    a.click();
-    setTimeout(function () { URL.revokeObjectURL(a.href); }, 5000);
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   }
-
-  // ── public API ────────────────────────────────────────────
 
   return {
     load      : load,
@@ -197,7 +118,8 @@ var AdminCMS = (function () {
     exportJson: exportJson,
     fmtDate   : fmtDate,
     today     : today,
-    esc       : esc
+    esc       : esc,
+    genId     : genId
   };
 
 })();

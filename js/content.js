@@ -4,12 +4,14 @@
  */
 
 (function () {
-  var REPO_RAW = 'https://raw.githubusercontent.com/sarvsop-crypto/ngo/main/data/';
+  var API_BASE = 'https://api.ngo.uz/v1/public/';
 
-  function fetchJSON(file, cb) {
-    fetch(REPO_RAW + file + '.json?_=' + Date.now())
-      .then(function (r) { return r.json(); })
-      .then(cb)
+  function fetchJSON(kind, cb) {
+    fetch(API_BASE + kind + '?limit=100&_=' + Date.now())
+      .then(function (r) { return r.ok ? r.json() : { items: [] }; })
+      .then(function (data) {
+        cb(data && data.items ? data.items : (Array.isArray(data) ? data : []));
+      })
       .catch(function () { cb([]); });
   }
 

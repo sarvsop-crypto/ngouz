@@ -31,7 +31,7 @@
           <p class="form-header__subtitle">Admin paneliga kirish uchun ma&rsquo;lumotlaringizni kiriting.</p>
         </div>
 
-        <form class="form-fields" action="admin-dashboard.html" method="get">
+        <form class="form-fields" id="adminLoginForm" novalidate>
           <div class="field">
             <label class="field__label" for="email">Email manzil <span>*</span></label>
             <div class="field__input-wrap">
@@ -88,6 +88,37 @@
         icon.className = 'ph ph-eye';
       }
     });
+  </script>
+
+  <script src="js/api-client.js"></script>
+  <script>
+    (function () {
+      if (NgoApi.getToken()) {
+        var q = new URLSearchParams(location.search);
+        location.replace(q.get('next') || 'admin-dashboard.html');
+        return;
+      }
+      var form = document.getElementById('adminLoginForm');
+      form.addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var emailEl = form.querySelector('input[name="email"]');
+        var passEl  = form.querySelector('input[name="password"]');
+        var btn     = form.querySelector('button[type="submit"]');
+        var email   = (emailEl.value || '').trim();
+        var pass    = passEl.value || '';
+        btn.disabled = true;
+        NgoApi.login(email, pass).then(function (res) {
+          var q = new URLSearchParams(location.search);
+          location.replace(q.get('next') || 'admin-dashboard.html');
+        }).catch(function (err) {
+          btn.disabled = false;
+          var msg = 'Login failed';
+          if (err && err.code === 'invalid_credentials') msg = "Email yoki parol noto'g'ri";
+          else if (err && err.code === 'too_many_attempts') msg = "Juda ko'p noto'g'ri urinish. 15 daqiqadan so'ng qayta urining";
+          alert(msg);
+        });
+      });
+    })();
   </script>
 </body>
 </html>
