@@ -271,6 +271,43 @@
     container.innerHTML = html;
   }
 
+  /* ── Documents ────────────────────────────────────────────── */
+  var DOC_CATEGORY_LABELS = {
+    'qonunlar': 'Qonunlar va qarorlar',
+    'davlat-dasturlari': 'Davlat dasturlari',
+    'nogironlar-huquqi': 'Nogironlar huquqlarini himoya qilish',
+    'rasmiy-hujjat': 'Rasmiy hujjatlar'
+  };
+
+  function renderDocumentsPage(items, container) {
+    if (!items.length) { container.innerHTML = '<p>Hujjatlar topilmadi.</p>'; return; }
+    var byCat = {};
+    items.forEach(function (d) {
+      var cat = d.category || 'boshqa';
+      if (!byCat[cat]) byCat[cat] = [];
+      byCat[cat].push(d);
+    });
+    var html = '';
+    var order = ['qonunlar', 'davlat-dasturlari', 'nogironlar-huquqi', 'rasmiy-hujjat'];
+    order.forEach(function (cat) {
+      var arr = byCat[cat];
+      if (!arr || !arr.length) return;
+      var label = DOC_CATEGORY_LABELS[cat] || cat;
+      html += '<h2 class="section-title" style="margin-top:2rem">' + label + '</h2>';
+      html += '<div class="doc-table">';
+      html += '<div class="doc-row head"><span>Hujjat nomi</span><span>Toifa</span><span>Sana</span></div>';
+      arr.forEach(function (d) {
+        html += '<div class="doc-row">'
+          + '<a href="news-detail.html?id=' + d.id + '&type=documents" style="font-weight:600">' + d.title + '</a>'
+          + '<span>' + label + '</span>'
+          + '<span>' + fmtDate(d.date) + '</span>'
+          + '</div>';
+      });
+      html += '</div>';
+    });
+    container.innerHTML = html;
+  }
+
   /* ── Archive tab support ──────────────────────────────────── */
   function renderArchiveTabs(container, kind, renderFn) {
     var tabBar = document.createElement('div');
@@ -344,6 +381,25 @@
     // projects.html grants — with archive tabs
     var grantsEl = document.getElementById('dynamic-grants-page');
     if (grantsEl) renderArchiveTabs(grantsEl, 'grants', renderGrantsPage);
+
+    // official-docs.html — documents
+    var docsEl = document.getElementById('dynamic-documents-page');
+    if (docsEl) fetchJSON('documents', function (items) { renderDocumentsPage(items, docsEl); });
+
+    // news-detail.html can also show documents (via ?type=documents)
+    var detailType = new URLSearchParams(window.location.search).get('type');
+    if (newsDetailEl && detailType === 'documents') {
+      var docId = new URLSearchParams(window.location.search).get('id');
+      if (docId) {
+        fetchOne('documents', docId, function (item) {
+          if (item) {
+            renderNewsDetail([item], newsDetailEl, docId);
+          } else {
+            newsDetailEl.innerHTML = '<p>Hujjat topilmadi.</p>';
+          }
+        });
+      }
+    }
   }
 
   if (document.readyState === 'loading') {
