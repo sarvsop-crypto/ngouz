@@ -77,28 +77,8 @@
                 <th>Holat</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td style="font-weight:500;">Fuqarolik jamiyatini mustahkamlash granti</td>
-                <td>USAID Uzbekistan</td>
-                <td style="font-weight:600;">$15,000</td>
-                <td>10.01.2026</td>
-                <td><span class="badge badge--warning"><span class="badge__dot"></span>Ko&rsquo;rib chiqilmoqda</span></td>
-              </tr>
-              <tr>
-                <td style="font-weight:500;">Yoshlar faolligini oshirish loyihasi</td>
-                <td>UNDP O&rsquo;zbekiston</td>
-                <td style="font-weight:600;">$8,500</td>
-                <td>15.02.2026</td>
-                <td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlandi</span></td>
-              </tr>
-              <tr>
-                <td style="font-weight:500;">NNTlar salohiyatini rivojlantirish</td>
-                <td>EU Delegation</td>
-                <td style="font-weight:600;">$12,000</td>
-                <td>20.03.2026</td>
-                <td><span class="badge badge--error"><span class="badge__dot"></span>Rad etildi</span></td>
-              </tr>
+            <tbody id="appliedGrantsBody">
+              <tr><td colspan="5" style="text-align:center;color:var(--grey-400);">Yuklanmoqda...</td></tr>
             </tbody>
           </table>
         </section>
@@ -128,23 +108,8 @@
                 <th>Holat</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td style="font-weight:500;">Yoshlar faolligini oshirish loyihasi</td>
-                <td>UNDP O&rsquo;zbekiston</td>
-                <td style="font-weight:600;">$8,500</td>
-                <td>01.03.2026</td>
-                <td>31.08.2026</td>
-                <td><span class="badge badge--success"><span class="badge__dot"></span>Faol</span></td>
-              </tr>
-              <tr>
-                <td style="font-weight:500;">Jamoat nazorati va hisobdorlik</td>
-                <td>NED</td>
-                <td style="font-weight:600;">$10,000</td>
-                <td>01.09.2025</td>
-                <td>28.02.2026</td>
-                <td><span class="badge badge--pending"><span class="badge__dot"></span>Yakunlangan</span></td>
-              </tr>
+            <tbody id="wonGrantsBody">
+              <tr><td colspan="6" style="text-align:center;color:var(--grey-400);">Yuklanmoqda...</td></tr>
             </tbody>
           </table>
         </section>
@@ -168,6 +133,73 @@
         });
       });
     })();
+  </script>
+  <script src="../js/api-client.js"></script>
+  <script>
+  (function () {
+    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+
+    var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
+
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function fmtDate(d) { if (!d) return '—'; var p = d.slice(0,10).split('-'); return p[2] + '.' + p[1] + '.' + p[0]; }
+
+    fetch(API + '/public/grants?limit=100')
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        var grants = res.items || res.data || [];
+        var applied = grants;
+        var won = grants.filter(function (g) { return g.status === 'approved' || g.status === 'active' || g.status === 'completed'; });
+
+        // Applied tab
+        var tbody1 = document.getElementById('appliedGrantsBody');
+        if (!applied.length) {
+          tbody1.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--grey-400);">Grant topilmadi</td></tr>';
+        } else {
+          tbody1.innerHTML = applied.map(function (g) {
+            var statusMap = { 'pending': 'warning', 'approved': 'success', 'rejected': 'error', 'active': 'success', 'completed': 'pending', 'draft': 'neutral' };
+            var labelMap  = { 'pending': "Ko'rib chiqilmoqda", 'approved': 'Tasdiqlandi', 'rejected': 'Rad etildi', 'active': 'Faol', 'completed': 'Yakunlangan', 'draft': 'Qoralama' };
+            var badge = statusMap[g.status] || 'neutral';
+            var label = labelMap[g.status] || g.status || '—';
+            return '<tr>' +
+              '<td style="font-weight:500;">' + esc(g.title || g.name || '—') + '</td>' +
+              '<td>' + esc(g.donor || g.organization || '—') + '</td>' +
+              '<td style="font-weight:600;">' + esc(g.amount || g.budget || '—') + '</td>' +
+              '<td>' + fmtDate(g.deadline || g.created_at) + '</td>' +
+              '<td><span class="badge badge--' + badge + '"><span class="badge__dot"></span>' + label + '</span></td>' +
+            '</tr>';
+          }).join('');
+        }
+
+        // Won tab
+        var tbody2 = document.getElementById('wonGrantsBody');
+        if (!won.length) {
+          tbody2.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--grey-400);">Erishilgan grant topilmadi</td></tr>';
+        } else {
+          tbody2.innerHTML = won.map(function (g) {
+            var badge = g.status === 'completed' ? 'pending' : 'success';
+            var label = g.status === 'completed' ? 'Yakunlangan' : 'Faol';
+            return '<tr>' +
+              '<td style="font-weight:500;">' + esc(g.title || g.name || '—') + '</td>' +
+              '<td>' + esc(g.donor || g.organization || '—') + '</td>' +
+              '<td style="font-weight:600;">' + esc(g.amount || g.budget || '—') + '</td>' +
+              '<td>' + fmtDate(g.start_date || g.created_at) + '</td>' +
+              '<td>' + fmtDate(g.end_date || g.deadline) + '</td>' +
+              '<td><span class="badge badge--' + badge + '"><span class="badge__dot"></span>' + label + '</span></td>' +
+            '</tr>';
+          }).join('');
+        }
+
+        // Update tab counts
+        var tabs = document.querySelectorAll('#grantTabs .tab .tab__count');
+        if (tabs[0]) tabs[0].textContent = applied.length;
+        if (tabs[1]) tabs[1].textContent = won.length;
+      })
+      .catch(function (err) {
+        console.error('Grants fetch error:', err);
+        document.getElementById('appliedGrantsBody').innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--error-600);">Xatolik yuz berdi</td></tr>';
+      });
+  })();
   </script>
   <script src="js/cabinet-chrome.js" defer></script>
   <script src="../js/pacta-foundation.js" defer></script>

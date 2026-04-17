@@ -77,72 +77,60 @@
         <button type="button" class="filter-chip">Grantlar</button>
       </div>
 
-      <div class="news-grid">
-        <div class="news-card">
-          <div class="news-card__img"><i class="ph ph-newspaper"></i></div>
-          <div class="news-card__body">
-            <span class="news-card__cat news-card__cat--important">MUHIM</span>
-            <h3 class="news-card__title">O&rsquo;zNNTMA 2026-yil a&rsquo;zolik shartlari e&rsquo;lon qilindi</h3>
-            <p class="news-card__excerpt">Yangi a&rsquo;zolik tartibi va majburiy hujjatlar ro&rsquo;yxati tasdiqlandi. Barcha faol a&rsquo;zolarga taalluqli.</p>
-            <div class="news-card__footer"><span class="news-card__date">05.04.2026</span><a href="#" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>
-          </div>
-        </div>
-
-        <div class="news-card">
-          <div class="news-card__img news-card__img--event"><i class="ph ph-calendar"></i></div>
-          <div class="news-card__body">
-            <span class="news-card__cat news-card__cat--event">TADBIR</span>
-            <h3 class="news-card__title">NNT vakillari uchun seminar: 15.04.2026</h3>
-            <p class="news-card__excerpt">Hisobotlar tayyorlash va topshirish bo&rsquo;yicha amaliy seminar. Ro&rsquo;yxatga olish ochildi.</p>
-            <div class="news-card__footer"><span class="news-card__date">03.04.2026</span><a href="cabinet-events.html" class="news-card__link">Ro&rsquo;yxat <i class="ph ph-arrow-right"></i></a></div>
-          </div>
-        </div>
-
-        <div class="news-card">
-          <div class="news-card__img news-card__img--grant"><i class="ph ph-trophy"></i></div>
-          <div class="news-card__body">
-            <span class="news-card__cat news-card__cat--grant">GRANT</span>
-            <h3 class="news-card__title">&laquo;Yoshlar salomatligi&raquo; grant musobaqasi</h3>
-            <p class="news-card__excerpt">UNICEF va O&rsquo;zNNTMA birgalikda e&rsquo;lon qilgan grant dasturi. Mablag&rsquo;: 50 000 000 so&rsquo;m. Ariza muddati: 30.04.2026.</p>
-            <div class="news-card__footer"><span class="news-card__date">01.04.2026</span><a href="cabinet-grants.html" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>
-          </div>
-        </div>
-
-        <div class="news-card">
-          <div class="news-card__img"><i class="ph ph-file-text"></i></div>
-          <div class="news-card__body">
-            <span class="news-card__cat news-card__cat--news">YANGILIK</span>
-            <h3 class="news-card__title">Yangi a&rsquo;zolik tartibi va hujjatlar ro&rsquo;yxati</h3>
-            <p class="news-card__excerpt">2026-yildan boshlab a&rsquo;zolikni yangilash uchun yangi hujjat talablari joriy etildi. Eski shakllar qabul qilinmaydi.</p>
-            <div class="news-card__footer"><span class="news-card__date">28.03.2026</span><a href="#" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>
-          </div>
-        </div>
-
-        <div class="news-card">
-          <div class="news-card__img news-card__img--partner"><i class="ph ph-handshake"></i></div>
-          <div class="news-card__body">
-            <span class="news-card__cat news-card__cat--news">YANGILIK</span>
-            <h3 class="news-card__title">Xalqaro hamkorlik: Germaniya fondi bilan kelishuv</h3>
-            <p class="news-card__excerpt">O&rsquo;zNNTMA va Konrad-Adenauer fondi o&rsquo;rtasida fuqarolik jamiyatini rivojlantirish bo&rsquo;yicha hamkorlik memorandumi imzolandi.</p>
-            <div class="news-card__footer"><span class="news-card__date">20.03.2026</span><a href="#" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>
-          </div>
-        </div>
-
-        <div class="news-card">
-          <div class="news-card__img news-card__img--urgent"><i class="ph ph-megaphone"></i></div>
-          <div class="news-card__body">
-            <span class="news-card__cat news-card__cat--important">MUHIM</span>
-            <h3 class="news-card__title">Elektron hisobot topshirish majburiy bo&rsquo;ladi</h3>
-            <p class="news-card__excerpt">2026-yil 1-iyuldan boshlab barcha a&rsquo;zolar hisobotlarni faqat elektron tarzda kabinet orqali topshirishi shart.</p>
-            <div class="news-card__footer"><span class="news-card__date">15.03.2026</span><a href="#" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>
-          </div>
-        </div>
+      <div class="news-grid" id="newsGrid">
+        <div style="grid-column:1/-1;text-align:center;color:var(--grey-400);padding:40px 0;">Yuklanmoqda...</div>
       </div>
     </main>
   </div>
 
   <div id="cabinet-notifications-root"></div>
 
+  <script src="../js/api-client.js"></script>
+  <script>
+  (function () {
+    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+
+    var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function fmtDate(d) { if (!d) return ''; var p = d.slice(0,10).split('-'); return p[2] + '.' + p[1] + '.' + p[0]; }
+
+    var iconMap  = { 'news': 'ph-newspaper', 'event': 'ph-calendar', 'grant': 'ph-trophy', 'announcement': 'ph-megaphone', 'default': 'ph-file-text' };
+    var imgClass = { 'event': 'news-card__img--event', 'grant': 'news-card__img--grant', 'partner': 'news-card__img--partner', 'urgent': 'news-card__img--urgent' };
+    var catClass = { 'news': 'news-card__cat--news', 'event': 'news-card__cat--event', 'grant': 'news-card__cat--grant', 'announcement': 'news-card__cat--important', 'important': 'news-card__cat--important' };
+    var catLabel = { 'news': 'YANGILIK', 'event': 'TADBIR', 'grant': 'GRANT', 'announcement': 'MUHIM', 'important': 'MUHIM' };
+
+    fetch(API + '/public/news?limit=100')
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        var items = res.items || res.data || [];
+        var grid = document.getElementById('newsGrid');
+        if (!items.length) {
+          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--grey-400);padding:40px 0;">Yangilik topilmadi</div>';
+          return;
+        }
+        grid.innerHTML = items.map(function (n) {
+          var cat = (n.category || n.type || 'news').toLowerCase();
+          var icon = iconMap[cat] || iconMap['default'];
+          var img  = imgClass[cat] || '';
+          var cc   = catClass[cat] || 'news-card__cat--news';
+          var cl   = catLabel[cat] || cat.toUpperCase();
+          var excerpt = esc(n.excerpt || n.summary || (n.body || '').slice(0, 120));
+          return '<div class="news-card">' +
+            '<div class="news-card__img ' + img + '"><i class="ph ' + icon + '"></i></div>' +
+            '<div class="news-card__body">' +
+              '<span class="news-card__cat ' + cc + '">' + cl + '</span>' +
+              '<h3 class="news-card__title">' + esc(n.title) + '</h3>' +
+              '<p class="news-card__excerpt">' + excerpt + '</p>' +
+              '<div class="news-card__footer"><span class="news-card__date">' + fmtDate(n.published_at || n.created_at) + '</span><a href="#" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>' +
+            '</div></div>';
+        }).join('');
+      })
+      .catch(function (err) {
+        console.error('News fetch error:', err);
+        document.getElementById('newsGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--error-600);padding:40px 0;">Xatolik yuz berdi</div>';
+      });
+  })();
+  </script>
   <script src="js/cabinet-chrome.js" defer></script>
 
   <script src="../js/pacta-foundation.js" defer></script>

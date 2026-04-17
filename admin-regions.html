@@ -166,9 +166,47 @@
     </div>
   </div>
 
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-boot.js"></script>
+  <script>
+  (function () {
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    NgoApi.get('/public/regions')
+      .then(function (res) {
+        var regions = res.items || res.data || res.regions || [];
+        var tbody = document.getElementById('regionsTableRows');
+        if (!regions.length) {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--grey-400);">Hudud topilmadi</td></tr>';
+          return;
+        }
+        var totalNnt = 0;
+        regions.forEach(function (r) { totalNnt += (r.ngo_count || r.nnt_count || 0); });
+
+        tbody.innerHTML = regions.map(function (r) {
+          var count = r.ngo_count || r.nnt_count || 0;
+          var active = r.active_count || count;
+          var newCount = r.new_count || 0;
+          var share = totalNnt ? ((count / totalNnt) * 100).toFixed(1) + '%' : '—';
+          return '<tr>' +
+            '<td>' + esc(r.code || r.id) + '</td>' +
+            '<td style="font-weight:500;">' + esc(r.name || r.title) + '</td>' +
+            '<td>' + count + '</td>' +
+            '<td>' + active + '</td>' +
+            '<td>' + newCount + '</td>' +
+            '<td>' + share + '</td>' +
+            '<td><a href="admin-registry.html?region=' + encodeURIComponent(r.id || r.code || '') + '" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i></a></td>' +
+          '</tr>';
+        }).join('');
+      })
+      .catch(function (err) {
+        console.error('Regions fetch error:', err);
+        document.getElementById('regionsTableRows').innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--error-600);">Xatolik yuz berdi</td></tr>';
+      });
+  })();
+  </script>
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
-  <script src="js/admin-seed.js"></script>
   <script src="js/pacta-app.js"></script>
 </body>
 </html>

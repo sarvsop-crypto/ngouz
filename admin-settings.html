@@ -98,10 +98,10 @@
           <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
             <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Profil ma&rsquo;lumotlari</h2>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Ism</label><input type="text" value="Administrator" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Email</label><input type="email" value="admin@uznntma.uz" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Telefon</label><input type="tel" value="+998 55 503-05-12" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Rol</label><input type="text" value="Bosh administrator" readonly style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-25);box-sizing:border-box;" /></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Ism</label><input type="text" id="profileName" value="" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Email</label><input type="email" id="profileEmail" value="" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Telefon</label><input type="tel" id="profilePhone" value="" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;box-sizing:border-box;" /></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Rol</label><input type="text" id="profileRole" value="" readonly style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-25);box-sizing:border-box;" /></div>
             </div>
             <div style="margin-top:20px;display:flex;gap:12px;">
               <button type="button" class="btn btn--primary"><i class="ph ph-floppy-disk"></i> Saqlash</button>
@@ -149,6 +149,31 @@
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-boot.js"></script>
+  <script>
+  (function () {
+    var ROLE_LABELS = {
+      'super_admin': 'Bosh administrator',
+      'regional_admin': 'Hududiy administrator',
+      'portal_moderator': 'Portal moderator',
+      'member_manager': 'A\'zo menejer',
+      'member_user': 'A\'zo foydalanuvchi'
+    };
+
+    NgoApi.get('/me')
+      .then(function (res) {
+        var user = res.user || res;
+        document.getElementById('profileName').value  = user.full_name || user.name || '';
+        document.getElementById('profileEmail').value = user.email || '';
+        document.getElementById('profilePhone').value = user.phone || '';
+        document.getElementById('profileRole').value  = ROLE_LABELS[user.role] || user.role || '';
+      })
+      .catch(function (err) {
+        console.error('Profile load error:', err);
+      });
+  })();
+  </script>
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
   <script src="js/pacta-app.js"></script>

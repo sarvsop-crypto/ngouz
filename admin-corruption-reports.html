@@ -147,47 +147,8 @@
               <th scope="col">Hudud</th><th scope="col">Darajasi</th><th scope="col">Holat</th><th scope="col"></th>
             </tr>
           </thead>
-          <tbody>
-            <tr data-status="new">
-              <td><input type="checkbox" aria-label="Tanlash" /></td>
-              <td><strong>KRP-2026-0042</strong></td>
-              <td><span class="badge badge--error"><span class="badge__dot"></span>Anonim</span></td>
-              <td>Grant taqsimotida qonunbuzarlik</td>
-              <td>Farg&rsquo;ona</td>
-              <td><span class="u-text-danger u-text-bold">Yuqori</span></td>
-              <td><span class="badge badge--warning"><span class="badge__dot"></span>Yangi</span></td>
-              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="corruptionReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
-            </tr>
-            <tr data-status="review">
-              <td><input type="checkbox" aria-label="Tanlash" /></td>
-              <td><strong>KRP-2026-0041</strong></td>
-              <td>Karimov Javlon</td>
-              <td>Xizmat ko&rsquo;rsatishda lavozim suiiste&rsquo;moli</td>
-              <td>Toshkent sh.</td>
-              <td><span class="u-text-warning u-text-bold">O&rsquo;rta</span></td>
-              <td><span class="badge badge--warning"><span class="badge__dot"></span>Tekshirilmoqda</span></td>
-              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="corruptionReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
-            </tr>
-            <tr data-status="review">
-              <td><input type="checkbox" aria-label="Tanlash" /></td>
-              <td><strong>KRP-2026-0040</strong></td>
-              <td><span class="badge badge--error"><span class="badge__dot"></span>Anonim</span></td>
-              <td>Hujjatlarni asossiz rad etish</td>
-              <td>Samarqand</td>
-              <td><span class="u-text-warning u-text-bold">O&rsquo;rta</span></td>
-              <td><span class="badge badge--warning"><span class="badge__dot"></span>Tekshirilmoqda</span></td>
-              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="corruptionReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
-            </tr>
-            <tr data-status="closed">
-              <td><input type="checkbox" aria-label="Tanlash" /></td>
-              <td><strong>KRP-2026-0039</strong></td>
-              <td>Nazarova Gulnora</td>
-              <td>Xayriya mablag&rsquo;larini notog&rsquo;ri taqsimlash</td>
-              <td>Buxoro</td>
-              <td><span class="u-text-muted u-text-bold">Past</span></td>
-              <td><span class="badge badge--success"><span class="badge__dot"></span>Yopilgan</span></td>
-              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="corruptionReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
-            </tr>
+          <tbody id="corruptionTableBody">
+            <tr><td colspan="8" style="text-align:center;color:var(--grey-400);">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -268,6 +229,90 @@
     </div>
   </div>
 
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-boot.js"></script>
+  <script>
+  (function () {
+    var items = [];
+    var statusFilter = 'all';
+    var searchQ = '';
+
+    var CORRUPTION_KEYWORDS = ['korrupsiya', 'corruption', 'poraxo\'rlik', 'pora', 'suiiste\'mol', 'qonunbuzarlik', 'noqonuniy', 'firibgarlik'];
+    var STATUS_BADGE = { 'new': 'warning', 'read': 'warning', 'handled': 'success', 'spam': 'error' };
+    var STATUS_LABEL = { 'new': 'Yangi', 'read': 'Tekshirilmoqda', 'handled': 'Yopilgan', 'spam': 'Spam' };
+
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    function isCorruptionRelated(item) {
+      var text = ((item.subject || '') + ' ' + (item.body || '') + ' ' + (item.category || '')).toLowerCase();
+      return CORRUPTION_KEYWORDS.some(function (kw) { return text.indexOf(kw) !== -1; });
+    }
+
+    function renderTable() {
+      var q = searchQ.toLowerCase();
+      var filtered = items.filter(function (item) {
+        if (statusFilter !== 'all' && item.status !== statusFilter) return false;
+        if (q && ((item.full_name || '') + ' ' + (item.subject || '') + ' #' + item.id).toLowerCase().indexOf(q) === -1) return false;
+        return true;
+      });
+      var tbody = document.getElementById('corruptionTableBody');
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--grey-400);">Murojaat topilmadi</td></tr>';
+        return;
+      }
+      tbody.innerHTML = filtered.map(function (item) {
+        var badge = STATUS_BADGE[item.status] || 'neutral';
+        var label = STATUS_LABEL[item.status] || item.status;
+        var name = item.full_name || '';
+        var nameHtml = name ? esc(name) : '<span class="badge badge--error"><span class="badge__dot"></span>Anonim</span>';
+        return '<tr data-status="' + (item.status || '') + '">' +
+          '<td><input type="checkbox" aria-label="Tanlash" /></td>' +
+          '<td><strong>KRP-' + item.id + '</strong></td>' +
+          '<td>' + nameHtml + '</td>' +
+          '<td>' + esc(item.subject || '—') + '</td>' +
+          '<td>' + esc(item.region || '—') + '</td>' +
+          '<td><span class="u-text-warning u-text-bold">—</span></td>' +
+          '<td><span class="badge badge--' + badge + '"><span class="badge__dot"></span>' + label + '</span></td>' +
+          '<td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="corruptionReviewModal"><i class="ph ph-eye"></i> Ko\'rish</button></td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderKpi() {
+      var cards = document.querySelectorAll('.card .card__value');
+      if (cards[0]) cards[0].textContent = items.length;
+      if (cards[1]) cards[1].textContent = items.filter(function (i) { return i.status === 'new'; }).length;
+      if (cards[2]) cards[2].textContent = items.filter(function (i) { return i.status === 'read'; }).length;
+      if (cards[3]) cards[3].textContent = items.filter(function (i) { return i.status === 'handled'; }).length;
+    }
+
+    var searchEl = document.getElementById('corruptionSearch');
+    if (searchEl) searchEl.addEventListener('input', function () { searchQ = this.value; renderTable(); });
+
+    document.querySelectorAll('[data-filter]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('[data-filter]').forEach(function (b) { b.classList.remove('is-active'); });
+        this.classList.add('is-active');
+        var f = this.dataset.filter;
+        var map = { 'all': 'all', 'new': 'new', 'review': 'read', 'closed': 'handled' };
+        statusFilter = map[f] || 'all';
+        renderTable();
+      });
+    });
+
+    NgoApi.get('/admin/contact-messages?limit=200')
+      .then(function (res) {
+        var all = res.items || [];
+        items = all.filter(isCorruptionRelated);
+        renderTable();
+        renderKpi();
+      })
+      .catch(function (err) {
+        console.error('Corruption reports fetch error:', err);
+        document.getElementById('corruptionTableBody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--error-600);">Xatolik yuz berdi</td></tr>';
+      });
+  })();
+  </script>
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
   <script src="js/pacta-app.js"></script>

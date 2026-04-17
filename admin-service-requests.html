@@ -145,57 +145,8 @@
               <th scope="col">Topshirilgan</th><th scope="col">Holat</th><th scope="col">Mas&rsquo;ul</th><th scope="col"></th>
             </tr>
           </thead>
-          <tbody>
-            <tr data-status="new">
-              <td><input type="checkbox" aria-label="Tanlash" /></td>
-              <td><strong>XZM-2026-0312</strong></td>
-              <td>Azizov Rustam<br><span class="u-text-muted-sm">+998 90 123-45-67</span></td>
-              <td>Ro&rsquo;yxatga olish</td>
-              <td>08.04.2026</td>
-              <td><span class="badge badge--warning"><span class="badge__dot"></span>Yangi</span></td>
-              <td>—</td>
-              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="serviceReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
-            </tr>
-            <tr data-status="progress">
-              <td><input type="checkbox" aria-label="Tanlash" /></td>
-              <td><strong>XZM-2026-0311</strong></td>
-              <td>Ibragimova Dilnoza<br><span class="u-text-muted-sm">dilnoza@example.uz</span></td>
-              <td>Ma&rsquo;lumotnoma</td>
-              <td>07.04.2026</td>
-              <td><span class="badge badge--warning"><span class="badge__dot"></span>Jarayonda</span></td>
-              <td>N. Karimov</td>
-              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="serviceReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
-            </tr>
-            <tr data-status="done">
-              <td><input type="checkbox" aria-label="Tanlash" /></td>
-              <td><strong>XZM-2026-0310</strong></td>
-              <td>Umid Istiqbol NNT<br><span class="u-text-muted-sm">Toshkent sh.</span></td>
-              <td>Sertifikat</td>
-              <td>05.04.2026</td>
-              <td><span class="badge badge--success"><span class="badge__dot"></span>Javob berilgan</span></td>
-              <td>F. Sattorova</td>
-              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="serviceReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
-            </tr>
-            <tr data-status="progress">
-              <td><input type="checkbox" aria-label="Tanlash" /></td>
-              <td><strong>XZM-2026-0309</strong></td>
-              <td>Yangi Nafas NNT<br><span class="u-text-muted-sm">Samarqand</span></td>
-              <td>Hujjat nusxasi</td>
-              <td>04.04.2026</td>
-              <td><span class="badge badge--warning"><span class="badge__dot"></span>Jarayonda</span></td>
-              <td>M. Abdullayev</td>
-              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="serviceReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
-            </tr>
-            <tr data-status="done">
-              <td><input type="checkbox" aria-label="Tanlash" /></td>
-              <td><strong>XZM-2026-0308</strong></td>
-              <td>Jumayev Aziz<br><span class="u-text-muted-sm">+998 93 555-44-33</span></td>
-              <td>Maslahat</td>
-              <td>03.04.2026</td>
-              <td><span class="badge badge--success"><span class="badge__dot"></span>Javob berilgan</span></td>
-              <td>N. Karimov</td>
-              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="serviceReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
-            </tr>
+          <tbody id="serviceTableBody">
+            <tr><td colspan="8" style="text-align:center;color:var(--grey-400);">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -280,6 +231,92 @@
     </div>
   </div>
 
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-boot.js"></script>
+  <script>
+  (function () {
+    var items = [];
+    var statusFilter = 'all';
+    var searchQ = '';
+
+    var CORRUPTION_KEYWORDS = ['korrupsiya', 'corruption', 'poraxo\'rlik', 'pora', 'suiiste\'mol', 'qonunbuzarlik', 'noqonuniy', 'firibgarlik'];
+    var STATUS_BADGE = { 'new': 'warning', 'read': 'warning', 'handled': 'success', 'spam': 'error' };
+    var STATUS_LABEL = { 'new': 'Yangi', 'read': 'Jarayonda', 'handled': 'Javob berilgan', 'spam': 'Spam' };
+
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function fmtDate(d) { if (!d) return '—'; var p = d.slice(0,10).split('-'); return p[2] + '.' + p[1] + '.' + p[0]; }
+
+    function isCorruptionRelated(item) {
+      var text = ((item.subject || '') + ' ' + (item.body || '') + ' ' + (item.category || '')).toLowerCase();
+      return CORRUPTION_KEYWORDS.some(function (kw) { return text.indexOf(kw) !== -1; });
+    }
+
+    function renderTable() {
+      var q = searchQ.toLowerCase();
+      var filtered = items.filter(function (item) {
+        if (statusFilter !== 'all' && item.status !== statusFilter) return false;
+        if (q && ((item.full_name || '') + ' ' + (item.subject || '') + ' #' + item.id).toLowerCase().indexOf(q) === -1) return false;
+        return true;
+      });
+      var tbody = document.getElementById('serviceTableBody');
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--grey-400);">So\'rov topilmadi</td></tr>';
+        return;
+      }
+      tbody.innerHTML = filtered.map(function (item) {
+        var badge = STATUS_BADGE[item.status] || 'neutral';
+        var label = STATUS_LABEL[item.status] || item.status;
+        var contact = esc(item.email || item.phone || '');
+        var nameHtml = esc(item.full_name || '—') + (contact ? '<br><span class="u-text-muted-sm">' + contact + '</span>' : '');
+        return '<tr data-status="' + (item.status || '') + '">' +
+          '<td><input type="checkbox" aria-label="Tanlash" /></td>' +
+          '<td><strong>XZM-' + item.id + '</strong></td>' +
+          '<td>' + nameHtml + '</td>' +
+          '<td>' + esc(item.subject || item.category || '—') + '</td>' +
+          '<td>' + fmtDate(item.created_at) + '</td>' +
+          '<td><span class="badge badge--' + badge + '"><span class="badge__dot"></span>' + label + '</span></td>' +
+          '<td>' + esc(item.assigned_to || '—') + '</td>' +
+          '<td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="serviceReviewModal"><i class="ph ph-eye"></i> Ko\'rish</button></td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderKpi() {
+      var cards = document.querySelectorAll('.card .card__value');
+      if (cards[0]) cards[0].textContent = items.length;
+      if (cards[1]) cards[1].textContent = items.filter(function (i) { return i.status === 'new'; }).length;
+      if (cards[2]) cards[2].textContent = items.filter(function (i) { return i.status === 'read'; }).length;
+      if (cards[3]) cards[3].textContent = items.filter(function (i) { return i.status === 'handled'; }).length;
+    }
+
+    var searchEl = document.getElementById('serviceSearch');
+    if (searchEl) searchEl.addEventListener('input', function () { searchQ = this.value; renderTable(); });
+
+    document.querySelectorAll('[data-filter]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('[data-filter]').forEach(function (b) { b.classList.remove('is-active'); });
+        this.classList.add('is-active');
+        var f = this.dataset.filter;
+        var map = { 'all': 'all', 'new': 'new', 'progress': 'read', 'done': 'handled' };
+        statusFilter = map[f] || 'all';
+        renderTable();
+      });
+    });
+
+    NgoApi.get('/admin/contact-messages?limit=200')
+      .then(function (res) {
+        var all = res.items || [];
+        // Service requests = everything NOT corruption-related
+        items = all.filter(function (item) { return !isCorruptionRelated(item); });
+        renderTable();
+        renderKpi();
+      })
+      .catch(function (err) {
+        console.error('Service requests fetch error:', err);
+        document.getElementById('serviceTableBody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--error-600);">Xatolik yuz berdi</td></tr>';
+      });
+  })();
+  </script>
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
   <script src="js/pacta-app.js"></script>
