@@ -33,6 +33,24 @@
 
         <form class="form-fields" id="registerForm" novalidate>
           <div class="field">
+            <label class="field__label" for="phone">Telefon raqam <span>*</span></label>
+            <div class="field__input-wrap">
+              <input type="tel" id="phone" class="field__input" name="phone" placeholder="+998 __ ___ __ __" required autocomplete="tel" />
+            </div>
+            <p id="phoneStatus" style="font-size:13px;margin:6px 0 0;display:none"></p>
+          </div>
+
+          <div id="orgInfo" style="display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px 16px;margin:4px 0 8px;">
+            <p style="margin:0;font-size:13px;color:#166534"><i class="ph ph-seal-check" style="vertical-align:middle"></i> Tasdiqlangan tashkilot:</p>
+            <p id="orgName" style="margin:4px 0 0;font-weight:600;color:#166534"></p>
+            <p id="orgLeader" style="margin:2px 0 0;font-size:13px;color:#166534"></p>
+          </div>
+
+          <div id="orgWarning" style="display:none;background:#fef9c3;border:1px solid #fde047;border-radius:8px;padding:12px 16px;margin:4px 0 8px;">
+            <p style="margin:0;font-size:13px;color:#854d0e"><i class="ph ph-warning" style="vertical-align:middle"></i> Bu telefon raqam a'zolar ro'yxatida topilmadi. Ariza yuborishingiz mumkin, lekin administrator tekshiradi.</p>
+          </div>
+
+          <div class="field">
             <label class="field__label" for="fullname">To&rsquo;liq ism <span>*</span></label>
             <div class="field__input-wrap">
               <input type="text" id="fullname" class="field__input" name="fullname" placeholder="Ism va familiyangizni kiriting" required autocomplete="name" />
@@ -40,30 +58,9 @@
           </div>
 
           <div class="field">
-            <label class="field__label" for="org">Tashkilot nomi <span>*</span></label>
-            <div class="field__input-wrap">
-              <input type="text" id="org" class="field__input" name="org" placeholder="Tashkilotingiz nomini kiriting" required />
-            </div>
-          </div>
-
-          <div class="field">
-            <label class="field__label" for="email">Email manzil <span>*</span></label>
-            <div class="field__input-wrap">
-              <input type="email" id="email" class="field__input" name="email" placeholder="Email manzilingizni kiriting" required autocomplete="email" />
-            </div>
-          </div>
-
-          <div class="field">
-            <label class="field__label" for="phone">Telefon raqam <span>*</span></label>
-            <div class="field__input-wrap">
-              <input type="tel" id="phone" class="field__input" name="phone" placeholder="+998 __ ___ __ __" required autocomplete="tel" />
-            </div>
-          </div>
-
-          <div class="field">
             <label class="field__label" for="password">Parol <span>*</span></label>
             <div class="field__input-wrap">
-              <input type="password" id="password" class="field__input" name="password" placeholder="Parol yarating" required minlength="8" autocomplete="new-password" />
+              <input type="password" id="password" class="field__input" name="password" placeholder="Kamida 8 ta belgi" required minlength="8" autocomplete="new-password" />
               <button type="button" class="field__toggle" id="togglePassword" aria-label="Parolni ko'rsatish">
                 <i class="ph ph-eye"></i>
               </button>
@@ -78,8 +75,10 @@
             </span>
           </label>
 
+          <input type="hidden" id="orgId" value="" />
+
           <button type="submit" class="btn-auth">
-            <i class="ph ph-user-check"></i> Ro&rsquo;yxatdan o&rsquo;tish
+            <i class="ph ph-user-check"></i> Ariza yuborish
           </button>
         </form>
 
@@ -101,6 +100,8 @@
 
   <script src="../js/api-client.js"></script>
   <script>
+    var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
+
     document.getElementById('togglePassword').addEventListener('click', function () {
       var inp = document.getElementById('password');
       var icon = this.querySelector('i');
@@ -108,37 +109,84 @@
       else { inp.type = 'password'; icon.className = 'ph ph-eye'; }
     });
 
-    if (NgoApi.getToken()) { location.replace('cabinet-dashboard.html'); }
+    // Phone verification on blur
+    var verifyTimer;
+    document.getElementById('phone').addEventListener('input', function () {
+      clearTimeout(verifyTimer);
+      var phone = this.value.replace(/[^\d]/g, '');
+      document.getElementById('orgInfo').style.display = 'none';
+      document.getElementById('orgWarning').style.display = 'none';
+      document.getElementById('orgId').value = '';
+      if (phone.length < 9) return;
 
+      verifyTimer = setTimeout(function () {
+        var status = document.getElementById('phoneStatus');
+        status.textContent = 'Tekshirilmoqda...';
+        status.style.color = '#798384';
+        status.style.display = 'block';
+
+        fetch(API + '/auth/verify-phone', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: phone })
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (res) {
+          if (res.verified && res.organization) {
+            document.getElementById('orgInfo').style.display = 'block';
+            document.getElementById('orgName').textContent = res.organization.name;
+            document.getElementById('orgLeader').textContent = 'Rahbar: ' + (res.organization.leader_name || '—');
+            document.getElementById('orgId').value = res.organization.id;
+            status.textContent = 'Tashkilot topildi!';
+            status.style.color = '#166534';
+          } else {
+            document.getElementById('orgWarning').style.display = 'block';
+            status.textContent = 'Ro\'yxatda topilmadi';
+            status.style.color = '#854d0e';
+          }
+        })
+        .catch(function () { status.style.display = 'none'; });
+      }, 500);
+    });
+
+    // Registration submit
     document.getElementById('registerForm').addEventListener('submit', function (e) {
       e.preventDefault();
+      var phone = document.getElementById('phone').value.replace(/[^\d]/g, '');
       var name  = document.getElementById('fullname').value.trim();
-      var org   = document.getElementById('org').value.trim();
-      var email = document.getElementById('email').value.trim();
       var pass  = document.getElementById('password').value;
-      if (!name || !org || !email || !pass) { alert('Barcha majburiy maydonlarni to\'ldiring.'); return; }
-      if (pass.length < 12) { alert('Parol kamida 12 belgidan iborat bo\'lishi kerak.'); return; }
+      var orgId = document.getElementById('orgId').value;
+      if (!phone || phone.length < 9) { alert('Telefon raqamni kiriting.'); return; }
+      if (!name) { alert('Ismingizni kiriting.'); return; }
+      if (pass.length < 8) { alert('Parol kamida 8 belgidan iborat bo\'lishi kerak.'); return; }
+
       var btn = this.querySelector('button[type="submit"]');
-      btn.disabled = true; btn.textContent = 'Ro\'yxatdan o\'tilmoqda...';
-      fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/auth/register', {
+      btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
+
+      fetch(API + '/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ full_name: name, org_name: org, email: email, password: pass })
+        body: JSON.stringify({ phone: phone, full_name: name, password: pass, organization_id: orgId || null })
       })
       .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
       .then(function (res) {
-        if (res.ok && res.data.token) {
-          try { localStorage.setItem('ngo_api_token', res.data.token); localStorage.setItem('ngo_api_user', JSON.stringify(res.data.user)); } catch(e) {}
-          location.replace('cabinet-dashboard.html');
+        if (res.ok) {
+          document.querySelector('.form-card').innerHTML =
+            '<div style="text-align:center;padding:40px 20px">'
+            + '<i class="ph ph-check-circle" style="font-size:48px;color:#16a34a"></i>'
+            + '<h2 style="margin:16px 0 8px">' + (res.data.verified ? 'Ariza tasdiqlandi!' : 'Ariza qabul qilindi!') + '</h2>'
+            + '<p style="color:#6b7280">' + res.data.message + '</p>'
+            + '<p style="color:#6b7280;margin-top:8px">Administrator arizangizni ko\'rib chiqgach, kabinetga kirishingiz mumkin.</p>'
+            + '<a href="cabinet-login.html" class="btn-auth" style="margin-top:20px;display:inline-block;text-decoration:none"><i class="ph ph-sign-in"></i> Kirishga o\'tish</a>'
+            + '</div>';
         } else {
-          var msg = 'Ro\'yxatdan o\'tishda xatolik.';
-          if (res.data.error === 'duplicate_email') msg = 'Bu email allaqachon ro\'yxatdan o\'tgan.';
-          if (res.data.error === 'validation') msg = 'Ma\'lumotlarni tekshiring. Parol kamida 12 belgi.';
+          var msg = res.data.message || 'Xatolik yuz berdi.';
+          if (res.data.error === 'duplicate_phone') msg = 'Bu telefon raqam allaqachon ro\'yxatdan o\'tgan.';
           alert(msg);
-          btn.disabled = false; btn.textContent = 'Ro\'yxatdan o\'tish';
+          btn.disabled = false; btn.textContent = 'Ariza yuborish';
         }
       })
-      .catch(function () { alert('Tarmoq xatosi.'); btn.disabled = false; btn.textContent = 'Ro\'yxatdan o\'tish'; });
+      .catch(function () { alert('Tarmoq xatosi.'); btn.disabled = false; btn.textContent = 'Ariza yuborish'; });
     });
   </script>
 </body>

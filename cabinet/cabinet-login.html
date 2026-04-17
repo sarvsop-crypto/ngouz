@@ -33,9 +33,9 @@
 
         <form class="form-fields" id="loginForm" novalidate>
           <div class="field">
-            <label class="field__label" for="email">Email manzil <span>*</span></label>
+            <label class="field__label" for="email">Telefon raqam <span>*</span></label>
             <div class="field__input-wrap">
-              <input type="email" id="email" class="field__input" name="email" placeholder="Email manzilingizni kiriting" required autocomplete="email" />
+              <input type="tel" id="email" class="field__input" name="email" placeholder="+998 __ ___ __ __" required autocomplete="tel" />
             </div>
           </div>
 
@@ -93,10 +93,11 @@
 
     document.getElementById('loginForm').addEventListener('submit', function (e) {
       e.preventDefault();
-      var email = document.getElementById('email').value.trim();
+      var phone = document.getElementById('email').value.replace(/[^\d]/g, '');
+      var email = phone + '@phone.ngo.uz';
       var pass  = document.getElementById('password').value;
       var btn   = this.querySelector('button[type="submit"]');
-      if (!email || !pass) return;
+      if (!phone || !pass) return;
       btn.disabled = true;
       NgoApi.login(email, pass).then(function () {
         location.replace('cabinet-dashboard.html');
