@@ -64,14 +64,12 @@ h3,
 h4,
 h5,
 h6 {
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
 
-/* Keep admin/data table cells stable; avoid forced mid-word wrapping. */
 th,
 td {
-  overflow-wrap: normal;
-  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 /* Keep chart labels horizontal/readable even under narrow layouts. */
@@ -641,10 +639,6 @@ td {
   vertical-align: middle;
 }
 
-.table td {
-  word-break: normal;
-  overflow-wrap: normal;
-}
 
 .mobile-nav-toggle {
   display: none;
