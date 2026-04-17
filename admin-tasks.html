@@ -124,12 +124,8 @@
           <button type="button" class="filter-chip" data-filter="progress">Jarayonda <span class="filter-chip__count">19</span></button>
           <button type="button" class="filter-chip" data-filter="done">Bajarilgan <span class="filter-chip__count">38</span></button>
           <button type="button" class="filter-chip" data-filter="overdue">Muddati o&rsquo;tgan <span class="filter-chip__count">7</span></button>
-          <select class="table-section__search u-search-160" aria-label="Mas'ul">
+          <select class="table-section__search u-search-160" aria-label="Mas'ul" id="taskOwnerFilter">
             <option value="">Barcha mas'ullar</option>
-            <option>Azizova Nodira</option>
-            <option>Toshmatov Akbar</option>
-            <option>Xolmatova Gulnora</option>
-            <option>Rahimov Bobur</option>
           </select>
         </form>
         <table class="table">
@@ -155,26 +151,11 @@
     <div class="notifications-panel__header">
       <h2 class="notifications-panel__title">Bildirishnomalar</h2>
     </div>
-    <div class="notifications-panel__list">
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-clipboard-text"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Yangi topshiriq qo'shildi <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">Azizova Nodira yangi topshiriq yaratdi.</p>
-          <p class="notifications-panel__item-time">5 daqiqa oldin</p>
-        </div>
-      </div>
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-check-circle"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Topshiriq bajarildi</p>
-          <p class="notifications-panel__item-body">Toshmatov Akbar topshiriqni yakunladi.</p>
-          <p class="notifications-panel__item-time">30 daqiqa oldin</p>
-        </div>
-      </div>
+    <div class="notifications-panel__list" id="notifPanelList">
+      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>
@@ -196,10 +177,6 @@
             <label class="modal__label" for="task-owner">Mas'ul shaxs <span style="color:#dc2626">*</span></label>
             <select id="task-owner" class="modal__select">
               <option value="">Tanlang</option>
-              <option>Azizova Nodira</option>
-              <option>Toshmatov Akbar</option>
-              <option>Xolmatova Gulnora</option>
-              <option>Rahimov Bobur</option>
             </select>
           </div>
           <div class="modal__field">

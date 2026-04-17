@@ -155,18 +155,11 @@
     <div class="notifications-panel__header">
       <h2 class="notifications-panel__title">Bildirishnomalar</h2>
     </div>
-    <div class="notifications-panel__list">
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-chat-dots"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Yangi qayta aloqa xabari <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">Tursunova Madina saytda hisobot yuklash xatosini aytdi.</p>
-          <p class="notifications-panel__item-time">30 daqiqa oldin</p>
-        </div>
-      </div>
+    <div class="notifications-panel__list" id="notifPanelList">
+      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>

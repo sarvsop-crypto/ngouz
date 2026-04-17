@@ -159,18 +159,11 @@
     <div class="notifications-panel__header">
       <h2 class="notifications-panel__title">Bildirishnomalar</h2>
     </div>
-    <div class="notifications-panel__list">
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-shield-warning"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Yuqori darajali anonim murojaat <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">KRP-2026-0042 &mdash; Farg&rsquo;onadan grant taqsimoti bo&rsquo;yicha shikoyat.</p>
-          <p class="notifications-panel__item-time">20 daqiqa oldin</p>
-        </div>
-      </div>
+    <div class="notifications-panel__list" id="notifPanelList">
+      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>
@@ -185,36 +178,36 @@
         <div class="u-modal-grid-2">
           <div class="modal__field">
             <label class="modal__label">Murojaat raqami</label>
-            <div class="u-modal-value u-modal-value-strong">KRP-2026-0042</div>
+            <div class="u-modal-value u-modal-value-strong" id="crpReviewId">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Topshirilgan</label>
-            <div class="u-modal-value">08.04.2026 &middot; 09:14</div>
+            <div class="u-modal-value" id="crpReviewDate">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Arizachi</label>
-            <div class="u-modal-value"><span class="badge badge--error"><span class="badge__dot"></span>Anonim</span></div>
+            <div class="u-modal-value" id="crpReviewName">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Hudud</label>
-            <div class="u-modal-value">Farg&rsquo;ona viloyati</div>
+            <div class="u-modal-value" id="crpReviewRegion">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Darajasi</label>
-            <div class="u-modal-value u-text-danger u-text-bold">Yuqori</div>
+            <div class="u-modal-value" id="crpReviewSeverity">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Holat</label>
-            <div class="u-modal-value"><span class="badge badge--warning"><span class="badge__dot"></span>Yangi</span></div>
+            <div class="u-modal-value" id="crpReviewStatus">&mdash;</div>
           </div>
         </div>
         <div class="modal__field">
           <label class="modal__label">Mavzu</label>
-          <div class="u-modal-value u-modal-value-medium">Grant taqsimotida qonunbuzarlik</div>
+          <div class="u-modal-value u-modal-value-medium" id="crpReviewSubject">&mdash;</div>
         </div>
         <div class="modal__field">
           <label class="modal__label">Batafsil matn</label>
-          <div class="u-modal-value">Farg&rsquo;ona viloyatida 2026-yil birinchi chorakdagi grantlar taqsimotida bir nechta NNTlar qonunsiz ustunlik olishgan. Hujjatlar va dalillar ilova qilingan.</div>
+          <div class="u-modal-value" id="crpReviewBody">&mdash;</div>
         </div>
         <div class="modal__field">
           <label class="modal__label">Mas&rsquo;ul tayinlash / Izoh</label>

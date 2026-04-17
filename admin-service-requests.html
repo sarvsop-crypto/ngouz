@@ -157,26 +157,11 @@
     <div class="notifications-panel__header">
       <h2 class="notifications-panel__title">Bildirishnomalar</h2>
     </div>
-    <div class="notifications-panel__list">
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-wrench"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Yangi xizmat so&rsquo;rovi <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">XZM-2026-0312 &mdash; Azizov Rustam ro&rsquo;yxatga olishni so&rsquo;ramoqda.</p>
-          <p class="notifications-panel__item-time">10 daqiqa oldin</p>
-        </div>
-      </div>
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-check-circle"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">So&rsquo;rov yopildi</p>
-          <p class="notifications-panel__item-body">XZM-2026-0310 sertifikat so&rsquo;rovi javob berilgan.</p>
-          <p class="notifications-panel__item-time">2 soat oldin</p>
-        </div>
-      </div>
+    <div class="notifications-panel__list" id="notifPanelList">
+      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>
@@ -191,32 +176,32 @@
         <div class="u-modal-grid-2">
           <div class="modal__field">
             <label class="modal__label">So&rsquo;rov raqami</label>
-            <div class="u-modal-value u-modal-value-strong">XZM-2026-0312</div>
+            <div class="u-modal-value u-modal-value-strong" id="svcReviewId">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Topshirilgan</label>
-            <div class="u-modal-value">08.04.2026 &middot; 14:22</div>
+            <div class="u-modal-value" id="svcReviewDate">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Arizachi</label>
-            <div class="u-modal-value u-modal-value-medium">Azizov Rustam</div>
+            <div class="u-modal-value u-modal-value-medium" id="svcReviewName">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Aloqa</label>
-            <div class="u-modal-value">+998 90 123-45-67</div>
+            <div class="u-modal-value" id="svcReviewContact">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Turi</label>
-            <div class="u-modal-value">Ro&rsquo;yxatga olish</div>
+            <div class="u-modal-value" id="svcReviewType">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Mas&rsquo;ul</label>
-            <div class="u-modal-value">Tayinlanmagan</div>
+            <div class="u-modal-value" id="svcReviewAssignee">Tayinlanmagan</div>
           </div>
         </div>
         <div class="modal__field">
           <label class="modal__label">So&rsquo;rov matni</label>
-          <div class="u-modal-value">Mening NNTim uchun rasmiy ro&rsquo;yxatga olish jarayoni haqida ma&rsquo;lumot olmoqchiman. Kerakli hujjatlar ro&rsquo;yxati va bosqichlarni yuboring.</div>
+          <div class="u-modal-value" id="svcReviewBody">&mdash;</div>
         </div>
         <div class="modal__field">
           <label class="modal__label">Javob matni</label>

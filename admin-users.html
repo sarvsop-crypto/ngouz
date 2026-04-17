@@ -300,26 +300,11 @@
   <!-- Notifications panel -->
   <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2></div>
-    <div class="notifications-panel__list">
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-user-plus"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Yangi hududiy admin qo'shildi <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">Samarqand viloyati uchun Karimov Jasur qo'shildi.</p>
-          <p class="notifications-panel__item-time">1 soat oldin</p>
-        </div>
-      </div>
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-lock-key"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Huquqlar yangilandi</p>
-          <p class="notifications-panel__item-body">Farg'ona viloyati admini huquqlari o'zgartirildi.</p>
-          <p class="notifications-panel__item-time">3 soat oldin</p>
-        </div>
-      </div>
+    <div class="notifications-panel__list" id="notifPanelList">
+      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read">Barchasini o'qildi deb belgilash</button>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o'qildi deb belgilash</button>
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>

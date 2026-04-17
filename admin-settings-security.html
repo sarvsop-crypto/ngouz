@@ -159,11 +159,11 @@
 
   <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2></div>
-    <div class="notifications-panel__list">
-      <div class="notifications-panel__item"><div class="notifications-panel__icon"><i class="ph ph-clipboard-text"></i></div><div class="notifications-panel__content"><p class="notifications-panel__item-title">Yangi ariza kelib tushdi <span class="notifications-panel__dot"></span></p><p class="notifications-panel__item-body">Yangi Nafas NNT — ARZ-2026-0418 ko'rib chiqilishi kerak.</p><p class="notifications-panel__item-time">2 daqiqa oldin</p></div></div>
+    <div class="notifications-panel__list" id="notifPanelList">
+      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read">Barchasini o'qildi deb belgilash</button>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o'qildi deb belgilash</button>
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>

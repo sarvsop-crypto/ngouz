@@ -145,34 +145,11 @@
     <div class="notifications-panel__header">
       <h2 class="notifications-panel__title">Bildirishnomalar</h2>
     </div>
-    <div class="notifications-panel__list">
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-clipboard-text"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Yangi ariza kelib tushdi <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">Yangi Nafas NNT &mdash; ARZ-2026-0418 ko&rsquo;rib chiqilishi kerak.</p>
-          <p class="notifications-panel__item-time">2 daqiqa oldin</p>
-        </div>
-      </div>
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-paperclip"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Hujjat yuklandi <span class="notifications-panel__dot"></span></p>
-          <p class="notifications-panel__item-body">Umid Istiqbol NNT yangi hujjat yukladi.</p>
-          <p class="notifications-panel__item-time">15 daqiqa oldin</p>
-        </div>
-      </div>
-      <div class="notifications-panel__item">
-        <div class="notifications-panel__icon"><i class="ph ph-check-circle"></i></div>
-        <div class="notifications-panel__content">
-          <p class="notifications-panel__item-title">Ariza tasdiqlandi</p>
-          <p class="notifications-panel__item-body">Mehr-Shafqat NNT arizasi tasdiqlandi.</p>
-          <p class="notifications-panel__item-time">1 soat oldin</p>
-        </div>
-      </div>
+    <div class="notifications-panel__list" id="notifPanelList">
+      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read">Barchasini o&rsquo;qildi deb belgilash</button>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>
@@ -187,27 +164,27 @@
         <div class="u-modal-grid-2">
           <div class="modal__field">
             <label class="modal__label">Ariza raqami</label>
-            <div class="u-modal-value u-modal-value-strong">ARZ-2026-0418</div>
+            <div class="u-modal-value u-modal-value-strong" id="reviewAppId">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Topshirilgan sana</label>
-            <div class="u-modal-value">02.04.2026</div>
+            <div class="u-modal-value" id="reviewAppDate">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Tashkilot nomi</label>
-            <div class="u-modal-value u-modal-value-medium">Yangi Nafas NNT</div>
+            <div class="u-modal-value u-modal-value-medium" id="reviewAppOrg">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Viloyat / Shahar</label>
-            <div class="u-modal-value">Toshkent shahri</div>
+            <div class="u-modal-value" id="reviewAppRegion">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Mas&rsquo;ul shaxs</label>
-            <div class="u-modal-value">Azizova Nodira</div>
+            <div class="u-modal-value" id="reviewAppPerson">&mdash;</div>
           </div>
           <div class="modal__field">
             <label class="modal__label">Bosqich</label>
-            <div class="u-modal-value">2 / 4</div>
+            <div class="u-modal-value" id="reviewAppStep">&mdash;</div>
           </div>
         </div>
         <div class="modal__field">
@@ -235,7 +212,7 @@
         <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
       </div>
       <div class="modal__body">
-        <p class="u-modal-text">Siz <strong>Yangi Nafas NNT</strong> (ARZ-2026-0418) arizasini tasdiqlayapsiz. Bu tashkilot a&rsquo;zolik ro&rsquo;yxatiga qo&rsquo;shiladi.</p>
+        <p class="u-modal-text" id="approveModalText">Siz tanlangan arizani tasdiqlayapsiz. Bu tashkilot a&rsquo;zolik ro&rsquo;yxatiga qo&rsquo;shiladi.</p>
         <div class="modal__field">
           <label class="modal__label">Tasdiqlash izohi (ixtiyoriy)</label>
           <textarea class="modal__textarea" placeholder="Tasdiqlash sababini kiriting..."></textarea>
@@ -256,7 +233,7 @@
         <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
       </div>
       <div class="modal__body">
-        <p class="u-modal-text">Siz <strong>Yangi Nafas NNT</strong> (ARZ-2026-0418) arizasini qaytaryapsiz. Arizachiga sabab ko&rsquo;rsatiladi.</p>
+        <p class="u-modal-text" id="returnModalText">Siz tanlangan arizani qaytaryapsiz. Arizachiga sabab ko&rsquo;rsatiladi.</p>
         <div class="modal__field">
           <label class="modal__label">Qaytarish sababi <span class="u-text-danger">*</span></label>
           <textarea class="modal__textarea" placeholder="Qaytarish sababini batafsil kiriting..." required></textarea>
