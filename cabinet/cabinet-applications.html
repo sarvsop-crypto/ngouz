@@ -34,10 +34,10 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;font-weight:600;font-size:16px;" class="main__profile-avatar">K</div>
+            <div class="main__profile-avatar u-profile-avatar-initial"></div>
             <div>
-              <div class="main__profile-name">Kamolov Sanjar</div>
-              <div class="main__profile-role">Yangi Nafas NNT</div>
+              <div class="main__profile-name"></div>
+              <div class="main__profile-role"></div>
             </div>
           </div>
         </div>
@@ -49,28 +49,22 @@
       </div>
 
       <div class="tabs">
-        <button type="button" class="tab is-active">Faol <span class="tab__count">1</span></button>
-        <button type="button" class="tab">Tasdiqlangan <span class="tab__count">0</span></button>
-        <button type="button" class="tab">Arxiv <span class="tab__count">0</span></button>
+        <button type="button" class="tab is-active">Faol <span class="tab__count">&mdash;</span></button>
+        <button type="button" class="tab">Tasdiqlangan <span class="tab__count">&mdash;</span></button>
+        <button type="button" class="tab">Arxiv <span class="tab__count">&mdash;</span></button>
       </div>
 
       <div class="cards">
-        <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Joriy holat</p><p class="card__value" style="font-size:16px;color:var(--warning-700);">Ko&rsquo;rib chiqilmoqda</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-steps"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Bosqich</p><p class="card__value">2 / 4</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-files"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Hujjatlar</p><p class="card__value">3 / 7</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-calendar"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Topshirilgan</p><p class="card__value" style="font-size:16px;">02.04.2026</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Joriy holat</p><p class="card__value" style="font-size:16px;color:var(--warning-700);">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-steps"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Bosqich</p><p class="card__value">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-files"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Hujjatlar</p><p class="card__value">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-calendar"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Topshirilgan</p><p class="card__value" style="font-size:16px;">&mdash;</p></div></div></div>
       </div>
 
-      <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
+      <!-- Application steps - hidden until API data is loaded -->
+      <div id="appStepsSection" style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;display:none;">
         <h2 style="font-size:16px;font-weight:600;margin:0 0 20px;">Ariza bosqichlari</h2>
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;position:relative;">
-          <div style="position:absolute;top:20px;left:10%;right:10%;height:2px;background:var(--grey-100);z-index:0;"></div>
-          <div style="position:absolute;top:20px;left:10%;width:25%;height:2px;background:var(--primary-500);z-index:1;"></div>
-          <div style="text-align:center;flex:1;position:relative;z-index:2;"><div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;margin:0 auto;"><i class="ph-bold ph-check"></i></div><div style="font-size:13px;font-weight:600;margin-top:8px;">Ariza topshirildi</div><div style="font-size:12px;color:var(--grey-400);">02.04.2026</div></div>
-          <div style="text-align:center;flex:1;position:relative;z-index:2;"><div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;margin:0 auto;font-weight:700;box-shadow:0 0 0 4px var(--primary-50);">2</div><div style="font-size:13px;font-weight:600;color:var(--primary-500);margin-top:8px;">Hujjatlar tekshiruvi</div><div style="font-size:12px;color:var(--primary-300);">Jarayonda</div></div>
-          <div style="text-align:center;flex:1;position:relative;z-index:2;"><div style="width:40px;height:40px;border-radius:50%;background:var(--grey-100);color:var(--grey-400);display:grid;place-items:center;margin:0 auto;font-weight:700;">3</div><div style="font-size:13px;color:var(--grey-400);margin-top:8px;">Shartnoma imzosi</div></div>
-          <div style="text-align:center;flex:1;position:relative;z-index:2;"><div style="width:40px;height:40px;border-radius:50%;background:var(--grey-100);color:var(--grey-400);display:grid;place-items:center;margin:0 auto;font-weight:700;">4</div><div style="font-size:13px;color:var(--grey-400);margin-top:8px;">A&rsquo;zolik tasdiqlandi</div></div>
-        </div>
+        <div style="text-align:center;color:var(--grey-400);font-size:13px;padding:16px 0;">Ariza ma'lumotlari yuklanmoqda...</div>
       </div>
 
       <section class="table-section">

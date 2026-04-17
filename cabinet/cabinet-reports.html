@@ -34,10 +34,10 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div class="main__profile-avatar u-profile-avatar-initial">K</div>
+            <div class="main__profile-avatar u-profile-avatar-initial"></div>
             <div>
-              <div class="main__profile-name">Kamolov Sanjar</div>
-              <div class="main__profile-role">Yangi Nafas NNT</div>
+              <div class="main__profile-name"></div>
+              <div class="main__profile-role"></div>
             </div>
           </div>
         </div>
@@ -51,18 +51,17 @@
       </div>
 
       <div class="cards">
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-chart-bar"></i></div></div><div class="card__body"><div><p class="card__label">Jami hisobotlar</p><p class="card__value">5</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div></div><div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value">2</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div></div><div class="card__body"><div><p class="card__label">Ko&rsquo;rib chiqilmoqda</p><p class="card__value">2</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon" style="background:var(--error-50);color:var(--error-600);"><i class="ph ph-x-circle"></i></div></div><div class="card__body"><div><p class="card__label">Qaytarilgan</p><p class="card__value">1</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-chart-bar"></i></div></div><div class="card__body"><div><p class="card__label">Jami hisobotlar</p><p class="card__value">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div></div><div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div></div><div class="card__body"><div><p class="card__label">Ko&rsquo;rib chiqilmoqda</p><p class="card__value">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon" style="background:var(--error-50);color:var(--error-600);"><i class="ph ph-x-circle"></i></div></div><div class="card__body"><div><p class="card__label">Qaytarilgan</p><p class="card__value">&mdash;</p></div></div></div>
       </div>
 
-      <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:18px 20px;margin-bottom:16px;display:flex;gap:12px;align-items:flex-start;">
+      <div id="reportsRejAlert" style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:18px 20px;margin-bottom:16px;display:none;gap:12px;align-items:flex-start;">
         <i class="ph ph-warning" style="color:var(--error-500);font-size:20px;flex-shrink:0;margin-top:1px;"></i>
         <div>
-          <div style="font-weight:600;font-size:14px;color:var(--error-700);margin-bottom:4px;">III chorak hisoboti qaytarilgan</div>
-          <div style="font-size:13px;color:var(--error-600);">Sababli: Moliyaviy ma&rsquo;lumotlar to&rsquo;liq ko&rsquo;rsatilmagan. 3&ndash;5-bandlardagi raqamlarni to&rsquo;ldirib qayta yuboring.</div>
-          <div style="font-size:12px;color:var(--error-400);margin-top:6px;">Muddat: 20.04.2026 gacha</div>
+          <div id="reportsRejTitle" style="font-weight:600;font-size:14px;color:var(--error-700);margin-bottom:4px;"></div>
+          <div id="reportsRejBody" style="font-size:13px;color:var(--error-600);"></div>
         </div>
       </div>
 
@@ -179,11 +178,13 @@
 
       // Show rejection alert if any rejected
       var rejItem = items.find(function (i) { return i.status === 'rejected'; });
-      var alertBox = document.querySelector('[style*="fef2f2"]');
-      if (alertBox && !rejItem) alertBox.style.display = 'none';
-      if (alertBox && rejItem && rejItem.review_note) {
-        var noteDiv = alertBox.querySelector('div > div:nth-child(2)');
-        if (noteDiv) noteDiv.textContent = 'Sababli: ' + rejItem.review_note;
+      var alertBox = document.getElementById('reportsRejAlert');
+      if (alertBox && rejItem) {
+        alertBox.style.display = 'flex';
+        var titleEl = document.getElementById('reportsRejTitle');
+        var bodyEl = document.getElementById('reportsRejBody');
+        if (titleEl) titleEl.textContent = (rejItem.title || 'Hisobot') + ' qaytarilgan';
+        if (bodyEl) bodyEl.textContent = rejItem.review_note ? ('Sababli: ' + rejItem.review_note) : '';
       }
     }).catch(function (err) {
       console.error('Reports load error:', err);

@@ -57,6 +57,14 @@
             </div>
           </div>
 
+          <div class="field" id="orgSearchField" style="display:none">
+            <label class="field__label" for="orgSearch">Tashkilotingizni tanlang <span>*</span></label>
+            <div class="field__input-wrap">
+              <input type="text" id="orgSearch" class="field__input" placeholder="Tashkilot nomini yozing..." autocomplete="off" />
+            </div>
+            <div id="orgResults" style="max-height:200px;overflow-y:auto;border:1px solid #e4e7e7;border-radius:8px;margin-top:4px;display:none"></div>
+          </div>
+
           <div class="field">
             <label class="field__label" for="password">Parol <span>*</span></label>
             <div class="field__input-wrap">
@@ -139,14 +147,50 @@
             document.getElementById('orgId').value = res.organization.id;
             status.textContent = 'Tashkilot topildi!';
             status.style.color = '#166534';
+            document.getElementById('orgSearchField').style.display = 'none';
           } else {
             document.getElementById('orgWarning').style.display = 'block';
-            status.textContent = 'Ro\'yxatda topilmadi';
+            document.getElementById('orgSearchField').style.display = 'block';
+            status.textContent = 'Ro\'yxatda topilmadi — tashkilotingizni qidiring';
             status.style.color = '#854d0e';
           }
         })
         .catch(function () { status.style.display = 'none'; });
       }, 500);
+    });
+
+    // Org search for unverified phones
+    var orgSearchTimer;
+    document.getElementById('orgSearch').addEventListener('input', function () {
+      clearTimeout(orgSearchTimer);
+      var q = this.value.trim();
+      var results = document.getElementById('orgResults');
+      if (q.length < 3) { results.style.display = 'none'; return; }
+      orgSearchTimer = setTimeout(function () {
+        fetch(API + '/public/organizations?q=' + encodeURIComponent(q) + '&limit=10')
+          .then(function (r) { return r.json(); })
+          .then(function (res) {
+            var items = res.items || [];
+            if (!items.length) { results.innerHTML = '<div style="padding:12px;color:#798384;font-size:13px">Topilmadi</div>'; results.style.display = 'block'; return; }
+            results.innerHTML = items.map(function (o) {
+              return '<div style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f1f3f5;font-size:14px" onmouseover="this.style.background=\'#f0fafd\'" onmouseout="this.style.background=\'\'" data-org-id="' + o.id + '" data-org-name="' + (o.name || '').replace(/"/g, '&quot;') + '">'
+                + '<strong>' + o.name + '</strong>'
+                + '<div style="font-size:12px;color:#798384">' + (o.region_code || '') + ' · ' + (o.leader_name || '') + '</div>'
+                + '</div>';
+            }).join('');
+            results.style.display = 'block';
+            results.querySelectorAll('[data-org-id]').forEach(function (el) {
+              el.addEventListener('click', function () {
+                document.getElementById('orgId').value = this.dataset.orgId;
+                document.getElementById('orgSearch').value = this.dataset.orgName;
+                results.style.display = 'none';
+                document.getElementById('orgWarning').innerHTML = '<p style="margin:0;font-size:13px;color:#166534"><i class="ph ph-check-circle" style="vertical-align:middle"></i> Tanlangan: <strong>' + this.dataset.orgName + '</strong></p>';
+                document.getElementById('orgWarning').style.background = '#f0fdf4';
+                document.getElementById('orgWarning').style.borderColor = '#86efac';
+              });
+            });
+          });
+      }, 300);
     });
 
     // Registration submit

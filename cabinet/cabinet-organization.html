@@ -34,10 +34,10 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div class="main__profile-avatar u-profile-avatar-initial">K</div>
+            <div class="main__profile-avatar u-profile-avatar-initial"></div>
             <div>
-              <div class="main__profile-name">Kamolov Sanjar</div>
-              <div class="main__profile-role">Yangi Nafas NNT</div>
+              <div class="main__profile-name"></div>
+              <div class="main__profile-role"></div>
             </div>
           </div>
         </div>
@@ -53,48 +53,48 @@
       <div class="cards">
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-seal-check"></i></div></div>
-          <div class="card__body"><div><p class="card__label">A'zolik holati</p><p class="card__value" style="font-size:16px;color:var(--success-600);">Faol</p></div></div>
-          <div style="font-size:12px;color:var(--grey-400);margin-top:4px;">2027-yil yangilanadi</div>
+          <div class="card__body"><div><p class="card__label">A'zolik holati</p><p class="card__value" id="orgCardStatus" style="font-size:16px;color:var(--success-600);">&mdash;</p></div></div>
+          <div id="orgCardStatusSub" style="font-size:12px;color:var(--grey-400);margin-top:4px;"></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-identification-badge"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Ro&rsquo;yxat raqami</p><p class="card__value" style="font-size:15px;">NNT-TKV-0127</p></div></div>
-          <div style="font-size:12px;color:var(--grey-400);margin-top:4px;">Toshkent viloyati</div>
+          <div class="card__body"><div><p class="card__label">Ro&rsquo;yxat raqami</p><p class="card__value" id="orgCardRegNum" style="font-size:15px;">&mdash;</p></div></div>
+          <div id="orgCardRegSub" style="font-size:12px;color:var(--grey-400);margin-top:4px;"></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-calendar"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Tashkil etilgan</p><p class="card__value">2019-yil</p></div></div>
-          <div style="font-size:12px;color:var(--grey-400);margin-top:4px;">5 yil faoliyatda</div>
+          <div class="card__body"><div><p class="card__label">Tashkil etilgan</p><p class="card__value" id="orgCardRegistered">&mdash;</p></div></div>
+          <div id="orgCardRegYearSub" style="font-size:12px;color:var(--grey-400);margin-top:4px;"></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-hourglass"></i></div></div>
-          <div class="card__body"><div><p class="card__label">A&rsquo;zolik muddati</p><p class="card__value" style="font-size:15px;">01.04.2027</p></div></div>
-          <div style="font-size:12px;color:var(--grey-400);margin-top:4px;">352 kun qoldi</div>
+          <div class="card__body"><div><p class="card__label">A&rsquo;zo bo&rsquo;lgan</p><p class="card__value" id="orgCardMemberSince" style="font-size:15px;">&mdash;</p></div></div>
+          <div id="orgCardMemberSub" style="font-size:12px;color:var(--grey-400);margin-top:4px;"></div>
         </div>
       </div>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
         <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
-          <h2 style="font-size:15px;font-weight:700;margin:0 0 18px;display:flex;align-items:center;gap:8px;"><i class="ph ph-buildings" style="color:var(--primary-500);"></i> Tashkilot ma&rsquo;lumotlari</h2>
+          <h2 style="font-size:15px;font-weight:700;margin:0 0 18px;display:flex;align-items:center;gap:8px;"><i class="ph ph-buildings" style="color:var(--primary-500);"></i> Tashkilot ma'lumotlari</h2>
           <dl style="display:grid;grid-template-columns:140px 1fr;row-gap:12px;column-gap:16px;font-size:14px;margin:0;">
             <dt style="color:var(--grey-500);font-weight:500;">Nomi:</dt>
-            <dd style="color:var(--grey-900);font-weight:600;margin:0;">&laquo;Yangi Nafas&raquo; NNT</dd>
+            <dd id="orgName" style="color:var(--grey-900);font-weight:600;margin:0;">&mdash;</dd>
             <dt style="color:var(--grey-500);font-weight:500;">Huquqiy shakli:</dt>
-            <dd style="margin:0;">Nodavlat notijorat tashkilot</dd>
+            <dd id="orgLegalForm" style="margin:0;">&mdash;</dd>
             <dt style="color:var(--grey-500);font-weight:500;">STIR:</dt>
-            <dd style="margin:0;font-family:monospace;">302 847 561</dd>
-            <dt style="color:var(--grey-500);font-weight:500;">Ro&rsquo;yxat raqami:</dt>
-            <dd style="margin:0;font-family:monospace;">NNT-TKV-0127</dd>
+            <dd id="orgInn" style="margin:0;font-family:monospace;">&mdash;</dd>
+            <dt style="color:var(--grey-500);font-weight:500;">Ro'yxat raqami:</dt>
+            <dd id="orgRegNum" style="margin:0;font-family:monospace;">&mdash;</dd>
             <dt style="color:var(--grey-500);font-weight:500;">Hudud:</dt>
-            <dd style="margin:0;">Toshkent viloyati, Nurafshon sh.</dd>
+            <dd id="orgRegion" style="margin:0;">&mdash;</dd>
             <dt style="color:var(--grey-500);font-weight:500;">Manzil:</dt>
-            <dd style="margin:0;">Ko&rsquo;k ko&rsquo;cha, 14-uy</dd>
+            <dd id="orgAddress" style="margin:0;">&mdash;</dd>
             <dt style="color:var(--grey-500);font-weight:500;">Telefon:</dt>
-            <dd style="margin:0;"><a href="tel:+998712345678" style="color:var(--primary-500);text-decoration:none;">+998 71 234-56-78</a></dd>
+            <dd id="orgPhone" style="margin:0;">&mdash;</dd>
             <dt style="color:var(--grey-500);font-weight:500;">Email:</dt>
-            <dd style="margin:0;"><a href="mailto:info@yanginafas.uz" style="color:var(--primary-500);text-decoration:none;">info@yanginafas.uz</a></dd>
+            <dd id="orgEmail" style="margin:0;">&mdash;</dd>
             <dt style="color:var(--grey-500);font-weight:500;">Veb-sayt:</dt>
-            <dd style="margin:0;"><a href="#" style="color:var(--primary-500);text-decoration:none;">yanginafas.uz</a></dd>
+            <dd id="orgWebsite" style="margin:0;">&mdash;</dd>
           </dl>
         </div>
 
@@ -102,50 +102,19 @@
           <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
             <h2 style="font-size:15px;font-weight:700;margin:0 0 18px;display:flex;align-items:center;gap:8px;"><i class="ph ph-user-circle" style="color:var(--primary-500);"></i> Rahbariyat</h2>
             <div style="display:flex;align-items:center;gap:14px;">
-              <div style="width:48px;height:48px;border-radius:50%;background:var(--primary-100);color:var(--primary-600);display:grid;place-items:center;font-weight:700;font-size:18px;flex-shrink:0;">K</div>
+              <div id="orgLeaderAvatar" style="width:48px;height:48px;border-radius:50%;background:var(--primary-100);color:var(--primary-600);display:grid;place-items:center;font-weight:700;font-size:18px;flex-shrink:0;">&mdash;</div>
               <div>
-                <div style="font-weight:600;font-size:15px;color:var(--grey-900);">Kamolov Sanjar Ravshan o&rsquo;g&rsquo;li</div>
+                <div id="orgLeaderName" style="font-weight:600;font-size:15px;color:var(--grey-900);">&mdash;</div>
                 <div style="font-size:13px;color:var(--grey-500);margin-top:2px;">Tashkilot rahbari</div>
-                <div style="font-size:13px;color:var(--grey-500);margin-top:2px;"><i class="ph ph-phone" style="vertical-align:middle;"></i> +998 90 123-45-67</div>
+                <div id="orgLeaderPhone" style="font-size:13px;color:var(--grey-500);margin-top:2px;display:none;"><i class="ph ph-phone" style="vertical-align:middle;"></i> <span></span></div>
               </div>
             </div>
           </div>
           <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
-            <h2 style="font-size:15px;font-weight:700;margin:0 0 14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-tag" style="color:var(--primary-500);"></i> Faoliyat yo&rsquo;nalishlari</h2>
-            <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              <span style="background:var(--primary-50);color:var(--primary-600);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:500;">Ijtimoiy himoya</span>
-              <span style="background:var(--primary-50);color:var(--primary-600);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:500;">Yoshlar ishlari</span>
-              <span style="background:var(--primary-50);color:var(--primary-600);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:500;">Ta&rsquo;lim</span>
-              <span style="background:var(--primary-50);color:var(--primary-600);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:500;">Xayriya</span>
+            <h2 style="font-size:15px;font-weight:700;margin:0 0 14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-tag" style="color:var(--primary-500);"></i> Faoliyat yo'nalishlari</h2>
+            <div id="orgActivities" style="display:flex;flex-wrap:wrap;gap:8px;">
+              <span style="color:var(--grey-400);font-size:13px;">Ma'lumot mavjud emas</span>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
-        <h2 style="font-size:15px;font-weight:700;margin:0 0 20px;">A&rsquo;zolik tarixi</h2>
-        <div style="display:flex;align-items:flex-start;justify-content:space-between;position:relative;">
-          <div style="position:absolute;top:20px;left:10%;right:10%;height:2px;background:var(--grey-100);z-index:0;"></div>
-          <div style="position:absolute;top:20px;left:10%;width:75%;height:2px;background:var(--primary-500);z-index:1;"></div>
-          <div style="text-align:center;flex:1;position:relative;z-index:2;">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;margin:0 auto;"><i class="ph-bold ph-check"></i></div>
-            <div style="font-size:13px;font-weight:600;margin-top:8px;">Ariza topshirildi</div>
-            <div style="font-size:12px;color:var(--grey-400);">15.03.2019</div>
-          </div>
-          <div style="text-align:center;flex:1;position:relative;z-index:2;">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;margin:0 auto;"><i class="ph-bold ph-check"></i></div>
-            <div style="font-size:13px;font-weight:600;margin-top:8px;">Hujjatlar tasdiqlandi</div>
-            <div style="font-size:12px;color:var(--grey-400);">28.03.2019</div>
-          </div>
-          <div style="text-align:center;flex:1;position:relative;z-index:2;">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;margin:0 auto;"><i class="ph-bold ph-check"></i></div>
-            <div style="font-size:13px;font-weight:600;margin-top:8px;">A&rsquo;zolik faollashdi</div>
-            <div style="font-size:12px;color:var(--grey-400);">01.04.2019</div>
-          </div>
-          <div style="text-align:center;flex:1;position:relative;z-index:2;">
-            <div style="width:40px;height:40px;border-radius:50%;background:var(--primary-500);color:#fff;display:grid;place-items:center;margin:0 auto;box-shadow:0 0 0 4px var(--primary-50);"><i class="ph-bold ph-seal-check"></i></div>
-            <div style="font-size:13px;font-weight:600;color:var(--primary-500);margin-top:8px;">Faol a&rsquo;zo</div>
-            <div style="font-size:12px;color:var(--primary-300);">Hozirgi holat</div>
           </div>
         </div>
       </div>
@@ -160,10 +129,10 @@
       </div>
       <div class="modal__body">
         <div style="display:grid;gap:14px;">
-          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Telefon raqami</label><input type="tel" class="field__input" value="+998 71 234-56-78" /></div>
-          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Email manzil</label><input type="email" class="field__input" value="info@yanginafas.uz" /></div>
-          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Veb-sayt</label><input type="url" class="field__input" value="yanginafas.uz" /></div>
-          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Yuridik manzil</label><input type="text" class="field__input" value="Ko'k ko'cha, 14-uy" /></div>
+          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Telefon raqami</label><input id="editPhone" type="tel" class="field__input" value="" /></div>
+          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Email manzil</label><input id="editEmail" type="email" class="field__input" value="" /></div>
+          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Veb-sayt</label><input id="editWebsite" type="url" class="field__input" value="" /></div>
+          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Yuridik manzil</label><input id="editAddress" type="text" class="field__input" value="" /></div>
         </div>
         <p style="font-size:12px;color:var(--grey-400);margin-top:14px;"><i class="ph ph-info"></i> STIR va ro&rsquo;yxat raqamini o&rsquo;zgartirish uchun murojaat qiling.</p>
       </div>
@@ -184,27 +153,114 @@
   <script>
   (function () {
     if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+
+    function setText(id, val) { var el = document.getElementById(id); if (el) el.textContent = val || '\u2014'; }
+    function setLink(id, val, prefix) {
+      var el = document.getElementById(id);
+      if (!el) return;
+      if (val) {
+        el.innerHTML = '<a href="' + (prefix || '') + val + '" style="color:var(--primary-500);text-decoration:none;">' + val + '</a>';
+      } else {
+        el.textContent = '\u2014';
+      }
+    }
+    function fmtDate(iso) {
+      if (!iso) return '\u2014';
+      var d = new Date(iso);
+      return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear();
+    }
+
     NgoApi.get('/cabinet/organization').then(function (res) {
       var o = res.organization;
       if (!o) return;
-      var dds = document.querySelectorAll('dd');
-      if (dds.length >= 9) {
-        dds[0].textContent = o.name || '—';
-        dds[2].textContent = o.inn || '—';
-        dds[4].textContent = o.region_code || '—';
-        dds[5].textContent = o.address || '—';
-        if (o.phone)   dds[6].innerHTML = '<a href="tel:' + o.phone + '" style="color:var(--primary-500);text-decoration:none;">' + o.phone + '</a>';
-        if (o.email)   dds[7].innerHTML = '<a href="mailto:' + o.email + '" style="color:var(--primary-500);text-decoration:none;">' + o.email + '</a>';
-        if (o.website) dds[8].innerHTML = '<a href="' + o.website + '" style="color:var(--primary-500);text-decoration:none;">' + o.website + '</a>';
+
+      // Detail fields
+      setText('orgName', o.name);
+      setText('orgLegalForm', o.legal_form || '\u2014');
+      setText('orgInn', o.inn);
+      setText('orgRegNum', o.reg_number || o.registration_number);
+      setText('orgRegion', o.region_code);
+      setText('orgAddress', o.address);
+      setLink('orgPhone', o.phone, 'tel:');
+      setLink('orgEmail', o.email, 'mailto:');
+      setLink('orgWebsite', o.website, '');
+
+      // Leader
+      setText('orgLeaderName', o.leader_name);
+      var avatar = document.getElementById('orgLeaderAvatar');
+      if (avatar && o.leader_name) avatar.textContent = o.leader_name.charAt(0).toUpperCase();
+      var leaderPhone = document.getElementById('orgLeaderPhone');
+      if (leaderPhone && o.phone) {
+        leaderPhone.style.display = '';
+        leaderPhone.querySelector('span').textContent = o.phone;
       }
-      var leaderDiv = document.querySelector('.ph-user-circle');
-      if (leaderDiv && o.leader_name) {
-        var nameEl = leaderDiv.closest('div').parentElement.querySelector('div[style*="font-weight:600"]');
-        if (nameEl) nameEl.textContent = o.leader_name;
+
+      // KPI cards
+      var statusLabels = { active: 'Faol', pending: 'Kutilmoqda', suspended: "To\u2018xtatilgan", inactive: 'Nofaol' };
+      setText('orgCardStatus', statusLabels[o.status] || o.status || '\u2014');
+      var statusEl = document.getElementById('orgCardStatus');
+      if (statusEl) {
+        if (o.status === 'active') statusEl.style.color = 'var(--success-600)';
+        else if (o.status === 'pending') statusEl.style.color = 'var(--warning-700)';
+        else statusEl.style.color = 'var(--grey-500)';
       }
+
+      setText('orgCardRegNum', o.reg_number || o.registration_number || '\u2014');
+      setText('orgCardRegSub', o.region_code || '');
+
+      if (o.registered_at) {
+        var yr = new Date(o.registered_at).getFullYear();
+        setText('orgCardRegistered', yr + '-yil');
+        var age = new Date().getFullYear() - yr;
+        setText('orgCardRegYearSub', age + ' yil faoliyatda');
+      }
+
+      if (o.member_since) {
+        setText('orgCardMemberSince', fmtDate(o.member_since));
+      }
+
+      // Activities - show if API has them
+      if (o.activities && o.activities.length) {
+        var el = document.getElementById('orgActivities');
+        if (el) {
+          el.innerHTML = o.activities.map(function (a) {
+            return '<span style="background:var(--primary-50);color:var(--primary-600);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:500;">' + a + '</span>';
+          }).join('');
+        }
+      }
+
+      // Populate edit modal
+      var ep = document.getElementById('editPhone');
+      var ee = document.getElementById('editEmail');
+      var ew = document.getElementById('editWebsite');
+      var ea = document.getElementById('editAddress');
+      if (ep) ep.value = o.phone || '';
+      if (ee) ee.value = o.email || '';
+      if (ew) ew.value = o.website || '';
+      if (ea) ea.value = o.address || '';
     }).catch(function (err) {
       if (err && err.status === 401) location.replace('cabinet-login.html');
     });
+
+    // Wire save button in edit modal
+    var saveBtn = document.querySelector('#editOrgModal .btn--primary');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function () {
+        var phone   = (document.getElementById('editPhone')   || {}).value || '';
+        var email   = (document.getElementById('editEmail')   || {}).value || '';
+        var website = (document.getElementById('editWebsite') || {}).value || '';
+        var address = (document.getElementById('editAddress') || {}).value || '';
+        saveBtn.disabled = true;
+        saveBtn.textContent = 'Saqlanmoqda...';
+        NgoApi.patch('/cabinet/organization', { phone: phone, email: email, website: website, address: address })
+          .then(function () { location.reload(); })
+          .catch(function (err) {
+            alert('Xatolik: ' + (err.message || 'Nomalum'));
+            saveBtn.disabled = false;
+            saveBtn.textContent = 'Saqlash';
+          });
+      });
+    }
   })();
   </script>
 </body>

@@ -34,10 +34,10 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div class="main__profile-avatar u-profile-avatar-initial">K</div>
+            <div class="main__profile-avatar u-profile-avatar-initial"></div>
             <div>
-              <div class="main__profile-name">Kamolov Sanjar</div>
-              <div class="main__profile-role">Yangi Nafas NNT</div>
+              <div class="main__profile-name"></div>
+              <div class="main__profile-role"></div>
             </div>
           </div>
         </div>
@@ -51,10 +51,10 @@
       </div>
 
       <div class="cards">
-        <div class="card"><div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value">3</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-warning"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Muddatli</p><p class="card__value">1</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-clock"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Kutilmoqda</p><p class="card__value">3</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-files"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Jami</p><p class="card__value">7</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-warning"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Muddatli</p><p class="card__value">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-clock"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Kutilmoqda</p><p class="card__value">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-files"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Jami</p><p class="card__value">&mdash;</p></div></div></div>
       </div>
 
       <div class="doc-progress-card">
@@ -66,17 +66,17 @@
               <circle cx="60" cy="60" r="45" fill="none" stroke="#059669" stroke-width="10" stroke-dasharray="116 167" stroke-linecap="butt" transform="rotate(-90 60 60)"/>
               <circle cx="60" cy="60" r="45" fill="none" stroke="var(--secondary-500)" stroke-width="10" stroke-dasharray="39 244" stroke-linecap="butt" transform="rotate(63 60 60)"/>
               <circle cx="60" cy="60" r="45" fill="none" stroke="#94a3b8" stroke-width="10" stroke-dasharray="116 167" stroke-linecap="butt" transform="rotate(118 60 60)"/>
-              <text x="60" y="56" text-anchor="middle" font-size="20" font-weight="700" fill="var(--grey-900)">43%</text>
+              <text x="60" y="56" text-anchor="middle" font-size="20" font-weight="700" fill="var(--grey-900)" id="docChartPct">—</text>
               <text x="60" y="70" text-anchor="middle" font-size="9" fill="var(--grey-400)">to&apos;liq</text>
             </svg>
           </div>
           <div>
-            <div class="doc-progress-title">3 / 7 hujjat qabul qilindi</div>
-            <div class="doc-progress-sub">1 ta muddatli &middot; 3 ta kutilmoqda</div>
-            <div class="doc-progress-legend">
-              <span class="doc-progress-legend-item"><span class="doc-progress-dot u-bg-green-600"></span>Tasdiqlangan: 3</span>
-              <span class="doc-progress-legend-item"><span class="doc-progress-dot u-bg-secondary-500"></span>Muddatli: 1</span>
-              <span class="doc-progress-legend-item"><span class="doc-progress-dot u-bg-grey-500"></span>Kutilmoqda: 3</span>
+            <div class="doc-progress-title">Yuklanmoqda...</div>
+            <div class="doc-progress-sub"></div>
+            <div class="doc-progress-legend" id="docProgressLegend">
+              <span class="doc-progress-legend-item"><span class="doc-progress-dot u-bg-green-600"></span>Tasdiqlangan: &mdash;</span>
+              <span class="doc-progress-legend-item"><span class="doc-progress-dot u-bg-secondary-500"></span>Muddatli: &mdash;</span>
+              <span class="doc-progress-legend-item"><span class="doc-progress-dot u-bg-grey-500"></span>Kutilmoqda: &mdash;</span>
             </div>
           </div>
         </div>
@@ -200,8 +200,19 @@
       // Update progress chart text
       var pctEl = document.querySelector('.doc-progress-title');
       if (pctEl) pctEl.textContent = approved + ' / ' + items.length + ' hujjat qabul qilindi';
+      var pctSvg = document.getElementById('docChartPct');
+      if (pctSvg && items.length) pctSvg.textContent = Math.round((approved / items.length) * 100) + '%';
+      else if (pctSvg) pctSvg.textContent = '0%';
       var subEl = document.querySelector('.doc-progress-sub');
       if (subEl) subEl.textContent = urgent + ' ta muddatli \u00b7 ' + pending + ' ta kutilmoqda';
+      // Update legend
+      var legendEl = document.getElementById('docProgressLegend');
+      if (legendEl) {
+        var spans = legendEl.querySelectorAll('.doc-progress-legend-item');
+        if (spans[0]) spans[0].innerHTML = '<span class="doc-progress-dot u-bg-green-600"></span>Tasdiqlangan: ' + approved;
+        if (spans[1]) spans[1].innerHTML = '<span class="doc-progress-dot u-bg-secondary-500"></span>Muddatli: ' + urgent;
+        if (spans[2]) spans[2].innerHTML = '<span class="doc-progress-dot u-bg-grey-500"></span>Kutilmoqda: ' + pending;
+      }
     }).catch(function (err) {
       console.error('Documents load error:', err);
       document.getElementById('documentsTableBody').innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--error-500);padding:32px;">Xatolik: ' + (err.message || 'Nomalum') + '</td></tr>';

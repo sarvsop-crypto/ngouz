@@ -46,29 +46,7 @@
     }
   ];
 
-  var PANEL_ITEMS = [
-    {
-      icon: 'ph-file-text',
-      title: 'Ustav yangi tahrir so' + RSQUO + 'raldi',
-      body:  'Arizangiz bo' + RSQUO + 'yicha qo' + RSQUO + 'shimcha hujjat talab qilinmoqda.',
-      time:  '2 daqiqa oldin',
-      unread: true
-    },
-    {
-      icon: 'ph-magnifying-glass',
-      title: 'Tekshiruv boshlandi',
-      body:  'ARZ-2026-0418 arizangiz tekshiruv bosqichiga o' + RSQUO + 'tkazildi.',
-      time:  '1 soat oldin',
-      unread: true
-    },
-    {
-      icon: 'ph-calendar',
-      title: 'Yangi tadbir e' + RSQUO + 'lon qilindi',
-      body:  'O' + RSQUO + 'zNNTMA yillik anjumani 2026 uchun ro' + RSQUO + 'yxat ochildi.',
-      time:  '1 kun oldin',
-      unread: false
-    }
-  ];
+  var PANEL_ITEMS = []; // loaded dynamically from API
 
   function buildNavLink(item, activeKey) {
     var activeClass = item.key === activeKey ? ' is-active' : '';
@@ -118,26 +96,14 @@
   }
 
   function buildNotificationsPanel() {
-    var items = PANEL_ITEMS.map(function (n) {
-      var dot = n.unread ? ' <span class="notifications-panel__dot"></span>' : '';
-      return (
-        '<div class="notifications-panel__item">' +
-          '<div class="notifications-panel__icon"><i class="ph ' + n.icon + '"></i></div>' +
-          '<div class="notifications-panel__content">' +
-            '<p class="notifications-panel__item-title">' + n.title + dot + '</p>' +
-            '<p class="notifications-panel__item-body">' + n.body + '</p>' +
-            '<p class="notifications-panel__item-time">' + n.time + '</p>' +
-          '</div>' +
-        '</div>'
-      );
-    }).join('');
-
     return (
       '<div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">' +
         '<div class="notifications-panel__header">' +
           '<h2 class="notifications-panel__title">Bildirishnomalar</h2>' +
         '</div>' +
-        '<div class="notifications-panel__list">' + items + '</div>' +
+        '<div class="notifications-panel__list" id="notifPanelList">' +
+          '<div style="text-align:center;color:#94a3b8;padding:24px 0;font-size:13px;">Yuklanmoqda...</div>' +
+        '</div>' +
         '<div class="notifications-panel__footer">' +
           '<button type="button" class="notifications-panel__mark-read">Barchasini o' + RSQUO + 'qildi deb belgilash</button>' +
           '<a href="cabinet-notifications.html" class="btn btn--primary">Barcha bildirishnomalar</a>' +
@@ -146,12 +112,90 @@
     );
   }
 
+  /** Fill the topbar profile from cached user or /me API */
+  function hydrateProfile() {
+    if (typeof NgoApi === 'undefined') return;
+    var user = NgoApi.getUser && NgoApi.getUser();
+    if (user) applyProfile(user);
+    // Also fetch fresh data if token exists
+    if (NgoApi.getToken && NgoApi.getToken()) {
+      NgoApi.get('/cabinet/dashboard').then(function (d) {
+        if (d.user) applyProfile(d.user);
+        if (d.organization) applyOrgName(d.organization.name);
+      }).catch(function () {});
+    }
+  }
+
+  function applyProfile(u) {
+    var nameEls = document.querySelectorAll('.main__profile-name');
+    var initial = (u.full_name || u.email || '?').charAt(0).toUpperCase();
+    nameEls.forEach(function (el) { el.textContent = u.full_name || u.email || ''; });
+    var avatarEls = document.querySelectorAll('.main__profile-avatar');
+    avatarEls.forEach(function (el) { el.textContent = initial; });
+  }
+
+  function applyOrgName(name) {
+    var roleEls = document.querySelectorAll('.main__profile-role');
+    roleEls.forEach(function (el) { el.textContent = name || ''; });
+  }
+
+  /** Load real notifications into the slide-out panel */
+  function hydrateNotifPanel() {
+    if (typeof NgoApi === 'undefined' || !NgoApi.getToken || !NgoApi.getToken()) return;
+    var typeIcons = {
+      warning: 'ph-file-text', info: 'ph-magnifying-glass', success: 'ph-check-circle',
+      event: 'ph-calendar', error: 'ph-x-circle', grant: 'ph-trophy',
+      system: 'ph-gear', security: 'ph-lock'
+    };
+    function relTime(iso) {
+      if (!iso) return '';
+      var diff = (Date.now() - new Date(iso).getTime()) / 1000;
+      if (diff < 60) return 'Hozir';
+      if (diff < 3600) return Math.floor(diff / 60) + ' daqiqa oldin';
+      if (diff < 86400) return Math.floor(diff / 3600) + ' soat oldin';
+      return Math.floor(diff / 86400) + ' kun oldin';
+    }
+    NgoApi.get('/cabinet/notifications').then(function (res) {
+      var items = (res.items || []).slice(0, 5);
+      var listEl = document.getElementById('notifPanelList');
+      if (!listEl) return;
+      if (!items.length) {
+        listEl.innerHTML = '<div style="text-align:center;color:#94a3b8;padding:24px 0;font-size:13px;">Bildirishnomalar yo\u2018q</div>';
+        return;
+      }
+      listEl.innerHTML = items.map(function (n) {
+        var icon = typeIcons[n.type] || 'ph-bell';
+        var dot = n.is_read ? '' : ' <span class="notifications-panel__dot"></span>';
+        return '<div class="notifications-panel__item">' +
+          '<div class="notifications-panel__icon"><i class="ph ' + icon + '"></i></div>' +
+          '<div class="notifications-panel__content">' +
+            '<p class="notifications-panel__item-title">' + (n.title || '') + dot + '</p>' +
+            '<p class="notifications-panel__item-body">' + (n.body || '') + '</p>' +
+            '<p class="notifications-panel__item-time">' + relTime(n.created_at) + '</p>' +
+          '</div></div>';
+      }).join('');
+      // Update badge count
+      var unread = (res.items || []).filter(function (n) { return !n.is_read; }).length;
+      var badge = document.querySelector('.topbar-notifications-badge');
+      if (badge) {
+        badge.textContent = unread || '';
+        badge.style.display = unread ? '' : 'none';
+      }
+    }).catch(function () {});
+  }
+
   function mount() {
     var activeKey = document.body.getAttribute('data-nav-active') || '';
     var sidebarRoot = document.getElementById('cabinet-sidebar-root');
     var panelRoot   = document.getElementById('cabinet-notifications-root');
     if (sidebarRoot) sidebarRoot.outerHTML = buildSidebar(activeKey);
     if (panelRoot)   panelRoot.outerHTML   = buildNotificationsPanel();
+    // Hydrate profile and notifications from API after DOM is ready
+    // Use a short delay to ensure api-client.js has loaded
+    setTimeout(function () {
+      hydrateProfile();
+      hydrateNotifPanel();
+    }, 50);
   }
 
   if (document.readyState === 'loading') {

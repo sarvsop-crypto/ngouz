@@ -307,26 +307,33 @@
       tbody.innerHTML = filtered.map(function (a) {
         var badge = STATUS_BADGE[a.status] || 'neutral';
         var label = STATUS_LABEL[a.status] || a.status;
+        var verified = (a.note || '').indexOf('tasdiqlangan') !== -1;
+        var verBadge = verified
+          ? '<span class="badge badge--success" style="font-size:10px">Tasdiqlangan</span>'
+          : '<span class="badge badge--warning" style="font-size:10px">Tekshirilmagan</span>';
         return '<tr>' +
           '<td><input type="checkbox" /></td>' +
           '<td><strong>#' + a.id + '</strong></td>' +
-          '<td>' + esc(a.org_name) + '</td>' +
-          '<td>' + esc(a.applicant_name) + '</td>' +
+          '<td>' + esc(a.org_name) + '<br>' + verBadge + '</td>' +
+          '<td>' + esc(a.applicant_name) + '<br><span style="font-size:12px;color:#798384">' + esc(a.phone || '') + '</span></td>' +
           '<td>' + esc((a.created_at||'').slice(0,10)) + '</td>' +
           '<td><span class="badge badge--' + badge + '">' + label + '</span></td>' +
           '<td style="white-space:nowrap">' +
             (a.status === 'pending' ?
-              '<button class="btn btn--sm btn--primary" onclick="approveApp(' + a.id + ')"><i class="ph ph-check"></i></button> ' +
+              '<button class="btn btn--sm btn--primary" onclick="approveApp(' + a.id + ',' + (a.organization_id || 'null') + ')"><i class="ph ph-check"></i> Tasdiqlash</button> ' +
               '<button class="btn btn--sm btn--secondary" onclick="rejectApp(' + a.id + ')"><i class="ph ph-x"></i></button>'
             : '—') +
           '</td></tr>';
       }).join('');
     }
 
-    window.approveApp = function (id) {
-      if (!confirm('Arizani tasdiqlaysizmi?')) return;
-      NgoApi.patch('/admin/membership-requests/' + id, { status: 'approved', review_note: '' })
-        .then(function () { reload(); })
+    window.approveApp = function (id, currentOrgId) {
+      var orgIdStr = prompt('Tashkilot ID raqamini kiriting yoki tasdiqlang:', currentOrgId || '');
+      if (orgIdStr === null) return;
+      var orgId = parseInt(orgIdStr, 10) || null;
+      if (!orgId) { alert('Tashkilot ID raqami kerak. NNT ro\'yxatidan toping.'); return; }
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'approved', organization_id: orgId })
+        .then(function () { alert('Tasdiqlandi! Foydalanuvchi kabineti faollashtirildi.'); reload(); })
         .catch(function () { alert('Xatolik'); });
     };
     window.rejectApp = function (id) {

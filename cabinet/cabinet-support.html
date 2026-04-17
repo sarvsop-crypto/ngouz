@@ -34,10 +34,10 @@
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
-            <div class="main__profile-avatar u-profile-avatar-initial">K</div>
+            <div class="main__profile-avatar u-profile-avatar-initial"></div>
             <div>
-              <div class="main__profile-name">Kamolov Sanjar</div>
-              <div class="main__profile-role">Yangi Nafas NNT</div>
+              <div class="main__profile-name"></div>
+              <div class="main__profile-role"></div>
             </div>
           </div>
         </div>
@@ -201,8 +201,8 @@
           subject: subject,
           priority: priority,
           message: message,
-          name: 'Cabinet User',
-          email: ''
+          name: (NgoApi.getUser && NgoApi.getUser() && NgoApi.getUser().full_name) || 'Cabinet User',
+          email: (NgoApi.getUser && NgoApi.getUser() && NgoApi.getUser().email) || ''
         })
       })
       .then(function (r) { return r.json(); })
