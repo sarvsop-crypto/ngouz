@@ -94,20 +94,20 @@
 
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-chat-dots"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami xabarlar</p><p class="card__value">312</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 14%</span></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-chat-dots"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Jami xabarlar</p><p class="card__value" id="kpiTotal">0</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-envelope-simple-open"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">O&rsquo;qilmagan</p><p class="card__value">38</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 7%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-envelope-simple-open"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Yangi</p><p class="card__value" id="kpiNew">0</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Javob berilgan</p><p class="card__value">241</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 10%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Ko'rib chiqilgan</p><p class="card__value" id="kpiHandled">0</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon" style="background:#e0f2fe;color:#0369a1;"><i class="ph ph-star"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">O&rsquo;rtacha baho</p><p class="card__value">4.6</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 0.2</span></div>
+          <div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-prohibit"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Spam</p><p class="card__value" id="kpiSpam">0</p></div></div>
         </div>
       </div>
 
@@ -119,49 +119,23 @@
           </div>
         </div>
         <form class="u-filter-row" role="search" aria-label="Xabarlarni filtrlash">
-          <label for="feedbackSearch" class="u-visually-hidden">Xabar raqami yoki jo'natuvchi bo'yicha qidirish</label>
-          <input id="feedbackSearch" type="search" class="table-section__search u-search-260" placeholder="Xabar #, ism, mavzu..." aria-label="Qidirish" />
-          <button type="button" class="filter-chip is-active" data-filter="all">Barchasi <span class="filter-chip__count">312</span></button>
-          <button type="button" class="filter-chip" data-filter="unread">O&rsquo;qilmagan <span class="filter-chip__count">38</span></button>
-          <button type="button" class="filter-chip" data-filter="responded">Javob berilgan <span class="filter-chip__count">241</span></button>
-          <button type="button" class="filter-chip" data-filter="closed">Yopilgan <span class="filter-chip__count">33</span></button>
-          <label for="feedbackTopic" class="u-visually-hidden">Mavzu bo'yicha filter</label>
-          <select id="feedbackTopic" class="table-section__search u-search-160" aria-label="Mavzu">
-            <option value="">Barcha mavzular</option>
-            <option>Tashkilot haqida</option>
-            <option>Sayt xatosi</option>
-            <option>Taklif</option>
-            <option>Minnatdorchilik</option>
-            <option>Shikoyat</option>
-            <option>Boshqa</option>
-          </select>
+          <input id="feedbackSearch" type="search" class="table-section__search u-search-260" placeholder="Ism, email, mavzu..." aria-label="Qidirish" />
+          <button type="button" class="filter-chip is-active" data-status-filter="all">Barchasi</button>
+          <button type="button" class="filter-chip" data-status-filter="new">Yangi</button>
+          <button type="button" class="filter-chip" data-status-filter="read">O'qilgan</button>
+          <button type="button" class="filter-chip" data-status-filter="handled">Ko'rib chiqilgan</button>
+          <button type="button" class="filter-chip" data-status-filter="spam">Spam</button>
         </form>
         <table class="table">
           <caption class="u-visually-hidden">Qayta aloqa xabarlari jadvali</caption>
           <thead>
             <tr>
               <th scope="col"><input type="checkbox" aria-label="Barchasini tanlash" /></th>
-              <th scope="col">Xabar #</th><th scope="col">Jo&rsquo;natuvchi</th><th scope="col">Mavzu</th>
-              <th scope="col">Turi</th><th scope="col">Topshirilgan</th><th scope="col">Holat</th><th scope="col"></th>
+              <th scope="col">#</th><th scope="col">Jo'natuvchi</th><th scope="col">Mavzu</th>
+              <th scope="col">Sana</th><th scope="col">Holat</th><th scope="col"></th>
             </tr>
           </thead>
-          <tbody>
-            <tr data-status="unread">
-              <td><input type="checkbox" aria-label="Tanlash" /></td>
-              <td><strong>QAL-2026-0512</strong></td>
-              <td>Tursunova Madina<br><span class="u-text-muted-sm">madina@example.uz</span></td>
-              <td>Saytda hisobot yuklash ishlamaydi</td>
-              <td>Sayt xatosi</td>
-              <td>08.04.2026</td>
-              <td><span class="badge badge--warning"><span class="badge__dot"></span>O&rsquo;qilmagan</span></td>
-              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="feedbackReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
-            </tr>
-            <tr data-status="unread">
-              <td><input type="checkbox" aria-label="Tanlash" /></td>
-              <td><strong>QAL-2026-0511</strong></td>
-              <td>Olimov Bekzod<br><span class="u-text-muted-sm">+998 99 887-66-55</span></td>
-              <td>NNT o&rsquo;qitish kursi haqida taklif</td>
-              <td>Taklif</td>
+          <tbody id="feedbackTableBody">
               <td>07.04.2026</td>
               <td><span class="badge badge--warning"><span class="badge__dot"></span>O&rsquo;qilmagan</span></td>
               <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="feedbackReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
@@ -171,21 +145,6 @@
               <td><strong>QAL-2026-0510</strong></td>
               <td>Yoshlar Kelajagi NNT<br><span class="u-text-muted-sm">Andijon</span></td>
               <td>Yordam uchun minnatdorchilik</td>
-              <td>Minnatdorchilik</td>
-              <td>06.04.2026</td>
-              <td><span class="badge badge--success"><span class="badge__dot"></span>Javob berilgan</span></td>
-              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="feedbackReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
-            </tr>
-            <tr data-status="responded">
-              <td><input type="checkbox" aria-label="Tanlash" /></td>
-              <td><strong>QAL-2026-0509</strong></td>
-              <td>Karimov Dilshod<br><span class="u-text-muted-sm">dilshod.k@mail.ru</span></td>
-              <td>Grant sharti noaniq ko&rsquo;rsatilgan</td>
-              <td>Shikoyat</td>
-              <td>05.04.2026</td>
-              <td><span class="badge badge--success"><span class="badge__dot"></span>Javob berilgan</span></td>
-              <td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="feedbackReviewModal"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td>
-            </tr>
           </tbody>
         </table>
       </section>
@@ -212,62 +171,155 @@
     </div>
   </div>
 
-  <div class="modal-overlay" id="feedbackReviewModal" role="dialog" aria-modal="true" aria-labelledby="feedbackReviewTitle">
+  <div class="modal-overlay" id="reviewModal" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle" aria-hidden="true">
     <div class="modal u-modal-max-600">
       <div class="modal__head">
-        <h2 class="modal__title" id="feedbackReviewTitle">Xabar tafsilotlari</h2>
-        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
+        <h2 class="modal__title" id="reviewModalTitle">Xabar tafsilotlari</h2>
+        <button type="button" class="modal__close" id="reviewModalClose" aria-label="Yopish"><i class="ph ph-x"></i></button>
       </div>
       <div class="modal__body">
         <div class="u-modal-grid-2">
-          <div class="modal__field">
-            <label class="modal__label">Xabar raqami</label>
-            <div class="u-modal-value u-modal-value-strong">QAL-2026-0512</div>
-          </div>
-          <div class="modal__field">
-            <label class="modal__label">Topshirilgan</label>
-            <div class="u-modal-value">08.04.2026 &middot; 11:42</div>
-          </div>
-          <div class="modal__field">
-            <label class="modal__label">Jo&rsquo;natuvchi</label>
-            <div class="u-modal-value u-modal-value-medium">Tursunova Madina</div>
-          </div>
-          <div class="modal__field">
-            <label class="modal__label">Aloqa</label>
-            <div class="u-modal-value">madina@example.uz</div>
-          </div>
-          <div class="modal__field">
-            <label class="modal__label">Turi</label>
-            <div class="u-modal-value">Sayt xatosi</div>
-          </div>
-          <div class="modal__field">
-            <label class="modal__label">Holat</label>
-            <div class="u-modal-value"><span class="badge badge--warning"><span class="badge__dot"></span>O&rsquo;qilmagan</span></div>
-          </div>
+          <div class="modal__field"><label class="modal__label">Raqam</label><div class="u-modal-value" id="rvId"></div></div>
+          <div class="modal__field"><label class="modal__label">Sana</label><div class="u-modal-value" id="rvDate"></div></div>
+          <div class="modal__field"><label class="modal__label">Ism</label><div class="u-modal-value" id="rvName"></div></div>
+          <div class="modal__field"><label class="modal__label">Aloqa</label><div class="u-modal-value" id="rvContact"></div></div>
         </div>
+        <div class="modal__field"><label class="modal__label">Mavzu</label><div class="u-modal-value" id="rvSubject"></div></div>
+        <div class="modal__field"><label class="modal__label">Xabar</label><div class="u-modal-value" id="rvBody" style="white-space:pre-wrap"></div></div>
         <div class="modal__field">
-          <label class="modal__label">Mavzu</label>
-          <div class="u-modal-value u-modal-value-medium">Saytda hisobot yuklash ishlamaydi</div>
-        </div>
-        <div class="modal__field">
-          <label class="modal__label">Xabar matni</label>
-          <div class="u-modal-value">Kabinetda 2026-yil I chorak hisobotini yuklamoqchi edim, lekin &ldquo;Yuklash&rdquo; tugmasi bosilmayapti. Brauzer: Chrome 132. Iltimos, tekshirib ko&rsquo;ring.</div>
-        </div>
-        <div class="modal__field">
-          <label class="modal__label">Javob matni</label>
-          <textarea class="modal__textarea" placeholder="Foydalanuvchiga javobni kiriting..."></textarea>
+          <label class="modal__label">Holatni o'zgartirish</label>
+          <select id="rvStatus" class="modal__select">
+            <option value="new">Yangi</option>
+            <option value="read">O'qilgan</option>
+            <option value="handled">Ko'rib chiqilgan</option>
+            <option value="spam">Spam</option>
+          </select>
         </div>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" data-modal-close>Yopish</button>
-        <button type="button" class="btn btn--secondary" data-modal-close><i class="ph ph-archive"></i> Arxivlash</button>
-        <button type="button" class="btn btn--primary" data-modal-close><i class="ph ph-paper-plane-tilt"></i> Javob yuborish</button>
+        <button type="button" class="btn btn--secondary" id="reviewCancelBtn">Yopish</button>
+        <button type="button" class="btn btn--primary" id="reviewSaveBtn"><i class="ph ph-floppy-disk"></i> Saqlash</button>
       </div>
     </div>
   </div>
 
-  <script src="js/pacta-foundation.js" defer></script>
-  <script src="js/pacta-notifications.js"></script>
+  <div class="cms-toast" id="cmsToast" role="alert" aria-live="polite"></div>
+
   <script src="js/pacta-app.js"></script>
+  <script src="js/pacta-foundation.js"></script>
+  <script src="js/pacta-notifications.js"></script>
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-boot.js"></script>
+  <script>
+  (function () {
+    var items = [];
+    var statusFilter = 'all';
+    var searchQ = '';
+    var reviewingId = null;
+
+    var STATUS_BADGE = { 'new': 'warning', 'read': 'info', 'handled': 'success', 'spam': 'error' };
+    var STATUS_LABEL = { 'new': 'Yangi', 'read': "O'qilgan", 'handled': "Ko'rib chiqilgan", 'spam': 'Spam' };
+
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    function openModal(id)  { var el = document.getElementById(id); if (el) { el.classList.add('is-open'); el.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; } }
+    function closeModal(id) { var el = document.getElementById(id); if (el) { el.classList.remove('is-open'); el.setAttribute('aria-hidden','true'); document.body.style.overflow=''; } }
+
+    var toastTimer;
+    function toast(msg, type) {
+      var el = document.getElementById('cmsToast');
+      el.textContent = msg;
+      el.className = 'cms-toast cms-toast--' + (type || 'info') + ' show';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3500);
+    }
+
+    function renderKpi() {
+      document.getElementById('kpiTotal').textContent   = items.length;
+      document.getElementById('kpiNew').textContent     = items.filter(function (i) { return i.status === 'new'; }).length;
+      document.getElementById('kpiHandled').textContent = items.filter(function (i) { return i.status === 'handled'; }).length;
+      document.getElementById('kpiSpam').textContent    = items.filter(function (i) { return i.status === 'spam'; }).length;
+    }
+
+    function renderTable() {
+      var q = searchQ.toLowerCase();
+      var filtered = items.filter(function (item) {
+        if (statusFilter !== 'all' && item.status !== statusFilter) return false;
+        if (q && ((item.full_name || '') + ' ' + (item.email || '') + ' ' + (item.subject || '')).toLowerCase().indexOf(q) === -1) return false;
+        return true;
+      });
+      var tbody = document.getElementById('feedbackTableBody');
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="7">Xabar topilmadi</td></tr>';
+        return;
+      }
+      tbody.innerHTML = filtered.map(function (item) {
+        var badge = STATUS_BADGE[item.status] || 'neutral';
+        var label = STATUS_LABEL[item.status] || item.status;
+        var contact = esc(item.email || item.phone || '—');
+        return '<tr>' +
+          '<td><input type="checkbox" aria-label="Tanlash" /></td>' +
+          '<td><strong>#' + item.id + '</strong></td>' +
+          '<td>' + esc(item.full_name) + '<br><span class="u-text-muted-sm">' + contact + '</span></td>' +
+          '<td class="u-td-truncate">' + esc(item.subject || '—') + '</td>' +
+          '<td>' + esc((item.created_at || '').slice(0, 10)) + '</td>' +
+          '<td><span class="badge badge--' + badge + '">' + label + '</span></td>' +
+          '<td><button class="btn btn--sm btn--secondary" onclick="reviewItem(' + item.id + ')"><i class="ph ph-eye"></i></button></td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    window.reviewItem = function (id) {
+      var item = items.find(function (i) { return i.id === id; });
+      if (!item) return;
+      reviewingId = id;
+      document.getElementById('rvId').textContent      = '#' + item.id;
+      document.getElementById('rvDate').textContent    = (item.created_at || '').slice(0, 16).replace('T', ' ');
+      document.getElementById('rvName').textContent    = item.full_name || '—';
+      document.getElementById('rvContact').textContent = (item.email || '') + (item.phone ? ' / ' + item.phone : '');
+      document.getElementById('rvSubject').textContent = item.subject || '—';
+      document.getElementById('rvBody').textContent    = item.body || '';
+      document.getElementById('rvStatus').value        = item.status || 'new';
+      openModal('reviewModal');
+    };
+
+    document.getElementById('reviewModalClose').addEventListener('click', function () { closeModal('reviewModal'); });
+    document.getElementById('reviewCancelBtn').addEventListener('click', function () { closeModal('reviewModal'); });
+    document.getElementById('reviewModal').addEventListener('click', function (e) { if (e.target === this) closeModal('reviewModal'); });
+
+    document.getElementById('reviewSaveBtn').addEventListener('click', function () {
+      if (!reviewingId) return;
+      var newStatus = document.getElementById('rvStatus').value;
+      NgoApi.patch('/admin/contact-messages/' + reviewingId, { status: newStatus })
+        .then(function () {
+          var item = items.find(function (i) { return i.id === reviewingId; });
+          if (item) item.status = newStatus;
+          closeModal('reviewModal');
+          renderTable();
+          renderKpi();
+          toast('Holat yangilandi', 'success');
+        })
+        .catch(function () { toast('Xatolik yuz berdi', 'error'); });
+    });
+
+    document.getElementById('feedbackSearch').addEventListener('input', function () {
+      searchQ = this.value;
+      renderTable();
+    });
+
+    document.querySelectorAll('[data-status-filter]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('[data-status-filter]').forEach(function (b) { b.classList.remove('is-active'); });
+        this.classList.add('is-active');
+        statusFilter = this.dataset.statusFilter;
+        renderTable();
+      });
+    });
+
+    NgoApi.get('/admin/contact-messages?limit=200')
+      .then(function (res) { items = res.items || []; renderTable(); renderKpi(); })
+      .catch(function () { toast('Xabarlarni yuklashda xatolik', 'error'); });
+  })();
+  </script>
 </body>
 </html>
