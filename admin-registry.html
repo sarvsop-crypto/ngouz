@@ -88,22 +88,22 @@
         <h1 class="main__title">NNT Ro&rsquo;yxati</h1>
         <div class="main__btns">
           <button type="button" class="btn btn--secondary"><i class="ph ph-download-simple"></i> Eksport</button>
-          <button type="button" class="btn btn--primary" data-modal-open="addNntModal"><i class="ph ph-plus"></i> NNT qo&rsquo;shish</button>
+          <button type="button" class="btn btn--primary" id="addNntBtn"><i class="ph ph-plus"></i> NNT qo'shish</button>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-buildings"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami ro&rsquo;yxatga olingan</p><p class="card__value">247</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 12%</span></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-buildings"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Jami NNTlar</p><p class="card__value" id="kpiTotal">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Faol a&rsquo;zolar</p><p class="card__value">94</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 8.1%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Faol</p><p class="card__value" id="kpiActive">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-map-pin"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Hududlar</p><p class="card__value">14</p></div></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-map-pin"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Hududlar</p><p class="card__value">15</p></div></div>
         </div>
       </div>
 
@@ -119,19 +119,10 @@
           <thead>
             <tr>
               <th><input type="checkbox" aria-label="Barchasini tanlash" /></th>
-              <th>NNT nomi</th><th>Turi</th><th>Viloyat</th><th>A&rsquo;zolik yili</th><th>Hujjatlar</th><th>Holat</th><th></th>
+              <th>NNT nomi</th><th>Hudud</th><th>Rahbar</th><th>A'zo bo'lgan</th><th>Holat</th><th></th>
             </tr>
           </thead>
-          <tbody>
-            <tr><td><input type="checkbox" /></td><td><div class="table__counterparty"><span class="table__avatar">YN</span><span class="table__company">Yangi Nafas NNT</span></div></td><td>Ijtimoiy</td><td>Toshkent</td><td>2024</td><td>3/7</td><td><span class="badge badge--active"><span class="badge__dot"></span>Faol</span></td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item"><i class="ph ph-pencil-simple"></i> Tahrirlash</button><button type="button" class="row-menu__item"><i class="ph ph-file-text"></i> Hujjatlar</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><div class="table__counterparty"><span class="table__avatar">MS</span><span class="table__company">Mehr-Shafqat NNT</span></div></td><td>Xayriya</td><td>Samarqand</td><td>2023</td><td>7/7</td><td><span class="badge badge--active"><span class="badge__dot"></span>Faol</span></td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item"><i class="ph ph-pencil-simple"></i> Tahrirlash</button><button type="button" class="row-menu__item"><i class="ph ph-file-text"></i> Hujjatlar</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><div class="table__counterparty"><span class="table__avatar">UI</span><span class="table__company">Umid Istiqbol NNT</span></div></td><td>Ta&rsquo;lim</td><td>Farg&rsquo;ona</td><td>2022</td><td>7/7</td><td><span class="badge badge--active"><span class="badge__dot"></span>Faol</span></td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item"><i class="ph ph-pencil-simple"></i> Tahrirlash</button><button type="button" class="row-menu__item"><i class="ph ph-file-text"></i> Hujjatlar</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><div class="table__counterparty"><span class="table__avatar">HM</span><span class="table__company">Hayot va Madaniyat</span></div></td><td>Madaniy</td><td>Andijon</td><td>2021</td><td>7/7</td><td><span class="badge badge--active"><span class="badge__dot"></span>Faol</span></td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item"><i class="ph ph-pencil-simple"></i> Tahrirlash</button><button type="button" class="row-menu__item"><i class="ph ph-file-text"></i> Hujjatlar</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><div class="table__counterparty"><span class="table__avatar">EM</span><span class="table__company">Ekologiya Markazi</span></div></td><td>Ekologiya</td><td>Namangan</td><td>2023</td><td>5/7</td><td><span class="badge badge--warning"><span class="badge__dot"></span>Muallaq</span></td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item"><i class="ph ph-pencil-simple"></i> Tahrirlash</button><button type="button" class="row-menu__item"><i class="ph ph-file-text"></i> Hujjatlar</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><div class="table__counterparty"><span class="table__avatar">YI</span><span class="table__company">Yoshlar Ittifoqi</span></div></td><td>Yoshlar</td><td>Buxoro</td><td>2024</td><td>2/7</td><td><span class="badge badge--pending"><span class="badge__dot"></span>Yangi</span></td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item"><i class="ph ph-pencil-simple"></i> Tahrirlash</button><button type="button" class="row-menu__item"><i class="ph ph-file-text"></i> Hujjatlar</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><div class="table__counterparty"><span class="table__avatar">BF</span><span class="table__company">Baxtli Oila Fondi</span></div></td><td>Oila</td><td>Xorazm</td><td>2022</td><td>6/7</td><td><span class="badge badge--active"><span class="badge__dot"></span>Faol</span></td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item"><i class="ph ph-pencil-simple"></i> Tahrirlash</button><button type="button" class="row-menu__item"><i class="ph ph-file-text"></i> Hujjatlar</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-            <tr><td><input type="checkbox" /></td><td><div class="table__counterparty"><span class="table__avatar">SP</span><span class="table__company">Sport va Rivojlanish</span></div></td><td>Sport</td><td>Qashqadaryo</td><td>2020</td><td>4/7</td><td><span class="badge badge--danger"><span class="badge__dot"></span>Noaktiv</span></td><td><div class="row-menu-wrap"><button type="button" aria-label="Menyu" data-action="row-menu"><i class="ph ph-dots-three-vertical"></i></button><div class="row-menu"><button type="button" class="row-menu__item"><i class="ph ph-eye"></i> Ko&rsquo;rish</button><button type="button" class="row-menu__item"><i class="ph ph-pencil-simple"></i> Tahrirlash</button><button type="button" class="row-menu__item"><i class="ph ph-file-text"></i> Hujjatlar</button><div class="row-menu__sep"></div><button type="button" class="row-menu__item row-menu__item--danger"><i class="ph ph-trash"></i> O&rsquo;chirish</button></div></div></td></tr>
-          </tbody>
+          <tbody id="registryTableBody"></tbody>
         </table>
       </section>
     </main>
@@ -246,8 +237,85 @@
     </div>
   </div>
 
-  <script src="js/pacta-foundation.js" defer></script>
-  <script src="js/pacta-notifications.js"></script>
   <script src="js/pacta-app.js"></script>
+  <script src="js/pacta-foundation.js"></script>
+  <script src="js/pacta-notifications.js"></script>
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-boot.js"></script>
+  <script>
+  (function () {
+    var items = [];
+    var offset = 0;
+    var total = 0;
+    var searchQ = '';
+
+    function esc(s) { return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    function renderKpi() {
+      document.getElementById('kpiTotal').textContent  = total;
+      document.getElementById('kpiActive').textContent = items.filter(function(o){return o.status==='active';}).length;
+    }
+
+    function renderTable() {
+      var q = searchQ.toLowerCase();
+      var filtered = items;
+      if (q) filtered = items.filter(function(o) { return (o.name+' '+o.leader_name+' '+o.region_code).toLowerCase().indexOf(q) !== -1; });
+      var tbody = document.getElementById('registryTableBody');
+      if (!filtered.length) { tbody.innerHTML = '<tr class="u-empty-row"><td colspan="7">NNT topilmadi</td></tr>'; return; }
+      tbody.innerHTML = filtered.slice(0, 100).map(function(o) {
+        var badge = o.status === 'active' ? 'success' : 'warning';
+        var label = o.status === 'active' ? 'Faol' : o.status;
+        var ini = o.name.slice(0,2).toUpperCase();
+        return '<tr>' +
+          '<td><input type="checkbox" /></td>' +
+          '<td><div class="table__counterparty"><span class="table__avatar">' + esc(ini) + '</span><span class="table__company">' + esc(o.name.length > 50 ? o.name.slice(0,50)+'…' : o.name) + '</span></div></td>' +
+          '<td>' + esc(o.region_code || '—') + '</td>' +
+          '<td>' + esc(o.leader_name || '—') + '</td>' +
+          '<td>' + esc(o.member_since || '—') + '</td>' +
+          '<td><span class="badge badge--' + badge + '">' + label + '</span></td>' +
+          '<td><button class="btn--ghost-sm danger" onclick="deleteOrg(' + o.id + ')" title="O\'chirish"><i class="ph ph-trash"></i></button></td>' +
+        '</tr>';
+      }).join('');
+      if (filtered.length > 100) {
+        tbody.innerHTML += '<tr><td colspan="7" style="text-align:center;padding:16px;color:#798384">Birinchi 100 ta ko\'rsatilmoqda. Qidiruvdan foydalaning.</td></tr>';
+      }
+    }
+
+    function loadPage() {
+      NgoApi.get('/admin/organizations?limit=200&offset=' + offset + (searchQ ? '&q=' + encodeURIComponent(searchQ) : ''))
+        .then(function(res) {
+          items = items.concat(res.items || []);
+          total = res.total;
+          if (items.length < total && !searchQ) { offset += 200; loadPage(); }
+          else { renderTable(); renderKpi(); }
+        });
+    }
+
+    window.deleteOrg = function(id) {
+      if (!confirm('Bu NNTni o\'chirmoqchimisiz?')) return;
+      NgoApi.del('/admin/organizations/' + id).then(function() {
+        items = items.filter(function(o){return o.id !== id;});
+        total--;
+        renderTable(); renderKpi();
+      });
+    };
+
+    document.getElementById('addNntBtn').addEventListener('click', function() {
+      var name = prompt('NNT nomi:');
+      if (!name) return;
+      var region = prompt('Hudud kodi (toshkent-sh, samarqand, buxoro, ...):');
+      NgoApi.post('/admin/organizations', { name: name, region_code: region || null, status: 'active' })
+        .then(function(res) { alert('Qo\'shildi! ID: ' + res.id); items = []; offset = 0; loadPage(); });
+    });
+
+    document.querySelector('.table-section__search').addEventListener('input', function() {
+      searchQ = this.value.trim();
+      items = []; offset = 0;
+      loadPage();
+    });
+
+    loadPage();
+  })();
+  </script>
 </body>
 </html>

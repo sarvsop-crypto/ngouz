@@ -505,8 +505,43 @@
 
 <script src="js/main.js"></script>
 <script src="js/content.js"></script>
-<script src="js/nnt_data.js"></script>
 <script>
+var NNT_DATA = {};
+var REGION_NAMES = {
+  'toshkent-sh': 'Toshkent shahri', 'toshkent-v': 'Toshkent viloyati',
+  'andijon': 'Andijon viloyati', 'fargona': "Farg'ona viloyati",
+  'namangan': 'Namangan viloyati', 'samarqand': 'Samarqand viloyati',
+  'buxoro': 'Buxoro viloyati', 'navoiy': 'Navoiy viloyati',
+  'qashqadaryo': 'Qashqadaryo viloyati', 'surxondaryo': 'Surxondaryo viloyati',
+  'jizzax': 'Jizzax viloyati', 'sirdaryo': 'Sirdaryo viloyati',
+  'xorazm': 'Xorazm viloyati', 'karakalpakstan': "Qoraqalpog\u02BBiston Respublikasi",
+  'respublika': 'Respublika ahamiyatiga ega', 'other': 'Boshqa'
+};
+
+function loadAllOrgs(offset, all, cb) {
+  fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?limit=200&offset=' + offset)
+    .then(function(r) { return r.json(); })
+    .then(function(d) {
+      all = all.concat(d.items || []);
+      if (all.length < d.total) { loadAllOrgs(offset + 200, all, cb); }
+      else { cb(all); }
+    })
+    .catch(function() { cb(all); });
+}
+
+loadAllOrgs(0, [], function(orgs) {
+  orgs.forEach(function(o) {
+    var regionName = REGION_NAMES[o.region_code] || o.region_code || 'Boshqa';
+    if (!NNT_DATA[regionName]) NNT_DATA[regionName] = [];
+    NNT_DATA[regionName].push({
+      nom: o.name, rahbar: o.leader_name || '', manzil: o.address || '',
+      shakl: '', soha: '', royxat: o.registered_at || '', azo: o.member_since || ''
+    });
+  });
+  initNntPage();
+});
+
+function initNntPage() {
 
 /* ── helpers ── */
 function esc(s) {
@@ -673,6 +708,7 @@ function render() {
 }
 
 render();
+} // end initNntPage
 </script>
 
 <div class="search-overlay" id="searchOverlay" role="dialog" aria-label="Qidirish" aria-modal="true" aria-hidden="true">
