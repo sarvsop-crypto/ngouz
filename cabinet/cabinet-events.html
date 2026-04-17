@@ -65,14 +65,8 @@
         <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-clock"></i></div></div><div class="card__body"><div><p class="card__label">Kelayotgan</p><p class="card__value">3</p></div></div></div>
       </div>
 
-      <div class="tabs" style="margin-bottom:20px;">
-        <button type="button" class="tab is-active">Kelayotgan <span class="tab__count">3</span></button>
-        <button type="button" class="tab">Ro&rsquo;yxatga olingan <span class="tab__count">2</span></button>
-        <button type="button" class="tab">O&rsquo;tib ketgan <span class="tab__count">3</span></button>
-      </div>
-
-      <div id="eventsContainer">
-        <div style="text-align:center;color:var(--grey-400);padding:32px;">Yuklanmoqda...</div>
+      <div class="news-grid" id="eventsContainer">
+        <div style="grid-column:1/-1;text-align:center;color:var(--grey-400);padding:40px 0;">Yuklanmoqda...</div>
       </div>
     </main>
   </div>
@@ -90,65 +84,51 @@
   (function () {
     if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
 
-    var months = ['Yan','Fev','Mar','Apr','May','Iyun','Iyul','Avg','Sen','Okt','Noy','Dek'];
+    var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function fmtDate(d) { if (!d) return ''; var p = d.slice(0,10).split('-'); return p[2] + '.' + p[1] + '.' + p[0]; }
 
-    function renderEvent(ev) {
-      var d = ev.event_date ? new Date(ev.event_date) : null;
-      var day = d ? ('0' + d.getDate()).slice(-2) : '--';
-      var mon = d ? months[d.getMonth()] : '---';
-      var isPast = d && d < new Date();
-      var pastCls = isPast ? ' event-card--past' : '';
+    fetch(API + '/public/events?limit=100')
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        var items = res.items || [];
+        var container = document.getElementById('eventsContainer');
+        if (!items.length) {
+          container.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--grey-400);padding:40px 0;">Tadbirlar topilmadi</div>';
+          return;
+        }
 
-      var isOnline = (ev.format === 'online') || (ev.location && /online|zoom|webinar/i.test(ev.location));
-      var formatBadge = isOnline
-        ? '<span style="background:#e0f2fe;color:#0369a1;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;flex-shrink:0;">Online</span>'
-        : '<span style="background:var(--primary-50);color:var(--primary-600);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;flex-shrink:0;">Offline</span>';
+        var now = new Date();
+        var upcoming = items.filter(function (e) { return e.date && new Date(e.date) >= now; });
+        var past = items.filter(function (e) { return !e.date || new Date(e.date) < now; });
 
-      var locationIcon = isOnline ? '<i class="ph ph-monitor"></i>' : '<i class="ph ph-map-pin"></i>';
-      var loc = ev.location || (isOnline ? 'Online' : '');
+        var vals = document.querySelectorAll('.cards .card__value');
+        if (vals[0]) vals[0].textContent = items.length;
+        if (vals[1]) vals[1].textContent = past.length;
+        if (vals[3]) vals[3].textContent = upcoming.length;
 
-      var timeStr = '';
-      if (ev.start_time) timeStr += ev.start_time;
-      if (ev.end_time) timeStr += ' \u2013 ' + ev.end_time;
+        container.innerHTML = items.map(function (ev) {
+          var statusLabel = ev.status === 'upcoming' ? 'KELAYOTGAN' : "BO'LIB O'TGAN";
+          var statusClass = ev.status === 'upcoming' ? 'news-card__cat--event' : 'news-card__cat--news';
+          var desc = esc(ev.description || '');
+          if (desc.length > 120) desc = desc.slice(0, 120) + '...';
+          var loc = ev.location ? '<i class="ph ph-map-pin"></i> ' + esc(ev.location) : '';
 
-      var capacityStr = '';
-      if (ev.capacity) capacityStr = '<i class="ph ph-users"></i> ' + ev.capacity + ' o\u2018rin';
-
-      return '<div class="event-card' + pastCls + '">'
-        + '<div class="event-date-badge"><div class="event-date-day">' + day + '</div><div class="event-date-month">' + mon + '</div></div>'
-        + '<div style="flex:1;">'
-        + '<div style="font-size:15px;font-weight:600;color:var(--grey-900);margin:0 0 6px;">' + (ev.title || '') + '</div>'
-        + (loc ? '<div class="event-detail">' + locationIcon + ' ' + loc + '</div>' : '')
-        + '<div class="event-detail">'
-        + (timeStr ? '<i class="ph ph-clock"></i> ' + timeStr : '')
-        + (capacityStr ? ' \u00b7 ' + capacityStr : '')
-        + '</div>'
-        + (ev.description ? '<div class="event-detail">' + ev.description + '</div>' : '')
-        + '</div>'
-        + formatBadge
-        + '</div>';
-    }
-
-    NgoApi.get('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/events?limit=100', { noAuth: true }).then(function (res) {
-      var items = res.items || res.data || [];
-      var container = document.getElementById('eventsContainer');
-      if (!items.length) {
-        container.innerHTML = '<div style="text-align:center;color:var(--grey-400);padding:32px;">Tadbirlar topilmadi</div>';
-        return;
-      }
-      container.innerHTML = items.map(renderEvent).join('');
-
-      // Update summary cards
-      var now = new Date();
-      var upcoming = items.filter(function (e) { return e.event_date && new Date(e.event_date) >= now; });
-      var past = items.filter(function (e) { return e.event_date && new Date(e.event_date) < now; });
-      var vals = document.querySelectorAll('.cards .card__value');
-      if (vals[0]) vals[0].textContent = items.length;
-      if (vals[3]) vals[3].textContent = upcoming.length;
-    }).catch(function (err) {
-      console.error('Events load error:', err);
-      document.getElementById('eventsContainer').innerHTML = '<div style="text-align:center;color:var(--error-500);padding:32px;">Xatolik: ' + (err.message || 'Nomalum') + '</div>';
-    });
+          return '<div class="news-card">'
+            + '<div class="news-card__img news-card__img--event"><i class="ph ph-calendar-blank"></i></div>'
+            + '<div class="news-card__body">'
+            + '<span class="news-card__cat ' + statusClass + '">' + statusLabel + '</span>'
+            + '<h3 class="news-card__title">' + esc(ev.title) + '</h3>'
+            + '<p class="news-card__excerpt">' + desc + '</p>'
+            + '<div class="news-card__footer">'
+            + '<span class="news-card__date">' + fmtDate(ev.date) + (loc ? ' · ' + loc : '') + '</span>'
+            + '<a href="../event-detail.html?id=' + ev.id + '" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a>'
+            + '</div></div></div>';
+        }).join('');
+      })
+      .catch(function () {
+        document.getElementById('eventsContainer').innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--error-600);padding:40px 0;">Xatolik yuz berdi</div>';
+      });
   })();
   </script>
 </body>
