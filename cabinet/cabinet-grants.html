@@ -144,12 +144,12 @@
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
     function fmtDate(d) { if (!d) return '—'; var p = d.slice(0,10).split('-'); return p[2] + '.' + p[1] + '.' + p[0]; }
 
-    fetch(API + '/public/grants?limit=100')
-      .then(function (r) { return r.json(); })
-      .then(function (res) {
-        var grants = res.items || res.data || [];
-        var applied = grants;
-        var won = grants.filter(function (g) { return g.status === 'approved' || g.status === 'active' || g.status === 'completed'; });
+    // Cabinet grants shows only THIS user's grant applications (not public grants)
+    // Since there's no grant_applications table yet, show empty state
+    (function () {
+        var grants = [];
+        var applied = [];
+        var won = [];
 
         // Applied tab
         var tbody1 = document.getElementById('appliedGrantsBody');
@@ -212,11 +212,7 @@
         if (wonCards[0]) wonCards[0].textContent = won.length;
         if (wonCards[1]) wonCards[1].textContent = activeGrants;
         if (wonCards[2]) wonCards[2].textContent = completedGrants;
-      })
-      .catch(function (err) {
-        console.error('Grants fetch error:', err);
-        document.getElementById('appliedGrantsBody').innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--error-600);">Xatolik yuz berdi</td></tr>';
-      });
+    })();
   })();
   </script>
   <script src="js/cabinet-chrome.js" defer></script>

@@ -178,45 +178,26 @@
         + '</tr>';
     }
 
-    NgoApi.get('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/documents?limit=100', { noAuth: true }).then(function (res) {
-      var items = res.items || res.data || [];
+    // Cabinet documents shows THIS user's org documents (not public docs)
+    // Empty state for new users — documents appear when admin uploads or user submits
+    (function () {
+      var items = [];
       var tbody = document.getElementById('documentsTableBody');
-      if (!items.length) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:32px;">Hujjatlar topilmadi</td></tr>';
-        return;
-      }
-      tbody.innerHTML = items.map(renderRow).join('');
+      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:32px;">'
+        + '<i class="ph ph-files" style="font-size:32px;display:block;margin-bottom:8px;"></i>'
+        + 'Tashkilot hujjatlari hali yuklanmagan.<br>Ustav, guvohnoma va boshqa hujjatlarni yuklash uchun "Hujjat yuklash" tugmasini bosing.'
+        + '</td></tr>';
 
       // Update summary cards
       var approved = items.filter(function (d) { return d.status === 'approved'; }).length;
       var urgent = items.filter(function (d) { return d.status === 'urgent'; }).length;
       var pending = items.filter(function (d) { return d.status === 'pending' || !d.status; }).length;
       var vals = document.querySelectorAll('.cards .card__value');
-      if (vals[0]) vals[0].textContent = approved;
-      if (vals[1]) vals[1].textContent = urgent;
-      if (vals[2]) vals[2].textContent = pending;
-      if (vals[3]) vals[3].textContent = items.length;
-
-      // Update progress chart text
-      var pctEl = document.querySelector('.doc-progress-title');
-      if (pctEl) pctEl.textContent = approved + ' / ' + items.length + ' hujjat qabul qilindi';
-      var pctSvg = document.getElementById('docChartPct');
-      if (pctSvg && items.length) pctSvg.textContent = Math.round((approved / items.length) * 100) + '%';
-      else if (pctSvg) pctSvg.textContent = '0%';
-      var subEl = document.querySelector('.doc-progress-sub');
-      if (subEl) subEl.textContent = urgent + ' ta muddatli \u00b7 ' + pending + ' ta kutilmoqda';
-      // Update legend
-      var legendEl = document.getElementById('docProgressLegend');
-      if (legendEl) {
-        var spans = legendEl.querySelectorAll('.doc-progress-legend-item');
-        if (spans[0]) spans[0].innerHTML = '<span class="doc-progress-dot u-bg-green-600"></span>Tasdiqlangan: ' + approved;
-        if (spans[1]) spans[1].innerHTML = '<span class="doc-progress-dot u-bg-secondary-500"></span>Muddatli: ' + urgent;
-        if (spans[2]) spans[2].innerHTML = '<span class="doc-progress-dot u-bg-grey-500"></span>Kutilmoqda: ' + pending;
-      }
-    }).catch(function (err) {
-      console.error('Documents load error:', err);
-      document.getElementById('documentsTableBody').innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--error-500);padding:32px;">Xatolik: ' + (err.message || 'Nomalum') + '</td></tr>';
-    });
+      if (vals[0]) vals[0].textContent = '0';
+      if (vals[1]) vals[1].textContent = '0';
+      if (vals[2]) vals[2].textContent = '0';
+      if (vals[3]) vals[3].textContent = '0';
+    })();
   })();
   </script>
 </body>
