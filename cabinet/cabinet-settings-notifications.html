@@ -102,10 +102,16 @@
 
   <div id="cabinet-notifications-root"></div>
 
+  <script src="../js/api-client.js"></script>
   <script src="js/cabinet-chrome.js" defer></script>
 
   <script src="../js/pacta-foundation.js" defer></script>
   <script src="../js/pacta-notifications.js"></script>
   <script src="../js/pacta-app.js"></script>
+  <script>
+  (function () {
+    if (window.NgoApi && !NgoApi.getToken()) { location.replace('cabinet-login.html'); }
+  })();
+  </script>
 </body>
 </html>

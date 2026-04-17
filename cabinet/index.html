@@ -1,2 +1,14 @@
 ﻿<!doctype html><html lang='uz'><head><meta charset='utf-8'>
-  <link rel="icon" type="image/svg+xml" href="../favicon.svg" /><meta name='viewport' content='width=device-width, initial-scale=1'><title>Cabinet Index</title><meta http-equiv='refresh' content='0;url=cabinet-dashboard.html'></head><body></body></html>
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg" /><meta name='viewport' content='width=device-width, initial-scale=1'><title>Cabinet</title>
+  <script src="../js/api-client.js"></script>
+</head><body>
+  <script>
+  (function () {
+    if (window.NgoApi && NgoApi.getToken()) {
+      location.replace('cabinet-dashboard.html');
+    } else {
+      location.replace('cabinet-login.html');
+    }
+  })();
+  </script>
+</body></html>

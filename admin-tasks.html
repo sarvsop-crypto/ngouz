@@ -236,9 +236,27 @@
     </div>
   </div>
 
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-boot.js"></script>
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
-  <script src="js/admin-seed.js"></script>
   <script src="js/pacta-app.js"></script>
+  <script>
+  (function () {
+    /* Zero out static KPI cards */
+    var vals = document.querySelectorAll('.card__value');
+    vals.forEach(function (v) { v.textContent = '0'; });
+    var trends = document.querySelectorAll('.card__trend');
+    trends.forEach(function (t) { t.style.display = 'none'; });
+    /* Filter chip counts to 0 */
+    var counts = document.querySelectorAll('.filter-chip__count');
+    counts.forEach(function (c) { c.textContent = '0'; });
+    /* Replace table body */
+    var tbody = document.getElementById('tasksTableRows');
+    if (tbody) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--grey-400);font-size:14px;"><i class="ph ph-check-square" style="font-size:24px;display:block;margin-bottom:8px;"></i>Topshiriqlar tizimi ishlab chiqilmoqda</td></tr>';
+    }
+  })();
+  </script>
 </body>
 </html>

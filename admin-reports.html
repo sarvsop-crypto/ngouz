@@ -180,9 +180,23 @@
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
     </div>
   </div>
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-boot.js"></script>
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
-  <script src="js/admin-seed.js"></script>
   <script src="js/pacta-app.js"></script>
+  <script>
+  (function () {
+    var tbody = document.getElementById('reportRows');
+    if (tbody) {
+      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--grey-400);font-size:14px;"><i class="ph ph-chart-bar" style="font-size:24px;display:block;margin-bottom:8px;"></i>Hisobotlar tizimi ishlab chiqilmoqda</td></tr>';
+    }
+    if (!window.NgoApi) return;
+    NgoApi.get('/admin/stats').then(function (s) {
+      var amount = document.querySelector('.chart-line__amount');
+      if (amount && s.total_ngos !== undefined) amount.textContent = s.total_ngos + ' NNT';
+    }).catch(function () {});
+  })();
+  </script>
 </body>
 </html>
