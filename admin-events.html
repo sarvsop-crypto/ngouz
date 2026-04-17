@@ -325,7 +325,7 @@
         var title = AdminCMS.esc(item.title.length > 60 ? item.title.slice(0, 60) + '…' : item.title);
         return '<tr>' +
           '<td><input type="checkbox" aria-label="Tanlash" /></td>' +
-          '<td class="u-td-truncate">' + title + '</td>' +
+          '<td class="u-td-truncate"><a href="event-detail.html?id=' + encodeURIComponent(item.id) + '" target="_blank" style="color:var(--primary-500);text-decoration:underline">' + title + '</a></td>' +
           '<td>' + AdminCMS.esc(item.date || '') + '</td>' +
           '<td>' + AdminCMS.esc(item.location || '—') + '</td>' +
           '<td>' + statusBadge + '</td>' +

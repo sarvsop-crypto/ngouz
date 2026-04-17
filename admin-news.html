@@ -342,7 +342,7 @@
         var title = AdminCMS.esc(item.title.length > 72 ? item.title.slice(0, 72) + '…' : item.title);
         return '<tr>' +
           '<td><input type="checkbox" aria-label="Tanlash" /></td>' +
-          '<td class="u-td-truncate">' + title + '</td>' +
+          '<td class="u-td-truncate"><a href="news-detail.html?id=' + encodeURIComponent(item.id) + '" target="_blank" style="color:var(--primary-500);text-decoration:underline">' + title + '</a></td>' +
           '<td>' + AdminCMS.esc(item.date || '') + '</td>' +
           '<td><span class="badge badge--' + badge + '">' + AdminCMS.esc(item.category) + '</span></td>' +
           '<td>' + (item.featured ? '<span class="badge badge--success">Ha</span>' : '<span style="color:var(--grey-300,#c3c6cf)">—</span>') + '</td>' +
