@@ -242,8 +242,8 @@
         <div class="superadmin-avatar">SA</div>
         <div class="superadmin-info">
           <div class="superadmin-badge"><i class="ph ph-crown-simple"></i> SUPER ADMIN</div>
-          <p class="superadmin-name">Sarvarbek Soporboyev</p>
-          <p class="superadmin-meta">admin@uznntma.uz &nbsp;&bull;&nbsp; +998 55 503-05-12 &nbsp;&bull;&nbsp; Barcha hududlar &bull; To&rsquo;liq kirish huquqi</p>
+          <p class="superadmin-name" id="saName">—</p>
+          <p class="superadmin-meta" id="saMeta">Yuklanmoqda...</p>
         </div>
         <div class="superadmin-actions">
           <button type="button" class="btn--ghost-white" data-modal-open="changePwModal"><i class="ph ph-lock-key"></i> Parolni o&rsquo;zgartirish</button>
@@ -585,7 +585,17 @@
 
     function reload() {
       NgoApi.get('/admin/users')
-        .then(function (res) { users = res.items || []; renderTable(); renderKpi(); })
+        .then(function (res) {
+          users = res.items || [];
+          renderTable(); renderKpi();
+          var sa = users.find(function (u) { return u.role === 'super_admin'; });
+          if (sa) {
+            var el = document.getElementById('saName');
+            if (el) el.textContent = sa.full_name || '—';
+            var meta = document.getElementById('saMeta');
+            if (meta) meta.textContent = (sa.email || '') + ' \u00b7 Barcha hududlar \u00b7 To\u2018liq kirish huquqi';
+          }
+        })
         .catch(function () { toast('Foydalanuvchilarni yuklashda xatolik', 'error'); });
     }
 
