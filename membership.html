@@ -110,7 +110,7 @@
 <div class="container-narrow">
 <h2 class="section-title">Tashkilot ma'lumotlari</h2>
 <div class="card">
-<form action="membership-status.html" method="get">
+<form id="membership-form" action="membership-status.html" method="get" novalidate>
 <div class="form-grid">
 <div class="form-field"><label class="form-label" for="mem-org-name">Tashkilot nomi</label><input id="mem-org-name" name="tashkilot_nomi" required=""/></div>
 <div class="form-field"><label class="form-label" for="mem-activity">Faoliyat sohasi</label><input id="mem-activity" name="faoliyat_sohasi" required=""/></div>
@@ -160,6 +160,66 @@
 </div>
 </footer>
 <script src="js/main.js"></script>
+<script>
+(function () {
+  var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
+  var checkbox = document.getElementById('reg-ok');
+  var submitBtn = document.getElementById('submit-membership');
+  var form = document.getElementById('membership-form');
+
+  // Enable submit only when reglament checkbox is checked
+  if (checkbox && submitBtn) {
+    checkbox.addEventListener('change', function () {
+      submitBtn.disabled = !this.checked;
+    });
+  }
+
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (submitBtn.disabled) return;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Yuborilmoqda...';
+
+      var body = {
+        organization_name: form.tashkilot_nomi.value,
+        activity_field: form.faoliyat_sohasi.value,
+        legal_form: form.tashkiliy_shakl.value,
+        head_name: form.rahbar_fio.value,
+        phone: form.telefon.value,
+        email: form.email.value,
+        telegram: form.telegram_raqam.value,
+        region: form.hudud.value
+      };
+
+      fetch(API + '/public/membership', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(body)
+      })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
+      .then(function (res) {
+        if (res.ok) {
+          form.innerHTML = '<div style="text-align:center;padding:32px 0">'
+            + '<h3 style="color:#065f46;margin-bottom:12px">Ariza qabul qilindi!</h3>'
+            + '<p>Arizangiz muvaffaqiyatli yuborildi. Tez orada siz bilan bog\'lanamiz.</p>'
+            + '<a class="btn" href="index.html" style="margin-top:16px;display:inline-block">Bosh sahifaga qaytish</a>'
+            + '</div>';
+        } else {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Ariza yuborish';
+          alert('Xatolik: ' + (res.data.message || 'Iltimos qaytadan urinib ko\'ring.'));
+        }
+      })
+      .catch(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Ariza yuborish';
+        alert('Tarmoq xatosi. Internet aloqangizni tekshiring.');
+      });
+    });
+  }
+})();
+</script>
 
 <div class="search-overlay" id="searchOverlay" role="dialog" aria-label="Qidirish" aria-modal="true" aria-hidden="true">
   <div class="search-overlay__box">

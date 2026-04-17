@@ -164,5 +164,76 @@
   <script src="../js/pacta-foundation.js" defer></script>
   <script src="../js/pacta-notifications.js"></script>
   <script src="../js/pacta-app.js"></script>
+  <script src="../js/api-client.js"></script>
+  <script>
+  (function () {
+    var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
+    var btn = document.querySelector('.support-submit-btn');
+    if (!btn) return;
+
+    btn.addEventListener('click', function () {
+      var formEl = document.querySelector('.support-form');
+      if (!formEl) return;
+      var selects = formEl.querySelectorAll('select');
+      var textarea = formEl.querySelector('textarea');
+      var subject = selects[0] ? selects[0].value : '';
+      var priority = selects[1] ? selects[1].value : 'Oddiy';
+      var message = textarea ? textarea.value.trim() : '';
+
+      if (!message) {
+        alert('Iltimos xabar yozing.');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="ph ph-spinner"></i> Yuborilmoqda...';
+
+      var token = '';
+      try { token = localStorage.getItem('ngo_api_token') || ''; } catch(e) {}
+
+      var headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
+      if (token) headers['Authorization'] = 'Bearer ' + token;
+
+      fetch(API + '/public/contact', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify({
+          subject: subject,
+          priority: priority,
+          message: message,
+          name: 'Cabinet User',
+          email: ''
+        })
+      })
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="ph ph-paper-plane-tilt"></i> Yuborish';
+        if (textarea) textarea.value = '';
+        alert('Murojaatingiz qabul qilindi! Tez orada javob beramiz.');
+      })
+      .catch(function () {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="ph ph-paper-plane-tilt"></i> Yuborish';
+        alert('Xatolik yuz berdi. Qaytadan urinib ko\'ring.');
+      });
+    });
+
+    // FAQ accordion toggle
+    var faqCards = document.querySelectorAll('.faq-card');
+    faqCards.forEach(function (card) {
+      var head = card.querySelector('.faq-card__head');
+      var body = card.querySelector('.faq-card__body');
+      if (!head || !body) return;
+      body.style.display = 'none';
+      head.style.cursor = 'pointer';
+      head.addEventListener('click', function () {
+        var open = body.style.display !== 'none';
+        body.style.display = open ? 'none' : 'block';
+        card.classList.toggle('is-open', !open);
+      });
+    });
+  })();
+  </script>
 </body>
 </html>

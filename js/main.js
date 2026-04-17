@@ -282,6 +282,17 @@
     }
   }
 
+  // Wire search overlay form to redirect to search-results.html
+  var searchOverlayForm = document.querySelector('#searchOverlay form');
+  if (searchOverlayForm) {
+    searchOverlayForm.onsubmit = function () {
+      var inp = document.getElementById('searchInput');
+      var val = inp ? inp.value.trim() : '';
+      if (val) location.href = 'search-results.html?q=' + encodeURIComponent(val);
+      return false;
+    };
+  }
+
   var a11yBtn = document.querySelector(".vis-btn");
   if (a11yBtn) {
     var key = "ngo_a11y_v1";

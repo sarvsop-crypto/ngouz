@@ -221,5 +221,66 @@
   <script src="js/pacta-notifications.js"></script>
   <script src="js/admin-seed.js"></script>
   <script src="js/pacta-app.js"></script>
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-boot.js"></script>
+  <script>
+  (function () {
+    if (!window.NgoApi) return;
+
+    NgoApi.get('/admin/stats')
+      .then(function (stats) {
+        if (!stats) return;
+        // Wire KPI cards — find all .card__value elements
+        var vals = document.querySelectorAll('.card__value');
+        if (vals[0] && stats.total_ngos !== undefined) vals[0].textContent = Number(stats.total_ngos).toLocaleString();
+        if (vals[1] && stats.active_ngos !== undefined) vals[1].textContent = Number(stats.active_ngos).toLocaleString();
+        if (vals[2] && stats.membership_rate !== undefined) vals[2].textContent = stats.membership_rate + '%';
+        if (vals[3] && stats.new_applications !== undefined) vals[3].textContent = Number(stats.new_applications).toLocaleString();
+
+        // Wire chart headline number
+        var chartAmount = document.querySelector('.chart-card__amount');
+        if (chartAmount && stats.total_ngos !== undefined) chartAmount.textContent = Number(stats.total_ngos).toLocaleString() + ' NNT';
+
+        // Wire regional rows
+        var regionTbody = document.getElementById('analyticsRegionRows');
+        if (regionTbody && stats.regions && stats.regions.length) {
+          regionTbody.innerHTML = stats.regions.map(function (r) {
+            var total = r.total || 0;
+            var active = r.active || 0;
+            var inactive = total - active;
+            var newCount = r.new_2026 || 0;
+            var rate = total ? Math.round((active / total) * 100) : 0;
+            var share = stats.total_ngos ? ((total / stats.total_ngos) * 100).toFixed(1) : '0';
+            return '<tr>'
+              + '<td>' + (r.name || r.region) + '</td>'
+              + '<td>' + total + '</td>'
+              + '<td>' + active + '</td>'
+              + '<td>' + inactive + '</td>'
+              + '<td>' + newCount + '</td>'
+              + '<td>' + rate + '%</td>'
+              + '<td>' + share + '%</td>'
+              + '</tr>';
+          }).join('');
+        }
+
+        // Wire sector rows
+        var sectorTbody = document.getElementById('analyticsSectorRows');
+        if (sectorTbody && stats.sectors && stats.sectors.length) {
+          sectorTbody.innerHTML = stats.sectors.map(function (s) {
+            var share = stats.total_ngos ? ((s.count / stats.total_ngos) * 100).toFixed(1) : '0';
+            return '<tr>'
+              + '<td>' + s.name + '</td>'
+              + '<td>' + s.count + '</td>'
+              + '<td>' + share + '%</td>'
+              + '<td><span class="card__trend"><i class="ph ph-arrow-up-right"></i> ' + (s.trend || '0') + '%</span></td>'
+              + '</tr>';
+          }).join('');
+        }
+      })
+      .catch(function (err) {
+        console.warn('admin-analytics stats error:', err);
+      });
+  })();
+  </script>
 </body>
 </html>

@@ -436,6 +436,72 @@
       }
     }
 
+    // publications.html — nashrlar category
+    var pubsEl = document.getElementById('dynamic-publications-page');
+    if (pubsEl) fetchJSON('news', function (items) { renderNewsPage(items, pubsEl); }, 'category=nashrlar');
+
+    // video-detail.html — single video by ID
+    var videoDetailEl = document.getElementById('detail-video-content');
+    if (videoDetailEl) {
+      var vidId = new URLSearchParams(window.location.search).get('id');
+      if (vidId) {
+        fetchOne('news', vidId, function (item) {
+          if (item) {
+            fetchJSON('news', function (others) { renderNewsDetail([item].concat(others), videoDetailEl, vidId); }, 'category=video');
+          } else {
+            videoDetailEl.innerHTML = '<p>Video topilmadi.</p>';
+          }
+        });
+      } else {
+        videoDetailEl.innerHTML = '<p>Video ID ko\'rsatilmagan.</p>';
+      }
+    }
+
+    // publication-detail.html — single publication by ID
+    var pubDetailEl = document.getElementById('detail-publication-content');
+    if (pubDetailEl) {
+      var pubId = new URLSearchParams(window.location.search).get('id');
+      if (pubId) {
+        fetchOne('news', pubId, function (item) {
+          if (item) {
+            fetchJSON('news', function (others) { renderNewsDetail([item].concat(others), pubDetailEl, pubId); }, 'category=nashrlar');
+          } else {
+            pubDetailEl.innerHTML = '<p>Publikatsiya topilmadi.</p>';
+          }
+        });
+      } else {
+        pubDetailEl.innerHTML = '<p>Publikatsiya ID ko\'rsatilmagan.</p>';
+      }
+    }
+
+    // projects.html — grants as project cards
+    var projGrantsEl = document.getElementById('dynamic-projects-grants');
+    if (projGrantsEl) fetchJSON('grants', function (items) { renderGrantsPage(items, projGrantsEl); });
+
+    // search-results.html — client-side search
+    var searchResultsEl = document.getElementById('dynamic-search-results');
+    if (searchResultsEl) {
+      var query = new URLSearchParams(window.location.search).get('q') || '';
+      var queryDisplay = document.getElementById('search-query');
+      if (queryDisplay) queryDisplay.textContent = query || 'so\'rov';
+      if (query) {
+        fetchJSON('news', function (items) {
+          var q = query.toLowerCase();
+          var matched = items.filter(function (n) {
+            return (n.title && n.title.toLowerCase().indexOf(q) !== -1)
+              || (n.excerpt && n.excerpt.toLowerCase().indexOf(q) !== -1);
+          });
+          if (matched.length) {
+            renderNewsPage(matched, searchResultsEl);
+          } else {
+            searchResultsEl.innerHTML = '<p style="padding:24px 0;color:#798384">\"' + query + '\" bo\'yicha hech narsa topilmadi.</p>';
+          }
+        });
+      } else {
+        searchResultsEl.innerHTML = '<p style="padding:24px 0;color:#798384">Qidiruv so\'rovi kiritilmagan.</p>';
+      }
+    }
+
     // about.html — biz-haqimizda articles
     var aboutEl = document.getElementById('dynamic-about-page');
     if (aboutEl) fetchJSON('news', function (items) { renderNewsPage(items, aboutEl); }, 'category=biz-haqimizda');

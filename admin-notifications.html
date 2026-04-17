@@ -135,6 +135,48 @@
   </main>
 </div>
 <script src="js/main.js"></script>
+<script src="js/api-client.js"></script>
+<script src="js/admin-boot.js"></script>
+<script>
+(function () {
+  if (!window.NgoApi) return;
+  var container = document.querySelector('.ds-card > div[style*="flex-direction:column"]');
+  if (!container) return;
+
+  NgoApi.get('/admin/contact-messages?limit=50&status=new')
+    .then(function (data) {
+      var items = data.items || data || [];
+      if (!items.length) {
+        container.innerHTML = '<p style="padding:16px;color:#798384">Yangi xabarnomalar yo\'q.</p>';
+        return;
+      }
+      var html = '';
+      items.forEach(function (msg) {
+        var isNew = msg.status === 'new';
+        var bg = isNew ? 'background:#f0f5ff;border-radius:10px;margin-bottom:4px;' : '';
+        var badge = isNew
+          ? '<span class="ds-badge-info">O\'qilmagan</span>'
+          : '<span class="ds-badge-dim">O\'qilgan</span>';
+        var icon = isNew ? 'ph-bell' : 'ph-check-circle';
+        html += '<div class="ds-stream-item" style="' + bg + '">'
+          + '<div class="ds-stream-icon"><i class="ph ' + icon + '"></i></div>'
+          + '<div class="ds-stream-body">'
+          + '<div class="ds-stream-title">' + (msg.subject || msg.name || 'Xabar') + '</div>'
+          + '<div class="ds-stream-meta">' + (msg.created_at || '') + ' · ' + badge + '</div>'
+          + '</div></div>';
+      });
+      container.innerHTML = html;
+
+      // Update chip counts
+      var chips = document.querySelectorAll('.ds-chip .ds-chip-n');
+      if (chips[0]) chips[0].textContent = items.length;
+      if (chips[1]) chips[1].textContent = items.filter(function (m) { return m.status === 'new'; }).length;
+    })
+    .catch(function (err) {
+      console.warn('notifications fetch error:', err);
+    });
+})();
+</script>
 </body>
 </html>
 
