@@ -538,13 +538,73 @@
     </div>
   </div>
 
-  <script src="js/pacta-foundation.js" defer></script>
-  <script src="js/pacta-notifications.js"></script>
-  <script src="js/admin-seed.js"></script>
   <script src="js/pacta-app.js"></script>
+  <script src="js/pacta-foundation.js"></script>
+  <script src="js/pacta-notifications.js"></script>
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-boot.js"></script>
   <script>
   (function () {
-    // ── Tab switching inside modal ──
+    var users = [];
+    var editingId = null;
+    var deleteId = null;
+
+    var ROLE_LABEL = { 'super_admin': 'Super admin', 'regional_admin': 'Hududiy admin', 'portal_moderator': 'Moderator', 'member_manager': 'A\'zo boshqaruvchi', 'member_user': 'A\'zo' };
+    var ROLE_BADGE = { 'super_admin': 'warning', 'regional_admin': 'info', 'portal_moderator': 'neutral', 'member_manager': 'neutral', 'member_user': 'neutral' };
+
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+    function openModal(id)  { var el = document.getElementById(id); if (el) { el.classList.add('is-open'); el.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; } }
+    function closeModal(id) { var el = document.getElementById(id); if (el) { el.classList.remove('is-open'); el.setAttribute('aria-hidden','true'); document.body.style.overflow=''; } }
+
+    var toastEl;
+    function toast(msg, type) {
+      if (!toastEl) { toastEl = document.createElement('div'); toastEl.className = 'cms-toast'; toastEl.setAttribute('role','alert'); document.body.appendChild(toastEl); }
+      toastEl.textContent = msg;
+      toastEl.className = 'cms-toast cms-toast--' + (type || 'info') + ' show';
+      setTimeout(function () { toastEl.classList.remove('show'); }, 3500);
+    }
+
+    function renderKpi() {
+      document.getElementById('kpiRegional').textContent = users.filter(function (u) { return u.role === 'regional_admin'; }).length;
+      document.getElementById('kpiActive').textContent   = users.filter(function (u) { return u.status === 'active'; }).length;
+      var regions = {};
+      users.forEach(function (u) { if (u.region_code) regions[u.region_code] = true; });
+      document.getElementById('kpiRegions').textContent = Object.keys(regions).length;
+    }
+
+    function renderTable() {
+      var nonSuper = users.filter(function (u) { return u.role !== 'super_admin'; });
+      var tbody = document.getElementById('regionalAdminRows');
+      if (!nonSuper.length) {
+        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6">Hududiy adminlar topilmadi</td></tr>';
+        return;
+      }
+      tbody.innerHTML = nonSuper.map(function (u) {
+        var badge = ROLE_BADGE[u.role] || 'neutral';
+        var statusBadge = u.status === 'active' ? 'success' : 'error';
+        var statusLabel = u.status === 'active' ? 'Faol' : 'Nofaol';
+        return '<tr>' +
+          '<td>' + esc(u.full_name) + '<br><span class="u-text-muted-sm">' + esc(u.email) + '</span></td>' +
+          '<td>' + (u.region_code ? '<span class="region-flag">' + esc(u.region_code) + '</span>' : '—') + '</td>' +
+          '<td><span class="badge badge--' + badge + '">' + (ROLE_LABEL[u.role] || u.role) + '</span></td>' +
+          '<td><span class="badge badge--' + statusBadge + '">' + statusLabel + '</span></td>' +
+          '<td>' + esc((u.last_login_at || '—').slice(0, 10)) + '</td>' +
+          '<td style="white-space:nowrap">' +
+            '<button class="btn--ghost-sm" title="Parolni yangilash" onclick="resetUserPw(' + u.id + ')"><i class="ph ph-lock-key"></i></button>' +
+            '<button class="btn--ghost-sm danger" title="O\'chirish" onclick="confirmDeleteUser(' + u.id + ')"><i class="ph ph-trash"></i></button>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function reload() {
+      NgoApi.get('/admin/users')
+        .then(function (res) { users = res.items || []; renderTable(); renderKpi(); })
+        .catch(function () { toast('Foydalanuvchilarni yuklashda xatolik', 'error'); });
+    }
+
+    // Tab switching
     document.querySelectorAll('.modal-tab').forEach(function (tab) {
       tab.addEventListener('click', function () {
         document.querySelectorAll('.modal-tab').forEach(function (t) { t.classList.remove('is-active'); });
@@ -555,47 +615,83 @@
       });
     });
 
-    // ── Open / close Add modal ──
-    function openModal(id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      el.classList.add('is-open');
-      el.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeModal(id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      el.classList.remove('is-open');
-      el.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    }
-
+    // Add user
     document.getElementById('addUserBtn').addEventListener('click', function () {
+      editingId = null;
       document.getElementById('userModalTitle').textContent = 'Hududiy admin qo\'shish';
-      // reset tab to first
+      document.getElementById('u-firstname').value = '';
+      document.getElementById('u-lastname').value = '';
+      document.getElementById('u-email').value = '';
+      document.getElementById('u-phone').value = '';
+      document.getElementById('u-region').value = '';
+      document.getElementById('u-password').value = '';
       document.querySelectorAll('.modal-tab')[0].click();
       openModal('userModal');
     });
+
     document.getElementById('userModalClose').addEventListener('click', function () { closeModal('userModal'); });
     document.getElementById('userModalCancel').addEventListener('click', function () { closeModal('userModal'); });
     document.getElementById('userModal').addEventListener('click', function (e) { if (e.target === this) closeModal('userModal'); });
 
     document.getElementById('userModalSave').addEventListener('click', function () {
-      closeModal('userModal');
+      var first = document.getElementById('u-firstname').value.trim();
+      var last  = document.getElementById('u-lastname').value.trim();
+      var email = document.getElementById('u-email').value.trim();
+      var region = document.getElementById('u-region').value;
+      var pw    = document.getElementById('u-password').value;
+      if (!first || !last || !email) { alert('Ism, familiya va email majburiy.'); return; }
+      if (!pw || pw.length < 12) { alert('Parol kamida 12 belgidan iborat bo\'lishi kerak.'); return; }
+
+      var btn = this;
+      btn.disabled = true;
+      NgoApi.post('/admin/users', {
+        full_name: first + ' ' + last,
+        email: email,
+        password: pw,
+        role: 'regional_admin',
+        region_code: region || null
+      }).then(function () {
+        closeModal('userModal');
+        toast('Yangi foydalanuvchi qo\'shildi', 'success');
+        reload();
+        btn.disabled = false;
+      }).catch(function (err) {
+        var msg = 'Xatolik yuz berdi.';
+        if (err && err.code === 'duplicate_email') msg = 'Bu email allaqachon mavjud.';
+        if (err && err.code === 'validation') msg = 'Ma\'lumotlarni tekshiring.';
+        alert(msg);
+        btn.disabled = false;
+      });
     });
 
-    // ── Edit / Delete row actions ──
-    window.editRegionalAdmin = function (name) {
-      document.getElementById('userModalTitle').textContent = name + ' — huquqlarni tahrirlash';
-      document.querySelectorAll('.modal-tab')[0].click();
-      openModal('userModal');
+    // Reset password
+    window.resetUserPw = function (id) {
+      var newPw = prompt('Yangi parolni kiriting (kamida 12 belgi):');
+      if (!newPw || newPw.length < 12) { if (newPw !== null) alert('Parol kamida 12 belgi bo\'lishi kerak.'); return; }
+      NgoApi.post('/admin/users/' + id + '/reset-password', { new_password: newPw })
+        .then(function () { toast('Parol yangilandi', 'success'); })
+        .catch(function () { toast('Xatolik yuz berdi', 'error'); });
     };
-    window.deleteRegionalAdmin = function (name) {
-      document.getElementById('deleteUserName').textContent = name;
+
+    // Delete user
+    window.confirmDeleteUser = function (id) {
+      deleteId = id;
+      var user = users.find(function (u) { return u.id === id; });
+      document.getElementById('deleteUserName').textContent = user ? user.full_name : '#' + id;
       openModal('deleteUserModal');
     };
     document.getElementById('deleteUserModal').addEventListener('click', function (e) { if (e.target === this) closeModal('deleteUserModal'); });
+    document.querySelectorAll('#deleteUserModal [data-modal-close]').forEach(function (btn) {
+      btn.addEventListener('click', function () { closeModal('deleteUserModal'); });
+    });
+    document.querySelector('#deleteUserModal .btn--danger').addEventListener('click', function () {
+      if (!deleteId) return;
+      NgoApi.del('/admin/users/' + deleteId)
+        .then(function () { closeModal('deleteUserModal'); toast('Hisob o\'chirildi', 'info'); reload(); })
+        .catch(function () { toast('Xatolik yuz berdi', 'error'); });
+    });
+
+    reload();
   })();
   </script>
 </body>
