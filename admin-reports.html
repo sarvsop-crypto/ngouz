@@ -208,8 +208,7 @@
       if (note === null) return;
       NgoApi.patch('/admin/reports/' + id, { status: 'returned', review_note: note }).then(function() { location.reload(); });
     };
-    }
-    if (!window.NgoApi) return;
+
     NgoApi.get('/admin/stats').then(function (s) {
       var amount = document.querySelector('.chart-line__amount');
       if (amount && s.total_ngos !== undefined) amount.textContent = s.total_ngos + ' NNT';

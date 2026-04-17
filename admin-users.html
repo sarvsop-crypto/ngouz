@@ -498,7 +498,7 @@
       </div>
       <div class="modal__foot">
         <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
-        <button type="button" class="btn btn--primary"><i class="ph ph-lock-key"></i> O&rsquo;zgartirish</button>
+        <button type="button" class="btn btn--primary" id="changePwSaveBtn"><i class="ph ph-lock-key"></i> O&rsquo;zgartirish</button>
       </div>
     </div>
   </div>
@@ -675,6 +675,35 @@
         .then(function () { closeModal('deleteUserModal'); toast('Hisob o\'chirildi', 'info'); reload(); })
         .catch(function () { toast('Xatolik yuz berdi', 'error'); });
     });
+
+    /* ── Change Password modal save ── */
+    var cpSave = document.getElementById('changePwSaveBtn');
+    if (cpSave) {
+      cpSave.addEventListener('click', function () {
+        var cur  = document.getElementById('cp-current').value;
+        var nw   = document.getElementById('cp-new').value;
+        var conf = document.getElementById('cp-confirm').value;
+        if (!cur || !nw) { alert('Barcha maydonlarni to\'ldiring.'); return; }
+        if (nw.length < 8) { alert('Parol kamida 8 belgidan iborat bo\'lishi kerak.'); return; }
+        if (nw !== conf) { alert('Yangi parollar mos kelmaydi.'); return; }
+        cpSave.disabled = true;
+        NgoApi.post('/auth/change-password', { current_password: cur, new_password: nw })
+          .then(function () {
+            toast('Parol muvaffaqiyatli yangilandi!', 'success');
+            closeModal('changePwModal');
+            document.getElementById('cp-current').value = '';
+            document.getElementById('cp-new').value = '';
+            document.getElementById('cp-confirm').value = '';
+            cpSave.disabled = false;
+          })
+          .catch(function (err) {
+            var msg = 'Xatolik yuz berdi.';
+            if (err && err.code === 'wrong_password') msg = 'Joriy parol noto\'g\'ri.';
+            alert(msg);
+            cpSave.disabled = false;
+          });
+      });
+    }
 
     reload();
   })();

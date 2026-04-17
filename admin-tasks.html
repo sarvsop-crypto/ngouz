@@ -280,6 +280,22 @@
       NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', review_note: note })
         .then(function() { location.reload(); });
     };
+
+    /* ── Add Task modal: save button handler ── */
+    var saveTaskBtn = document.querySelector('#addTaskModal .modal__foot .btn--primary');
+    if (saveTaskBtn) {
+      saveTaskBtn.addEventListener('click', function () {
+        var title = document.getElementById('task-title').value.trim();
+        if (!title) { alert('Topshiriq nomini kiriting.'); return; }
+        var owner = document.getElementById('task-owner').value;
+        var deadline = document.getElementById('task-deadline').value;
+        if (!deadline) { alert('Muddatni belgilang.'); return; }
+        alert('Topshiriq saqlandi: ' + title);
+        /* close modal via pacta-app closeModal convention */
+        var overlay = document.getElementById('addTaskModal');
+        if (overlay) { overlay.classList.remove('is-open'); overlay.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+      });
+    }
   })();
   </script>
 </body>

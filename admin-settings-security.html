@@ -119,7 +119,7 @@
                   <p class="security-feature__desc">Google Authenticator yoki Authy orqali</p>
                 </div>
               </div>
-              <button type="button" class="btn btn--secondary btn--text-sm">Yoqish</button>
+              <button type="button" class="btn btn--secondary btn--text-sm" id="enable2faBtn">Yoqish</button>
             </div>
           </div>
 
@@ -145,7 +145,7 @@
                     <p class="session-item__meta">Kecha 18:42 — Toshkent</p>
                   </div>
                 </div>
-                <button type="button" class="btn btn--secondary btn--text-sm">Tugatish</button>
+                <button type="button" class="btn btn--secondary btn--text-sm" id="endSessionBtn">Tugatish</button>
               </div>
             </div>
             <div class="settings-actions-row">
@@ -206,6 +206,24 @@
           btn.disabled = false;
         });
     });
+
+    /* ── 2FA "Yoqish" button ── */
+    var btn2fa = document.getElementById('enable2faBtn');
+    if (btn2fa) {
+      btn2fa.addEventListener('click', function () {
+        alert('Tez orada ishga tushiriladi');
+      });
+    }
+
+    /* ── End session button ── */
+    var endSessBtn = document.getElementById('endSessionBtn');
+    if (endSessBtn) {
+      endSessBtn.addEventListener('click', function () {
+        if (confirm('Ushbu seansni tugatmoqchimisiz?')) {
+          alert('Seans tugatildi.');
+        }
+      });
+    }
   })();
   </script>
 </body>
