@@ -18,15 +18,20 @@
   <link rel="stylesheet" href="../css/pacta-modal.css">
   <link rel="stylesheet" href="../css/pacta-foundation.css">
   <style>
-    .event-card{background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:20px;display:flex;gap:18px;align-items:flex-start;margin-bottom:12px;transition:box-shadow .15s;}
-    .event-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.07);}
-    .event-date-badge{background:var(--primary-500);color:#fff;border-radius:10px;min-width:54px;text-align:center;padding:8px 10px;flex-shrink:0;}
-    .event-date-day{font-size:24px;font-weight:700;line-height:1;}
-    .event-date-month{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-top:2px;}
-    .event-detail{font-size:13px;color:var(--grey-500);display:flex;align-items:center;gap:6px;margin-bottom:3px;}
-    .event-actions{display:flex;align-items:center;gap:10px;margin-top:12px;}
-    .event-card--past{opacity:.6;}
-    .event-card--past .event-date-badge{background:var(--grey-300);}
+    .news-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;}
+    .news-card{background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;overflow:hidden;transition:box-shadow .15s;}
+    .news-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);}
+    .news-card__img{height:140px;background:linear-gradient(135deg,var(--primary-100) 0%,var(--primary-200) 100%);display:grid;place-items:center;font-size:40px;color:var(--primary-400);}
+    .news-card__img--event{background:linear-gradient(135deg,#fef3c7 0%,#fde68a 100%);color:#d97706;}
+    .news-card__body{padding:16px;}
+    .news-card__cat{display:inline-block;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;margin-bottom:8px;text-transform:uppercase;letter-spacing:.03em;}
+    .news-card__cat--news{background:var(--primary-50);color:var(--primary-600);}
+    .news-card__cat--event{background:var(--secondary-50,#fff7ed);color:var(--warning-700,#b45309);}
+    .news-card__title{font-size:14px;font-weight:600;color:var(--grey-900);margin:0 0 8px;line-height:1.4;}
+    .news-card__excerpt{font-size:13px;color:var(--grey-500);margin:0 0 12px;line-height:1.5;}
+    .news-card__footer{display:flex;align-items:center;justify-content:space-between;}
+    .news-card__date{font-size:12px;color:var(--grey-400);}
+    .news-card__link{font-size:13px;color:var(--primary-500);text-decoration:none;}
   </style>
 </head>
 <body data-nav-active="events">
