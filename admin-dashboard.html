@@ -111,33 +111,22 @@
         </div>
       </div>
 
-      <div class="charts">
-        <div class="chart-card chart-card--wide">
-          <div class="chart-card__head">
-            <h2 class="chart-card__title">A'zolik statistikasi</h2>
-            <div class="chart-card__controls">
-              <button type="button" class="btn btn--secondary u-btn-period">Oylik <i class="ph ph-caret-down"></i></button>
-            </div>
-          </div>
-          <div class="chart-card__body">
-            <div class="chart-card__stats">
-              <span class="chart-card__amount" id="chartNntCount">— NNT</span>
-              <span class="u-text-subtle">barcha a'zo tashkilotlar</span>
-            </div>
-            <div class="chart-card__legend">
-              <span class="chart-card__legend-item"><span class="chart-card__legend-dot u-bg-primary-500"></span> Yangi arizalar</span>
-              <span class="chart-card__legend-item"><span class="chart-card__legend-dot u-bg-secondary-500"></span> Tasdiqlangan</span>
-            </div>
-            <div id="dashboardLineChart"></div>
-          </div>
+      <div class="cards" id="dashExtraKpis">
+        <div class="card">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-buildings"></i></div></div>
+          <div class="card__body"><div><p class="card__label">A'zo NNTlar</p><p class="card__value" id="kpiOrgs">&mdash;</p></div></div>
         </div>
-        <div class="chart-card chart-card--narrow">
-          <div class="chart-card__head">
-            <h2 class="chart-card__title">Ariza holati taqsimoti</h2>
-          </div>
-          <div class="chart-donut">
-            <div id="dashboardDonutChart"></div>
-          </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Kutilayotgan arizalar</p><p class="card__value" id="kpiPending">&mdash;</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-users"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Foydalanuvchilar</p><p class="card__value" id="kpiUsers">&mdash;</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-hand-coins"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Grantlar</p><p class="card__value" id="kpiGrants">&mdash;</p></div></div>
         </div>
       </div>
 
@@ -207,10 +196,25 @@
       document.getElementById('kpiDocs').textContent    = s.documents || 0;
     }).catch(function () {});
 
-    // NNT count for chart header
+    // Extra KPIs
     NgoApi.get('/public/organizations?limit=1').then(function (res) {
-      var el = document.getElementById('chartNntCount');
-      if (el) el.textContent = (res.total || 0) + ' NNT';
+      var el = document.getElementById('kpiOrgs');
+      if (el) el.textContent = res.total || 0;
+    }).catch(function () {});
+
+    NgoApi.get('/admin/membership-requests?limit=1&status=pending').then(function (res) {
+      var el = document.getElementById('kpiPending');
+      if (el) el.textContent = res.total || 0;
+    }).catch(function () {});
+
+    NgoApi.get('/admin/users').then(function (res) {
+      var el = document.getElementById('kpiUsers');
+      if (el) el.textContent = (res.items || []).length;
+    }).catch(function () {});
+
+    NgoApi.get('/public/grants?limit=1').then(function (res) {
+      var el = document.getElementById('kpiGrants');
+      if (el) el.textContent = res.total || 0;
     }).catch(function () {});
 
     // Recent contact messages
