@@ -94,6 +94,7 @@
     document.getElementById('loginForm').addEventListener('submit', function (e) {
       e.preventDefault();
       var phone = document.getElementById('email').value.replace(/[^\d]/g, '');
+      phone = phone.slice(-9);
       var email = phone + '@phone.ngo.uz';
       var pass  = document.getElementById('password').value;
       var btn   = this.querySelector('button[type="submit"]');
