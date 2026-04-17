@@ -229,8 +229,8 @@
     function esc(s) { return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
     function renderKpi() {
-      document.getElementById('kpiTotal').textContent  = total;
-      document.getElementById('kpiActive').textContent = items.filter(function(o){return o.status==='active';}).length;
+      document.getElementById('kpiTotal').textContent = total;
+      document.getElementById('kpiActive').textContent = total; // all imported orgs are active
     }
 
     function renderTable() {
@@ -277,13 +277,45 @@
       });
     };
 
+    // Wire "NNT qo'shish" button to the modal
     document.getElementById('addNntBtn').addEventListener('click', function() {
-      var name = prompt('NNT nomi:');
-      if (!name) return;
-      var region = prompt('Hudud kodi (toshkent-sh, samarqand, buxoro, ...):');
-      NgoApi.post('/admin/organizations', { name: name, region_code: region || null, status: 'active' })
-        .then(function(res) { alert('Qo\'shildi! ID: ' + res.id); items = []; offset = 0; loadPage(); });
+      document.getElementById('nnt-name').value = '';
+      document.getElementById('nnt-type').value = '';
+      document.getElementById('nnt-region').value = '';
+      document.getElementById('nnt-year').value = '';
+      document.getElementById('nnt-status').value = 'active';
+      document.getElementById('nnt-contact').value = '';
     });
+
+    // Wire modal save button
+    var modalSaveBtn = document.querySelector('#addNntModal .btn--primary');
+    if (modalSaveBtn) {
+      modalSaveBtn.addEventListener('click', function() {
+        var name = document.getElementById('nnt-name').value.trim();
+        var region = document.getElementById('nnt-region').value;
+        var status = document.getElementById('nnt-status').value || 'active';
+        var phone = document.getElementById('nnt-contact').value.trim();
+        if (!name) { alert('NNT nomini kiriting'); return; }
+        var regionMap = {
+          'Toshkent shahri': 'toshkent-sh', 'Toshkent viloyati': 'toshkent-v',
+          'Samarqand': 'samarqand', "Farg\u2019ona": 'fargona', 'Buxoro': 'buxoro',
+          'Namangan': 'namangan', 'Andijon': 'andijon', 'Qashqadaryo': 'qashqadaryo',
+          'Surxondaryo': 'surxondaryo', 'Xorazm': 'xorazm', 'Jizzax': 'jizzax',
+          'Sirdaryo': 'sirdaryo', 'Navoiy': 'navoiy', "Qoraqalpog\u2019iston": 'karakalpakstan'
+        };
+        var regionCode = regionMap[region] || region || null;
+        this.disabled = true;
+        var btn = this;
+        NgoApi.post('/admin/organizations', { name: name, region_code: regionCode, status: status, phone: phone })
+          .then(function(res) {
+            btn.disabled = false;
+            items = []; offset = 0; loadPage();
+            var overlay = document.getElementById('addNntModal');
+            if (overlay) { overlay.classList.remove('is-open'); overlay.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+          })
+          .catch(function() { btn.disabled = false; alert('Xatolik yuz berdi'); });
+      });
+    }
 
     document.querySelector('.table-section__search').addEventListener('input', function() {
       searchQ = this.value.trim();
