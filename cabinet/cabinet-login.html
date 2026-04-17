@@ -31,7 +31,7 @@
           <p class="form-header__subtitle">Shaxsiy kabinetga kirish uchun ma&rsquo;lumotlaringizni kiriting.</p>
         </div>
 
-        <form class="form-fields" action="cabinet-dashboard.html" method="get">
+        <form class="form-fields" id="loginForm" novalidate>
           <div class="field">
             <label class="field__label" for="email">Email manzil <span>*</span></label>
             <div class="field__input-wrap">
@@ -78,17 +78,35 @@
     </nav>
   </footer>
 
+  <script src="../js/api-client.js"></script>
   <script>
     document.getElementById('togglePassword').addEventListener('click', function () {
       var inp = document.getElementById('password');
       var icon = this.querySelector('i');
-      if (inp.type === 'password') {
-        inp.type = 'text';
-        icon.className = 'ph ph-eye-slash';
-      } else {
-        inp.type = 'password';
-        icon.className = 'ph ph-eye';
-      }
+      if (inp.type === 'password') { inp.type = 'text'; icon.className = 'ph ph-eye-slash'; }
+      else { inp.type = 'password'; icon.className = 'ph ph-eye'; }
+    });
+
+    if (NgoApi.getToken()) {
+      location.replace('cabinet-dashboard.html');
+    }
+
+    document.getElementById('loginForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var email = document.getElementById('email').value.trim();
+      var pass  = document.getElementById('password').value;
+      var btn   = this.querySelector('button[type="submit"]');
+      if (!email || !pass) return;
+      btn.disabled = true;
+      NgoApi.login(email, pass).then(function () {
+        location.replace('cabinet-dashboard.html');
+      }).catch(function (err) {
+        btn.disabled = false;
+        var msg = 'Kirish xatosi';
+        if (err && err.code === 'invalid_credentials') msg = "Email yoki parol noto'g'ri";
+        if (err && err.code === 'too_many_attempts') msg = "Juda ko'p urinish. 15 daqiqadan so'ng qayta urining";
+        alert(msg);
+      });
     });
   </script>
 </body>

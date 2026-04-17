@@ -178,9 +178,35 @@
   <div id="cabinet-notifications-root"></div>
 
   <script src="js/cabinet-chrome.js" defer></script>
-
+  <script src="../js/api-client.js"></script>
   <script src="../js/pacta-foundation.js" defer></script>
   <script src="../js/pacta-notifications.js"></script>
   <script src="../js/pacta-app.js"></script>
+  <script>
+  (function () {
+    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+    NgoApi.get('/cabinet/organization').then(function (res) {
+      var o = res.organization;
+      if (!o) return;
+      var dds = document.querySelectorAll('dd');
+      if (dds.length >= 9) {
+        dds[0].textContent = o.name || '—';
+        dds[2].textContent = o.inn || '—';
+        dds[4].textContent = o.region_code || '—';
+        dds[5].textContent = o.address || '—';
+        if (o.phone)   dds[6].innerHTML = '<a href="tel:' + o.phone + '" style="color:var(--primary-500);text-decoration:none;">' + o.phone + '</a>';
+        if (o.email)   dds[7].innerHTML = '<a href="mailto:' + o.email + '" style="color:var(--primary-500);text-decoration:none;">' + o.email + '</a>';
+        if (o.website) dds[8].innerHTML = '<a href="' + o.website + '" style="color:var(--primary-500);text-decoration:none;">' + o.website + '</a>';
+      }
+      var leaderDiv = document.querySelector('.ph-user-circle');
+      if (leaderDiv && o.leader_name) {
+        var nameEl = leaderDiv.closest('div').parentElement.querySelector('div[style*="font-weight:600"]');
+        if (nameEl) nameEl.textContent = o.leader_name;
+      }
+    }).catch(function (err) {
+      if (err && err.status === 401) location.replace('cabinet-login.html');
+    });
+  })();
+  </script>
 </body>
 </html>

@@ -58,24 +58,20 @@
 
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Ariza holati</p><p class="card__value" style="font-size:18px;color:var(--warning-700);">Ko&rsquo;rib chiqilmoqda</p></div></div>
-          <div style="font-size:12px;color:var(--grey-400);margin-top:4px;">ARZ-2026-0418</div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-buildings"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Tashkilot</p><p class="card__value" id="kpiOrg" style="font-size:16px;">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-steps"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Bosqich</p><p class="card__value">2 / 4</p></div></div>
-          <div style="font-size:12px;color:var(--grey-400);margin-top:4px;">Hujjatlar tekshiruvi</div>
+          <div class="card__head"><div class="card__icon card__icon--info"><i class="ph ph-file-text"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Hisobotlar</p><p class="card__value" id="kpiReports">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-calendar-check"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Topshirilgan</p><p class="card__value" style="font-size:18px;">02.04.2026</p></div></div>
-          <div style="font-size:12px;color:var(--grey-400);margin-top:4px;">Sana</div>
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-bell"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Bildirishnomalar</p><p class="card__value" id="kpiNotifs">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-lock"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">A&rsquo;zolik</p><p class="card__value" style="font-size:18px;color:var(--grey-400);">Kutilmoqda</p></div></div>
-          <div style="font-size:12px;color:var(--grey-400);margin-top:4px;">Hali tasdiqlanmagan</div>
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-calendar-blank"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Tadbirlar</p><p class="card__value" id="kpiEvents">—</p></div></div>
         </div>
       </div>
 
@@ -160,9 +156,26 @@
   <div id="cabinet-notifications-root"></div>
 
   <script src="js/cabinet-chrome.js" defer></script>
-
+  <script src="../js/api-client.js"></script>
   <script src="../js/pacta-foundation.js" defer></script>
   <script src="../js/pacta-notifications.js"></script>
   <script src="../js/pacta-app.js"></script>
+  <script>
+  (function () {
+    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+    NgoApi.get('/cabinet/dashboard').then(function (d) {
+      if (d.organization) {
+        document.getElementById('kpiOrg').textContent = d.organization.name || '—';
+      } else {
+        document.getElementById('kpiOrg').textContent = 'Bog\'lanmagan';
+      }
+      document.getElementById('kpiReports').textContent = d.reports_count || 0;
+      document.getElementById('kpiNotifs').textContent  = d.notifications_unread || 0;
+      document.getElementById('kpiEvents').textContent  = (d.upcoming_events || []).length;
+    }).catch(function (err) {
+      if (err && err.status === 401) location.replace('cabinet-login.html');
+    });
+  })();
+  </script>
 </body>
 </html>
