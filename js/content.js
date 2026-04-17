@@ -350,7 +350,8 @@
 
     // news-detail.html — use single-item API
     var newsDetailEl = document.getElementById('detail-news-content');
-    if (newsDetailEl) {
+    var detailType = new URLSearchParams(window.location.search).get('type');
+    if (newsDetailEl && detailType !== 'documents') {
       var newsId = new URLSearchParams(window.location.search).get('id');
       if (newsId) {
         fetchOne('news', newsId, function (item) {
@@ -386,8 +387,7 @@
     var docsEl = document.getElementById('dynamic-documents-page');
     if (docsEl) fetchJSON('documents', function (items) { renderDocumentsPage(items, docsEl); });
 
-    // news-detail.html can also show documents (via ?type=documents)
-    var detailType = new URLSearchParams(window.location.search).get('type');
+    // news-detail.html — handle documents via ?type=documents
     if (newsDetailEl && detailType === 'documents') {
       var docId = new URLSearchParams(window.location.search).get('id');
       if (docId) {
@@ -400,6 +400,30 @@
         });
       }
     }
+
+    // about.html — biz-haqimizda articles
+    var aboutEl = document.getElementById('dynamic-about-page');
+    if (aboutEl) fetchJSON('news', function (items) { renderNewsPage(items, aboutEl); }, 'category=biz-haqimizda');
+
+    // services.html — xalqaro-faoliyat articles
+    var intlEl = document.getElementById('dynamic-intl-page');
+    if (intlEl) fetchJSON('news', function (items) { renderNewsPage(items, intlEl); }, 'category=xalqaro-faoliyat');
+
+    // videos.html — video category
+    var videoEl = document.getElementById('dynamic-video-page');
+    if (videoEl) fetchJSON('news', function (items) { renderNewsPage(items, videoEl); }, 'category=video');
+
+    // dayjestlar.html — digest articles
+    var digestEl = document.getElementById('dynamic-digest-page');
+    if (digestEl) fetchJSON('news', function (items) { renderNewsPage(items, digestEl); }, 'category=daydjest');
+
+    // jamoatchilik-kengashi.html — kengash articles
+    var councilEl = document.getElementById('dynamic-council-page');
+    if (councilEl) fetchJSON('news', function (items) { renderNewsPage(items, councilEl); }, 'category=kengash');
+
+    // leadership.html — rahbariyat articles
+    var leaderEl = document.getElementById('dynamic-leadership-page');
+    if (leaderEl) fetchJSON('news', function (items) { renderNewsPage(items, leaderEl); }, 'category=rahbariyat');
   }
 
   if (document.readyState === 'loading') {
