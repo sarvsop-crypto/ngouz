@@ -88,27 +88,27 @@
       <div class="main__header">
         <h1 class="main__title">Hujjatlar</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary"><i class="ph ph-download-simple"></i> Eksport</button>
-          <button type="button" class="btn btn--primary" data-modal-open="uploadDocModal"><i class="ph ph-upload-simple"></i> Hujjat yuklash</button>
+          <button type="button" class="btn btn--secondary" id="exportBtn"><i class="ph ph-download-simple"></i> Eksport</button>
+          <button type="button" class="btn btn--primary" id="newItemBtn"><i class="ph ph-plus"></i> Yangi hujjat</button>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-files"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami hujjatlar</p><p class="card__value">342</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 8%</span></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-files"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Jami hujjatlar</p><p class="card__value" id="kpiTotal">0</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Kutilmoqda</p><p class="card__value">47</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 2%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--info"><i class="ph ph-scales"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Qonunlar</p><p class="card__value" id="kpiQonunlar">0</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value">281</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 11%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-flag-banner"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Davlat dasturlari</p><p class="card__value" id="kpiDasturlar">0</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-x-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Qaytarilgan</p><p class="card__value">14</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 4%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-shield-check"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Nogironlar huquqi</p><p class="card__value" id="kpiNogironlar">0</p></div></div>
         </div>
       </div>
 
@@ -116,23 +116,15 @@
         <div class="table-section__head">
           <h2 class="table-section__title" id="docsTableTitle">Hujjatlar jadvali</h2>
           <div class="table-section__tools">
-            <input type="search" class="table-section__search" placeholder="Hujjat nomi yoki tashkilot..." aria-label="Qidirish" />
+            <input type="search" class="table-section__search" id="cmsSearch" placeholder="Hujjat nomini qidirish..." aria-label="Qidirish" />
           </div>
         </div>
         <form class="u-filter-row" role="search" aria-label="Hujjatlarni filtrlash">
-          <button type="button" class="filter-chip is-active" data-filter="all">Barchasi <span class="filter-chip__count">342</span></button>
-          <button type="button" class="filter-chip" data-filter="pending">Kutilmoqda <span class="filter-chip__count">47</span></button>
-          <button type="button" class="filter-chip" data-filter="approved">Tasdiqlangan <span class="filter-chip__count">281</span></button>
-          <button type="button" class="filter-chip" data-filter="returned">Qaytarilgan <span class="filter-chip__count">14</span></button>
-          <select class="table-section__search u-search-160" aria-label="Hujjat turi">
-            <option value="">Barcha turlar</option>
-            <option>Ustav</option>
-            <option>Ro'yxatga olish guvohnomasi</option>
-            <option>Soliq ma'lumotnomasi</option>
-            <option>Hisobot</option>
-            <option>Shartnoma</option>
-            <option>Boshqa</option>
-          </select>
+          <button type="button" class="filter-chip is-active" data-cat-filter="all">Barchasi</button>
+          <button type="button" class="filter-chip" data-cat-filter="qonunlar">Qonunlar</button>
+          <button type="button" class="filter-chip" data-cat-filter="davlat-dasturlari">Davlat dasturlari</button>
+          <button type="button" class="filter-chip" data-cat-filter="nogironlar-huquqi">Nogironlar huquqi</button>
+          <button type="button" class="filter-chip" data-cat-filter="rasmiy-hujjat">Rasmiy hujjat</button>
         </form>
         <table class="table">
           <caption class="u-visually-hidden">Hujjatlar jadvali</caption>
@@ -140,15 +132,13 @@
             <tr>
               <th scope="col"><input type="checkbox" aria-label="Barchasini tanlash" /></th>
               <th scope="col">Hujjat nomi</th>
-              <th scope="col">Turi</th>
-              <th scope="col">Tashkilot</th>
-              <th scope="col">Yuklangan sana</th>
+              <th scope="col">Sana</th>
+              <th scope="col">Toifa</th>
               <th scope="col">Holat</th>
-              <th scope="col">Mas&rsquo;ul</th>
               <th scope="col"></th>
             </tr>
           </thead>
-          <tbody id="documentsTableRows"></tbody>
+          <tbody id="docsTableBody"></tbody>
         </table>
       </section>
     </main>
@@ -182,74 +172,262 @@
     </div>
   </div>
 
-  <!-- Upload Document Modal -->
-  <div class="modal-overlay" id="uploadDocModal" role="dialog" aria-modal="true" aria-labelledby="uploadDocTitle">
-    <div class="modal" style="max-width:520px;">
+  <!-- Create/Edit Document Modal -->
+  <div class="modal-overlay" id="formModal" role="dialog" aria-modal="true" aria-labelledby="formModalTitle" aria-hidden="true">
+    <div class="modal" style="max-width:600px;">
+      <form id="cmsForm" novalidate>
+        <div class="modal__head">
+          <h2 class="modal__title" id="formModalTitle">Yangi hujjat</h2>
+          <button type="button" class="modal__close" id="formModalClose" aria-label="Yopish"><i class="ph ph-x"></i></button>
+        </div>
+        <div class="modal__body">
+          <div class="modal__field">
+            <label class="modal__label" for="fTitle">Sarlavha <span style="color:#dc2626">*</span></label>
+            <input id="fTitle" class="modal__input" type="text" required placeholder="Hujjat sarlavhasini kiriting" />
+          </div>
+          <div class="modal__grid2">
+            <div class="modal__field">
+              <label class="modal__label" for="fDate">Sana <span style="color:#dc2626">*</span></label>
+              <input id="fDate" class="modal__input" type="date" required />
+            </div>
+            <div class="modal__field">
+              <label class="modal__label" for="fCategory">Toifa <span style="color:#dc2626">*</span></label>
+              <select id="fCategory" class="modal__select" required>
+                <option value="">— Tanlang —</option>
+                <option value="qonunlar">Qonunlar va qarorlar</option>
+                <option value="davlat-dasturlari">Davlat dasturlari</option>
+                <option value="nogironlar-huquqi">Nogironlar huquqi</option>
+                <option value="rasmiy-hujjat">Rasmiy hujjat</option>
+              </select>
+            </div>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="fExcerpt">Qisqa matn</label>
+            <textarea id="fExcerpt" class="modal__textarea" placeholder="Hujjatning qisqacha tavsifi"></textarea>
+          </div>
+          <div class="modal__field">
+            <label class="modal__label" for="fBody">To'liq matn <span style="color:#dc2626">*</span></label>
+            <textarea id="fBody" class="modal__textarea modal__textarea--tall" required placeholder="Hujjatning to'liq matni"></textarea>
+          </div>
+          <p id="formError" style="color:#dc2626;font-size:13px;display:none;margin:0;"></p>
+        </div>
+        <div class="modal__foot">
+          <button type="button" class="btn btn--secondary" id="formCancelBtn">Bekor qilish</button>
+          <button type="submit" class="btn btn--primary" id="formSaveBtn"><i class="ph ph-floppy-disk"></i> Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle" aria-hidden="true">
+    <div class="modal u-modal-max-440">
       <div class="modal__head">
-        <h2 class="modal__title" id="uploadDocTitle">Hujjat yuklash</h2>
-        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
+        <h2 class="modal__title" id="deleteModalTitle">Hujjatni o'chirish</h2>
+        <button type="button" class="modal__close" id="deleteModalClose" aria-label="Yopish"><i class="ph ph-x"></i></button>
       </div>
       <div class="modal__body">
-        <div class="modal__field">
-          <label class="modal__label" for="doc-org">Tashkilot <span style="color:#dc2626">*</span></label>
-          <select id="doc-org" class="modal__select">
-            <option value="">Tashkilotni tanlang</option>
-            <option>Yangi Nafas NNT</option>
-            <option>Mehr-Shafqat NNT</option>
-            <option>Umid Istiqbol NNT</option>
-            <option>Yoshlar Ittifoqi</option>
-            <option>Ekologiya Markazi</option>
-          </select>
-        </div>
-        <div class="modal__row">
-          <div class="modal__field">
-            <label class="modal__label" for="doc-type">Hujjat turi <span style="color:#dc2626">*</span></label>
-            <select id="doc-type" class="modal__select">
-              <option value="">Turini tanlang</option>
-              <option>Ustav</option>
-              <option>Ro'yxatga olish guvohnomasi</option>
-              <option>Soliq ma'lumotnomasi</option>
-              <option>Hisobot</option>
-              <option>Shartnoma</option>
-              <option>Boshqa</option>
-            </select>
-          </div>
-          <div class="modal__field">
-            <label class="modal__label" for="doc-responsible">Mas'ul shaxs</label>
-            <select id="doc-responsible" class="modal__select">
-              <option>Azizova Nodira</option>
-              <option>Toshmatov Akbar</option>
-              <option>Xolmatova Gulnora</option>
-              <option>Rahimov Bobur</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal__field">
-          <label class="modal__label" for="doc-name">Hujjat nomi <span style="color:#dc2626">*</span></label>
-          <input type="text" id="doc-name" class="modal__input" placeholder="Masalan: Ustav 2024 yangi tahrir" />
-        </div>
-        <div class="modal__field">
-          <label class="modal__label">Fayl yuklash <span style="color:#dc2626">*</span></label>
-          <div style="border:2px dashed #d1d5db;border-radius:8px;padding:24px;text-align:center;color:#6b7280;cursor:pointer;">
-            <i class="ph ph-upload-simple" style="font-size:28px;display:block;margin-bottom:8px;"></i>
-            PDF, DOC, DOCX — max 10MB
-          </div>
-        </div>
-        <div class="modal__field">
-          <label class="modal__label" for="doc-note">Izoh</label>
-          <textarea id="doc-note" class="modal__textarea" placeholder="Qo'shimcha izoh..."></textarea>
-        </div>
+        <p style="margin:0;font-size:14px;color:var(--grey-700,#2b2d3a);">
+          <strong id="deleteName"></strong> hujjatini o'chirmoqchimisiz?<br>
+          <span style="color:var(--grey-400,#818898)">Bu amalni qaytarib bo'lmaydi.</span>
+        </p>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
-        <button type="button" class="btn btn--primary"><i class="ph ph-upload-simple"></i> Yuklash</button>
+        <button type="button" class="btn btn--secondary" id="deleteCancelBtn">Bekor qilish</button>
+        <button type="button" class="btn btn--danger" id="deleteConfirmBtn"><i class="ph ph-trash"></i> Ha, o'chirish</button>
       </div>
     </div>
   </div>
 
-  <script src="js/pacta-foundation.js" defer></script>
-  <script src="js/pacta-notifications.js"></script>
-  <script src="js/admin-seed.js"></script>
+  <div class="cms-toast" id="cmsToast" role="alert" aria-live="polite"></div>
+
   <script src="js/pacta-app.js"></script>
+  <script src="js/pacta-foundation.js"></script>
+  <script src="js/pacta-notifications.js"></script>
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-boot.js"></script>
+  <script src="js/admin-cms.js"></script>
+  <script>
+  (function () {
+    var TYPE      = 'documents';
+    var items     = [];
+    var editingId = null;
+    var deleteId  = null;
+    var catFilter = 'all';
+    var searchQ   = '';
+
+    var CAT_LABEL = {
+      'qonunlar': 'Qonunlar', 'davlat-dasturlari': 'Davlat dasturlari',
+      'nogironlar-huquqi': 'Nogironlar huquqi', 'rasmiy-hujjat': 'Rasmiy hujjat'
+    };
+    var CAT_BADGE = {
+      'qonunlar': 'info', 'davlat-dasturlari': 'success',
+      'nogironlar-huquqi': 'warning', 'rasmiy-hujjat': 'neutral'
+    };
+
+    function openModal(id)  { var el = document.getElementById(id); if (!el) return; el.classList.add('is-open'); el.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; }
+    function closeModal(id) { var el = document.getElementById(id); if (!el) return; el.classList.remove('is-open'); el.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
+
+    var toastTimer;
+    function toast(msg, type) {
+      var el = document.getElementById('cmsToast');
+      el.textContent = msg;
+      el.className = 'cms-toast cms-toast--' + (type || 'info') + ' show';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3500);
+    }
+
+    function renderKpi() {
+      document.getElementById('kpiTotal').textContent      = items.length;
+      document.getElementById('kpiQonunlar').textContent    = items.filter(function (i) { return i.category === 'qonunlar'; }).length;
+      document.getElementById('kpiDasturlar').textContent   = items.filter(function (i) { return i.category === 'davlat-dasturlari'; }).length;
+      document.getElementById('kpiNogironlar').textContent  = items.filter(function (i) { return i.category === 'nogironlar-huquqi'; }).length;
+    }
+
+    function renderTable() {
+      var q = searchQ.toLowerCase();
+      var filtered = items.filter(function (item) {
+        if (catFilter !== 'all' && item.category !== catFilter) return false;
+        if (q && (item.title + ' ' + (item.excerpt || '')).toLowerCase().indexOf(q) === -1) return false;
+        return true;
+      });
+      var tbody = document.getElementById('docsTableBody');
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6">Hujjat topilmadi</td></tr>';
+        return;
+      }
+      tbody.innerHTML = filtered.map(function (item) {
+        var badge = CAT_BADGE[item.category] || 'neutral';
+        var label = CAT_LABEL[item.category] || item.category || '';
+        var title = AdminCMS.esc(item.title.length > 72 ? item.title.slice(0, 72) + '…' : item.title);
+        return '<tr>' +
+          '<td><input type="checkbox" aria-label="Tanlash" /></td>' +
+          '<td class="u-td-truncate">' + title + '</td>' +
+          '<td>' + AdminCMS.esc(item.date || '') + '</td>' +
+          '<td><span class="badge badge--' + badge + '">' + label + '</span></td>' +
+          '<td><span class="badge badge--' + (item.status === 'published' ? 'success' : 'neutral') + '">' + (item.status === 'published' ? 'Faol' : 'Qoralama') + '</span></td>' +
+          '<td style="white-space:nowrap">' +
+            '<button class="btn--ghost-sm" title="Tahrirlash" onclick="editItem(\'' + item.id + '\')"><i class="ph ph-pencil-simple"></i></button>' +
+            '<button class="btn--ghost-sm danger" title="O\'chirish" onclick="confirmDelete(\'' + item.id + '\')"><i class="ph ph-trash"></i></button>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function reload() { items = AdminCMS.get(TYPE) || []; renderTable(); renderKpi(); }
+
+    function clearForm() {
+      document.getElementById('fTitle').value    = '';
+      document.getElementById('fDate').value     = AdminCMS.today();
+      document.getElementById('fCategory').value = '';
+      document.getElementById('fExcerpt').value  = '';
+      document.getElementById('fBody').value     = '';
+      document.getElementById('formError').style.display = 'none';
+    }
+    function fillForm(item) {
+      document.getElementById('fTitle').value    = item.title    || '';
+      document.getElementById('fDate').value     = item.date     || '';
+      document.getElementById('fCategory').value = item.category || '';
+      document.getElementById('fExcerpt').value  = item.excerpt  || '';
+      document.getElementById('fBody').value     = item.body     || '';
+      document.getElementById('formError').style.display = 'none';
+    }
+    function readForm() {
+      return {
+        title   : document.getElementById('fTitle').value.trim(),
+        date    : document.getElementById('fDate').value,
+        category: document.getElementById('fCategory').value,
+        excerpt : document.getElementById('fExcerpt').value.trim(),
+        body    : document.getElementById('fBody').value.trim()
+      };
+    }
+
+    window.editItem = function (id) {
+      var item = items.find(function (i) { return i.id === id; });
+      if (!item) return;
+      editingId = id;
+      document.getElementById('formModalTitle').textContent = 'Hujjatni tahrirlash';
+      fillForm(item);
+      openModal('formModal');
+    };
+
+    window.confirmDelete = function (id) {
+      var item = items.find(function (i) { return i.id === id; });
+      deleteId = id;
+      document.getElementById('deleteName').textContent = item ? item.title.slice(0, 60) : id;
+      openModal('deleteModal');
+    };
+
+    document.getElementById('newItemBtn').addEventListener('click', function () {
+      editingId = null;
+      document.getElementById('formModalTitle').textContent = 'Yangi hujjat';
+      clearForm();
+      openModal('formModal');
+    });
+
+    document.getElementById('formModalClose').addEventListener('click', function () { closeModal('formModal'); });
+    document.getElementById('formCancelBtn').addEventListener('click', function () { closeModal('formModal'); });
+    document.getElementById('deleteModalClose').addEventListener('click', function () { closeModal('deleteModal'); });
+    document.getElementById('deleteCancelBtn').addEventListener('click', function () { closeModal('deleteModal'); });
+
+    document.getElementById('cmsForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var data  = readForm();
+      var errEl = document.getElementById('formError');
+      if (!data.title || !data.date || !data.category || !data.body) {
+        errEl.textContent = 'Iltimos, barcha majburiy maydonlarni to\'ldiring.';
+        errEl.style.display = 'block';
+        return;
+      }
+      errEl.style.display = 'none';
+      if (editingId) {
+        AdminCMS.update(TYPE, editingId, data);
+        toast('Hujjat yangilandi', 'success');
+      } else {
+        AdminCMS.create(TYPE, data);
+        toast('Yangi hujjat saqlandi', 'success');
+      }
+      closeModal('formModal');
+      reload();
+    });
+
+    document.getElementById('deleteConfirmBtn').addEventListener('click', function () {
+      if (!deleteId) return;
+      AdminCMS.remove(TYPE, deleteId);
+      closeModal('deleteModal');
+      reload();
+      toast('Hujjat o\'chirildi', 'info');
+      deleteId = null;
+    });
+
+    document.getElementById('cmsSearch').addEventListener('input', function () {
+      searchQ = this.value;
+      renderTable();
+    });
+
+    document.querySelectorAll('[data-cat-filter]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('[data-cat-filter]').forEach(function (b) { b.classList.remove('is-active'); });
+        this.classList.add('is-active');
+        catFilter = this.dataset.catFilter;
+        renderTable();
+      });
+    });
+
+    document.getElementById('exportBtn').addEventListener('click', function () {
+      AdminCMS.exportJson(TYPE);
+    });
+
+    document.getElementById('formModal').addEventListener('click',   function (e) { if (e.target === this) closeModal('formModal'); });
+    document.getElementById('deleteModal').addEventListener('click', function (e) { if (e.target === this) closeModal('deleteModal'); });
+
+    AdminCMS.load(TYPE, function (err, data) {
+      if (err) toast('Ma\'lumotlarni yuklashda xatolik', 'error');
+      items = data || [];
+      renderTable();
+      renderKpi();
+    });
+  })();
+  </script>
 </body>
 </html>

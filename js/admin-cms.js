@@ -9,7 +9,7 @@ var AdminCMS = (function () {
     'iyul','avgust','sentabr','oktabr','noyabr','dekabr'
   ];
 
-  var cache = { news: [], events: [], grants: [] };
+  var cache = { news: [], events: [], grants: [], documents: [] };
 
   // ── helpers ──────────────────────────────────────────────
 
@@ -31,7 +31,7 @@ var AdminCMS = (function () {
   }
 
   function genId(type) {
-    var prefix = { news: 'news', events: 'event', grants: 'grant' }[type] || type;
+    var prefix = { news: 'news', events: 'event', grants: 'grant', documents: 'doc' }[type] || type;
     var stamp  = new Date().toISOString().replace(/[-:T]/g, '').slice(0, 14).toLowerCase();
     var rand   = Math.random().toString(36).slice(2, 6);
     return prefix + '-' + stamp + '-' + rand;
