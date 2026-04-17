@@ -88,7 +88,12 @@
     });
 
     if (NgoApi.getToken()) {
-      location.replace('cabinet-dashboard.html');
+      fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/me', {
+        headers: { 'Authorization': 'Bearer ' + NgoApi.getToken() }
+      }).then(function(r) {
+        if (r.ok) location.replace('cabinet-dashboard.html');
+        else { try { localStorage.removeItem('ngo_api_token'); } catch(e) {} }
+      }).catch(function() {});
     }
 
     document.getElementById('loginForm').addEventListener('submit', function (e) {

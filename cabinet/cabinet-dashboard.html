@@ -163,6 +163,17 @@
   <script>
   (function () {
     if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+    NgoApi.get('/me').then(function (me) {
+      if (!me || !me.user || me.user.status !== 'active') {
+        try { localStorage.removeItem('ngo_api_token'); localStorage.removeItem('ngo_api_user'); } catch(e) {}
+        location.replace('cabinet-login.html');
+        return;
+      }
+    }).catch(function () {
+      try { localStorage.removeItem('ngo_api_token'); localStorage.removeItem('ngo_api_user'); } catch(e) {}
+      location.replace('cabinet-login.html');
+      return;
+    });
     NgoApi.get('/cabinet/dashboard').then(function (d) {
       if (d.organization) {
         document.getElementById('kpiOrg').textContent = d.organization.name || '—';
