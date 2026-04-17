@@ -1064,7 +1064,7 @@ body.a11y-grayscale { filter: grayscale(1); }
 .team-card:hover .team-photo img { transform: scale(1.05); }
 .team-card h3 { margin:0 0 4px; font-size:16px; font-weight:700; line-height:1.35; }
 .team-role { margin:0 0 10px; color:var(--green-500); font-weight:600; font-size:13px; line-height:1.4; }
-.team-meta { margin-top:10px; display:grid; gap:5px; color:var(--neutral-500); font-size:13px; word-break:break-all; }
+.team-meta { margin-top:10px; display:grid; gap:5px; color:var(--neutral-500); font-size:13px; }
 .team-card p { margin:0; color:var(--neutral-500); line-height:1.6; }
 .team-meta { margin-top:12px; display:grid; gap:6px; color:var(--neutral-900); font-size:15px; font-weight:600; }
 .team-departments .item h4 { font-size:18px; }
@@ -1828,8 +1828,8 @@ body.a11y-grayscale { filter: grayscale(1); }
   }
   .orb, .orb-1, .orb-2, .orb-3 { display:none; }
   .scan, .scan-1, .scan-2 { width:100%; left:0; right:0; }
-  p, li, td, th, a, .excerpt, .hero-cinematic-copy p { overflow-wrap:break-word; word-wrap:break-word; }
-  a[href*="://"] { word-break:break-all; }
+  p, li, a, .excerpt, .hero-cinematic-copy p { overflow-wrap:break-word; word-wrap:break-word; }
+  a[href*="://"]:not(td a) { word-break:break-all; }
 }
 
 /* ── Very narrow phones: hide nav CTA (accessible via hamburger) ── */

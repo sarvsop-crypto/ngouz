@@ -639,7 +639,11 @@ td {
 .table th,
 .table td {
   vertical-align: middle;
-  white-space: nowrap;
+}
+
+.table td {
+  word-break: normal;
+  overflow-wrap: normal;
 }
 
 .mobile-nav-toggle {
