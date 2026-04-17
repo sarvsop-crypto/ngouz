@@ -97,13 +97,14 @@
           <div class="settings-panel">
             <h2 class="settings-section-title">Parolni o'zgartirish</h2>
             <div class="settings-grid-two">
-              <div><label class="settings-form-label">Joriy parol</label><input class="settings-form-control" type="password" placeholder="Joriy parolni kiriting" /></div>
+              <div><label class="settings-form-label" for="pwCurrent">Joriy parol</label><input id="pwCurrent" class="settings-form-control" type="password" placeholder="Joriy parolni kiriting" /></div>
               <div></div>
-              <div><label class="settings-form-label">Yangi parol</label><input class="settings-form-control" type="password" placeholder="Yangi parolni kiriting" /></div>
-              <div><label class="settings-form-label">Yangi parolni tasdiqlang</label><input class="settings-form-control" type="password" placeholder="Takrorlab kiriting" /></div>
+              <div><label class="settings-form-label" for="pwNew">Yangi parol (kamida 12 belgi)</label><input id="pwNew" class="settings-form-control" type="password" placeholder="Yangi parolni kiriting" /></div>
+              <div><label class="settings-form-label" for="pwConfirm">Yangi parolni tasdiqlang</label><input id="pwConfirm" class="settings-form-control" type="password" placeholder="Takrorlab kiriting" /></div>
             </div>
+            <p id="pwMsg" style="font-size:13px;margin:8px 0 0;display:none"></p>
             <div class="settings-actions-row">
-              <button type="button" class="btn btn--primary"><i class="ph ph-lock-key"></i> Parolni yangilash</button>
+              <button type="button" class="btn btn--primary" id="pwSubmitBtn"><i class="ph ph-lock-key"></i> Parolni yangilash</button>
             </div>
           </div>
 
@@ -169,5 +170,43 @@
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
   <script src="js/pacta-app.js"></script>
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-boot.js"></script>
+  <script>
+  (function () {
+    document.getElementById('pwSubmitBtn').addEventListener('click', function () {
+      var current = document.getElementById('pwCurrent').value;
+      var newPass = document.getElementById('pwNew').value;
+      var confirm = document.getElementById('pwConfirm').value;
+      var msg = document.getElementById('pwMsg');
+
+      if (!current || !newPass) { msg.textContent = 'Barcha maydonlarni to\'ldiring.'; msg.style.color = '#dc2626'; msg.style.display = 'block'; return; }
+      if (newPass.length < 12) { msg.textContent = 'Parol kamida 12 belgidan iborat bo\'lishi kerak.'; msg.style.color = '#dc2626'; msg.style.display = 'block'; return; }
+      if (newPass !== confirm) { msg.textContent = 'Yangi parollar mos kelmaydi.'; msg.style.color = '#dc2626'; msg.style.display = 'block'; return; }
+
+      this.disabled = true;
+      var btn = this;
+      NgoApi.post('/auth/change-password', { current_password: current, new_password: newPass })
+        .then(function () {
+          msg.textContent = 'Parol muvaffaqiyatli yangilandi!';
+          msg.style.color = '#0e7490';
+          msg.style.display = 'block';
+          document.getElementById('pwCurrent').value = '';
+          document.getElementById('pwNew').value = '';
+          document.getElementById('pwConfirm').value = '';
+          btn.disabled = false;
+        })
+        .catch(function (err) {
+          var text = 'Xatolik yuz berdi.';
+          if (err && err.code === 'wrong_password') text = 'Joriy parol noto\'g\'ri.';
+          if (err && err.code === 'weak_password') text = 'Parol juda qisqa (kamida 12 belgi).';
+          msg.textContent = text;
+          msg.style.color = '#dc2626';
+          msg.style.display = 'block';
+          btn.disabled = false;
+        });
+    });
+  })();
+  </script>
 </body>
 </html>
