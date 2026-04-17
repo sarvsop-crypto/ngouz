@@ -187,9 +187,50 @@
   <script src="js/pacta-app.js"></script>
   <script>
   (function () {
-    var tbody = document.getElementById('reportRows');
-    if (tbody) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--grey-400);font-size:14px;"><i class="ph ph-chart-bar" style="font-size:24px;display:block;margin-bottom:8px;"></i>Hisobotlar tizimi ishlab chiqilmoqda</td></tr>';
+    var STATUS_BADGE = { 'draft': 'neutral', 'submitted': 'warning', 'accepted': 'success', 'returned': 'error' };
+    var STATUS_LABEL = { 'draft': 'Qoralama', 'submitted': 'Yuborilgan', 'accepted': 'Qabul qilingan', 'returned': 'Qaytarilgan' };
+    function esc(s) { return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    NgoApi.get('/admin/reports?limit=200').then(function(res) {
+      var items = res.items || [];
+      var tbody = document.getElementById('reportRows');
+
+      // Update KPI cards if they exist
+      var cards = document.querySelectorAll('.card__value');
+      if (cards[0]) cards[0].textContent = res.total || 0;
+      if (cards[1]) cards[1].textContent = items.filter(function(r){return r.status==='submitted';}).length;
+      if (cards[2]) cards[2].textContent = items.filter(function(r){return r.status==='accepted';}).length;
+
+      if (!items.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--grey-400)">Hisobotlar topilmadi. A\'zo tashkilotlar hisobot yuborganda bu yerda ko\'rinadi.</td></tr>';
+        return;
+      }
+      tbody.innerHTML = items.map(function(r) {
+        var badge = STATUS_BADGE[r.status] || 'neutral';
+        var label = STATUS_LABEL[r.status] || r.status;
+        var actions = r.status === 'submitted'
+          ? '<button class="btn btn--sm btn--primary" onclick="acceptReport(' + r.id + ')"><i class="ph ph-check"></i></button> '
+            + '<button class="btn btn--sm btn--secondary" onclick="returnReport(' + r.id + ')"><i class="ph ph-arrow-u-up-left"></i></button>'
+          : '—';
+        return '<tr>'
+          + '<td><input type="checkbox" /></td>'
+          + '<td><strong>' + esc(r.title) + '</strong></td>'
+          + '<td>' + esc(r.org_name || '—') + '</td>'
+          + '<td>' + esc(r.period) + '</td>'
+          + '<td>' + esc((r.created_at||'').slice(0,10)) + '</td>'
+          + '<td><span class="badge badge--' + badge + '">' + label + '</span></td>'
+          + '<td>' + actions + '</td></tr>';
+      }).join('');
+    });
+
+    window.acceptReport = function(id) {
+      NgoApi.patch('/admin/reports/' + id, { status: 'accepted' }).then(function() { location.reload(); });
+    };
+    window.returnReport = function(id) {
+      var note = prompt('Qaytarish sababi:');
+      if (note === null) return;
+      NgoApi.patch('/admin/reports/' + id, { status: 'returned', review_note: note }).then(function() { location.reload(); });
+    };
     }
     if (!window.NgoApi) return;
     NgoApi.get('/admin/stats').then(function (s) {

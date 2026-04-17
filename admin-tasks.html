@@ -95,20 +95,20 @@
 
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-list-checks"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami topshiriqlar</p><p class="card__value">64</p></div></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-list-checks"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Kutilayotgan arizalar</p><p class="card__value" id="kpiPending">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Bajarilgan</p><p class="card__value">38</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 59%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value" id="kpiApproved">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jarayonda</p><p class="card__value">19</p></div></div>
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-chat-dots"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Yangi xabarlar</p><p class="card__value" id="kpiMessages">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-warning"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Muddati o&rsquo;tgan</p><p class="card__value">7</p></div><span class="card__trend u-trend-down"><i class="ph ph-arrow-down-right"></i> 3 ta yangi</span></div>
+          <div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-x-circle"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Rad etilgan</p><p class="card__value" id="kpiRejected">—</p></div></div>
         </div>
       </div>
 
@@ -252,10 +252,57 @@
     var counts = document.querySelectorAll('.filter-chip__count');
     counts.forEach(function (c) { c.textContent = '0'; });
     /* Replace table body */
-    var tbody = document.getElementById('tasksTableRows');
-    if (tbody) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--grey-400);font-size:14px;"><i class="ph ph-check-square" style="font-size:24px;display:block;margin-bottom:8px;"></i>Topshiriqlar tizimi ishlab chiqilmoqda</td></tr>';
-    }
+    var STATUS_BADGE = { 'pending': 'warning', 'approved': 'success', 'returned': 'info', 'rejected': 'error' };
+    var STATUS_LABEL = { 'pending': 'Kutilmoqda', 'approved': 'Tasdiqlangan', 'returned': 'Qaytarilgan', 'rejected': 'Rad etilgan' };
+    function esc(s) { return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    NgoApi.get('/admin/membership-requests?limit=200').then(function (res) {
+      var items = res.items || [];
+      var pending = items.filter(function(a){return a.status==='pending';});
+      var approved = items.filter(function(a){return a.status==='approved';});
+      var rejected = items.filter(function(a){return a.status==='rejected'||a.status==='returned';});
+      document.getElementById('kpiPending').textContent = pending.length;
+      document.getElementById('kpiApproved').textContent = approved.length;
+      document.getElementById('kpiRejected').textContent = rejected.length;
+
+      NgoApi.get('/admin/contact-messages?limit=1').then(function(c){
+        document.getElementById('kpiMessages').textContent = c.total || 0;
+      }).catch(function(){});
+
+      var tbody = document.getElementById('tasksTableRows');
+      if (!items.length) {
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--grey-400)">Arizalar topilmadi</td></tr>';
+        return;
+      }
+      tbody.innerHTML = items.map(function(a) {
+        var badge = STATUS_BADGE[a.status] || 'neutral';
+        var label = STATUS_LABEL[a.status] || a.status;
+        var actions = a.status === 'pending'
+          ? '<button class="btn btn--sm btn--primary" onclick="approveTask(' + a.id + ')"><i class="ph ph-check"></i></button> '
+            + '<button class="btn btn--sm btn--secondary" onclick="rejectTask(' + a.id + ')"><i class="ph ph-x"></i></button>'
+          : '—';
+        return '<tr>'
+          + '<td><input type="checkbox" /></td>'
+          + '<td><strong>#' + a.id + '</strong></td>'
+          + '<td>' + esc(a.org_name) + '</td>'
+          + '<td>' + esc(a.applicant_name) + '</td>'
+          + '<td>' + esc((a.created_at||'').slice(0,10)) + '</td>'
+          + '<td><span class="badge badge--' + badge + '">' + label + '</span></td>'
+          + '<td>' + actions + '</td></tr>';
+      }).join('');
+    });
+
+    window.approveTask = function(id) {
+      if (!confirm('Arizani tasdiqlaysizmi?')) return;
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'approved' })
+        .then(function() { location.reload(); });
+    };
+    window.rejectTask = function(id) {
+      var note = prompt('Rad etish sababi:');
+      if (note === null) return;
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', review_note: note })
+        .then(function() { location.reload(); });
+    };
   })();
   </script>
 </body>
