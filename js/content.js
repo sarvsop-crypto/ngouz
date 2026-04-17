@@ -33,7 +33,7 @@
 
   function coverStyle(item) {
     var img = mediaUrl(item.cover_image);
-    if (img) return 'background-image:url(\'' + img + '\');background-size:cover;background-position:center';
+    if (img) return 'background:url(\'' + img + '\') center/cover no-repeat';
     return 'background:' + coverGradient(item.category || item.status || '');
   }
 
