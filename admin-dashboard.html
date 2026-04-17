@@ -114,16 +114,15 @@
       <div class="charts">
         <div class="chart-card chart-card--wide">
           <div class="chart-card__head">
-            <h2 class="chart-card__title">A&rsquo;zolik dinamikasi (2025&ndash;2026)</h2>
+            <h2 class="chart-card__title">A'zolik statistikasi</h2>
             <div class="chart-card__controls">
               <button type="button" class="btn btn--secondary u-btn-period">Oylik <i class="ph ph-caret-down"></i></button>
             </div>
           </div>
           <div class="chart-card__body">
             <div class="chart-card__stats">
-              <span class="chart-card__amount">247 NNT</span>
-              <span class="card__trend"><i class="ph ph-arrow-up-right"></i> 12.4%</span>
-              <span class="u-text-subtle">yanvar &mdash; dekabr davomida</span>
+              <span class="chart-card__amount" id="chartNntCount">— NNT</span>
+              <span class="u-text-subtle">barcha a'zo tashkilotlar</span>
             </div>
             <div class="chart-card__legend">
               <span class="chart-card__legend-item"><span class="chart-card__legend-dot u-bg-primary-500"></span> Yangi arizalar</span>
@@ -187,7 +186,7 @@
       <h2 class="notifications-panel__title">Bildirishnomalar</h2>
     </div>
     <div class="notifications-panel__list" id="notifPanelList">
-      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+      <p class="notif-empty">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
       <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
@@ -208,16 +207,54 @@
       document.getElementById('kpiDocs').textContent    = s.documents || 0;
     }).catch(function () {});
 
-    // Load recent contact messages for the table
+    // NNT count for chart header
+    NgoApi.get('/public/organizations?limit=1').then(function (res) {
+      var el = document.getElementById('chartNntCount');
+      if (el) el.textContent = (res.total || 0) + ' NNT';
+    }).catch(function () {});
+
+    // Recent contact messages
     NgoApi.get('/admin/contact-messages?limit=5&status=new').then(function (res) {
       var tbody = document.getElementById('dashboardRecentRows');
       if (!tbody) return;
       var items = res.items || [];
-      if (!items.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#9ca3af">Yangi xabar yo\'q</td></tr>'; return; }
+      if (!items.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Yangi xabar yo\'q</td></tr>'; return; }
       tbody.innerHTML = items.map(function (m) {
         return '<tr><td>#' + m.id + '</td><td>' + (m.full_name || '—') + '</td><td>' + (m.email || m.phone || '—') + '</td><td>' + (m.subject || '—') + '</td>'
           + '<td><span class="badge badge--warning">Yangi</span></td><td>' + (m.created_at || '').slice(0, 10) + '</td></tr>';
       }).join('');
+    }).catch(function () {});
+
+    // Pending membership requests as deadlines
+    NgoApi.get('/admin/membership-requests?limit=5&status=pending').then(function (res) {
+      var ul = document.getElementById('dashboardDeadlines');
+      if (!ul) return;
+      var items = res.items || [];
+      if (!items.length) { ul.innerHTML = '<li class="alert-item"><span class="text-dim">Kutilayotgan ariza yo\'q</span></li>'; return; }
+      ul.innerHTML = items.map(function (a) {
+        return '<li class="alert-item"><span class="badge badge--warning">Kutilmoqda</span><span>' + (a.org_name || '—') + '</span><span class="text-dim">' + (a.created_at || '').slice(0,10) + '</span></li>';
+      }).join('');
+    }).catch(function () {});
+
+    // Region distribution table
+    NgoApi.get('/public/regions').then(function (res) {
+      var tbody = document.getElementById('dashboardRegionRows');
+      if (!tbody) return;
+      var regions = res.items || [];
+      if (!regions.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Ma\'lumot yo\'q</td></tr>'; return; }
+      // Get org counts per region
+      var promises = regions.map(function (r) {
+        return fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?region=' + r.code + '&limit=1')
+          .then(function (resp) { return resp.json(); })
+          .then(function (d) { return { code: r.code, name: r.name_uz, total: d.total || 0 }; });
+      });
+      Promise.all(promises).then(function (data) {
+        var grandTotal = data.reduce(function (s, d) { return s + d.total; }, 0);
+        tbody.innerHTML = data.map(function (d) {
+          var pct = grandTotal ? Math.round(d.total / grandTotal * 100) : 0;
+          return '<tr><td>' + d.name + '</td><td>' + d.total + '</td><td>' + d.total + '</td><td>—</td><td>' + pct + '%</td></tr>';
+        }).join('');
+      });
     }).catch(function () {});
   })();
   </script>
