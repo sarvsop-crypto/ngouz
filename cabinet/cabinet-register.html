@@ -31,7 +31,7 @@
           <p class="form-header__subtitle">A&rsquo;zolik uchun ariza topshirish va kabinetga kirish uchun ro&rsquo;yxatdan o&rsquo;ting.</p>
         </div>
 
-        <form class="form-fields" action="cabinet-dashboard.html" method="get">
+        <form class="form-fields" id="registerForm" novalidate>
           <div class="field">
             <label class="field__label" for="fullname">To&rsquo;liq ism <span>*</span></label>
             <div class="field__input-wrap">
@@ -99,17 +99,46 @@
     </nav>
   </footer>
 
+  <script src="../js/api-client.js"></script>
   <script>
     document.getElementById('togglePassword').addEventListener('click', function () {
       var inp = document.getElementById('password');
       var icon = this.querySelector('i');
-      if (inp.type === 'password') {
-        inp.type = 'text';
-        icon.className = 'ph ph-eye-slash';
-      } else {
-        inp.type = 'password';
-        icon.className = 'ph ph-eye';
-      }
+      if (inp.type === 'password') { inp.type = 'text'; icon.className = 'ph ph-eye-slash'; }
+      else { inp.type = 'password'; icon.className = 'ph ph-eye'; }
+    });
+
+    if (NgoApi.getToken()) { location.replace('cabinet-dashboard.html'); }
+
+    document.getElementById('registerForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      var name  = document.getElementById('fullname').value.trim();
+      var org   = document.getElementById('org').value.trim();
+      var email = document.getElementById('email').value.trim();
+      var pass  = document.getElementById('password').value;
+      if (!name || !org || !email || !pass) { alert('Barcha majburiy maydonlarni to\'ldiring.'); return; }
+      if (pass.length < 12) { alert('Parol kamida 12 belgidan iborat bo\'lishi kerak.'); return; }
+      var btn = this.querySelector('button[type="submit"]');
+      btn.disabled = true; btn.textContent = 'Ro\'yxatdan o\'tilmoqda...';
+      fetch('https://api.ngo.uz/v1/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ full_name: name, org_name: org, email: email, password: pass })
+      })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
+      .then(function (res) {
+        if (res.ok && res.data.token) {
+          try { localStorage.setItem('ngo_api_token', res.data.token); localStorage.setItem('ngo_api_user', JSON.stringify(res.data.user)); } catch(e) {}
+          location.replace('cabinet-dashboard.html');
+        } else {
+          var msg = 'Ro\'yxatdan o\'tishda xatolik.';
+          if (res.data.error === 'duplicate_email') msg = 'Bu email allaqachon ro\'yxatdan o\'tgan.';
+          if (res.data.error === 'validation') msg = 'Ma\'lumotlarni tekshiring. Parol kamida 12 belgi.';
+          alert(msg);
+          btn.disabled = false; btn.textContent = 'Ro\'yxatdan o\'tish';
+        }
+      })
+      .catch(function () { alert('Tarmoq xatosi.'); btn.disabled = false; btn.textContent = 'Ro\'yxatdan o\'tish'; });
     });
   </script>
 </body>

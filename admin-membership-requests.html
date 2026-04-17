@@ -94,20 +94,20 @@
 
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-file-text"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami arizalar</p><p class="card__value">247</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 12%</span></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-file-text"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Jami arizalar</p><p class="card__value" id="kpiTotal">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Ko&rsquo;rib chiqilmoqda</p><p class="card__value">61</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 3.2%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Kutilmoqda</p><p class="card__value" id="kpiPending">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value">94</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 8.1%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value" id="kpiApproved">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-x-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Qaytarilgan</p><p class="card__value">18</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 5%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-x-circle"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Rad etilgan</p><p class="card__value" id="kpiRejected">—</p></div></div>
         </div>
       </div>
 
@@ -119,29 +119,20 @@
           </div>
         </div>
         <form class="u-filter-row" role="search" aria-label="Arizalarni filtrlash">
-          <label for="membershipSearch" class="u-visually-hidden">Ariza raqami yoki tashkilot bo'yicha qidirish</label>
-          <input id="membershipSearch" type="search" class="table-section__search u-search-260" placeholder="Ariza raqami, tashkilot nomi..." aria-label="Qidirish" />
-          <button type="button" class="filter-chip is-active" data-filter="all">Barchasi <span class="filter-chip__count">247</span></button>
-          <button type="button" class="filter-chip" data-filter="review">Ko&rsquo;rib chiqilmoqda <span class="filter-chip__count">61</span></button>
-          <button type="button" class="filter-chip" data-filter="approved">Tasdiqlangan <span class="filter-chip__count">94</span></button>
-          <button type="button" class="filter-chip" data-filter="returned">Qaytarilgan <span class="filter-chip__count">18</span></button>
-          <label for="membershipRegion" class="u-visually-hidden">Viloyat bo'yicha filter</label>
-          <select id="membershipRegion" class="table-section__search u-search-160" aria-label="Viloyat">
-            <option value="">Barcha viloyatlar</option>
-            <option>Toshkent shahri</option><option>Toshkent viloyati</option><option>Samarqand</option>
-            <option>Farg&rsquo;ona</option><option>Buxoro</option><option>Namangan</option>
-            <option>Andijon</option><option>Qashqadaryo</option><option>Surxondaryo</option>
-            <option>Xorazm</option><option>Jizzax</option><option>Sirdaryo</option>
-            <option>Navoiy</option><option>Qoraqalpog&rsquo;iston</option>
-          </select>
+          <input id="membershipSearch" type="search" class="table-section__search u-search-260" placeholder="Tashkilot nomi..." aria-label="Qidirish" />
+          <button type="button" class="filter-chip is-active" data-status-filter="all">Barchasi</button>
+          <button type="button" class="filter-chip" data-status-filter="pending">Kutilmoqda</button>
+          <button type="button" class="filter-chip" data-status-filter="approved">Tasdiqlangan</button>
+          <button type="button" class="filter-chip" data-status-filter="returned">Qaytarilgan</button>
+          <button type="button" class="filter-chip" data-status-filter="rejected">Rad etilgan</button>
         </form>
         <table class="table">
           <caption class="u-visually-hidden">A'zolik arizalari jadvali</caption>
           <thead>
             <tr>
               <th scope="col"><input type="checkbox" aria-label="Barchasini tanlash" /></th>
-              <th scope="col">Ariza #</th><th scope="col">Tashkilot nomi</th><th scope="col">Viloyat</th>
-              <th scope="col">Topshirilgan sana</th><th scope="col">Bosqich</th><th scope="col">Holat</th><th scope="col">Mas&rsquo;ul</th><th scope="col"></th>
+              <th scope="col">#</th><th scope="col">Tashkilot</th><th scope="col">Ariza beruvchi</th>
+              <th scope="col">Sana</th><th scope="col">Holat</th><th scope="col"></th>
             </tr>
           </thead>
           <tbody id="membershipRequestRows"></tbody>
@@ -278,9 +269,92 @@
     </div>
   </div>
 
-  <script src="js/pacta-foundation.js" defer></script>
-  <script src="js/pacta-notifications.js"></script>
-  <script src="js/admin-seed.js"></script>
   <script src="js/pacta-app.js"></script>
+  <script src="js/pacta-foundation.js"></script>
+  <script src="js/pacta-notifications.js"></script>
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-boot.js"></script>
+  <script>
+  (function () {
+    var items = [];
+    var statusFilter = 'all';
+    var searchQ = '';
+
+    var STATUS_BADGE = { 'pending': 'warning', 'approved': 'success', 'returned': 'info', 'rejected': 'error' };
+    var STATUS_LABEL = { 'pending': 'Kutilmoqda', 'approved': 'Tasdiqlangan', 'returned': 'Qaytarilgan', 'rejected': 'Rad etilgan' };
+
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+    function openModal(id)  { var el = document.getElementById(id); if (el) { el.classList.add('is-open'); el.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; } }
+    function closeModal(id) { var el = document.getElementById(id); if (el) { el.classList.remove('is-open'); el.setAttribute('aria-hidden','true'); document.body.style.overflow=''; } }
+
+    function renderKpi() {
+      document.getElementById('kpiTotal').textContent    = items.length;
+      document.getElementById('kpiPending').textContent  = items.filter(function(i){return i.status==='pending';}).length;
+      document.getElementById('kpiApproved').textContent = items.filter(function(i){return i.status==='approved';}).length;
+      document.getElementById('kpiRejected').textContent = items.filter(function(i){return i.status==='rejected'||i.status==='returned';}).length;
+    }
+
+    function renderTable() {
+      var q = searchQ.toLowerCase();
+      var filtered = items.filter(function (item) {
+        if (statusFilter !== 'all' && item.status !== statusFilter) return false;
+        if (q && (item.org_name + ' ' + item.applicant_name).toLowerCase().indexOf(q) === -1) return false;
+        return true;
+      });
+      var tbody = document.getElementById('membershipRequestRows');
+      if (!filtered.length) { tbody.innerHTML = '<tr class="u-empty-row"><td colspan="7">Ariza topilmadi</td></tr>'; return; }
+      tbody.innerHTML = filtered.map(function (a) {
+        var badge = STATUS_BADGE[a.status] || 'neutral';
+        var label = STATUS_LABEL[a.status] || a.status;
+        return '<tr>' +
+          '<td><input type="checkbox" /></td>' +
+          '<td><strong>#' + a.id + '</strong></td>' +
+          '<td>' + esc(a.org_name) + '</td>' +
+          '<td>' + esc(a.applicant_name) + '</td>' +
+          '<td>' + esc((a.created_at||'').slice(0,10)) + '</td>' +
+          '<td><span class="badge badge--' + badge + '">' + label + '</span></td>' +
+          '<td style="white-space:nowrap">' +
+            (a.status === 'pending' ?
+              '<button class="btn btn--sm btn--primary" onclick="approveApp(' + a.id + ')"><i class="ph ph-check"></i></button> ' +
+              '<button class="btn btn--sm btn--secondary" onclick="rejectApp(' + a.id + ')"><i class="ph ph-x"></i></button>'
+            : '—') +
+          '</td></tr>';
+      }).join('');
+    }
+
+    window.approveApp = function (id) {
+      if (!confirm('Arizani tasdiqlaysizmi?')) return;
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'approved', review_note: '' })
+        .then(function () { reload(); })
+        .catch(function () { alert('Xatolik'); });
+    };
+    window.rejectApp = function (id) {
+      var note = prompt('Rad etish sababi:');
+      if (note === null) return;
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', review_note: note })
+        .then(function () { reload(); })
+        .catch(function () { alert('Xatolik'); });
+    };
+
+    function reload() {
+      NgoApi.get('/admin/membership-requests?limit=200')
+        .then(function (res) { items = res.items || []; renderTable(); renderKpi(); });
+    }
+
+    document.getElementById('membershipSearch').addEventListener('input', function () { searchQ = this.value; renderTable(); });
+
+    document.querySelectorAll('[data-status-filter]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('[data-status-filter]').forEach(function (b) { b.classList.remove('is-active'); });
+        this.classList.add('is-active');
+        statusFilter = this.dataset.statusFilter;
+        renderTable();
+      });
+    });
+
+    reload();
+  })();
+  </script>
 </body>
 </html>

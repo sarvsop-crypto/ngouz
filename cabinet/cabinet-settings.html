@@ -58,14 +58,14 @@
           <div class="settings-panel">
             <h2 class="settings-section-title">Shaxsiy ma&rsquo;lumotlar</h2>
             <div class="settings-grid-two">
-              <div><label class="settings-form-label">Ism</label><input class="settings-form-control" type="text" value="Kamolov Sanjar" /></div>
-              <div><label class="settings-form-label">Email</label><input class="settings-form-control" type="email" value="kamolov@yanginafas.uz" /></div>
-              <div><label class="settings-form-label">Telefon</label><input class="settings-form-control" type="tel" value="+998 90 123 45 67" /></div>
-              <div><label class="settings-form-label">Lavozim</label><input class="settings-form-control" type="text" value="Tashkilot rahbari" /></div>
+              <div><label class="settings-form-label">Ism</label><input id="sName" class="settings-form-control" type="text" value="" /></div>
+              <div><label class="settings-form-label">Email</label><input id="sEmail" class="settings-form-control" type="email" value="" disabled /></div>
+              <div><label class="settings-form-label">Telefon</label><input id="sPhone" class="settings-form-control" type="tel" value="" /></div>
+              <div><label class="settings-form-label">Veb-sayt</label><input id="sWebsite" class="settings-form-control" type="text" value="" /></div>
             </div>
+            <p id="sMsg" style="font-size:13px;margin:8px 0 0;display:none"></p>
             <div class="settings-actions-row">
-              <button type="button" class="btn btn--primary"><i class="ph ph-floppy-disk"></i> Saqlash</button>
-              <button type="button" class="btn btn--secondary">Bekor qilish</button>
+              <button type="button" class="btn btn--primary" id="sSaveBtn"><i class="ph ph-floppy-disk"></i> Saqlash</button>
             </div>
           </div>
         </div>
@@ -76,9 +76,37 @@
   <div id="cabinet-notifications-root"></div>
 
   <script src="js/cabinet-chrome.js" defer></script>
-
+  <script src="../js/api-client.js"></script>
   <script src="../js/pacta-foundation.js" defer></script>
   <script src="../js/pacta-notifications.js"></script>
   <script src="../js/pacta-app.js"></script>
+  <script>
+  (function () {
+    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+    NgoApi.get('/me').then(function (res) {
+      var u = res.user;
+      document.getElementById('sName').value  = u.full_name || '';
+      document.getElementById('sEmail').value = u.email || '';
+    });
+    NgoApi.get('/cabinet/organization').then(function (res) {
+      var o = res.organization;
+      if (o) {
+        document.getElementById('sPhone').value   = o.phone || '';
+        document.getElementById('sWebsite').value = o.website || '';
+      }
+    }).catch(function () {});
+
+    document.getElementById('sSaveBtn').addEventListener('click', function () {
+      var phone   = document.getElementById('sPhone').value.trim();
+      var website = document.getElementById('sWebsite').value.trim();
+      var msg = document.getElementById('sMsg');
+      this.disabled = true;
+      var btn = this;
+      NgoApi.patch('/cabinet/organization', { phone: phone, website: website })
+        .then(function () { msg.textContent = 'Saqlandi!'; msg.style.color = '#0e7490'; msg.style.display = 'block'; btn.disabled = false; })
+        .catch(function () { msg.textContent = 'Xatolik yuz berdi.'; msg.style.color = '#dc2626'; msg.style.display = 'block'; btn.disabled = false; });
+    });
+  })();
+  </script>
 </body>
 </html>

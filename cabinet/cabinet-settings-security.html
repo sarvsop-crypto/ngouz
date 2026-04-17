@@ -58,12 +58,13 @@
           <div class="settings-panel">
             <h2 class="settings-section-title">Parolni o&rsquo;zgartirish</h2>
             <div class="settings-grid-two">
-              <div><label class="settings-form-label">Joriy parol</label><input class="settings-form-control" type="password" placeholder="Joriy parol" /></div>
+              <div><label class="settings-form-label">Joriy parol</label><input id="cpCurrent" class="settings-form-control" type="password" placeholder="Joriy parol" /></div>
               <div></div>
-              <div><label class="settings-form-label">Yangi parol</label><input class="settings-form-control" type="password" placeholder="Yangi parol" /></div>
-              <div><label class="settings-form-label">Yangi parolni tasdiqlang</label><input class="settings-form-control" type="password" placeholder="Takrorlab kiriting" /></div>
+              <div><label class="settings-form-label">Yangi parol (kamida 12 belgi)</label><input id="cpNew" class="settings-form-control" type="password" placeholder="Yangi parol" /></div>
+              <div><label class="settings-form-label">Yangi parolni tasdiqlang</label><input id="cpConfirm" class="settings-form-control" type="password" placeholder="Takrorlab kiriting" /></div>
             </div>
-            <div class="settings-actions-row"><button type="button" class="btn btn--primary"><i class="ph ph-lock-key"></i> Yangilash</button></div>
+            <p id="cpMsg" style="font-size:13px;margin:8px 0 0;display:none"></p>
+            <div class="settings-actions-row"><button type="button" class="btn btn--primary" id="cpSaveBtn"><i class="ph ph-lock-key"></i> Yangilash</button></div>
           </div>
           <div class="settings-panel">
             <h2 class="settings-section-title settings-section-title--tight">Ikki bosqichli tasdiqlash</h2>
@@ -103,9 +104,35 @@
   <div id="cabinet-notifications-root"></div>
 
   <script src="js/cabinet-chrome.js" defer></script>
-
+  <script src="../js/api-client.js"></script>
   <script src="../js/pacta-foundation.js" defer></script>
   <script src="../js/pacta-notifications.js"></script>
   <script src="../js/pacta-app.js"></script>
+  <script>
+  (function () {
+    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+    document.getElementById('cpSaveBtn').addEventListener('click', function () {
+      var cur = document.getElementById('cpCurrent').value;
+      var np  = document.getElementById('cpNew').value;
+      var cf  = document.getElementById('cpConfirm').value;
+      var msg = document.getElementById('cpMsg');
+      if (!cur || !np) { msg.textContent = 'Barcha maydonlarni to\'ldiring.'; msg.style.color='#dc2626'; msg.style.display='block'; return; }
+      if (np.length < 12) { msg.textContent = 'Kamida 12 belgi.'; msg.style.color='#dc2626'; msg.style.display='block'; return; }
+      if (np !== cf) { msg.textContent = 'Parollar mos kelmaydi.'; msg.style.color='#dc2626'; msg.style.display='block'; return; }
+      var btn = this; btn.disabled = true;
+      NgoApi.post('/auth/change-password', { current_password: cur, new_password: np })
+        .then(function () {
+          msg.textContent = 'Parol yangilandi!'; msg.style.color='#0e7490'; msg.style.display='block';
+          document.getElementById('cpCurrent').value=''; document.getElementById('cpNew').value=''; document.getElementById('cpConfirm').value='';
+          btn.disabled = false;
+        })
+        .catch(function (err) {
+          var t = 'Xatolik.';
+          if (err && err.code === 'wrong_password') t = 'Joriy parol noto\'g\'ri.';
+          msg.textContent = t; msg.style.color='#dc2626'; msg.style.display='block'; btn.disabled = false;
+        });
+    });
+  })();
+  </script>
 </body>
 </html>
