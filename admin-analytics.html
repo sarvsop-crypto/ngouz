@@ -91,55 +91,22 @@
         </div>
       </div>
 
-      <!-- KPI Cards -->
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-buildings"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami NNTlar</p><p class="card__value">&mdash;</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 6.2%</span></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-buildings"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Jami NNTlar</p><p class="card__value" id="kpiTotalNnt">&mdash;</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Faol NNTlar</p><p class="card__value">&mdash;</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 4.8%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-newspaper"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Yangiliklar</p><p class="card__value" id="kpiTotalNews">&mdash;</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-percent"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">A&rsquo;zolik darajasi</p><p class="card__value">&mdash;</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 1.3%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-chat-dots"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Xabarlar</p><p class="card__value" id="kpiTotalContacts">&mdash;</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-file-plus"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Yangi arizalar (2026)</p><p class="card__value">&mdash;</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 9.5%</span></div>
-        </div>
-      </div>
-
-      <!-- Charts row -->
-      <div class="charts">
-        <div class="chart-card chart-card--wide">
-          <div class="chart-card__head">
-            <h2 class="chart-card__title">NNT o&rsquo;sish dinamikasi (2020&ndash;2026)</h2>
-            <div class="chart-card__controls">
-              <button type="button" class="btn btn--secondary u-btn-period">Yillik <i class="ph ph-caret-down"></i></button>
-            </div>
-          </div>
-          <div class="chart-card__body">
-            <div class="chart-card__stats">
-              <span class="chart-card__amount">&mdash; NNT</span>
-              <span class="card__trend"><i class="ph ph-arrow-up-right"></i> 6.2%</span>
-              <span class="u-text-subtle">2020 &mdash; 2026 yillar</span>
-            </div>
-            <div class="chart-card__legend">
-              <span class="chart-card__legend-item"><span class="chart-card__legend-dot u-bg-primary-500"></span> Jami NNTlar</span>
-              <span class="chart-card__legend-item"><span class="chart-card__legend-dot u-bg-secondary-500"></span> Faol NNTlar</span>
-            </div>
-            <div id="analyticsLineChart"></div>
-          </div>
-        </div>
-        <div class="chart-card chart-card--narrow">
-          <div class="chart-card__head">
-            <h2 class="chart-card__title">Soha bo&rsquo;yicha taqsimot</h2>
-          </div>
-          <div class="chart-donut">
-            <div id="analyticsDonutChart"></div>
-          </div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-users"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Foydalanuvchilar</p><p class="card__value" id="kpiTotalUsers">&mdash;</p></div></div>
         </div>
       </div>
 
@@ -204,67 +171,58 @@
 
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
-  <script src="js/admin-seed.js"></script>
   <script src="js/pacta-app.js"></script>
   <script src="js/api-client.js"></script>
   <script src="js/admin-boot.js"></script>
   <script>
   (function () {
-    if (!window.NgoApi) return;
+    var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
+    var regionCodeMap = {
+      'TSH': 'toshkent-sh', 'TOS': 'toshkent-v', 'AND': 'andijon', 'BUX': 'buxoro',
+      'FAR': 'fargona', 'JIZ': 'jizzax', 'XOR': 'xorazm', 'NAM': 'namangan',
+      'NAV': 'navoiy', 'QAS': 'qashqadaryo', 'QRK': 'karakalpakstan',
+      'SAM': 'samarqand', 'SIR': 'sirdaryo', 'SUR': 'surxondaryo'
+    };
 
-    NgoApi.get('/admin/stats')
-      .then(function (stats) {
-        if (!stats) return;
-        // Wire KPI cards — find all .card__value elements
-        var vals = document.querySelectorAll('.card__value');
-        if (vals[0] && stats.total_ngos !== undefined) vals[0].textContent = Number(stats.total_ngos).toLocaleString();
-        if (vals[1] && stats.active_ngos !== undefined) vals[1].textContent = Number(stats.active_ngos).toLocaleString();
-        if (vals[2] && stats.membership_rate !== undefined) vals[2].textContent = stats.membership_rate + '%';
-        if (vals[3] && stats.new_applications !== undefined) vals[3].textContent = Number(stats.new_applications).toLocaleString();
+    // KPIs
+    NgoApi.get('/admin/stats').then(function (s) {
+      document.getElementById('kpiTotalNews').textContent = s.news || 0;
+      document.getElementById('kpiTotalContacts').textContent = s.contacts_total || 0;
+      document.getElementById('kpiTotalUsers').textContent = s.users || 0;
+    }).catch(function () {});
 
-        // Wire chart headline number
-        var chartAmount = document.querySelector('.chart-card__amount');
-        if (chartAmount && stats.total_ngos !== undefined) chartAmount.textContent = Number(stats.total_ngos).toLocaleString() + ' NNT';
+    NgoApi.get('/public/organizations?limit=1').then(function (res) {
+      document.getElementById('kpiTotalNnt').textContent = res.total || 0;
+    }).catch(function () {});
 
-        // Wire regional rows
-        var regionTbody = document.getElementById('analyticsRegionRows');
-        if (regionTbody && stats.regions && stats.regions.length) {
-          regionTbody.innerHTML = stats.regions.map(function (r) {
-            var total = r.total || 0;
-            var active = r.active || 0;
-            var inactive = total - active;
-            var newCount = r.new_2026 || 0;
-            var rate = total ? Math.round((active / total) * 100) : 0;
-            var share = stats.total_ngos ? ((total / stats.total_ngos) * 100).toFixed(1) : '0';
-            return '<tr>'
-              + '<td>' + (r.name || r.region) + '</td>'
-              + '<td>' + total + '</td>'
-              + '<td>' + active + '</td>'
-              + '<td>' + inactive + '</td>'
-              + '<td>' + newCount + '</td>'
-              + '<td>' + rate + '%</td>'
-              + '<td>' + share + '%</td>'
-              + '</tr>';
-          }).join('');
-        }
+    // Region table
+    NgoApi.get('/public/regions').then(function (res) {
+      var regions = res.items || [];
+      var tbody = document.getElementById('analyticsRegionRows');
+      if (!tbody || !regions.length) return;
+      tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Yuklanmoqda...</td></tr>';
 
-        // Wire sector rows
-        var sectorTbody = document.getElementById('analyticsSectorRows');
-        if (sectorTbody && stats.sectors && stats.sectors.length) {
-          sectorTbody.innerHTML = stats.sectors.map(function (s) {
-            var share = stats.total_ngos ? ((s.count / stats.total_ngos) * 100).toFixed(1) : '0';
-            return '<tr>'
-              + '<td>' + s.name + '</td>'
-              + '<td>' + s.count + '</td>'
-              + '<td>' + share + '%</td>'
-              + '<td><span class="card__trend"><i class="ph ph-arrow-up-right"></i> ' + (s.trend || '0') + '%</span></td>'
-              + '</tr>';
-          }).join('');
-        }
-      })
-      .catch(function (err) {
-        console.warn('admin-analytics stats error:', err);
+      var promises = regions.map(function (r) {
+        var orgCode = regionCodeMap[r.code] || r.code.toLowerCase();
+        return fetch(API + '/public/organizations?region=' + orgCode + '&limit=1')
+          .then(function (resp) { return resp.json(); })
+          .then(function (d) { return { name: r.name_uz, total: d.total || 0 }; });
       });
+
+      Promise.all(promises).then(function (data) {
+        var grandTotal = data.reduce(function (s, d) { return s + d.total; }, 0);
+        tbody.innerHTML = data.map(function (d) {
+          var pct = grandTotal ? ((d.total / grandTotal) * 100).toFixed(1) + '%' : '—';
+          return '<tr><td>' + d.name + '</td><td>' + d.total + '</td><td>' + d.total + '</td><td>0</td><td>—</td><td>100%</td><td>' + pct + '</td></tr>';
+        }).join('');
+      });
+    }).catch(function () {});
+
+    // Sector table — we don't have sector data in the DB, show empty
+    var sectorTbody = document.getElementById('analyticsSectorRows');
+    if (sectorTbody) {
+      sectorTbody.innerHTML = '<tr><td colspan="4" class="empty-state">Soha ma\'lumotlari hali kiritilmagan</td></tr>';
+    }
   })();
   </script>
 </body>
