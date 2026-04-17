@@ -95,19 +95,19 @@
       <div class="cards">
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-wrench"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami so&rsquo;rovlar</p><p class="card__value">148</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 6%</span></div>
+          <div class="card__body"><div><p class="card__label">Jami so&rsquo;rovlar</p><p class="card__value">&mdash;</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 6%</span></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-envelope-simple-open"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Yangi</p><p class="card__value">23</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 11%</span></div>
+          <div class="card__body"><div><p class="card__label">Yangi</p><p class="card__value">&mdash;</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 11%</span></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jarayonda</p><p class="card__value">41</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 2%</span></div>
+          <div class="card__body"><div><p class="card__label">Jarayonda</p><p class="card__value">&mdash;</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 2%</span></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Javob berilgan</p><p class="card__value">84</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 9%</span></div>
+          <div class="card__body"><div><p class="card__label">Javob berilgan</p><p class="card__value">&mdash;</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 9%</span></div>
         </div>
       </div>
 
@@ -121,10 +121,10 @@
         <form class="u-filter-row" role="search" aria-label="So'rovlarni filtrlash">
           <label for="serviceSearch" class="u-visually-hidden">So'rov raqami yoki arizachi bo'yicha qidirish</label>
           <input id="serviceSearch" type="search" class="table-section__search u-search-260" placeholder="So'rov #, arizachi ismi..." aria-label="Qidirish" />
-          <button type="button" class="filter-chip is-active" data-filter="all">Barchasi <span class="filter-chip__count">148</span></button>
-          <button type="button" class="filter-chip" data-filter="new">Yangi <span class="filter-chip__count">23</span></button>
-          <button type="button" class="filter-chip" data-filter="progress">Jarayonda <span class="filter-chip__count">41</span></button>
-          <button type="button" class="filter-chip" data-filter="done">Javob berilgan <span class="filter-chip__count">84</span></button>
+          <button type="button" class="filter-chip is-active" data-filter="all">Barchasi <span class="filter-chip__count">&mdash;</span></button>
+          <button type="button" class="filter-chip" data-filter="new">Yangi <span class="filter-chip__count">&mdash;</span></button>
+          <button type="button" class="filter-chip" data-filter="progress">Jarayonda <span class="filter-chip__count">&mdash;</span></button>
+          <button type="button" class="filter-chip" data-filter="done">Javob berilgan <span class="filter-chip__count">&mdash;</span></button>
           <label for="serviceType" class="u-visually-hidden">So'rov turi bo'yicha filter</label>
           <select id="serviceType" class="table-section__search u-search-160" aria-label="Turi">
             <option value="">Barcha turlar</option>
@@ -267,11 +267,21 @@
     }
 
     function renderKpi() {
+      var total = items.length;
+      var newC = items.filter(function (i) { return i.status === 'new'; }).length;
+      var readC = items.filter(function (i) { return i.status === 'read'; }).length;
+      var handledC = items.filter(function (i) { return i.status === 'handled'; }).length;
       var cards = document.querySelectorAll('.card .card__value');
-      if (cards[0]) cards[0].textContent = items.length;
-      if (cards[1]) cards[1].textContent = items.filter(function (i) { return i.status === 'new'; }).length;
-      if (cards[2]) cards[2].textContent = items.filter(function (i) { return i.status === 'read'; }).length;
-      if (cards[3]) cards[3].textContent = items.filter(function (i) { return i.status === 'handled'; }).length;
+      if (cards[0]) cards[0].textContent = total;
+      if (cards[1]) cards[1].textContent = newC;
+      if (cards[2]) cards[2].textContent = readC;
+      if (cards[3]) cards[3].textContent = handledC;
+      // Update filter chip counts
+      var chips = document.querySelectorAll('.filter-chip__count');
+      if (chips[0]) chips[0].textContent = total;
+      if (chips[1]) chips[1].textContent = newC;
+      if (chips[2]) chips[2].textContent = readC;
+      if (chips[3]) chips[3].textContent = handledC;
     }
 
     var searchEl = document.getElementById('serviceSearch');

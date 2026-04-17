@@ -149,5 +149,35 @@
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
   <script src="js/pacta-app.js"></script>
+  <script>
+  (function () {
+    var STORAGE_KEY = 'admin_notification_prefs';
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    var saveBtn = document.querySelector('.btn--primary');
+
+    // Restore saved state from localStorage
+    try {
+      var saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      if (saved && Array.isArray(saved) && saved.length === checkboxes.length) {
+        checkboxes.forEach(function (cb, i) { cb.checked = saved[i]; });
+      }
+    } catch (e) {}
+
+    // Wire save button
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function () {
+        var states = [];
+        checkboxes.forEach(function (cb) { states.push(cb.checked); });
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(states)); } catch (e) {}
+        saveBtn.innerHTML = '<i class="ph ph-check-circle"></i> Saqlandi!';
+        saveBtn.disabled = true;
+        setTimeout(function () {
+          saveBtn.innerHTML = '<i class="ph ph-floppy-disk"></i> Saqlash';
+          saveBtn.disabled = false;
+        }, 2000);
+      });
+    }
+  })();
+  </script>
 </body>
 </html>

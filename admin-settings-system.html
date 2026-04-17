@@ -154,6 +154,87 @@
   <script src="js/pacta-notifications.js"></script>
   <script src="js/pacta-app.js"></script>
   <script>
+  (function () {
+    var GENERAL_KEY = 'admin_system_general';
+    var PARAMS_KEY = 'admin_system_params';
+
+    // General settings — dropdowns
+    var selects = document.querySelectorAll('.settings-layout select:not(#serviceType)');
+    // Exclude the publishToken area selects — grab the ones inside the first card
+    var generalCard = document.querySelector('.settings-layout > div > div');
+    var generalSelects = generalCard ? generalCard.querySelectorAll('select') : [];
+    var generalBtns = generalCard ? generalCard.querySelectorAll('.btn--primary') : [];
+    var generalSaveBtn = generalBtns.length ? generalBtns[0] : null;
+
+    // Restore general settings
+    try {
+      var savedGen = JSON.parse(localStorage.getItem(GENERAL_KEY));
+      if (savedGen && Array.isArray(savedGen) && savedGen.length === generalSelects.length) {
+        generalSelects.forEach(function (sel, i) { sel.value = savedGen[i]; });
+      }
+    } catch (e) {}
+
+    // Wire cancel button — restore from localStorage
+    var cancelBtn = generalCard ? generalCard.querySelector('.btn--secondary') : null;
+    if (cancelBtn) {
+      cancelBtn.addEventListener('click', function () {
+        try {
+          var savedGen = JSON.parse(localStorage.getItem(GENERAL_KEY));
+          if (savedGen && Array.isArray(savedGen) && savedGen.length === generalSelects.length) {
+            generalSelects.forEach(function (sel, i) { sel.value = savedGen[i]; });
+          }
+        } catch (e) {}
+      });
+    }
+
+    // Wire general save button
+    if (generalSaveBtn) {
+      generalSaveBtn.addEventListener('click', function () {
+        var vals = [];
+        generalSelects.forEach(function (sel) { vals.push(sel.value); });
+        try { localStorage.setItem(GENERAL_KEY, JSON.stringify(vals)); } catch (e) {}
+        generalSaveBtn.innerHTML = '<i class="ph ph-check-circle"></i> Saqlandi!';
+        generalSaveBtn.disabled = true;
+        setTimeout(function () {
+          generalSaveBtn.innerHTML = '<i class="ph ph-floppy-disk"></i> Saqlash';
+          generalSaveBtn.disabled = false;
+        }, 2000);
+      });
+    }
+
+    // System params — checkboxes in the third card
+    var cards = document.querySelectorAll('.settings-layout > div > div');
+    var paramsCard = cards.length >= 3 ? cards[2] : null;
+    if (paramsCard) {
+      var paramCheckboxes = paramsCard.querySelectorAll('input[type="checkbox"]');
+      var paramSaveBtn = paramsCard.querySelector('.btn--primary');
+
+      // Restore system params
+      try {
+        var savedParams = JSON.parse(localStorage.getItem(PARAMS_KEY));
+        if (savedParams && Array.isArray(savedParams) && savedParams.length === paramCheckboxes.length) {
+          paramCheckboxes.forEach(function (cb, i) { cb.checked = savedParams[i]; });
+        }
+      } catch (e) {}
+
+      // Wire system params save button
+      if (paramSaveBtn) {
+        paramSaveBtn.addEventListener('click', function () {
+          var states = [];
+          paramCheckboxes.forEach(function (cb) { states.push(cb.checked); });
+          try { localStorage.setItem(PARAMS_KEY, JSON.stringify(states)); } catch (e) {}
+          paramSaveBtn.innerHTML = '<i class="ph ph-check-circle"></i> Saqlandi!';
+          paramSaveBtn.disabled = true;
+          setTimeout(function () {
+            paramSaveBtn.innerHTML = '<i class="ph ph-floppy-disk"></i> Saqlash';
+            paramSaveBtn.disabled = false;
+          }, 2000);
+        });
+      }
+    }
+  })();
+  </script>
+  <script>
   (function(){
     var inp    = document.getElementById('publishTokenInput');
     var status = document.getElementById('publishTokenStatus');
