@@ -130,8 +130,7 @@
 </div>
 <div class="form-actions">
 <button class="btn" type="submit">
-<svg aria-hidden="true" fill="currentColor" height="16" style="margin-right:6px;vertical-align:middle" viewbox="0 0 24 24" width="16"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.75a2.25 2.25 0 0 0 .126 4.238l3.918 1.176 1.77 5.522a.75.75 0 0 0 1.317.209l2.352-2.938 4.552 3.31a2.25 2.25 0 0 0 3.478-1.464l2.25-15.75a2.25 2.25 0 0 0-2.241-2.268z"></path></svg>
-            Telegram orqali yuborish
+Yuborish
           </button>
 </div>
 </form>
@@ -173,11 +172,34 @@
 document.getElementById('feedbackForm').addEventListener('submit', function(e) {
   e.preventDefault();
   var name    = document.getElementById('qa-name').value.trim();
+  var phone   = document.getElementById('qa-phone').value.trim();
+  var email   = document.getElementById('qa-email').value.trim();
   var topic   = document.getElementById('qa-topic').value;
   var message = document.getElementById('qa-message').value.trim();
   if (!name || !topic || !message) { alert("Iltimos, majburiy maydonlarni to'ldiring."); return; }
-  var text = "Qayta aloqa\n\nIsm: " + name + "\nMavzu: " + topic + "\n\n" + message;
-  window.open("https://t.me/AskarNurbekov1?text=" + encodeURIComponent(text), "_blank");
+  var btn = this.querySelector('button[type="submit"]');
+  btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
+  fetch('https://api.ngo.uz/v1/public/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ full_name: name, phone: phone, email: email, subject: topic, body: message })
+  })
+  .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }); })
+  .then(function(res) {
+    if (res.ok) {
+      document.getElementById('feedbackForm').innerHTML =
+        '<div style="text-align:center;padding:40px 0"><h3 style="color:#0e7490">Murojaatingiz qabul qilindi!</h3>'
+        + '<p>Tez orada javob beramiz.</p>'
+        + '<a class="btn" href="index.html" style="margin-top:16px">Bosh sahifaga qaytish</a></div>';
+    } else {
+      alert(res.data.detail || 'Xatolik yuz berdi. Qaytadan urinib ko\'ring.');
+      btn.disabled = false; btn.textContent = 'Yuborish';
+    }
+  })
+  .catch(function() {
+    alert('Tarmoq xatosi. Internet aloqangizni tekshiring.');
+    btn.disabled = false; btn.textContent = 'Yuborish';
+  });
 });
 </script>
 <script src="js/main.js"></script>
