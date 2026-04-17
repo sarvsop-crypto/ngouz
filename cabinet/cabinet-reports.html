@@ -207,13 +207,36 @@
           if (!title) { alert('Hisobot turini tanlang'); return; }
           submitBtn.disabled = true;
           submitBtn.innerHTML = '<i class="ph ph-spinner"></i> Yuborilmoqda...';
-          NgoApi.post('/cabinet/reports', {
-            title: title,
-            period: period,
-            file_path: '',
-            note: note,
-            submit: true
-          }, { loginPage: 'cabinet-login.html' }).then(function () {
+
+          var token = '';
+          try { token = localStorage.getItem('ngo_api_token') || ''; } catch(e) {}
+          var authHeaders = token ? { 'Authorization': 'Bearer ' + token } : {};
+
+          // If file selected, upload first then create report with path
+          var file = fileInput && fileInput.files.length ? fileInput.files[0] : null;
+          var uploadPromise;
+          if (file) {
+            var formData = new FormData();
+            formData.append('file', file);
+            formData.append('type', 'report');
+            uploadPromise = fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/admin/upload', {
+              method: 'POST',
+              headers: authHeaders,
+              body: formData
+            }).then(function (r) { return r.json(); }).then(function (d) { return d.path || d.file_path || ''; });
+          } else {
+            uploadPromise = Promise.resolve('');
+          }
+
+          uploadPromise.then(function (filePath) {
+            return NgoApi.post('/cabinet/reports', {
+              title: title,
+              period: period,
+              file_path: filePath,
+              note: note,
+              submit: true
+            }, { loginPage: 'cabinet-login.html' });
+          }).then(function () {
             location.reload();
           }).catch(function (err) {
             alert('Xatolik: ' + (err.message || 'Nomalum'));

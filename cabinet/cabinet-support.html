@@ -168,6 +168,15 @@
   <script>
   (function () {
     var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
+    // Wire "Yangi murojaat" button to scroll to form
+    var newRequestBtn = document.querySelector('.help-header .btn--primary');
+    if (newRequestBtn) {
+      newRequestBtn.addEventListener('click', function () {
+        var formCard = document.querySelector('.support-form');
+        if (formCard) formCard.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
     var btn = document.querySelector('.support-submit-btn');
     if (!btn) return;
 

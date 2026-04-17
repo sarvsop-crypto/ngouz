@@ -135,6 +135,56 @@
   (function () {
     if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
 
+    // Wire "Hujjat yuklash" button to toggle upload panel
+    var uploadToggle = document.querySelector('[data-action="upload-doc"]');
+    var uploadPanel = document.querySelector('.doc-upload-panel');
+    if (uploadToggle && uploadPanel) {
+      uploadPanel.style.display = 'none';
+      uploadToggle.addEventListener('click', function () {
+        var visible = uploadPanel.style.display !== 'none';
+        uploadPanel.style.display = visible ? 'none' : 'block';
+        if (!visible) uploadPanel.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
+    // Wire "Yuklash" button inside upload panel
+    var panelSubmitBtn = uploadPanel ? uploadPanel.querySelector('.doc-upload-actions .btn--primary') : null;
+    if (panelSubmitBtn) {
+      panelSubmitBtn.addEventListener('click', function () {
+        var selectEl = uploadPanel.querySelector('select');
+        var fileInput = uploadPanel.querySelector('input[type="file"]');
+        var docType = selectEl ? selectEl.value : '';
+        if (!docType) { alert('Hujjat turini tanlang'); return; }
+        if (!fileInput || !fileInput.files.length) { alert('Faylni tanlang'); return; }
+
+        var formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+        formData.append('type', docType);
+
+        panelSubmitBtn.disabled = true;
+        panelSubmitBtn.innerHTML = '<i class="ph ph-spinner"></i> Yuklanmoqda...';
+
+        var token = '';
+        try { token = localStorage.getItem('ngo_api_token') || ''; } catch(e) {}
+        fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/admin/upload', {
+          method: 'POST',
+          headers: token ? { 'Authorization': 'Bearer ' + token } : {},
+          body: formData
+        })
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          if (data.error) throw new Error(data.message || 'Upload xatosi');
+          alert('Hujjat muvaffaqiyatli yuklandi!');
+          location.reload();
+        })
+        .catch(function (err) {
+          alert('Xatolik: ' + (err.message || 'Yuklashda xatolik'));
+          panelSubmitBtn.disabled = false;
+          panelSubmitBtn.innerHTML = '<i class="ph ph-upload-simple"></i> Yuklash';
+        });
+      });
+    }
+
     function fmtDate(iso) {
       if (!iso) return '\u2014';
       var d = new Date(iso);

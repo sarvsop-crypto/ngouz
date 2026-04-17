@@ -76,12 +76,12 @@
             <h2 class="settings-section-title settings-section-title--tight">Bank rekvizitlari</h2>
             <p class="settings-section-sub">Grant va moliyaviy operatsiyalar uchun</p>
             <div class="settings-grid-two">
-              <div><label class="settings-form-label">Bank nomi</label><input class="settings-form-control" type="text" placeholder="Bank nomi" /></div>
-              <div><label class="settings-form-label">Hisob raqami</label><input class="settings-form-control" type="text" placeholder="20208000000000000000" /></div>
-              <div><label class="settings-form-label">MFO</label><input class="settings-form-control" type="text" placeholder="00000" /></div>
+              <div><label class="settings-form-label">Bank nomi</label><input class="settings-form-control" type="text" id="bankName" placeholder="Bank nomi" /></div>
+              <div><label class="settings-form-label">Hisob raqami</label><input class="settings-form-control" type="text" id="bankAccount" placeholder="20208000000000000000" /></div>
+              <div><label class="settings-form-label">MFO</label><input class="settings-form-control" type="text" id="bankMfo" placeholder="00000" /></div>
             </div>
             <div class="settings-actions-row">
-              <button type="button" class="btn btn--primary"><i class="ph ph-floppy-disk"></i> Saqlash</button>
+              <button type="button" class="btn btn--primary" id="bankSaveBtn"><i class="ph ph-floppy-disk"></i> Saqlash</button>
             </div>
           </div>
         </div>
@@ -131,6 +131,39 @@
         })
         .catch(function (err) {
           console.error('Org save error:', err);
+          btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Saqlash';
+          btn.disabled = false;
+          alert('Xatolik: ' + (err.message || 'Saqlashda xatolik yuz berdi'));
+        });
+    });
+
+    // Load bank details from org data
+    NgoApi.get('/cabinet/organization')
+      .then(function (res) {
+        var org = res.organization || res.data || res;
+        if (org.bank_name) document.getElementById('bankName').value = org.bank_name;
+        if (org.bank_account) document.getElementById('bankAccount').value = org.bank_account;
+        if (org.bank_mfo) document.getElementById('bankMfo').value = org.bank_mfo;
+      })
+      .catch(function () {});
+
+    // Wire bank details save button
+    document.getElementById('bankSaveBtn').addEventListener('click', function () {
+      var btn = this;
+      var data = {
+        bank_name: document.getElementById('bankName').value,
+        bank_account: document.getElementById('bankAccount').value,
+        bank_mfo: document.getElementById('bankMfo').value
+      };
+      btn.disabled = true;
+      btn.innerHTML = '<i class="ph ph-spinner"></i> Saqlanmoqda...';
+      NgoApi.patch('/cabinet/organization', data)
+        .then(function () {
+          btn.innerHTML = '<i class="ph ph-check-circle"></i> Saqlandi!';
+          setTimeout(function () { btn.disabled = false; btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Saqlash'; }, 2000);
+        })
+        .catch(function (err) {
+          console.error('Bank save error:', err);
           btn.innerHTML = '<i class="ph ph-floppy-disk"></i> Saqlash';
           btn.disabled = false;
           alert('Xatolik: ' + (err.message || 'Saqlashda xatolik yuz berdi'));
