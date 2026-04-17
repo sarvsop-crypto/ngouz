@@ -91,14 +91,8 @@
         </div>
         <table class="table">
           <thead><tr><th>Hujjat nomi</th><th>Turi</th><th>Muddat</th><th>Holat</th><th>Amal</th></tr></thead>
-          <tbody>
-            <tr><td><a href="#" class="doc-link"><i class="ph ph-file-pdf"></i> NGO Ustavi</a></td><td>Majburiy</td><td>01.04.2026</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
-            <tr><td><a href="#" class="doc-link"><i class="ph ph-file-pdf"></i> Davlat ro&rsquo;yxatidan o&rsquo;tish guvohnomasi</a></td><td>Majburiy</td><td>01.04.2026</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
-            <tr><td><a href="#" class="doc-link"><i class="ph ph-file-pdf"></i> Rahbar haqida ma&rsquo;lumotnoma</a></td><td>Majburiy</td><td>01.04.2026</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
-            <tr class="table-row-warning"><td><i class="ph ph-warning"></i> Ustav yangi tahrir (2026-yil)</td><td>Majburiy</td><td><strong class="text-warning-strong">10.04.2026</strong></td><td><span class="badge badge--warning"><span class="badge__dot"></span>Muddatli</span></td><td><button type="button" class="btn btn--sm btn--primary"><i class="ph ph-upload-simple"></i> Yuklash</button></td></tr>
-            <tr><td><i class="ph ph-clock"></i> Soliq organidan ma&rsquo;lumotnoma</td><td>Majburiy</td><td>&mdash;</td><td><span class="badge badge--pending"><span class="badge__dot"></span>Yuklanmagan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-upload-simple"></i> Yuklash</button></td></tr>
-            <tr><td><a href="#" class="doc-link"><i class="ph ph-file-text"></i> A&rsquo;zolik shartnomasi</a></td><td>Majburiy</td><td>&mdash;</td><td><span class="badge badge--warning"><span class="badge__dot"></span>Imzo kutilmoqda</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
-            <tr><td><i class="ph ph-clock"></i> Tashkilot nizomi</td><td>Ixtiyoriy</td><td>&mdash;</td><td><span class="badge badge--pending"><span class="badge__dot"></span>Yuklanmagan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-upload-simple"></i> Yuklash</button></td></tr>
+          <tbody id="documentsTableBody">
+            <tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:32px;">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -130,10 +124,89 @@
 
   <div id="cabinet-notifications-root"></div>
 
+  <script src="../js/api-client.js"></script>
   <script src="js/cabinet-chrome.js" defer></script>
 
   <script src="../js/pacta-foundation.js" defer></script>
   <script src="../js/pacta-notifications.js"></script>
   <script src="../js/pacta-app.js"></script>
+
+  <script>
+  (function () {
+    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+
+    function fmtDate(iso) {
+      if (!iso) return '\u2014';
+      var d = new Date(iso);
+      return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear();
+    }
+
+    function fileIcon(path) {
+      if (!path) return '<i class="ph ph-file-text"></i>';
+      if (/\.pdf$/i.test(path)) return '<i class="ph ph-file-pdf"></i>';
+      if (/\.docx?$/i.test(path)) return '<i class="ph ph-file-doc"></i>';
+      return '<i class="ph ph-file-text"></i>';
+    }
+
+    function renderRow(doc) {
+      var hasFile = doc.file_path || doc.file_url;
+      var titleCell = hasFile
+        ? '<a href="' + (doc.file_url || doc.file_path || '#') + '" class="doc-link" target="_blank">' + fileIcon(doc.file_path) + ' ' + (doc.title || '') + '</a>'
+        : '<i class="ph ph-clock"></i> ' + (doc.title || '');
+
+      var category = doc.category || doc.type || '\u2014';
+
+      var statusBadge = '';
+      if (doc.status === 'approved') statusBadge = '<span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span>';
+      else if (doc.status === 'pending') statusBadge = '<span class="badge badge--pending"><span class="badge__dot"></span>Kutilmoqda</span>';
+      else if (doc.status === 'urgent') statusBadge = '<span class="badge badge--warning"><span class="badge__dot"></span>Muddatli</span>';
+      else if (doc.status === 'rejected') statusBadge = '<span class="badge badge--error"><span class="badge__dot"></span>Rad etilgan</span>';
+      else statusBadge = '<span class="badge badge--pending"><span class="badge__dot"></span>' + (doc.status || 'Noaniq') + '</span>';
+
+      var actionBtn = hasFile
+        ? '<button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko\u2018rish</button>'
+        : '<button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-upload-simple"></i> Yuklash</button>';
+
+      var rowCls = doc.status === 'urgent' ? ' class="table-row-warning"' : '';
+
+      return '<tr' + rowCls + '>'
+        + '<td>' + titleCell + '</td>'
+        + '<td>' + category + '</td>'
+        + '<td>' + fmtDate(doc.deadline || doc.created_at) + '</td>'
+        + '<td>' + statusBadge + '</td>'
+        + '<td>' + actionBtn + '</td>'
+        + '</tr>';
+    }
+
+    NgoApi.get('https://api.ngo.uz/v1/public/documents?limit=100', { noAuth: true }).then(function (res) {
+      var items = res.items || res.data || [];
+      var tbody = document.getElementById('documentsTableBody');
+      if (!items.length) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:32px;">Hujjatlar topilmadi</td></tr>';
+        return;
+      }
+      tbody.innerHTML = items.map(renderRow).join('');
+
+      // Update summary cards
+      var approved = items.filter(function (d) { return d.status === 'approved'; }).length;
+      var urgent = items.filter(function (d) { return d.status === 'urgent'; }).length;
+      var pending = items.filter(function (d) { return d.status === 'pending' || !d.status; }).length;
+      var vals = document.querySelectorAll('.cards .card__value');
+      if (vals[0]) vals[0].textContent = approved;
+      if (vals[1]) vals[1].textContent = urgent;
+      if (vals[2]) vals[2].textContent = pending;
+      if (vals[3]) vals[3].textContent = items.length;
+
+      // Update progress chart text
+      var pctEl = document.querySelector('.doc-progress-title');
+      if (pctEl) pctEl.textContent = approved + ' / ' + items.length + ' hujjat qabul qilindi';
+      var subEl = document.querySelector('.doc-progress-sub');
+      if (subEl) subEl.textContent = urgent + ' ta muddatli \u00b7 ' + pending + ' ta kutilmoqda';
+    }).catch(function (err) {
+      console.error('Documents load error:', err);
+      document.getElementById('documentsTableBody').innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--error-500);padding:32px;">Xatolik: ' + (err.message || 'Nomalum') + '</td></tr>';
+    });
+  })();
+  </script>
 </body>
 </html>

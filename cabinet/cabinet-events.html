@@ -71,56 +71,85 @@
         <button type="button" class="tab">O&rsquo;tib ketgan <span class="tab__count">3</span></button>
       </div>
 
-      <div class="event-card">
-        <div class="event-date-badge"><div class="event-date-day">15</div><div class="event-date-month">Apr</div></div>
-        <div style="flex:1;">
-          <div style="font-size:15px;font-weight:600;color:var(--grey-900);margin:0 0 6px;">NNT vakillari uchun seminar: 2026-yil hisobotlari</div>
-          <div class="event-detail"><i class="ph ph-map-pin"></i> Toshkent, O&rsquo;zNNTMA markaziy ofisi</div>
-          <div class="event-detail"><i class="ph ph-clock"></i> 10:00 &ndash; 14:00 &middot; <i class="ph ph-users"></i> 150 o&rsquo;rin &middot; <span style="color:var(--success-600);">47 bo&rsquo;sh joy</span></div>
-          <div class="event-actions">
-            <span class="badge badge--warning"><span class="badge__dot"></span>Ro&rsquo;yxat ochiq</span>
-            <button type="button" class="btn btn--primary btn--sm">Ro&rsquo;yxatdan o&rsquo;tish</button>
-          </div>
-        </div>
-        <span style="background:var(--primary-50);color:var(--primary-600);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;flex-shrink:0;">Offline</span>
-      </div>
-
-      <div class="event-card">
-        <div class="event-date-badge"><div class="event-date-day">22</div><div class="event-date-month">Apr</div></div>
-        <div style="flex:1;">
-          <div style="font-size:15px;font-weight:600;color:var(--grey-900);margin:0 0 6px;">Grantlar bo&rsquo;yicha vebinar: Xalqaro mablag&rsquo; manbalari</div>
-          <div class="event-detail"><i class="ph ph-monitor"></i> Online &mdash; Zoom orqali</div>
-          <div class="event-detail"><i class="ph ph-clock"></i> 14:00 &ndash; 16:00 &middot; <i class="ph ph-users"></i> 500 o&rsquo;rin &middot; <span style="color:var(--success-600);">241 bo&rsquo;sh joy</span></div>
-          <div class="event-actions">
-            <span class="badge badge--warning"><span class="badge__dot"></span>Ro&rsquo;yxat ochiq</span>
-            <button type="button" class="btn btn--primary btn--sm">Ro&rsquo;yxatdan o&rsquo;tish</button>
-          </div>
-        </div>
-        <span style="background:#e0f2fe;color:#0369a1;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;flex-shrink:0;">Online</span>
-      </div>
-
-      <div class="event-card">
-        <div class="event-date-badge" style="background:var(--secondary-500);"><div class="event-date-day">01</div><div class="event-date-month">May</div></div>
-        <div style="flex:1;">
-          <div style="font-size:15px;font-weight:600;color:var(--grey-900);margin:0 0 6px;">O&rsquo;zNNTMA yillik anjumani 2026</div>
-          <div class="event-detail"><i class="ph ph-map-pin"></i> Toshkent, &laquo;Intercontinental&raquo; mehmonxonasi</div>
-          <div class="event-detail"><i class="ph ph-clock"></i> 09:00 &ndash; 18:00 &middot; <i class="ph ph-users"></i> 300 o&rsquo;rin &middot; <span style="color:var(--error-500);">Faqat 8 joy qoldi</span></div>
-          <div class="event-actions">
-            <span class="badge" style="background:#fef9c3;color:#92400e;"><span class="badge__dot" style="background:#ca8a04;"></span>Shoshiling</span>
-            <button type="button" class="btn btn--primary btn--sm">Ro&rsquo;yxatdan o&rsquo;tish</button>
-          </div>
-        </div>
-        <span style="background:var(--primary-50);color:var(--primary-600);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;flex-shrink:0;">Offline</span>
+      <div id="eventsContainer">
+        <div style="text-align:center;color:var(--grey-400);padding:32px;">Yuklanmoqda...</div>
       </div>
     </main>
   </div>
 
   <div id="cabinet-notifications-root"></div>
 
+  <script src="../js/api-client.js"></script>
   <script src="js/cabinet-chrome.js" defer></script>
 
   <script src="../js/pacta-foundation.js" defer></script>
   <script src="../js/pacta-notifications.js"></script>
   <script src="../js/pacta-app.js"></script>
+
+  <script>
+  (function () {
+    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+
+    var months = ['Yan','Fev','Mar','Apr','May','Iyun','Iyul','Avg','Sen','Okt','Noy','Dek'];
+
+    function renderEvent(ev) {
+      var d = ev.event_date ? new Date(ev.event_date) : null;
+      var day = d ? ('0' + d.getDate()).slice(-2) : '--';
+      var mon = d ? months[d.getMonth()] : '---';
+      var isPast = d && d < new Date();
+      var pastCls = isPast ? ' event-card--past' : '';
+
+      var isOnline = (ev.format === 'online') || (ev.location && /online|zoom|webinar/i.test(ev.location));
+      var formatBadge = isOnline
+        ? '<span style="background:#e0f2fe;color:#0369a1;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;flex-shrink:0;">Online</span>'
+        : '<span style="background:var(--primary-50);color:var(--primary-600);font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;flex-shrink:0;">Offline</span>';
+
+      var locationIcon = isOnline ? '<i class="ph ph-monitor"></i>' : '<i class="ph ph-map-pin"></i>';
+      var loc = ev.location || (isOnline ? 'Online' : '');
+
+      var timeStr = '';
+      if (ev.start_time) timeStr += ev.start_time;
+      if (ev.end_time) timeStr += ' \u2013 ' + ev.end_time;
+
+      var capacityStr = '';
+      if (ev.capacity) capacityStr = '<i class="ph ph-users"></i> ' + ev.capacity + ' o\u2018rin';
+
+      return '<div class="event-card' + pastCls + '">'
+        + '<div class="event-date-badge"><div class="event-date-day">' + day + '</div><div class="event-date-month">' + mon + '</div></div>'
+        + '<div style="flex:1;">'
+        + '<div style="font-size:15px;font-weight:600;color:var(--grey-900);margin:0 0 6px;">' + (ev.title || '') + '</div>'
+        + (loc ? '<div class="event-detail">' + locationIcon + ' ' + loc + '</div>' : '')
+        + '<div class="event-detail">'
+        + (timeStr ? '<i class="ph ph-clock"></i> ' + timeStr : '')
+        + (capacityStr ? ' \u00b7 ' + capacityStr : '')
+        + '</div>'
+        + (ev.description ? '<div class="event-detail">' + ev.description + '</div>' : '')
+        + '</div>'
+        + formatBadge
+        + '</div>';
+    }
+
+    NgoApi.get('https://api.ngo.uz/v1/public/events?limit=100', { noAuth: true }).then(function (res) {
+      var items = res.items || res.data || [];
+      var container = document.getElementById('eventsContainer');
+      if (!items.length) {
+        container.innerHTML = '<div style="text-align:center;color:var(--grey-400);padding:32px;">Tadbirlar topilmadi</div>';
+        return;
+      }
+      container.innerHTML = items.map(renderEvent).join('');
+
+      // Update summary cards
+      var now = new Date();
+      var upcoming = items.filter(function (e) { return e.event_date && new Date(e.event_date) >= now; });
+      var past = items.filter(function (e) { return e.event_date && new Date(e.event_date) < now; });
+      var vals = document.querySelectorAll('.cards .card__value');
+      if (vals[0]) vals[0].textContent = items.length;
+      if (vals[3]) vals[3].textContent = upcoming.length;
+    }).catch(function (err) {
+      console.error('Events load error:', err);
+      document.getElementById('eventsContainer').innerHTML = '<div style="text-align:center;color:var(--error-500);padding:32px;">Xatolik: ' + (err.message || 'Nomalum') + '</div>';
+    });
+  })();
+  </script>
 </body>
 </html>

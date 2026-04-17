@@ -74,81 +74,128 @@
         <button type="button" class="tab">Tizim <span class="tab__count">2</span></button>
       </div>
 
-      <div class="notif-list">
-        <div class="notif-item notif-item--unread">
-          <div class="notif-icon notif-icon--warning"><i class="ph ph-file-text"></i></div>
-          <div class="notif-item__content">
-            <div class="notif-item__title">Ustav yangi tahrir so&rsquo;raldi <span class="notif-item__dot"></span></div>
-            <div class="notif-item__body">Arizangiz bo&rsquo;yicha qo&rsquo;shimcha hujjat talab qilinmoqda: Ustav yangi tahrir (2026-yil). Muddat: 10.04.2026.</div>
-            <div class="notif-item__time">04.04.2026 &middot; 15:22</div>
-          </div>
-        </div>
-        <div class="notif-item notif-item--unread">
-          <div class="notif-icon"><i class="ph ph-magnifying-glass"></i></div>
-          <div class="notif-item__content">
-            <div class="notif-item__title">Tekshiruv boshlandi <span class="notif-item__dot"></span></div>
-            <div class="notif-item__body">ARZ-2026-0418 arizangiz hujjatlar tekshiruvi bosqichiga o&rsquo;tkazildi.</div>
-            <div class="notif-item__time">03.04.2026 &middot; 10:05</div>
-          </div>
-        </div>
-        <div class="notif-item notif-item--unread">
-          <div class="notif-icon notif-icon--success"><i class="ph ph-check-circle"></i></div>
-          <div class="notif-item__content">
-            <div class="notif-item__title">Ariza qabul qilindi <span class="notif-item__dot"></span></div>
-            <div class="notif-item__body">A&rsquo;zolik arizangiz (ARZ-2026-0418) muvaffaqiyatli qabul qilindi.</div>
-            <div class="notif-item__time">02.04.2026 &middot; 09:14</div>
-          </div>
-        </div>
-        <div class="notif-item">
-          <div class="notif-icon"><i class="ph ph-calendar"></i></div>
-          <div class="notif-item__content">
-            <div class="notif-item__title">Yangi tadbir: 15-aprel seminari</div>
-            <div class="notif-item__body">NNT vakillari uchun seminar ro&rsquo;yxati ochildi. O&rsquo;rin cheklangan (150 ta).</div>
-            <div class="notif-item__time">01.04.2026 &middot; 12:00</div>
-          </div>
-        </div>
-        <div class="notif-item">
-          <div class="notif-icon notif-icon--error"><i class="ph ph-x-circle"></i></div>
-          <div class="notif-item__content">
-            <div class="notif-item__title">Hisobot qaytarildi</div>
-            <div class="notif-item__body">III chorak hisoboti (2025-yil) moliyaviy ma&rsquo;lumotlar to&rsquo;liq emasligi sababli qaytarildi. Muddat: 20.04.2026.</div>
-            <div class="notif-item__time">28.03.2026 &middot; 16:40</div>
-          </div>
-        </div>
-        <div class="notif-item">
-          <div class="notif-icon notif-icon--success"><i class="ph ph-trophy"></i></div>
-          <div class="notif-item__content">
-            <div class="notif-item__title">Yangi grant e&rsquo;loni</div>
-            <div class="notif-item__body">&laquo;Yoshlar salomatligi&raquo; dasturi bo&rsquo;yicha grant musobaqasi e&rsquo;lon qilindi. Muddat: 30.04.2026.</div>
-            <div class="notif-item__time">25.03.2026 &middot; 09:00</div>
-          </div>
-        </div>
-        <div class="notif-item">
-          <div class="notif-icon notif-icon--system"><i class="ph ph-gear"></i></div>
-          <div class="notif-item__content">
-            <div class="notif-item__title">Tizim yangilandi</div>
-            <div class="notif-item__body">Shaxsiy kabinet yangi imkoniyatlar bilan yangilandi. Hisobot yuklash sahifasi takomillashtirildi.</div>
-            <div class="notif-item__time">20.03.2026 &middot; 08:00</div>
-          </div>
-        </div>
-        <div class="notif-item">
-          <div class="notif-icon notif-icon--system"><i class="ph ph-lock"></i></div>
-          <div class="notif-item__content">
-            <div class="notif-item__title">Xavfsizlik ogohlantirishi</div>
-            <div class="notif-item__body">Hisobingizga yangi qurilmadan kirish aniqlandi. Agar siz bo&rsquo;lmasangiz, parolingizni o&rsquo;zgartiring.</div>
-            <div class="notif-item__time">15.03.2026 &middot; 22:17</div>
-          </div>
-        </div>
+      <div class="notif-list" id="notifList">
+        <div style="text-align:center;color:var(--grey-400);padding:32px;">Yuklanmoqda...</div>
       </div>
     </main>
   </div>
 
   <div id="cabinet-notifications-root"></div>
 
+  <script src="../js/api-client.js"></script>
   <script src="js/cabinet-chrome.js" defer></script>
 
   <script src="../js/pacta-foundation.js" defer></script>
   <script src="../js/pacta-notifications.js"></script>
   <script src="../js/pacta-app.js"></script>
+
+  <script>
+  (function () {
+    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+
+    var typeIcons = {
+      warning:  { icon: 'ph-file-text',        cls: 'notif-icon--warning' },
+      info:     { icon: 'ph-magnifying-glass',  cls: '' },
+      success:  { icon: 'ph-check-circle',      cls: 'notif-icon--success' },
+      event:    { icon: 'ph-calendar',          cls: '' },
+      error:    { icon: 'ph-x-circle',          cls: 'notif-icon--error' },
+      grant:    { icon: 'ph-trophy',            cls: 'notif-icon--success' },
+      system:   { icon: 'ph-gear',              cls: 'notif-icon--system' },
+      security: { icon: 'ph-lock',              cls: 'notif-icon--system' }
+    };
+
+    function fmtDateTime(iso) {
+      if (!iso) return '';
+      var d = new Date(iso);
+      return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear()
+        + ' \u00b7 ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+    }
+
+    function renderNotif(n) {
+      var t = typeIcons[n.type] || typeIcons.info;
+      var unread = n.is_read ? '' : ' notif-item--unread';
+      var dot = n.is_read ? '' : ' <span class="notif-item__dot"></span>';
+      return '<div class="notif-item' + unread + '" data-notif-id="' + n.id + '">'
+        + '<div class="notif-icon ' + t.cls + '"><i class="ph ' + t.icon + '"></i></div>'
+        + '<div class="notif-item__content">'
+        + '<div class="notif-item__title">' + (n.title || '') + dot + '</div>'
+        + '<div class="notif-item__body">' + (n.body || '') + '</div>'
+        + '<div class="notif-item__time">' + fmtDateTime(n.created_at) + '</div>'
+        + '</div></div>';
+    }
+
+    var allItems = [];
+
+    function renderList(filter) {
+      var list = document.getElementById('notifList');
+      var filtered = allItems;
+      if (filter === 'unread') filtered = allItems.filter(function (n) { return !n.is_read; });
+      else if (filter === 'system') filtered = allItems.filter(function (n) { return n.type === 'system' || n.type === 'security'; });
+      if (!filtered.length) {
+        list.innerHTML = '<div style="text-align:center;color:var(--grey-400);padding:32px;">Bildirishnomalar topilmadi</div>';
+        return;
+      }
+      list.innerHTML = filtered.map(renderNotif).join('');
+
+      // Click to mark individual as read
+      list.querySelectorAll('.notif-item--unread').forEach(function (el) {
+        el.addEventListener('click', function () {
+          var id = el.getAttribute('data-notif-id');
+          NgoApi.post('/cabinet/notifications/' + id + '/mark-read', {}, { loginPage: 'cabinet-login.html' }).then(function () {
+            el.classList.remove('notif-item--unread');
+            var dot = el.querySelector('.notif-item__dot');
+            if (dot) dot.remove();
+            var item = allItems.find(function (n) { return String(n.id) === String(id); });
+            if (item) item.is_read = true;
+            updateCounts();
+          }).catch(function () {});
+        });
+      });
+    }
+
+    function updateCounts() {
+      var tabs = document.querySelectorAll('.tab .tab__count');
+      var unreadCount = allItems.filter(function (n) { return !n.is_read; }).length;
+      var systemCount = allItems.filter(function (n) { return n.type === 'system' || n.type === 'security'; }).length;
+      if (tabs[0]) tabs[0].textContent = allItems.length;
+      if (tabs[1]) tabs[1].textContent = unreadCount;
+      if (tabs[2]) tabs[2].textContent = systemCount;
+    }
+
+    NgoApi.get('/cabinet/notifications', { loginPage: 'cabinet-login.html' }).then(function (res) {
+      allItems = res.items || [];
+      updateCounts();
+      renderList('all');
+    }).catch(function (err) {
+      console.error('Notifications load error:', err);
+      document.getElementById('notifList').innerHTML = '<div style="text-align:center;color:var(--error-500);padding:32px;">Xatolik: ' + (err.message || 'Nomalum') + '</div>';
+    });
+
+    // Tab switching
+    var tabs = document.querySelectorAll('.notif-tabs .tab');
+    var filters = ['all', 'unread', 'system'];
+    tabs.forEach(function (tab, i) {
+      tab.addEventListener('click', function () {
+        tabs.forEach(function (t) { t.classList.remove('is-active'); });
+        tab.classList.add('is-active');
+        renderList(filters[i]);
+      });
+    });
+
+    // Mark all as read button
+    var markAllBtn = document.querySelector('.main__btns .btn--secondary');
+    if (markAllBtn) {
+      markAllBtn.addEventListener('click', function () {
+        NgoApi.post('/cabinet/notifications/mark-read', {}, { loginPage: 'cabinet-login.html' }).then(function () {
+          allItems.forEach(function (n) { n.is_read = true; });
+          updateCounts();
+          renderList('all');
+        }).catch(function (err) {
+          alert('Xatolik: ' + (err.message || 'Nomalum'));
+        });
+      });
+    }
+  })();
+  </script>
 </body>
 </html>

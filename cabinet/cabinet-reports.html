@@ -79,12 +79,8 @@
           <thead>
             <tr><th>Hisobot nomi</th><th>Turi</th><th>Davr</th><th>Topshirilgan</th><th>Holat</th><th>Amal</th></tr>
           </thead>
-          <tbody>
-            <tr><td><i class="ph ph-file-pdf" style="color:var(--error-500);vertical-align:middle;margin-right:6px;"></i>Yillik faoliyat hisoboti 2025</td><td>Yillik</td><td>2025-yil</td><td>15.01.2026</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
-            <tr><td><i class="ph ph-file-pdf" style="color:var(--error-500);vertical-align:middle;margin-right:6px;"></i>Moliyaviy hisobot 2024</td><td>Yillik</td><td>2024-yil</td><td>20.01.2025</td><td><span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
-            <tr><td><i class="ph ph-file-text" style="color:var(--grey-400);vertical-align:middle;margin-right:6px;"></i>I chorak hisoboti 2026</td><td>Choraklik</td><td>2026 I ch.</td><td>05.04.2026</td><td><span class="badge badge--warning"><span class="badge__dot"></span>Ko&rsquo;rib chiqilmoqda</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
-            <tr><td><i class="ph ph-file-text" style="color:var(--grey-400);vertical-align:middle;margin-right:6px;"></i>IV chorak hisoboti 2025</td><td>Choraklik</td><td>2025 IV ch.</td><td>10.01.2026</td><td><span class="badge badge--warning"><span class="badge__dot"></span>Ko&rsquo;rib chiqilmoqda</span></td><td><button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko&rsquo;rish</button></td></tr>
-            <tr class="table-row-danger"><td><i class="ph ph-warning" style="color:var(--error-500);vertical-align:middle;margin-right:6px;"></i>III chorak hisoboti 2025</td><td>Choraklik</td><td>2025 III ch.</td><td>12.10.2025</td><td><span class="badge badge--error"><span class="badge__dot"></span>Qaytarilgan</span></td><td><button type="button" class="btn btn--sm btn--primary" data-modal-open="uploadReportModal"><i class="ph ph-upload-simple"></i> Qayta yuklash</button></td></tr>
+          <tbody id="reportsTableBody">
+            <tr><td colspan="6" style="text-align:center;color:var(--grey-400);padding:32px;">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -115,10 +111,118 @@
 
   <div id="cabinet-notifications-root"></div>
 
+  <script src="../js/api-client.js"></script>
   <script src="js/cabinet-chrome.js" defer></script>
 
   <script src="../js/pacta-foundation.js" defer></script>
   <script src="../js/pacta-notifications.js"></script>
   <script src="../js/pacta-app.js"></script>
+
+  <script>
+  (function () {
+    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+
+    var statusMap = {
+      approved: { label: 'Tasdiqlangan', cls: 'badge--success' },
+      pending:  { label: "Ko\u2018rib chiqilmoqda", cls: 'badge--warning' },
+      rejected: { label: 'Qaytarilgan', cls: 'badge--error' },
+      draft:    { label: 'Qoralama', cls: 'badge--pending' }
+    };
+
+    function fmtDate(iso) {
+      if (!iso) return '\u2014';
+      var d = new Date(iso);
+      return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear();
+    }
+
+    function fileIcon(path) {
+      if (!path) return '<i class="ph ph-file-text" style="color:var(--grey-400);vertical-align:middle;margin-right:6px;"></i>';
+      if (/\.pdf$/i.test(path)) return '<i class="ph ph-file-pdf" style="color:var(--error-500);vertical-align:middle;margin-right:6px;"></i>';
+      return '<i class="ph ph-file-text" style="color:var(--grey-400);vertical-align:middle;margin-right:6px;"></i>';
+    }
+
+    function renderRow(r) {
+      var s = statusMap[r.status] || statusMap.pending;
+      var isDanger = r.status === 'rejected';
+      var actionBtn = isDanger
+        ? '<button type="button" class="btn btn--sm btn--primary" data-modal-open="uploadReportModal"><i class="ph ph-upload-simple"></i> Qayta yuklash</button>'
+        : '<button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko\u2018rish</button>';
+      return '<tr' + (isDanger ? ' class="table-row-danger"' : '') + '>'
+        + '<td>' + (isDanger ? '<i class="ph ph-warning" style="color:var(--error-500);vertical-align:middle;margin-right:6px;"></i>' : fileIcon(r.file_path)) + (r.title || '') + '</td>'
+        + '<td>' + (r.period || '') + '</td>'
+        + '<td>' + (r.period || '') + '</td>'
+        + '<td>' + fmtDate(r.created_at) + '</td>'
+        + '<td><span class="badge ' + s.cls + '"><span class="badge__dot"></span>' + s.label + '</span></td>'
+        + '<td>' + actionBtn + '</td>'
+        + '</tr>';
+    }
+
+    NgoApi.get('/cabinet/reports', { loginPage: 'cabinet-login.html' }).then(function (res) {
+      var items = res.items || [];
+      var tbody = document.getElementById('reportsTableBody');
+      if (!items.length) {
+        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--grey-400);padding:32px;">Hisobotlar topilmadi</td></tr>';
+        return;
+      }
+      tbody.innerHTML = items.map(renderRow).join('');
+
+      // Update summary cards
+      var total = items.length;
+      var approved = items.filter(function (i) { return i.status === 'approved'; }).length;
+      var pending = items.filter(function (i) { return i.status === 'pending'; }).length;
+      var rejected = items.filter(function (i) { return i.status === 'rejected'; }).length;
+      var vals = document.querySelectorAll('.cards .card__value');
+      if (vals[0]) vals[0].textContent = total;
+      if (vals[1]) vals[1].textContent = approved;
+      if (vals[2]) vals[2].textContent = pending;
+      if (vals[3]) vals[3].textContent = rejected;
+
+      // Show rejection alert if any rejected
+      var rejItem = items.find(function (i) { return i.status === 'rejected'; });
+      var alertBox = document.querySelector('[style*="fef2f2"]');
+      if (alertBox && !rejItem) alertBox.style.display = 'none';
+      if (alertBox && rejItem && rejItem.review_note) {
+        var noteDiv = alertBox.querySelector('div > div:nth-child(2)');
+        if (noteDiv) noteDiv.textContent = 'Sababli: ' + rejItem.review_note;
+      }
+    }).catch(function (err) {
+      console.error('Reports load error:', err);
+      var tbody = document.getElementById('reportsTableBody');
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--error-500);padding:32px;">Xatolik: ' + (err.message || 'Nomalum xato') + '</td></tr>';
+    });
+
+    // Wire modal submit button
+    var modal = document.getElementById('uploadReportModal');
+    if (modal) {
+      var submitBtn = modal.querySelector('.modal__foot .btn--primary');
+      if (submitBtn) {
+        submitBtn.addEventListener('click', function () {
+          var selects = modal.querySelectorAll('select');
+          var fileInput = modal.querySelector('input[type="file"]');
+          var textarea = modal.querySelector('textarea');
+          var title = selects[0] ? selects[0].value : '';
+          var period = selects[1] ? selects[1].value : '';
+          var note = textarea ? textarea.value : '';
+          if (!title) { alert('Hisobot turini tanlang'); return; }
+          submitBtn.disabled = true;
+          submitBtn.innerHTML = '<i class="ph ph-spinner"></i> Yuborilmoqda...';
+          NgoApi.post('/cabinet/reports', {
+            title: title,
+            period: period,
+            file_path: '',
+            note: note,
+            submit: true
+          }, { loginPage: 'cabinet-login.html' }).then(function () {
+            location.reload();
+          }).catch(function (err) {
+            alert('Xatolik: ' + (err.message || 'Nomalum'));
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = '<i class="ph ph-upload-simple"></i> Yuborish';
+          });
+        });
+      }
+    }
+  })();
+  </script>
 </body>
 </html>

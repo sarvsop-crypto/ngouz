@@ -77,11 +77,8 @@
         <div class="table-section__head"><h2 class="table-section__title">Ariza tarixi</h2></div>
         <table class="table">
           <thead><tr><th>Tadbir</th><th>Tavsif</th><th>Sana</th><th>Kim tomonidan</th><th>Holat</th></tr></thead>
-          <tbody>
-            <tr><td style="display:flex;align-items:center;gap:6px;"><i class="ph ph-clipboard-text"></i> Ariza yuborildi</td><td>A&rsquo;zolik arizasi muvaffaqiyatli yuborildi</td><td>02.04.2026</td><td>Kamolov Sanjar</td><td><span class="badge badge--success"><span class="badge__dot"></span>Bajarildi</span></td></tr>
-            <tr><td style="display:flex;align-items:center;gap:6px;"><i class="ph ph-magnifying-glass"></i> Tekshiruv boshlandi</td><td>Hujjatlar tekshiruv bosqichiga o&rsquo;tkazildi</td><td>03.04.2026</td><td>Admin</td><td><span class="badge badge--success"><span class="badge__dot"></span>Bajarildi</span></td></tr>
-            <tr><td style="display:flex;align-items:center;gap:6px;"><i class="ph ph-paperclip"></i> Hujjat so&rsquo;raldi</td><td>Ustav yangi tahrir (2026-yil) so&rsquo;raldi</td><td>04.04.2026</td><td>Admin</td><td><span class="badge badge--warning"><span class="badge__dot"></span>Kutilmoqda</span></td></tr>
-            <tr><td style="display:flex;align-items:center;gap:6px;"><i class="ph ph-file-text"></i> Shartnoma loyihasi</td><td>A&rsquo;zolik shartnomasi loyihasi tayyorlandi</td><td>05.04.2026</td><td>Admin</td><td><span class="badge badge--pending"><span class="badge__dot"></span>Imzo kutilmoqda</span></td></tr>
+          <tbody id="applicationsTableBody">
+            <tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:32px;">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -90,10 +87,75 @@
 
   <div id="cabinet-notifications-root"></div>
 
+  <script src="../js/api-client.js"></script>
   <script src="js/cabinet-chrome.js" defer></script>
 
   <script src="../js/pacta-foundation.js" defer></script>
   <script src="../js/pacta-notifications.js"></script>
   <script src="../js/pacta-app.js"></script>
+
+  <script>
+  (function () {
+    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+
+    var statusMap = {
+      approved:  { label: 'Tasdiqlangan', cls: 'badge--success' },
+      pending:   { label: "Ko\u2018rib chiqilmoqda", cls: 'badge--warning' },
+      rejected:  { label: 'Rad etilgan', cls: 'badge--error' },
+      submitted: { label: 'Yuborildi', cls: 'badge--success' },
+      review:    { label: 'Tekshiruvda', cls: 'badge--warning' },
+      document_requested: { label: 'Hujjat kutilmoqda', cls: 'badge--warning' },
+      signing:   { label: 'Imzo kutilmoqda', cls: 'badge--pending' }
+    };
+
+    function fmtDate(iso) {
+      if (!iso) return '\u2014';
+      var d = new Date(iso);
+      return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear();
+    }
+
+    function renderRow(a) {
+      var s = statusMap[a.status] || statusMap.pending;
+      return '<tr>'
+        + '<td style="display:flex;align-items:center;gap:6px;"><i class="ph ph-clipboard-text"></i> ' + (a.org_name || 'Ariza') + '</td>'
+        + '<td>' + (a.review_note || a.status || '') + '</td>'
+        + '<td>' + fmtDate(a.created_at) + '</td>'
+        + '<td>\u2014</td>'
+        + '<td><span class="badge ' + s.cls + '"><span class="badge__dot"></span>' + s.label + '</span></td>'
+        + '</tr>';
+    }
+
+    NgoApi.get('/cabinet/membership', { loginPage: 'cabinet-login.html' }).then(function (res) {
+      var items = res.items || [];
+      var tbody = document.getElementById('applicationsTableBody');
+      if (!items.length) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:32px;">Arizalar topilmadi</td></tr>';
+        return;
+      }
+      tbody.innerHTML = items.map(renderRow).join('');
+
+      // Update summary cards
+      var active = items.filter(function (i) { return i.status !== 'approved' && i.status !== 'rejected'; });
+      var approved = items.filter(function (i) { return i.status === 'approved'; });
+      var tabs = document.querySelectorAll('.tabs .tab .tab__count');
+      if (tabs[0]) tabs[0].textContent = active.length;
+      if (tabs[1]) tabs[1].textContent = approved.length;
+
+      // Update the status card with latest application
+      var latest = items[0];
+      if (latest) {
+        var sInfo = statusMap[latest.status] || statusMap.pending;
+        var statusVal = document.querySelector('.cards .card__value');
+        if (statusVal) statusVal.textContent = sInfo.label;
+        // Update date card
+        var dateVal = document.querySelectorAll('.cards .card__value');
+        if (dateVal[3]) dateVal[3].textContent = fmtDate(latest.created_at);
+      }
+    }).catch(function (err) {
+      console.error('Applications load error:', err);
+      document.getElementById('applicationsTableBody').innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--error-500);padding:32px;">Xatolik: ' + (err.message || 'Nomalum') + '</td></tr>';
+    });
+  })();
+  </script>
 </body>
 </html>
