@@ -4,8 +4,8 @@
  */
 
 (function () {
-  var API_BASE = 'https://api.ngo.uz/v1/public/';
-  var MEDIA_BASE = 'https://api.ngo.uz/media.php?path=';
+  var API_BASE = 'https://ngo-api-proxy.sarvsop.workers.dev/v1/public/';
+  var MEDIA_BASE = 'https://ngo-api-proxy.sarvsop.workers.dev/media.php?path=';
 
   function fetchJSON(kind, cb, extraParams) {
     var url = API_BASE + kind + '?limit=100&_=' + Date.now();

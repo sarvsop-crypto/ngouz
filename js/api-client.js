@@ -6,7 +6,7 @@
  */
 
 (function () {
-  var API_BASE = 'https://api.ngo.uz/v1';
+  var API_BASE = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
   var TOKEN_KEY  = 'ngo_api_token';
   var USER_KEY   = 'ngo_api_user';
   var LOGIN_PAGE = 'admin-login.html';

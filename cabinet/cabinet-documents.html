@@ -178,7 +178,7 @@
         + '</tr>';
     }
 
-    NgoApi.get('https://api.ngo.uz/v1/public/documents?limit=100', { noAuth: true }).then(function (res) {
+    NgoApi.get('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/documents?limit=100', { noAuth: true }).then(function (res) {
       var items = res.items || res.data || [];
       var tbody = document.getElementById('documentsTableBody');
       if (!items.length) {

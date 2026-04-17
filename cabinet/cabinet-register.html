@@ -120,7 +120,7 @@
       if (pass.length < 12) { alert('Parol kamida 12 belgidan iborat bo\'lishi kerak.'); return; }
       var btn = this.querySelector('button[type="submit"]');
       btn.disabled = true; btn.textContent = 'Ro\'yxatdan o\'tilmoqda...';
-      fetch('https://api.ngo.uz/v1/auth/register', {
+      fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ full_name: name, org_name: org, email: email, password: pass })

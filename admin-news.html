@@ -381,7 +381,7 @@
       document.getElementById('fCoverImage').value = item.cover_image || '';
       var preview = document.getElementById('fCoverPreview');
       if (item.cover_image) {
-        preview.src = 'https://api.ngo.uz/media.php?path=' + encodeURIComponent(item.cover_image);
+        preview.src = 'https://ngo-api-proxy.sarvsop.workers.dev/media.php?path=' + encodeURIComponent(item.cover_image);
         preview.style.display = 'block';
       } else {
         preview.style.display = 'none';

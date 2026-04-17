@@ -177,7 +177,7 @@ document.getElementById('antiCorruptionForm').addEventListener('submit', functio
   var body  = (org ? "Tashkilot: " + org + "\n\n" : "") + message;
   var btn = this.querySelector('button[type="submit"]');
   btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
-  fetch('https://api.ngo.uz/v1/public/contact', {
+  fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ full_name: name, phone: phone, subject: 'Korrupsiyaga qarshi murojaat', body: body })
