@@ -240,15 +240,21 @@
       }).join('');
     }).catch(function () {});
 
-    // Region distribution table
+    // Region distribution table — map region DB codes to org region_codes
+    var regionCodeMap = {
+      'TSH': 'toshkent-sh', 'TOS': 'toshkent-v', 'AND': 'andijon', 'BUX': 'buxoro',
+      'FAR': 'fargona', 'JIZ': 'jizzax', 'XOR': 'xorazm', 'NAM': 'namangan',
+      'NAV': 'navoiy', 'QAS': 'qashqadaryo', 'QRK': 'karakalpakstan',
+      'SAM': 'samarqand', 'SIR': 'sirdaryo', 'SUR': 'surxondaryo'
+    };
     NgoApi.get('/public/regions').then(function (res) {
       var tbody = document.getElementById('dashboardRegionRows');
       if (!tbody) return;
       var regions = res.items || [];
       if (!regions.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Ma\'lumot yo\'q</td></tr>'; return; }
-      // Get org counts per region
       var promises = regions.map(function (r) {
-        return fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?region=' + r.code + '&limit=1')
+        var orgCode = regionCodeMap[r.code] || r.code.toLowerCase();
+        return fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?region=' + orgCode + '&limit=1')
           .then(function (resp) { return resp.json(); })
           .then(function (d) { return { code: r.code, name: r.name_uz, total: d.total || 0 }; });
       });
