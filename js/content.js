@@ -5,14 +5,36 @@
 
 (function () {
   var API_BASE = 'https://api.ngo.uz/v1/public/';
+  var MEDIA_BASE = 'https://api.ngo.uz/media.php?path=';
 
-  function fetchJSON(kind, cb) {
-    fetch(API_BASE + kind + '?limit=100&_=' + Date.now())
-      .then(function (r) { return r.ok ? r.json() : { items: [] }; })
+  function fetchJSON(kind, cb, extraParams) {
+    var url = API_BASE + kind + '?limit=100&_=' + Date.now();
+    if (extraParams) url += '&' + extraParams;
+    fetch(url)
+      .then(function (r) { return r.ok ? r.json() : { items: [], total: 0 }; })
       .then(function (data) {
-        cb(data && data.items ? data.items : (Array.isArray(data) ? data : []));
+        cb(data && data.items ? data.items : (Array.isArray(data) ? data : []), data);
       })
-      .catch(function () { cb([]); });
+      .catch(function () { cb([], { total: 0 }); });
+  }
+
+  function fetchOne(kind, id, cb) {
+    fetch(API_BASE + kind + '/' + encodeURIComponent(id) + '?_=' + Date.now())
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (data) { cb(data); })
+      .catch(function () { cb(null); });
+  }
+
+  function mediaUrl(path) {
+    if (!path) return '';
+    if (path.indexOf('http') === 0) return path;
+    return MEDIA_BASE + encodeURIComponent(path);
+  }
+
+  function coverStyle(item) {
+    var img = mediaUrl(item.cover_image);
+    if (img) return 'background-image:url(\'' + img + '\');background-size:cover;background-position:center';
+    return 'background:' + coverGradient(item.category || item.status || '');
   }
 
   var UZ_MONTHS = ['Yan','Feb','Mar','Apr','May','Iyn','Iyl','Avg','Sen','Okt','Noy','Dek'];
@@ -42,25 +64,30 @@
   }
 
   /* ── News ─────────────────────────────────────────────────── */
+  function newsCardHTML(n) {
+    var url = 'news-detail.html?id=' + n.id;
+    var cat = n.category || '';
+    var archiveBadge = (n.is_archive === '1' || n.is_archive === 1)
+      ? '<span class="gov-news-archive-badge">Arxiv</span>' : '';
+    return '<article class="gov-news-card" data-cat="' + cat + '">'
+      + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
+      + '<div class="gov-news-img-inner" style="' + coverStyle(n) + '"></div>'
+      + '<div class="gov-news-overlay"></div>' + archiveBadge + '</a>'
+      + '<div class="gov-news-content">'
+      + '<div class="gov-news-header">'
+      + '<div class="gov-news-date"><b>' + dateDay(n.date) + '</b><span>' + dateMonthAbbr(n.date) + '</span></div>'
+      + '<a href="' + url + '" class="gov-news-title">' + n.title + '</a>'
+      + '</div>'
+      + '<a href="' + url + '" class="gov-news-excerpt">' + n.excerpt + '</a>'
+      + '<div class="gov-news-footer"><span>' + fmtDate(n.date) + '</span><a href="' + url + '">' + cat + '</a></div>'
+      + '</div></article>';
+  }
+
   function renderNewsHome(items, container) {
     var latest = items.slice(0, 3);
     if (!latest.length) return;
     var html = '<div class="gov-news-grid">';
-    latest.forEach(function (n) {
-      var url = 'news-detail.html?id=' + n.id;
-      var cat = n.category || '';
-      html += '<article class="gov-news-card" data-cat="' + cat + '">'
-        + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
-        + '<div class="gov-news-img-inner"></div><div class="gov-news-overlay"></div></a>'
-        + '<div class="gov-news-content">'
-        + '<div class="gov-news-header">'
-        + '<div class="gov-news-date"><b>' + dateDay(n.date) + '</b><span>' + dateMonthAbbr(n.date) + '</span></div>'
-        + '<a href="' + url + '" class="gov-news-title">' + n.title + '</a>'
-        + '</div>'
-        + '<a href="' + url + '" class="gov-news-excerpt">' + n.excerpt + '</a>'
-        + '<div class="gov-news-footer"><span>' + fmtDate(n.date) + '</span><a href="' + url + '">' + cat + '</a></div>'
-        + '</div></article>';
-    });
+    latest.forEach(function (n) { html += newsCardHTML(n); });
     html += '</div>';
     container.innerHTML = html;
   }
@@ -68,27 +95,7 @@
   function renderNewsPage(items, container) {
     if (!items.length) { container.innerHTML = '<p style="color:rgba(180,220,255,.5)">Yangiliklar topilmadi.</p>'; return; }
     var html = '<div class="gov-news-grid">';
-    items.forEach(function (n) {
-      var url = 'news-detail.html?id=' + n.id;
-      var cat = n.category || '';
-      html += '<article class="gov-news-card" data-cat="' + cat + '">'
-        + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
-        + '<div class="gov-news-img-inner"></div>'
-        + '<div class="gov-news-overlay"></div>'
-        + '</a>'
-        + '<div class="gov-news-content">'
-        + '<div class="gov-news-header">'
-        + '<div class="gov-news-date"><b>' + dateDay(n.date) + '</b><span>' + dateMonthAbbr(n.date) + '</span></div>'
-        + '<a href="' + url + '" class="gov-news-title">' + n.title + '</a>'
-        + '</div>'
-        + '<a href="' + url + '" class="gov-news-excerpt">' + n.excerpt + '</a>'
-        + '<div class="gov-news-footer">'
-        + '<span>' + fmtDate(n.date) + '</span>'
-        + '<a href="' + url + '">' + cat + '</a>'
-        + '</div>'
-        + '</div>'
-        + '</article>';
-    });
+    items.forEach(function (n) { html += newsCardHTML(n); });
     html += '</div>';
     container.innerHTML = html;
   }
@@ -148,7 +155,7 @@
       + '</div>'
       + '<h1 class="detail-title">' + item.title + '</h1>'
       + '<p class="detail-meta"><span>' + fmtDate(item.date) + '</span><span class="detail-meta-sep">/</span><a href="news.html">' + cat + '</a></p>'
-      + '<div class="detail-cover" style="background:' + coverGradient(cat) + '"></div>'
+      + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
       + '<div class="detail-body">' + bodyToHTML(item.body || item.excerpt) + '</div>'
       + '<div class="detail-tags"><a href="news.html" class="detail-tag">' + cat + '</a></div>'
       + shareButtons(pageUrl, item.title)
@@ -158,26 +165,31 @@
   }
 
   /* ── Events ───────────────────────────────────────────────── */
+  function eventCardHTML(e) {
+    var url = 'event-detail.html?id=' + e.id;
+    var cat = e.status || 'past';
+    var label = cat === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
+    var archiveBadge = (e.is_archive === '1' || e.is_archive === 1)
+      ? '<span class="gov-news-archive-badge">Arxiv</span>' : '';
+    return '<article class="gov-news-card" data-cat="' + cat + '">'
+      + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
+      + '<div class="gov-news-img-inner" style="' + coverStyle(e) + '"></div>'
+      + '<div class="gov-news-overlay"></div>' + archiveBadge + '</a>'
+      + '<div class="gov-news-content">'
+      + '<div class="gov-news-header">'
+      + '<div class="gov-news-date"><b>' + dateDay(e.date) + '</b><span>' + dateMonthAbbr(e.date) + '</span></div>'
+      + '<a href="' + url + '" class="gov-news-title">' + e.title + '</a>'
+      + '</div>'
+      + '<a href="' + url + '" class="gov-news-excerpt">' + (e.description || '') + '</a>'
+      + '<div class="gov-news-footer"><span>' + (e.dateLabel || fmtDate(e.date)) + '</span><a href="' + url + '">' + label + '</a></div>'
+      + '</div></article>';
+  }
+
   function renderEventsHome(items, container) {
     var latest = items.slice(0, 3);
     if (!latest.length) return;
     var html = '<div class="gov-news-grid">';
-    latest.forEach(function (e) {
-      var url = 'event-detail.html?id=' + e.id;
-      var cat = e.status || 'past';
-      var label = cat === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
-      html += '<article class="gov-news-card" data-cat="' + cat + '">'
-        + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
-        + '<div class="gov-news-img-inner"></div><div class="gov-news-overlay"></div></a>'
-        + '<div class="gov-news-content">'
-        + '<div class="gov-news-header">'
-        + '<div class="gov-news-date"><b>' + dateDay(e.date) + '</b><span>' + dateMonthAbbr(e.date) + '</span></div>'
-        + '<a href="' + url + '" class="gov-news-title">' + e.title + '</a>'
-        + '</div>'
-        + '<a href="' + url + '" class="gov-news-excerpt">' + e.description + '</a>'
-        + '<div class="gov-news-footer"><span>' + e.dateLabel + '</span><a href="' + url + '">' + label + '</a></div>'
-        + '</div></article>';
-    });
+    latest.forEach(function (e) { html += eventCardHTML(e); });
     html += '</div>';
     container.innerHTML = html;
   }
@@ -186,29 +198,6 @@
     if (!items.length) { container.innerHTML = '<p>Tadbirlar topilmadi.</p>'; return; }
     var upcoming = items.filter(function (e) { return e.status === 'upcoming'; });
     var past     = items.filter(function (e) { return e.status === 'past'; });
-
-    function eventCardHTML(e) {
-      var url = 'event-detail.html?id=' + e.id;
-      var cat = e.status || 'past';
-      var label = cat === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
-      return '<article class="gov-news-card" data-cat="' + cat + '">'
-        + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
-        + '<div class="gov-news-img-inner"></div>'
-        + '<div class="gov-news-overlay"></div>'
-        + '</a>'
-        + '<div class="gov-news-content">'
-        + '<div class="gov-news-header">'
-        + '<div class="gov-news-date"><b>' + dateDay(e.date) + '</b><span>' + dateMonthAbbr(e.date) + '</span></div>'
-        + '<a href="' + url + '" class="gov-news-title">' + e.title + '</a>'
-        + '</div>'
-        + '<a href="' + url + '" class="gov-news-excerpt">' + e.description + '</a>'
-        + '<div class="gov-news-footer">'
-        + '<span>' + e.dateLabel + '</span>'
-        + '<a href="' + url + '">' + label + '</a>'
-        + '</div>'
-        + '</div>'
-        + '</article>';
-    }
 
     function sectionHTML(arr, label) {
       if (!arr.length) return '';
@@ -255,7 +244,7 @@
       + '</div>'
       + '<h1 class="detail-title">' + item.title + '</h1>'
       + '<p class="detail-meta"><span>' + item.dateLabel + '</span><span class="detail-meta-sep">/</span><a href="events.html">' + statusLabel + '</a></p>'
-      + '<div class="detail-cover" style="background:' + coverGradient(statusKey) + '"></div>'
+      + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
       + '<div class="detail-body">' + body + '</div>'
       + '<div class="detail-tags"><a href="events.html" class="detail-tag">Tadbir</a><a href="events.html" class="detail-tag">' + statusLabel + '</a></div>'
       + shareButtons(pageUrl, item.title)
@@ -282,41 +271,79 @@
     container.innerHTML = html;
   }
 
+  /* ── Archive tab support ──────────────────────────────────── */
+  function renderArchiveTabs(container, kind, renderFn) {
+    var tabBar = document.createElement('div');
+    tabBar.className = 'archive-tab-bar';
+    tabBar.innerHTML = '<button class="archive-tab active" data-archive="0">Joriy</button>'
+      + '<button class="archive-tab" data-archive="1">Arxiv (2015–2019)</button>';
+    container.parentNode.insertBefore(tabBar, container);
+
+    var btns = tabBar.querySelectorAll('.archive-tab');
+    function load(archive) {
+      container.innerHTML = '<p style="color:rgba(180,220,255,.5)">Yuklanmoqda...</p>';
+      fetchJSON(kind, function (items) { renderFn(items, container); }, 'archive=' + archive);
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].classList.toggle('active', btns[i].getAttribute('data-archive') === archive);
+      }
+    }
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener('click', function () { load(this.getAttribute('data-archive')); });
+    }
+    load('0');
+  }
+
   /* ── Auto-init on page load ───────────────────────────────── */
   function init() {
-    // Home page — news
+    // Home page — news (current only)
     var newsHomeEl = document.getElementById('dynamic-news-home');
-    if (newsHomeEl) fetchJSON('news', function (items) { renderNewsHome(items, newsHomeEl); });
+    if (newsHomeEl) fetchJSON('news', function (items) { renderNewsHome(items, newsHomeEl); }, 'archive=0');
 
-    // Home page — events
+    // Home page — events (current only)
     var eventsHomeEl = document.getElementById('dynamic-events-home');
-    if (eventsHomeEl) fetchJSON('events', function (items) { renderEventsHome(items, eventsHomeEl); });
+    if (eventsHomeEl) fetchJSON('events', function (items) { renderEventsHome(items, eventsHomeEl); }, 'archive=0');
 
-    // news.html full page
+    // news.html full page — with archive tabs
     var newsPageEl = document.getElementById('dynamic-news-page');
-    if (newsPageEl) fetchJSON('news', function (items) { renderNewsPage(items, newsPageEl); });
+    if (newsPageEl) renderArchiveTabs(newsPageEl, 'news', renderNewsPage);
 
-    // events.html full page
+    // events.html full page — with archive tabs
     var eventsPageEl = document.getElementById('dynamic-events-page');
-    if (eventsPageEl) fetchJSON('events', function (items) { renderEventsPage(items, eventsPageEl); });
+    if (eventsPageEl) renderArchiveTabs(eventsPageEl, 'events', renderEventsPage);
 
-    // news-detail.html
+    // news-detail.html — use single-item API
     var newsDetailEl = document.getElementById('detail-news-content');
     if (newsDetailEl) {
       var newsId = new URLSearchParams(window.location.search).get('id');
-      fetchJSON('news', function (items) { renderNewsDetail(items, newsDetailEl, newsId); });
+      if (newsId) {
+        fetchOne('news', newsId, function (item) {
+          if (item) {
+            fetchJSON('news', function (others) { renderNewsDetail([item].concat(others), newsDetailEl, newsId); });
+          } else {
+            newsDetailEl.innerHTML = '<p>Yangilik topilmadi.</p>';
+          }
+        });
+      }
     }
 
-    // event-detail.html
+    // event-detail.html — use single-item API
     var eventDetailEl = document.getElementById('detail-event-content');
     if (eventDetailEl) {
       var eventId = new URLSearchParams(window.location.search).get('id');
-      fetchJSON('events', function (items) { renderEventDetail(items, eventDetailEl, eventId); });
+      if (eventId) {
+        fetchOne('events', eventId, function (item) {
+          if (item) {
+            fetchJSON('events', function (others) { renderEventDetail([item].concat(others), eventDetailEl, eventId); });
+          } else {
+            eventDetailEl.innerHTML = '<p>Tadbir topilmadi.</p>';
+          }
+        });
+      }
     }
 
-    // projects.html grants
+    // projects.html grants — with archive tabs
     var grantsEl = document.getElementById('dynamic-grants-page');
-    if (grantsEl) fetchJSON('grants', function (items) { renderGrantsPage(items, grantsEl); });
+    if (grantsEl) renderArchiveTabs(grantsEl, 'grants', renderGrantsPage);
   }
 
   if (document.readyState === 'loading') {

@@ -1903,6 +1903,42 @@ body.a11y-grayscale { filter: grayscale(1); }
 .gov-news-card[data-cat="E'LON"]   .gov-news-img-inner { background: linear-gradient(135deg,#5c3a1a 0%,#d97706 100%); }
 .gov-news-card[data-cat="PRESS"]   .gov-news-img-inner { background: linear-gradient(135deg,#1a4a5c 0%,#0e7490 100%); }
 
+.gov-news-archive-badge {
+  position: absolute;
+  top: 10px; left: 10px;
+  background: rgba(2,51,71,.82);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: 3px 8px;
+  border-radius: 3px;
+  z-index: 2;
+}
+.archive-tab-bar {
+  display: flex;
+  gap: 0;
+  margin-bottom: 24px;
+  border-bottom: 2px solid var(--neutral-200, #e4e7e7);
+}
+.archive-tab {
+  padding: 10px 22px;
+  font-size: 15px;
+  font-weight: 700;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  color: var(--neutral-500, #798384);
+  transition: color .15s, border-color .15s;
+}
+.archive-tab:hover { color: var(--neutral-900, #171a1b); }
+.archive-tab.active {
+  color: var(--green-500, #0e7490);
+  border-bottom-color: var(--green-500, #0e7490);
+}
 .gov-news-overlay {
   position: absolute; inset: 0;
   background: #000; opacity: .4;
@@ -2110,6 +2146,8 @@ body.a11y-grayscale { filter: grayscale(1); }
   margin: 0 auto 2rem;
   border-radius: 4px;
   background: linear-gradient(135deg, #1a5c35 0%, var(--green-500, #0e7490) 100%);
+  background-size: cover;
+  background-position: center;
 }
 @media (max-width: 48rem) { .detail-cover { height: 13rem; } }
 
