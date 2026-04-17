@@ -157,36 +157,52 @@
   (function () {
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
+    var regionCodeMap = {
+      'TSH': 'toshkent-sh', 'TOS': 'toshkent-v', 'AND': 'andijon', 'BUX': 'buxoro',
+      'FAR': 'fargona', 'JIZ': 'jizzax', 'XOR': 'xorazm', 'NAM': 'namangan',
+      'NAV': 'navoiy', 'QAS': 'qashqadaryo', 'QRK': 'karakalpakstan',
+      'SAM': 'samarqand', 'SIR': 'sirdaryo', 'SUR': 'surxondaryo'
+    };
+
     NgoApi.get('/public/regions')
       .then(function (res) {
-        var regions = res.items || res.data || res.regions || [];
+        var regions = res.items || [];
         var tbody = document.getElementById('regionsTableRows');
         if (!regions.length) {
-          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--grey-400);">Hudud topilmadi</td></tr>';
+          tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Hudud topilmadi</td></tr>';
           return;
         }
-        var totalNnt = 0;
-        regions.forEach(function (r) { totalNnt += (r.ngo_count || r.nnt_count || 0); });
+        tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Yuklanmoqda...</td></tr>';
 
-        tbody.innerHTML = regions.map(function (r) {
-          var count = r.ngo_count || r.nnt_count || 0;
-          var active = r.active_count || count;
-          var newCount = r.new_count || 0;
-          var share = totalNnt ? ((count / totalNnt) * 100).toFixed(1) + '%' : '—';
-          return '<tr>' +
-            '<td>' + esc(r.code || r.id) + '</td>' +
-            '<td style="font-weight:500;">' + esc(r.name || r.title) + '</td>' +
-            '<td>' + count + '</td>' +
-            '<td>' + active + '</td>' +
-            '<td>' + newCount + '</td>' +
-            '<td>' + share + '</td>' +
-            '<td><a href="admin-registry.html?region=' + encodeURIComponent(r.id || r.code || '') + '" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i></a></td>' +
-          '</tr>';
-        }).join('');
+        var promises = regions.map(function (r) {
+          var orgCode = regionCodeMap[r.code] || r.code.toLowerCase();
+          return fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?region=' + orgCode + '&limit=1')
+            .then(function (resp) { return resp.json(); })
+            .then(function (d) { return { code: r.code, name: r.name_uz, total: d.total || 0, orgCode: orgCode }; });
+        });
+
+        Promise.all(promises).then(function (data) {
+          var grandTotal = data.reduce(function (s, d) { return s + d.total; }, 0);
+
+          var kpiCards = document.querySelectorAll('.card__value');
+          if (kpiCards[1]) kpiCards[1].textContent = grandTotal;
+
+          tbody.innerHTML = data.map(function (d) {
+            var pct = grandTotal ? ((d.total / grandTotal) * 100).toFixed(1) + '%' : '—';
+            return '<tr>' +
+              '<td>' + esc(d.code) + '</td>' +
+              '<td style="font-weight:500;">' + esc(d.name) + '</td>' +
+              '<td>' + d.total + '</td>' +
+              '<td>' + d.total + '</td>' +
+              '<td>—</td>' +
+              '<td>' + pct + '</td>' +
+              '<td><a href="admin-registry.html?q=' + encodeURIComponent(d.orgCode) + '" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i></a></td>' +
+            '</tr>';
+          }).join('');
+        });
       })
       .catch(function (err) {
-        console.error('Regions fetch error:', err);
-        document.getElementById('regionsTableRows').innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--error-600);">Xatolik yuz berdi</td></tr>';
+        document.getElementById('regionsTableRows').innerHTML = '<tr><td colspan="7" class="empty-state">Xatolik yuz berdi</td></tr>';
       });
   })();
   </script>
