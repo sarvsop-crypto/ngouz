@@ -94,20 +94,20 @@
 
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-buildings"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami NNTlar</p><p class="card__value">247</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 12.4%</span></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-newspaper"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Yangiliklar</p><p class="card__value" id="kpiNews">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value">94</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 8.1%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-calendar-blank"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Tadbirlar</p><p class="card__value" id="kpiEvents">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Ko&rsquo;rib chiqilmoqda</p><p class="card__value">61</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 3.2%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-chat-dots"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Yangi xabarlar</p><p class="card__value" id="kpiContacts">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-warning"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Qaytarilgan</p><p class="card__value">18</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 5.0%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--info"><i class="ph ph-files"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Hujjatlar</p><p class="card__value" id="kpiDocs">—</p></div></div>
         </div>
       </div>
 
@@ -222,5 +222,27 @@
   <script src="js/api-client.js"></script>
   <script src="js/admin-boot.js"></script>
   <script src="js/pacta-app.js"></script>
+  <script>
+  (function () {
+    NgoApi.get('/admin/stats').then(function (s) {
+      document.getElementById('kpiNews').textContent    = s.news || 0;
+      document.getElementById('kpiEvents').textContent  = s.events || 0;
+      document.getElementById('kpiContacts').textContent = s.contacts_new || 0;
+      document.getElementById('kpiDocs').textContent    = s.documents || 0;
+    }).catch(function () {});
+
+    // Load recent contact messages for the table
+    NgoApi.get('/admin/contact-messages?limit=5&status=new').then(function (res) {
+      var tbody = document.getElementById('dashboardRecentRows');
+      if (!tbody) return;
+      var items = res.items || [];
+      if (!items.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:#9ca3af">Yangi xabar yo\'q</td></tr>'; return; }
+      tbody.innerHTML = items.map(function (m) {
+        return '<tr><td>#' + m.id + '</td><td>' + (m.full_name || '—') + '</td><td>' + (m.email || m.phone || '—') + '</td><td>' + (m.subject || '—') + '</td>'
+          + '<td><span class="badge badge--warning">Yangi</span></td><td>' + (m.created_at || '').slice(0, 10) + '</td></tr>';
+      }).join('');
+    }).catch(function () {});
+  })();
+  </script>
 </body>
 </html>
