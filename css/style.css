@@ -2954,3 +2954,16 @@ body.a11y-grayscale { filter: grayscale(1); }
 .contact-action-card:hover{ transform: scale(1.05); box-shadow: 0 8px 24px rgba(0,180,198,.13);     z-index: 2; }
 .infographic-card:hover   { transform: scale(1.05); box-shadow: 0 8px 24px rgba(0,180,198,.12);     z-index: 2; }
 .research-card:hover      { transform: scale(1.05); box-shadow: 0 8px 24px rgba(0,0,0,.10);         z-index: 2; }
+
+/* ── Utility classes extracted from inline styles (content.js) ── */
+.text-muted-light { color: rgba(180,220,255,.5); }
+.loading-text { color: rgba(180,220,255,.5); }
+.grant-amount { font-size: 13px; color: #00b4d8; margin-top: 8px; }
+.grant-deadline { font-size: 13px; color: rgba(180,220,255,.6); margin-top: 4px; }
+.btn-inline { margin-top: 14px; display: inline-block; }
+.mt-section { margin-top: 2rem; }
+.mb-section { margin-bottom: 3rem; }
+.fw-600 { font-weight: 600; }
+.load-more-wrap { text-align: center; margin: 32px 0; }
+.load-more-count { font-size: 13px; color: var(--neutral-500); margin-top: 8px; }
+.search-empty { padding: 24px 0; color: #798384; }

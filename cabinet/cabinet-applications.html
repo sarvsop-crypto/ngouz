@@ -62,9 +62,9 @@
       </div>
 
       <!-- Application steps - hidden until API data is loaded -->
-      <div id="appStepsSection" style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;display:none;">
-        <h2 style="font-size:16px;font-weight:600;margin:0 0 20px;">Ariza bosqichlari</h2>
-        <div style="text-align:center;color:var(--grey-400);font-size:13px;padding:16px 0;">Ariza ma'lumotlari yuklanmoqda...</div>
+      <div id="appStepsSection" class="app-steps-box">
+        <h2 class="app-steps-box__title">Ariza bosqichlari</h2>
+        <div class="text-dim" style="text-align:center;padding:16px 0;">Ariza ma'lumotlari yuklanmoqda...</div>
       </div>
 
       <section class="table-section">
@@ -72,7 +72,7 @@
         <table class="table">
           <thead><tr><th>Tadbir</th><th>Tavsif</th><th>Sana</th><th>Kim tomonidan</th><th>Holat</th></tr></thead>
           <tbody id="applicationsTableBody">
-            <tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:32px;">Yuklanmoqda...</td></tr>
+            <tr><td colspan="5" class="empty-state">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -111,7 +111,7 @@
     function renderRow(a) {
       var s = statusMap[a.status] || statusMap.pending;
       return '<tr>'
-        + '<td style="display:flex;align-items:center;gap:6px;"><i class="ph ph-clipboard-text"></i> ' + (a.org_name || 'Ariza') + '</td>'
+        + '<td class="flex-row-sm"><i class="ph ph-clipboard-text"></i> ' + (a.org_name || 'Ariza') + '</td>'
         + '<td>' + (a.review_note || a.status || '') + '</td>'
         + '<td>' + fmtDate(a.created_at) + '</td>'
         + '<td>\u2014</td>'
@@ -123,7 +123,7 @@
       var items = res.items || [];
       var tbody = document.getElementById('applicationsTableBody');
       if (!items.length) {
-        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:32px;">Arizalar topilmadi</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Arizalar topilmadi</td></tr>';
         return;
       }
       tbody.innerHTML = items.map(renderRow).join('');
@@ -147,7 +147,7 @@
       }
     }).catch(function (err) {
       console.error('Applications load error:', err);
-      document.getElementById('applicationsTableBody').innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--error-500);padding:32px;">Xatolik: ' + (err.message || 'Nomalum') + '</td></tr>';
+      document.getElementById('applicationsTableBody').innerHTML = '<tr><td colspan="5" class="empty-state" style="color:var(--error-500);">Xatolik: ' + (err.message || 'Nomalum') + '</td></tr>';
     });
   })();
   </script>

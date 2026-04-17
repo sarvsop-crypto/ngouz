@@ -57,11 +57,11 @@
         <div class="card"><div class="card__head"><div class="card__icon" style="background:var(--error-50);color:var(--error-600);"><i class="ph ph-x-circle"></i></div></div><div class="card__body"><div><p class="card__label">Qaytarilgan</p><p class="card__value">&mdash;</p></div></div></div>
       </div>
 
-      <div id="reportsRejAlert" style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:18px 20px;margin-bottom:16px;display:none;gap:12px;align-items:flex-start;">
-        <i class="ph ph-warning" style="color:var(--error-500);font-size:20px;flex-shrink:0;margin-top:1px;"></i>
+      <div id="reportsRejAlert" class="reports-rej-alert">
+        <i class="ph ph-warning reports-rej-alert__icon"></i>
         <div>
-          <div id="reportsRejTitle" style="font-weight:600;font-size:14px;color:var(--error-700);margin-bottom:4px;"></div>
-          <div id="reportsRejBody" style="font-size:13px;color:var(--error-600);"></div>
+          <div id="reportsRejTitle" class="reports-rej-alert__title"></div>
+          <div id="reportsRejBody" class="reports-rej-alert__body"></div>
         </div>
       </div>
 
@@ -79,7 +79,7 @@
             <tr><th>Hisobot nomi</th><th>Turi</th><th>Davr</th><th>Topshirilgan</th><th>Holat</th><th>Amal</th></tr>
           </thead>
           <tbody id="reportsTableBody">
-            <tr><td colspan="6" style="text-align:center;color:var(--grey-400);padding:32px;">Yuklanmoqda...</td></tr>
+            <tr><td colspan="6" class="empty-state">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -95,10 +95,10 @@
       </div>
       <div class="modal__body">
         <div style="display:grid;gap:14px;">
-          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Hisobot turi</label><select class="field__input"><option value="">Turini tanlang</option><option>Yillik faoliyat hisoboti</option><option>Moliyaviy hisobot</option><option>Choraklik hisobot</option><option>Boshqa</option></select></div>
-          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Davr</label><select class="field__input"><option>2026 &mdash; I chorak</option><option>2026 &mdash; Yillik</option><option>2025 &mdash; IV chorak</option><option>2025 &mdash; III chorak (qayta)</option></select></div>
-          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Fayl (PDF, DOCX &mdash; maks. 20 MB)</label><input type="file" class="field__input" accept=".pdf,.doc,.docx" /></div>
-          <div><label style="font-size:13px;font-weight:500;color:var(--grey-700);display:block;margin-bottom:5px;">Izoh (ixtiyoriy)</label><textarea class="field__input" rows="3" placeholder="Qo'shimcha ma'lumot..."></textarea></div>
+          <div><label class="form-label-sm">Hisobot turi</label><select class="field__input"><option value="">Turini tanlang</option><option>Yillik faoliyat hisoboti</option><option>Moliyaviy hisobot</option><option>Choraklik hisobot</option><option>Boshqa</option></select></div>
+          <div><label class="form-label-sm">Davr</label><select class="field__input"><option>2026 &mdash; I chorak</option><option>2026 &mdash; Yillik</option><option>2025 &mdash; IV chorak</option><option>2025 &mdash; III chorak (qayta)</option></select></div>
+          <div><label class="form-label-sm">Fayl (PDF, DOCX &mdash; maks. 20 MB)</label><input type="file" class="field__input" accept=".pdf,.doc,.docx" /></div>
+          <div><label class="form-label-sm">Izoh (ixtiyoriy)</label><textarea class="field__input" rows="3" placeholder="Qo'shimcha ma'lumot..."></textarea></div>
         </div>
       </div>
       <div class="modal__foot">
@@ -135,9 +135,9 @@
     }
 
     function fileIcon(path) {
-      if (!path) return '<i class="ph ph-file-text" style="color:var(--grey-400);vertical-align:middle;margin-right:6px;"></i>';
-      if (/\.pdf$/i.test(path)) return '<i class="ph ph-file-pdf" style="color:var(--error-500);vertical-align:middle;margin-right:6px;"></i>';
-      return '<i class="ph ph-file-text" style="color:var(--grey-400);vertical-align:middle;margin-right:6px;"></i>';
+      if (!path) return '<i class="ph ph-file-text file-icon-inline" style="color:var(--grey-400);"></i>';
+      if (/\.pdf$/i.test(path)) return '<i class="ph ph-file-pdf file-icon-inline" style="color:var(--error-500);"></i>';
+      return '<i class="ph ph-file-text file-icon-inline" style="color:var(--grey-400);"></i>';
     }
 
     function renderRow(r) {
@@ -147,7 +147,7 @@
         ? '<button type="button" class="btn btn--sm btn--primary" data-modal-open="uploadReportModal"><i class="ph ph-upload-simple"></i> Qayta yuklash</button>'
         : '<button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko\u2018rish</button>';
       return '<tr' + (isDanger ? ' class="table-row-danger"' : '') + '>'
-        + '<td>' + (isDanger ? '<i class="ph ph-warning" style="color:var(--error-500);vertical-align:middle;margin-right:6px;"></i>' : fileIcon(r.file_path)) + (r.title || '') + '</td>'
+        + '<td>' + (isDanger ? '<i class="ph ph-warning file-icon-inline" style="color:var(--error-500);"></i>' : fileIcon(r.file_path)) + (r.title || '') + '</td>'
         + '<td>' + (r.period || '') + '</td>'
         + '<td>' + (r.period || '') + '</td>'
         + '<td>' + fmtDate(r.created_at) + '</td>'
@@ -160,7 +160,7 @@
       var items = res.items || [];
       var tbody = document.getElementById('reportsTableBody');
       if (!items.length) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--grey-400);padding:32px;">Hisobotlar topilmadi</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Hisobotlar topilmadi</td></tr>';
         return;
       }
       tbody.innerHTML = items.map(renderRow).join('');
@@ -189,7 +189,7 @@
     }).catch(function (err) {
       console.error('Reports load error:', err);
       var tbody = document.getElementById('reportsTableBody');
-      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--error-500);padding:32px;">Xatolik: ' + (err.message || 'Nomalum xato') + '</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" class="empty-state" style="color:var(--error-500);">Xatolik: ' + (err.message || 'Nomalum xato') + '</td></tr>';
     });
 
     // Wire modal submit button

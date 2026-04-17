@@ -71,7 +71,7 @@
       </div>
 
       <div class="news-grid" id="eventsContainer">
-        <div style="grid-column:1/-1;text-align:center;color:var(--grey-400);padding:40px 0;">Yuklanmoqda...</div>
+        <div class="grid-empty-state">Yuklanmoqda...</div>
       </div>
     </main>
   </div>
@@ -99,7 +99,7 @@
         var items = res.items || [];
         var container = document.getElementById('eventsContainer');
         if (!items.length) {
-          container.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--grey-400);padding:40px 0;">Tadbirlar topilmadi</div>';
+          container.innerHTML = '<div class="grid-empty-state">Tadbirlar topilmadi</div>';
           return;
         }
 
@@ -132,7 +132,7 @@
         }).join('');
       })
       .catch(function () {
-        document.getElementById('eventsContainer').innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--error-600);padding:40px 0;">Xatolik yuz berdi</div>';
+        document.getElementById('eventsContainer').innerHTML = '<div class="grid-empty-state" style="color:var(--error-600);">Xatolik yuz berdi</div>';
       });
   })();
   </script>

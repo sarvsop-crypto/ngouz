@@ -102,7 +102,7 @@
           '<h2 class="notifications-panel__title">Bildirishnomalar</h2>' +
         '</div>' +
         '<div class="notifications-panel__list" id="notifPanelList">' +
-          '<div style="text-align:center;color:#94a3b8;padding:24px 0;font-size:13px;">Yuklanmoqda...</div>' +
+          '<div class="notif-empty">Yuklanmoqda...</div>' +
         '</div>' +
         '<div class="notifications-panel__footer">' +
           '<button type="button" class="notifications-panel__mark-read">Barchasini o' + RSQUO + 'qildi deb belgilash</button>' +
@@ -160,7 +160,7 @@
       var listEl = document.getElementById('notifPanelList');
       if (!listEl) return;
       if (!items.length) {
-        listEl.innerHTML = '<div style="text-align:center;color:#94a3b8;padding:24px 0;font-size:13px;">Bildirishnomalar yo\u2018q</div>';
+        listEl.innerHTML = '<div class="notif-empty">Bildirishnomalar yo\u2018q</div>';
         return;
       }
       listEl.innerHTML = items.map(function (n) {

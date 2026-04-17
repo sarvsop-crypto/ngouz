@@ -78,7 +78,7 @@
               </tr>
             </thead>
             <tbody id="appliedGrantsBody">
-              <tr><td colspan="5" style="text-align:center;color:var(--grey-400);">Yuklanmoqda...</td></tr>
+              <tr><td colspan="5" class="empty-state">Yuklanmoqda...</td></tr>
             </tbody>
           </table>
         </section>
@@ -109,7 +109,7 @@
               </tr>
             </thead>
             <tbody id="wonGrantsBody">
-              <tr><td colspan="6" style="text-align:center;color:var(--grey-400);">Yuklanmoqda...</td></tr>
+              <tr><td colspan="6" class="empty-state">Yuklanmoqda...</td></tr>
             </tbody>
           </table>
         </section>
@@ -154,7 +154,7 @@
         // Applied tab
         var tbody1 = document.getElementById('appliedGrantsBody');
         if (!applied.length) {
-          tbody1.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--grey-400);">Grant topilmadi</td></tr>';
+          tbody1.innerHTML = '<tr><td colspan="5" class="empty-state">Grant topilmadi</td></tr>';
         } else {
           tbody1.innerHTML = applied.map(function (g) {
             var statusMap = { 'pending': 'warning', 'approved': 'success', 'rejected': 'error', 'active': 'success', 'completed': 'pending', 'draft': 'neutral' };
@@ -164,7 +164,7 @@
             return '<tr>' +
               '<td style="font-weight:500;">' + esc(g.title || g.name || '—') + '</td>' +
               '<td>' + esc(g.donor || g.organization || '—') + '</td>' +
-              '<td style="font-weight:600;">' + esc(g.amount || g.budget || '—') + '</td>' +
+              '<td class="text-bold-sm">' + esc(g.amount || g.budget || '—') + '</td>' +
               '<td>' + fmtDate(g.deadline || g.created_at) + '</td>' +
               '<td><span class="badge badge--' + badge + '"><span class="badge__dot"></span>' + label + '</span></td>' +
             '</tr>';
@@ -174,7 +174,7 @@
         // Won tab
         var tbody2 = document.getElementById('wonGrantsBody');
         if (!won.length) {
-          tbody2.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--grey-400);">Erishilgan grant topilmadi</td></tr>';
+          tbody2.innerHTML = '<tr><td colspan="6" class="empty-state">Erishilgan grant topilmadi</td></tr>';
         } else {
           tbody2.innerHTML = won.map(function (g) {
             var badge = g.status === 'completed' ? 'pending' : 'success';
@@ -182,7 +182,7 @@
             return '<tr>' +
               '<td style="font-weight:500;">' + esc(g.title || g.name || '—') + '</td>' +
               '<td>' + esc(g.donor || g.organization || '—') + '</td>' +
-              '<td style="font-weight:600;">' + esc(g.amount || g.budget || '—') + '</td>' +
+              '<td class="text-bold-sm">' + esc(g.amount || g.budget || '—') + '</td>' +
               '<td>' + fmtDate(g.start_date || g.created_at) + '</td>' +
               '<td>' + fmtDate(g.end_date || g.deadline) + '</td>' +
               '<td><span class="badge badge--' + badge + '"><span class="badge__dot"></span>' + label + '</span></td>' +

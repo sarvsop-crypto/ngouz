@@ -93,7 +93,7 @@
   }
 
   function renderNewsPage(items, container) {
-    if (!items.length) { container.innerHTML = '<p style="color:rgba(180,220,255,.5)">Yangiliklar topilmadi.</p>'; return; }
+    if (!items.length) { container.innerHTML = '<p class="text-muted-light">Yangiliklar topilmadi.</p>'; return; }
     var html = '<div class="gov-news-grid">';
     items.forEach(function (n) { html += newsCardHTML(n); });
     html += '</div>';
@@ -202,7 +202,7 @@
     function sectionHTML(arr, label) {
       if (!arr.length) return '';
       return '<h2 class="gov-news-section-label">' + label + '</h2>'
-        + '<div class="gov-news-grid" style="margin-bottom:3rem">'
+        + '<div class="gov-news-grid mb-section">'
         + arr.map(eventCardHTML).join('')
         + '</div>';
     }
@@ -255,16 +255,16 @@
 
   /* ── Grants ───────────────────────────────────────────────── */
   function renderGrantsPage(items, container) {
-    if (!items.length) { container.innerHTML = '<p style="color:rgba(180,220,255,.5)">Faol grant yoki tanlov mavjud emas.</p>'; return; }
+    if (!items.length) { container.innerHTML = '<p class="text-muted-light">Faol grant yoki tanlov mavjud emas.</p>'; return; }
     var html = '<div class="cards">';
     items.forEach(function (g) {
       html += '<article class="card">'
         + '<span class="tag">' + g.category + (g.status === 'active' ? ' · Faol' : ' · Yopilgan') + '</span>'
         + '<h3>' + g.title + '</h3>'
         + '<p>' + g.description + '</p>'
-        + (g.amount ? '<p style="font-size:13px;color:#00b4d8;margin-top:8px">Miqdor: ' + g.amount + '</p>' : '')
-        + (g.deadlineLabel ? '<p style="font-size:13px;color:rgba(180,220,255,.6);margin-top:4px">Muddat: ' + g.deadlineLabel + '</p>' : '')
-        + '<a class="btn" href="service-request.html" style="margin-top:14px;display:inline-block">Ariza topshirish</a>'
+        + (g.amount ? '<p class="grant-amount">Miqdor: ' + g.amount + '</p>' : '')
+        + (g.deadlineLabel ? '<p class="grant-deadline">Muddat: ' + g.deadlineLabel + '</p>' : '')
+        + '<a class="btn btn-inline" href="service-request.html">Ariza topshirish</a>'
         + '</article>';
     });
     html += '</div>';
@@ -293,12 +293,12 @@
       var arr = byCat[cat];
       if (!arr || !arr.length) return;
       var label = DOC_CATEGORY_LABELS[cat] || cat;
-      html += '<h2 class="section-title" style="margin-top:2rem">' + label + '</h2>';
+      html += '<h2 class="section-title mt-section">' + label + '</h2>';
       html += '<div class="doc-table">';
       html += '<div class="doc-row head"><span>Hujjat nomi</span><span>Toifa</span><span>Sana</span></div>';
       arr.forEach(function (d) {
         html += '<div class="doc-row">'
-          + '<a href="news-detail.html?id=' + d.id + '&type=documents" style="font-weight:600">' + d.title + '</a>'
+          + '<a href="news-detail.html?id=' + d.id + '&type=documents" class="fw-600">' + d.title + '</a>'
           + '<span>' + label + '</span>'
           + '<span>' + fmtDate(d.date) + '</span>'
           + '</div>';
@@ -341,9 +341,9 @@
 
           if (!loadMoreBtn) {
             loadMoreBtn = document.createElement('div');
-            loadMoreBtn.style.cssText = 'text-align:center;margin:32px 0';
+            loadMoreBtn.className = 'load-more-wrap';
             loadMoreBtn.innerHTML = '<button class="btn" id="loadMoreBtn">Ko\'proq ko\'rish</button>'
-              + '<p style="font-size:13px;color:var(--neutral-500);margin-top:8px" id="loadMoreCount"></p>';
+              + '<p class="load-more-count" id="loadMoreCount"></p>';
             container.appendChild(loadMoreBtn);
             loadMoreBtn.querySelector('#loadMoreBtn').addEventListener('click', loadPage);
           }
@@ -361,7 +361,7 @@
         });
     }
 
-    container.innerHTML = '<p style="color:rgba(180,220,255,.5)">Yuklanmoqda...</p>';
+    container.innerHTML = '<p class="loading-text">Yuklanmoqda...</p>';
     loadPage();
   }
 
@@ -494,11 +494,11 @@
           if (matched.length) {
             renderNewsPage(matched, searchResultsEl);
           } else {
-            searchResultsEl.innerHTML = '<p style="padding:24px 0;color:#798384">\"' + query + '\" bo\'yicha hech narsa topilmadi.</p>';
+            searchResultsEl.innerHTML = '<p class="search-empty">\"' + query + '\" bo\'yicha hech narsa topilmadi.</p>';
           }
         });
       } else {
-        searchResultsEl.innerHTML = '<p style="padding:24px 0;color:#798384">Qidiruv so\'rovi kiritilmagan.</p>';
+        searchResultsEl.innerHTML = '<p class="search-empty">Qidiruv so\'rovi kiritilmagan.</p>';
       }
     }
 

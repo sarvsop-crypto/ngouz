@@ -190,7 +190,7 @@
       '</div>' +
       '<div class="chart-donut__legend">' +
         donutData.map(function (part) {
-          return '<span class="chart-donut__legend-item"><span class="chart-donut__legend-dot" style="background:' + esc(part.color) + ';"></span> ' + esc(part.label) + ': ' + esc(part.value) + '</span>';
+          return '<span class="chart-donut__legend-item"><span class="chart-donut__legend-dot legend-dot-dynamic" style="--dot-color:' + esc(part.color) + ';"></span> ' + esc(part.label) + ': ' + esc(part.value) + '</span>';
         }).join('') +
       '</div>';
   }
@@ -568,7 +568,7 @@
       '</div>' +
       '<div class="chart-donut__legend">' +
         sectors.map(function (s) {
-          return '<span class="chart-donut__legend-item"><span class="chart-donut__legend-dot" style="background:' + esc(s.color) + '"></span> ' + esc(s.label) + ': ' + esc(s.value) + '</span>';
+          return '<span class="chart-donut__legend-item"><span class="chart-donut__legend-dot legend-dot-dynamic" style="--dot-color:' + esc(s.color) + '"></span> ' + esc(s.label) + ': ' + esc(s.value) + '</span>';
         }).join('') +
       '</div>';
   }
@@ -598,11 +598,11 @@
 
       regionMount.innerHTML = regions.map(function (r) {
         return '<tr>' +
-          '<td style="color:#64748b;font-variant-numeric:tabular-nums;">' + esc(r.code) + '</td>' +
+          '<td class="cell-code">' + esc(r.code) + '</td>' +
           '<th scope="row">' + esc(r.name) + '</th>' +
           '<td>' + esc(r.total) + '</td>' +
-          '<td><span style="color:#059669;font-weight:600;">' + esc(r.active) + '</span></td>' +
-          '<td><span style="color:#94a3b8;">' + esc(r.inactive) + '</span></td>' +
+          '<td><span class="cell-active">' + esc(r.active) + '</span></td>' +
+          '<td><span class="cell-inactive">' + esc(r.inactive) + '</span></td>' +
           '<td>' + esc(r.fresh) + '</td>' +
           '<td>' +
             '<div class="u-bar-row">' +
@@ -631,13 +631,13 @@
       ];
 
       sectorMount.innerHTML = sectors.map(function (s) {
-        var trendColor = s.up ? '#059669' : '#dc2626';
+        var trendClass = s.up ? 'trend-up' : 'trend-down';
         var trendIcon = s.up ? 'ph-arrow-up-right' : 'ph-arrow-down-right';
         return '<tr>' +
           '<th scope="row">' + esc(s.name) + '</th>' +
           '<td><strong>' + esc(s.count) + '</strong></td>' +
           '<td>' + esc(s.share) + '</td>' +
-          '<td><span style="color:' + trendColor + ';font-weight:600;display:inline-flex;align-items:center;gap:3px;"><i class="ph ' + trendIcon + '"></i> ' + esc(s.trend) + '</span></td>' +
+          '<td><span class="trend-indicator ' + trendClass + '"><i class="ph ' + trendIcon + '"></i> ' + esc(s.trend) + '</span></td>' +
         '</tr>';
       }).join('');
     }
@@ -679,10 +679,10 @@
 
     mount.innerHTML = regions.map(function (r) {
       return '<tr>' +
-        '<td style="color:#64748b;font-variant-numeric:tabular-nums;font-weight:600;">' + esc(r.code) + '</td>' +
+        '<td class="cell-code-bold">' + esc(r.code) + '</td>' +
         '<th scope="row">' + esc(r.name) + '</th>' +
         '<td><strong>' + esc(r.total) + '</strong></td>' +
-        '<td><span style="color:#059669;font-weight:600;">' + esc(r.active) + '</span></td>' +
+        '<td><span class="cell-active">' + esc(r.active) + '</span></td>' +
         '<td>' + esc(r.fresh) + '</td>' +
         '<td>' +
           '<div class="u-bar-row">' +
@@ -734,7 +734,7 @@
       var s = statusMeta(d.status);
       return '<tr>' +
         '<td><input type="checkbox" /></td>' +
-        '<th scope="row"><span style="display:inline-flex;align-items:center;gap:6px;"><i class="ph ph-file-text" style="color:#64748b;"></i>' + esc(d.name) + '</span></th>' +
+        '<th scope="row"><span class="doc-name-inline"><i class="ph ph-file-text"></i>' + esc(d.name) + '</span></th>' +
         '<td>' + esc(d.type) + '</td>' +
         '<td><div class="table__counterparty"><span class="table__company">' + esc(d.org) + '</span></div></td>' +
         '<td>' + esc(d.date) + '</td>' +
@@ -789,12 +789,12 @@
     mount.innerHTML = tasks.map(function (t) {
       var p = priorityMeta(t.priority);
       var s = statusMeta(t.status);
-      var deadlineColor = t.status === 'overdue' ? 'color:#dc2626;font-weight:600;' : '';
+      var deadlineClass = t.status === 'overdue' ? ' class="cell-overdue"' : '';
       return '<tr>' +
         '<td><input type="checkbox" /></td>' +
         '<th scope="row">' + esc(t.title) + '</th>' +
         '<td>' + esc(t.owner) + '</td>' +
-        '<td style="' + deadlineColor + '">' + esc(t.deadline) + (t.status === 'overdue' ? ' <i class="ph ph-warning" style="color:#dc2626;"></i>' : '') + '</td>' +
+        '<td' + deadlineClass + '>' + esc(t.deadline) + (t.status === 'overdue' ? ' <i class="ph ph-warning"></i>' : '') + '</td>' +
         '<td><span class="badge ' + esc(p.cls) + '"><span class="badge__dot"></span>' + esc(p.text) + '</span></td>' +
         '<td><span class="badge ' + esc(s.cls) + '"><span class="badge__dot"></span>' + esc(s.text) + '</span></td>' +
         '<td>' + rowMenu() + '</td>' +
@@ -879,18 +879,18 @@
       return (
         '<tr>' +
           '<td>' +
-            '<div style="display:flex;align-items:center;gap:10px;">' +
-              '<div class="member-avatar ' + esc(a.avatarClass) + '" style="width:34px;height:34px;font-size:12px;flex-shrink:0;">' + esc(a.initials) + '</div>' +
+            '<div class="member-row-flex">' +
+              '<div class="member-avatar mini-avatar ' + esc(a.avatarClass) + '">' + esc(a.initials) + '</div>' +
               '<div>' +
-                '<div style="font-weight:600;color:#111827;font-size:13px;">' + esc(a.name) + '</div>' +
-                '<div style="font-size:11px;color:#6b7280;">' + esc(a.email) + '</div>' +
+                '<div class="member-name-cell">' + esc(a.name) + '</div>' +
+                '<div class="member-sub">' + esc(a.email) + '</div>' +
               '</div>' +
             '</div>' +
           '</td>' +
           '<td><span class="region-flag">' + esc(a.regionCode) + '</span> ' + esc(a.region) + '</td>' +
           '<td>' + chips + '</td>' +
           '<td>' + statusBadge + '</td>' +
-          '<td style="color:#6b7280;font-size:12px;">' + esc(a.lastSeen) + '</td>' +
+          '<td class="cell-dim">' + esc(a.lastSeen) + '</td>' +
           '<td>' + rowMenu(a.name) + '</td>' +
         '</tr>'
       );

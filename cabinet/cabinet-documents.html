@@ -92,7 +92,7 @@
         <table class="table">
           <thead><tr><th>Hujjat nomi</th><th>Turi</th><th>Muddat</th><th>Holat</th><th>Amal</th></tr></thead>
           <tbody id="documentsTableBody">
-            <tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:32px;">Yuklanmoqda...</td></tr>
+            <tr><td colspan="5" class="empty-state">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -183,8 +183,8 @@
     (function () {
       var items = [];
       var tbody = document.getElementById('documentsTableBody');
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--grey-400);padding:32px;">'
-        + '<i class="ph ph-files" style="font-size:32px;display:block;margin-bottom:8px;"></i>'
+      tbody.innerHTML = '<tr><td colspan="5" class="empty-state">'
+        + '<i class="ph ph-files empty-icon"></i>'
         + 'Tashkilot hujjatlari hali yuklanmagan.<br>Ustav, guvohnoma va boshqa hujjatlarni yuklash uchun "Hujjat yuklash" tugmasini bosing.'
         + '</td></tr>';
 
