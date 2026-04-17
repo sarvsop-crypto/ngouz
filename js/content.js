@@ -308,26 +308,61 @@
     container.innerHTML = html;
   }
 
-  /* ── Archive tab support ──────────────────────────────────── */
-  function renderArchiveTabs(container, kind, renderFn) {
-    var tabBar = document.createElement('div');
-    tabBar.className = 'archive-tab-bar';
-    tabBar.innerHTML = '<button class="archive-tab active" data-archive="0">Joriy</button>'
-      + '<button class="archive-tab" data-archive="1">Arxiv (2015–2019)</button>';
-    container.parentNode.insertBefore(tabBar, container);
+  /* ── Paginated list with "Load more" ──────────────────────── */
+  function renderPaginatedList(container, kind, renderFn) {
+    var allItems = [];
+    var offset = 0;
+    var total = 0;
+    var gridEl = null;
+    var loadMoreBtn = null;
 
-    var btns = tabBar.querySelectorAll('.archive-tab');
-    function load(archive) {
-      container.innerHTML = '<p style="color:rgba(180,220,255,.5)">Yuklanmoqda...</p>';
-      fetchJSON(kind, function (items) { renderFn(items, container); }, 'archive=' + archive);
-      for (var i = 0; i < btns.length; i++) {
-        btns[i].classList.toggle('active', btns[i].getAttribute('data-archive') === archive);
-      }
+    function loadPage() {
+      var url = kind + '?limit=100&offset=' + offset;
+      fetch(API_BASE + url + '&_=' + Date.now())
+        .then(function (r) { return r.ok ? r.json() : { items: [], total: 0 }; })
+        .then(function (data) {
+          var items = data.items || [];
+          total = data.total || 0;
+          allItems = allItems.concat(items);
+          offset += items.length;
+
+          if (!gridEl) {
+            container.innerHTML = '';
+            renderFn(allItems, container);
+            gridEl = container.querySelector('.gov-news-grid, .cards, .doc-table');
+          } else {
+            var temp = document.createElement('div');
+            renderFn(items, temp);
+            var newGrid = temp.querySelector('.gov-news-grid, .cards, .doc-table');
+            if (newGrid && gridEl) {
+              while (newGrid.firstChild) gridEl.appendChild(newGrid.firstChild);
+            }
+          }
+
+          if (!loadMoreBtn) {
+            loadMoreBtn = document.createElement('div');
+            loadMoreBtn.style.cssText = 'text-align:center;margin:32px 0';
+            loadMoreBtn.innerHTML = '<button class="btn" id="loadMoreBtn">Ko\'proq ko\'rish</button>'
+              + '<p style="font-size:13px;color:var(--neutral-500);margin-top:8px" id="loadMoreCount"></p>';
+            container.appendChild(loadMoreBtn);
+            loadMoreBtn.querySelector('#loadMoreBtn').addEventListener('click', loadPage);
+          }
+
+          var countEl = container.querySelector('#loadMoreCount');
+          if (countEl) countEl.textContent = allItems.length + ' / ' + total + ' ko\'rsatilmoqda';
+
+          if (offset >= total) {
+            var btn = container.querySelector('#loadMoreBtn');
+            if (btn) btn.style.display = 'none';
+          }
+        })
+        .catch(function () {
+          if (!allItems.length) container.innerHTML = '<p>Yuklanmadi.</p>';
+        });
     }
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].addEventListener('click', function () { load(this.getAttribute('data-archive')); });
-    }
-    load('0');
+
+    container.innerHTML = '<p style="color:rgba(180,220,255,.5)">Yuklanmoqda...</p>';
+    loadPage();
   }
 
   /* ── Auto-init on page load ───────────────────────────────── */
@@ -340,13 +375,13 @@
     var eventsHomeEl = document.getElementById('dynamic-events-home');
     if (eventsHomeEl) fetchJSON('events', function (items) { renderEventsHome(items, eventsHomeEl); }, 'archive=0');
 
-    // news.html full page — with archive tabs
+    // news.html full page — all articles with pagination
     var newsPageEl = document.getElementById('dynamic-news-page');
-    if (newsPageEl) renderArchiveTabs(newsPageEl, 'news', renderNewsPage);
+    if (newsPageEl) renderPaginatedList(newsPageEl, 'news', renderNewsPage);
 
-    // events.html full page — with archive tabs
+    // events.html full page — all events with pagination
     var eventsPageEl = document.getElementById('dynamic-events-page');
-    if (eventsPageEl) renderArchiveTabs(eventsPageEl, 'events', renderEventsPage);
+    if (eventsPageEl) renderPaginatedList(eventsPageEl, 'events', renderEventsPage);
 
     // news-detail.html — use single-item API
     var newsDetailEl = document.getElementById('detail-news-content');
@@ -379,9 +414,9 @@
       }
     }
 
-    // projects.html grants — with archive tabs
+    // grants.html — all grants with pagination
     var grantsEl = document.getElementById('dynamic-grants-page');
-    if (grantsEl) renderArchiveTabs(grantsEl, 'grants', renderGrantsPage);
+    if (grantsEl) renderPaginatedList(grantsEl, 'grants', renderGrantsPage);
 
     // official-docs.html — documents
     var docsEl = document.getElementById('dynamic-documents-page');
