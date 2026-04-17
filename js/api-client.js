@@ -34,7 +34,7 @@
       var ct = r.headers.get('content-type') || '';
       var parse = ct.indexOf('application/json') !== -1 ? r.json() : r.text();
       return parse.then(function (data) {
-        if (r.status === 401 && !opts.noRedirect) {
+        if (r.status === 401 && opts.authRedirect) {
           clearToken();
           if (!/\/(admin-login|cabinet-login)\.html/.test(location.pathname)) {
             var next = encodeURIComponent(location.pathname + location.search);
@@ -81,7 +81,7 @@
       location.replace((opts.loginPage || LOGIN_PAGE) + '?next=' + next);
       return Promise.reject(new Error('no_token'));
     }
-    return me().then(function (res) {
+    return request('GET', '/me', undefined, { authRedirect: true, loginPage: opts.loginPage }).then(function (res) {
       setUser(res.user);
       if (opts.minRole) {
         var levels = { super_admin: 100, regional_admin: 60, portal_moderator: 40, member_manager: 20, member_user: 10 };
