@@ -94,8 +94,12 @@
   <script>
     (function () {
       if (NgoApi.getToken()) {
-        var q = new URLSearchParams(location.search);
-        location.replace(q.get('next') || 'admin-dashboard.html');
+        NgoApi.me().then(function () {
+          var q = new URLSearchParams(location.search);
+          location.replace(q.get('next') || 'admin-dashboard.html');
+        }).catch(function () {
+          NgoApi.clearToken();
+        });
         return;
       }
       var form = document.getElementById('adminLoginForm');
