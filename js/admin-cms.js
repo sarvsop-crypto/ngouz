@@ -106,6 +106,15 @@ var AdminCMS = (function () {
     URL.revokeObjectURL(url);
   }
 
+  function uploadFile(fileInput, cb) {
+    if (!fileInput || !fileInput.files || !fileInput.files[0]) { cb(new Error('No file selected')); return; }
+    var fd = new FormData();
+    fd.append('file', fileInput.files[0]);
+    NgoApi.post('/admin/upload', fd)
+      .then(function (res) { cb(null, res); })
+      .catch(function (err) { cb(err); });
+  }
+
   return {
     load      : load,
     refresh   : refresh,
@@ -116,6 +125,7 @@ var AdminCMS = (function () {
     remove    : remove,
     publish   : publish,
     exportJson: exportJson,
+    uploadFile: uploadFile,
     fmtDate   : fmtDate,
     today     : today,
     esc       : esc,

@@ -227,6 +227,15 @@
             <textarea id="fBody" class="modal__textarea modal__textarea--tall" required placeholder="Maqolaning to'liq matni"></textarea>
           </div>
           <div class="modal__field">
+            <label class="modal__label">Muqova rasmi</label>
+            <div style="display:flex;gap:8px;align-items:center">
+              <input type="file" id="fCoverFile" accept="image/*" style="font-size:13px" />
+              <span id="fCoverStatus" style="font-size:12px;color:#6b7280"></span>
+            </div>
+            <input type="hidden" id="fCoverImage" />
+            <img id="fCoverPreview" style="max-width:200px;max-height:120px;margin-top:8px;border-radius:4px;display:none" />
+          </div>
+          <div class="modal__field">
             <label class="modal__checkbox-row">
               <input type="checkbox" id="fFeatured" />
               Bosh sahifada tavsiya etish (featured)
@@ -355,6 +364,10 @@
       document.getElementById('fExcerpt').value  = '';
       document.getElementById('fBody').value     = '';
       document.getElementById('fFeatured').checked = false;
+      document.getElementById('fCoverFile').value = '';
+      document.getElementById('fCoverImage').value = '';
+      document.getElementById('fCoverPreview').style.display = 'none';
+      document.getElementById('fCoverStatus').textContent = '';
       document.getElementById('formError').style.display = 'none';
     }
     function fillForm(item) {
@@ -364,18 +377,43 @@
       document.getElementById('fExcerpt').value  = item.excerpt  || '';
       document.getElementById('fBody').value     = item.body     || '';
       document.getElementById('fFeatured').checked = !!item.featured;
+      document.getElementById('fCoverFile').value = '';
+      document.getElementById('fCoverImage').value = item.cover_image || '';
+      var preview = document.getElementById('fCoverPreview');
+      if (item.cover_image) {
+        preview.src = 'https://api.ngo.uz/media.php?path=' + encodeURIComponent(item.cover_image);
+        preview.style.display = 'block';
+      } else {
+        preview.style.display = 'none';
+      }
+      document.getElementById('fCoverStatus').textContent = item.cover_image ? 'Mavjud' : '';
       document.getElementById('formError').style.display = 'none';
     }
     function readForm() {
       return {
-        title   : document.getElementById('fTitle').value.trim(),
-        date    : document.getElementById('fDate').value,
-        category: document.getElementById('fCategory').value,
-        excerpt : document.getElementById('fExcerpt').value.trim(),
-        body    : document.getElementById('fBody').value.trim(),
-        featured: document.getElementById('fFeatured').checked
+        title      : document.getElementById('fTitle').value.trim(),
+        date       : document.getElementById('fDate').value,
+        category   : document.getElementById('fCategory').value,
+        excerpt    : document.getElementById('fExcerpt').value.trim(),
+        body       : document.getElementById('fBody').value.trim(),
+        featured   : document.getElementById('fFeatured').checked,
+        cover_image: document.getElementById('fCoverImage').value
       };
     }
+
+    document.getElementById('fCoverFile').addEventListener('change', function () {
+      if (!this.files[0]) return;
+      var status = document.getElementById('fCoverStatus');
+      status.textContent = 'Yuklanmoqda...';
+      AdminCMS.uploadFile(this, function (err, res) {
+        if (err) { status.textContent = 'Xatolik!'; return; }
+        document.getElementById('fCoverImage').value = res.path;
+        status.textContent = 'Yuklandi!';
+        var preview = document.getElementById('fCoverPreview');
+        preview.src = res.url;
+        preview.style.display = 'block';
+      });
+    });
 
     // ── actions ───────────────────────────────────────────
     window.editItem = function (id) {
