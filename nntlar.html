@@ -536,7 +536,7 @@ loadAllOrgs(0, [], function(orgs) {
     if (!NNT_DATA[regionName]) NNT_DATA[regionName] = [];
     NNT_DATA[regionName].push({
       nom: o.name, rahbar: o.leader_name || '', manzil: o.address || '',
-      shakl: '', soha: '', royxat: o.registered_at || '', azo: o.member_since || ''
+      shakl: '', soha: o.soha || '', royxat: o.registered_at || '', azo: o.member_since || ''
     });
   });
   initNntPage();
