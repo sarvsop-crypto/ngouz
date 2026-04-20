@@ -50,13 +50,14 @@
 <a href="#">Ochiq maʼlumotlar <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
 <div class="dropdown">
 <a href="contact.html">Bog'lanish</a>
+<a href="grant-tanlovlari.html">Grant tanlovi e'lonlari</a>
 <a href="official-docs.html">Normativ-huquqiy hujjatlar</a>
 <a href="multimedia-room.html">Media</a>
 <a href="events.html">Tadbirlar</a>
 <a href="reporting-forms.html">Hisobotlar</a>
 <a href="dayjestlar.html">Dayjestlar</a>
 <a href="vacancies.html">Bo'sh ish o'rinlari</a>
-<a href="talim-rivojlanish.html">Ta'lim va rivojlanish</a>
+<a href="talim-rivojlanish.html">Virtual akademiya</a>
 <a href="stajirovka-volontyorlik.html">Stajirovka va volontyorlik</a>
 </div>
 </div>
@@ -446,6 +447,23 @@ window.addEventListener('load', function(){
 
   function fmt(n){ return n.toLocaleString('ru-RU'); }
 
+  var regionCodeBySvgId = {
+    'UZ-QR': 'karakalpakstan',
+    'UZ-XO': 'xorazm',
+    'UZ-NW': 'navoiy',
+    'UZ-BU': 'buxoro',
+    'UZ-JI': 'jizzax',
+    'UZ-SA': 'samarqand',
+    'UZ-QA': 'qashqadaryo',
+    'UZ-SU': 'surxondaryo',
+    'UZ-SI': 'sirdaryo',
+    'UZ-TO': 'toshkent-v',
+    'UZ-TK': 'toshkent-sh',
+    'UZ-NG': 'namangan',
+    'UZ-FA': 'fargona',
+    'UZ-AN': 'andijon'
+  };
+
   (function initMap(){
     var box = document.getElementById('mapBox');
     if (!box || typeof UZ_MAP_SVG === 'undefined') return;
@@ -455,8 +473,6 @@ window.addEventListener('load', function(){
     svg.removeAttribute('width');
     svg.removeAttribute('height');
     svg.setAttribute('viewBox', '0 0 ' + VBW + ' ' + VBH);
-
-    var activeLabel = null, activePath = null;
 
     Object.keys(data).forEach(function(id){
       var d = data[id];
@@ -485,17 +501,14 @@ window.addEventListener('load', function(){
         lbl.classList.add('active');
       });
       path.addEventListener('mouseleave', function(){
-        if (activePath !== this) this.classList.remove('hovered');
-        if (activeLabel !== lbl) lbl.classList.remove('active');
+        this.classList.remove('hovered');
+        lbl.classList.remove('active');
       });
       path.addEventListener('click', function(){
-        if (activePath) { activePath.classList.remove('hovered', 'active'); }
-        if (activeLabel) { activeLabel.classList.remove('active'); }
-        activePath = this;
-        activeLabel = lbl;
-        this.classList.add('active');
-        lbl.classList.add('active');
+        var code = regionCodeBySvgId[id];
+        if (code) window.location.href = 'nntlar.html?region=' + encodeURIComponent(code);
       });
+      lbl.style.cursor = 'pointer';
     });
   })();
 })();
