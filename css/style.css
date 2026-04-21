@@ -16,6 +16,31 @@
   --admin-widget-max: 170px;
 }
 * { box-sizing: border-box; }
+.test-mode-banner {
+  background: linear-gradient(90deg, #b45309 0%, #d97706 100%);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  border-bottom: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05);
+}
+.test-mode-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px 16px;
+  text-align: center;
+  line-height: 1.4;
+}
+.test-mode-banner svg { flex-shrink: 0; opacity: .95; }
+.test-mode-banner strong { font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 11px; padding: 2px 8px; background: rgba(255,255,255,.18); border-radius: 999px; }
+@media (max-width: 560px) {
+  .test-mode-banner { font-size: 12px; }
+  .test-mode-inner { padding: 7px 12px; gap: 8px; }
+  .test-mode-banner strong { font-size: 10px; padding: 2px 6px; }
+}
 html, body { margin:0; padding:0; font-family:'Montserrat',system-ui,-apple-system,Segoe UI,Roboto,sans-serif; color:var(--neutral-900); font-size:var(--base-font-size,17px); background:var(--bg-light); }
 .skip-link {
   position: absolute;
