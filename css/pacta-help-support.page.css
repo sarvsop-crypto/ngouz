@@ -1,5 +1,4 @@
 ﻿* { box-sizing: border-box; }
-    body { margin: 0; font-family: 'Archivo', sans-serif; color: var(--grey-900); background: var(--grey-0); min-height: 100vh; }
 
     .layout { display: flex; min-height: 100vh; }
 
@@ -13,8 +12,6 @@
 
     .help-header { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; margin-bottom: 20px; }
     .help-header__title { font-size: 20px; font-weight: 600; line-height: 1.35; color: var(--grey-900); margin: 0; }
-    .btn { height: 40px; padding: 0 16px; border-radius: 10px; font-family: inherit; font-size: 14px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1px solid transparent; }
-    .btn--primary { background: var(--primary-500); color: var(--grey-0); border-color: var(--primary-600); box-shadow: 0 1px 2px 0 rgba(13,13,18,0.06); }
 
     .faq-grid { display: flex; flex-direction: column; gap: 16px; padding-bottom: 24px; }
     .faq-row { display: flex; gap: 16px; }

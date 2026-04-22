@@ -1,28 +1,41 @@
-﻿:root {
-  --primary-50: #e7f5f2;
-  --primary-100: #b6dfd6;
-  --primary-300: #60baa7;
-  --primary-500: #0f6a57;
-  --primary-600: #0c5b49;
-  --primary-700: #094c3d;
+/* Design tokens for admin + cabinet dashboards.
+   Values mirror the public site (css/style.css) so all three surfaces
+   share one palette and typography. Variable names preserved for
+   existing pacta component CSS. */
 
+:root {
+  /* Typography — matches main site (style.css line 53) */
+  --font-body: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Montserrat', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+  /* Primary — teal ramp derived from main site --green-500 (#0e7490) / --green-800 (#155e75) */
+  --primary-50: #e6f3f6;
+  --primary-100: #c2dfe6;
+  --primary-300: #5ca8b8;
+  --primary-500: #0e7490;
+  --primary-600: #0c6481;
+  --primary-700: #155e75;
+
+  /* Secondary accent — kept from pacta (amber), used sparsely */
   --secondary-50: #fef9ec;
   --secondary-300: #f9d57c;
   --secondary-500: #f6c03c;
 
+  /* Greys — tuned toward main site's cool neutrals (--neutral-200..900) */
   --grey-0: #ffffff;
-  --grey-25: #f6f8fa;
-  --grey-50: #eceff3;
-  --grey-100: #dfe1e7;
-  --grey-200: #c1c7d0;
-  --grey-300: #a4acb9;
-  --grey-400: #667085;
-  --grey-500: #666d80;
-  --grey-600: #36394a;
-  --grey-700: #4b5563;
-  --grey-800: #1a1b25;
-  --grey-900: #0d0d12;
+  --grey-25: #f1f8f8;   /* main site --bg-light */
+  --grey-50: #e4e7e7;   /* main site --neutral-200 */
+  --grey-100: #e4e7e7;
+  --grey-200: #c8cfd0;  /* main site --neutral-300 */
+  --grey-300: #929c9d;  /* main site --neutral-400 */
+  --grey-400: #798384;  /* main site --neutral-500 */
+  --grey-500: #798384;
+  --grey-600: #3d4848;
+  --grey-700: #2a3434;
+  --grey-800: #1f2525;
+  --grey-900: #171a1b;  /* main site --neutral-900 */
 
+  /* Status — kept, same semantics as pacta */
   --success-0: #effefa;
   --success-25: #ddf3ef;
   --success-100: #d1fae5;
@@ -50,9 +63,7 @@
   --risk-medium: #92400e;
   --risk-low: #16a34a;
 
-  --border-tint: #efe6fd;
-  --gradient-start: rgba(231, 245, 242, 0.48);
-  --gradient-end: rgba(231, 245, 242, 0);
+  --border-tint: #d5e5ef;
+  --gradient-start: rgba(230, 243, 246, 0.48);
+  --gradient-end: rgba(230, 243, 246, 0);
 }
-
-

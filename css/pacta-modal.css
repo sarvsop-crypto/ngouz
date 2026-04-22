@@ -16,7 +16,7 @@
   border-radius: 16px;
   width: 100%; max-width: 540px;
   max-height: 90vh; overflow-y: auto;
-  box-shadow: 0 20px 60px rgba(13, 13, 18, 0.2);
+  box-shadow: 0 20px 60px rgba(2, 51, 71, 0.2);
   transform: translateY(10px);
   transition: transform 0.18s ease;
 }
@@ -70,7 +70,7 @@
 .modal__input:focus,
 .modal__select:focus,
 .modal__textarea:focus {
-  outline: none; border-color: var(--primary-500, #12987b);
+  outline: none; border-color: var(--primary-500, #0e7490);
 }
 .modal__textarea { resize: vertical; min-height: 80px; }
 .modal__row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -85,7 +85,7 @@
   position: absolute; right: 0; top: calc(100% + 4px); z-index: 200;
   background: var(--grey-0, #fff);
   border: 1px solid var(--grey-100, #dfe1e7); border-radius: 10px;
-  box-shadow: 0 8px 24px rgba(13, 13, 18, 0.12);
+  box-shadow: 0 8px 24px rgba(2, 51, 71, 0.12);
   padding: 4px; min-width: 172px;
   opacity: 0; pointer-events: none;
   transform: translateY(-6px);
