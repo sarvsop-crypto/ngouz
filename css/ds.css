@@ -1,16 +1,16 @@
 /* ds.css — NGO Admin & Cabinet Design System
-   Font: DM Sans (matches main site) | Primary: #00b4d8 teal */
+   Font: Montserrat, Primary: #0e7490 — mirrors css/style.css */
 
 :root {
-  --bg:        #eef5fa;   /* main site --bg-light  */
+  --bg:        #f1f8f8;   /* main site --bg-light */
   --panel:     #ffffff;
-  --text:      #0e1724;   /* main site --neutral-900 */
-  --muted:     #7a90a0;   /* main site --neutral-400 */
-  --muted2:    #587585;   /* main site --neutral-500 */
-  --line:      #d5e5ef;   /* main site --neutral-200 */
-  --primary:   #00b4d8;   /* main site --green-500   */
-  --primary-d: #007a94;   /* main site --green-800 (hover / dark) */
-  --primary-50:#e0f2f9;   /* light teal tint */
+  --text:      #171a1b;   /* main site --neutral-900 */
+  --muted:     #929c9d;   /* main site --neutral-400 */
+  --muted2:    #798384;   /* main site --neutral-500 */
+  --line:      #e4e7e7;   /* main site --neutral-200 */
+  --primary:   #0e7490;   /* main site --green-500   */
+  --primary-d: #155e75;   /* main site --green-800 (hover / dark) */
+  --primary-50:#e6f3f6;   /* light teal tint */
   --green:     #28a745;
   --green-50:  #e6f9ee;
   --orange:    #d97706;
@@ -21,7 +21,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
-/* DM Sans matches main site — no separate font import needed (style.css loads it) */
+/* Montserrat loaded via style.css — no separate font import needed */
 
 a { color: inherit; text-decoration: none; }
 
@@ -30,7 +30,7 @@ a { color: inherit; text-decoration: none; }
   width: 100%;
   min-height: calc(100vh - 110px);
   background: var(--bg);
-  font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+  font-family: "Montserrat", system-ui, -apple-system, sans-serif;
   color: var(--text);
   padding: 24px;
   display: grid;
@@ -164,7 +164,7 @@ a { color: inherit; text-decoration: none; }
   border: none;
   outline: none;
   background: transparent;
-  font: 400 13.5px "DM Sans", system-ui, -apple-system, sans-serif;
+  font: 400 13.5px "Montserrat", system-ui, -apple-system, sans-serif;
   color: var(--text);
   width: 100%;
 }
@@ -175,7 +175,7 @@ a { color: inherit; text-decoration: none; }
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #007a94, #00b4d8);
+  background: linear-gradient(135deg, #155e75, #0e7490);
   display: grid;
   place-items: center;
   color: #fff;
@@ -277,7 +277,7 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--line);
   border-radius: 12px;
   background: #fff;
-  font: 400 13.5px "DM Sans", system-ui, -apple-system, sans-serif;
+  font: 400 13.5px "Montserrat", system-ui, -apple-system, sans-serif;
   color: var(--text);
   cursor: pointer;
   white-space: nowrap;
@@ -323,7 +323,7 @@ a { color: inherit; text-decoration: none; }
   border-radius: 999px;
   border: 1px solid var(--line);
   background: #fff;
-  font: 400 13px "DM Sans", system-ui, -apple-system, sans-serif;
+  font: 400 13px "Montserrat", system-ui, -apple-system, sans-serif;
   color: var(--muted2);
   cursor: pointer;
   transition: all .12s;
@@ -390,7 +390,7 @@ a { color: inherit; text-decoration: none; }
 .ds-badge-warn { background: var(--orange-50); color: var(--orange); }
 .ds-badge-bad  { background: var(--red-50); color: var(--red); }
 .ds-badge-info { background: var(--primary-50); color: var(--primary-d); }
-.ds-badge-dim  { background: #eef5fa; color: var(--muted2); }
+.ds-badge-dim  { background: var(--bg); color: var(--muted2); }
 
 /* ───── Action icons ───── */
 .ds-acts { display: flex; gap: 6px; }
@@ -460,7 +460,7 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 0 16px;
-  font: 400 14px "DM Sans", system-ui, -apple-system, sans-serif;
+  font: 400 14px "Montserrat", system-ui, -apple-system, sans-serif;
   color: var(--text);
   background: #fff;
   transition: border-color .12s;
@@ -474,7 +474,7 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 0 16px;
-  font: 400 14px "DM Sans", system-ui, -apple-system, sans-serif;
+  font: 400 14px "Montserrat", system-ui, -apple-system, sans-serif;
   color: var(--text);
   background: #fff;
   appearance: none;
@@ -488,7 +488,7 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--line);
   border-radius: 14px;
   padding: 12px 16px;
-  font: 400 14px "DM Sans", system-ui, -apple-system, sans-serif;
+  font: 400 14px "Montserrat", system-ui, -apple-system, sans-serif;
   color: var(--text);
   background: #fff;
   resize: vertical;
@@ -502,7 +502,7 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--line);
   border-radius: 12px;
   padding: 0 12px;
-  font: 400 13.5px "DM Sans", system-ui, -apple-system, sans-serif;
+  font: 400 13.5px "Montserrat", system-ui, -apple-system, sans-serif;
   color: var(--text);
   background: #fff;
 }
@@ -775,7 +775,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 .uzlabel {
-  font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+  font-family: "Montserrat", system-ui, -apple-system, sans-serif;
   font-size: 11px;
   font-weight: 700;
   fill: #fff;

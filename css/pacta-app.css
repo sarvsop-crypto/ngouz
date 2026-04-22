@@ -3,7 +3,55 @@
    Modal Â· Toast Â· Dropdown Â· Filter panel
    â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-/* â”€â”€ Modal overlay â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+/* ── Buttons (canonical — was redeclared in 10 page CSS files) ────── */
+.btn {
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-decoration: none;
+  border: 1px solid transparent;
+  background: var(--grey-0);
+  color: var(--grey-900);
+  box-shadow: var(--shadow-xs);
+  transition: background .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease, transform .12s ease;
+}
+.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.btn:active { transform: translateY(0); box-shadow: var(--shadow-xs); }
+.btn:focus-visible { outline: none; box-shadow: var(--focus-ring); }
+
+.btn--primary {
+  background: var(--primary-500);
+  color: var(--grey-0);
+  border-color: var(--primary-600);
+}
+.btn--primary:hover { background: var(--primary-600); border-color: var(--primary-700); }
+
+.btn--secondary {
+  background: var(--grey-0);
+  border-color: var(--grey-100);
+  color: var(--grey-900);
+}
+.btn--secondary:hover { background: var(--grey-25); border-color: var(--grey-200); }
+
+/* ── Card motion — subtle lift on hover, matches main site .stat-card ── */
+.card {
+  transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--grey-200);
+}
+
+/* ── Modal overlay ────────────────────────────────────────────────── */
 .modal-overlay {
   position: fixed; inset: 0;
   background: rgba(13,13,18,.45);
@@ -73,8 +121,8 @@
   background: #fff; outline: none;
 }
 .modal__input:focus, .modal__select:focus, .modal__textarea:focus {
-  border-color: var(--primary-500,#12987b);
-  box-shadow: 0 0 0 3px rgba(18,152,123,.12);
+  border-color: var(--primary-500,#0e7490);
+  box-shadow: 0 0 0 3px rgba(14, 116, 144,.12);
 }
 .modal__textarea { height: 80px; padding: 10px 12px; resize: vertical; }
 .modal__field { margin-bottom: 16px; }
@@ -88,9 +136,9 @@
   transition: background .15s, border-color .15s;
 }
 .modal__btn--primary {
-  background: var(--primary-500,#12987b); color: #fff; border-color: var(--primary-600,#108a70);
+  background: var(--primary-500,#0e7490); color: #fff; border-color: var(--primary-600,#0c6481);
 }
-.modal__btn--primary:hover { background: var(--primary-600,#108a70); }
+.modal__btn--primary:hover { background: var(--primary-600,#0c6481); }
 .modal__btn--danger {
   background: var(--error-100,#df1c41); color: #fff;
 }
@@ -110,7 +158,7 @@
   transition: border-color .15s, background .15s;
 }
 .modal__formats li:last-child { margin-bottom: 0; }
-.modal__formats li:hover { border-color: var(--primary-500,#12987b); background: var(--success-0,#effefa); }
+.modal__formats li:hover { border-color: var(--primary-500,#0e7490); background: var(--success-0,#effefa); }
 .fmt-icon--pdf  { background:#fef2f2; color:#dc2626; }
 .fmt-icon--csv  { background:#eff6ff; color:#2563eb; }
 .fmt-icon--docx { background:#f0fdf4; color:#16a34a; }
@@ -141,7 +189,7 @@
   min-width: 320px; max-width: 440px;
   padding: 14px 20px; border-radius: 10px;
   display: flex; align-items: center; gap: 10px;
-  font-size: 14px; font-weight: 500; font-family: 'Archivo', sans-serif;
+  font-size: 14px; font-weight: 500; font-family: var(--font-body);
   box-shadow: 0 8px 24px -4px rgba(0,0,0,.14);
   transform: translateX(120%);
   transition: transform .3s cubic-bezier(.4,0,.2,1), opacity .25s;
@@ -212,7 +260,7 @@
 }
 .filter-chip:hover { border-color: var(--primary-500); color: var(--primary-500); }
 .filter-chip.is-active {
-  background: var(--primary-500,#12987b); color: #fff;
+  background: var(--primary-500,#0e7490); color: #fff;
   border-color: var(--primary-500);
 }
 
