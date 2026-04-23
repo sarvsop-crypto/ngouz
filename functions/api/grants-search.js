@@ -56,16 +56,18 @@ async function handle({ request, env }, H) {
   if (!tsData.success) return json({ error: 'turnstile_failed', codes: tsData['error-codes'] || [] }, 403, H);
 
   // --- 2. Rate limits ---
+  // Per-IP daily cap — bumped temporarily for manager evaluation.
+  const DAILY_LIMIT = 1000;
   const today = new Date().toISOString().slice(0, 10);
   const ipKey = `rl:ip:${ip}:${today}`;
   const ipCountStr = await env.RL_KV.get(ipKey);
   const ipCount = parseInt(ipCountStr || '0', 10);
-  if (ipCount >= 3) {
+  if (ipCount >= DAILY_LIMIT) {
     return json({
       error: 'ip_limit',
-      message_uz: 'Bugun kunlik 3 ta so\'rov limitingizga yetdingiz. Ertaga qayta urinib ko\'ring.',
-      message_ru: 'Вы достигли дневного лимита 3 запросов. Попробуйте завтра.',
-      message_en: 'You have reached today\'s 3-request limit. Please try again tomorrow.',
+      message_uz: 'Bugun kunlik so\'rov limitingizga yetdingiz. Ertaga qayta urinib ko\'ring.',
+      message_ru: 'Вы достигли дневного лимита запросов. Попробуйте завтра.',
+      message_en: 'You have reached today\'s request limit. Please try again tomorrow.',
     }, 429, H);
   }
 
@@ -89,6 +91,7 @@ async function handle({ request, env }, H) {
   ]);
 
   // --- 3. LLM #1: router / query extractor ---
+  const nowYear = new Date().getUTCFullYear();
   const routerPrompt = [
     'You are a routing layer for a grant-search assistant used by Uzbek NGOs.',
     'Given the user\'s free-text question, produce JSON only.',
@@ -96,7 +99,12 @@ async function handle({ request, env }, H) {
     '- lang: detected language code ("uz", "ru", or "en")',
     '- soha: short English label for the user\'s sector (e.g. "autism support", "beekeeping", "rural water")',
     '- keywords: 3-5 English search terms',
-    '- queries: 2 complete English search queries aimed at finding OPEN grant calls for this sector, with phrases like "grant call", "funding opportunity", "application deadline"',
+    `- queries: exactly 4 DIVERSE English search queries aimed at finding currently-OPEN grant calls for this sector. Each query must push for a FUTURE deadline result. Mix these angles across the 4 queries so Tavily returns varied hits:`,
+    `    1) "<sector> grant call ${nowYear} application deadline"`,
+    `    2) "<sector> funding opportunity ${nowYear} open applications"`,
+    `    3) "<sector> NGO grant Uzbekistan Central Asia ${nowYear}" (geographic slant)`,
+    `    4) "<sector> call for proposals deadline ${nowYear + 1}" (next-year angle)`,
+    'Do not return placeholder <sector> — substitute real keywords.',
     '',
     'Return ONLY the JSON object. No markdown, no commentary.',
     '',
@@ -114,12 +122,12 @@ async function handle({ request, env }, H) {
 
   // --- 4. Tavily search: whitelist first, broad fallback ---
   let results = await tavilySearch(env.TAVILY_API_KEY, parsed.queries, { include_domains: WHITELIST });
-  if (results.length < 3) {
+  if (results.length < 8) {
     const broad = await tavilySearch(env.TAVILY_API_KEY, parsed.queries, { exclude_domains: SPAM_DOMAINS });
     const seen = new Set(results.map(r => r.url));
     for (const r of broad) if (!seen.has(r.url)) { results.push(r); seen.add(r.url); }
   }
-  results = results.slice(0, 10);
+  results = results.slice(0, 20);
 
   if (results.length === 0) {
     const noHits = {
@@ -229,8 +237,13 @@ async function geminiCall(apiKey, prompt, maxOutputTokens) {
 
 async function tavilySearch(apiKey, queries, opts) {
   const all = [];
-  for (const q of queries) {
-    const body = { api_key: apiKey, query: q, max_results: 5, search_depth: 'basic' };
+  await Promise.all(queries.map(async (q) => {
+    const body = {
+      api_key: apiKey,
+      query: q,
+      max_results: 10,
+      search_depth: 'advanced',
+    };
     if (opts.include_domains) body.include_domains = opts.include_domains;
     if (opts.exclude_domains) body.exclude_domains = opts.exclude_domains;
     const resp = await fetch('https://api.tavily.com/search', {
@@ -240,7 +253,7 @@ async function tavilySearch(apiKey, queries, opts) {
     });
     const data = await resp.json();
     if (Array.isArray(data?.results)) all.push(...data.results);
-  }
+  }));
   const seen = new Set();
   return all.filter(r => {
     if (!r.url || seen.has(r.url)) return false;
