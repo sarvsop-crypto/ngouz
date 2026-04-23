@@ -10,6 +10,37 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="css/style.css" rel="stylesheet">
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<style>
+  .grants-ai { max-width: 860px; margin: 0 auto; }
+  .grants-ai__header h2 { font-size: 26px; margin: 0 0 6px; color: #023347; }
+  .grants-ai__header p { color: #587585; margin: 0 0 20px; font-size: 15px; }
+  .grants-ai__form { background: #fff; border: 1px solid #e4e7e7; border-radius: 12px; padding: 18px; box-shadow: 0 2px 8px rgba(2,51,71,.04); }
+  .grants-ai__form textarea { width: 100%; resize: vertical; min-height: 80px; padding: 12px 14px; border: 1px solid #cfd9df; border-radius: 8px; font: inherit; font-size: 16px; color: #1a2e3a; outline: none; box-sizing: border-box; transition: border-color .15s; }
+  .grants-ai__form textarea:focus { border-color: #0e7490; }
+  .grants-ai__form .cf-turnstile { margin: 14px 0; }
+  .grants-ai__form button { background: #0e7490; color: #fff; border: 0; padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer; transition: background .15s; }
+  .grants-ai__form button:hover:not(:disabled) { background: #155e75; }
+  .grants-ai__form button:disabled { background: #a0aaae; cursor: not-allowed; }
+  .grants-ai__status { margin-top: 18px; font-size: 14px; color: #587585; min-height: 20px; }
+  .grants-ai__status.error { color: #c0392b; }
+  .grants-ai__answer { margin-top: 24px; font-size: 16px; line-height: 1.55; color: #1a2e3a; padding: 14px 16px; background: #f1f8f8; border-left: 3px solid #0e7490; border-radius: 4px; display: none; }
+  .grants-ai__answer.show { display: block; }
+  .grants-ai__results { margin-top: 20px; display: grid; gap: 12px; }
+  .grant-card { background: #fff; border: 1px solid #e4e7e7; border-radius: 10px; padding: 16px 18px; transition: border-color .15s, box-shadow .15s; }
+  .grant-card:hover { border-color: #0e7490; box-shadow: 0 4px 14px rgba(1,61,140,.08); }
+  .grant-card h4 { margin: 0 0 6px; font-size: 17px; color: #023347; }
+  .grant-card .donor { font-size: 13px; color: #587585; margin: 0 0 6px; }
+  .grant-card .deadline { font-size: 13px; color: #c0392b; font-weight: 600; margin: 0 0 8px; }
+  .grant-card p.body { margin: 0 0 10px; font-size: 14px; color: #2d3a3b; line-height: 1.5; }
+  .grant-card a { color: #0e7490; font-weight: 600; font-size: 14px; text-decoration: none; }
+  .grant-card a:hover { text-decoration: underline; }
+  @media (max-width: 560px) {
+    .grants-ai__header h2 { font-size: 22px; }
+    .grants-ai__form { padding: 14px; }
+    .grant-card { padding: 14px; }
+  }
+</style>
 </link></head>
 <body>
 <header class="site-header">
@@ -89,12 +120,126 @@
 </section>
 <section class="section">
 <div class="container">
-<div style="text-align:center;padding:72px 24px;background:#f8fbfc;border:1px dashed #cfd9df;border-radius:14px;color:#587585;">
-<p style="font-size:18px;font-weight:600;color:#023347;margin:0 0 8px;">Hozircha e'lonlar mavjud emas</p>
-<p style="font-size:15px;margin:0;">Yangi grant tanlovi e'lonlari shu yerda paydo bo'ladi. Yangiliklarni kuzatib boring.</p>
+<div class="grants-ai">
+<div class="grants-ai__header">
+<h2>Soha bo'yicha grant qidirish (AI)</h2>
+<p>Sohangizni yoki loyiha g'oyangizni o'zbekcha, ruscha yoki inglizcha yozing — ishonchli donor va davlat manbalaridan ochiq grantlarni topamiz.</p>
+</div>
+<form class="grants-ai__form" id="grantsForm" autocomplete="off">
+<textarea id="grantsQuery" placeholder="Masalan: 'Autizm spektri kasalligi bo'lgan bolalarga yordam beruvchi NNT uchun grant bormi?'" rows="3" maxlength="500" required></textarea>
+<div class="cf-turnstile" data-sitekey="0x4AAAAAADB9Mx0-zTy-6jb_" data-size="flexible" data-theme="light"></div>
+<button type="submit" id="grantsSubmit">Qidirish</button>
+</form>
+<div class="grants-ai__status" id="grantsStatus"></div>
+<div class="grants-ai__answer" id="grantsAnswer"></div>
+<div class="grants-ai__results" id="grantsResults"></div>
 </div>
 </div>
 </section>
+<script>
+(function () {
+  var form = document.getElementById('grantsForm');
+  var input = document.getElementById('grantsQuery');
+  var submitBtn = document.getElementById('grantsSubmit');
+  var statusEl = document.getElementById('grantsStatus');
+  var answerEl = document.getElementById('grantsAnswer');
+  var resultsEl = document.getElementById('grantsResults');
+
+  var LABELS = {
+    uz: { searching: 'Qidirilmoqda...', retry: 'Server band, qayta urinilmoqda...', netErr: 'Tarmoq xatoligi: ', srv: 'Server xatoligi', deadline: 'Muddati: ', open: 'Rasmiy sahifaga o\'tish →', noTs: 'Turnstile hali tayyor emas, bir necha soniyadan so\'ng qayta urinib ko\'ring.', empty: 'Iltimos savolingizni kiriting.' },
+    ru: { deadline: 'Срок: ', open: 'Открыть источник →' },
+    en: { deadline: 'Deadline: ', open: 'Open source →' },
+  };
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  function setStatus(msg, isErr) {
+    statusEl.textContent = msg || '';
+    statusEl.className = 'grants-ai__status' + (isErr ? ' error' : '');
+  }
+
+  function getTsToken() {
+    var el = document.querySelector('input[name="cf-turnstile-response"]');
+    return el ? el.value : '';
+  }
+
+  function resetTurnstile() {
+    if (window.turnstile) try { window.turnstile.reset(); } catch (_) {}
+  }
+
+  function renderResults(data) {
+    var lang = data.lang || 'uz';
+    var L = LABELS[lang] || LABELS.uz;
+    if (data.answer) {
+      answerEl.textContent = data.answer;
+      answerEl.classList.add('show');
+    }
+    resultsEl.innerHTML = '';
+    (data.grants || []).forEach(function (g) {
+      var card = document.createElement('div');
+      card.className = 'grant-card';
+      card.innerHTML =
+        '<h4>' + esc(g.name) + '</h4>' +
+        '<p class="donor">' + esc(g.donor || '') + (g.source ? ' · <span>' + esc(g.source) + '</span>' : '') + '</p>' +
+        '<p class="deadline">' + L.deadline + esc(g.deadline || 'unknown') + '</p>' +
+        '<p class="body">' + esc(g.summary || '') + '</p>' +
+        (g.link ? '<a href="' + esc(g.link) + '" target="_blank" rel="noopener noreferrer">' + L.open + '</a>' : '');
+      resultsEl.appendChild(card);
+    });
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var query = input.value.trim();
+    if (!query) { setStatus(LABELS.uz.empty, true); return; }
+    var token = getTsToken();
+    if (!token) { setStatus(LABELS.uz.noTs, true); return; }
+
+    submitBtn.disabled = true;
+    setStatus(LABELS.uz.searching);
+    answerEl.classList.remove('show');
+    answerEl.textContent = '';
+    resultsEl.innerHTML = '';
+
+    var attempt = 0;
+    async function go() {
+      attempt++;
+      try {
+        var resp = await fetch('/api/grants-search', {
+          method: 'POST',
+          headers: { 'content-type': 'application/json' },
+          body: JSON.stringify({ query: query, turnstileToken: token }),
+        });
+        var data = await resp.json();
+
+        if (resp.status === 429 && data.error === 'global_limit' && attempt <= 3) {
+          setStatus(LABELS.uz.retry);
+          setTimeout(go, 1500);
+          return;
+        }
+
+        if (!resp.ok || data.error) {
+          var msg = data.message_uz || data.message_en || data.error || LABELS.uz.srv;
+          setStatus(msg, true);
+          resetTurnstile();
+          submitBtn.disabled = false;
+          return;
+        }
+
+        setStatus('');
+        renderResults(data);
+        resetTurnstile();
+        submitBtn.disabled = false;
+      } catch (err) {
+        setStatus(LABELS.uz.netErr + (err && err.message || err), true);
+        resetTurnstile();
+        submitBtn.disabled = false;
+      }
+    }
+    go();
+  });
+})();
+</script>
 </main>
 <footer class="site-footer">
 <div class="footer-inner">
