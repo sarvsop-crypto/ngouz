@@ -3002,6 +3002,17 @@ body.a11y-grayscale { filter: grayscale(1); }
 .load-more-count { font-size: 13px; color: var(--neutral-500); margin-top: 8px; }
 .search-empty { padding: 24px 0; color: #798384; }
 
+/* Header nav spans full viewport with truly symmetric side padding
+   so logo (flush-left) and the rightmost icon (flush-right) sit at equal distance from the edges.
+   Other .container uses (hero, main sections, footer) remain 1200px centered. */
+.site-header > .container {
+  width: 100%;
+  max-width: 100%;
+  padding-left: clamp(16px, 2.5vw, 48px);
+  padding-right: clamp(16px, 2.5vw, 48px);
+  box-sizing: border-box;
+}
+
 /* ── Responsive-down fixes. */
 
 /* Top-bar: shrink fond-brand text progressively in the 1200-1100 window before menu collapses. */
