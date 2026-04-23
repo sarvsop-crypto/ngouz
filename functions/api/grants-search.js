@@ -27,9 +27,16 @@ export async function onRequestOptions() {
   });
 }
 
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost(ctx) {
   const H = { 'content-type': 'application/json; charset=utf-8', 'access-control-allow-origin': '*' };
+  try {
+    return await handle(ctx, H);
+  } catch (e) {
+    return json({ error: 'unhandled', stage: e.stage || 'unknown', message: String(e && e.message || e), stack: String(e && e.stack || '').split('\n').slice(0, 5).join(' | ') }, 500, H);
+  }
+}
 
+async function handle({ request, env }, H) {
   let body;
   try { body = await request.json(); } catch { return json({ error: 'bad_json' }, 400, H); }
   const query = (body && typeof body.query === 'string') ? body.query.trim() : '';
@@ -96,10 +103,12 @@ export async function onRequestPost({ request, env }) {
     `User question: ${query}`,
   ].join('\n');
 
-  const llm1 = await geminiCall(env.GEMINI_API_KEY, routerPrompt, 512);
+  let llm1;
+  try { llm1 = await geminiCall(env.GEMINI_API_KEY, routerPrompt, 512); }
+  catch (e) { return json({ error: 'llm1_call_failed', message: String(e && e.message || e) }, 502, H); }
   const parsed = extractJson(llm1);
   if (!parsed || !Array.isArray(parsed.queries) || parsed.queries.length === 0) {
-    return json({ error: 'llm1_parse_failed', raw: llm1 }, 500, H);
+    return json({ error: 'llm1_parse_failed', raw: String(llm1).slice(0, 400) }, 500, H);
   }
   const lang = ['uz', 'ru', 'en'].includes(parsed.lang) ? parsed.lang : 'uz';
 
@@ -150,9 +159,11 @@ export async function onRequestPost({ request, env }) {
     'If nothing in the results is a real open call, return an empty grants array and say so in `answer`.',
   ].join('\n');
 
-  const llm2 = await geminiCall(env.GEMINI_API_KEY, synthPrompt, 2048);
+  let llm2;
+  try { llm2 = await geminiCall(env.GEMINI_API_KEY, synthPrompt, 2048); }
+  catch (e) { return json({ error: 'llm2_call_failed', message: String(e && e.message || e) }, 502, H); }
   const synth = extractJson(llm2);
-  if (!synth) return json({ error: 'llm2_parse_failed', raw: llm2 }, 500, H);
+  if (!synth) return json({ error: 'llm2_parse_failed', raw: String(llm2).slice(0, 400) }, 500, H);
 
   return json({ lang, ...synth }, 200, H);
 }

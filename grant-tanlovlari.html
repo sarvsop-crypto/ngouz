@@ -210,7 +210,15 @@
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify({ query: query, turnstileToken: token }),
         });
-        var data = await resp.json();
+        var raw = await resp.text();
+        var data;
+        try { data = JSON.parse(raw); }
+        catch (_) {
+          setStatus('Server xatoligi (status ' + resp.status + '): ' + raw.slice(0, 300), true);
+          resetTurnstile();
+          submitBtn.disabled = false;
+          return;
+        }
 
         if (resp.status === 429 && data.error === 'global_limit' && attempt <= 3) {
           setStatus(LABELS.uz.retry);
