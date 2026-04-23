@@ -3002,28 +3002,6 @@ body.a11y-grayscale { filter: grayscale(1); }
 .load-more-count { font-size: 13px; color: var(--neutral-500); margin-top: 8px; }
 .search-empty { padding: 24px 0; color: #798384; }
 
-/* ── Large-monitor scale-up (QHD, 4K, ultrawide). */
-@media (min-width: 1500px) {
-  :root { --base-font-size: 18px; }
-  .container { width:min(1360px, calc(100% - 40px)); }
-  .container-narrow { width:min(960px, calc(100% - 40px)); }
-}
-@media (min-width: 1800px) {
-  :root { --base-font-size: 19px; }
-  .container { width:min(1500px, calc(100% - 48px)); }
-  .container-narrow { width:min(1040px, calc(100% - 48px)); }
-}
-@media (min-width: 2200px) {
-  :root { --base-font-size: 21px; }
-  .container { width:min(1680px, calc(100% - 64px)); }
-  .container-narrow { width:min(1180px, calc(100% - 64px)); }
-}
-@media (min-width: 2800px) {
-  :root { --base-font-size: 24px; }
-  .container { width:min(1920px, calc(100% - 80px)); }
-  .container-narrow { width:min(1320px, calc(100% - 80px)); }
-}
-
 /* ── Responsive-down fixes. */
 
 /* Top-bar: shrink fond-brand text progressively in the 1200-1100 window before menu collapses. */
