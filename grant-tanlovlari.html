@@ -13,15 +13,16 @@
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
   :root {
-    --g-brand: #8E51FF;
-    --g-brand-light: #F2E6FF;
-    --g-brand-border: #D4B3FF;
-    --g-ink: #101010;
-    --g-body: #606060;
-    --g-muted: #878787;
-    --g-subtle: #C2C2C2;
-    --g-border: #EDEDED;
-    --g-surface: #F5F5F5;
+    --g-brand: #0e7490;
+    --g-brand-dark: #155e75;
+    --g-brand-light: #e6f4f6;
+    --g-brand-border: #a8d8df;
+    --g-ink: #023347;
+    --g-body: #2a6e7a;
+    --g-muted: #587585;
+    --g-subtle: #929c9d;
+    --g-border: #e4e7e7;
+    --g-surface: #f1f8f8;
   }
 
   .grants-ai { max-width: 680px; margin: 0 auto; }
@@ -58,19 +59,20 @@
     transition: border-color .15s, background .15s;
   }
   .grants-ai__form textarea:focus { border-color: var(--g-brand); background: #fff; }
-  .grants-ai__form textarea::placeholder { color: #A78BFA; }
+  .grants-ai__form textarea::placeholder { color: #7aa3ad; }
 
-  .grants-ai__turnstile { min-height: 24px; }
+  /* Invisible mode — keep in DOM so the script runs, but take no space */
+  .grants-ai__turnstile { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 
   .grants-ai__submit {
     display: flex; align-items: center; justify-content: center; gap: 8px;
-    background: var(--g-ink); color: #fff;
+    background: var(--g-brand); color: #fff;
     border: 0; padding: 14px 20px; border-radius: 12px;
     font: inherit; font-size: 14px; font-weight: 500;
     cursor: pointer;
     transition: background .15s, opacity .15s;
   }
-  .grants-ai__submit:hover:not(:disabled) { background: #2E2E2E; }
+  .grants-ai__submit:hover:not(:disabled) { background: var(--g-brand-dark); }
   .grants-ai__submit:disabled { opacity: .5; cursor: not-allowed; }
   .grants-ai__submit svg { flex-shrink: 0; }
   .grants-ai__spinner {
@@ -119,7 +121,7 @@
     padding: 14px 16px;
     transition: border-color .15s, box-shadow .15s;
   }
-  .grant-card:hover { border-color: var(--g-brand); box-shadow: 0 4px 14px rgba(142,81,255,.08); }
+  .grant-card:hover { border-color: var(--g-brand); box-shadow: 0 4px 14px rgba(14,116,144,.1); }
   .grant-card h4 { margin: 0 0 4px; font-size: 15px; color: var(--g-ink); font-weight: 600; letter-spacing: -.005em; }
   .grant-card .donor { font-size: 12px; color: var(--g-muted); margin: 0 0 6px; }
   .grant-card .deadline {
