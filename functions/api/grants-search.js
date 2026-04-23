@@ -108,7 +108,16 @@ async function handle({ request, env }, H) {
 
   let llm1;
   try { llm1 = await geminiCall(env.GEMINI_API_KEY, routerPrompt, 512); }
-  catch (e) { return json({ error: 'llm1_call_failed', message: String(e && e.message || e) }, 502, H); }
+  catch (e) {
+    const rateLimited = e && e.code === 'gemini_rate_limited';
+    return json({
+      error: rateLimited ? 'gemini_rate_limited' : 'llm1_call_failed',
+      message_uz: rateLimited ? 'AI vaqtincha band — bir necha soniyadan so\'ng qayta urinib ko\'ring.' : undefined,
+      message_ru: rateLimited ? 'AI временно занят — попробуйте через несколько секунд.' : undefined,
+      message_en: rateLimited ? 'AI is temporarily busy — try again in a few seconds.' : undefined,
+      message: String(e && e.message || e),
+    }, rateLimited ? 429 : 502, { ...H, 'retry-after': rateLimited ? '10' : undefined });
+  }
   const parsed = extractJson(llm1);
   if (!parsed || !Array.isArray(parsed.queries) || parsed.queries.length === 0) {
     return json({ error: 'llm1_parse_failed', raw: String(llm1).slice(0, 400) }, 500, H);
@@ -174,7 +183,16 @@ async function handle({ request, env }, H) {
 
   let llm2;
   try { llm2 = await geminiCall(env.GEMINI_API_KEY, synthPrompt, 2048); }
-  catch (e) { return json({ error: 'llm2_call_failed', message: String(e && e.message || e) }, 502, H); }
+  catch (e) {
+    const rateLimited = e && e.code === 'gemini_rate_limited';
+    return json({
+      error: rateLimited ? 'gemini_rate_limited' : 'llm2_call_failed',
+      message_uz: rateLimited ? 'AI vaqtincha band — bir necha soniyadan so\'ng qayta urinib ko\'ring.' : undefined,
+      message_ru: rateLimited ? 'AI временно занят — попробуйте через несколько секунд.' : undefined,
+      message_en: rateLimited ? 'AI is temporarily busy — try again in a few seconds.' : undefined,
+      message: String(e && e.message || e),
+    }, rateLimited ? 429 : 502, { ...H, 'retry-after': rateLimited ? '10' : undefined });
+  }
   const synth = extractJson(llm2);
   if (!synth) return json({ error: 'llm2_parse_failed', raw: String(llm2).slice(0, 400) }, 500, H);
 
@@ -214,20 +232,30 @@ function json(obj, status, headers) {
 
 async function geminiCall(apiKey, prompt, maxOutputTokens) {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`;
-  const resp = await fetch(url, {
-    method: 'POST',
-    headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
-      generationConfig: {
-        temperature: 0.2,
-        maxOutputTokens,
-        responseMimeType: 'application/json',
-      },
-    }),
+  const body = JSON.stringify({
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: { temperature: 0.2, maxOutputTokens, responseMimeType: 'application/json' },
   });
-  const data = await resp.json();
-  return data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  for (let attempt = 0; attempt < 3; attempt++) {
+    const resp = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body });
+    const data = await resp.json().catch(() => ({}));
+    if (resp.status === 429) {
+      // Gemini free tier is 20 RPM; paid tier is much higher. Back off and retry.
+      const retryAfter = Number(data?.error?.details?.find?.(d => d?.retryDelay)?.retryDelay?.replace?.('s', '')) || (2 * (attempt + 1));
+      if (attempt === 2) {
+        const err = new Error('Gemini rate limited (429). ' + (data?.error?.message || '').slice(0, 200));
+        err.code = 'gemini_rate_limited';
+        throw err;
+      }
+      await new Promise(r => setTimeout(r, Math.min(retryAfter, 4) * 1000));
+      continue;
+    }
+    if (!resp.ok) {
+      throw new Error(`Gemini ${resp.status}: ${(data?.error?.message || '').slice(0, 200)}`);
+    }
+    return data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+  }
+  throw new Error('gemini_exhausted');
 }
 
 async function tavilySearch(apiKey, queries, opts) {
