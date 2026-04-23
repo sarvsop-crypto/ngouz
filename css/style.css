@@ -3023,13 +3023,21 @@ body.a11y-grayscale { filter: grayscale(1); }
 /* Home: keep the h1 clear of the fixed blurry header (height ~108px = 36 test-mode + 72 nav). */
 body.home-page .hero-cinematic-inner { padding: 160px 0 180px; }
 
-/* Collapse nav to hamburger at 1480. Keep grid auto 1fr auto so logo stays flush-left and hamburger flush-right (symmetric side padding = container margin). */
+/* At ≤1480: swap menu to hamburger but KEEP topbar-controls (eye / search / lang / fond-brand) visible.
+   Use a 4-col grid: [logo | 1fr filler | controls | hamburger] so the right side has controls AND hamburger flush with container right. */
 @media (max-width: 1480px) {
   .menu { display: none !important; }
-  .hamburger { display: flex !important; grid-column: 3; justify-self: end; }
-  .nav { grid-template-columns: auto 1fr auto; }
-  .topbar-controls { display: none; }
+  .hamburger { display: flex !important; justify-self: end; }
+  .nav { grid-template-columns: auto 1fr auto auto; }
 }
+
+/* Progressive shedding of topbar-controls items as room actually runs out. */
+@media (max-width: 1060px) { .topbar-fond-name { display: none; } }
+@media (max-width:  900px) { .topbar-fond-brand { display: none; } }
+@media (max-width:  720px) { .topbar-lang:nth-child(n+2) { display: none; } }
+@media (max-width:  560px) { .topbar-lang { display: none; } }
+@media (max-width:  480px) { .vis-btn { display: none; } }
+@media (max-width:  400px) { .search-btn { display: none; } }
 
 /* At ≤1100: stack the hero so stats bar / CTA buttons flow below content naturally. */
 @media (max-width: 1100px) {
