@@ -131,9 +131,11 @@ async function handle({ request, env }, H) {
   }
 
   // --- 5. LLM #2: synthesizer ---
+  const todayISO = new Date().toISOString().slice(0, 10);
   const langName = { uz: 'Uzbek (O\'zbekcha)', ru: 'Russian (Русский)', en: 'English' }[lang];
   const synthPrompt = [
-    `You are a grants researcher. The user asked: "${query}"`,
+    `You are a grants researcher. Today is ${todayISO}.`,
+    `The user asked: "${query}"`,
     `Their sector: ${parsed.soha}`,
     `Respond in: ${langName}.`,
     '',
@@ -148,7 +150,7 @@ async function handle({ request, env }, H) {
     '    {',
     '      "name": "grant/call name",',
     '      "donor": "issuing organization",',
-    '      "deadline": "YYYY-MM-DD or \\"rolling\\" or \\"unknown\\"",',
+    `      "deadline": "YYYY-MM-DD (a date strictly AFTER ${todayISO}) or \\"rolling\\" for open-ended programs",`,
     '      "link": "URL",',
     `      "summary": "1-2 sentences in ${langName} about who this is for and what it funds",`,
     '      "source": "root domain only, e.g. un.org"',
@@ -156,7 +158,12 @@ async function handle({ request, env }, H) {
     '  ]',
     '}',
     '',
-    'If nothing in the results is a real open call, return an empty grants array and say so in `answer`.',
+    'HARD FILTERS — skip the grant entirely if any apply:',
+    `- The deadline is before ${todayISO} (already passed).`,
+    '- The deadline is not clearly stated in the source (do not guess).',
+    '- The result is a generic page, news article, or archive — not an active call.',
+    '',
+    'If nothing in the results is a real open call with a future deadline (or rolling), return an empty grants array and say so in `answer`.',
   ].join('\n');
 
   let llm2;
@@ -165,7 +172,33 @@ async function handle({ request, env }, H) {
   const synth = extractJson(llm2);
   if (!synth) return json({ error: 'llm2_parse_failed', raw: String(llm2).slice(0, 400) }, 500, H);
 
+  // Defensive filter: drop grants with unknown or passed deadlines.
+  if (Array.isArray(synth.grants)) {
+    synth.grants = synth.grants.filter(g => hasValidDeadline(g && g.deadline));
+    if (synth.grants.length === 0 && synth.answer) {
+      // Tell the user nothing open was found instead of showing a stale "answer" pointing at filtered-out items.
+      const noHits = {
+        uz: 'Hozirgi vaqtda ochiq va muddati o\'tmagan grantlar topilmadi. Keyinroq qayta urinib ko\'ring yoki so\'rovni kengroq yozing.',
+        ru: 'На данный момент открытых грантов с актуальным сроком не найдено. Попробуйте позже или сформулируйте запрос шире.',
+        en: 'No currently open grants with active deadlines found. Try again later or broaden your query.',
+      };
+      synth.answer = noHits[lang] || noHits.uz;
+    }
+  }
+
   return json({ lang, ...synth }, 200, H);
+}
+
+function hasValidDeadline(dl) {
+  if (!dl) return false;
+  const s = String(dl).trim().toLowerCase();
+  if (!s || s === 'unknown' || s === 'n/a' || s === 'tbd' || s === 'tba') return false;
+  if (s === 'rolling' || s === 'ongoing' || s === 'open' || s === 'continuous') return true;
+  const d = new Date(s);
+  if (isNaN(d.getTime())) return false;
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+  return d.getTime() >= today.getTime();
 }
 
 // ── helpers ─────────────────────────────────────────────────────────
