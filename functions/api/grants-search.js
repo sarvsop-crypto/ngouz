@@ -99,12 +99,7 @@ async function handle({ request, env }, H) {
     '- lang: detected language code ("uz", "ru", or "en")',
     '- soha: short English label for the user\'s sector (e.g. "autism support", "beekeeping", "rural water")',
     '- keywords: 3-5 English search terms',
-    `- queries: exactly 4 DIVERSE English search queries aimed at finding currently-OPEN grant calls for this sector. Each query must push for a FUTURE deadline result. Mix these angles across the 4 queries so Tavily returns varied hits:`,
-    `    1) "<sector> grant call ${nowYear} application deadline"`,
-    `    2) "<sector> funding opportunity ${nowYear} open applications"`,
-    `    3) "<sector> NGO grant Uzbekistan Central Asia ${nowYear}" (geographic slant)`,
-    `    4) "<sector> call for proposals deadline ${nowYear + 1}" (next-year angle)`,
-    'Do not return placeholder <sector> — substitute real keywords.',
+    `- queries: exactly 2 complementary English search queries aimed at finding currently-OPEN grant calls with FUTURE deadlines for this sector. Use phrases like "grant call ${nowYear}", "application deadline", "open funding opportunity".`,
     '',
     'Return ONLY the JSON object. No markdown, no commentary.',
     '',
@@ -122,12 +117,12 @@ async function handle({ request, env }, H) {
 
   // --- 4. Tavily search: whitelist first, broad fallback ---
   let results = await tavilySearch(env.TAVILY_API_KEY, parsed.queries, { include_domains: WHITELIST });
-  if (results.length < 8) {
+  if (results.length < 3) {
     const broad = await tavilySearch(env.TAVILY_API_KEY, parsed.queries, { exclude_domains: SPAM_DOMAINS });
     const seen = new Set(results.map(r => r.url));
     for (const r of broad) if (!seen.has(r.url)) { results.push(r); seen.add(r.url); }
   }
-  results = results.slice(0, 20);
+  results = results.slice(0, 10);
 
   if (results.length === 0) {
     const noHits = {
@@ -241,7 +236,7 @@ async function tavilySearch(apiKey, queries, opts) {
     const body = {
       api_key: apiKey,
       query: q,
-      max_results: 10,
+      max_results: 5,
       search_depth: 'advanced',
     };
     if (opts.include_domains) body.include_domains = opts.include_domains;
