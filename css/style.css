@@ -3023,11 +3023,11 @@ body.a11y-grayscale { filter: grayscale(1); }
 /* Home: keep the h1 clear of the fixed blurry header (height ~108px = 36 test-mode + 72 nav). */
 body.home-page .hero-cinematic-inner { padding: 160px 0 180px; }
 
-/* Collapse nav to hamburger at 1480 — below this, nav content (~1340px) overflows the 1200 container asymmetrically to the right. */
+/* Collapse nav to hamburger at 1480. Keep grid auto 1fr auto so logo stays flush-left and hamburger flush-right (symmetric side padding = container margin). */
 @media (max-width: 1480px) {
   .menu { display: none !important; }
-  .hamburger { display: flex !important; grid-column: 3; }
-  .nav { grid-template-columns: 1fr auto 1fr; }
+  .hamburger { display: flex !important; grid-column: 3; justify-self: end; }
+  .nav { grid-template-columns: auto 1fr auto; }
   .topbar-controls { display: none; }
 }
 
