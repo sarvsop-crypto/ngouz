@@ -139,7 +139,7 @@ async function handle({ request, env }, H) {
     `Their sector: ${parsed.soha}`,
     `Respond in: ${langName}.`,
     '',
-    'Below are web search results from vetted donor / government sources. Filter to only include items that look like ACTUAL OPEN CALLS, funding opportunities, or directly-relevant active programs. Skip results that are news articles about grants, generic donor pages, or unrelated.',
+    'Below are web search results from vetted donor / government sources. Include any item that looks like an open or ongoing grant / funding opportunity / active program. Skip news articles, archives, and clearly expired calls.',
     '',
     ...results.map((r, i) => `[${i + 1}] ${r.title}\nURL: ${r.url}\nSnippet: ${(r.content || '').slice(0, 400)}`),
     '',
@@ -150,7 +150,7 @@ async function handle({ request, env }, H) {
     '    {',
     '      "name": "grant/call name",',
     '      "donor": "issuing organization",',
-    `      "deadline": "YYYY-MM-DD (a date strictly AFTER ${todayISO}) or \\"rolling\\" for open-ended programs",`,
+    '      "deadline": "YYYY-MM-DD | rolling | unknown",',
     '      "link": "URL",',
     `      "summary": "1-2 sentences in ${langName} about who this is for and what it funds",`,
     '      "source": "root domain only, e.g. un.org"',
@@ -158,12 +158,13 @@ async function handle({ request, env }, H) {
     '  ]',
     '}',
     '',
-    'HARD FILTERS — skip the grant entirely if any apply:',
-    `- The deadline is before ${todayISO} (already passed).`,
-    '- The deadline is not clearly stated in the source (do not guess).',
-    '- The result is a generic page, news article, or archive — not an active call.',
+    'Deadline rules:',
+    `- If the source clearly states a date in the future (after ${todayISO}), use that YYYY-MM-DD.`,
+    '- If the program is clearly open-ended, use "rolling".',
+    '- If the source does not state a deadline, use "unknown" (still include the grant).',
+    `- HARD SKIP: do NOT include a grant whose source explicitly shows a deadline BEFORE ${todayISO} (already passed).`,
     '',
-    'If nothing in the results is a real open call with a future deadline (or rolling), return an empty grants array and say so in `answer`.',
+    'If nothing in the results is relevant, return an empty grants array and say so in `answer`.',
   ].join('\n');
 
   let llm2;
@@ -172,33 +173,26 @@ async function handle({ request, env }, H) {
   const synth = extractJson(llm2);
   if (!synth) return json({ error: 'llm2_parse_failed', raw: String(llm2).slice(0, 400) }, 500, H);
 
-  // Defensive filter: drop grants with unknown or passed deadlines.
+  // Defensive filter: drop ONLY grants whose deadline is a parseable date that's already in the past.
+  // Unknown / rolling / future dates all pass.
   if (Array.isArray(synth.grants)) {
-    synth.grants = synth.grants.filter(g => hasValidDeadline(g && g.deadline));
-    if (synth.grants.length === 0 && synth.answer) {
-      // Tell the user nothing open was found instead of showing a stale "answer" pointing at filtered-out items.
-      const noHits = {
-        uz: 'Hozirgi vaqtda ochiq va muddati o\'tmagan grantlar topilmadi. Keyinroq qayta urinib ko\'ring yoki so\'rovni kengroq yozing.',
-        ru: 'На данный момент открытых грантов с актуальным сроком не найдено. Попробуйте позже или сформулируйте запрос шире.',
-        en: 'No currently open grants with active deadlines found. Try again later or broaden your query.',
-      };
-      synth.answer = noHits[lang] || noHits.uz;
-    }
+    synth.grants = synth.grants.filter(g => !hasPassedDeadline(g && g.deadline));
   }
 
   return json({ lang, ...synth }, 200, H);
 }
 
-function hasValidDeadline(dl) {
+function hasPassedDeadline(dl) {
   if (!dl) return false;
   const s = String(dl).trim().toLowerCase();
-  if (!s || s === 'unknown' || s === 'n/a' || s === 'tbd' || s === 'tba') return false;
-  if (s === 'rolling' || s === 'ongoing' || s === 'open' || s === 'continuous') return true;
+  if (!s) return false;
+  // Accept: unknown, rolling, ongoing, etc — never treat as passed.
+  if (['unknown', 'rolling', 'ongoing', 'open', 'continuous', 'n/a', 'tbd', 'tba'].includes(s)) return false;
   const d = new Date(s);
-  if (isNaN(d.getTime())) return false;
+  if (isNaN(d.getTime())) return false; // unparseable → keep (not passed, just unknown format)
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
-  return d.getTime() >= today.getTime();
+  return d.getTime() < today.getTime();
 }
 
 // ── helpers ─────────────────────────────────────────────────────────
