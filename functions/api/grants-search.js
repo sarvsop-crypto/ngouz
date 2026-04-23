@@ -82,10 +82,10 @@ async function handle({ request, env }, H) {
     }, 429, { ...H, 'retry-after': '1' });
   }
 
-  // Increment (fire-and-forget; the KV put is eventually consistent but good enough here)
+  // Increment (Cloudflare KV requires expirationTtl >= 60s)
   await Promise.all([
     env.RL_KV.put(ipKey, String(ipCount + 1), { expirationTtl: 90000 }),
-    env.RL_KV.put(globalKey, String(globalCount + 1), { expirationTtl: 3 }),
+    env.RL_KV.put(globalKey, String(globalCount + 1), { expirationTtl: 60 }),
   ]);
 
   // --- 3. LLM #1: router / query extractor ---
