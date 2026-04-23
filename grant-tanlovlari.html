@@ -12,33 +12,132 @@
 <link href="css/style.css" rel="stylesheet">
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
-  .grants-ai { max-width: 860px; margin: 0 auto; }
-  .grants-ai__header h2 { font-size: 26px; margin: 0 0 6px; color: #023347; }
-  .grants-ai__header p { color: #587585; margin: 0 0 20px; font-size: 15px; }
-  .grants-ai__form { background: #fff; border: 1px solid #e4e7e7; border-radius: 12px; padding: 18px; box-shadow: 0 2px 8px rgba(2,51,71,.04); }
-  .grants-ai__form textarea { width: 100%; resize: vertical; min-height: 80px; padding: 12px 14px; border: 1px solid #cfd9df; border-radius: 8px; font: inherit; font-size: 16px; color: #1a2e3a; outline: none; box-sizing: border-box; transition: border-color .15s; }
-  .grants-ai__form textarea:focus { border-color: #0e7490; }
-  .grants-ai__form .cf-turnstile { margin: 14px 0; }
-  .grants-ai__form button { background: #0e7490; color: #fff; border: 0; padding: 12px 24px; border-radius: 8px; font-weight: 700; font-size: 15px; cursor: pointer; transition: background .15s; }
-  .grants-ai__form button:hover:not(:disabled) { background: #155e75; }
-  .grants-ai__form button:disabled { background: #a0aaae; cursor: not-allowed; }
-  .grants-ai__status { margin-top: 18px; font-size: 14px; color: #587585; min-height: 20px; }
-  .grants-ai__status.error { color: #c0392b; }
-  .grants-ai__answer { margin-top: 24px; font-size: 16px; line-height: 1.55; color: #1a2e3a; padding: 14px 16px; background: #f1f8f8; border-left: 3px solid #0e7490; border-radius: 4px; display: none; }
+  :root {
+    --g-brand: #8E51FF;
+    --g-brand-light: #F2E6FF;
+    --g-brand-border: #D4B3FF;
+    --g-ink: #101010;
+    --g-body: #606060;
+    --g-muted: #878787;
+    --g-subtle: #C2C2C2;
+    --g-border: #EDEDED;
+    --g-surface: #F5F5F5;
+  }
+
+  .grants-ai { max-width: 680px; margin: 0 auto; }
+  .grants-ai__header { text-align: center; margin-bottom: 20px; }
+  .grants-ai__eyebrow {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--g-brand); margin-bottom: 10px;
+  }
+  .grants-ai__eyebrow svg { flex-shrink: 0; }
+  .grants-ai__header h2 { font-size: 26px; margin: 0 0 6px; color: var(--g-ink); font-weight: 700; letter-spacing: -.01em; }
+  .grants-ai__header p { color: var(--g-muted); margin: 0; font-size: 14px; line-height: 1.5; }
+
+  /* AI panel */
+  .grants-ai__panel {
+    background: var(--g-brand-light);
+    border: 1px solid var(--g-brand-border);
+    border-radius: 14px;
+    padding: 14px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .grants-ai__panel-label {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600;
+    color: var(--g-brand);
+  }
+  .grants-ai__panel-label svg { flex-shrink: 0; }
+  .grants-ai__form textarea {
+    width: 100%; resize: none; min-height: 84px;
+    padding: 12px 14px; font: inherit; font-size: 14px;
+    color: var(--g-ink); background: rgba(255,255,255,.7);
+    border: 1px solid var(--g-brand-border); border-radius: 10px;
+    outline: none; box-sizing: border-box;
+    transition: border-color .15s, background .15s;
+  }
+  .grants-ai__form textarea:focus { border-color: var(--g-brand); background: #fff; }
+  .grants-ai__form textarea::placeholder { color: #A78BFA; }
+
+  .grants-ai__turnstile { min-height: 24px; }
+
+  .grants-ai__submit {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--g-ink); color: #fff;
+    border: 0; padding: 14px 20px; border-radius: 12px;
+    font: inherit; font-size: 14px; font-weight: 500;
+    cursor: pointer;
+    transition: background .15s, opacity .15s;
+  }
+  .grants-ai__submit:hover:not(:disabled) { background: #2E2E2E; }
+  .grants-ai__submit:disabled { opacity: .5; cursor: not-allowed; }
+  .grants-ai__submit svg { flex-shrink: 0; }
+  .grants-ai__spinner {
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,.3); border-top-color: #fff;
+    border-radius: 50%; animation: g-spin .7s linear infinite;
+  }
+  @keyframes g-spin { to { transform: rotate(360deg); } }
+
+  /* Status / thinking */
+  .grants-ai__status { margin-top: 16px; font-size: 12px; color: var(--g-muted); min-height: 16px; text-align: center; }
+  .grants-ai__status.error { color: #E63946; }
+  .grants-ai__thinking {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 12px; color: var(--g-muted);
+  }
+  .grants-ai__dots { display: inline-flex; gap: 4px; }
+  .grants-ai__dots span {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--g-brand);
+    animation: g-bounce 1.2s infinite ease-in-out both;
+  }
+  .grants-ai__dots span:nth-child(2) { animation-delay: .15s; }
+  .grants-ai__dots span:nth-child(3) { animation-delay: .3s; }
+  @keyframes g-bounce { 0%, 80%, 100% { transform: scale(.6); opacity: .5; } 40% { transform: scale(1); opacity: 1; } }
+
+  /* Results */
+  .grants-ai__divider {
+    display: flex; align-items: center; gap: 10px;
+    margin: 28px 0 14px; color: var(--g-muted);
+    font-size: 10px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase;
+  }
+  .grants-ai__divider::before, .grants-ai__divider::after { content: ''; flex: 1; height: 1px; background: var(--g-border); }
+
+  .grants-ai__answer {
+    font-size: 15px; line-height: 1.55; color: var(--g-ink);
+    padding: 14px 16px; background: var(--g-brand-light);
+    border-left: 3px solid var(--g-brand); border-radius: 10px;
+    display: none;
+  }
   .grants-ai__answer.show { display: block; }
-  .grants-ai__results { margin-top: 20px; display: grid; gap: 12px; }
-  .grant-card { background: #fff; border: 1px solid #e4e7e7; border-radius: 10px; padding: 16px 18px; transition: border-color .15s, box-shadow .15s; }
-  .grant-card:hover { border-color: #0e7490; box-shadow: 0 4px 14px rgba(1,61,140,.08); }
-  .grant-card h4 { margin: 0 0 6px; font-size: 17px; color: #023347; }
-  .grant-card .donor { font-size: 13px; color: #587585; margin: 0 0 6px; }
-  .grant-card .deadline { font-size: 13px; color: #c0392b; font-weight: 600; margin: 0 0 8px; }
-  .grant-card p.body { margin: 0 0 10px; font-size: 14px; color: #2d3a3b; line-height: 1.5; }
-  .grant-card a { color: #0e7490; font-weight: 600; font-size: 14px; text-decoration: none; }
+
+  .grants-ai__results { margin-top: 14px; display: grid; gap: 10px; }
+  .grant-card {
+    background: #fff; border: 1px solid var(--g-border); border-radius: 14px;
+    padding: 14px 16px;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .grant-card:hover { border-color: var(--g-brand); box-shadow: 0 4px 14px rgba(142,81,255,.08); }
+  .grant-card h4 { margin: 0 0 4px; font-size: 15px; color: var(--g-ink); font-weight: 600; letter-spacing: -.005em; }
+  .grant-card .donor { font-size: 12px; color: var(--g-muted); margin: 0 0 6px; }
+  .grant-card .deadline {
+    display: inline-block; font-size: 11px; font-weight: 600;
+    color: var(--g-brand); background: var(--g-brand-light);
+    padding: 3px 8px; border-radius: 6px; margin-bottom: 8px;
+  }
+  .grant-card .body { margin: 0 0 10px; font-size: 13px; color: var(--g-body); line-height: 1.5; }
+  .grant-card a {
+    display: inline-flex; align-items: center; gap: 4px;
+    color: var(--g-brand); font-weight: 500; font-size: 13px; text-decoration: none;
+  }
   .grant-card a:hover { text-decoration: underline; }
+
   @media (max-width: 560px) {
     .grants-ai__header h2 { font-size: 22px; }
-    .grants-ai__form { padding: 14px; }
-    .grant-card { padding: 14px; }
+    .grants-ai__panel { padding: 12px; }
+    .grant-card { padding: 12px 14px; }
   }
 </style>
 </link></head>
@@ -122,13 +221,24 @@
 <div class="container">
 <div class="grants-ai">
 <div class="grants-ai__header">
-<h2>Soha bo'yicha grant qidirish (AI)</h2>
-<p>Sohangizni yoki loyiha g'oyangizni o'zbekcha, ruscha yoki inglizcha yozing — ishonchli donor va davlat manbalaridan ochiq grantlarni topamiz.</p>
+<span class="grants-ai__eyebrow">
+<svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0l1.5 4.5L14 6l-4.5 1.5L8 12l-1.5-4.5L2 6l4.5-1.5L8 0zm5 9l.9 2.1L16 12l-2.1.9L13 15l-.9-2.1L10 12l2.1-.9L13 9z"/></svg>
+AI yordamchi
+</span>
+<h2>Sohangizga mos grantni toping</h2>
+<p>Vaziyatingizni yoki loyiha g'oyangizni erkin yozing — ishonchli donor va davlat manbalaridan eng mos ochiq grantlarni topamiz.</p>
 </div>
-<form class="grants-ai__form" id="grantsForm" autocomplete="off">
-<textarea id="grantsQuery" placeholder="Masalan: 'Autizm spektri kasalligi bo'lgan bolalarga yordam beruvchi NNT uchun grant bormi?'" rows="3" maxlength="500" required></textarea>
-<div class="cf-turnstile" data-sitekey="0x4AAAAAADB9Mx0-zTy-6jb_" data-size="flexible" data-theme="light"></div>
-<button type="submit" id="grantsSubmit">Qidirish</button>
+<form class="grants-ai__panel grants-ai__form" id="grantsForm" autocomplete="off">
+<span class="grants-ai__panel-label">
+<svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0l1.5 4.5L14 6l-4.5 1.5L8 12l-1.5-4.5L2 6l4.5-1.5L8 0zm5 9l.9 2.1L16 12l-2.1.9L13 15l-.9-2.1L10 12l2.1-.9L13 9z"/></svg>
+So'rovingizni yozing
+</span>
+<textarea id="grantsQuery" placeholder="Masalan: Autizm spektri kasalligi bo'lgan bolalarga yordam beruvchi NNT uchun grant bormi? / Расскажите, для какой сферы нужен грант..." rows="3" maxlength="500" required></textarea>
+<div class="grants-ai__turnstile cf-turnstile" data-sitekey="0x4AAAAAADB9Mx0-zTy-6jb_" data-size="flexible" data-theme="light"></div>
+<button type="submit" id="grantsSubmit" class="grants-ai__submit">
+<svg id="grantsSubmitIcon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0l1.5 4.5L14 6l-4.5 1.5L8 12l-1.5-4.5L2 6l4.5-1.5L8 0z"/></svg>
+<span id="grantsSubmitLabel">Grantlarni topish</span>
+</button>
 </form>
 <div class="grants-ai__status" id="grantsStatus"></div>
 <div class="grants-ai__answer" id="grantsAnswer"></div>
@@ -146,10 +256,33 @@
   var resultsEl = document.getElementById('grantsResults');
 
   var LABELS = {
-    uz: { searching: 'Qidirilmoqda...', retry: 'Server band, qayta urinilmoqda...', netErr: 'Tarmoq xatoligi: ', srv: 'Server xatoligi', deadline: 'Muddati: ', open: 'Rasmiy sahifaga o\'tish →', noTs: 'Turnstile hali tayyor emas, bir necha soniyadan so\'ng qayta urinib ko\'ring.', empty: 'Iltimos savolingizni kiriting.' },
-    ru: { deadline: 'Срок: ', open: 'Открыть источник →' },
-    en: { deadline: 'Deadline: ', open: 'Open source →' },
+    uz: { thinking: 'O\'ylayapman', retry: 'Server band, qayta urinilmoqda...', netErr: 'Tarmoq xatoligi: ', srv: 'Server xatoligi', deadline: 'Muddat: ', open: 'Rasmiy sahifa', noTs: 'Turnstile hali tayyor emas, bir necha soniyadan so\'ng qayta urinib ko\'ring.', empty: 'Iltimos savolingizni kiriting.', btnLoading: 'Qidirilmoqda...' },
+    ru: { deadline: 'Срок: ', open: 'Источник' },
+    en: { deadline: 'Deadline: ', open: 'Source' },
   };
+
+  var submitIcon = document.getElementById('grantsSubmitIcon');
+  var submitLabel = document.getElementById('grantsSubmitLabel');
+  var defaultIconHtml = submitIcon.outerHTML;
+  var defaultLabel = submitLabel.textContent;
+  function setSubmitLoading(on) {
+    if (on) {
+      submitIcon.outerHTML = '<span class="grants-ai__spinner" id="grantsSubmitIcon"></span>';
+      submitLabel.textContent = LABELS.uz.btnLoading;
+    } else {
+      document.getElementById('grantsSubmitIcon').outerHTML = defaultIconHtml;
+      submitLabel.textContent = defaultLabel;
+    }
+    submitIcon = document.getElementById('grantsSubmitIcon');
+  }
+  function setThinking(on) {
+    if (on) {
+      statusEl.innerHTML = '<span class="grants-ai__thinking"><span class="grants-ai__dots"><span></span><span></span><span></span></span><span>' + LABELS.uz.thinking + '</span></span>';
+      statusEl.className = 'grants-ai__status';
+    } else {
+      statusEl.innerHTML = '';
+    }
+  }
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
@@ -167,23 +300,35 @@
     if (window.turnstile) try { window.turnstile.reset(); } catch (_) {}
   }
 
+  var DIVIDER_LABEL = { uz: 'Topilgan grantlar', ru: 'Найденные гранты', en: 'Found grants' };
+  var ARROW = '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="margin-left:2px;vertical-align:-1px"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
+
   function renderResults(data) {
     var lang = data.lang || 'uz';
-    var L = LABELS[lang] || LABELS.uz;
+    var L = Object.assign({}, LABELS.uz, LABELS[lang] || {});
+    resultsEl.innerHTML = '';
     if (data.answer) {
       answerEl.textContent = data.answer;
       answerEl.classList.add('show');
+    } else {
+      answerEl.classList.remove('show');
     }
-    resultsEl.innerHTML = '';
-    (data.grants || []).forEach(function (g) {
+    var grants = data.grants || [];
+    if (grants.length > 0) {
+      var divider = document.createElement('div');
+      divider.className = 'grants-ai__divider';
+      divider.textContent = DIVIDER_LABEL[lang] || DIVIDER_LABEL.uz;
+      resultsEl.appendChild(divider);
+    }
+    grants.forEach(function (g) {
       var card = document.createElement('div');
       card.className = 'grant-card';
       card.innerHTML =
         '<h4>' + esc(g.name) + '</h4>' +
-        '<p class="donor">' + esc(g.donor || '') + (g.source ? ' · <span>' + esc(g.source) + '</span>' : '') + '</p>' +
-        '<p class="deadline">' + L.deadline + esc(g.deadline || 'unknown') + '</p>' +
+        '<p class="donor">' + esc(g.donor || '') + (g.source ? ' · ' + esc(g.source) : '') + '</p>' +
+        (g.deadline && g.deadline !== 'unknown' ? '<span class="deadline">' + L.deadline + esc(g.deadline) + '</span>' : '') +
         '<p class="body">' + esc(g.summary || '') + '</p>' +
-        (g.link ? '<a href="' + esc(g.link) + '" target="_blank" rel="noopener noreferrer">' + L.open + '</a>' : '');
+        (g.link ? '<a href="' + esc(g.link) + '" target="_blank" rel="noopener noreferrer">' + L.open + ARROW + '</a>' : '');
       resultsEl.appendChild(card);
     });
   }
@@ -196,7 +341,8 @@
     if (!token) { setStatus(LABELS.uz.noTs, true); return; }
 
     submitBtn.disabled = true;
-    setStatus(LABELS.uz.searching);
+    setSubmitLoading(true);
+    setThinking(true);
     answerEl.classList.remove('show');
     answerEl.textContent = '';
     resultsEl.innerHTML = '';
@@ -217,6 +363,7 @@
           setStatus('Server xatoligi (status ' + resp.status + '): ' + raw.slice(0, 300), true);
           resetTurnstile();
           submitBtn.disabled = false;
+          setSubmitLoading(false);
           return;
         }
 
@@ -231,17 +378,20 @@
           setStatus(msg, true);
           resetTurnstile();
           submitBtn.disabled = false;
+          setSubmitLoading(false);
           return;
         }
 
-        setStatus('');
+        setThinking(false);
         renderResults(data);
         resetTurnstile();
         submitBtn.disabled = false;
+        setSubmitLoading(false);
       } catch (err) {
         setStatus(LABELS.uz.netErr + (err && err.message || err), true);
         resetTurnstile();
         submitBtn.disabled = false;
+        setSubmitLoading(false);
       }
     }
     go();
