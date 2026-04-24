@@ -1,0 +1,17 @@
+name = "ngouz"
+pages_build_output_dir = ""
+compatibility_date = "2026-04-04"
+
+[ai]
+binding = "AI"
+
+[[kv_namespaces]]
+id = "85fc5115533d45878418dce3b121cc7f"
+binding = "RL_KV"
+
+[env.production.ai]
+binding = "AI"
+
+[[env.production.kv_namespaces]]
+id = "85fc5115533d45878418dce3b121cc7f"
+binding = "RL_KV"

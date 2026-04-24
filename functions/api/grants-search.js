@@ -1,6 +1,6 @@
 // Cloudflare Pages Function: POST /api/grants-search
-// Pipeline: Turnstile verify → rate limits (3/day per IP, 2/sec global) →
-// Gemini router → Tavily (whitelist + fallback) → Gemini synthesizer.
+// Pipeline: Turnstile verify → rate limits (1000/day per IP, 2/sec global) →
+// Gemma 4 router (Workers AI) → DuckDuckGo + page-fetch enrich → Gemma 4 synthesizer.
 
 const WHITELIST = [
   'gov.uz', 'uzbekistan.un.org', 'nntma.uz', 'yeoj.uz', 'yoshlaragentligi.uz',
@@ -14,7 +14,9 @@ const WHITELIST = [
 
 const SPAM_DOMAINS = ['pinterest.com', 'quora.com', 'reddit.com', 'medium.com'];
 
-const MODEL = 'gemini-2.5-flash-lite';
+const GEMMA_MODEL = '@cf/google/gemma-4-26b-a4b-it';
+
+const BROWSER_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
 
 export async function onRequestOptions() {
   return new Response(null, {
@@ -107,11 +109,11 @@ async function handle({ request, env }, H) {
   ].join('\n');
 
   let llm1;
-  try { llm1 = await geminiCall(env.GEMINI_API_KEY, routerPrompt, 512); }
+  try { llm1 = await gemmaCall(env.AI, routerPrompt, 512); }
   catch (e) {
-    const rateLimited = e && e.code === 'gemini_rate_limited';
+    const rateLimited = e && e.code === 'gemma_rate_limited';
     return json({
-      error: rateLimited ? 'gemini_rate_limited' : 'llm1_call_failed',
+      error: rateLimited ? 'gemma_rate_limited' : 'llm1_call_failed',
       message_uz: rateLimited ? 'AI vaqtincha band — bir necha soniyadan so\'ng qayta urinib ko\'ring.' : undefined,
       message_ru: rateLimited ? 'AI временно занят — попробуйте через несколько секунд.' : undefined,
       message_en: rateLimited ? 'AI is temporarily busy — try again in a few seconds.' : undefined,
@@ -124,16 +126,21 @@ async function handle({ request, env }, H) {
   }
   const lang = ['uz', 'ru', 'en'].includes(parsed.lang) ? parsed.lang : 'uz';
 
-  // --- 4. Tavily search: whitelist first, broad fallback ---
-  let results = await tavilySearch(env.TAVILY_API_KEY, parsed.queries, { include_domains: WHITELIST });
-  if (results.length < 3) {
-    const broad = await tavilySearch(env.TAVILY_API_KEY, parsed.queries, { exclude_domains: SPAM_DOMAINS });
-    const seen = new Set(results.map(r => r.url));
-    for (const r of broad) if (!seen.has(r.url)) { results.push(r); seen.add(r.url); }
-  }
-  results = results.slice(0, 10);
+  // --- 4. DuckDuckGo search → post-hoc whitelist filter → broad fallback ---
+  const allRaw = await duckduckgoSearch(parsed.queries);
+  const broadFiltered = allRaw.filter(r => !SPAM_DOMAINS.some(d => urlHostMatches(r.url, d)));
+  const whitelisted = broadFiltered.filter(r => WHITELIST.some(d => urlHostMatches(r.url, d)));
 
-  if (results.length === 0) {
+  let chosen = whitelisted.slice(0, 6);
+  if (chosen.length < 3) {
+    const seen = new Set(chosen.map(r => r.url));
+    for (const r of broadFiltered) {
+      if (chosen.length >= 6) break;
+      if (!seen.has(r.url)) { chosen.push(r); seen.add(r.url); }
+    }
+  }
+
+  if (chosen.length === 0) {
     const noHits = {
       uz: 'Ushbu soha uchun ochiq grantlar topilmadi. So\'rovingizni kengroq ifodalab ko\'ring.',
       ru: 'Открытых грантов для этой сферы не найдено. Попробуйте сформулировать запрос шире.',
@@ -141,6 +148,12 @@ async function handle({ request, env }, H) {
     };
     return json({ lang, answer: noHits[lang], grants: [] }, 200, H);
   }
+
+  // Enrich with fetched page content (parallel, best-effort, 1500 chars each).
+  const results = await Promise.all(chosen.map(async (r) => {
+    const content = await fetchAndStrip(r.url, 1500).catch(() => '');
+    return { url: r.url, title: r.title, content: content || r.snippet || '' };
+  }));
 
   // --- 5. LLM #2: synthesizer ---
   const todayISO = new Date().toISOString().slice(0, 10);
@@ -153,7 +166,7 @@ async function handle({ request, env }, H) {
     '',
     'Below are web search results from vetted donor / government sources. Include any item that looks like an open or ongoing grant / funding opportunity / active program. Skip news articles, archives, and clearly expired calls.',
     '',
-    ...results.map((r, i) => `[${i + 1}] ${r.title}\nURL: ${r.url}\nSnippet: ${(r.content || '').slice(0, 400)}`),
+    ...results.map((r, i) => `[${i + 1}] ${r.title}\nURL: ${r.url}\nContent: ${(r.content || '').slice(0, 1500)}`),
     '',
     'Return ONLY JSON (no markdown) with shape:',
     '{',
@@ -182,11 +195,11 @@ async function handle({ request, env }, H) {
   ].join('\n');
 
   let llm2;
-  try { llm2 = await geminiCall(env.GEMINI_API_KEY, synthPrompt, 2048); }
+  try { llm2 = await gemmaCall(env.AI, synthPrompt, 2048); }
   catch (e) {
-    const rateLimited = e && e.code === 'gemini_rate_limited';
+    const rateLimited = e && e.code === 'gemma_rate_limited';
     return json({
-      error: rateLimited ? 'gemini_rate_limited' : 'llm2_call_failed',
+      error: rateLimited ? 'gemma_rate_limited' : 'llm2_call_failed',
       message_uz: rateLimited ? 'AI vaqtincha band — bir necha soniyadan so\'ng qayta urinib ko\'ring.' : undefined,
       message_ru: rateLimited ? 'AI временно занят — попробуйте через несколько секунд.' : undefined,
       message_en: rateLimited ? 'AI is temporarily busy — try again in a few seconds.' : undefined,
@@ -197,7 +210,6 @@ async function handle({ request, env }, H) {
   if (!synth) return json({ error: 'llm2_parse_failed', raw: String(llm2).slice(0, 400) }, 500, H);
 
   // Defensive filter: keep ONLY grants with a parseable future date as deadline.
-  // Drop unknown / rolling / non-date / past.
   if (Array.isArray(synth.grants)) {
     synth.grants = synth.grants.filter(g => hasFutureDeadline(g && g.deadline));
     if (synth.grants.length === 0) {
@@ -230,53 +242,56 @@ function json(obj, status, headers) {
   return new Response(JSON.stringify(obj), { status, headers });
 }
 
-async function geminiCall(apiKey, prompt, maxOutputTokens) {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`;
-  const body = JSON.stringify({
-    contents: [{ parts: [{ text: prompt }] }],
-    generationConfig: { temperature: 0.2, maxOutputTokens, responseMimeType: 'application/json' },
-  });
+async function gemmaCall(ai, prompt, maxOutputTokens) {
   for (let attempt = 0; attempt < 3; attempt++) {
-    const resp = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body });
-    const data = await resp.json().catch(() => ({}));
-    if (resp.status === 429) {
-      // Gemini free tier is 20 RPM; paid tier is much higher. Back off and retry.
-      const retryAfter = Number(data?.error?.details?.find?.(d => d?.retryDelay)?.retryDelay?.replace?.('s', '')) || (2 * (attempt + 1));
-      if (attempt === 2) {
-        const err = new Error('Gemini rate limited (429). ' + (data?.error?.message || '').slice(0, 200));
-        err.code = 'gemini_rate_limited';
-        throw err;
+    try {
+      const resp = await ai.run(GEMMA_MODEL, {
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: maxOutputTokens,
+        temperature: 0.2,
+      });
+      const text = (resp && (resp.response || resp.result)) || '';
+      if (!text) throw new Error('empty_response');
+      return text;
+    } catch (e) {
+      const msg = String(e && e.message || e);
+      // Workers AI rate-limit / capacity errors → backoff + retry, then surface as 429.
+      if (/429|rate.?limit|capacity|busy|too many/i.test(msg)) {
+        if (attempt === 2) {
+          const err = new Error('Gemma rate limited. ' + msg.slice(0, 200));
+          err.code = 'gemma_rate_limited';
+          throw err;
+        }
+        await new Promise(r => setTimeout(r, (attempt + 1) * 2000));
+        continue;
       }
-      await new Promise(r => setTimeout(r, Math.min(retryAfter, 4) * 1000));
-      continue;
+      throw new Error(`Gemma: ${msg.slice(0, 200)}`);
     }
-    if (!resp.ok) {
-      throw new Error(`Gemini ${resp.status}: ${(data?.error?.message || '').slice(0, 200)}`);
-    }
-    return data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
   }
-  throw new Error('gemini_exhausted');
+  throw new Error('gemma_exhausted');
 }
 
-async function tavilySearch(apiKey, queries, opts) {
+async function duckduckgoSearch(queries) {
   const all = [];
   await Promise.all(queries.map(async (q) => {
-    const body = {
-      api_key: apiKey,
-      query: q,
-      max_results: 5,
-      search_depth: 'advanced',
-    };
-    if (opts.include_domains) body.include_domains = opts.include_domains;
-    if (opts.exclude_domains) body.exclude_domains = opts.exclude_domains;
-    const resp = await fetch('https://api.tavily.com/search', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json' },
-      body: JSON.stringify(body),
-    });
-    const data = await resp.json();
-    if (Array.isArray(data?.results)) all.push(...data.results);
+    try {
+      const resp = await fetch('https://html.duckduckgo.com/html/', {
+        method: 'POST',
+        headers: {
+          'user-agent': BROWSER_UA,
+          'accept': 'text/html,application/xhtml+xml',
+          'accept-language': 'en-US,en;q=0.9',
+          'content-type': 'application/x-www-form-urlencoded',
+        },
+        body: `q=${encodeURIComponent(q)}&kl=us-en`,
+      });
+      if (!resp.ok) return;
+      const html = await resp.text();
+      const parsed = parseDdgHtml(html);
+      all.push(...parsed);
+    } catch { /* swallow per-query errors; other query may still produce hits */ }
   }));
+  // Dedupe by URL.
   const seen = new Set();
   return all.filter(r => {
     if (!r.url || seen.has(r.url)) return false;
@@ -285,10 +300,97 @@ async function tavilySearch(apiKey, queries, opts) {
   });
 }
 
-function extractJson(text) {
-  if (!text) return null;
-  try { return JSON.parse(text); } catch {}
-  const m = text.match(/\{[\s\S]*\}/);
-  if (m) { try { return JSON.parse(m[0]); } catch {} }
+function parseDdgHtml(html) {
+  const results = [];
+  // Each result block on html.duckduckgo.com/html/ is wrapped in `<div class="result ...">`.
+  // Inside: `<a class="result__a" href="<ddg-redirect>">title</a>` and
+  // `<a class="result__snippet" ...>snippet</a>` (snippet may also be a div).
+  const blocks = html.split(/<div\s+class="result\b/);
+  for (let i = 1; i < blocks.length; i++) {
+    const b = blocks[i];
+    const titleMatch = b.match(/class="result__a"[^>]*href="([^"]+)"[^>]*>([\s\S]*?)<\/a>/);
+    if (!titleMatch) continue;
+    const realUrl = extractDdgRedirect(titleMatch[1]);
+    if (!realUrl) continue;
+    const title = stripTags(titleMatch[2]).trim();
+    if (!title) continue;
+    const snipMatch = b.match(/class="result__snippet"[^>]*>([\s\S]*?)<\/(a|div)>/);
+    const snippet = snipMatch ? stripTags(snipMatch[1]).trim() : '';
+    results.push({ url: realUrl, title, snippet });
+  }
+  return results;
+}
+
+function extractDdgRedirect(href) {
+  if (!href) return null;
+  if (/^https?:\/\//i.test(href)) return href;
+  // DDG redirect: //duckduckgo.com/l/?uddg=<encoded-real-url>&rut=...
+  const m = href.match(/[?&]uddg=([^&]+)/);
+  if (m) {
+    try { return decodeURIComponent(m[1]); } catch { return null; }
+  }
   return null;
+}
+
+function stripTags(s) {
+  return String(s)
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, ' ');
+}
+
+function urlHostMatches(url, domain) {
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    const d = domain.toLowerCase();
+    return host === d || host.endsWith('.' + d);
+  } catch { return false; }
+}
+
+async function fetchAndStrip(url, maxChars) {
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), 8000);
+  try {
+    const resp = await fetch(url, {
+      headers: {
+        'user-agent': BROWSER_UA,
+        'accept': 'text/html,application/xhtml+xml',
+        'accept-language': 'en-US,en;q=0.9',
+      },
+      signal: ctrl.signal,
+      redirect: 'follow',
+    });
+    if (!resp.ok) return '';
+    const ct = resp.headers.get('content-type') || '';
+    if (!/text\/html|application\/xhtml/i.test(ct)) return '';
+
+    const chunks = [];
+    let totalLen = 0;
+    const limit = maxChars * 3;
+    const rewriter = new HTMLRewriter()
+      .on('script, style, noscript, nav, header, footer, aside, svg, iframe, form, button', {
+        element(el) { el.remove(); },
+      })
+      .on('body', {
+        text(t) {
+          if (totalLen >= limit) return;
+          const s = t.text.replace(/\s+/g, ' ');
+          if (s.trim().length > 0) {
+            chunks.push(s);
+            totalLen += s.length;
+          }
+        },
+      });
+    await rewriter.transform(resp).text();
+    return chunks.join(' ').replace(/\s+/g, ' ').trim().slice(0, maxChars);
+  } catch {
+    return '';
+  } finally {
+    clearTimeout(t);
+  }
 }

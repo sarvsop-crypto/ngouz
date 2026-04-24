@@ -2,6 +2,7 @@
 Thumbs.db
 *.log
 node_modules/
+.wrangler/
 
 # Keep Flutter app source in git, ignore generated/build artifacts
 nntma_subscriber_app/.dart_tool/
