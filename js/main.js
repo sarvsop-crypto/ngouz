@@ -379,6 +379,7 @@
     var mobileNav = document.createElement('div');
     mobileNav.className = 'mobile-nav';
     mobileNav.id = 'mobileNav';
+    // Mirror desktop nav (kept as the single source of truth).
     mobileNav.innerHTML =
       '<span class="mobile-nav-label">Assotsiatsiya haqida</span>' +
       '<a href="about.html">Assotsiatsiya haqida</a>' +
@@ -403,22 +404,17 @@
         '<a href="mahalliy-hamkorlar.html">Mahalliy hamkorlar</a>' +
         '<a href="jamoatchilik-kengashi.html">Jamoatchilik kengashi a\'zolari</a>' +
       '</div>' +
-      '<span class="mobile-nav-label">Bog\'lanish</span>' +
-      '<a href="contact.html">Kontaktlar</a>' +
-      '<div class="mobile-nav-sub">' +
-        '<a href="qayta-aloqa.html">Qayta aloqa</a>' +
-        '<a href="korrupsiya-murojaat.html">Korrupsiyani oldini olish bo\'yicha murojat</a>' +
-      '</div>' +
       '<span class="mobile-nav-label">Ochiq ma\'lumotlar</span>' +
-      '<a href="infographics.html">Infografikalar</a>' +
+      '<a href="contact.html">Bog\'lanish</a>' +
       '<div class="mobile-nav-sub">' +
+        '<a href="grant-tanlovlari.html">Grant tanlovlari - AI qidiruv</a>' +
         '<a href="official-docs.html">Normativ-huquqiy hujjatlar</a>' +
         '<a href="multimedia-room.html">Media</a>' +
         '<a href="events.html">Tadbirlar</a>' +
         '<a href="reporting-forms.html">Hisobotlar</a>' +
         '<a href="dayjestlar.html">Dayjestlar</a>' +
         '<a href="vacancies.html">Bo\'sh ish o\'rinlari</a>' +
-        '<a href="talim-rivojlanish.html">Ta\'lim va rivojlanish</a>' +
+        '<a href="talim-rivojlanish.html">Virtual akademiya</a>' +
         '<a href="stajirovka-volontyorlik.html">Stajirovka va volontyorlik</a>' +
       '</div>' +
       '<a href="membership.html" class="mobile-nav-cta">A\'zo bo\'lish</a>';
