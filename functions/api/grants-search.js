@@ -249,6 +249,10 @@ async function gemmaCall(ai, prompt, maxOutputTokens) {
         messages: [{ role: 'user', content: prompt }],
         max_tokens: maxOutputTokens,
         temperature: 0.2,
+        // Gemma 4 enables a chain-of-thought mode by default that can consume
+        // the entire token budget on hidden reasoning, leaving an empty final
+        // message. Disable for our short JSON prompts.
+        chat_template_kwargs: { enable_thinking: false },
       });
       const text = (
         resp?.choices?.[0]?.message?.content ||
@@ -256,7 +260,11 @@ async function gemmaCall(ai, prompt, maxOutputTokens) {
         resp?.result ||
         ''
       );
-      if (!text) throw new Error('empty_response');
+      if (!text) {
+        // Surface the real shape so we can see what Workers AI actually returned.
+        const debug = JSON.stringify(resp).slice(0, 400);
+        throw new Error(`empty_response (got: ${debug})`);
+      }
       return text;
     } catch (e) {
       const msg = String(e && e.message || e);
