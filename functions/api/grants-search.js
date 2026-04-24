@@ -242,6 +242,14 @@ function json(obj, status, headers) {
   return new Response(JSON.stringify(obj), { status, headers });
 }
 
+function extractJson(text) {
+  if (!text) return null;
+  try { return JSON.parse(text); } catch {}
+  const m = text.match(/\{[\s\S]*\}/);
+  if (m) { try { return JSON.parse(m[0]); } catch {} }
+  return null;
+}
+
 async function gemmaCall(ai, prompt, maxOutputTokens) {
   for (let attempt = 0; attempt < 3; attempt++) {
     try {
