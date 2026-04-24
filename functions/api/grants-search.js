@@ -101,7 +101,7 @@ async function handle({ request, env }, H) {
     '- lang: detected language code ("uz", "ru", or "en")',
     '- soha: short English label for the user\'s sector (e.g. "autism support", "beekeeping", "rural water")',
     '- keywords: 3-5 English search terms',
-    `- queries: exactly 2 complementary English search queries aimed at finding currently-OPEN grant calls with FUTURE deadlines for this sector. Use phrases like "grant call ${nowYear}", "application deadline", "open funding opportunity".`,
+    `- queries: exactly 3 complementary English search queries aimed at finding currently-OPEN grant calls with FUTURE deadlines for this sector. Use phrases like "grant call ${nowYear}", "application deadline", "open funding opportunity". Each query should target a different angle (e.g. donor-focused, sector-focused, region-focused).`,
     '',
     'Return ONLY the JSON object. No markdown, no commentary.',
     '',
@@ -131,11 +131,11 @@ async function handle({ request, env }, H) {
   const broadFiltered = allRaw.filter(r => !SPAM_DOMAINS.some(d => urlHostMatches(r.url, d)));
   const whitelisted = broadFiltered.filter(r => WHITELIST.some(d => urlHostMatches(r.url, d)));
 
-  let chosen = whitelisted.slice(0, 6);
-  if (chosen.length < 3) {
+  let chosen = whitelisted.slice(0, 8);
+  if (chosen.length < 8) {
     const seen = new Set(chosen.map(r => r.url));
     for (const r of broadFiltered) {
-      if (chosen.length >= 6) break;
+      if (chosen.length >= 8) break;
       if (!seen.has(r.url)) { chosen.push(r); seen.add(r.url); }
     }
   }
@@ -195,7 +195,7 @@ async function handle({ request, env }, H) {
   ].join('\n');
 
   let llm2;
-  try { llm2 = await gemmaCall(env.AI, synthPrompt, 2048); }
+  try { llm2 = await gemmaCall(env.AI, synthPrompt, 3072); }
   catch (e) {
     const rateLimited = e && e.code === 'gemma_rate_limited';
     return json({
