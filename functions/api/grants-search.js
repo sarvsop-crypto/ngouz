@@ -149,9 +149,9 @@ async function handle({ request, env }, H) {
     return json({ lang, answer: noHits[lang], grants: [] }, 200, H);
   }
 
-  // Enrich with fetched page content (parallel, best-effort, 1500 chars each).
+  // Enrich with fetched page content (parallel, best-effort, 4000 chars each).
   const results = await Promise.all(chosen.map(async (r) => {
-    const content = await fetchAndStrip(r.url, 1500).catch(() => '');
+    const content = await fetchAndStrip(r.url, 4000).catch(() => '');
     return { url: r.url, title: r.title, content: content || r.snippet || '' };
   }));
 
@@ -175,7 +175,7 @@ async function handle({ request, env }, H) {
     '',
     'A REAL grant entry must have all of: a specific call/programme name, who can apply, and either a stated deadline OR an explicit rolling/ongoing/year-round indication.',
     '',
-    ...results.map((r, i) => `[${i + 1}] ${r.title}\nURL: ${r.url}\nContent: ${(r.content || '').slice(0, 2000)}`),
+    ...results.map((r, i) => `[${i + 1}] ${r.title}\nURL: ${r.url}\nContent: ${(r.content || '').slice(0, 4000)}`),
     '',
     'Return ONLY JSON (no markdown) with shape:',
     '{',
@@ -187,18 +187,23 @@ async function handle({ request, env }, H) {
     `      "deadline": "YYYY-MM-DD if a specific future date is stated; otherwise empty string \\"\\"",`,
     '      "link": "URL",',
     `      "summary": "1-2 sentences in ${langName} about who this is for and what it funds",`,
-    '      "source": "root domain only, e.g. un.org"',
+    '      "source": "root domain only, e.g. un.org",',
+    '      "status": "open | closed | unknown — see rules below"',
     '    }',
     '  ]',
     '}',
     '',
+    'STATUS rules — set this for every grant:',
+    '- "open" — the page clearly indicates the call is currently accepting applications: a stated future deadline, or explicit "rolling/ongoing/year-round" language, or a current-year call announcement.',
+    `- "closed" — a deadline is stated and is on or before ${todayISO}, or the page describes a past round ("applications closed", "Round 2024", year-stamped programme older than ${nowYear} with no new opening).`,
+    '- "unknown" — you cannot tell from the content whether the call is open or closed.',
+    '',
     'Deadline rules — VERY IMPORTANT:',
     `- If the source clearly states a specific deadline AFTER ${todayISO}, output it as YYYY-MM-DD.`,
-    '- If the source explicitly says the call is "rolling", "ongoing", "year-round", "open continuously", or accepts applications anytime, set deadline to empty string "" and include the grant.',
-    `- HARD SKIP if a deadline is stated and is on or before ${todayISO}.`,
-    '- HARD SKIP if the page only describes a past round (e.g. "applications closed", "Round 2024", year-stamped programme older than current year with no new opening).',
-    '- If you cannot find ANY signal that this is currently open (no future deadline, no rolling indication, no current-year call announcement), HARD SKIP. Do NOT keep ambiguous pages "just in case".',
+    '- If the source explicitly says the call is "rolling", "ongoing", "year-round", "open continuously", or accepts applications anytime, set deadline to empty string "".',
     '- Never invent a date.',
+    '',
+    'You may include grants with status="closed" or "unknown" in the array — the system will drop them. But ALWAYS set the status field truthfully.',
     '',
     'If no real grants/funding opportunities are found in the results, return an empty grants array and say so in `answer`.',
   ].join('\n');
@@ -218,10 +223,11 @@ async function handle({ request, env }, H) {
   const synth = extractJson(llm2);
   if (!synth) return json({ error: 'llm2_parse_failed', raw: String(llm2).slice(0, 400) }, 500, H);
 
-  // Defensive filter: drop grants whose deadline is a parseable PAST date.
-  // Keep grants with no deadline, "rolling"/"ongoing"/etc., or future dates.
+  // Defensive filter: keep only status="open" grants whose deadline isn't
+  // a parseable PAST date. Drop "closed", "unknown", or anything missing
+  // status. Empty/rolling deadline is fine when status is "open".
   if (Array.isArray(synth.grants)) {
-    synth.grants = synth.grants.filter(g => !isExpired(g && g.deadline));
+    synth.grants = synth.grants.filter(g => g && g.status === 'open' && !isExpired(g.deadline));
     if (synth.grants.length === 0) {
       const noHits = {
         uz: 'Ushbu soha uchun ochiq grantlar topilmadi. So\'rovingizni kengroq ifodalab ko\'ring.',
