@@ -250,7 +250,12 @@ async function gemmaCall(ai, prompt, maxOutputTokens) {
         max_tokens: maxOutputTokens,
         temperature: 0.2,
       });
-      const text = (resp && (resp.response || resp.result)) || '';
+      const text = (
+        resp?.choices?.[0]?.message?.content ||
+        resp?.response ||
+        resp?.result ||
+        ''
+      );
       if (!text) throw new Error('empty_response');
       return text;
     } catch (e) {
