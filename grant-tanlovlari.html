@@ -354,7 +354,7 @@ So'rovingizni yozing
     async function go() {
       attempt++;
       try {
-        var resp = await fetch('/api/grants-search', {
+        var resp = await fetch('https://api.ngo.uz/v1/public/grants-search', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify({ query: query, turnstileToken: token }),
