@@ -61,8 +61,9 @@
   .grants-ai__form textarea:focus { border-color: var(--g-brand); background: #fff; }
   .grants-ai__form textarea::placeholder { color: #7aa3ad; }
 
-  /* Invisible mode — keep in DOM so the script runs, but take no space */
-  .grants-ai__turnstile { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  /* data-size="invisible" handles its own visibility; if Turnstile needs to
+     show a managed challenge it will overlay one — don't push it off-screen. */
+  .grants-ai__turnstile { display: contents; }
 
   .grants-ai__submit {
     display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -236,7 +237,7 @@ AI yordamchi
 So'rovingizni yozing
 </span>
 <textarea id="grantsQuery" placeholder="Masalan: Autizm spektri kasalligi bo'lgan bolalarga yordam beruvchi NNT uchun grant bormi?" rows="3" maxlength="500" required></textarea>
-<div class="grants-ai__turnstile cf-turnstile" data-sitekey="0x4AAAAAADB9Mx0-zTy-6jb_" data-size="flexible" data-theme="light"></div>
+<div class="grants-ai__turnstile cf-turnstile" data-sitekey="0x4AAAAAADB9Mx0-zTy-6jb_" data-size="invisible" data-theme="light"></div>
 <button type="submit" id="grantsSubmit" class="grants-ai__submit">
 <svg id="grantsSubmitIcon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0l1.5 4.5L14 6l-4.5 1.5L8 12l-1.5-4.5L2 6l4.5-1.5L8 0z"/></svg>
 <span id="grantsSubmitLabel">Grantlarni topish</span>
