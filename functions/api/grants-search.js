@@ -175,7 +175,7 @@ async function handle({ request, env }, H) {
     '    {',
     '      "name": "grant/call name",',
     '      "donor": "issuing organization",',
-    `      "deadline": "YYYY-MM-DD (a real date strictly AFTER ${todayISO})",`,
+    `      "deadline": "YYYY-MM-DD if a specific future date is stated; otherwise empty string \\"\\"",`,
     '      "link": "URL",',
     `      "summary": "1-2 sentences in ${langName} about who this is for and what it funds",`,
     '      "source": "root domain only, e.g. un.org"',
@@ -183,15 +183,12 @@ async function handle({ request, env }, H) {
     '  ]',
     '}',
     '',
-    'STRICT deadline rule — include a grant ONLY when:',
-    `- The source clearly states a specific deadline that is strictly AFTER ${todayISO}, and you output it as YYYY-MM-DD.`,
+    'Deadline rules — VERY IMPORTANT:',
+    `- If the source clearly states a specific deadline AFTER ${todayISO}, output it as YYYY-MM-DD.`,
+    '- If the source does NOT state a deadline, OR describes the program as "rolling", "ongoing", "open call", "year-round", set deadline to empty string "". Do NOT invent a date. Do NOT output "unknown". Still include the grant.',
+    `- HARD SKIP (do not include): deadline is clearly stated and is on or before ${todayISO} — that grant has already closed.`,
     '',
-    'Hard skip (do not include) if any of these apply:',
-    `- Deadline is before or on ${todayISO} (already passed).`,
-    '- Deadline is not clearly stated in the source (do not guess, do not output "unknown").',
-    '- Program is described only as "rolling", "ongoing", "open", or similar without a specific future date.',
-    '',
-    'If nothing in the results has a clearly-stated future deadline, return an empty grants array and say so in `answer`.',
+    'If no real grants/funding opportunities are found in the results, return an empty grants array and say so in `answer`.',
   ].join('\n');
 
   let llm2;
@@ -209,14 +206,15 @@ async function handle({ request, env }, H) {
   const synth = extractJson(llm2);
   if (!synth) return json({ error: 'llm2_parse_failed', raw: String(llm2).slice(0, 400) }, 500, H);
 
-  // Defensive filter: keep ONLY grants with a parseable future date as deadline.
+  // Defensive filter: drop grants whose deadline is a parseable PAST date.
+  // Keep grants with no deadline, "rolling"/"ongoing"/etc., or future dates.
   if (Array.isArray(synth.grants)) {
-    synth.grants = synth.grants.filter(g => hasFutureDeadline(g && g.deadline));
+    synth.grants = synth.grants.filter(g => !isExpired(g && g.deadline));
     if (synth.grants.length === 0) {
       const noHits = {
-        uz: 'Hozirgi vaqtda aniq muddat bilan ochiq grantlar topilmadi. Keyinroq qayta urinib ko\'ring yoki so\'rovni kengroq yozing.',
-        ru: 'На данный момент не найдено открытых грантов с указанным сроком. Попробуйте позже или сформулируйте запрос шире.',
-        en: 'No currently open grants with a stated future deadline found. Try again later or broaden your query.',
+        uz: 'Ushbu soha uchun ochiq grantlar topilmadi. So\'rovingizni kengroq ifodalab ko\'ring.',
+        ru: 'Открытых грантов для этой сферы не найдено. Попробуйте сформулировать запрос шире.',
+        en: 'No open grants found for this sector. Try phrasing your query more broadly.',
       };
       synth.answer = noHits[lang] || noHits.uz;
     }
@@ -225,15 +223,16 @@ async function handle({ request, env }, H) {
   return json({ lang, ...synth }, 200, H);
 }
 
-function hasFutureDeadline(dl) {
+function isExpired(dl) {
   if (!dl) return false;
   const s = String(dl).trim();
   if (!s) return false;
   const d = new Date(s);
+  // Non-date strings like "rolling", "ongoing", "TBD" → not expired, keep.
   if (isNaN(d.getTime())) return false;
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
-  return d.getTime() > today.getTime();
+  return d.getTime() <= today.getTime();
 }
 
 // ── helpers ─────────────────────────────────────────────────────────
