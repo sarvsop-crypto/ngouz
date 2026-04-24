@@ -57,7 +57,7 @@
 <a href="#">Ochiq maʼlumotlar <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
 <div class="dropdown">
 <a href="contact.html">Bog'lanish</a>
-<a href="grant-tanlovlari.html">Grant tanlovi e'lonlari</a>
+<a href="grant-tanlovlari.html">Grant tanlovlari - AI qidiruv</a>
 <a href="official-docs.html">Normativ-huquqiy hujjatlar</a>
 <a href="multimedia-room.html">Media</a>
 <a href="events.html">Tadbirlar</a>
@@ -484,6 +484,7 @@ window.addEventListener('load', function(){
       // build label div
       var lbl = document.createElement('div');
       lbl.className = 'map-label';
+      lbl.setAttribute('data-region', id);
       lbl.style.left = cx + '%';
       lbl.style.top  = cy + '%';
       var lines = d.name.split('\n');
@@ -507,6 +508,31 @@ window.addEventListener('load', function(){
       });
       lbl.style.cursor = 'pointer';
     });
+
+    // Live member counts: pull the same /v1/public/organizations the
+    // /nntlar page uses, count per region_code, replace the "N a'zo"
+    // line. Big NNT total stays hardcoded until the backend exposes it.
+    (function loadMembers(offset, all){
+      fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?limit=200&offset=' + offset)
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          all = all.concat(d.items || []);
+          if (all.length < d.total) { loadMembers(offset + 200, all); return; }
+          var counts = {};
+          all.forEach(function(o){
+            if (!o.region_code) return;
+            counts[o.region_code] = (counts[o.region_code] || 0) + 1;
+          });
+          Object.keys(regionCodeBySvgId).forEach(function(uzId){
+            var apiCode = regionCodeBySvgId[uzId];
+            var lbl = box.querySelector('.map-label[data-region="' + uzId + '"]');
+            if (!lbl) return;
+            var memSpan = lbl.querySelector('.ml-members');
+            if (memSpan) memSpan.textContent = fmt(counts[apiCode] || 0) + ' a\'zo';
+          });
+        })
+        .catch(function(){ /* keep hardcoded fallback on network error */ });
+    })(0, []);
   })();
 })();
 </script>
