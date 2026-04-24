@@ -198,12 +198,16 @@ async function handle({ request, env }, H) {
     `- "closed" — a deadline is stated and is on or before ${todayISO}, or the page describes a past round ("applications closed", "Round 2024", year-stamped programme older than ${nowYear} with no new opening).`,
     '- "unknown" — you cannot tell from the content whether the call is open or closed.',
     '',
-    'Deadline rules — VERY IMPORTANT:',
+    'Deadline rules:',
     `- If the source clearly states a specific deadline AFTER ${todayISO}, output it as YYYY-MM-DD.`,
     '- If the source explicitly says the call is "rolling", "ongoing", "year-round", "open continuously", or accepts applications anytime, set deadline to empty string "".',
     '- Never invent a date.',
     '',
-    'You may include grants with status="closed" or "unknown" in the array — the system will drop them. But ALWAYS set the status field truthfully.',
+    'INCLUDE grants liberally — only the system\'s structural filters drop entries. Your job is to label them honestly:',
+    '- status="open" when you have positive evidence (future deadline, current-year call, rolling/ongoing language).',
+    '- status="unknown" when the page looks like a real grant programme but you cannot tell from the content whether it is currently accepting applications.',
+    '- status="closed" ONLY when you have positive evidence of closure (past deadline, "applications closed", year-stamped past round).',
+    'The system drops only status="closed". Do NOT pre-emptively skip ambiguous-but-plausible grants — set status="unknown" and include them.',
     '',
     'If no real grants/funding opportunities are found in the results, return an empty grants array and say so in `answer`.',
   ].join('\n');
@@ -223,11 +227,11 @@ async function handle({ request, env }, H) {
   const synth = extractJson(llm2);
   if (!synth) return json({ error: 'llm2_parse_failed', raw: String(llm2).slice(0, 400) }, 500, H);
 
-  // Defensive filter: keep only status="open" grants whose deadline isn't
-  // a parseable PAST date. Drop "closed", "unknown", or anything missing
-  // status. Empty/rolling deadline is fine when status is "open".
+  // Defensive filter: drop only grants explicitly marked closed, or with a
+  // parseable PAST date. Keep "open", "unknown", or missing status —
+  // requiring strict "open" was too aggressive and dropped most results.
   if (Array.isArray(synth.grants)) {
-    synth.grants = synth.grants.filter(g => g && g.status === 'open' && !isExpired(g.deadline));
+    synth.grants = synth.grants.filter(g => g && g.status !== 'closed' && !isExpired(g.deadline));
     if (synth.grants.length === 0) {
       const noHits = {
         uz: 'Ushbu soha uchun ochiq grantlar topilmadi. So\'rovingizni kengroq ifodalab ko\'ring.',
