@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin-*
+Disallow: /cabinet/
+Disallow: /functions/
+Disallow: /api/
+Disallow: /search-results.html
+Disallow: /*?*
+
+Sitemap: https://www.ngo.uz/sitemap.xml
