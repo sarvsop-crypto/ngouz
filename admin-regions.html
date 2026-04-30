@@ -95,20 +95,20 @@
 
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-map-trifold"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami hududlar</p><p class="card__value">15</p></div></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-map-trifold"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Jami hududlar</p><p class="card__value" id="kpiRegionsCount">&mdash;</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-buildings"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami NNTlar</p><p class="card__value">&mdash;</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 6.2%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-buildings"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Jami NNTlar</p><p class="card__value" id="kpiOrgsTotal">&mdash;</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-star"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Eng faol hudud</p><p class="card__value" style="font-size:18px;">Toshkent sh.</p></div></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-star"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Eng faol hudud</p><p class="card__value" id="kpiTopRegion" style="font-size:18px;">&mdash;</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-globe"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Respublika miqyosi</p><p class="card__value">&mdash;</p></div></div>
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-globe"></i></div></div>
+          <div class="card__body"><div><p class="card__label">O&rsquo;rtacha hudud bo&rsquo;yicha</p><p class="card__value" id="kpiAvgPerRegion">&mdash;</p></div></div>
         </div>
       </div>
 
@@ -116,7 +116,7 @@
         <div class="table-section__head">
           <h2 class="table-section__title" id="regionsTableTitle">Viloyatlar va hududlar ro&rsquo;yxati</h2>
           <div class="table-section__tools">
-            <input type="search" class="table-section__search" placeholder="Hudud qidirish..." aria-label="Qidirish" />
+            <input type="search" id="regionsSearch" class="table-section__search" placeholder="Hudud qidirish..." aria-label="Qidirish" />
           </div>
         </div>
         <table class="table">
@@ -126,8 +126,6 @@
               <th scope="col">Kod</th>
               <th scope="col">Hudud nomi</th>
               <th scope="col">Jami NNT</th>
-              <th scope="col">Faol</th>
-              <th scope="col">Yangi (2026)</th>
               <th scope="col">Ulush</th>
               <th scope="col"></th>
             </tr>
@@ -157,6 +155,7 @@
   (function () {
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
+    // Maps the public regions API `code` to the slug expected by /public/organizations?region=
     var regionCodeMap = {
       'TSH': 'toshkent-sh', 'TOS': 'toshkent-v', 'AND': 'andijon', 'BUX': 'buxoro',
       'FAR': 'fargona', 'JIZ': 'jizzax', 'XOR': 'xorazm', 'NAM': 'namangan',
@@ -164,45 +163,86 @@
       'SAM': 'samarqand', 'SIR': 'sirdaryo', 'SUR': 'surxondaryo'
     };
 
+    var rows = [];
+    var query = '';
+    var tbody = document.getElementById('regionsTableRows');
+    var searchInput = document.getElementById('regionsSearch');
+
+    function setKpi(id, value) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    function emptyRow(text) {
+      return '<tr><td colspan="5" class="empty-state">' + esc(text) + '</td></tr>';
+    }
+
+    function render() {
+      if (!rows.length) { tbody.innerHTML = emptyRow('Hudud topilmadi'); return; }
+      var q = query.trim().toLowerCase();
+      var filtered = q
+        ? rows.filter(function (r) {
+            return r.name.toLowerCase().indexOf(q) !== -1 || r.code.toLowerCase().indexOf(q) !== -1;
+          })
+        : rows;
+      if (!filtered.length) { tbody.innerHTML = emptyRow('Hech narsa topilmadi'); return; }
+      var grandTotal = rows.reduce(function (s, d) { return s + d.total; }, 0);
+      tbody.innerHTML = filtered.map(function (d) {
+        var pct = grandTotal ? ((d.total / grandTotal) * 100).toFixed(1) + '%' : '—';
+        var totalCell = d.error ? '<span class="text-dim" title="Yuklab bo&rsquo;lmadi">—</span>' : d.total;
+        return '<tr>' +
+          '<td>' + esc(d.code) + '</td>' +
+          '<td style="font-weight:500;">' + esc(d.name) + '</td>' +
+          '<td>' + totalCell + '</td>' +
+          '<td>' + (d.error ? '—' : pct) + '</td>' +
+          '<td><a href="admin-registry.html?q=' + encodeURIComponent(d.orgCode) + '" class="btn btn--sm btn--secondary" aria-label="' + esc(d.name) + ' NNTlarini ko&rsquo;rish"><i class="ph ph-eye"></i></a></td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderKpis() {
+      setKpi('kpiRegionsCount', rows.length);
+      var withData = rows.filter(function (r) { return !r.error; });
+      var grandTotal = withData.reduce(function (s, d) { return s + d.total; }, 0);
+      setKpi('kpiOrgsTotal', grandTotal);
+      if (withData.length) {
+        var top = withData.slice().sort(function (a, b) { return b.total - a.total; })[0];
+        setKpi('kpiTopRegion', top && top.total > 0 ? top.name : '—');
+        setKpi('kpiAvgPerRegion', Math.round(grandTotal / withData.length));
+      } else {
+        setKpi('kpiTopRegion', '—');
+        setKpi('kpiAvgPerRegion', '—');
+      }
+    }
+
+    if (searchInput) {
+      searchInput.addEventListener('input', function () { query = this.value || ''; render(); });
+    }
+
+    tbody.innerHTML = emptyRow('Yuklanmoqda...');
+
     NgoApi.get('/public/regions')
       .then(function (res) {
-        var regions = res.items || [];
-        var tbody = document.getElementById('regionsTableRows');
+        var regions = (res && res.items) || [];
         if (!regions.length) {
-          tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Hudud topilmadi</td></tr>';
+          tbody.innerHTML = emptyRow('Hudud topilmadi');
+          renderKpis();
           return;
         }
-        tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Yuklanmoqda...</td></tr>';
-
         var promises = regions.map(function (r) {
-          var orgCode = regionCodeMap[r.code] || r.code.toLowerCase();
-          return fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?region=' + orgCode + '&limit=1')
-            .then(function (resp) { return resp.json(); })
-            .then(function (d) { return { code: r.code, name: r.name_uz, total: d.total || 0, orgCode: orgCode }; });
+          var orgCode = regionCodeMap[r.code] || (r.code || '').toLowerCase();
+          return NgoApi.get('/public/organizations?region=' + encodeURIComponent(orgCode) + '&limit=1')
+            .then(function (d) { return { code: r.code, name: r.name_uz, total: (d && d.total) | 0, orgCode: orgCode }; })
+            .catch(function () { return { code: r.code, name: r.name_uz, total: 0, orgCode: orgCode, error: true }; });
         });
-
-        Promise.all(promises).then(function (data) {
-          var grandTotal = data.reduce(function (s, d) { return s + d.total; }, 0);
-
-          var kpiCards = document.querySelectorAll('.card__value');
-          if (kpiCards[1]) kpiCards[1].textContent = grandTotal;
-
-          tbody.innerHTML = data.map(function (d) {
-            var pct = grandTotal ? ((d.total / grandTotal) * 100).toFixed(1) + '%' : '—';
-            return '<tr>' +
-              '<td>' + esc(d.code) + '</td>' +
-              '<td style="font-weight:500;">' + esc(d.name) + '</td>' +
-              '<td>' + d.total + '</td>' +
-              '<td>' + d.total + '</td>' +
-              '<td>—</td>' +
-              '<td>' + pct + '</td>' +
-              '<td><a href="admin-registry.html?q=' + encodeURIComponent(d.orgCode) + '" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i></a></td>' +
-            '</tr>';
-          }).join('');
+        return Promise.all(promises).then(function (data) {
+          rows = data;
+          renderKpis();
+          render();
         });
       })
-      .catch(function (err) {
-        document.getElementById('regionsTableRows').innerHTML = '<tr><td colspan="7" class="empty-state">Xatolik yuz berdi</td></tr>';
+      .catch(function () {
+        tbody.innerHTML = emptyRow('Xatolik yuz berdi');
       });
   })();
   </script>
