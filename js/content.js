@@ -1,6 +1,7 @@
 /**
- * content.js — fetches data/*.json from the GitHub repo and renders
- * dynamic content on public-facing pages.
+ * content.js — fetches news/events/grants/etc. from the API proxy
+ * (ngo-api-proxy.sarvsop.workers.dev/v1/public/) and renders dynamic
+ * content on public-facing pages.
  */
 
 (function () {
