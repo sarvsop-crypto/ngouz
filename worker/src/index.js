@@ -17,6 +17,38 @@ export default {
       return corsResponse(origin, 204);
     }
 
+    // /healthz returns OK without touching the upstream so external
+    // monitors can check the worker without consuming PHP backend.
+    if (url.pathname === '/healthz') {
+      const headers = new Headers({
+        'Content-Type': 'application/json; charset=utf-8',
+        'Cache-Control': 'no-store',
+        'X-Proxied-By': 'ngo-api-proxy',
+      });
+      setCors(headers, origin);
+      appendVary(headers, 'Origin');
+      return new Response(
+        JSON.stringify({ ok: true, worker: 'ngo-api-proxy', upstream: ORIGIN }),
+        { status: 200, headers },
+      );
+    }
+
+    // Only /v1/* paths are valid frontend traffic. Reject anything else
+    // before forwarding so the worker isn't an open relay to upstream.
+    if (!url.pathname.startsWith('/v1/') && url.pathname !== '/v1') {
+      const headers = new Headers({
+        'Content-Type': 'application/json; charset=utf-8',
+        'Cache-Control': 'no-store',
+        'X-Proxied-By': 'ngo-api-proxy',
+      });
+      setCors(headers, origin);
+      appendVary(headers, 'Origin');
+      return new Response(
+        JSON.stringify({ error: 'not_found', path: url.pathname }),
+        { status: 404, headers },
+      );
+    }
+
     const targetUrl = ORIGIN + url.pathname + url.search;
 
     const headers = new Headers(request.headers);
