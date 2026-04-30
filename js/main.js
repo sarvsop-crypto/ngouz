@@ -1,7 +1,9 @@
 (function () {
-  /* ── Load Phosphor Icons 2.1 ─────────────────────────────── */
+  /* ── Load Phosphor Icons 2.1 (SRI-pinned) ─────────────────── */
   var _ph = document.createElement('script');
-  _ph.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1';
+  _ph.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js';
+  _ph.integrity = 'sha384-cPFV+/abYd3INVFHPmSKpBmcnH+Q+bTZW7dv/EiuShUNPkHyFmRF8PsL7Ibfvunk';
+  _ph.crossOrigin = 'anonymous';
   document.head.appendChild(_ph);
 
   var i18nKey = "ngo_lang_v1";
