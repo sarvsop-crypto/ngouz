@@ -7,7 +7,7 @@
  *
  * Versioned cache name — bump CACHE_VERSION to invalidate on rollouts.
  */
-const CACHE_VERSION = 'ngo-v3';
+const CACHE_VERSION = 'ngo-v4';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 
 const PRECACHE = [
