@@ -372,8 +372,22 @@
 </nav>
 </div>
 </footer>
-<script src="js/chart.min.js?v=1" defer></script>
 <script>
+// Lazy-load Chart.js (~201 KB gzip-saved by deferring) only when the
+// chart canvas scrolls into view. Most visitors never scroll past the
+// hero, so the bytes are wasted on first paint when statically loaded.
+function loadChartJs() {
+  if (window.Chart) return Promise.resolve();
+  if (window.__chartJsPromise) return window.__chartJsPromise;
+  window.__chartJsPromise = new Promise(function (resolve, reject) {
+    var s = document.createElement('script');
+    s.src = 'js/chart.min.js?v=1';
+    s.onload = function () { resolve(); };
+    s.onerror = function () { reject(new Error('chart.js load failed')); };
+    document.head.appendChild(s);
+  });
+  return window.__chartJsPromise;
+}
 window.addEventListener('load', function(){
   var canvas = document.getElementById('nntChart');
   if(!canvas) return;
@@ -508,14 +522,19 @@ window.addEventListener('load', function(){
     link.click();
   });
 
-  // Defer the chart's first paint until the canvas scrolls into view —
-  // saves rendering cost (Chart.js layout, retina canvas blit) for the
-  // ~majority of visitors who never scroll past the hero.
+  // Defer Chart.js *script load* AND first paint until the canvas
+  // scrolls into view — saves both 201 KB of JS download and the
+  // render cost for visitors who never scroll past the hero.
+  function lazyBuild() {
+    loadChartJs().then(buildChart, function (err) {
+      try { console.warn(err); } catch (e) {}
+    });
+  }
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries, obs) {
       for (var i = 0; i < entries.length; i++) {
         if (entries[i].isIntersecting) {
-          buildChart();
+          lazyBuild();
           obs.disconnect();
           break;
         }
@@ -523,7 +542,7 @@ window.addEventListener('load', function(){
     }, { rootMargin: '120px 0px' });
     io.observe(canvas);
   } else {
-    buildChart();
+    lazyBuild();
   }
 });
 </script>
@@ -656,8 +675,10 @@ window.addEventListener('load', function(){
         entry.target.classList.add('visible');
         // Re-play Chart.js bar animation every time the chart card enters view
         if (entry.target.classList.contains('nnt-chart-card')) {
+          // Chart.js is now lazy-loaded — guard the re-animate hook against
+          // running before Chart.* exists on window.
           var canvas = document.getElementById('nntChart');
-          var chart = canvas && Chart.getChart(canvas);
+          var chart = canvas && window.Chart && window.Chart.getChart(canvas);
           if (chart) { chart.reset(); chart.update(); }
         }
       } else {
