@@ -3133,3 +3133,23 @@ select:focus-visible,
 .team-card .team-meta a:hover { text-decoration:underline; }
 .team-card.vacancy .team-photo { background:var(--neutral-200); }
   
+
+/* iter 52: footer legal/copyright row */
+.footer-legal {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+}
+.footer-legal a {
+  color: rgba(255,255,255,0.7);
+  text-decoration: none;
+}
+.footer-legal a:hover { color: #fff; text-decoration: underline; }
+.footer-legal-links { display: flex; gap: 18px; flex-wrap: wrap; }
