@@ -206,7 +206,7 @@
     }).catch(function (err) {
       console.error('Reports load error:', err);
       var tbody = document.getElementById('reportsTableBody');
-      tbody.innerHTML = '<tr><td colspan="6" class="empty-state" style="color:var(--error-500);">Xatolik: ' + (err.message || 'Nomalum xato') + '</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="6" class="empty-state" style="color:var(--error-500);">Xatolik: ' + esc(err.message || 'Nomalum xato') + '</td></tr>';
     });
 
     // Wire modal submit button

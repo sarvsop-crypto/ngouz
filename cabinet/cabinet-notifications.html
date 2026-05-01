@@ -195,7 +195,7 @@
       renderList('all');
     }).catch(function (err) {
       console.error('Notifications load error:', err);
-      document.getElementById('notifList').innerHTML = '<div style="text-align:center;color:var(--error-500);padding:32px;">Xatolik: ' + (err.message || 'Nomalum') + '</div>';
+      document.getElementById('notifList').innerHTML = '<div style="text-align:center;color:var(--error-500);padding:32px;">Xatolik: ' + esc(err.message || 'Nomalum') + '</div>';
     });
 
     // Tab switching

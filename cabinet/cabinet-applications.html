@@ -164,7 +164,7 @@
       }
     }).catch(function (err) {
       console.error('Applications load error:', err);
-      document.getElementById('applicationsTableBody').innerHTML = '<tr><td colspan="5" class="empty-state" style="color:var(--error-500);">Xatolik: ' + (err.message || 'Nomalum') + '</td></tr>';
+      document.getElementById('applicationsTableBody').innerHTML = '<tr><td colspan="5" class="empty-state" style="color:var(--error-500);">Xatolik: ' + esc(err.message || 'Nomalum') + '</td></tr>';
     });
   })();
   </script>
