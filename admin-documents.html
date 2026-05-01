@@ -419,24 +419,27 @@
         return;
       }
       errEl.style.display = 'none';
-      if (editingId) {
-        AdminCMS.update(TYPE, editingId, data);
-        toast('Hujjat yangilandi', 'success');
-      } else {
-        AdminCMS.create(TYPE, data);
-        toast('Yangi hujjat saqlandi', 'success');
-      }
-      closeModal('formModal');
-      reload();
+      var op = editingId ? AdminCMS.update(TYPE, editingId, data) : AdminCMS.create(TYPE, data);
+      op.then(function () {
+        toast(editingId ? 'Hujjat yangilandi' : 'Yangi hujjat saqlandi', 'success');
+        closeModal('formModal');
+        reload();
+      }).catch(function (err) {
+        errEl.textContent = 'Saqlashda xatolik: ' + ((err && err.message) || 'noma\'lum');
+        errEl.style.display = 'block';
+      });
     });
 
     document.getElementById('deleteConfirmBtn').addEventListener('click', function () {
       if (!deleteId) return;
-      AdminCMS.remove(TYPE, deleteId);
-      closeModal('deleteModal');
-      reload();
-      toast('Hujjat o\'chirildi', 'info');
-      deleteId = null;
+      AdminCMS.remove(TYPE, deleteId).then(function () {
+        toast('Hujjat o\'chirildi', 'info');
+        closeModal('deleteModal');
+        reload();
+        deleteId = null;
+      }).catch(function (err) {
+        toast('O\'chirishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error');
+      });
     });
 
     document.getElementById('cmsSearch').addEventListener('input', function () {
