@@ -129,12 +129,57 @@
       + '</div>';
   }
 
+  function injectArticleJsonLd(item) {
+    try {
+      var existing = document.getElementById('news-article-jsonld');
+      if (existing) existing.remove();
+      var pageUrl = window.location.href;
+      var coverImg = (item.cover_image_url || item.cover_url || '');
+      if (coverImg && coverImg.indexOf('http') !== 0) {
+        coverImg = MEDIA_BASE + encodeURIComponent(coverImg);
+      }
+      var data = {
+        '@context': 'https://schema.org',
+        '@type': 'NewsArticle',
+        'headline': String(item.title || '').slice(0, 300),
+        'datePublished': item.published_at || item.date || item.created_at || '',
+        'dateModified': item.updated_at || item.published_at || item.date || '',
+        'description': String(item.excerpt || '').slice(0, 500),
+        'articleSection': item.category || 'Yangiliklar',
+        'inLanguage': 'uz-UZ',
+        'mainEntityOfPage': { '@type': 'WebPage', '@id': pageUrl },
+        'url': pageUrl,
+        'author': {
+          '@type': 'Organization',
+          'name': "O'zNNTMA",
+          'url': 'https://www.ngo.uz/'
+        },
+        'publisher': {
+          '@type': 'Organization',
+          'name': "O'zNNTMA",
+          'url': 'https://www.ngo.uz/',
+          'logo': {
+            '@type': 'ImageObject',
+            'url': 'https://www.ngo.uz/img/logo-oznntma.png'
+          }
+        }
+      };
+      if (coverImg) data.image = [coverImg];
+      var s = document.createElement('script');
+      s.type = 'application/ld+json';
+      s.id = 'news-article-jsonld';
+      s.textContent = JSON.stringify(data);
+      document.head.appendChild(s);
+    } catch (e) { /* swallow — JSON-LD failure must not break the page */ }
+  }
+
   function renderNewsDetail(items, container, id) {
     var item = id ? items.find(function (n) { return n.id === id; }) : null;
     if (!item) item = items[0];
     if (!item) { container.innerHTML = '<p>Yangilik topilmadi.</p>'; return; }
 
     document.title = item.title + ' - ngo.uz';
+    injectArticleJsonLd(item);
     var cat = item.category || '';
     var pageUrl = window.location.href;
 
