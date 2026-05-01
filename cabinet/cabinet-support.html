@@ -215,28 +215,36 @@
       var headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
       if (token) headers['Authorization'] = 'Bearer ' + token;
 
+      var user = (NgoApi.getUser && NgoApi.getUser()) || {};
       fetchT(API + '/public/contact', {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({
-          subject: subject,
-          priority: priority,
-          message: message,
-          name: (NgoApi.getUser && NgoApi.getUser() && NgoApi.getUser().full_name) || 'Cabinet User',
-          email: (NgoApi.getUser && NgoApi.getUser() && NgoApi.getUser().email) || ''
+          subject: 'Cabinet yordam: ' + (subject || 'Boshqa'),
+          full_name: user.full_name || 'Cabinet User',
+          email: user.email || '',
+          body: '[Muhimligi: ' + (priority || 'Oddiy') + ']\n' + message
         })
       })
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; }); })
+      .then(function (res) {
         btn.disabled = false;
         btn.innerHTML = '<i class="ph ph-paper-plane-tilt"></i> Yuborish';
-        if (textarea) textarea.value = '';
-        alert('Murojaatingiz qabul qilindi! Tez orada javob beramiz.');
+        if (res.ok) {
+          if (textarea) textarea.value = '';
+          var idStr = res.data && res.data.id ? '#' + res.data.id : '';
+          alert('Murojaatingiz qabul qilindi' + (idStr ? ' (' + idStr + ')' : '') + '. Tez orada javob beramiz.');
+        } else {
+          // Backend error path — earlier this swallowed any non-2xx and
+          // showed the success alert anyway, so users with a rejected
+          // submission thought it went through and never re-tried.
+          alert('Xatolik: ' + ((res.data && res.data.message) || 'Iltimos qaytadan urinib ko‘ring.'));
+        }
       })
       .catch(function () {
         btn.disabled = false;
         btn.innerHTML = '<i class="ph ph-paper-plane-tilt"></i> Yuborish';
-        alert('Xatolik yuz berdi. Qaytadan urinib ko\'ring.');
+        alert('Tarmoq xatosi. Internet aloqangizni tekshiring.');
       });
     });
 
