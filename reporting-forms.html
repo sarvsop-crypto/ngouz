@@ -107,7 +107,7 @@
 <main id="main-content">
 <section class="grid-bg"><div class="container hero center"><h1>NNT hisobot shakllari</h1><p class="sub">Hisobot turlari, muddatlar va onlayn yuborish shakli.</p></div></section>
 <section class="section"><div class="container"><div class="doc-table"><div class="doc-row head"><span>Hisobot turi</span><span>Muddati</span><span>Format</span><span>Shakl</span></div><div class="doc-row"><span>Yillik moliyaviy hisobot</span><span>1-fevral</span><span>XLSX/PDF</span><a href="reporting-forms">Yuklab olish</a></div><div class="doc-row"><span>Yarim yillik faoliyat hisobot</span><span>15-iyul</span><span>DOCX/PDF</span><a href="reporting-forms">Yuklab olish</a></div><div class="doc-row"><span>Grant loyihasi yakuniy hisobot</span><span>30 kun ichida</span><span>DOCX</span><a href="reporting-forms">Yuklab olish</a></div></div></div></section>
-<section class="section section-no-top"><div class="container"><h2 class="section-title">Hisobot yuborish</h2><div class="card"><form action="report-status" method="get" novalidate data-validate><div class="form-grid"><div class="form-field"><label class="form-label" for="report-org">Tashkilot nomi</label><input id="report-org" name="org" required=""/></div><div class="form-field"><label class="form-label" for="report-stir">STIR</label><input id="report-stir" name="stir" required=""/></div><div class="form-field"><label class="form-label" for="report-fio">Mas'ul shaxs F.I.Sh.</label><input id="report-fio" name="fio" required=""/></div><div class="form-field"><label class="form-label" for="report-email">Elektron pochta</label><input autocomplete="email" id="report-email" name="email" required="" type="email"/></div><div class="form-field"><label class="form-label" for="report-type">Hisobot turi</label><select id="report-type" name="type" required=""><option value="">Hisobot turini tanlang</option><option>Yillik moliyaviy hisobot</option><option>Yarim yillik faoliyat hisobot</option><option>Grant loyihasi yakuniy hisobot</option></select></div><div class="form-field"><label class="form-label" for="report-period">Hisobot davri</label><input id="report-period" name="period" required=""/></div></div><label class="check-line form-consent"><input id="report-confirm" type="checkbox"/> Ma'lumotlarning to'g'riligini tasdiqlayman.</label><div class="form-actions"><button class="btn" disabled="" id="report-submit" type="submit">Hisobotni yuborish</button></div></form></div></div></section>
+<section class="section section-no-top"><div class="container"><h2 class="section-title">Hisobot yuborish</h2><div class="card"><form id="reportingForm"><div class="form-grid"><div class="form-field"><label class="form-label" for="report-org">Tashkilot nomi</label><input id="report-org" name="org" required=""/></div><div class="form-field"><label class="form-label" for="report-stir">STIR</label><input id="report-stir" name="stir" required=""/></div><div class="form-field"><label class="form-label" for="report-fio">Mas'ul shaxs F.I.Sh.</label><input id="report-fio" name="fio" required=""/></div><div class="form-field"><label class="form-label" for="report-email">Elektron pochta</label><input autocomplete="email" id="report-email" name="email" required="" type="email"/></div><div class="form-field"><label class="form-label" for="report-type">Hisobot turi</label><select id="report-type" name="type" required=""><option value="">Hisobot turini tanlang</option><option>Yillik moliyaviy hisobot</option><option>Yarim yillik faoliyat hisobot</option><option>Grant loyihasi yakuniy hisobot</option></select></div><div class="form-field"><label class="form-label" for="report-period">Hisobot davri</label><input id="report-period" name="period" required=""/></div></div><label class="check-line form-consent"><input id="report-confirm" type="checkbox"/> Ma'lumotlarning to'g'riligini tasdiqlayman.</label><div class="form-actions"><button class="btn" disabled="" id="report-submit" type="submit">Hisobotni yuborish</button></div></form></div></div></section>
 </main>
 <footer class="site-footer">
 <div class="footer-inner">
@@ -160,5 +160,61 @@
   </div>
 </div>
 <script src="js/search-overlay.js" defer></script>
+<script>
+// reporting-forms previously used <form action="report-status" method="get">
+// — submitting just navigated to a static page that hardcoded a fake
+// "REP-2026-0220" tracking number (cleaned up in iter 122). Authed
+// member orgs go through the cabinet for real report tracking; this
+// public form now POSTs to /v1/public/contact (same route /qayta-aloqa
+// uses) so unauthed orgs can still register intent to submit and the
+// admin team can follow up.
+(function () {
+  var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+  var form = document.getElementById('reportingForm');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    var org    = document.getElementById('report-org').value.trim();
+    var stir   = document.getElementById('report-stir').value.trim();
+    var fio    = document.getElementById('report-fio').value.trim();
+    var email  = document.getElementById('report-email').value.trim();
+    var type   = document.getElementById('report-type').value;
+    var period = document.getElementById('report-period').value.trim();
+    var btn = form.querySelector('button[type="submit"]');
+    var defaultLabel = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
+    var body = "Tashkilot: " + org + "\nSTIR: " + stir + "\nMas'ul: " + fio + "\nDavr: " + period;
+    fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        full_name: fio,
+        email: email,
+        subject: 'Hisobot yuborish: ' + type,
+        body: body
+      })
+    })
+    .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; }); })
+    .then(function (res) {
+      if (res.ok) {
+        form.innerHTML = '<div style="text-align:center;padding:32px 0">'
+          + '<h3 style="color:#0e7490;margin-bottom:10px">Murojaatingiz qabul qilindi</h3>'
+          + '<p style="margin-bottom:18px">Murojaat ID: <strong>' + (res.data && res.data.id ? '#' + res.data.id : '—') + '</strong></p>'
+          + '<p>Hisobot fayli va to‘liq materiallar uchun admin xodimi 3 ish kuni ichida ko‘rsatilgan email orqali bog‘lanadi.</p>'
+          + '<a class="btn" href="reporting-forms" style="margin-top:18px;display:inline-block">Yangi murojaat</a>'
+          + '</div>';
+      } else {
+        btn.disabled = false; btn.textContent = defaultLabel;
+        alert((res.data && res.data.message) || "Xatolik yuz berdi. Qaytadan urinib ko‘ring.");
+      }
+    })
+    .catch(function () {
+      btn.disabled = false; btn.textContent = defaultLabel;
+      alert('Tarmoq xatosi. Internet aloqangizni tekshiring.');
+    });
+  });
+})();
+</script>
 </body>
 </html>
