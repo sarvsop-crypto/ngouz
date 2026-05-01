@@ -304,17 +304,21 @@
         var verBadge = verified
           ? '<span class="badge badge--success" style="font-size:10px">Tasdiqlangan</span>'
           : '<span class="badge badge--warning" style="font-size:10px">Tekshirilmagan</span>';
+        // Numeric ids land inside an inline onclick — coerce to int so
+        // a stray non-digit can't escape the JS arg list.
+        var idNum = parseInt(a.id, 10) || 0;
+        var orgIdNum = a.organization_id == null ? 'null' : (parseInt(a.organization_id, 10) || 'null');
         return '<tr>' +
           '<td><input type="checkbox" /></td>' +
-          '<td><strong>#' + a.id + '</strong></td>' +
+          '<td><strong>#' + esc(a.id) + '</strong></td>' +
           '<td>' + esc(a.org_name) + '<br>' + verBadge + '</td>' +
           '<td>' + esc(a.applicant_name) + '<br><span style="font-size:12px;color:#798384">' + esc(a.phone || '') + '</span></td>' +
           '<td>' + esc((a.created_at||'').slice(0,10)) + '</td>' +
           '<td><span class="badge badge--' + badge + '">' + label + '</span></td>' +
           '<td style="white-space:nowrap">' +
             (a.status === 'pending' ?
-              '<button type="button" class="btn btn--sm btn--primary" onclick="approveApp(' + a.id + ',' + (a.organization_id || 'null') + ')"><i class="ph ph-check"></i> Tasdiqlash</button> ' +
-              '<button type="button" class="btn btn--sm btn--secondary" aria-label="Rad etish" onclick="rejectApp(' + a.id + ')"><i class="ph ph-x"></i></button>'
+              '<button type="button" class="btn btn--sm btn--primary" onclick="approveApp(' + idNum + ',' + orgIdNum + ')"><i class="ph ph-check"></i> Tasdiqlash</button> ' +
+              '<button type="button" class="btn btn--sm btn--secondary" aria-label="Rad etish" onclick="rejectApp(' + idNum + ')"><i class="ph ph-x"></i></button>'
             : '—') +
           '</td></tr>';
       }).join('');

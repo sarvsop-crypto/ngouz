@@ -164,9 +164,10 @@
       tbody.innerHTML = items.map(function(r) {
         var badge = STATUS_BADGE[r.status] || 'neutral';
         var label = STATUS_LABEL[r.status] || r.status;
+        var idNum = parseInt(r.id, 10) || 0;
         var actions = r.status === 'submitted'
-          ? '<button type="button" class="btn btn--sm btn--primary" aria-label="Qabul qilish" onclick="acceptReport(' + r.id + ')"><i class="ph ph-check"></i></button> '
-            + '<button type="button" class="btn btn--sm btn--secondary" aria-label="Qaytarish" onclick="returnReport(' + r.id + ')"><i class="ph ph-arrow-u-up-left"></i></button>'
+          ? '<button type="button" class="btn btn--sm btn--primary" aria-label="Qabul qilish" onclick="acceptReport(' + idNum + ')"><i class="ph ph-check"></i></button> '
+            + '<button type="button" class="btn btn--sm btn--secondary" aria-label="Qaytarish" onclick="returnReport(' + idNum + ')"><i class="ph ph-arrow-u-up-left"></i></button>'
           : '—';
         return '<tr>'
           + '<td><input type="checkbox" /></td>'

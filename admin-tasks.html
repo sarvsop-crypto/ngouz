@@ -265,13 +265,14 @@
       tbody.innerHTML = items.map(function(a) {
         var badge = STATUS_BADGE[a.status] || 'neutral';
         var label = STATUS_LABEL[a.status] || a.status;
+        var idNum = parseInt(a.id, 10) || 0;
         var actions = a.status === 'pending'
-          ? '<button type="button" class="btn btn--sm btn--primary" aria-label="Tasdiqlash" onclick="approveTask(' + a.id + ')"><i class="ph ph-check"></i></button> '
-            + '<button type="button" class="btn btn--sm btn--secondary" aria-label="Rad etish" onclick="rejectTask(' + a.id + ')"><i class="ph ph-x"></i></button>'
+          ? '<button type="button" class="btn btn--sm btn--primary" aria-label="Tasdiqlash" onclick="approveTask(' + idNum + ')"><i class="ph ph-check"></i></button> '
+            + '<button type="button" class="btn btn--sm btn--secondary" aria-label="Rad etish" onclick="rejectTask(' + idNum + ')"><i class="ph ph-x"></i></button>'
           : '—';
         return '<tr>'
           + '<td><input type="checkbox" /></td>'
-          + '<td><strong>#' + a.id + '</strong></td>'
+          + '<td><strong>#' + esc(a.id) + '</strong></td>'
           + '<td>' + esc(a.org_name) + '</td>'
           + '<td>' + esc(a.applicant_name) + '</td>'
           + '<td>' + esc((a.created_at||'').slice(0,10)) + '</td>'
