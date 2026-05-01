@@ -180,6 +180,11 @@
       e.preventDefault();
       applyLang(code);
       langDrop.classList.remove("open");
+      // Trigger may not be in scope at this point (it is built below)
+      // — so look it up by id; this also covers any rebuild of the
+      // wrapper in dynamic flows.
+      var t = document.getElementById("topbarLangTrigger");
+      if (t) t.setAttribute("aria-expanded", "false");
     });
   });
 
@@ -191,11 +196,16 @@
   langTrigger.type = "button";
   langTrigger.className = "topbar-lang-trigger";
   langTrigger.id = "topbarLangTrigger";
+  langTrigger.setAttribute("aria-haspopup", "listbox");
+  langTrigger.setAttribute("aria-expanded", "false");
+  langTrigger.setAttribute("aria-label", "Tilni tanlash");
   langTrigger.innerHTML = '<span id="topbarLangLabel">' + (langShort[initialLang] || "O\u02BBzbekcha") + '</span>' +
     '<svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="2,3 5,7 8,3"/></svg>';
   var langMenu = document.createElement("div");
   langMenu.className = "topbar-lang-menu";
+  langMenu.setAttribute("role", "listbox");
   Array.prototype.forEach.call(document.querySelectorAll(".topbar-lang[data-lang]"), function(a) {
+    a.setAttribute("role", "option");
     langMenu.appendChild(a);
   });
   langDrop.appendChild(langTrigger);
@@ -207,10 +217,22 @@
 
   langTrigger.addEventListener("click", function(e) {
     e.stopPropagation();
-    langDrop.classList.toggle("open");
+    var nowOpen = langDrop.classList.toggle("open");
+    langTrigger.setAttribute("aria-expanded", nowOpen ? "true" : "false");
   });
   document.addEventListener("click", function(e) {
-    if (!langDrop.contains(e.target)) langDrop.classList.remove("open");
+    if (!langDrop.contains(e.target) && langDrop.classList.contains("open")) {
+      langDrop.classList.remove("open");
+      langTrigger.setAttribute("aria-expanded", "false");
+    }
+  });
+  // Esc closes \u2014 same pattern as the visibility panel and modal stack.
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && langDrop.classList.contains("open")) {
+      langDrop.classList.remove("open");
+      langTrigger.setAttribute("aria-expanded", "false");
+      langTrigger.focus();
+    }
   });
 
   applyLang(initialLang);
