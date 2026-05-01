@@ -105,7 +105,10 @@
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
     function fmtDate(d) { if (!d) return ''; var p = d.slice(0,10).split('-'); return p[2] + '.' + p[1] + '.' + p[0]; }
 
-    fetchT(API + '/public/events?limit=100')
+    // archive=0: hide archived events, matching the public /events
+    // listing (content.js renderEventsPage uses the same archive=0
+    // upstream filter).
+    fetchT(API + '/public/events?limit=100&archive=0')
       .then(function (r) { return r.json(); })
       .then(function (res) {
         var items = res.items || [];

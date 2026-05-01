@@ -111,7 +111,12 @@
     var catClass = { 'news': 'news-card__cat--news', 'event': 'news-card__cat--event', 'grant': 'news-card__cat--grant', 'announcement': 'news-card__cat--important', 'important': 'news-card__cat--important' };
     var catLabel = { 'news': 'YANGILIK', 'event': 'TADBIR', 'grant': 'GRANT', 'announcement': 'MUHIM', 'important': 'MUHIM' };
 
-    fetchT(API + '/public/news?limit=100')
+    // archive=0: hide archived items, matching the public /news listing.
+    // Cabinet members previously saw archived news mixed with current —
+    // a confusing inconsistency since /news (the same data source for
+    // public visitors) hides them via content.js fetchJSON's archive=0
+    // extraParam.
+    fetchT(API + '/public/news?limit=100&archive=0')
       .then(function (r) { return r.json(); })
       .then(function (res) {
         var items = res.items || res.data || [];
