@@ -7,10 +7,14 @@
 <meta name="apple-mobile-web-app-title" content="NNTMA Kabinet" />
 <meta name="format-detection" content="telephone=no" />
 <meta name="robots" content="noindex, nofollow" />
+<!-- JS-disabled fallback: meta refresh sends the user to login; the
+     'real' (token-aware) routing happens in the inline script below. -->
+<meta http-equiv="refresh" content="0;url=cabinet-login">
   <script src="../js/api-client.js"></script>
 <script src="../js/errlog.js" defer></script>
 </head><body>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. <a href="cabinet-login" style="color:#7a5800;font-weight:600">Kirishga o'tish</a>.</div></noscript>
+  <p style="text-align:center;padding:48px 24px;color:#9ca3af;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif">Yo'naltirilmoqda… <a href="cabinet-login" style="color:#0e7490">Davom etish</a></p>
   <script>
   (function () {
     if (window.NgoApi && NgoApi.getToken()) {
