@@ -64,7 +64,8 @@ export default {
     {
       const rssMatch = (
         url.pathname === '/v1/news.rss' ? 'news' :
-        url.pathname === '/v1/events.rss' ? 'events' : null
+        url.pathname === '/v1/events.rss' ? 'events' :
+        url.pathname === '/v1/grants.rss' ? 'grants' : null
       );
       if (rssMatch && (request.method === 'GET' || request.method === 'HEAD')) {
         try {
@@ -259,6 +260,13 @@ const RSS_FEEDS = {
     listUrl: 'https://www.ngo.uz/events.html',
     selfUrl: 'https://ngo-api-proxy.sarvsop.workers.dev/v1/events.rss',
     detailPath: '/event-detail.html',
+  },
+  grants: {
+    title: 'Grantlar — ngo.uz',
+    description: 'NNTlar uchun amaldagi grant tanlovlari va e\'lonlar.',
+    listUrl: 'https://www.ngo.uz/grants.html',
+    selfUrl: 'https://ngo-api-proxy.sarvsop.workers.dev/v1/grants.rss',
+    detailPath: '/grants.html',
   },
 };
 
