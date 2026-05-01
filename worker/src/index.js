@@ -61,8 +61,8 @@ export default {
           time: new Date().toISOString(),
           // Bump on each meaningful change so external monitors can detect
           // a deploy without diffing other fields. Increments naturally
-          // line up with our iteration log; latest = iter 185.
-          version: 185,
+          // line up with our iteration log; latest = iter 196.
+          version: 196,
         }),
         { status: 200, headers },
       );
@@ -238,6 +238,12 @@ export default {
     // fetch responses (matches the worker-direct paths from iter 45).
     if (!responseHeaders.has('Cross-Origin-Resource-Policy')) {
       responseHeaders.set('Cross-Origin-Resource-Policy', 'cross-origin');
+    }
+    // API responses are JSON for browsers; tell crawlers not to index
+    // them. Without this, a stray <a> link to a public API URL
+    // (e.g. on a developer page) could leak raw JSON into SERPs.
+    if (!responseHeaders.has('X-Robots-Tag')) {
+      responseHeaders.set('X-Robots-Tag', 'noindex, nofollow');
     }
 
     return new Response(resp.body, {
