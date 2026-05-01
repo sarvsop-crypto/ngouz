@@ -277,12 +277,13 @@
       .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; }); })
       .then(function (res) {
         if (res.ok) {
-          form.innerHTML = '<div style="text-align:center;padding:32px 0">'
+          form.innerHTML = '<div role="status" tabindex="-1" id="formSuccessMsg" style="text-align:center;padding:32px 0">'
             + '<h3 style="color:#065f46;margin-bottom:12px">Ariza qabul qilindi!</h3>'
             + '<p style="margin-bottom:12px">Murojaat ID: <strong>' + (res.data && res.data.id ? '#' + res.data.id : '—') + '</strong></p>'
             + '<p>Arizangiz qabul qilindi. 15 ish kuni ichida ko‘rsatilgan telefon yoki email orqali bog‘lanamiz.</p>'
             + '<a class="btn" href="/" style="margin-top:16px;display:inline-block">Bosh sahifaga qaytish</a>'
             + '</div>';
+          var sm = document.getElementById('formSuccessMsg'); if (sm) sm.focus();
         } else {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Ariza yuborish';

@@ -834,9 +834,9 @@ window.addEventListener('load', function(){
 </form>
 </div>
 <!-- Step 3: Success -->
-<div class="membership-step" hidden="" id="mem-step3">
+<div class="membership-step" hidden="" id="mem-step3" role="status" tabindex="-1">
 <div style="text-align:center;padding:24px 0 16px;">
-<svg fill="none" height="56" stroke="#2a8e9e" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" style="margin-bottom:18px" viewbox="0 0 24 24" width="56"><circle cx="12" cy="12" r="10"></circle><path d="M8 12l2.5 2.5L16 9"></path></svg>
+<svg fill="none" height="56" stroke="#2a8e9e" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" style="margin-bottom:18px" viewbox="0 0 24 24" width="56" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M8 12l2.5 2.5L16 9"></path></svg>
 <h3 style="margin:0 0 10px;font-size:1.25rem;color:#023347;">Arizangiz qabul qilindi!</h3>
 <p style="margin:0 0 24px;color:#666;font-size:.9375rem;max-width:480px;margin-left:auto;margin-right:auto;">Ko'rsatilgan telefon va email orqali siz bilan 15 ish kuni ichida bog'lanamiz. O'zNNTMAga qo'shilishingizdan mamnunmiz.</p>
 <a class="membership-submit" href="#" style="display:inline-block;text-decoration:none;border-radius:30px;padding:13px 36px;">Yopish</a>
@@ -849,6 +849,9 @@ function memStep(n) {
   document.getElementById('mem-step1').hidden = (n !== 1);
   document.getElementById('mem-step2').hidden = (n !== 2);
   document.getElementById('mem-step3').hidden = (n !== 3);
+  // role=status doesn't always re-announce when content was already
+  // in the DOM; explicit focus on the success step kicks AT to read it.
+  if (n === 3) { try { document.getElementById('mem-step3').focus(); } catch (e) {} }
 }
 function memSubmit(e) {
   e.preventDefault();

@@ -255,9 +255,10 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
   .then(function(res) {
     if (res.ok) {
       document.getElementById('feedbackForm').innerHTML =
-        '<div style="text-align:center;padding:40px 0"><h3 style="color:#0e7490">Murojaatingiz qabul qilindi!</h3>'
+        '<div role="status" tabindex="-1" id="formSuccessMsg" style="text-align:center;padding:40px 0"><h3 style="color:#0e7490">Murojaatingiz qabul qilindi!</h3>'
         + '<p>Tez orada javob beramiz.</p>'
         + '<a class="btn" href="/" style="margin-top:16px">Bosh sahifaga qaytish</a></div>';
+      var sm = document.getElementById('formSuccessMsg'); if (sm) sm.focus();
     } else {
       alert(res.data.detail || 'Xatolik yuz berdi. Qaytadan urinib ko\'ring.');
       btn.disabled = false; btn.textContent = 'Yuborish';
