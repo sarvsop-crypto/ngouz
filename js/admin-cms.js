@@ -62,7 +62,21 @@ var AdminCMS = (function () {
   function load(type, cb) {
     if (!window.NgoApi) { cb(new Error('api_client_not_loaded')); return; }
     NgoApi.get('/admin/' + type + '?limit=200')
-      .then(function (res) { cache[type] = res.items || []; cb(null, cache[type]); })
+      .then(function (res) {
+        var items = res.items || [];
+        // Sort newest-first by date/created_at so admins editing
+        // news/events/grants/documents see fresh content at the top
+        // of the table. Backend ordering is not guaranteed; without
+        // this admins were sometimes presented with stale 2024 items
+        // first while their newly-created article sat at the bottom.
+        items.sort(function (a, b) {
+          var ta = new Date(a.date || a.created_at || a.published_at || 0).getTime() || 0;
+          var tb = new Date(b.date || b.created_at || b.published_at || 0).getTime() || 0;
+          return tb - ta;
+        });
+        cache[type] = items;
+        cb(null, cache[type]);
+      })
       .catch(function (err) { cache[type] = []; cb(err); });
   }
 
