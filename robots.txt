@@ -4,7 +4,9 @@ Disallow: /admin-*
 Disallow: /cabinet/
 Disallow: /functions/
 Disallow: /api/
-Disallow: /search-results.html
 Disallow: /*?*
+
+# Crawl rate hint (most bots ignore but Yandex/Bing honor it).
+Crawl-delay: 1
 
 Sitemap: https://www.ngo.uz/sitemap.xml
