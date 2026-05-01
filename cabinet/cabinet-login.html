@@ -99,12 +99,17 @@
     });
 
     if (NgoApi.getToken()) {
-      fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/me', {
-        headers: { 'Authorization': 'Bearer ' + NgoApi.getToken() }
-      }).then(function(r) {
-        if (r.ok) location.replace('cabinet-dashboard');
-        else { try { localStorage.removeItem('ngo_api_token'); } catch(e) {} }
-      }).catch(function() {});
+      // Was a manual fetch with no timeout — a hanging /v1/me call
+      // left a logged-in user staring at the login form forever
+      // (page does nothing visible while the promise pends). Routing
+      // through NgoApi.me() picks up the iter-103 15s timeout and
+      // (via iter 100) the on-401 token-clear that lets the page
+      // fall through to its normal login form display.
+      NgoApi.me().then(function () {
+        location.replace('cabinet-dashboard');
+      }).catch(function () {
+        // Bad token, network error, or timeout — let the user log in.
+      });
     }
 
     document.getElementById('loginForm').addEventListener('submit', function (e) {
