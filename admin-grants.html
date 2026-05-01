@@ -309,19 +309,28 @@
       return Math.ceil(diff / 86400000);
     }
 
+    // Status fallback: if upstream record has no explicit
+    // 'active'/'closed', infer from the deadline. Without this an
+    // imported grant with a future deadline rendered as 'Yopilgan'
+    // and dropped out of the active KPI count.
+    function grantStatus(g) {
+      if (g.status === 'active' || g.status === 'closed') return g.status;
+      return daysUntil(g.deadline) >= 0 ? 'active' : 'closed';
+    }
+
     function renderKpi() {
-      var active = items.filter(function (i) { return i.status === 'active'; });
+      var active = items.filter(function (i) { return grantStatus(i) === 'active'; });
       var soon   = active.filter(function (i) { return daysUntil(i.deadline) <= 30; });
       document.getElementById('kpiTotal').textContent  = items.length;
       document.getElementById('kpiActive').textContent = active.length;
-      document.getElementById('kpiClosed').textContent = items.filter(function (i) { return i.status === 'closed'; }).length;
+      document.getElementById('kpiClosed').textContent = items.filter(function (i) { return grantStatus(i) === 'closed'; }).length;
       document.getElementById('kpiSoon').textContent   = soon.length;
     }
 
     function renderTable() {
       var q = searchQ.toLowerCase();
       var filtered = items.filter(function (item) {
-        if (statusFilter !== 'all' && item.status !== statusFilter) return false;
+        if (statusFilter !== 'all' && grantStatus(item) !== statusFilter) return false;
         if (q && (item.title + ' ' + (item.organizer || '')).toLowerCase().indexOf(q) === -1) return false;
         return true;
       });
@@ -335,7 +344,7 @@
         return;
       }
       tbody.innerHTML = filtered.map(function (item) {
-        var statusBadge = item.status === 'active'
+        var statusBadge = grantStatus(item) === 'active'
           ? '<span class="badge badge--success">Faol</span>'
           : '<span class="badge badge--neutral">Yopilgan</span>';
         var title = AdminCMS.esc(item.title.length > 55 ? item.title.slice(0, 55) + '…' : item.title);
