@@ -66,7 +66,7 @@
 
   /* ── News ─────────────────────────────────────────────────── */
   function newsCardHTML(n) {
-    var url = 'news-detail.html?id=' + n.id;
+    var url = 'news-detail?id=' + n.id;
     var cat = n.category || '';
     var archiveBadge = (n.is_archive === '1' || n.is_archive === 1)
       ? '<span class="gov-news-archive-badge">Arxiv</span>' : '';
@@ -186,7 +186,7 @@
     var others = items.filter(function (n) { return n !== item; }).slice(0, 8);
     var sidebar = '<aside class="detail-sidebar"><p class="detail-sidebar-heading">Boshqa yangiliklar</p>';
     others.forEach(function (n) {
-      sidebar += '<a href="news-detail.html?id=' + n.id + '" class="detail-sidebar-item">'
+      sidebar += '<a href="news-detail?id=' + n.id + '" class="detail-sidebar-item">'
         + '<p class="detail-sidebar-item-date">' + fmtDate(n.date) + ' · ' + (n.category || '') + '</p>'
         + '<p class="detail-sidebar-item-title">' + n.title + '</p>'
         + '</a>';
@@ -196,14 +196,14 @@
     container.innerHTML = '<div class="detail-layout">'
       + '<div class="detail-paper">'
       + '<div class="detail-top-bar">'
-      + '<p class="detail-breadcrumbs"><a href="index.html">Bosh sahifa</a><span class="detail-bc-sep">›</span><a href="news.html">Yangiliklar</a><span class="detail-bc-sep">›</span><span>' + cat + '</span></p>'
+      + '<p class="detail-breadcrumbs"><a href="index">Bosh sahifa</a><span class="detail-bc-sep">›</span><a href="news">Yangiliklar</a><span class="detail-bc-sep">›</span><span>' + cat + '</span></p>'
       + '<button class="detail-print-btn" onclick="window.print()" aria-label="Chop etish"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>'
       + '</div>'
       + '<h1 class="detail-title">' + item.title + '</h1>'
-      + '<p class="detail-meta"><span>' + fmtDate(item.date) + '</span><span class="detail-meta-sep">/</span><a href="news.html">' + cat + '</a></p>'
+      + '<p class="detail-meta"><span>' + fmtDate(item.date) + '</span><span class="detail-meta-sep">/</span><a href="news">' + cat + '</a></p>'
       + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
       + '<div class="detail-body">' + bodyToHTML(item.body || item.excerpt) + '</div>'
-      + '<div class="detail-tags"><a href="news.html" class="detail-tag">' + cat + '</a></div>'
+      + '<div class="detail-tags"><a href="news" class="detail-tag">' + cat + '</a></div>'
       + shareButtons(pageUrl, item.title)
       + '</div>'
       + sidebar
@@ -212,7 +212,7 @@
 
   /* ── Events ───────────────────────────────────────────────── */
   function eventCardHTML(e) {
-    var url = 'event-detail.html?id=' + e.id;
+    var url = 'event-detail?id=' + e.id;
     var cat = e.status || 'past';
     var label = cat === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
     var archiveBadge = (e.is_archive === '1' || e.is_archive === 1)
@@ -327,7 +327,7 @@
     var others = items.filter(function (e) { return e !== item; }).slice(0, 8);
     var sidebar = '<aside class="detail-sidebar"><p class="detail-sidebar-heading">Boshqa tadbirlar</p>';
     others.forEach(function (e) {
-      sidebar += '<a href="event-detail.html?id=' + e.id + '" class="detail-sidebar-item">'
+      sidebar += '<a href="event-detail?id=' + e.id + '" class="detail-sidebar-item">'
         + '<p class="detail-sidebar-item-date">' + e.dateLabel + '</p>'
         + '<p class="detail-sidebar-item-title">' + e.title + '</p>'
         + '</a>';
@@ -337,14 +337,14 @@
     container.innerHTML = '<div class="detail-layout">'
       + '<div class="detail-paper">'
       + '<div class="detail-top-bar">'
-      + '<p class="detail-breadcrumbs"><a href="index.html">Bosh sahifa</a><span class="detail-bc-sep">›</span><a href="events.html">Tadbirlar</a><span class="detail-bc-sep">›</span><span>' + statusLabel + '</span></p>'
+      + '<p class="detail-breadcrumbs"><a href="index">Bosh sahifa</a><span class="detail-bc-sep">›</span><a href="events">Tadbirlar</a><span class="detail-bc-sep">›</span><span>' + statusLabel + '</span></p>'
       + '<button class="detail-print-btn" onclick="window.print()" aria-label="Chop etish"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>'
       + '</div>'
       + '<h1 class="detail-title">' + item.title + '</h1>'
-      + '<p class="detail-meta"><span>' + item.dateLabel + '</span><span class="detail-meta-sep">/</span><a href="events.html">' + statusLabel + '</a></p>'
+      + '<p class="detail-meta"><span>' + item.dateLabel + '</span><span class="detail-meta-sep">/</span><a href="events">' + statusLabel + '</a></p>'
       + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
       + '<div class="detail-body">' + body + '</div>'
-      + '<div class="detail-tags"><a href="events.html" class="detail-tag">Tadbir</a><a href="events.html" class="detail-tag">' + statusLabel + '</a></div>'
+      + '<div class="detail-tags"><a href="events" class="detail-tag">Tadbir</a><a href="events" class="detail-tag">' + statusLabel + '</a></div>'
       + shareButtons(pageUrl, item.title)
       + '</div>'
       + sidebar
@@ -362,7 +362,7 @@
         + '<p>' + g.description + '</p>'
         + (g.amount ? '<p class="grant-amount">Miqdor: ' + g.amount + '</p>' : '')
         + (g.deadlineLabel ? '<p class="grant-deadline">Muddat: ' + g.deadlineLabel + '</p>' : '')
-        + '<a class="btn btn-inline" href="service-request.html">Ariza topshirish</a>'
+        + '<a class="btn btn-inline" href="service-request">Ariza topshirish</a>'
         + '</article>';
     });
     html += '</div>';
@@ -396,7 +396,7 @@
       html += '<div class="doc-row head"><span>Hujjat nomi</span><span>Toifa</span><span>Sana</span></div>';
       arr.forEach(function (d) {
         html += '<div class="doc-row">'
-          + '<a href="news-detail.html?id=' + d.id + '&type=documents" style="color:#0e7490;text-decoration:underline;font-weight:600">' + d.title + '</a>'
+          + '<a href="news-detail?id=' + d.id + '&type=documents" style="color:#0e7490;text-decoration:underline;font-weight:600">' + d.title + '</a>'
           + '<span>' + label + '</span>'
           + '<span>' + fmtDate(d.date) + '</span>'
           + '</div>';

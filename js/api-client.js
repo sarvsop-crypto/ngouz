@@ -9,7 +9,7 @@
   var API_BASE = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
   var TOKEN_KEY  = 'ngo_api_token';
   var USER_KEY   = 'ngo_api_user';
-  var LOGIN_PAGE = 'admin-login.html';
+  var LOGIN_PAGE = 'admin-login';
 
   function getToken() { try { return localStorage.getItem(TOKEN_KEY) || ''; } catch (e) { return ''; } }
   function setToken(t) { try { localStorage.setItem(TOKEN_KEY, t || ''); } catch (e) {} }
@@ -86,7 +86,7 @@
       if (opts.minRole) {
         var levels = { super_admin: 100, regional_admin: 60, portal_moderator: 40, member_manager: 20, member_user: 10 };
         if ((levels[res.user.role] || 0) < (levels[opts.minRole] || 0)) {
-          location.replace('admin-login.html?error=forbidden');
+          location.replace('admin-login?error=forbidden');
           return Promise.reject(new Error('forbidden'));
         }
       }

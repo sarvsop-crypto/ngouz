@@ -8,7 +8,7 @@
     return;
   }
 
-  NgoApi.requireAuth({ minRole: 'regional_admin', loginPage: 'admin-login.html' })
+  NgoApi.requireAuth({ minRole: 'regional_admin', loginPage: 'admin-login' })
     .then(function (user) {
       window.__CURRENT_USER__ = user;
       var slot = document.querySelector('[data-user-name]');
@@ -22,6 +22,6 @@
     var el = ev.target.closest && ev.target.closest('[data-action="logout"]');
     if (!el) return;
     ev.preventDefault();
-    NgoApi.logout().then(function () { location.replace('admin-login.html'); });
+    NgoApi.logout().then(function () { location.replace('admin-login'); });
   });
 })();

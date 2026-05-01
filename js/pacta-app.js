@@ -269,7 +269,7 @@ document.addEventListener('DOMContentLoaded', function () {
       var confirmBtn = document.getElementById('logoutConfirmBtn');
       if (confirmBtn) {
         confirmBtn.onclick = function () {
-          window.location.href = dest || 'admin-login.html';
+          window.location.href = dest || 'admin-login';
         };
       }
       openModal('logoutModal', link);
