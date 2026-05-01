@@ -55,9 +55,14 @@
   var PANEL_ITEMS = []; // loaded dynamically from API
 
   function buildNavLink(item, activeKey) {
-    var activeClass = item.key === activeKey ? ' is-active' : '';
+    var isActive = item.key === activeKey;
+    var activeClass = isActive ? ' is-active' : '';
+    // aria-current="page" lets screen readers announce "current page"
+    // when the user lands on or tabs to the link — without it, the
+    // is-active class is purely visual.
+    var ariaCurrent = isActive ? ' aria-current="page"' : '';
     return (
-      '<a href="' + item.href + '" class="sidebar__nav-link' + activeClass + '" title="' + item.title + '">' +
+      '<a href="' + item.href + '" class="sidebar__nav-link' + activeClass + '" title="' + item.title + '"' + ariaCurrent + '>' +
         '<span class="sidebar__nav-icon"><i class="ph ' + item.icon + '"></i></span>' +
         '<span class="sidebar__nav-link-text">' + item.text + '</span>' +
       '</a>'
@@ -88,7 +93,7 @@
           '<span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>' +
           '<input type="text" placeholder="Qidirish" aria-label="Qidirish" />' +
         '</div>' +
-        '<nav class="sidebar__nav">' +
+        '<nav class="sidebar__nav" aria-label="Kabinet menyusi">' +
           sections +
           '<div class="sidebar__nav-section u-mt-auto">' +
             '<a href="cabinet-login" data-action="logout" class="sidebar__nav-link logout" title="Chiqish">' +
