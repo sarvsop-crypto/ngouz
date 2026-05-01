@@ -277,7 +277,7 @@
           '<td class="u-td-truncate">' + esc(item.subject || '—') + '</td>' +
           '<td>' + esc((item.created_at || '').slice(0, 10)) + '</td>' +
           '<td><span class="badge badge--' + badge + '">' + label + '</span></td>' +
-          '<td><button class="btn btn--sm btn--secondary" aria-label="Ko\'rib chiqish" onclick="reviewItem(' + item.id + ')"><i class="ph ph-eye"></i></button></td>' +
+          '<td><button type="button" class="btn btn--sm btn--secondary" aria-label="Ko\'rib chiqish" onclick="reviewItem(' + item.id + ')"><i class="ph ph-eye"></i></button></td>' +
         '</tr>';
       }).join('');
     }

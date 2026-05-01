@@ -165,8 +165,8 @@
         var badge = STATUS_BADGE[r.status] || 'neutral';
         var label = STATUS_LABEL[r.status] || r.status;
         var actions = r.status === 'submitted'
-          ? '<button class="btn btn--sm btn--primary" aria-label="Qabul qilish" onclick="acceptReport(' + r.id + ')"><i class="ph ph-check"></i></button> '
-            + '<button class="btn btn--sm btn--secondary" aria-label="Qaytarish" onclick="returnReport(' + r.id + ')"><i class="ph ph-arrow-u-up-left"></i></button>'
+          ? '<button type="button" class="btn btn--sm btn--primary" aria-label="Qabul qilish" onclick="acceptReport(' + r.id + ')"><i class="ph ph-check"></i></button> '
+            + '<button type="button" class="btn btn--sm btn--secondary" aria-label="Qaytarish" onclick="returnReport(' + r.id + ')"><i class="ph ph-arrow-u-up-left"></i></button>'
           : '—';
         return '<tr>'
           + '<td><input type="checkbox" /></td>'

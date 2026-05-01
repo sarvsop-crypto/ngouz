@@ -261,7 +261,7 @@
           '<td>' + esc(o.leader_name || '—') + '</td>' +
           '<td>' + esc(o.member_since || '—') + '</td>' +
           '<td><span class="badge badge--' + badge + '">' + label + '</span></td>' +
-          '<td><button class="btn--ghost-sm danger" aria-label="O\'chirish" onclick="deleteOrg(' + o.id + ')" title="O\'chirish"><i class="ph ph-trash"></i></button></td>' +
+          '<td><button type="button" class="btn--ghost-sm danger" aria-label="O\'chirish" onclick="deleteOrg(' + o.id + ')" title="O\'chirish"><i class="ph ph-trash"></i></button></td>' +
         '</tr>';
       }).join('');
       if (filtered.length > 100) {
