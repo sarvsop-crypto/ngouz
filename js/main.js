@@ -270,7 +270,10 @@
     var params = new URLSearchParams(location.search);
     var q = (params.get("q") || "").trim().toLowerCase();
     var queryNode = document.getElementById("search-query");
-    var resultsNode = document.getElementById("search-results-list");
+    // search-results.html uses id=dynamic-search-results; older mock had
+    // search-results-list. Accept either so the page works regardless.
+    var resultsNode = document.getElementById("dynamic-search-results")
+      || document.getElementById("search-results-list");
     if (queryNode) queryNode.textContent = q ? ("\"" + params.get("q").trim() + "\"") : "so'rov kiritilmagan";
     if (resultsNode) {
       if (!q) {
@@ -284,7 +287,11 @@
           resultsNode.innerHTML = "<div class=\"search-item\"><h3>Natija topilmadi</h3><p>Boshqa kalit so'z bilan qayta qidirib ko'ring.</p></div>";
         } else {
           resultsNode.innerHTML = results.map(function (item) {
-            return "<a class=\"search-item\" href=\"" + item.url + "\"><h3>" + item.title + "</h3><p>" + item.summary + "</p></a>";
+            // siteIndex urls were authored with .html (legacy); strip
+            // the suffix so clicks hit the canonical clean URL directly
+            // instead of taking a 308 round-trip.
+            var href = String(item.url).replace(/\.html$/, "");
+            return "<a class=\"search-item\" href=\"" + href + "\"><h3>" + item.title + "</h3><p>" + item.summary + "</p></a>";
           }).join("");
         }
       }
