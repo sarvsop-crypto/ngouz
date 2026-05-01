@@ -118,9 +118,15 @@
           return;
         }
 
-        var now = new Date();
-        var upcoming = items.filter(function (e) { return e.date && new Date(e.date) >= now; });
-        var past = items.filter(function (e) { return !e.date || new Date(e.date) < now; });
+        var todayMs = new Date().setHours(0, 0, 0, 0);
+        function isUpcoming(e) {
+          if (e.status === 'upcoming') return true;
+          if (e.status === 'past') return false;
+          var t = e.date ? new Date(e.date).getTime() : NaN;
+          return !isNaN(t) && t >= todayMs;
+        }
+        var upcoming = items.filter(isUpcoming);
+        var past = items.filter(function (e) { return !isUpcoming(e); });
 
         var vals = document.querySelectorAll('.cards .card__value');
         if (vals[0]) vals[0].textContent = items.length;
@@ -128,8 +134,12 @@
         if (vals[3]) vals[3].textContent = upcoming.length;
 
         container.innerHTML = items.map(function (ev) {
-          var statusLabel = ev.status === 'upcoming' ? 'KELAYOTGAN' : "BO'LIB O'TGAN";
-          var statusClass = ev.status === 'upcoming' ? 'news-card__cat--event' : 'news-card__cat--news';
+          // Use the same status resolution the rest of the site does
+          // (iter 238) — explicit field wins, fallback to date so
+          // future-dated events with no status read 'KELAYOTGAN'.
+          var isUp = isUpcoming(ev);
+          var statusLabel = isUp ? 'KELAYOTGAN' : "BO'LIB O'TGAN";
+          var statusClass = isUp ? 'news-card__cat--event' : 'news-card__cat--news';
           // Slice the raw description first, THEN esc — slicing the
           // escaped string can cut a multi-char entity (&amp; → &am)
           // and break rendering or leak partial markup.
