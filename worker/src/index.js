@@ -62,7 +62,7 @@ export default {
           // Bump on each meaningful change so external monitors can detect
           // a deploy without diffing other fields. Increments naturally
           // line up with our iteration log; latest = iter 196.
-          version: 261,
+          version: 262,
         }),
         { status: 200, headers },
       );
@@ -77,17 +77,38 @@ export default {
         url.pathname === '/v1/grants.rss' ? 'grants' : null
       );
       if (rssMatch && (request.method === 'GET' || request.method === 'HEAD')) {
+        // Build a no-cache JSON error response. RSS readers usually
+        // honour Cache-Control on the response itself; without
+        // no-cache an upstream blip got cached for 5 minutes and the
+        // reader silently saw 'no new items' until cache expired.
+        const errResp = (status, code, message) => {
+          const h = new Headers({
+            'Content-Type': 'application/json; charset=utf-8',
+            'Cache-Control': 'no-store',
+            'X-Proxied-By': 'ngo-api-proxy',
+          });
+          setSecurityHeaders(h);
+          return new Response(JSON.stringify({ error: code, message }), { status, headers: h });
+        };
         try {
           // archive=0: hide archived items from the public RSS feeds.
           // The /news, /events, /grants HTML pages and homepage strips
           // already filter archived (iter 195 + 243); the RSS feeds
           // were the lone surface still mixing them in, so subscribers
           // saw archived posts as 'new'.
-          const upstreamRes = await fetch(ORIGIN + '/v1/public/' + rssMatch + '?limit=50&archive=0', {
-            headers: { 'Host': 'api.ngo.uz' },
-          });
+          // 25s timeout matches the main proxy path so a slow upstream
+          // surfaces a clean 504 to readers instead of CF's 1101.
+          const ctrl = new AbortController();
+          const tid = setTimeout(() => ctrl.abort(), 25000);
+          let upstreamRes;
+          try {
+            upstreamRes = await fetch(ORIGIN + '/v1/public/' + rssMatch + '?limit=50&archive=0', {
+              headers: { 'Host': 'api.ngo.uz' },
+              signal: ctrl.signal,
+            });
+          } finally { clearTimeout(tid); }
           if (!upstreamRes.ok) {
-            return new Response('upstream_failed', { status: 502 });
+            return errResp(502, 'rss_upstream_failed', 'Upstream returned ' + upstreamRes.status);
           }
           const data = await upstreamRes.json();
           const items = (data && data.items) ? data.items : [];
@@ -100,7 +121,12 @@ export default {
           setSecurityHeaders(headers);
           return new Response(xml, { status: 200, headers });
         } catch (e) {
-          return new Response('error', { status: 500 });
+          const aborted = e && e.name === 'AbortError';
+          return errResp(
+            aborted ? 504 : 500,
+            aborted ? 'rss_upstream_timeout' : 'rss_render_failed',
+            String((e && e.message) || e).slice(0, 200)
+          );
         }
       }
     }
