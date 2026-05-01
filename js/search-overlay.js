@@ -40,10 +40,30 @@
     lastFocused = null;
   }
 
+  // Focus-trap helper for Tab / Shift+Tab while open.
+  var FOCUSABLE = 'a[href],button:not([disabled]),input:not([disabled]),' +
+                  'select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+  function trapTab(e) {
+    if (e.key !== 'Tab' || !overlay.classList.contains('open')) return;
+    var focusables = overlay.querySelectorAll(FOCUSABLE);
+    if (!focusables.length) return;
+    var first = focusables[0];
+    var last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }
+
   toggle.addEventListener('click', openSearch);
   if (close) close.addEventListener('click', closeSearch);
   overlay.addEventListener('click', function (e) { if (e.target === overlay) closeSearch(); });
   document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && overlay.classList.contains('open')) closeSearch();
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape') closeSearch();
+    else if (e.key === 'Tab') trapTab(e);
   });
 })();
