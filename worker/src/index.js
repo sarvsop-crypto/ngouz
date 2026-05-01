@@ -52,6 +52,7 @@ export default {
       });
       setCors(headers, origin);
       appendVary(headers, 'Origin');
+      setSecurityHeaders(headers);
       return new Response(
         JSON.stringify({ ok: true, worker: 'ngo-api-proxy', upstream: ORIGIN }),
         { status: 200, headers },
@@ -81,6 +82,7 @@ export default {
             'Cache-Control': 'public, max-age=300, s-maxage=300',
             'X-Proxied-By': 'ngo-api-proxy',
           });
+          setSecurityHeaders(headers);
           return new Response(xml, { status: 200, headers });
         } catch (e) {
           return new Response('error', { status: 500 });
@@ -101,6 +103,7 @@ export default {
       });
       setCors(headers, origin);
       appendVary(headers, 'Origin');
+      setSecurityHeaders(headers);
       try {
         const raw = await request.text();
         if (raw.length > 8192) {
@@ -144,6 +147,7 @@ export default {
       });
       setCors(headers, origin);
       appendVary(headers, 'Origin');
+      setSecurityHeaders(headers);
       return new Response(
         JSON.stringify({ error: 'not_found', path: url.pathname }),
         { status: 404, headers },
@@ -211,7 +215,18 @@ function corsResponse(origin, status) {
   const headers = new Headers();
   setCors(headers, origin);
   appendVary(headers, 'Origin');
+  setSecurityHeaders(headers);
   return new Response(null, { status, headers });
+}
+
+function setSecurityHeaders(headers) {
+  // Worker-direct responses (healthz, errlog, RSS, 404) need their own
+  // hardening — they don't inherit CF Pages _headers or upstream PHP's
+  // headers. CORP=cross-origin is required since browsers fetch RSS
+  // from feed-reader origins.
+  headers.set('X-Content-Type-Options', 'nosniff');
+  headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  headers.set('Cross-Origin-Resource-Policy', 'cross-origin');
 }
 
 function xmlEscape(s) {
