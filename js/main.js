@@ -75,7 +75,40 @@
     { title: "Savol-javob", url: "faq.html", summary: "NNT faoliyatiga oid ko'p beriladigan savollarga javoblar.", keywords: "savol javob faq nnt" },
     { title: "Grant va tanlovlar", url: "projects.html", summary: "Faol grant tanlovlari va moliyaviy qo'llab-quvvatlash dasturlari.", keywords: "grant tanlov loyiha moliya" },
     { title: "Publikatsiyalar", url: "publications.html", summary: "Tahliliy maqolalar, seminar materiallari va metodik qo'llanmalar.", keywords: "publikatsiya nashr maqola material" },
-    { title: "A'zolik yo'riqnomasi", url: "membership-guide.html", summary: "O'zNNTMAga a'zo bo'lish bo'yicha bosqichma-bosqich yo'riqnoma.", keywords: "azoliq yuriqnoma bosqich hujjat" }
+    { title: "A'zolik yo'riqnomasi", url: "membership-guide", summary: "O'zNNTMAga a'zo bo'lish bo'yicha bosqichma-bosqich yo'riqnoma.", keywords: "azoliq yuriqnoma bosqich hujjat" },
+    // iter 150: round out the index from 17 → ~46 entries so site
+    // search reaches every public page after the iter-67 URL cleanup.
+    // strip() in main.js handles the trailing .html for legacy entries.
+    { title: "Maqsad va vazifalar", url: "mission", summary: "O'zNNTMA strategik maqsadlari va NNT sektori uchun ustuvor vazifalari.", keywords: "maqsad vazifa missiya strategiya" },
+    { title: "Kengash a'zolari", url: "board-of-experts", summary: "O'zNNTMA Boshqaruv kengashi a'zolari, ekspertlar va qo'mita raislari.", keywords: "kengash ekspertlar board" },
+    { title: "Hududiy bo'linmalar", url: "hududiy-bolinmalar", summary: "O'zNNTMA viloyat va Toshkent shahar hududiy bo'linmalari.", keywords: "hududiy bolinma viloyat toshkent regional" },
+    { title: "Assotsiatsiya tuzilmasi", url: "structure", summary: "O'zNNTMA tashkiliy tuzilmasi, qo'mitalar va ishchi guruhlar.", keywords: "tuzilma struktura qomita ishchi guruh" },
+    { title: "NNTlar reyestri", url: "nntlar", summary: "Assotsiatsiyaga a'zo NNTlar — to'liq ro'yxat, qidiruv va hududlar bo'yicha filtr.", keywords: "nnt reyestr royxat azolar a'zo organization tashkilot" },
+    { title: "Barqarorlik indeksi", url: "sustainability-index", summary: "NNTlar barqarorlik indeksi va tashkilot bal taqsimoti.", keywords: "barqarorlik indeks reyting sustainability" },
+    { title: "Barqaror NNT sertifikati", url: "sustainability-cert", summary: "Barqaror NNT sertifikatiga ega tashkilotlar ro'yxati.", keywords: "barqaror sertifikat sustainability cert" },
+    { title: "Mahalliy hamkorlar", url: "mahalliy-hamkorlar", summary: "O'zNNTMA mahalliy davlat va xususiy hamkorlari.", keywords: "mahalliy hamkor partner uzbekistan" },
+    { title: "Jamoatchilik kengashi", url: "jamoatchilik-kengashi", summary: "Jamoatchilik kengashi a'zolari va ularning faoliyat sohalari.", keywords: "jamoatchilik kengash a'zo public council" },
+    { title: "Loyihalar", url: "projects", summary: "Faol loyihalar, grant tanlovlari va NNTlar uchun moliyaviy yordam.", keywords: "loyiha proyekt grant project" },
+    { title: "Grant tanlovlari (AI)", url: "grant-tanlovlari", summary: "AI yordamida grant tanlovlarini topish — sun'iy intellektga savol bering.", keywords: "grant ai sunatik intellekt search ai chat" },
+    { title: "Bog'lanish", url: "contact", summary: "Manzil, telefon, email va ijtimoiy tarmoqlar.", keywords: "kontakt bog'lanish manzil aloqa" },
+    { title: "Qayta aloqa", url: "qayta-aloqa", summary: "Savol, taklif yoki murojaat yuborish uchun forma.", keywords: "qayta aloqa feedback murojaat savol" },
+    { title: "Korrupsiya murojaati", url: "korrupsiya-murojaat", summary: "Korrupsiyani oldini olish — anonim murojaat shakli.", keywords: "korrupsiya anti-corruption murojaat anonim" },
+    { title: "Multimedia", url: "multimedia-room", summary: "Foto, video va audio materiallar.", keywords: "multimedia foto video audio media" },
+    { title: "Videolar", url: "videos", summary: "O'zNNTMA video roliklari va treninglar.", keywords: "video rolik trening multimedia" },
+    { title: "Infografika", url: "infographics", summary: "NNT sektori statistikasi va vizualizatsiyalar.", keywords: "infografika statistika diagramma chart" },
+    { title: "Dayjestlar", url: "dayjestlar", summary: "Haftalik va oylik NNT yangiliklari dayjesti.", keywords: "dayjest digest haftalik oy review" },
+    { title: "Bo'sh ish o'rinlari", url: "vacancies", summary: "NNT sektoridagi bo'sh ish o'rinlari va ish e'lonlari.", keywords: "vakansiya ish vacancy job o'rin" },
+    { title: "Stajirovka va volontyorlik", url: "stajirovka-volontyorlik", summary: "Stajirovka va volontyorlik dasturlari, NNTlar bilan amaliyot.", keywords: "stajirovka volontyor internship volunteer amaliyot" },
+    { title: "Virtual akademiya", url: "talim-rivojlanish", summary: "Onlayn ta'lim — NNT rahbarlari va xodimlari uchun kurslar.", keywords: "akademiya talim ta'lim kurs online education" },
+    { title: "Onlayn kutubxona", url: "online-library", summary: "NNT sektori bo'yicha kitoblar, qo'llanmalar va metodik materiallar.", keywords: "kutubxona library kitob qollanma material" },
+    { title: "Tadqiqot yo'nalishlari", url: "research-areas", summary: "O'zNNTMA tadqiqot yo'nalishlari va ilmiy ishlanmalar.", keywords: "tadqiqot research yo'nalish ilm science" },
+    { title: "Davlat ijtimoiy buyurtmalari", url: "social-orders", summary: "Davlat ijtimoiy buyurtmalari va NNT sektori ishtiroki.", keywords: "ijtimoiy buyurtma davlat social order tender" },
+    { title: "Ijtimoiy afzalliklar", url: "afzalliklar", summary: "A'zolik afzalliklari, imtiyozlar va bonuslar.", keywords: "afzallik benefit imtiyoz bonus a'zolik" },
+    { title: "Rasmiy murojaat", url: "service-request", summary: "Interaktiv xizmatlar bo'yicha rasmiy murojaat yuborish formasi.", keywords: "service request rasmiy murojaat formal" },
+    { title: "A'zolik guvohnomasi", url: "membership-certificate", summary: "Tashkilot a'zolik guvohnomasini olish tartibi.", keywords: "guvohnoma certificate a'zolik membership" },
+    { title: "Kim biz", url: "who-we-are", summary: "O'zNNTMA tashkiloti haqida — vazifa, missiya va qadriyatlar.", keywords: "kim biz who we are about haqida" },
+    { title: "Maxfiylik siyosati", url: "maxfiylik-siyosati", summary: "Shaxsiy ma'lumotlarni qayta ishlash siyosati va saytdan foydalanish.", keywords: "maxfiylik privacy siyosat policy" },
+    { title: "Foydalanish shartlari", url: "foydalanish-shartlari", summary: "Sayt va xizmatlardan foydalanish shartlari.", keywords: "shartlar foydalanish terms conditions" }
   ];
 
 
