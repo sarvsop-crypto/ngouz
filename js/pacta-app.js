@@ -333,11 +333,21 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // --- Filter chips: radio-group + dispatch a filter-change event ---
+  // Initialize aria-pressed once so AT users can read the current
+  // selection without waiting for the first click to flip a value
+  // they never had.
   document.querySelectorAll('.filter-chip').forEach(function (chip) {
+    if (!chip.hasAttribute('aria-pressed')) {
+      chip.setAttribute('aria-pressed', chip.classList.contains('is-active') ? 'true' : 'false');
+    }
     chip.addEventListener('click', function () {
       var group = chip.parentElement.querySelectorAll('.filter-chip');
-      group.forEach(function (c) { c.classList.remove('is-active'); });
+      group.forEach(function (c) {
+        c.classList.remove('is-active');
+        c.setAttribute('aria-pressed', 'false');
+      });
       chip.classList.add('is-active');
+      chip.setAttribute('aria-pressed', 'true');
       chip.dispatchEvent(new CustomEvent('pacta:filter-change', { bubbles: true }));
     });
   });
