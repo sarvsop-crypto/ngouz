@@ -159,9 +159,10 @@
           location.replace(safeNext());
         }).catch(function (err) {
           btn.disabled = false;
-          var msg = 'Login failed';
+          var msg = 'Kirish xatosi';
           if (err && err.code === 'invalid_credentials') msg = "Email yoki parol noto'g'ri";
           else if (err && err.code === 'too_many_attempts') msg = "Juda ko'p noto'g'ri urinish. 15 daqiqadan so'ng qayta urining";
+          else if (err && err.message) msg = "Kirish xatosi: " + err.message;
           alert(msg);
         });
       });
