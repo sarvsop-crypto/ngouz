@@ -396,6 +396,33 @@
     window.setTimeout(normalizeRefreshButtons, 150);
   }
 
+  // Sidebar search lives in #sidebarSearchTrigger > input on every
+  // admin/cabinet shell. Typing into it did nothing — wire it to
+  // hide non-matching nav links so users can quickly jump to the
+  // section they want.
+  function setupSidebarSearch() {
+    var wrap = document.getElementById('sidebarSearchTrigger');
+    if (!wrap) return;
+    var input = wrap.querySelector('input');
+    if (!input) return;
+    var nav = document.querySelector('.sidebar__nav');
+    if (!nav) return;
+    input.addEventListener('input', function () {
+      var q = (this.value || '').trim().toLowerCase();
+      nav.querySelectorAll('.sidebar__nav-link').forEach(function (link) {
+        if (link.classList.contains('logout')) return;
+        var label = (link.textContent || '').toLowerCase();
+        link.style.display = (!q || label.indexOf(q) !== -1) ? '' : 'none';
+      });
+      // Hide group labels when their entire section is filtered out.
+      nav.querySelectorAll('.sidebar__nav-section').forEach(function (section) {
+        var visibleLink = section.querySelector('.sidebar__nav-link:not([style*="display: none"])');
+        var label = section.querySelector('.sidebar__nav-label');
+        if (label) label.style.display = (q && !visibleLink) ? 'none' : '';
+      });
+    });
+  }
+
   function init() {
     ensureSkipLink();
     hardenLandmarks();
@@ -404,6 +431,7 @@
     wrapTables();
     optimizeImages();
     setupMobileSidebar();
+    setupSidebarSearch();
     applyInlineUtilityClasses();
     initChartTextRepair();
   }
