@@ -62,7 +62,7 @@ export default {
           // Bump on each meaningful change so external monitors can detect
           // a deploy without diffing other fields. Increments naturally
           // line up with our iteration log; latest = iter 196.
-          version: 196,
+          version: 261,
         }),
         { status: 200, headers },
       );
@@ -78,7 +78,12 @@ export default {
       );
       if (rssMatch && (request.method === 'GET' || request.method === 'HEAD')) {
         try {
-          const upstreamRes = await fetch(ORIGIN + '/v1/public/' + rssMatch + '?limit=50', {
+          // archive=0: hide archived items from the public RSS feeds.
+          // The /news, /events, /grants HTML pages and homepage strips
+          // already filter archived (iter 195 + 243); the RSS feeds
+          // were the lone surface still mixing them in, so subscribers
+          // saw archived posts as 'new'.
+          const upstreamRes = await fetch(ORIGIN + '/v1/public/' + rssMatch + '?limit=50&archive=0', {
             headers: { 'Host': 'api.ngo.uz' },
           });
           if (!upstreamRes.ok) {
