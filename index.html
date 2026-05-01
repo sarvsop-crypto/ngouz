@@ -774,7 +774,44 @@ function memStep(n) {
 }
 function memSubmit(e) {
   e.preventDefault();
-  memStep(3);
+  var form = e.target;
+  var btn = form.querySelector('button[type="submit"]');
+  if (!btn || btn.disabled) return;
+  var defaultLabel = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Yuborilmoqda...';
+
+  var body = {
+    organization_name: form.querySelector('#mem-org').value.trim(),
+    head_name:         form.querySelector('#mem-leader').value.trim(),
+    phone:             form.querySelector('#mem-phone').value.trim(),
+    email:             form.querySelector('#mem-email').value.trim(),
+    region:            form.querySelector('#mem-region').value,
+    note:              form.querySelector('#mem-note').value.trim()
+  };
+
+  // memSubmit was wired to memStep(3) directly — users saw "Arizangiz qabul
+  // qilindi!" without anything reaching the server. Route through the same
+  // /v1/public/membership endpoint as membership.html.
+  var done = function () { memStep(3); };
+  var fail = function (msg) {
+    btn.disabled = false;
+    btn.textContent = defaultLabel;
+    alert(msg || 'Xatolik. Iltimos qaytadan urinib ko’ring.');
+  };
+
+  fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/membership', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(body)
+  }).then(function (r) {
+    return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; });
+  }).then(function (res) {
+    if (res.ok) done();
+    else fail(res.data && res.data.message);
+  }).catch(function () {
+    fail('Tarmoq xatosi. Internet aloqangizni tekshiring.');
+  });
 }
 // Close modal on overlay click
 document.querySelector('.membership-overlay').addEventListener('click', function(e) {
