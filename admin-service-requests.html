@@ -99,7 +99,7 @@
       <div class="main__header">
         <h1 class="main__title">Xizmat so&rsquo;rovlari</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" data-action="export" data-export-title="Xizmat so'rovlari eksport"><i class="ph ph-download-simple"></i> Eksport (CSV)</button>
+          <button type="button" class="btn btn--secondary" id="exportServiceBtn"><i class="ph ph-download-simple"></i> Eksport (CSV)</button>
         </div>
       </div>
 
@@ -355,6 +355,33 @@
         console.error('Service requests fetch error:', err);
         document.getElementById('serviceTableBody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--error-600);">Xatolik yuz berdi</td></tr>';
       });
+
+    // CSV export — same pattern as iter 270 / 271 / corruption-
+    // reports. Operates on the non-corruption subset shown in the
+    // table.
+    var exportBtn = document.getElementById('exportServiceBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', function () {
+        if (!items.length) { alert('Eksport qilish uchun so\'rov yo\'q'); return; }
+        var headers = ['id', 'created_at', 'status', 'full_name', 'email', 'phone', 'subject', 'category', 'body', 'assigned_to'];
+        function csvCell(v) {
+          var s = String(v == null ? '' : v);
+          if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+          return s;
+        }
+        var lines = [headers.join(',')];
+        items.forEach(function (it) {
+          lines.push(headers.map(function (h) { return csvCell(it[h]); }).join(','));
+        });
+        var blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'xizmat-sorovlari-' + new Date().toISOString().slice(0, 10) + '.csv';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      });
+    }
   })();
   </script>
   <script src="js/pacta-foundation.js" defer></script>
