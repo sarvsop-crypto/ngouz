@@ -136,6 +136,14 @@
 
     NgoApi.get('/cabinet/membership', { loginPage: 'cabinet-login' }).then(function (res) {
       var items = res.items || [];
+      // Sort newest-first so items[0] is genuinely the latest
+      // application — backend ordering isn't guaranteed and the
+      // 'Joriy holat' card needs the correct one to be useful.
+      items.sort(function (a, b) {
+        var ta = new Date(a.created_at || 0).getTime() || 0;
+        var tb = new Date(b.created_at || 0).getTime() || 0;
+        return tb - ta;
+      });
       var tbody = document.getElementById('applicationsTableBody');
       if (!items.length) {
         tbody.innerHTML = '<tr><td colspan="5" class="empty-state">'
@@ -148,9 +156,13 @@
       // Update summary cards
       var active = items.filter(function (i) { return i.status !== 'approved' && i.status !== 'rejected'; });
       var approved = items.filter(function (i) { return i.status === 'approved'; });
+      var archived = items.filter(function (i) { return i.status === 'rejected' || i.status === 'returned' || i.is_archive; });
       var tabs = document.querySelectorAll('.tabs .tab .tab__count');
       if (tabs[0]) tabs[0].textContent = active.length;
       if (tabs[1]) tabs[1].textContent = approved.length;
+      // Was unset — Arxiv tab always read '—' even when there
+      // were rejected or returned applications.
+      if (tabs[2]) tabs[2].textContent = archived.length;
 
       // Update the status card with latest application
       var latest = items[0];
