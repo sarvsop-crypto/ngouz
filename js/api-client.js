@@ -18,6 +18,8 @@
   function getUser()  { try { return JSON.parse(localStorage.getItem(USER_KEY) || 'null'); } catch (e) { return null; } }
   function setUser(u) { try { localStorage.setItem(USER_KEY, JSON.stringify(u || null)); } catch (e) {} }
 
+  var DEFAULT_TIMEOUT_MS = 15000;
+
   function request(method, path, body, opts) {
     opts = opts || {};
     var url = path.indexOf('http') === 0 ? path : API_BASE + path;
@@ -30,7 +32,29 @@
     if (body !== undefined && body !== null) {
       init.body = (body instanceof FormData) ? body : JSON.stringify(body);
     }
+
+    // 15s default timeout — admin/cabinet are auth-walled and a slow
+    // backend mustn't hang the user's only path back to login. Pass
+    // opts.timeout = 0 to disable (e.g. uploads). AbortController
+    // cancels the fetch; finally clears the timer so the slot doesn't
+    // leak when the response arrives normally.
+    var timeoutMs = (typeof opts.timeout === 'number') ? opts.timeout : DEFAULT_TIMEOUT_MS;
+    var timer = null;
+    if (timeoutMs > 0 && typeof AbortController === 'function') {
+      var ctrl = new AbortController();
+      timer = setTimeout(function () { ctrl.abort(); }, timeoutMs);
+      init.signal = ctrl.signal;
+    }
+
+    var clearTimer = function () { if (timer) { clearTimeout(timer); timer = null; } };
+
     return fetch(url, init).then(function (r) {
+      clearTimer();
+      return r;
+    }, function (err) {
+      clearTimer();
+      throw err;
+    }).then(function (r) {
       var ct = r.headers.get('content-type') || '';
       var parse = ct.indexOf('application/json') !== -1 ? r.json() : r.text();
       return parse.then(function (data) {
