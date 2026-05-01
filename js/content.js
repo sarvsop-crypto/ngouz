@@ -502,7 +502,12 @@
     var loadMoreBtn = null;
 
     function loadPage() {
-      var url = kind + '?limit=100&offset=' + offset;
+      // Match the homepage news/events strips and cabinet listings
+      // by hiding archived items by default. Without this, the
+      // full-page /news, /events, /grants listings showed archived
+      // alongside current — inconsistent with every other surface
+      // that fetches the same data.
+      var url = kind + '?limit=100&offset=' + offset + '&archive=0';
       fetchWithTimeout(API_BASE + url + '&_=' + Date.now())
         .then(function (r) { return r.ok ? r.json() : { items: [], total: 0 }; })
         .then(function (data) {
