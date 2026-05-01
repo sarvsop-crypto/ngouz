@@ -1194,8 +1194,20 @@ body.a11y-grayscale { filter: grayscale(1); }
 
 @media (prefers-reduced-motion: reduce){
   .orb,
-  .scan{
+  .scan,
+  .nnt-card,
+  .scroll-fade,
+  .fade-up{
     animation:none !important;
+    transition:none !important;
+  }
+  /* Make sure scroll-fade content is visible without the fade-in
+     transition. Without this rule the elements stay at the
+     opacity:0 starting state forever. */
+  .scroll-fade,
+  .scroll-fade.ready{
+    opacity:1 !important;
+    transform:none !important;
   }
 }
 
