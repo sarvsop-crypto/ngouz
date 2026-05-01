@@ -135,32 +135,19 @@
           </div>
 
           <div class="settings-panel">
-            <h2 class="settings-section-title settings-section-title--tight">Faol seanslar</h2>
-            <p class="settings-section-sub">Hozirda tizimga kirgan qurilmalar</p>
+            <h2 class="settings-section-title settings-section-title--tight">Faol seans</h2>
+            <p class="settings-section-sub">Joriy qurilma ma'lumoti. Boshqa qurilmalardan kirgan bo'lsangiz, parolni o'zgartiring.</p>
             <div class="settings-stack">
               <div class="session-item">
                 <div class="session-item__left">
-                  <i class="ph ph-monitor session-item__icon"></i>
+                  <i class="ph ph-monitor session-item__icon" id="sessIcon"></i>
                   <div>
-                    <p class="session-item__title">Windows · Chrome</p>
-                    <p class="session-item__meta">Toshkent, O'zbekiston — Joriy seans</p>
+                    <p class="session-item__title" id="sessTitle">&mdash;</p>
+                    <p class="session-item__meta" id="sessMeta">Joriy seans</p>
                   </div>
                 </div>
                 <span class="session-pill">Joriy</span>
               </div>
-              <div class="session-item">
-                <div class="session-item__left">
-                  <i class="ph ph-device-mobile session-item__icon"></i>
-                  <div>
-                    <p class="session-item__title">Android · Chrome Mobile</p>
-                    <p class="session-item__meta">Kecha 18:42 — Toshkent</p>
-                  </div>
-                </div>
-                <button type="button" class="btn btn--secondary btn--text-sm" id="endSessionBtn">Tugatish</button>
-              </div>
-            </div>
-            <div class="settings-actions-row">
-              <button type="button" class="btn btn--danger btn--danger-outline"><i class="ph ph-sign-out"></i> Barcha seanslarni tugatish</button>
             </div>
           </div>
         </div>
@@ -226,15 +213,31 @@
       });
     }
 
-    /* ── End session button ── */
-    var endSessBtn = document.getElementById('endSessionBtn');
-    if (endSessBtn) {
-      endSessBtn.addEventListener('click', function () {
-        if (confirm('Ushbu seansni tugatmoqchimisiz?')) {
-          alert('Seans tugatildi.');
-        }
-      });
-    }
+    /* ── Populate current session card from navigator.userAgent ──
+       Was hardcoded 'Windows · Chrome / Toshkent — Joriy seans'. */
+    (function () {
+      var ua = navigator.userAgent || '';
+      var os = 'Brauzer';
+      if (/Windows NT/i.test(ua)) os = 'Windows';
+      else if (/Mac OS X|Macintosh/i.test(ua)) os = 'macOS';
+      else if (/Android/i.test(ua)) os = 'Android';
+      else if (/iPhone|iPad|iPod/i.test(ua)) os = 'iOS';
+      else if (/Linux/i.test(ua)) os = 'Linux';
+      var browser = 'Brauzer';
+      if (/Edg\//i.test(ua)) browser = 'Edge';
+      else if (/OPR\//i.test(ua)) browser = 'Opera';
+      else if (/Chrome\//i.test(ua) && !/Edg\/|OPR\//i.test(ua)) browser = 'Chrome';
+      else if (/Firefox\//i.test(ua)) browser = 'Firefox';
+      else if (/Safari\//i.test(ua)) browser = 'Safari';
+      var isMobile = /Mobi|Android|iPhone|iPad|iPod/i.test(ua);
+      var titleEl = document.getElementById('sessTitle');
+      var iconEl  = document.getElementById('sessIcon');
+      if (titleEl) titleEl.textContent = os + ' · ' + browser;
+      if (iconEl) {
+        iconEl.classList.remove('ph-monitor');
+        iconEl.classList.add(isMobile ? 'ph-device-mobile' : 'ph-monitor');
+      }
+    })();
   })();
   </script>
 </body>
