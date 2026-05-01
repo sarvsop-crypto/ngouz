@@ -19,17 +19,25 @@
   var input = document.getElementById('searchInput');
   if (!overlay || !toggle) return;
 
+  // Static markup didn't declare these — screen readers treated the
+  // toggle as a plain button rather than a dialog opener.
+  toggle.setAttribute('aria-haspopup', 'dialog');
+  toggle.setAttribute('aria-expanded', 'false');
+  toggle.setAttribute('aria-controls', overlay.id);
+
   var lastFocused = null;
 
   function openSearch() {
     lastFocused = document.activeElement;
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
+    toggle.setAttribute('aria-expanded', 'true');
     if (input) setTimeout(function () { input.focus(); }, 50);
   }
   function closeSearch() {
     overlay.classList.remove('open');
     overlay.setAttribute('aria-hidden', 'true');
+    toggle.setAttribute('aria-expanded', 'false');
     // Return focus to whatever opened the overlay, or fall back to the
     // toggle button. Wrapped in try/catch since the previous element
     // may have been removed from the DOM in the meantime.
