@@ -138,7 +138,9 @@
       var items = res.items || [];
       var tbody = document.getElementById('applicationsTableBody');
       if (!items.length) {
-        tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Arizalar topilmadi</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="5" class="empty-state">'
+          + 'Hali a‘zolik arizasi topshirilmagan. <a href="../membership" style="color:var(--primary-500);text-decoration:underline">Yangi ariza yuborish</a>.'
+          + '</td></tr>';
         return;
       }
       tbody.innerHTML = items.map(renderRow).join('');

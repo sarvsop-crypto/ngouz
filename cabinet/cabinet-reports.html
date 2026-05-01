@@ -175,7 +175,9 @@
       var items = res.items || [];
       var tbody = document.getElementById('reportsTableBody');
       if (!items.length) {
-        tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Hisobotlar topilmadi</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="6" class="empty-state">'
+          + 'Hali hisobot yuborilmagan. Yuqoridagi <strong>“Hisobot yuklash”</strong> tugmasi orqali birinchi hisobotingizni topshiring.'
+          + '</td></tr>';
         return;
       }
       tbody.innerHTML = items.map(renderRow).join('');
