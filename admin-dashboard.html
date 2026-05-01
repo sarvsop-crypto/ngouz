@@ -278,7 +278,11 @@
         var grandTotal = data.reduce(function (s, d) { return s + d.total; }, 0);
         tbody.innerHTML = data.map(function (d) {
           var pct = grandTotal ? Math.round(d.total / grandTotal * 100) : 0;
-          return '<tr><td>' + d.name + '</td><td>' + d.total + '</td><td>' + d.total + '</td><td>—</td><td>' + pct + '%</td></tr>';
+          // d.name comes from /public/regions (r.name_uz). Run it
+          // through esc() before innerHTML — backend-controlled, but
+          // a single misencoded record shouldn't break the row.
+          // d.total is already a number from `d.total || 0` above.
+          return '<tr><td>' + esc(d.name) + '</td><td>' + d.total + '</td><td>' + d.total + '</td><td>—</td><td>' + pct + '%</td></tr>';
         }).join('');
       });
     }).catch(function () {});
