@@ -36,7 +36,11 @@
       return parse.then(function (data) {
         if (r.status === 401 && opts.authRedirect) {
           clearToken();
-          if (!/\/(admin-login|cabinet-login)\.html/.test(location.pathname)) {
+          // Match both legacy /admin-login.html and clean /admin-login
+          // (CF Pages serves both since iter 67 internal-link cleanup).
+          // Without the optional \.html, a 401 fired while already on
+          // /admin-login would re-redirect back to itself — infinite loop.
+          if (!/\/(admin-login|cabinet-login)(\.html)?$/.test(location.pathname)) {
             var next = encodeURIComponent(location.pathname + location.search);
             location.href = (opts.loginPage || LOGIN_PAGE) + '?next=' + next;
           }
