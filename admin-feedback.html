@@ -100,7 +100,7 @@
       <div class="main__header">
         <h1 class="main__title">Qayta aloqa</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" data-action="export" data-export-title="Qayta aloqa eksport"><i class="ph ph-download-simple"></i> Eksport (CSV)</button>
+          <button type="button" class="btn btn--secondary" id="exportFeedbackBtn"><i class="ph ph-download-simple"></i> Eksport (CSV)</button>
         </div>
       </div>
 
@@ -126,9 +126,7 @@
       <section class="table-section" aria-labelledby="feedbackTableTitle">
         <div class="table-section__head">
           <h2 class="table-section__title" id="feedbackTableTitle">Kelib tushgan xabarlar</h2>
-          <div class="table-section__tools">
-            <button type="button" class="btn btn--secondary"><i class="ph ph-download-simple"></i> Eksport (CSV)</button>
-          </div>
+          <div class="table-section__tools"></div>
         </div>
         <form class="u-filter-row" role="search" aria-label="Xabarlarni filtrlash">
           <input id="feedbackSearch" type="search" class="table-section__search u-search-260" placeholder="Ism, email, mavzu..." aria-label="Qidirish" />
@@ -332,6 +330,36 @@
     NgoApi.get('/admin/contact-messages?limit=200')
       .then(function (res) { items = res.items || []; renderTable(); renderKpi(); })
       .catch(function () { toast('Xabarlarni yuklashda xatolik', 'error'); });
+
+    // CSV export — was a stub that alerted "tez orada qo'shiladi"
+    // via pacta-app's data-action="export" delegate. We have the
+    // full items array in memory after the initial fetch; build a
+    // CSV from it client-side and trigger a download.
+    var exportBtn = document.getElementById('exportFeedbackBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', function () {
+        if (!items.length) { toast('Eksport qilish uchun xabar yo\'q', 'info'); return; }
+        var headers = ['id', 'created_at', 'status', 'full_name', 'email', 'phone', 'subject', 'body'];
+        function csvCell(v) {
+          var s = String(v == null ? '' : v);
+          if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+          return s;
+        }
+        var lines = [headers.join(',')];
+        items.forEach(function (it) {
+          lines.push(headers.map(function (h) { return csvCell(it[h]); }).join(','));
+        });
+        // BOM so Excel detects UTF-8 (Cyrillic / Uzbek apostrophes).
+        var blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'qayta-aloqa-' + new Date().toISOString().slice(0, 10) + '.csv';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        toast('CSV yuklab olindi (' + items.length + ' yozuv)', 'success');
+      });
+    }
   })();
   </script>
 </body>
