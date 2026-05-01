@@ -237,8 +237,19 @@
     }
 
     window.approveTask = function(id) {
-      if (!confirm('Arizani tasdiqlaysizmi?')) return;
-      NgoApi.patch('/admin/membership-requests/' + id, { status: 'approved' })
+      // Same /admin/membership-requests endpoint as admin-membership-
+      // requests' approveApp — that flow requires organization_id so
+      // the approved member's account links to a real org. Was just
+      // sending { status: 'approved' } here, which left the new member
+      // unattached. Prompt for the org id (preselected from the
+      // application's existing link if upstream stored one).
+      var item = allItems.find(function (a) { return parseInt(a.id, 10) === id; });
+      var existingOrgId = item && item.organization_id ? item.organization_id : '';
+      var orgIdStr = prompt('Tashkilot ID raqamini kiriting yoki tasdiqlang:\n(NNT ro\'yxatidan toping — admin-registry sahifasi)', existingOrgId);
+      if (orgIdStr === null) return;
+      var orgId = parseInt(orgIdStr, 10) || null;
+      if (!orgId) { alert('Tashkilot ID raqami kerak.'); return; }
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'approved', organization_id: orgId })
         .then(function() { location.reload(); })
         .catch(function (err) {
           alert('Tasdiqlashda xatolik: ' + ((err && err.message) || 'noma\'lum'));
