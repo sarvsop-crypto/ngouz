@@ -154,6 +154,15 @@
       var d = new Date(iso);
       return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear();
     }
+    // HTML-escape API-returned strings before innerHTML interpolation.
+    // Cabinet view is authed, but admin-edited event/notification
+    // titles are still untrusted — a malicious admin could store an
+    // <script> in an event title and execute on every member.
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
 
     NgoApi.get('/me').then(function (me) {
       if (!me || !me.user || me.user.status !== 'active') {
@@ -199,7 +208,7 @@
         evContainer.innerHTML = events.slice(0, 3).map(function (ev) {
           return '<div class="event-preview">'
             + '<span class="event-preview__badge">TADBIR</span>'
-            + '<div class="event-preview__title">' + (ev.title || '') + '</div>'
+            + '<div class="event-preview__title">' + esc(ev.title || '') + '</div>'
             + '<div class="event-preview__date">' + fmtDate(ev.date || ev.event_date) + '</div>'
             + '</div>';
         }).join('');
@@ -224,7 +233,7 @@
       list.innerHTML = items.map(function (n) {
         var color = dotColors[n.type] || 'var(--primary-500)';
         return '<li class="alert-item"><span class="alert-dot" style="background:' + color + ';"></span>'
-          + '<div class="alert-text"><div class="alert-title">' + (n.title || '') + '</div>'
+          + '<div class="alert-text"><div class="alert-title">' + esc(n.title || '') + '</div>'
           + '<div class="alert-meta">' + fmtDate(n.created_at) + '</div></div></li>';
       }).join('');
     }).catch(function () {

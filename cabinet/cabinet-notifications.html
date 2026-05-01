@@ -120,16 +120,24 @@
       return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear()
         + ' \u00b7 ' + ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
     }
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
 
     function renderNotif(n) {
       var t = typeIcons[n.type] || typeIcons.info;
       var unread = n.is_read ? '' : ' notif-item--unread';
       var dot = n.is_read ? '' : ' <span class="notif-item__dot"></span>';
-      return '<div class="notif-item' + unread + '" data-notif-id="' + n.id + '">'
+      // n.id lands in a data-notif-id attribute; use encodeURIComponent
+      // for safety in case the backend ever returns ids with quotes.
+      var safeId = String(n.id == null ? '' : n.id).replace(/[^A-Za-z0-9_-]/g, '');
+      return '<div class="notif-item' + unread + '" data-notif-id="' + safeId + '">'
         + '<div class="notif-icon ' + t.cls + '"><i class="ph ' + t.icon + '"></i></div>'
         + '<div class="notif-item__content">'
-        + '<div class="notif-item__title">' + (n.title || '') + dot + '</div>'
-        + '<div class="notif-item__body">' + (n.body || '') + '</div>'
+        + '<div class="notif-item__title">' + esc(n.title || '') + dot + '</div>'
+        + '<div class="notif-item__body">' + esc(n.body || '') + '</div>'
         + '<div class="notif-item__time">' + fmtDateTime(n.created_at) + '</div>'
         + '</div></div>';
     }
