@@ -7,11 +7,25 @@
 (function () {
   var API_BASE = 'https://ngo-api-proxy.sarvsop.workers.dev/v1/public/';
   var MEDIA_BASE = 'https://ngo-api-proxy.sarvsop.workers.dev/media.php?path=';
+  var TIMEOUT_MS = 15000;
+
+  // Wrapper around fetch with a 15s AbortController timeout. Without
+  // it a hanging upstream PHP backend would leave the news / events /
+  // grants page stuck on "Yuklanmoqda…" forever — the existing
+  // .catch handlers only fire on rejections, not stalls.
+  function fetchWithTimeout(url) {
+    if (typeof AbortController !== 'function') return fetch(url);
+    var ctrl = new AbortController();
+    var timer = setTimeout(function () { ctrl.abort(); }, TIMEOUT_MS);
+    return fetch(url, { signal: ctrl.signal }).finally(function () {
+      clearTimeout(timer);
+    });
+  }
 
   function fetchJSON(kind, cb, extraParams) {
     var url = API_BASE + kind + '?limit=100&_=' + Date.now();
     if (extraParams) url += '&' + extraParams;
-    fetch(url)
+    fetchWithTimeout(url)
       .then(function (r) { return r.ok ? r.json() : { items: [], total: 0 }; })
       .then(function (data) {
         cb(data && data.items ? data.items : (Array.isArray(data) ? data : []), data);
@@ -20,7 +34,7 @@
   }
 
   function fetchOne(kind, id, cb) {
-    fetch(API_BASE + kind + '/' + encodeURIComponent(id) + '?_=' + Date.now())
+    fetchWithTimeout(API_BASE + kind + '/' + encodeURIComponent(id) + '?_=' + Date.now())
       .then(function (r) { return r.ok ? r.json() : null; })
       .then(function (data) { cb(data); })
       .catch(function () { cb(null); });
@@ -416,7 +430,7 @@
 
     function loadPage() {
       var url = kind + '?limit=100&offset=' + offset;
-      fetch(API_BASE + url + '&_=' + Date.now())
+      fetchWithTimeout(API_BASE + url + '&_=' + Date.now())
         .then(function (r) { return r.ok ? r.json() : { items: [], total: 0 }; })
         .then(function (data) {
           var items = data.items || [];
