@@ -22,6 +22,21 @@
     });
   }
 
+  // HTML-escape user-supplied / API-returned strings before they land
+  // in innerHTML templates. The legacy PHP backend's sanitization
+  // story is unknown and admin CMS users edit titles/descriptions
+  // directly — a single <script> in any item.title would otherwise
+  // be stored XSS. Use for every backend-string interpolation; it's
+  // a no-op for null/undefined.
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
   function fetchJSON(kind, cb, extraParams) {
     var url = API_BASE + kind + '?limit=100&_=' + Date.now();
     if (extraParams) url += '&' + extraParams;
@@ -80,21 +95,21 @@
 
   /* ── News ─────────────────────────────────────────────────── */
   function newsCardHTML(n) {
-    var url = 'news-detail?id=' + n.id;
+    var url = 'news-detail?id=' + encodeURIComponent(n.id);
     var cat = n.category || '';
     var archiveBadge = (n.is_archive === '1' || n.is_archive === 1)
       ? '<span class="gov-news-archive-badge">Arxiv</span>' : '';
-    return '<article class="gov-news-card" data-cat="' + cat + '">'
+    return '<article class="gov-news-card" data-cat="' + esc(cat) + '">'
       + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
       + '<div class="gov-news-img-inner" style="' + coverStyle(n) + '"></div>'
       + '<div class="gov-news-overlay"></div>' + archiveBadge + '</a>'
       + '<div class="gov-news-content">'
       + '<div class="gov-news-header">'
       + '<div class="gov-news-date"><b>' + dateDay(n.date) + '</b><span>' + dateMonthAbbr(n.date) + '</span></div>'
-      + '<a href="' + url + '" class="gov-news-title">' + n.title + '</a>'
+      + '<a href="' + url + '" class="gov-news-title">' + esc(n.title) + '</a>'
       + '</div>'
-      + '<a href="' + url + '" class="gov-news-excerpt">' + n.excerpt + '</a>'
-      + '<div class="gov-news-footer"><span>' + fmtDate(n.date) + '</span><a href="' + url + '">' + cat + '</a></div>'
+      + '<a href="' + url + '" class="gov-news-excerpt">' + esc(n.excerpt) + '</a>'
+      + '<div class="gov-news-footer"><span>' + fmtDate(n.date) + '</span><a href="' + url + '">' + esc(cat) + '</a></div>'
       + '</div></article>';
   }
 
@@ -211,9 +226,9 @@
     var others = items.filter(function (n) { return n !== item; }).slice(0, 8);
     var sidebar = '<aside class="detail-sidebar"><p class="detail-sidebar-heading">Boshqa yangiliklar</p>';
     others.forEach(function (n) {
-      sidebar += '<a href="news-detail?id=' + n.id + '" class="detail-sidebar-item">'
-        + '<p class="detail-sidebar-item-date">' + fmtDate(n.date) + ' · ' + (n.category || '') + '</p>'
-        + '<p class="detail-sidebar-item-title">' + n.title + '</p>'
+      sidebar += '<a href="news-detail?id=' + encodeURIComponent(n.id) + '" class="detail-sidebar-item">'
+        + '<p class="detail-sidebar-item-date">' + fmtDate(n.date) + ' · ' + esc(n.category || '') + '</p>'
+        + '<p class="detail-sidebar-item-title">' + esc(n.title) + '</p>'
         + '</a>';
     });
     sidebar += '</aside>';
@@ -221,14 +236,14 @@
     container.innerHTML = '<div class="detail-layout">'
       + '<div class="detail-paper">'
       + '<div class="detail-top-bar">'
-      + '<p class="detail-breadcrumbs"><a href="index">Bosh sahifa</a><span class="detail-bc-sep">›</span><a href="news">Yangiliklar</a><span class="detail-bc-sep">›</span><span>' + cat + '</span></p>'
+      + '<p class="detail-breadcrumbs"><a href="index">Bosh sahifa</a><span class="detail-bc-sep">›</span><a href="news">Yangiliklar</a><span class="detail-bc-sep">›</span><span>' + esc(cat) + '</span></p>'
       + '<button class="detail-print-btn" onclick="window.print()" aria-label="Chop etish"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>'
       + '</div>'
-      + '<h1 class="detail-title">' + item.title + '</h1>'
-      + '<p class="detail-meta"><span>' + fmtDate(item.date) + '</span><span class="detail-meta-sep">/</span><a href="news">' + cat + '</a></p>'
+      + '<h1 class="detail-title">' + esc(item.title) + '</h1>'
+      + '<p class="detail-meta"><span>' + fmtDate(item.date) + '</span><span class="detail-meta-sep">/</span><a href="news">' + esc(cat) + '</a></p>'
       + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
       + '<div class="detail-body">' + bodyToHTML(item.body || item.excerpt) + '</div>'
-      + '<div class="detail-tags"><a href="news" class="detail-tag">' + cat + '</a></div>'
+      + '<div class="detail-tags"><a href="news" class="detail-tag">' + esc(cat) + '</a></div>'
       + shareButtons(pageUrl, item.title)
       + '</div>'
       + sidebar
@@ -237,22 +252,22 @@
 
   /* ── Events ───────────────────────────────────────────────── */
   function eventCardHTML(e) {
-    var url = 'event-detail?id=' + e.id;
+    var url = 'event-detail?id=' + encodeURIComponent(e.id);
     var cat = e.status || 'past';
     var label = cat === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
     var archiveBadge = (e.is_archive === '1' || e.is_archive === 1)
       ? '<span class="gov-news-archive-badge">Arxiv</span>' : '';
-    return '<article class="gov-news-card" data-cat="' + cat + '">'
+    return '<article class="gov-news-card" data-cat="' + esc(cat) + '">'
       + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
       + '<div class="gov-news-img-inner" style="' + coverStyle(e) + '"></div>'
       + '<div class="gov-news-overlay"></div>' + archiveBadge + '</a>'
       + '<div class="gov-news-content">'
       + '<div class="gov-news-header">'
       + '<div class="gov-news-date"><b>' + dateDay(e.date) + '</b><span>' + dateMonthAbbr(e.date) + '</span></div>'
-      + '<a href="' + url + '" class="gov-news-title">' + e.title + '</a>'
+      + '<a href="' + url + '" class="gov-news-title">' + esc(e.title) + '</a>'
       + '</div>'
-      + '<a href="' + url + '" class="gov-news-excerpt">' + (e.description || '') + '</a>'
-      + '<div class="gov-news-footer"><span>' + (e.dateLabel || fmtDate(e.date)) + '</span><a href="' + url + '">' + label + '</a></div>'
+      + '<a href="' + url + '" class="gov-news-excerpt">' + esc(e.description || '') + '</a>'
+      + '<div class="gov-news-footer"><span>' + esc(e.dateLabel || fmtDate(e.date)) + '</span><a href="' + url + '">' + label + '</a></div>'
       + '</div></article>';
   }
 
@@ -346,16 +361,16 @@
     var statusLabel = statusKey === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
 
     var body = bodyToHTML(item.description)
-      + (item.location ? '<p><strong>Joyi:</strong> ' + item.location + '</p>' : '')
-      + (item.participants ? '<p><strong>Ishtirokchilar:</strong> ' + item.participants + ' kishi</p>' : '')
-      + (item.deadline ? '<p><strong>Ariza muddati:</strong> ' + item.deadlineLabel + '</p>' : '');
+      + (item.location ? '<p><strong>Joyi:</strong> ' + esc(item.location) + '</p>' : '')
+      + (item.participants ? '<p><strong>Ishtirokchilar:</strong> ' + esc(item.participants) + ' kishi</p>' : '')
+      + (item.deadline ? '<p><strong>Ariza muddati:</strong> ' + esc(item.deadlineLabel) + '</p>' : '');
 
     var others = items.filter(function (e) { return e !== item; }).slice(0, 8);
     var sidebar = '<aside class="detail-sidebar"><p class="detail-sidebar-heading">Boshqa tadbirlar</p>';
     others.forEach(function (e) {
-      sidebar += '<a href="event-detail?id=' + e.id + '" class="detail-sidebar-item">'
-        + '<p class="detail-sidebar-item-date">' + e.dateLabel + '</p>'
-        + '<p class="detail-sidebar-item-title">' + e.title + '</p>'
+      sidebar += '<a href="event-detail?id=' + encodeURIComponent(e.id) + '" class="detail-sidebar-item">'
+        + '<p class="detail-sidebar-item-date">' + esc(e.dateLabel) + '</p>'
+        + '<p class="detail-sidebar-item-title">' + esc(e.title) + '</p>'
         + '</a>';
     });
     sidebar += '</aside>';
@@ -366,8 +381,8 @@
       + '<p class="detail-breadcrumbs"><a href="index">Bosh sahifa</a><span class="detail-bc-sep">›</span><a href="events">Tadbirlar</a><span class="detail-bc-sep">›</span><span>' + statusLabel + '</span></p>'
       + '<button class="detail-print-btn" onclick="window.print()" aria-label="Chop etish"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>'
       + '</div>'
-      + '<h1 class="detail-title">' + item.title + '</h1>'
-      + '<p class="detail-meta"><span>' + item.dateLabel + '</span><span class="detail-meta-sep">/</span><a href="events">' + statusLabel + '</a></p>'
+      + '<h1 class="detail-title">' + esc(item.title) + '</h1>'
+      + '<p class="detail-meta"><span>' + esc(item.dateLabel) + '</span><span class="detail-meta-sep">/</span><a href="events">' + statusLabel + '</a></p>'
       + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
       + '<div class="detail-body">' + body + '</div>'
       + '<div class="detail-tags"><a href="events" class="detail-tag">Tadbir</a><a href="events" class="detail-tag">' + statusLabel + '</a></div>'
@@ -388,11 +403,11 @@
       var safeId = String(g.id || '').replace(/[^A-Za-z0-9_-]/g, '');
       var id = safeId ? ' id="' + safeId + '"' : '';
       html += '<article class="card"' + id + '>'
-        + '<span class="tag">' + g.category + (g.status === 'active' ? ' · Faol' : ' · Yopilgan') + '</span>'
-        + '<h3>' + g.title + '</h3>'
-        + '<p>' + g.description + '</p>'
-        + (g.amount ? '<p class="grant-amount">Miqdor: ' + g.amount + '</p>' : '')
-        + (g.deadlineLabel ? '<p class="grant-deadline">Muddat: ' + g.deadlineLabel + '</p>' : '')
+        + '<span class="tag">' + esc(g.category) + (g.status === 'active' ? ' · Faol' : ' · Yopilgan') + '</span>'
+        + '<h3>' + esc(g.title) + '</h3>'
+        + '<p>' + esc(g.description) + '</p>'
+        + (g.amount ? '<p class="grant-amount">Miqdor: ' + esc(g.amount) + '</p>' : '')
+        + (g.deadlineLabel ? '<p class="grant-deadline">Muddat: ' + esc(g.deadlineLabel) + '</p>' : '')
         + '<a class="btn btn-inline" href="service-request">Ariza topshirish</a>'
         + '</article>';
     });
