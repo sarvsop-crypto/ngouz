@@ -61,8 +61,8 @@ export default {
           time: new Date().toISOString(),
           // Bump on each meaningful change so external monitors can detect
           // a deploy without diffing other fields. Increments naturally
-          // line up with our iteration log; latest = iter 89.
-          version: 89,
+          // line up with our iteration log; latest = iter 119.
+          version: 119,
         }),
         { status: 200, headers },
       );
@@ -265,23 +265,23 @@ const RSS_FEEDS = {
   news: {
     title: 'Yangiliklar — ngo.uz',
     description: "O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi yangiliklari.",
-    listUrl: 'https://www.ngo.uz/news.html',
+    listUrl: 'https://www.ngo.uz/news',
     selfUrl: 'https://ngo-api-proxy.sarvsop.workers.dev/v1/news.rss',
-    detailPath: '/news-detail.html',
+    detailPath: '/news-detail',
   },
   events: {
     title: 'Tadbirlar — ngo.uz',
     description: "Assotsiatsiya tadbirlari, treninglar va anjumanlar.",
-    listUrl: 'https://www.ngo.uz/events.html',
+    listUrl: 'https://www.ngo.uz/events',
     selfUrl: 'https://ngo-api-proxy.sarvsop.workers.dev/v1/events.rss',
-    detailPath: '/event-detail.html',
+    detailPath: '/event-detail',
   },
   grants: {
     title: 'Grantlar — ngo.uz',
     description: 'NNTlar uchun amaldagi grant tanlovlari va e\'lonlar.',
-    listUrl: 'https://www.ngo.uz/grants.html',
+    listUrl: 'https://www.ngo.uz/grants',
     selfUrl: 'https://ngo-api-proxy.sarvsop.workers.dev/v1/grants.rss',
-    detailPath: '/grants.html',
+    detailPath: '/grants',
   },
 };
 
