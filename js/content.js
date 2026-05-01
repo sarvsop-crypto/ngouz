@@ -650,13 +650,16 @@
     var pubsEl = document.getElementById('dynamic-publications-page');
     if (pubsEl) fetchJSON('news', function (items) { renderNewsPage(items, pubsEl); }, 'category=nashrlar');
 
-    // video-detail.html — single video by ID
+    // video-detail.html — single video by ID. The id may belong to
+    // a different news category; reject those so /video-detail?
+    // id=<news-article> doesn't render a regular article inside
+    // the video chrome.
     var videoDetailEl = document.getElementById('detail-video-content');
     if (videoDetailEl) {
       var vidId = new URLSearchParams(window.location.search).get('id');
       if (vidId) {
         fetchOne('news', vidId, function (item) {
-          if (item) {
+          if (item && (item.category || '').toLowerCase() === 'video') {
             fetchJSON('news', function (others) { renderNewsDetail([item].concat(others), videoDetailEl, vidId); }, 'category=video');
           } else {
             videoDetailEl.innerHTML = '<p>Video topilmadi.</p>';
@@ -667,13 +670,13 @@
       }
     }
 
-    // publication-detail.html — single publication by ID
+    // publication-detail.html — same category check as video-detail.
     var pubDetailEl = document.getElementById('detail-publication-content');
     if (pubDetailEl) {
       var pubId = new URLSearchParams(window.location.search).get('id');
       if (pubId) {
         fetchOne('news', pubId, function (item) {
-          if (item) {
+          if (item && (item.category || '').toLowerCase() === 'nashrlar') {
             fetchJSON('news', function (others) { renderNewsDetail([item].concat(others), pubDetailEl, pubId); }, 'category=nashrlar');
           } else {
             pubDetailEl.innerHTML = '<p>Publikatsiya topilmadi.</p>';
