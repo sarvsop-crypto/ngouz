@@ -16,7 +16,17 @@ var AdminCMS = (function () {
   function esc(s) {
     return String(s == null ? '' : s)
       .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      .replace(/>/g,'&gt;').replace(/"/g,'&quot;')
+      .replace(/'/g,'&#39;');
+  }
+
+  // Strip ids down to ASCII word/dash chars before they land in an
+  // inline onclick="editItem('...')" / data-id="..." attribute. Backend
+  // ids are already in this charset, so this is a defensive no-op for
+  // legitimate data — but a single ' in an id would otherwise break
+  // out of the JS string and execute attacker JS.
+  function safeId(s) {
+    return String(s == null ? '' : s).replace(/[^A-Za-z0-9_-]/g, '');
   }
 
   function fmtDate(iso) {
@@ -129,6 +139,7 @@ var AdminCMS = (function () {
     fmtDate   : fmtDate,
     today     : today,
     esc       : esc,
+    safeId    : safeId,
     genId     : genId
   };
 

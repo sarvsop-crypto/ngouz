@@ -266,7 +266,7 @@
         var nameHtml = esc(item.full_name || '—') + (contact ? '<br><span class="u-text-muted-sm">' + contact + '</span>' : '');
         return '<tr data-status="' + (item.status || '') + '">' +
           '<td><input type="checkbox" aria-label="Tanlash" /></td>' +
-          '<td><strong>XZM-' + item.id + '</strong></td>' +
+          '<td><strong>XZM-' + esc(item.id) + '</strong></td>' +
           '<td>' + nameHtml + '</td>' +
           '<td>' + esc(item.subject || item.category || '—') + '</td>' +
           '<td>' + fmtDate(item.created_at) + '</td>' +

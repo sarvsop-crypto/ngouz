@@ -317,8 +317,8 @@
           '<td><span class="badge badge--' + badge + '">' + label + '</span></td>' +
           '<td><span class="badge badge--' + (item.status === 'published' ? 'success' : 'neutral') + '">' + (item.status === 'published' ? 'Faol' : 'Qoralama') + '</span></td>' +
           '<td style="white-space:nowrap">' +
-            '<button type="button" class="btn--ghost-sm" title="Tahrirlash" aria-label="Tahrirlash" onclick="editItem(\'' + item.id + '\')"><i class="ph ph-pencil-simple"></i></button>' +
-            '<button type="button" class="btn--ghost-sm danger" title="O\'chirish" aria-label="O\'chirish" onclick="confirmDelete(\'' + item.id + '\')"><i class="ph ph-trash"></i></button>' +
+            '<button type="button" class="btn--ghost-sm" title="Tahrirlash" aria-label="Tahrirlash" onclick="editItem(\'' + AdminCMS.safeId(item.id) + '\')"><i class="ph ph-pencil-simple"></i></button>' +
+            '<button type="button" class="btn--ghost-sm danger" title="O\'chirish" aria-label="O\'chirish" onclick="confirmDelete(\'' + AdminCMS.safeId(item.id) + '\')"><i class="ph ph-trash"></i></button>' +
           '</td>' +
         '</tr>';
       }).join('');

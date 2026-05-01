@@ -271,7 +271,7 @@
         var nameHtml = name ? esc(name) : '<span class="badge badge--error"><span class="badge__dot"></span>Anonim</span>';
         return '<tr data-status="' + (item.status || '') + '">' +
           '<td><input type="checkbox" aria-label="Tanlash" /></td>' +
-          '<td><strong>KRP-' + item.id + '</strong></td>' +
+          '<td><strong>KRP-' + esc(item.id) + '</strong></td>' +
           '<td>' + nameHtml + '</td>' +
           '<td>' + esc(item.subject || '—') + '</td>' +
           '<td>' + esc(item.region || '—') + '</td>' +
