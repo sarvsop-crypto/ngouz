@@ -414,6 +414,19 @@
   }
 
   /* ── Grants ───────────────────────────────────────────────── */
+  // Mirror the admin-grants resolver (iter 241): explicit status
+  // wins; otherwise check deadline against today. Without this a
+  // grant with a future deadline but no status field rendered as
+  // 'Yopilgan' on the public /grants page.
+  function grantStatus(g) {
+    if (g.status === 'active' || g.status === 'closed') return g.status;
+    if (g.deadline) {
+      var t = new Date(g.deadline).getTime();
+      if (!isNaN(t)) return t >= new Date().setHours(0, 0, 0, 0) ? 'active' : 'closed';
+    }
+    return 'closed';
+  }
+
   function renderGrantsPage(items, container) {
     if (!items.length) { container.innerHTML = '<p class="text-muted-light">Faol grant yoki tanlov mavjud emas.</p>'; return; }
     var html = '<div class="cards">';
@@ -424,7 +437,7 @@
       var safeId = String(g.id || '').replace(/[^A-Za-z0-9_-]/g, '');
       var id = safeId ? ' id="' + safeId + '"' : '';
       html += '<article class="card"' + id + '>'
-        + '<span class="tag">' + esc(g.category) + (g.status === 'active' ? ' · Faol' : ' · Yopilgan') + '</span>'
+        + '<span class="tag">' + esc(g.category) + (grantStatus(g) === 'active' ? ' · Faol' : ' · Yopilgan') + '</span>'
         + '<h3>' + esc(g.title) + '</h3>'
         + '<p>' + esc(g.description) + '</p>'
         + (g.amount ? '<p class="grant-amount">Miqdor: ' + esc(g.amount) + '</p>' : '')
