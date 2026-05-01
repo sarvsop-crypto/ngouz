@@ -134,11 +134,15 @@
     a.setAttribute("data-lang", code);
   });
   languageLinks = document.querySelectorAll(".topbar-lang[data-lang]");
-  var currentFile = (location.pathname.split("/").pop() || "index.html").toLowerCase();
-  if (currentFile.indexOf(".html") === -1) currentFile = "index.html";
+  // CF Pages serves clean URLs (no .html). The .html stubs in /uz/,
+  // /ru/, /en/ are also accessible without the suffix, so build the
+  // switcher href the same way: /<code>/<slug>.
+  var currentSlug = (location.pathname.split("/").pop() || "index").toLowerCase();
+  if (currentSlug.endsWith(".html")) currentSlug = currentSlug.slice(0, -5);
+  if (!currentSlug) currentSlug = "index";
   languageLinks.forEach(function (a) {
     var code = a.getAttribute("data-lang");
-    a.setAttribute("href", "/" + code + "/" + currentFile);
+    a.setAttribute("href", "/" + code + "/" + currentSlug);
     a.addEventListener("click", function (e) {
       e.preventDefault();
       applyLang(code);
@@ -178,7 +182,10 @@
 
   applyLang(initialLang);
 
-  var path = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+  // CF Pages serves clean URLs (iter 67); normalize back to .html form
+  // so the parentMap entries below still match.
+  var path = (location.pathname.split("/").pop() || "index").toLowerCase();
+  if (!path.endsWith(".html")) path += ".html";
   var parentMap = {
     "who-we-are.html": "about.html",
     "mission.html": "about.html",
@@ -259,7 +266,7 @@
   }
 
   var searchPath = (location.pathname.split("/").pop() || "").toLowerCase();
-  if (searchPath === "search-results.html") {
+  if (searchPath === "search-results" || searchPath === "search-results.html") {
     var params = new URLSearchParams(location.search);
     var q = (params.get("q") || "").trim().toLowerCase();
     var queryNode = document.getElementById("search-query");

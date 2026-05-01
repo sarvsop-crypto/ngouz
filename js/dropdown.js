@@ -18,15 +18,20 @@
 (function () {
   // Mark current page in the nav
   try {
-    var currentFile = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-    if (currentFile.indexOf('.html') === -1) currentFile = 'index.html';
+    // Resolve current page to its bare slug (no .html suffix) since CF
+    // Pages serves clean URLs and iter 67 stripped .html from internal
+    // hrefs. Empty pathname (root /) → "index".
+    var currentSlug = (location.pathname.split('/').pop() || 'index').toLowerCase();
+    if (currentSlug.endsWith('.html')) currentSlug = currentSlug.slice(0, -5);
+    if (!currentSlug) currentSlug = 'index';
     document.querySelectorAll('header.site-header a[href]').forEach(function (a) {
       var href = (a.getAttribute('href') || '').toLowerCase();
       // Skip absolute URLs, mailto, tel, hash-only, javascript:, language switchers
       if (!href || href.charAt(0) === '#' || href.indexOf(':') !== -1) return;
-      // Compare just the filename portion
-      var hrefFile = href.split('/').pop();
-      if (hrefFile === currentFile) {
+      var hrefSlug = href.split('/').pop().split('?')[0].split('#')[0];
+      if (hrefSlug.endsWith('.html')) hrefSlug = hrefSlug.slice(0, -5);
+      if (!hrefSlug) hrefSlug = 'index';
+      if (hrefSlug === currentSlug) {
         a.setAttribute('aria-current', 'page');
       }
     });

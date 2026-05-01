@@ -83,8 +83,8 @@
           <label class="checkbox-wrap" style="margin-top:4px;">
             <input type="checkbox" name="agree" required />
             <span>
-              <a href="cabinet-support.html" style="color:var(--primary-500);text-decoration:none;font-weight:500;">Foydalanish shartlari</a> va
-              <a href="cabinet-support.html" style="color:var(--primary-500);text-decoration:none;font-weight:500;">Maxfiylik siyosati</a>ga roziman
+              <a href="cabinet-support" style="color:var(--primary-500);text-decoration:none;font-weight:500;">Foydalanish shartlari</a> va
+              <a href="cabinet-support" style="color:var(--primary-500);text-decoration:none;font-weight:500;">Maxfiylik siyosati</a>ga roziman
             </span>
           </label>
 
@@ -95,7 +95,7 @@
           </button>
         </form>
 
-        <p class="form-alt">Hisobingiz bormi? <a href="cabinet-login.html">Kirish</a></p>
+        <p class="form-alt">Hisobingiz bormi? <a href="cabinet-login">Kirish</a></p>
       </div>
     </main>
 
@@ -107,7 +107,7 @@
       <a href="mailto:info@ngo.uz" class="footer__link"><i class="ph ph-envelope"></i> info@ngo.uz</a>
       <a href="../maxfiylik-siyosati.html" class="footer__link"><i class="ph ph-shield"></i> Maxfiylik</a>
       <a href="../foydalanish-shartlari.html" class="footer__link"><i class="ph ph-file-text"></i> Shartlar</a>
-      <a href="cabinet-support.html" class="footer__link"><i class="ph ph-question"></i> Yordam</a>
+      <a href="cabinet-support" class="footer__link"><i class="ph ph-question"></i> Yordam</a>
     </nav>
   </footer>
 
@@ -226,7 +226,7 @@
             + '<h2 style="margin:16px 0 8px">' + (res.data.verified ? 'Ariza tasdiqlandi!' : 'Ariza qabul qilindi!') + '</h2>'
             + '<p style="color:#6b7280">' + res.data.message + '</p>'
             + '<p style="color:#6b7280;margin-top:8px">Administrator arizangizni ko\'rib chiqgach, kabinetga kirishingiz mumkin.</p>'
-            + '<a href="cabinet-login.html" class="btn-auth" style="margin-top:20px;display:inline-block;text-decoration:none"><i class="ph ph-sign-in"></i> Kirishga o\'tish</a>'
+            + '<a href="cabinet-login" class="btn-auth" style="margin-top:20px;display:inline-block;text-decoration:none"><i class="ph ph-sign-in"></i> Kirishga o\'tish</a>'
             + '</div>';
         } else {
           var msg = res.data.message || 'Xatolik yuz berdi.';
