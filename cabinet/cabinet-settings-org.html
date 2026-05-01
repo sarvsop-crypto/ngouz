@@ -104,7 +104,7 @@
   <script src="../js/api-client.js"></script>
   <script>
   (function () {
-    if (!NgoApi.getToken()) { location.replace('cabinet-login'); return; }
+    if (!NgoApi.getToken()) { var _next=encodeURIComponent(location.pathname + location.search); location.replace('cabinet-login?next=' + _next); return; }
 
     var fields = {
       orgName: 'name', orgInn: 'inn', orgRegNumber: 'registration_number',

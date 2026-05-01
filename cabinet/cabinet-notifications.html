@@ -101,7 +101,7 @@
 
   <script>
   (function () {
-    if (!NgoApi.getToken()) { location.replace('cabinet-login'); return; }
+    if (!NgoApi.getToken()) { var _next=encodeURIComponent(location.pathname + location.search); location.replace('cabinet-login?next=' + _next); return; }
 
     var typeIcons = {
       warning:  { icon: 'ph-file-text',        cls: 'notif-icon--warning' },

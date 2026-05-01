@@ -92,7 +92,7 @@
   <script src="../js/pacta-app.js"></script>
   <script>
   (function () {
-    if (!NgoApi.getToken()) { location.replace('cabinet-login'); return; }
+    if (!NgoApi.getToken()) { var _next=encodeURIComponent(location.pathname + location.search); location.replace('cabinet-login?next=' + _next); return; }
     NgoApi.get('/me').then(function (res) {
       var u = res.user;
       document.getElementById('sName').value  = u.full_name || '';

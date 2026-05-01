@@ -147,7 +147,7 @@
   <script src="../js/api-client.js"></script>
   <script>
   (function () {
-    if (!NgoApi.getToken()) { location.replace('cabinet-login'); return; }
+    if (!NgoApi.getToken()) { var _next=encodeURIComponent(location.pathname + location.search); location.replace('cabinet-login?next=' + _next); return; }
 
     var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
 

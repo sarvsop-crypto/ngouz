@@ -100,7 +100,7 @@
 
   <script>
   (function () {
-    if (!NgoApi.getToken()) { location.replace('cabinet-login'); return; }
+    if (!NgoApi.getToken()) { var _next=encodeURIComponent(location.pathname + location.search); location.replace('cabinet-login?next=' + _next); return; }
 
     var statusMap = {
       approved:  { label: 'Tasdiqlangan', cls: 'badge--success' },

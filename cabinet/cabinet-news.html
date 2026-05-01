@@ -100,7 +100,7 @@
     var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
 
   (function () {
-    if (!NgoApi.getToken()) { location.replace('cabinet-login'); return; }
+    if (!NgoApi.getToken()) { var _next=encodeURIComponent(location.pathname + location.search); location.replace('cabinet-login?next=' + _next); return; }
 
     var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
