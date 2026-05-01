@@ -61,8 +61,8 @@ export default {
           time: new Date().toISOString(),
           // Bump on each meaningful change so external monitors can detect
           // a deploy without diffing other fields. Increments naturally
-          // line up with our iteration log; latest = iter 119.
-          version: 119,
+          // line up with our iteration log; latest = iter 120.
+          version: 120,
         }),
         { status: 200, headers },
       );
@@ -299,7 +299,13 @@ function buildRss(items, kind) {
   lines.push('    <lastBuildDate>' + new Date().toUTCString() + '</lastBuildDate>');
   for (const it of items) {
     const id = it.id || '';
-    const link = 'https://www.ngo.uz' + cfg.detailPath + '?id=' + encodeURIComponent(id);
+    // News and events have dedicated detail pages that read ?id=. Grants
+    // share /grants — there is no per-grant detail page, so feed items
+    // linked to ?id=X just landed on the bare grant list. Use #fragment
+    // anchors so the page can scroll to the matching <article id=X>.
+    const useFragment = kind === 'grants';
+    const link = 'https://www.ngo.uz' + cfg.detailPath
+      + (useFragment ? '#' : '?id=') + encodeURIComponent(id);
     const dateField = it.published_at || it.date || it.start_date || it.event_date || it.created_at;
     lines.push('    <item>');
     lines.push('      <title>' + xmlEscape(it.title || '') + '</title>');

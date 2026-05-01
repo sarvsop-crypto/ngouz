@@ -382,7 +382,12 @@
     if (!items.length) { container.innerHTML = '<p class="text-muted-light">Faol grant yoki tanlov mavjud emas.</p>'; return; }
     var html = '<div class="cards">';
     items.forEach(function (g) {
-      html += '<article class="card">'
+      // Restrict to ascii word/dash chars; backend grant ids match
+      // /^[a-z0-9-]+$/, but be defensive — this id lands directly in
+      // an HTML attribute and an RSS link target.
+      var safeId = String(g.id || '').replace(/[^A-Za-z0-9_-]/g, '');
+      var id = safeId ? ' id="' + safeId + '"' : '';
+      html += '<article class="card"' + id + '>'
         + '<span class="tag">' + g.category + (g.status === 'active' ? ' · Faol' : ' · Yopilgan') + '</span>'
         + '<h3>' + g.title + '</h3>'
         + '<p>' + g.description + '</p>'
@@ -393,6 +398,13 @@
     });
     html += '</div>';
     container.innerHTML = html;
+    // RSS feed items link via /grants#<id>; if the page loaded with a
+    // hash, scroll the matching article into view (browsers don't re-
+    // resolve :target after innerHTML replacement).
+    if (location.hash && location.hash.length > 1) {
+      var target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (target) target.scrollIntoView({ block: 'start', behavior: 'auto' });
+    }
   }
 
   /* ── Documents ────────────────────────────────────────────── */
