@@ -261,7 +261,10 @@
       if (ew) ew.value = o.website || '';
       if (ea) ea.value = o.address || '';
     }).catch(function (err) {
-      if (err && err.status === 401) location.replace('cabinet-login');
+      if (err && err.status === 401) {
+        var _next = encodeURIComponent(location.pathname + location.search);
+        location.replace('cabinet-login?next=' + _next);
+      }
     });
 
     // Wire save button in edit modal
