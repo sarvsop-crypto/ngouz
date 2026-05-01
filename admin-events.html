@@ -302,9 +302,20 @@
       toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3500);
     }
 
+    // Mirror the public-site eventStatus resolver (iter 238) — admin
+    // edits set status explicitly, but stale records or imports may
+    // leave it blank. Date fallback prevents the table from showing
+    // a future-dated event as 'Bo'lib o'tgan'.
+    var todayMs = new Date().setHours(0, 0, 0, 0);
+    function eventStatus(e) {
+      if (e.status === 'upcoming' || e.status === 'past') return e.status;
+      var t = e.date ? new Date(e.date).getTime() : NaN;
+      return (!isNaN(t) && t >= todayMs) ? 'upcoming' : 'past';
+    }
+
     function renderKpi() {
-      var upcoming = items.filter(function (i) { return i.status === 'upcoming'; });
-      var past     = items.filter(function (i) { return i.status === 'past'; });
+      var upcoming = items.filter(function (i) { return eventStatus(i) === 'upcoming'; });
+      var past     = items.filter(function (i) { return eventStatus(i) === 'past'; });
       var totalP   = items.reduce(function (s, i) { return s + (parseInt(i.participants) || 0); }, 0);
       document.getElementById('kpiTotal').textContent        = items.length;
       document.getElementById('kpiUpcoming').textContent     = upcoming.length;
@@ -315,7 +326,7 @@
     function renderTable() {
       var q = searchQ.toLowerCase();
       var filtered = items.filter(function (item) {
-        if (statusFilter !== 'all' && item.status !== statusFilter) return false;
+        if (statusFilter !== 'all' && eventStatus(item) !== statusFilter) return false;
         if (q && (item.title + ' ' + (item.location || '')).toLowerCase().indexOf(q) === -1) return false;
         return true;
       });
@@ -329,7 +340,7 @@
         return;
       }
       tbody.innerHTML = filtered.map(function (item) {
-        var statusBadge = item.status === 'upcoming'
+        var statusBadge = eventStatus(item) === 'upcoming'
           ? '<span class="badge badge--success">Rejalashtirilgan</span>'
           : '<span class="badge badge--neutral">Bo\'lib o\'tgan</span>';
         var title = AdminCMS.esc(item.title.length > 60 ? item.title.slice(0, 60) + '…' : item.title);
