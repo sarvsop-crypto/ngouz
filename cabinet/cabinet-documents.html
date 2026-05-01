@@ -144,7 +144,7 @@
 
   <script>
   (function () {
-    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+    if (!NgoApi.getToken()) { location.replace('cabinet-login'); return; }
 
     // Wire "Hujjat yuklash" button to toggle upload panel
     var uploadToggle = document.querySelector('[data-action="upload-doc"]');

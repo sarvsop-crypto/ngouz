@@ -121,7 +121,7 @@
   <script src="../js/pacta-app.js"></script>
   <script>
   (function () {
-    if (window.NgoApi && !NgoApi.getToken()) { location.replace('cabinet-login.html'); }
+    if (window.NgoApi && !NgoApi.getToken()) { location.replace('cabinet-login'); }
 
     var STORAGE_KEY = 'ngo_notification_prefs';
     var checkboxes = document.querySelectorAll('.settings-checkbox');

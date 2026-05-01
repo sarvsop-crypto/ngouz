@@ -121,7 +121,7 @@
   <script src="../js/pacta-app.js"></script>
   <script>
   (function () {
-    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+    if (!NgoApi.getToken()) { location.replace('cabinet-login'); return; }
     document.getElementById('cpSaveBtn').addEventListener('click', function () {
       var cur = document.getElementById('cpCurrent').value;
       var np  = document.getElementById('cpNew').value;

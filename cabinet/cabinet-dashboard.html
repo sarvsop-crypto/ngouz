@@ -148,7 +148,7 @@
   <script src="../js/pacta-app.js"></script>
   <script>
   (function () {
-    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+    if (!NgoApi.getToken()) { location.replace('cabinet-login'); return; }
 
     function fmtDate(iso) {
       if (!iso) return '';
@@ -159,12 +159,12 @@
     NgoApi.get('/me').then(function (me) {
       if (!me || !me.user || me.user.status !== 'active') {
         try { localStorage.removeItem('ngo_api_token'); localStorage.removeItem('ngo_api_user'); } catch(e) {}
-        location.replace('cabinet-login.html');
+        location.replace('cabinet-login');
         return;
       }
     }).catch(function () {
       try { localStorage.removeItem('ngo_api_token'); localStorage.removeItem('ngo_api_user'); } catch(e) {}
-      location.replace('cabinet-login.html');
+      location.replace('cabinet-login');
       return;
     });
 
@@ -206,7 +206,7 @@
         }).join('');
       }
     }).catch(function (err) {
-      if (err && err.status === 401) location.replace('cabinet-login.html');
+      if (err && err.status === 401) location.replace('cabinet-login');
     });
 
     // Load recent notifications for the dashboard timeline

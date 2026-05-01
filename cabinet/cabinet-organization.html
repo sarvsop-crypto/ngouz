@@ -163,7 +163,7 @@
   <script src="../js/pacta-app.js"></script>
   <script>
   (function () {
-    if (!NgoApi.getToken()) { location.replace('cabinet-login.html'); return; }
+    if (!NgoApi.getToken()) { location.replace('cabinet-login'); return; }
 
     function setText(id, val) { var el = document.getElementById(id); if (el) el.textContent = val || '\u2014'; }
     function setLink(id, val, prefix) {
@@ -250,7 +250,7 @@
       if (ew) ew.value = o.website || '';
       if (ea) ea.value = o.address || '';
     }).catch(function (err) {
-      if (err && err.status === 401) location.replace('cabinet-login.html');
+      if (err && err.status === 401) location.replace('cabinet-login');
     });
 
     // Wire save button in edit modal

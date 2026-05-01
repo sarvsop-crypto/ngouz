@@ -102,7 +102,7 @@
       fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/me', {
         headers: { 'Authorization': 'Bearer ' + NgoApi.getToken() }
       }).then(function(r) {
-        if (r.ok) location.replace('cabinet-dashboard.html');
+        if (r.ok) location.replace('cabinet-dashboard');
         else { try { localStorage.removeItem('ngo_api_token'); } catch(e) {} }
       }).catch(function() {});
     }
@@ -117,7 +117,7 @@
       if (!phone || !pass) return;
       btn.disabled = true;
       NgoApi.login(email, pass).then(function () {
-        location.replace('cabinet-dashboard.html');
+        location.replace('cabinet-dashboard');
       }).catch(function (err) {
         btn.disabled = false;
         var msg = 'Kirish xatosi';
