@@ -288,12 +288,10 @@ document.addEventListener('DOMContentLoaded', function () {
     closeCurrentMenu(false);
   });
 
-  document.querySelectorAll('[data-action="export"]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var title = btn.getAttribute('data-export-title') || 'Eksport';
-      alert(title + ' funksiyasi tez orada qo\'shiladi.');
-    });
-  });
+  // (Removed iter 277: [data-action="export"] alert placeholder.
+  // All admin Eksport buttons now have real CSV handlers wired to
+  // window.exportCsv from pacta-foundation.js — no element in any
+  // HTML still carries the data-action attribute.)
 
   document.querySelectorAll('.logout').forEach(function (link) {
     link.addEventListener('click', function (e) {
