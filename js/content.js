@@ -115,7 +115,13 @@
 
   function renderNewsHome(items, container) {
     var latest = items.slice(0, 3);
-    if (!latest.length) return;
+    if (!latest.length) {
+      // Was an early return — left the section header above with an
+      // empty area beneath it. Show a placeholder so the layout flow
+      // doesn't break and the user sees what's intended.
+      container.innerHTML = '<p class="text-muted-light" style="padding:16px 0;">So‘nggi yangiliklar topilmadi.</p>';
+      return;
+    }
     var html = '<div class="gov-news-grid">';
     latest.forEach(function (n) { html += newsCardHTML(n); });
     html += '</div>';
@@ -273,7 +279,10 @@
 
   function renderEventsHome(items, container) {
     var latest = items.slice(0, 3);
-    if (!latest.length) return;
+    if (!latest.length) {
+      container.innerHTML = '<p class="text-muted-light" style="padding:16px 0;">Yaqin tadbirlar topilmadi.</p>';
+      return;
+    }
     var html = '<div class="gov-news-grid">';
     latest.forEach(function (e) { html += eventCardHTML(e); });
     html += '</div>';
