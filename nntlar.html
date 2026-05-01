@@ -549,6 +549,8 @@
 <script src="js/main.js" defer></script>
 <script src="js/content.js" defer></script>
 <script>
+    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+
 var NNT_DATA = {};
 var REGION_NAMES = {
   'toshkent-sh': 'Toshkent shahri', 'toshkent-v': 'Toshkent viloyati',
@@ -562,7 +564,7 @@ var REGION_NAMES = {
 };
 
 function loadAllOrgs(offset, all, cb) {
-  fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?limit=200&offset=' + offset)
+  fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?limit=200&offset=' + offset)
     .then(function(r) { return r.json(); })
     .then(function(d) {
       all = all.concat(d.items || []);

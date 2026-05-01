@@ -217,6 +217,8 @@
 </footer>
 <script src="js/main.js" defer></script>
 <script>
+    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+
 (function () {
   var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
   var checkbox = document.getElementById('reg-ok');
@@ -248,7 +250,7 @@
         region: form.hudud.value
       };
 
-      fetch(API + '/public/membership', {
+      fetchT(API + '/public/membership', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
         body: JSON.stringify(body)

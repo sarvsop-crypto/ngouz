@@ -216,6 +216,8 @@
 </div>
 </footer>
 <script>
+    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+
 document.getElementById('antiCorruptionForm').addEventListener('submit', function(e) {
   e.preventDefault();
   var message = document.getElementById('ac-message').value.trim();
@@ -226,7 +228,7 @@ document.getElementById('antiCorruptionForm').addEventListener('submit', functio
   var body  = (org ? "Tashkilot: " + org + "\n\n" : "") + message;
   var btn = this.querySelector('button[type="submit"]');
   btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
-  fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
+  fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ full_name: name, phone: phone, subject: 'Korrupsiyaga qarshi murojaat', body: body })

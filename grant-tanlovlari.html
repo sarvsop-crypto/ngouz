@@ -291,6 +291,8 @@ So'rovingizni yozing
 </div>
 </section>
 <script>
+    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+
 (function () {
   var form = document.getElementById('grantsForm');
   var input = document.getElementById('grantsQuery');
@@ -395,7 +397,7 @@ So'rovingizni yozing
     async function go() {
       attempt++;
       try {
-        var resp = await fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/grants-search', {
+        var resp = await fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/grants-search', {
           method: 'POST',
           headers: { 'content-type': 'application/json' },
           body: JSON.stringify({ query: query, turnstileToken: token }),

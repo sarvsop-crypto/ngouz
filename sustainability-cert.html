@@ -414,6 +414,8 @@
 <script src="js/main.js" defer></script>
 <script src="js/content.js" defer></script>
 <script>
+    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+
 (function(){
   var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?limit=20';
   var tbody = document.getElementById('certTableBody');
@@ -421,7 +423,7 @@
   function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function certLevel(s){if(s>=85)return{cls:'gold',label:'Birinchi daraja'};if(s>=70)return{cls:'silver',label:'Ikkinchi daraja'};return{cls:'bronze',label:'Uchinchi daraja'};}
   function scoreColor(s){return s>=80?'#16a34a':'#ca8a04';}
-  fetch(API).then(function(r){return r.json();}).then(function(data){
+  fetchT(API).then(function(r){return r.json();}).then(function(data){
     var items=data.items||data.data||[];
     if(!items.length){tbody.innerHTML='<tr><td colspan="7" style="text-align:center;color:var(--neutral-400);">Ma\u2018lumot topilmadi</td></tr>';return;}
     tbody.innerHTML=items.map(function(org,i){

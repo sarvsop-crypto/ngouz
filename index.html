@@ -531,6 +531,8 @@ window.addEventListener('load', function(){
 <script src="js/content.js?v=3" defer></script>
 <script src="js/uzmap.js?v=3" defer></script>
 <script>
+    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+
 (function(){
   var VBW = 792, VBH = 517;
   var data = {
@@ -621,7 +623,7 @@ window.addEventListener('load', function(){
     // /nntlar page uses, count per region_code, replace the "N a'zo"
     // line. Big NNT total stays hardcoded until the backend exposes it.
     (function loadMembers(offset, all){
-      fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?limit=200&offset=' + offset)
+      fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?limit=200&offset=' + offset)
         .then(function(r){ return r.json(); })
         .then(function(d){
           all = all.concat(d.items || []);

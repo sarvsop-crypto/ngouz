@@ -218,6 +218,8 @@ Yuborish
 </div>
 </footer>
 <script>
+    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+
 document.getElementById('feedbackForm').addEventListener('submit', function(e) {
   e.preventDefault();
   var name    = document.getElementById('qa-name').value.trim();
@@ -228,7 +230,7 @@ document.getElementById('feedbackForm').addEventListener('submit', function(e) {
   if (!name || !topic || !message) { alert("Iltimos, majburiy maydonlarni to'ldiring."); return; }
   var btn = this.querySelector('button[type="submit"]');
   btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
-  fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
+  fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ full_name: name, phone: phone, email: email, subject: topic, body: message })
