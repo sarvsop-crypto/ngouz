@@ -102,16 +102,25 @@
         }
         var typeIcon = { 'info': 'ph-bell', 'warning': 'ph-warning', 'success': 'ph-check-circle', 'action': 'ph-lightning' };
         var typeBg = { 'info': '#f0f5ff', 'warning': '#fff9f0', 'success': '#f0fdf4', 'action': '#fef2f2' };
+        function esc(s) {
+          return String(s == null ? '' : s)
+            .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+            .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+        }
         container.innerHTML = items.map(function (n) {
           var bg = typeBg[n.type] || '';
           var icon = typeIcon[n.type] || 'ph-bell';
-          var target = n.user_id ? 'Foydalanuvchi #' + n.user_id : (n.organization_id ? 'Tashkilot #' + n.organization_id : 'Barcha a\'zolar');
+          var userIdNum = parseInt(n.user_id, 10) || 0;
+          var orgIdNum  = parseInt(n.organization_id, 10) || 0;
+          var target = userIdNum ? 'Foydalanuvchi #' + userIdNum
+                     : orgIdNum  ? 'Tashkilot #' + orgIdNum
+                     : 'Barcha a\'zolar';
           return '<div class="ds-stream-item" style="background:' + bg + ';border-radius:10px;margin-bottom:4px;">'
             + '<div class="ds-stream-icon"><i class="ph ' + icon + '"></i></div>'
             + '<div class="ds-stream-body">'
-            + '<div class="ds-stream-title">' + (n.title || '') + '</div>'
-            + '<div class="ds-stream-meta">' + (n.created_at || '').slice(0,16) + ' · ' + target + '</div>'
-            + (n.body ? '<div style="font-size:13px;color:#798384;margin-top:4px">' + n.body.slice(0,100) + '</div>' : '')
+            + '<div class="ds-stream-title">' + esc(n.title || '') + '</div>'
+            + '<div class="ds-stream-meta">' + esc((n.created_at || '').slice(0,16)) + ' · ' + target + '</div>'
+            + (n.body ? '<div style="font-size:13px;color:#798384;margin-top:4px">' + esc(String(n.body).slice(0,100)) + '</div>' : '')
             + '</div></div>';
         }).join('');
       });

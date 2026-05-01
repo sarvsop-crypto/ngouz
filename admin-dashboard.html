@@ -200,6 +200,11 @@
   <script src="js/pacta-app.js"></script>
   <script>
   (function () {
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
     NgoApi.get('/admin/stats').then(function (s) {
       document.getElementById('kpiNews').textContent    = s.news || 0;
       document.getElementById('kpiEvents').textContent  = s.events || 0;
@@ -235,8 +240,8 @@
       var items = res.items || [];
       if (!items.length) { tbody.innerHTML = '<tr><td colspan="6" class="empty-state">Yangi xabar yo\'q</td></tr>'; return; }
       tbody.innerHTML = items.map(function (m) {
-        return '<tr><td>#' + m.id + '</td><td>' + (m.full_name || '—') + '</td><td>' + (m.email || m.phone || '—') + '</td><td>' + (m.subject || '—') + '</td>'
-          + '<td><span class="badge badge--warning">Yangi</span></td><td>' + (m.created_at || '').slice(0, 10) + '</td></tr>';
+        return '<tr><td>#' + esc(m.id) + '</td><td>' + esc(m.full_name || '—') + '</td><td>' + esc(m.email || m.phone || '—') + '</td><td>' + esc(m.subject || '—') + '</td>'
+          + '<td><span class="badge badge--warning">Yangi</span></td><td>' + esc((m.created_at || '').slice(0, 10)) + '</td></tr>';
       }).join('');
     }).catch(function () {});
 
@@ -247,7 +252,7 @@
       var items = res.items || [];
       if (!items.length) { ul.innerHTML = '<li class="alert-item"><span class="text-dim">Kutilayotgan ariza yo\'q</span></li>'; return; }
       ul.innerHTML = items.map(function (a) {
-        return '<li class="alert-item"><span class="badge badge--warning">Kutilmoqda</span><span>' + (a.org_name || '—') + '</span><span class="text-dim">' + (a.created_at || '').slice(0,10) + '</span></li>';
+        return '<li class="alert-item"><span class="badge badge--warning">Kutilmoqda</span><span>' + esc(a.org_name || '—') + '</span><span class="text-dim">' + esc((a.created_at || '').slice(0,10)) + '</span></li>';
       }).join('');
     }).catch(function () {});
 
