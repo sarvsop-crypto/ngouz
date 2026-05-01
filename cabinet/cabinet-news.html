@@ -79,12 +79,12 @@
         <h1 class="main__title">Yangiliklar</h1>
       </div>
 
-      <div class="news-filters">
-        <button type="button" class="filter-chip is-active">Hammasi</button>
-        <button type="button" class="filter-chip">Yangiliklar</button>
-        <button type="button" class="filter-chip">E&rsquo;lonlar</button>
-        <button type="button" class="filter-chip">Tadbirlar</button>
-        <button type="button" class="filter-chip">Grantlar</button>
+      <div class="news-filters" role="group" aria-label="Yangiliklarni filtrlash">
+        <button type="button" class="filter-chip is-active" data-news-cat="all">Hammasi</button>
+        <button type="button" class="filter-chip" data-news-cat="news">Yangiliklar</button>
+        <button type="button" class="filter-chip" data-news-cat="announcement">E&rsquo;lonlar</button>
+        <button type="button" class="filter-chip" data-news-cat="event">Tadbirlar</button>
+        <button type="button" class="filter-chip" data-news-cat="grant">Grantlar</button>
       </div>
 
       <div class="news-grid" id="newsGrid">
@@ -116,44 +116,71 @@
     // a confusing inconsistency since /news (the same data source for
     // public visitors) hides them via content.js fetchJSON's archive=0
     // extraParam.
+    var allItems = [];
+    var activeCat = 'all';
+
+    function cardHtml(n) {
+      var cat = (n.category || n.type || 'news').toLowerCase();
+      var icon = iconMap[cat] || iconMap['default'];
+      var img  = imgClass[cat] || '';
+      var cc   = catClass[cat] || 'news-card__cat--news';
+      // Map fallback (catLabel[cat] || cat.toUpperCase()) was XSS:
+      // a malicious category like '><script>... would land
+      // uppercased in innerHTML. esc() the fallback path.
+      var cl   = catLabel[cat] || esc(cat.toUpperCase());
+      var excerpt = esc(n.excerpt || n.summary || (n.body || '').slice(0, 120));
+      // 'Batafsil' was href='#' — clicking did nothing. Link to the
+      // public news-detail page (with an id) so cabinet members can
+      // read the full article. Use ../ since cabinet pages live
+      // under /cabinet/.
+      var detailHref = '../news-detail?id=' + encodeURIComponent(n.id || '');
+      return '<div class="news-card">' +
+        '<div class="news-card__img ' + img + '"><i class="ph ' + icon + '"></i></div>' +
+        '<div class="news-card__body">' +
+          '<span class="news-card__cat ' + cc + '">' + cl + '</span>' +
+          '<h3 class="news-card__title">' + esc(n.title) + '</h3>' +
+          '<p class="news-card__excerpt">' + excerpt + '</p>' +
+          '<div class="news-card__footer"><span class="news-card__date">' + fmtDate(n.published_at || n.created_at) + '</span><a href="' + detailHref + '" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>' +
+        '</div></div>';
+    }
+
+    function render() {
+      var grid = document.getElementById('newsGrid');
+      var filtered = activeCat === 'all'
+        ? allItems
+        : allItems.filter(function (n) {
+            return (n.category || n.type || 'news').toLowerCase() === activeCat;
+          });
+      if (!filtered.length) {
+        var msg = !allItems.length
+          ? 'Yangilik topilmadi'
+          : 'Tanlangan turdagi yangiliklar yo‘q';
+        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--grey-400);padding:40px 0;">' + msg + '</div>';
+        return;
+      }
+      grid.innerHTML = filtered.map(cardHtml).join('');
+    }
+
     fetchT(API + '/public/news?limit=100&archive=0')
       .then(function (r) { return r.json(); })
       .then(function (res) {
-        var items = res.items || res.data || [];
-        var grid = document.getElementById('newsGrid');
-        if (!items.length) {
-          grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--grey-400);padding:40px 0;">Yangilik topilmadi</div>';
-          return;
-        }
-        grid.innerHTML = items.map(function (n) {
-          var cat = (n.category || n.type || 'news').toLowerCase();
-          var icon = iconMap[cat] || iconMap['default'];
-          var img  = imgClass[cat] || '';
-          var cc   = catClass[cat] || 'news-card__cat--news';
-          // Map fallback (catLabel[cat] || cat.toUpperCase()) was XSS:
-          // a malicious category like '><script>... would land
-          // uppercased in innerHTML. esc() the fallback path.
-          var cl   = catLabel[cat] || esc(cat.toUpperCase());
-          var excerpt = esc(n.excerpt || n.summary || (n.body || '').slice(0, 120));
-          // 'Batafsil' was href='#' — clicking did nothing. Link to
-          // the public news-detail page (with an id) so cabinet
-          // members can read the full article. Use ../ since cabinet
-          // pages live under /cabinet/.
-          var detailHref = '../news-detail?id=' + encodeURIComponent(n.id || '');
-          return '<div class="news-card">' +
-            '<div class="news-card__img ' + img + '"><i class="ph ' + icon + '"></i></div>' +
-            '<div class="news-card__body">' +
-              '<span class="news-card__cat ' + cc + '">' + cl + '</span>' +
-              '<h3 class="news-card__title">' + esc(n.title) + '</h3>' +
-              '<p class="news-card__excerpt">' + excerpt + '</p>' +
-              '<div class="news-card__footer"><span class="news-card__date">' + fmtDate(n.published_at || n.created_at) + '</span><a href="' + detailHref + '" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>' +
-            '</div></div>';
-        }).join('');
+        allItems = res.items || res.data || [];
+        render();
       })
       .catch(function (err) {
         console.error('News fetch error:', err);
         document.getElementById('newsGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--error-600);padding:40px 0;">Xatolik yuz berdi</div>';
       });
+
+    /* Wire filter chips */
+    document.querySelectorAll('[data-news-cat]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('[data-news-cat]').forEach(function (b) { b.classList.remove('is-active'); });
+        this.classList.add('is-active');
+        activeCat = this.dataset.newsCat;
+        render();
+      });
+    });
   })();
   </script>
   <script src="js/cabinet-chrome.js" defer></script>
