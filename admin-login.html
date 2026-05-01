@@ -121,10 +121,20 @@
         notice.textContent = msg;
         notice.style.display = 'block';
       }
+      // Sanitize ?next= against open-redirect — only same-origin
+      // relative paths. q above is the same URLSearchParams.
+      function safeNext() {
+        var n = qParams.get('next');
+        if (!n) return 'admin-dashboard';
+        try { n = decodeURIComponent(n); } catch (e) { return 'admin-dashboard'; }
+        if (/^[a-z]+:/i.test(n) || (n.charAt(0) === '/' && n.charAt(1) === '/')) {
+          return 'admin-dashboard';
+        }
+        return n;
+      }
       if (NgoApi.getToken()) {
         NgoApi.me().then(function () {
-          var q = new URLSearchParams(location.search);
-          location.replace(q.get('next') || 'admin-dashboard');
+          location.replace(safeNext());
         }).catch(function () {
           NgoApi.clearToken();
         });
@@ -146,8 +156,7 @@
         var pass    = passEl.value || '';
         btn.disabled = true;
         NgoApi.login(email, pass).then(function (res) {
-          var q = new URLSearchParams(location.search);
-          location.replace(q.get('next') || 'admin-dashboard');
+          location.replace(safeNext());
         }).catch(function (err) {
           btn.disabled = false;
           var msg = 'Login failed';

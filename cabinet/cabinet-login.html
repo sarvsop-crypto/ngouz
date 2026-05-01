@@ -114,6 +114,19 @@
       else { inp.type = 'password'; icon.className = 'ph ph-eye'; }
     });
 
+    // Sanitize the ?next= param: only allow same-origin relative paths
+    // so a malicious link can't redirect through our login to evil.com.
+    function safeNext() {
+      var n = qParams.get('next');
+      if (!n) return 'cabinet-dashboard';
+      try { n = decodeURIComponent(n); } catch (e) { return 'cabinet-dashboard'; }
+      // Reject schemes (http://, javascript:, data:) and protocol-relative //
+      if (/^[a-z]+:/i.test(n) || n.charAt(0) === '/' && n.charAt(1) === '/') {
+        return 'cabinet-dashboard';
+      }
+      return n;
+    }
+
     if (NgoApi.getToken()) {
       // Was a manual fetch with no timeout — a hanging /v1/me call
       // left a logged-in user staring at the login form forever
@@ -122,7 +135,7 @@
       // (via iter 100) the on-401 token-clear that lets the page
       // fall through to its normal login form display.
       NgoApi.me().then(function () {
-        location.replace('cabinet-dashboard');
+        location.replace(safeNext());
       }).catch(function () {
         // Bad token, network error, or timeout — let the user log in.
       });
@@ -146,7 +159,7 @@
       }
       btn.disabled = true;
       NgoApi.login(email, pass).then(function () {
-        location.replace('cabinet-dashboard');
+        location.replace(safeNext());
       }).catch(function (err) {
         btn.disabled = false;
         var msg = 'Kirish xatosi';
