@@ -57,8 +57,8 @@
   </style>
 </head>
 <body>
-  <div class="card">
-    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <main class="card" role="main" aria-live="polite">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M1 1l22 22" />
       <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55" />
       <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39" />
@@ -67,10 +67,49 @@
       <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
       <line x1="12" y1="20" x2="12.01" y2="20" />
     </svg>
-    <h1>Internet aloqasi yo'q</h1>
-    <p>Sahifa yuklanishi uchun internetga ulanishingiz kerak. Ulanishni tekshirib qaytadan urinib ko'ring.</p>
-    <button type="button" onclick="location.reload()">Qayta urinish</button>
+    <h1 id="offlineTitle">Internet aloqasi yo'q</h1>
+    <p id="offlineDesc">Sahifa yuklanishi uchun internetga ulanishingiz kerak. Ulanishni tekshirib qaytadan urinib ko'ring.</p>
+    <button type="button" id="retryBtn">Qayta urinish</button>
     <p style="margin-top:24px;font-size:13px"><a href="/">Bosh sahifaga qaytish</a></p>
-  </div>
+  </main>
+  <script>
+    (function () {
+      var btn = document.getElementById('retryBtn');
+      var title = document.getElementById('offlineTitle');
+      var desc = document.getElementById('offlineDesc');
+
+      // Reflect current online state — landing on /offline.html directly
+      // (e.g. from cache after the connection came back) shouldn't keep
+      // the 'offline' alarm copy if navigator.onLine says we're back.
+      function applyState() {
+        if (navigator.onLine) {
+          title.textContent = 'Aloqa tiklandi';
+          desc.textContent = 'Internetga qayta ulandingiz. Bosh sahifaga qaytish uchun pastdagi havolani bosing yoki sahifani yangilang.';
+          btn.textContent = 'Bosh sahifaga o‘tish';
+        } else {
+          title.textContent = "Internet aloqasi yo'q";
+          desc.textContent = "Sahifa yuklanishi uchun internetga ulanishingiz kerak. Ulanishni tekshirib qaytadan urinib ko'ring.";
+          btn.textContent = 'Qayta urinish';
+        }
+      }
+      applyState();
+
+      // Retry intent depends on current state — if we're already online,
+      // skip the reload-into-cached-offline loop and go to the home page.
+      btn.addEventListener('click', function () {
+        if (navigator.onLine) {
+          location.href = '/';
+        } else {
+          location.reload();
+        }
+      });
+
+      // Auto-recover when connectivity comes back without forcing the
+      // user to click — most users won't notice the 'online' transition
+      // unless we surface it.
+      window.addEventListener('online', applyState);
+      window.addEventListener('offline', applyState);
+    })();
+  </script>
 </body>
 </html>
