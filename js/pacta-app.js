@@ -101,17 +101,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  document.querySelectorAll('[data-modal-open]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      openModal(btn.getAttribute('data-modal-open'), btn);
-    });
-  });
-
-  document.querySelectorAll('[data-modal-close]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      var overlay = btn.closest('.modal-overlay');
+  // Event delegation — admin pages build [data-modal-open] / [data-
+  // modal-close] buttons via innerHTML AFTER page load (admin-cms.js
+  // populates table rows, etc.). Per-element listeners attached on
+  // initial load missed those late-rendered buttons, so the modals
+  // silently never opened. A single document-level click delegate
+  // catches both initial and late-bound buttons.
+  document.addEventListener('click', function (e) {
+    var openBtn = e.target.closest && e.target.closest('[data-modal-open]');
+    if (openBtn) {
+      openModal(openBtn.getAttribute('data-modal-open'), openBtn);
+      return;
+    }
+    var closeBtn = e.target.closest && e.target.closest('[data-modal-close]');
+    if (closeBtn) {
+      var overlay = closeBtn.closest('.modal-overlay');
       if (overlay) closeModal(overlay);
-    });
+    }
   });
 
   document.querySelectorAll('.modal-overlay').forEach(function (overlay) {
