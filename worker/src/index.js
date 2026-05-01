@@ -61,8 +61,8 @@ export default {
           time: new Date().toISOString(),
           // Bump on each meaningful change so external monitors can detect
           // a deploy without diffing other fields. Increments naturally
-          // line up with our iteration log; latest = iter 120.
-          version: 120,
+          // line up with our iteration log; latest = iter 162.
+          version: 162,
         }),
         { status: 200, headers },
       );
@@ -129,14 +129,32 @@ export default {
         if (ct.includes('csp-report')) kind = 'csp-report';
         else if (ct.includes('reports+json')) kind = 'report-api';
         else if (payload && payload['csp-report']) kind = 'csp-report';
-        const ip = request.headers.get('CF-Connecting-IP') || '';
+        // Privacy: don't log raw IP. Cloudflare's edge logs already
+        // capture it for security/abuse purposes; persisting it in
+        // application logs risks aggregating identifiable user-trail
+        // data under O'zbekiston Personal Data Law. Country + UA is
+        // enough for bug triage. We hash the IP into a short opaque
+        // dedup key so we can group recurring errors from the same
+        // session without retaining the address.
+        const rawIp = request.headers.get('CF-Connecting-IP') || '';
         const country = request.headers.get('CF-IPCountry') || '';
         const ua = request.headers.get('User-Agent') || '';
+        let ipHash = '';
+        if (rawIp) {
+          try {
+            const buf = await crypto.subtle.digest(
+              'SHA-256',
+              new TextEncoder().encode(rawIp + '|' + new Date().toISOString().slice(0, 10))
+            );
+            ipHash = Array.from(new Uint8Array(buf, 0, 6))
+              .map((b) => b.toString(16).padStart(2, '0')).join('');
+          } catch { /* swallow */ }
+        }
         console.log(JSON.stringify({
           kind,
           ts: new Date().toISOString(),
           origin,
-          ip,
+          ipHash, // 12-char hex, daily-rotated salt
           country,
           ua,
           payload,
