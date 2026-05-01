@@ -13,7 +13,7 @@
       var link = document.createElement('a');
       link.className = 'skip-link';
       link.href = '#' + main.id;
-      link.textContent = 'Skip to content';
+      link.textContent = "Asosiy kontentga o'tish";
       document.body.insertBefore(link, document.body.firstChild);
     }
   }
@@ -23,7 +23,7 @@
     if (sidebar) {
       sidebar.setAttribute('role', sidebar.getAttribute('role') || 'navigation');
       if (!sidebar.getAttribute('aria-label')) {
-        sidebar.setAttribute('aria-label', 'Primary navigation');
+        sidebar.setAttribute('aria-label', 'Asosiy navigatsiya');
       }
     }
 
@@ -35,7 +35,7 @@
     var navs = document.querySelectorAll('nav.sidebar__nav');
     navs.forEach(function (nav) {
       if (!nav.getAttribute('aria-label')) {
-        nav.setAttribute('aria-label', 'Main navigation');
+        nav.setAttribute('aria-label', 'Asosiy menyu');
       }
     });
   }
@@ -53,18 +53,18 @@
       }
 
       if (btn.classList.contains('topbar-notifications-btn')) {
-        btn.setAttribute('aria-label', 'Open notifications');
+        btn.setAttribute('aria-label', 'Bildirishnomalar');
         return;
       }
 
       if (btn.matches('[data-action="row-menu"], .row-action-btn, .action-menu-btn')) {
-        btn.setAttribute('aria-label', 'Row actions');
+        btn.setAttribute('aria-label', 'Qator amallari');
         return;
       }
 
       var text = (btn.textContent || '').replace(/\s+/g, ' ').trim();
       if (!text || !/[A-Za-z0-9]/.test(text)) {
-        btn.setAttribute('aria-label', 'Action');
+        btn.setAttribute('aria-label', 'Amal');
       }
     });
   }
@@ -90,7 +90,7 @@
       } else if (select.title) {
         select.setAttribute('aria-label', select.title.trim());
       } else {
-        select.setAttribute('aria-label', 'Select option');
+        select.setAttribute('aria-label', 'Variantni tanlang');
       }
     });
   }
