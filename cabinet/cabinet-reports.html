@@ -248,7 +248,13 @@
 
           uploadPromise.then(function (filePath) {
             return NgoApi.post('/cabinet/reports', {
+              // selects[0] is the report TYPE — send it both as
+              // r.title (display name in 'Hisobot nomi' column) and
+              // r.type (used in the 'Turi' column after iter 220's
+              // r.type/r.period split). Otherwise members saw a
+              // blank 'Turi' for everything they uploaded here.
               title: title,
+              type: title,
               period: period,
               file_path: filePath,
               note: note,
