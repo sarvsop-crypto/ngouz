@@ -1,0 +1,4 @@
+Contact: mailto:info@ngo.uz
+Expires: 2027-05-01T00:00:00.000Z
+Preferred-Languages: uz, en, ru
+Canonical: https://www.ngo.uz/.well-known/security.txt
