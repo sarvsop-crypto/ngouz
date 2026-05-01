@@ -1,1 +1,8 @@
 /security.txt /.well-known/security.txt 301
+
+# iOS auto-probes /apple-touch-icon.png at root before checking the
+# <link rel="apple-touch-icon"> tag. Without this fallback, only pages
+# that declare the link (index.html) get the brand icon when added to
+# the home screen — every other page lands a default browser icon.
+/apple-touch-icon.png /img/apple-touch-icon.png 200
+/apple-touch-icon-precomposed.png /img/apple-touch-icon.png 200
