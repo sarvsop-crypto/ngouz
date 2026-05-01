@@ -123,7 +123,12 @@ var AdminCMS = (function () {
     }
     var fd = new FormData();
     fd.append('file', fileInput.files[0]);
-    NgoApi.post('/admin/upload', fd)
+    // Uploads need more headroom than the 15s api-client default —
+    // a 10 MB cover image on a slow connection routinely exceeds it
+    // and the user just sees 'Xatolik!'. 90s matches the 60s used by
+    // the iter-108 cabinet upload buttons, with extra slack since
+    // these run on admin desktop sessions where 4G/3G is rarer.
+    NgoApi.post('/admin/upload', fd, { timeout: 90000 })
       .then(function (res) { cb(null, res); })
       .catch(function (err) { cb(err); });
   }
