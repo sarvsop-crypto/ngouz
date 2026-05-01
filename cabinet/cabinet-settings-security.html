@@ -139,6 +139,8 @@
         .catch(function (err) {
           var t = 'Xatolik.';
           if (err && err.code === 'wrong_password') t = 'Joriy parol noto\'g\'ri.';
+          else if (err && err.code === 'weak_password') t = 'Parol talablariga javob bermaydi (kamida 8 belgi).';
+          else if (err && err.message) t = 'Xatolik: ' + err.message;
           msg.textContent = t; msg.style.color='#dc2626'; msg.style.display='block'; btn.disabled = false;
         });
     });
