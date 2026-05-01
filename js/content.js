@@ -527,6 +527,24 @@
 
   /* ── Auto-init on page load ───────────────────────────────── */
   function init() {
+    // Hero stat: total registered member organizations. The other 6
+    // hero stats are organization-internal numbers (legal aid count,
+    // media appearances, trained NNTs etc) with no live source —
+    // leave them hardcoded. Only this one is derivable from the API.
+    var liveOrgEl = document.querySelector('[data-live-stat="member-orgs"]');
+    if (liveOrgEl) {
+      fetch(API_BASE + 'organizations?limit=1')
+        .then(function (r) { return r.json(); })
+        .then(function (d) {
+          if (typeof d.total === 'number') {
+            // Match the 1 234-style space-separated thousands grouping
+            // used by the hardcoded values around it.
+            liveOrgEl.textContent = String(d.total).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+          }
+        })
+        .catch(function () { /* fall back to hardcoded value */ });
+    }
+
     // Home page — news (current only)
     var newsHomeEl = document.getElementById('dynamic-news-home');
     if (newsHomeEl) fetchJSON('news', function (items) { renderNewsHome(items, newsHomeEl); }, 'archive=0');
