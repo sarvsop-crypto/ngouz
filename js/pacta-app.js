@@ -356,10 +356,19 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.tabs, .modal-tabs').forEach(function (tabBar) {
     var tabs = tabBar.querySelectorAll('.tab, .modal-tab');
     tabs.forEach(function (tab) {
+      // Initialize aria-pressed on first sight (true if .is-active
+      // in markup) so AT users get the right state before any click.
+      if (!tab.hasAttribute('aria-pressed')) {
+        tab.setAttribute('aria-pressed', tab.classList.contains('is-active') ? 'true' : 'false');
+      }
       tab.addEventListener('click', function (e) {
         e.preventDefault();
-        tabs.forEach(function (t) { t.classList.remove('is-active'); });
+        tabs.forEach(function (t) {
+          t.classList.remove('is-active');
+          t.setAttribute('aria-pressed', 'false');
+        });
         tab.classList.add('is-active');
+        tab.setAttribute('aria-pressed', 'true');
         var target = tab.getAttribute('data-tab');
         if (!target) return;
         var root = tabBar.parentElement || document;
