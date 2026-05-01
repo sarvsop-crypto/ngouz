@@ -66,7 +66,8 @@ html, body { margin:0; padding:0; font-family:'Montserrat',system-ui,-apple-syst
 /* Screen-reader-only utility — visually invisible but readable to AT.
    Used for chart-data tables and any other content that's redundant
    for sighted users but essential for keyboard/screen-reader access. */
-.visually-hidden {
+.visually-hidden,
+.u-visually-hidden {
   position: absolute !important;
   width: 1px; height: 1px;
   padding: 0; margin: -1px;
