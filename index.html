@@ -249,7 +249,7 @@
 <section class="map-section nnt-chart-section">
 <div class="container">
 <div class="nnt-chart-card scroll-fade">
-<h2 style="font-size:20px;font-weight:700;color:#1a2e3a;margin:0 0 20px;">Assotsiatsiyaga a'zo nodavlat notijorat tashkilotlari soni</h2>
+<h2 id="nntChartTitle" style="font-size:20px;font-weight:700;color:#1a2e3a;margin:0 0 20px;">Assotsiatsiyaga a'zo nodavlat notijorat tashkilotlari soni</h2>
 <div class="nnt-chart-stats">
 <div class="nnt-stat-box">
 <span class="nnt-stat-label">2020 yildan o'sish</span>
@@ -269,8 +269,20 @@
 <span class="nnt-legend-item"><span class="nnt-legend-ln"></span>Trend</span>
 </div>
 <div class="nnt-chart-wrap">
-<canvas id="nntChart"></canvas>
+<canvas id="nntChart" role="img" aria-labelledby="nntChartTitle" aria-describedby="nntChartTable">Bu element diagrammani ko'rsatadi. Ma'lumotlarning batafsil jadvali quyida.</canvas>
 </div>
+<table id="nntChartTable" class="visually-hidden" aria-label="O'zNNTMA a'zo NNTlar dinamikasi">
+<caption>NNT soni dinamikasi (2020–2025)</caption>
+<thead><tr><th scope="col">Yil</th><th scope="col">NNT soni</th></tr></thead>
+<tbody>
+<tr><th scope="row">2020</th><td>532</td></tr>
+<tr><th scope="row">2021</th><td>990</td></tr>
+<tr><th scope="row">2022</th><td>1 482</td></tr>
+<tr><th scope="row">2023</th><td>1 843</td></tr>
+<tr><th scope="row">2024</th><td>2 143</td></tr>
+<tr><th scope="row">2025</th><td>2 382</td></tr>
+</tbody>
+</table>
 <div class="nnt-chart-footer">
 <button type="button" class="nnt-dl-btn" id="nntDlBtn" title="Rasmni yuklab olish">↓</button>
 <span class="nnt-chart-source">Manba: ngo.uz</span>
