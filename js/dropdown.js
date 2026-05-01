@@ -24,6 +24,18 @@
     var currentSlug = (location.pathname.split('/').pop() || 'index').toLowerCase();
     if (currentSlug.endsWith('.html')) currentSlug = currentSlug.slice(0, -5);
     if (!currentSlug) currentSlug = 'index';
+    // Detail/sub pages aren't listed in any dropdown directly, but
+    // their parent section should still highlight when the user is
+    // on them. Map the leaf slug to an ancestor that IS in the nav.
+    var SECTION_PARENT = {
+      'news-detail': 'news',
+      'publications': 'news',
+      'publication-detail': 'news',
+      'event-detail': 'events',
+      'video-detail': 'multimedia-room',
+      'videos': 'multimedia-room'
+    };
+    var sectionTarget = SECTION_PARENT[currentSlug] || null;
     document.querySelectorAll('header.site-header a[href]').forEach(function (a) {
       var href = (a.getAttribute('href') || '').toLowerCase();
       // Skip absolute URLs, mailto, tel, hash-only, javascript:, language switchers
@@ -31,13 +43,15 @@
       var hrefSlug = href.split('/').pop().split('?')[0].split('#')[0];
       if (hrefSlug.endsWith('.html')) hrefSlug = hrefSlug.slice(0, -5);
       if (!hrefSlug) hrefSlug = 'index';
-      if (hrefSlug === currentSlug) {
-        a.setAttribute('aria-current', 'page');
-        // If the active link sits inside a dropdown, also mark the
+      var isExact = hrefSlug === currentSlug;
+      var isSection = sectionTarget && hrefSlug === sectionTarget;
+      if (isExact || isSection) {
+        if (isExact) a.setAttribute('aria-current', 'page');
+        // If the matched link sits inside a dropdown, also mark the
         // parent .nav-item so CSS can keep the trigger visually
         // highlighted while the user is on the subpage. Without this,
-        // navigating to /our-team gives no signal in the top nav that
-        // you're in the "Assotsiatsiya haqida" section.
+        // navigating to /our-team or /event-detail?id=X gives no
+        // signal in the top nav about which section you're in.
         var parentItem = a.closest('.nav-item.has-dropdown');
         if (parentItem) parentItem.classList.add('is-section-active');
       }
