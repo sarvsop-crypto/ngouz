@@ -378,8 +378,9 @@
     document.title = item.title + ' - ngo.uz';
     injectEventJsonLd(item);
     var pageUrl = window.location.href;
-    var statusKey = item.status || '';
-    var statusLabel = statusKey === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
+    // Use the shared resolver (iter 238) so a missing status field
+    // doesn't mislabel a future event as 'Bo'lib o'tdi'.
+    var statusLabel = eventStatus(item) === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
 
     var body = bodyToHTML(item.description)
       + (item.location ? '<p><strong>Joyi:</strong> ' + esc(item.location) + '</p>' : '')
