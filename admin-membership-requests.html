@@ -331,14 +331,14 @@
       if (!orgId) { alert('Tashkilot ID raqami kerak. NNT ro\'yxatidan toping.'); return; }
       NgoApi.patch('/admin/membership-requests/' + id, { status: 'approved', organization_id: orgId })
         .then(function () { alert('Tasdiqlandi! Foydalanuvchi kabineti faollashtirildi.'); reload(); })
-        .catch(function () { alert('Xatolik'); });
+        .catch(function (err) { alert('Tasdiqlashda xatolik: ' + ((err && err.message) || 'noma\'lum')); });
     };
     window.rejectApp = function (id) {
       var note = prompt('Rad etish sababi:');
       if (note === null) return;
       NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', review_note: note })
         .then(function () { reload(); })
-        .catch(function () { alert('Xatolik'); });
+        .catch(function (err) { alert('Rad etishda xatolik: ' + ((err && err.message) || 'noma\'lum')); });
     };
 
     function reload() {

@@ -284,13 +284,19 @@
     window.approveTask = function(id) {
       if (!confirm('Arizani tasdiqlaysizmi?')) return;
       NgoApi.patch('/admin/membership-requests/' + id, { status: 'approved' })
-        .then(function() { location.reload(); });
+        .then(function() { location.reload(); })
+        .catch(function (err) {
+          alert('Tasdiqlashda xatolik: ' + ((err && err.message) || 'noma\'lum'));
+        });
     };
     window.rejectTask = function(id) {
       var note = prompt('Rad etish sababi:');
       if (note === null) return;
       NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', review_note: note })
-        .then(function() { location.reload(); });
+        .then(function() { location.reload(); })
+        .catch(function (err) {
+          alert('Rad etishda xatolik: ' + ((err && err.message) || 'noma\'lum'));
+        });
     };
 
     /* ── Add Task modal: save button handler ── */

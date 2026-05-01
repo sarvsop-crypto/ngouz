@@ -181,12 +181,20 @@
     });
 
     window.acceptReport = function(id) {
-      NgoApi.patch('/admin/reports/' + id, { status: 'accepted' }).then(function() { location.reload(); });
+      NgoApi.patch('/admin/reports/' + id, { status: 'accepted' })
+        .then(function() { location.reload(); })
+        .catch(function (err) {
+          alert('Qabul qilishda xatolik: ' + ((err && err.message) || 'noma\'lum'));
+        });
     };
     window.returnReport = function(id) {
       var note = prompt('Qaytarish sababi:');
       if (note === null) return;
-      NgoApi.patch('/admin/reports/' + id, { status: 'returned', review_note: note }).then(function() { location.reload(); });
+      NgoApi.patch('/admin/reports/' + id, { status: 'returned', review_note: note })
+        .then(function() { location.reload(); })
+        .catch(function (err) {
+          alert('Qaytarishda xatolik: ' + ((err && err.message) || 'noma\'lum'));
+        });
     };
 
     NgoApi.get('/admin/stats').then(function (s) {
