@@ -172,11 +172,16 @@ document.addEventListener('DOMContentLoaded', function () {
     openMenu = null;
   }
 
-  document.querySelectorAll('[data-action="row-menu"]').forEach(function (btn) {
+  // Lazy aria setup — runs on first interaction with each button so it
+  // works on dynamically-rendered table rows (admin-cms inserts these
+  // via innerHTML after page load; the previous static querySelectorAll
+  // missed them entirely).
+  function setupRowMenu(btn) {
+    if (btn.__rowMenuSetup) return null;
     var wrap = btn.closest('.row-menu-wrap');
     var menu = wrap ? wrap.querySelector('.row-menu') : null;
-    if (!menu) return;
-
+    if (!menu) return null;
+    btn.__rowMenuSetup = true;
     if (!menu.id) {
       menuIdCounter += 1;
       menu.id = 'row-menu-' + menuIdCounter;
@@ -187,43 +192,54 @@ document.addEventListener('DOMContentLoaded', function () {
       item.setAttribute('role', 'menuitem');
       item.tabIndex = itemIndex === 0 ? 0 : -1;
     });
-
     btn.setAttribute('aria-haspopup', 'menu');
     btn.setAttribute('aria-expanded', 'false');
     btn.setAttribute('aria-controls', menu.id);
+    return menu;
+  }
 
-    btn.addEventListener('click', function (e) {
-      e.stopPropagation();
-
-      if (openMenu && openMenu !== menu) {
-        closeCurrentMenu(false);
-      }
-
-      menu.classList.toggle('is-open');
-      openMenu = menu.classList.contains('is-open') ? menu : null;
-      btn.setAttribute('aria-expanded', openMenu ? 'true' : 'false');
-
-      if (openMenu) {
-        focusMenuItem(openMenu, 0);
-      }
-    });
-
-    btn.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
-        e.preventDefault();
-        btn.click();
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        if (!openMenu) {
-          btn.click();
-        }
-        if (openMenu) {
-          var items = getMenuItems(openMenu);
-          focusMenuItem(openMenu, Math.max(items.length - 1, 0));
-        }
-      }
-    });
+  // Click delegation — catches both initially-rendered and late-added
+  // row-menu buttons.
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-action="row-menu"]');
+    if (!btn) return;
+    e.stopPropagation();
+    var menu = setupRowMenu(btn);
+    if (!menu) return;
+    if (openMenu && openMenu !== menu) {
+      closeCurrentMenu(false);
+    }
+    menu.classList.toggle('is-open');
+    openMenu = menu.classList.contains('is-open') ? menu : null;
+    btn.setAttribute('aria-expanded', openMenu ? 'true' : 'false');
+    if (openMenu) {
+      focusMenuItem(openMenu, 0);
+    }
   });
+
+  // Keydown delegation — same late-binding fix as the click handler
+  // above. Enter/Space/ArrowDown opens the menu; ArrowUp opens then
+  // focuses the LAST item.
+  document.addEventListener('keydown', function (e) {
+    var btn = e.target.closest && e.target.closest('[data-action="row-menu"]');
+    if (!btn) return;
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      btn.click();
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (!openMenu) btn.click();
+      if (openMenu) {
+        var items = getMenuItems(openMenu);
+        focusMenuItem(openMenu, Math.max(items.length - 1, 0));
+      }
+    }
+  });
+
+  // Static-only setup pass — ensures aria-* attrs are present on
+  // initially-rendered buttons even before the user interacts (so a
+  // focusing screen reader announces the popup-trigger state).
+  document.querySelectorAll('[data-action="row-menu"]').forEach(setupRowMenu);
 
   document.querySelectorAll('.row-menu').forEach(function (menu) {
     menu.addEventListener('click', function (e) {
