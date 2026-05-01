@@ -286,6 +286,8 @@
         items = items.filter(function(o){return o.id !== id;});
         total--;
         renderTable(); renderKpi();
+      }).catch(function (err) {
+        alert('O\'chirishda xatolik: ' + ((err && err.message) || 'noma\'lum'));
       });
     };
 
@@ -325,7 +327,7 @@
             var overlay = document.getElementById('addNntModal');
             if (overlay) { overlay.classList.remove('is-open'); overlay.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
           })
-          .catch(function() { btn.disabled = false; alert('Xatolik yuz berdi'); });
+          .catch(function(err) { btn.disabled = false; alert('Saqlashda xatolik: ' + ((err && err.message) || 'noma\'lum')); });
       });
     }
 

@@ -682,7 +682,7 @@
       if (!newPw || newPw.length < 12) { if (newPw !== null) alert('Parol kamida 12 belgi bo\'lishi kerak.'); return; }
       NgoApi.post('/admin/users/' + id + '/reset-password', { new_password: newPw })
         .then(function () { toast('Parol yangilandi', 'success'); })
-        .catch(function () { toast('Xatolik yuz berdi', 'error'); });
+        .catch(function (err) { toast('Xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); });
     };
 
     // Delete user
@@ -700,7 +700,7 @@
       if (!deleteId) return;
       NgoApi.del('/admin/users/' + deleteId)
         .then(function () { closeModal('deleteUserModal'); toast('Hisob o\'chirildi', 'info'); reload(); })
-        .catch(function () { toast('Xatolik yuz berdi', 'error'); });
+        .catch(function (err) { toast('O\'chirishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); });
     });
 
     /* ── Change Password modal save ── */
