@@ -328,7 +328,6 @@
       if (coverImg && coverImg.indexOf('http') !== 0) {
         coverImg = MEDIA_BASE + encodeURIComponent(coverImg);
       }
-      var statusKey = item.status || '';
       var data = {
         '@context': 'https://schema.org',
         '@type': 'Event',
@@ -336,9 +335,11 @@
         'description': String(item.description || '').slice(0, 500),
         'startDate': item.start_date || item.date || item.event_date || '',
         'endDate': item.end_date || item.start_date || item.date || '',
-        'eventStatus': statusKey === 'upcoming'
-          ? 'https://schema.org/EventScheduled'
-          : 'https://schema.org/EventScheduled',
+        // schema.org's EventStatusType has no 'completed' value —
+        // past events without modifications stay as Scheduled. The
+        // previous ternary returned EventScheduled in both branches,
+        // so it was dead code. Drop the branch.
+        'eventStatus': 'https://schema.org/EventScheduled',
         'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
         'inLanguage': 'uz-UZ',
         'url': pageUrl,
