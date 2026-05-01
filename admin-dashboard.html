@@ -98,7 +98,7 @@
       <div class="main__header">
         <h1 class="main__title">Boshqaruv paneli</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" data-action="export" data-export-title="Hisobot eksport"><i class="ph ph-download-simple"></i> Eksport</button>
+          <button type="button" class="btn btn--secondary" id="exportDashboardBtn"><i class="ph ph-download-simple"></i> Eksport</button>
           <a href="admin-membership-requests" class="btn btn--primary"><i class="ph ph-plus"></i> Yangi ariza</a>
         </div>
       </div>
@@ -263,6 +263,7 @@
       'NAV': 'navoiy', 'QAS': 'qashqadaryo', 'QRK': 'karakalpakstan',
       'SAM': 'samarqand', 'SIR': 'sirdaryo', 'SUR': 'surxondaryo'
     };
+    var dashRegions = [];
     NgoApi.get('/public/regions').then(function (res) {
       var tbody = document.getElementById('dashboardRegionRows');
       if (!tbody) return;
@@ -275,6 +276,7 @@
           .then(function (d) { return { code: r.code, name: r.name_uz, total: d.total || 0 }; });
       });
       Promise.all(promises).then(function (data) {
+        dashRegions = data;
         var grandTotal = data.reduce(function (s, d) { return s + d.total; }, 0);
         tbody.innerHTML = data.map(function (d) {
           var pct = grandTotal ? Math.round(d.total / grandTotal * 100) : 0;
@@ -286,6 +288,30 @@
         }).join('');
       });
     }).catch(function () {});
+
+    // Eksport — was alert('… tez orada'). Dashboard's most useful
+    // exportable artefact is the region breakdown that already
+    // renders below the KPIs. Reuse window.exportCsv from iter 273.
+    var exportBtn = document.getElementById('exportDashboardBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', function () {
+        if (!dashRegions.length) { alert('Ma\'lumotlar hali yuklanmagan'); return; }
+        var grandTotal = dashRegions.reduce(function (s, d) { return s + d.total; }, 0);
+        var rows = dashRegions.map(function (d) {
+          return {
+            kod: d.code,
+            hudud: d.name,
+            jami_nnt: d.total,
+            ulush: grandTotal ? Math.round(d.total / grandTotal * 100) + '%' : ''
+          };
+        });
+        window.exportCsv(
+          'boshqaruv-paneli-' + new Date().toISOString().slice(0, 10) + '.csv',
+          rows,
+          ['kod', 'hudud', 'jami_nnt', 'ulush']
+        );
+      });
+    }
   })();
   </script>
 </body>
