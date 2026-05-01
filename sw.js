@@ -7,7 +7,7 @@
  *
  * Versioned cache name — bump CACHE_VERSION to invalidate on rollouts.
  */
-const CACHE_VERSION = 'ngo-v2';
+const CACHE_VERSION = 'ngo-v3';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 
 const PRECACHE = [
@@ -37,6 +37,28 @@ function isStaticAsset(url) {
       || /^\/manifest\.webmanifest$/.test(url.pathname);
 }
 
+// Cache.put() rejects responses with .redirected = true. CF Pages
+// 308-redirects every /foo.html → /foo, which broke HTML caching in
+// iter 46. Rebuild a non-redirected Response from the body before
+// putting in cache.
+async function cachePut(cache, req, res) {
+  if (!res || !res.ok) return;
+  if (!res.redirected) {
+    cache.put(req, res.clone()).catch(() => {});
+    return;
+  }
+  try {
+    const cloned = res.clone();
+    const body = await cloned.blob();
+    const fixed = new Response(body, {
+      status: res.status,
+      statusText: res.statusText,
+      headers: res.headers,
+    });
+    cache.put(req, fixed).catch(() => {});
+  } catch (e) { /* swallow */ }
+}
+
 self.addEventListener('fetch', (event) => {
   const req = event.request;
   if (req.method !== 'GET') return;
@@ -52,15 +74,12 @@ self.addEventListener('fetch', (event) => {
         if (cached) {
           // Refresh in the background.
           fetch(req).then((res) => {
-            if (res && res.ok) caches.open(STATIC_CACHE).then((c) => c.put(req, res));
+            if (res && res.ok) caches.open(STATIC_CACHE).then((c) => cachePut(c, req, res));
           }).catch(() => {});
           return cached;
         }
         return fetch(req).then((res) => {
-          if (res && res.ok) {
-            const copy = res.clone();
-            caches.open(STATIC_CACHE).then((c) => c.put(req, copy));
-          }
+          if (res && res.ok) caches.open(STATIC_CACHE).then((c) => cachePut(c, req, res));
           return res;
         });
       })
@@ -68,14 +87,11 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Network-first for HTML navigation; fall back to cache then offline.html.
+  // Network-first for HTML navigation; fall back to cache then /offline.
   if (req.mode === 'navigate' || (req.headers.get('Accept') || '').includes('text/html')) {
     event.respondWith(
       fetch(req).then((res) => {
-        if (res && res.ok) {
-          const copy = res.clone();
-          caches.open(STATIC_CACHE).then((c) => c.put(req, copy));
-        }
+        if (res && res.ok) caches.open(STATIC_CACHE).then((c) => cachePut(c, req, res));
         return res;
       }).catch(() =>
         caches.match(req).then((cached) => cached || caches.match('/offline'))
