@@ -165,11 +165,23 @@
     if (!NgoApi.getToken()) { location.replace('cabinet-login'); return; }
 
     function setText(id, val) { var el = document.getElementById(id); if (el) el.textContent = val || '\u2014'; }
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
     function setLink(id, val, prefix) {
       var el = document.getElementById(id);
       if (!el) return;
       if (val) {
-        el.innerHTML = '<a href="' + (prefix || '') + val + '" style="color:var(--primary-500);text-decoration:none;">' + val + '</a>';
+        // val lands in both href attribute and link text. esc covers
+        // attribute breakout; for the href we also need to ensure no
+        // javascript: scheme leaks via the prefix-less path. mailto:
+        // and tel: prefixes are caller-supplied; an unprefixed bare
+        // URL is treated as mailto-less.
+        var href = (prefix || '') + String(val).trim();
+        if (!prefix && /^javascript:/i.test(href)) href = '#';
+        el.innerHTML = '<a href="' + esc(href) + '" style="color:var(--primary-500);text-decoration:none;">' + esc(val) + '</a>';
       } else {
         el.textContent = '\u2014';
       }
@@ -234,7 +246,7 @@
         var el = document.getElementById('orgActivities');
         if (el) {
           el.innerHTML = o.activities.map(function (a) {
-            return '<span style="background:var(--primary-50);color:var(--primary-600);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:500;">' + a + '</span>';
+            return '<span style="background:var(--primary-50);color:var(--primary-600);border-radius:20px;padding:5px 14px;font-size:13px;font-weight:500;">' + esc(a) + '</span>';
           }).join('');
         }
       }
