@@ -8,56 +8,56 @@
     <priority>1.0</priority>
   </url>
 
-  <url><loc>https://www.ngo.uz/news.html</loc><lastmod>2026-04-30</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.ngo.uz/events.html</loc><lastmod>2026-04-30</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.ngo.uz/grants.html</loc><lastmod>2026-04-30</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.ngo.uz/grant-tanlovlari.html</loc><lastmod>2026-04-30</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://www.ngo.uz/official-docs.html</loc><lastmod>2026-04-30</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.ngo.uz/news</loc><lastmod>2026-04-30</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.ngo.uz/events</loc><lastmod>2026-04-30</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.ngo.uz/grants</loc><lastmod>2026-04-30</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.ngo.uz/grant-tanlovlari</loc><lastmod>2026-04-30</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.ngo.uz/official-docs</loc><lastmod>2026-04-30</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>
 
-  <url><loc>https://www.ngo.uz/about.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.ngo.uz/who-we-are.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/mission.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/leadership.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/our-team.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/structure.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/board-of-experts.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/jamoatchilik-kengashi.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/about</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.ngo.uz/who-we-are</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/mission</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/leadership</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/our-team</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/structure</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/board-of-experts</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/jamoatchilik-kengashi</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 
-  <url><loc>https://www.ngo.uz/services.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.ngo.uz/service-request.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/reporting-forms.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/social-orders.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/services</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.ngo.uz/service-request</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/reporting-forms</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/social-orders</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 
-  <url><loc>https://www.ngo.uz/membership.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
-  <url><loc>https://www.ngo.uz/membership-guide.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/membership-certificate.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/sustainability-cert.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/sustainability-index.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/membership</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.ngo.uz/membership-guide</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/membership-certificate</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/sustainability-cert</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/sustainability-index</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 
-  <url><loc>https://www.ngo.uz/nntlar.html</loc><lastmod>2026-04-30</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/hududiy-bolinmalar.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/mahalliy-hamkorlar.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/nntlar</loc><lastmod>2026-04-30</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/hududiy-bolinmalar</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/mahalliy-hamkorlar</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 
-  <url><loc>https://www.ngo.uz/projects.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/research-areas.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/talim-rivojlanish.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/nnt-school.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/stajirovka-volontyorlik.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/vacancies.html</loc><lastmod>2026-04-30</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/projects</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/research-areas</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/talim-rivojlanish</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/nnt-school</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/stajirovka-volontyorlik</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/vacancies</loc><lastmod>2026-04-30</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
 
-  <url><loc>https://www.ngo.uz/publications.html</loc><lastmod>2026-04-30</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/online-library.html</loc><lastmod>2026-04-30</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/multimedia-room.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/videos.html</loc><lastmod>2026-04-30</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/infographics.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/dayjestlar.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/awards.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/afzalliklar.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/publications</loc><lastmod>2026-04-30</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/online-library</loc><lastmod>2026-04-30</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/multimedia-room</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/videos</loc><lastmod>2026-04-30</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/infographics</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/dayjestlar</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/awards</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/afzalliklar</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
 
-  <url><loc>https://www.ngo.uz/contact.html</loc><lastmod>2026-04-30</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/qayta-aloqa.html</loc><lastmod>2026-04-30</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/korrupsiya-murojaat.html</loc><lastmod>2026-04-30</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://www.ngo.uz/faq.html</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://www.ngo.uz/maxfiylik-siyosati.html</loc><lastmod>2026-04-30</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
-  <url><loc>https://www.ngo.uz/foydalanish-shartlari.html</loc><lastmod>2026-04-30</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://www.ngo.uz/contact</loc><lastmod>2026-04-30</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/qayta-aloqa</loc><lastmod>2026-04-30</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/korrupsiya-murojaat</loc><lastmod>2026-04-30</lastmod><changefreq>yearly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.ngo.uz/faq</loc><lastmod>2026-04-30</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.ngo.uz/maxfiylik-siyosati</loc><lastmod>2026-04-30</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
+  <url><loc>https://www.ngo.uz/foydalanish-shartlari</loc><lastmod>2026-04-30</lastmod><changefreq>yearly</changefreq><priority>0.4</priority></url>
 </urlset>
