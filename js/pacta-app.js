@@ -241,36 +241,37 @@ document.addEventListener('DOMContentLoaded', function () {
   // focusing screen reader announces the popup-trigger state).
   document.querySelectorAll('[data-action="row-menu"]').forEach(setupRowMenu);
 
-  document.querySelectorAll('.row-menu').forEach(function (menu) {
-    menu.addEventListener('click', function (e) {
-      e.stopPropagation();
-    });
-
-    menu.addEventListener('keydown', function (e) {
-      var items = getMenuItems(menu);
-      if (!items.length) return;
-      var currentIndex = items.indexOf(document.activeElement);
-      if (currentIndex < 0) {
-        currentIndex = 0;
-      }
-
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        focusMenuItem(menu, (currentIndex + 1) % items.length);
-      } else if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        focusMenuItem(menu, (currentIndex - 1 + items.length) % items.length);
-      } else if (e.key === 'Home') {
-        e.preventDefault();
-        focusMenuItem(menu, 0);
-      } else if (e.key === 'End') {
-        e.preventDefault();
-        focusMenuItem(menu, items.length - 1);
-      } else if (e.key === 'Escape') {
-        e.preventDefault();
-        closeCurrentMenu(true);
-      }
-    });
+  // Delegated click + keydown handlers for .row-menu — same late-
+  // binding fix as iter 88 modals + iter 90 row-menu triggers.
+  // .row-menu elements get rendered along with the rest of each table
+  // row (admin-cms innerHTML), so on-load forEach missed them.
+  document.addEventListener('click', function (e) {
+    var menu = e.target.closest && e.target.closest('.row-menu');
+    if (menu) e.stopPropagation();
+  });
+  document.addEventListener('keydown', function (e) {
+    var menu = e.target.closest && e.target.closest('.row-menu');
+    if (!menu) return;
+    var items = getMenuItems(menu);
+    if (!items.length) return;
+    var currentIndex = items.indexOf(document.activeElement);
+    if (currentIndex < 0) currentIndex = 0;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      focusMenuItem(menu, (currentIndex + 1) % items.length);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      focusMenuItem(menu, (currentIndex - 1 + items.length) % items.length);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      focusMenuItem(menu, 0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      focusMenuItem(menu, items.length - 1);
+    } else if (e.key === 'Escape') {
+      e.preventDefault();
+      closeCurrentMenu(true);
+    }
   });
 
   document.addEventListener('click', function () {
