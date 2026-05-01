@@ -78,10 +78,10 @@
         </div>
       </div>
 
-      <div class="tabs notif-tabs">
-        <button type="button" class="tab is-active">Hammasi <span class="tab__count">&mdash;</span></button>
-        <button type="button" class="tab">O&rsquo;qilmagan <span class="tab__count">&mdash;</span></button>
-        <button type="button" class="tab">Tizim <span class="tab__count">&mdash;</span></button>
+      <div class="tabs notif-tabs" role="group" aria-label="Bildirishnomalarni filtrlash">
+        <button type="button" class="tab is-active" aria-pressed="true">Hammasi <span class="tab__count">&mdash;</span></button>
+        <button type="button" class="tab" aria-pressed="false">O&rsquo;qilmagan <span class="tab__count">&mdash;</span></button>
+        <button type="button" class="tab" aria-pressed="false">Tizim <span class="tab__count">&mdash;</span></button>
       </div>
 
       <div class="notif-list" id="notifList">
@@ -203,8 +203,12 @@
     var filters = ['all', 'unread', 'system'];
     tabs.forEach(function (tab, i) {
       tab.addEventListener('click', function () {
-        tabs.forEach(function (t) { t.classList.remove('is-active'); });
+        tabs.forEach(function (t) {
+          t.classList.remove('is-active');
+          t.setAttribute('aria-pressed', 'false');
+        });
         tab.classList.add('is-active');
+        tab.setAttribute('aria-pressed', 'true');
         renderList(filters[i]);
       });
     });
