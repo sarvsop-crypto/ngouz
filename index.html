@@ -175,9 +175,26 @@
 <main id="main-content">
 <section class="hero-cinematic">
 <div class="hero-cinematic-bg">
-<video aria-hidden="true" autoplay="" class="hero-cinematic-video" loop="" muted="" playsinline="" preload="metadata" disablepictureinpicture>
+<!-- Hero video: 24 MB MP4 background. Autoplay is opt-out so users
+     who explicitly request data savings (Chrome 'Lite mode',
+     navigator.connection.saveData=true, or prefers-reduced-data
+     media query at the CSS level) don't burn cellular data on a
+     decorative drone shot. The inline IIFE strips the autoplay
+     attribute before the video element starts buffering. -->
+<video aria-hidden="true" autoplay="" class="hero-cinematic-video" loop="" muted="" playsinline="" preload="metadata" disablepictureinpicture id="heroVideo">
 <source src="videos/hero-tashkent-drone.mp4" type="video/mp4"/>
 </video>
+<script>
+(function () {
+  try {
+    var c = navigator.connection;
+    if (c && (c.saveData || c.effectiveType === 'slow-2g' || c.effectiveType === '2g')) {
+      var v = document.getElementById('heroVideo');
+      if (v) { v.removeAttribute('autoplay'); v.setAttribute('preload', 'none'); v.pause(); }
+    }
+  } catch (e) { /* swallow */ }
+})();
+</script>
 </div>
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
