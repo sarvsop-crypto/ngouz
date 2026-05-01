@@ -41,7 +41,7 @@
           <p class="form-header__subtitle">A&rsquo;zolik uchun ariza topshirish va kabinetga kirish uchun ro&rsquo;yxatdan o&rsquo;ting.</p>
         </div>
 
-        <form class="form-fields" id="registerForm" novalidate>
+        <form class="form-fields" id="registerForm">
           <div class="field">
             <label class="field__label" for="phone">Telefon raqam <span>*</span></label>
             <div class="field__input-wrap">
@@ -206,13 +206,23 @@
     });
 
     // Registration submit
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
     document.getElementById('registerForm').addEventListener('submit', function (e) {
       e.preventDefault();
+      // Native HTML5 validation (required + type=tel/email) covers most
+      // of the empty-field cases; the alerts below only fire after the
+      // browser-level checks pass (or for finer rules like 9-digit
+      // phone after stripping non-digits).
+      if (!this.checkValidity()) { this.reportValidity(); return; }
       var phone = document.getElementById('phone').value.replace(/[^\d]/g, '');
       var name  = document.getElementById('fullname').value.trim();
       var pass  = document.getElementById('password').value;
       var orgId = document.getElementById('orgId').value;
-      if (!phone || phone.length < 9) { alert('Telefon raqamni kiriting.'); return; }
+      if (!phone || phone.length < 9) { alert('Telefon raqamni to‘g‘ri kiriting (9 raqam).'); return; }
       if (!name) { alert('Ismingizni kiriting.'); return; }
       if (pass.length < 8) { alert('Parol kamida 8 belgidan iborat bo\'lishi kerak.'); return; }
 
@@ -227,11 +237,14 @@
       .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
       .then(function (res) {
         if (res.ok) {
+          // res.data.message lands in innerHTML — it's server-controlled
+          // not user-supplied, but the legacy PHP backend's escaping is
+          // unknown. Defensive esc().
           document.querySelector('.form-card').innerHTML =
             '<div style="text-align:center;padding:40px 20px">'
             + '<i class="ph ph-check-circle" style="font-size:48px;color:#16a34a"></i>'
             + '<h2 style="margin:16px 0 8px">' + (res.data.verified ? 'Ariza tasdiqlandi!' : 'Ariza qabul qilindi!') + '</h2>'
-            + '<p style="color:#6b7280">' + res.data.message + '</p>'
+            + '<p style="color:#6b7280">' + esc(res.data.message || '') + '</p>'
             + '<p style="color:#6b7280;margin-top:8px">Administrator arizangizni ko\'rib chiqgach, kabinetga kirishingiz mumkin.</p>'
             + '<a href="cabinet-login" class="btn-auth" style="margin-top:20px;display:inline-block;text-decoration:none"><i class="ph ph-sign-in"></i> Kirishga o\'tish</a>'
             + '</div>';
