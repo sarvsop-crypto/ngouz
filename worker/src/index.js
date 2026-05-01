@@ -61,8 +61,8 @@ export default {
           time: new Date().toISOString(),
           // Bump on each meaningful change so external monitors can detect
           // a deploy without diffing other fields. Increments naturally
-          // line up with our iteration log; latest = iter 162.
-          version: 162,
+          // line up with our iteration log; latest = iter 185.
+          version: 185,
         }),
         { status: 200, headers },
       );
@@ -190,12 +190,44 @@ export default {
     headers.delete('CF-Connecting-IP');
     headers.delete('CF-RAY');
 
-    const resp = await fetch(targetUrl, {
-      method: request.method,
-      headers: headers,
-      body: request.method !== 'GET' && request.method !== 'HEAD' ? request.body : undefined,
-      redirect: 'follow',
-    });
+    let resp;
+    try {
+      // 25s upstream timeout. CF Workers default to 30s wall-clock but
+      // a plain fetch with no AbortController can stall for the full
+      // budget — we want to surface a clean 504 to the frontend before
+      // CF kills us with a generic 1101.
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 25000);
+      try {
+        resp = await fetch(targetUrl, {
+          method: request.method,
+          headers: headers,
+          body: request.method !== 'GET' && request.method !== 'HEAD' ? request.body : undefined,
+          redirect: 'follow',
+          signal: ctrl.signal,
+        });
+      } finally {
+        clearTimeout(timer);
+      }
+    } catch (e) {
+      // Upstream PHP unreachable (DNS, TCP refuse, abort). Return a
+      // structured 502 so frontends can show a real error toast
+      // instead of getting a CF 1101 page.
+      const errH = new Headers({
+        'Content-Type': 'application/json; charset=utf-8',
+        'Cache-Control': 'no-store',
+        'X-Proxied-By': 'ngo-api-proxy',
+      });
+      setCors(errH, origin);
+      appendVary(errH, 'Origin');
+      setSecurityHeaders(errH);
+      const code = (e && e.name === 'AbortError') ? 504 : 502;
+      const msg = code === 504 ? 'upstream_timeout' : 'upstream_unreachable';
+      return new Response(
+        JSON.stringify({ error: msg, message: 'Server bilan aloqa o\'rnatilmadi. Qaytadan urinib ko\'ring.' }),
+        { status: code, headers: errH },
+      );
+    }
 
     const responseHeaders = new Headers(resp.headers);
     setCors(responseHeaders, origin);
