@@ -54,7 +54,7 @@
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
 <header class="site-header">
 <div class="container nav">
-<a class="topbar-building" href="index"><img alt="O'ZNNTMA" src="img/logo-oznntma.png" decoding="async"/></a>
+<a class="topbar-building" href="/"><img alt="O'ZNNTMA" src="img/logo-oznntma.png" decoding="async"/></a>
 <nav aria-label="Asosiy menyu" class="menu">
 <div class="nav-item has-dropdown">
 <a href="about">Assotsiatsiya haqida <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
@@ -181,7 +181,7 @@
 <div class="footer-inner">
 <div class="footer-grid">
 <div class="footer-col footer-col-brand">
-<a class="footer-logo-link" href="index">
+<a class="footer-logo-link" href="/">
 <img alt="O'ZNNTMA" class="footer-logo-img" src="img/logo-oznntma.png" loading="lazy" decoding="async"/>
 </a>
 
@@ -237,7 +237,7 @@ document.getElementById('antiCorruptionForm').addEventListener('submit', functio
       document.getElementById('antiCorruptionForm').innerHTML =
         '<div style="text-align:center;padding:40px 0"><h3 style="color:#0e7490">Murojaatingiz qabul qilindi!</h3>'
         + '<p>Maxfiylik kafolatlanadi.</p>'
-        + '<a class="btn" href="index" style="margin-top:16px">Bosh sahifaga qaytish</a></div>';
+        + '<a class="btn" href="/" style="margin-top:16px">Bosh sahifaga qaytish</a></div>';
     } else {
       alert(res.data.detail || 'Xatolik yuz berdi.');
       btn.disabled = false; btn.textContent = 'Yuborish';
