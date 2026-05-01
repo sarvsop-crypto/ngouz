@@ -435,7 +435,7 @@ body.a11y-grayscale { filter: grayscale(1); }
 }
 .nav-item > a { display:flex; align-items:center; gap:5px; cursor:pointer; }
 .nav-item > a ph-caret-down { font-size:10px; width:10px; height:10px; flex-shrink:0; opacity:.55; transition:transform .2s; }
-.nav-item:hover > a ph-caret-down, .nav-item.is-open > a ph-caret-down { transform:rotate(180deg); opacity:1; }
+.nav-item:hover > a ph-caret-down, .nav-item.is-open > a ph-caret-down, .nav-item:focus-within > a ph-caret-down { transform:rotate(180deg); opacity:1; }
 .dropdown {
   position: absolute;
   top: calc(100% + 8px);
@@ -451,7 +451,10 @@ body.a11y-grayscale { filter: grayscale(1); }
   display: none;
   border-radius: 0 0 6px 6px;
 }
-.nav-item:hover .dropdown, .nav-item.is-open .dropdown { display: block; }
+/* :focus-within keeps the dropdown open while keyboard users tab
+   through its links — without it, tabbing into a hidden submenu
+   meant the focused link was visually unreachable. */
+.nav-item:hover .dropdown, .nav-item.is-open .dropdown, .nav-item:focus-within .dropdown { display: block; }
 .dropdown a {
   display: flex;
   align-items: center;
