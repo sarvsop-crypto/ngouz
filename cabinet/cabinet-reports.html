@@ -96,12 +96,11 @@
     </main>
   </div>
 
-  <div class="modal" id="uploadReportModal" role="dialog" aria-label="Hisobot yuklash" aria-modal="true" aria-hidden="true">
-    <div class="modal__backdrop" data-modal-close="uploadReportModal"></div>
-    <div class="modal__panel" style="max-width:480px;">
+  <div class="modal-overlay" id="uploadReportModal" role="dialog" aria-label="Hisobot yuklash" aria-modal="true" aria-hidden="true">
+    <div class="modal" style="max-width:480px;">
       <div class="modal__head">
         <h2 class="modal__title">Hisobot yuklash</h2>
-        <button type="button" class="modal__close" data-modal-close="uploadReportModal" aria-label="Yopish"><i class="ph ph-x"></i></button>
+        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
       </div>
       <div class="modal__body">
         <div style="display:grid;gap:14px;">
@@ -112,7 +111,7 @@
         </div>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" data-modal-close="uploadReportModal">Bekor qilish</button>
+        <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
         <button type="button" class="btn btn--primary"><i class="ph ph-upload-simple"></i> Yuborish</button>
       </div>
     </div>
