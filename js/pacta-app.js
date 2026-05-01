@@ -302,11 +302,23 @@ document.addEventListener('DOMContentLoaded', function () {
   var sidebarToggle = document.getElementById('sidebarToggle');
   var sidebar = document.querySelector('.sidebar');
   if (sidebarToggle && sidebar) {
+    var SIDEBAR_KEY = 'ngo_sidebar_collapsed_v1';
+    function applySidebarState(collapsed) {
+      sidebar.classList.toggle('is-collapsed', collapsed);
+      sidebarToggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      sidebarToggle.textContent = collapsed ? '\u203a' : '\u2039';
+      // Sync aria-label to match the action the user is about to take \u2014
+      // "yopish" (close) when expanded, "ochish" (open) when collapsed.
+      sidebarToggle.setAttribute('aria-label',
+        collapsed ? 'Yon panelni ochish' : 'Yon panelni yopish');
+    }
+    try {
+      if (localStorage.getItem(SIDEBAR_KEY) === '1') applySidebarState(true);
+    } catch (e) { /* swallow */ }
     sidebarToggle.addEventListener('click', function () {
-      sidebar.classList.toggle('is-collapsed');
-      var expanded = !sidebar.classList.contains('is-collapsed');
-      sidebarToggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-      sidebarToggle.textContent = expanded ? '\u2039' : '\u203a';
+      var willCollapse = !sidebar.classList.contains('is-collapsed');
+      applySidebarState(willCollapse);
+      try { localStorage.setItem(SIDEBAR_KEY, willCollapse ? '1' : '0'); } catch (e) {}
     });
   }
 
