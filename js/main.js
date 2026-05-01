@@ -290,7 +290,7 @@
     searchOverlayForm.onsubmit = function () {
       var inp = document.getElementById('searchInput');
       var val = inp ? inp.value.trim() : '';
-      if (val) location.href = 'search-results.html?q=' + encodeURIComponent(val);
+      if (val) location.href = 'search-results?q=' + encodeURIComponent(val);
       return false;
     };
   }
