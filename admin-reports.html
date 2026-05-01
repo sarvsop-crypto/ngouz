@@ -100,7 +100,7 @@
         <h1 class="report-header__title">Hisobotlar</h1>
         <div class="report-header__btns">
           <button type="button" class="btn btn--secondary"><i class="ph ph-plus"></i> Yangi hisobot</button>
-          <button type="button" class="btn btn--primary" data-action="export" data-export-title="Hisobot eksport"><i class="ph ph-export"></i> Eksport</button>
+          <button type="button" class="btn btn--primary" id="exportReportsBtn"><i class="ph ph-export"></i> Eksport</button>
         </div>
       </div>
 
@@ -147,8 +147,9 @@
     var STATUS_LABEL = { 'draft': 'Qoralama', 'submitted': 'Yuborilgan', 'accepted': 'Qabul qilingan', 'returned': 'Qaytarilgan' };
     function esc(s) { return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
+    var items = [];
     NgoApi.get('/admin/reports?limit=200').then(function(res) {
-      var items = res.items || [];
+      items = res.items || [];
       var tbody = document.getElementById('reportRows');
 
       // Update KPI cards if they exist
@@ -201,6 +202,18 @@
       var amount = document.querySelector('.chart-line__amount');
       if (amount && s.total_ngos !== undefined) amount.textContent = s.total_ngos + ' NNT';
     }).catch(function () {});
+
+    var exportBtn = document.getElementById('exportReportsBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', function () {
+        if (!items.length) { alert('Eksport qilish uchun hisobot yo\'q'); return; }
+        window.exportCsv(
+          'hisobotlar-' + new Date().toISOString().slice(0, 10) + '.csv',
+          items,
+          ['id', 'created_at', 'status', 'title', 'org_name', 'period', 'type', 'review_note', 'file_path']
+        );
+      });
+    }
   })();
   </script>
 </body>
