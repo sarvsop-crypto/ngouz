@@ -54,7 +54,16 @@ export default {
       appendVary(headers, 'Origin');
       setSecurityHeaders(headers);
       return new Response(
-        JSON.stringify({ ok: true, worker: 'ngo-api-proxy', upstream: ORIGIN }),
+        JSON.stringify({
+          ok: true,
+          worker: 'ngo-api-proxy',
+          upstream: ORIGIN,
+          time: new Date().toISOString(),
+          // Bump on each meaningful change so external monitors can detect
+          // a deploy without diffing other fields. Increments naturally
+          // line up with our iteration log; latest = iter 89.
+          version: 89,
+        }),
         { status: 200, headers },
       );
     }
