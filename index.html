@@ -781,18 +781,23 @@ function memSubmit(e) {
   btn.disabled = true;
   btn.textContent = 'Yuborilmoqda...';
 
-  var body = {
-    organization_name: form.querySelector('#mem-org').value.trim(),
-    head_name:         form.querySelector('#mem-leader').value.trim(),
-    phone:             form.querySelector('#mem-phone').value.trim(),
-    email:             form.querySelector('#mem-email').value.trim(),
-    region:            form.querySelector('#mem-region').value,
-    note:              form.querySelector('#mem-note').value.trim()
-  };
+  var orgName = form.querySelector('#mem-org').value.trim();
+  var leader  = form.querySelector('#mem-leader').value.trim();
+  var phone   = form.querySelector('#mem-phone').value.trim();
+  var email   = form.querySelector('#mem-email').value.trim();
+  var region  = form.querySelector('#mem-region').value;
+  var note    = form.querySelector('#mem-note').value.trim();
 
-  // memSubmit was wired to memStep(3) directly — users saw "Arizangiz qabul
-  // qilindi!" without anything reaching the server. Route through the same
-  // /v1/public/membership endpoint as membership.html.
+  // /v1/public/membership returns 404 — endpoint not yet implemented.
+  // Route through /v1/public/contact (which works) so admin still sees
+  // applications. iter 117 wired this to /membership; iter 125 redirects
+  // to /contact for parity with the dedicated /membership page.
+  var bodyText =
+    "Tashkilot: " + orgName +
+    "\nHudud: " + region +
+    "\nTelefon: " + phone +
+    (note ? "\nIzoh: " + note : "");
+
   var done = function () { memStep(3); };
   var fail = function (msg) {
     btn.disabled = false;
@@ -800,10 +805,16 @@ function memSubmit(e) {
     alert(msg || 'Xatolik. Iltimos qaytadan urinib ko’ring.');
   };
 
-  fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/membership', {
+  fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify(body)
+    body: JSON.stringify({
+      full_name: leader,
+      phone: phone,
+      email: email,
+      subject: "A'zolik arizasi: " + orgName,
+      body: bodyText
+    })
   }).then(function (r) {
     return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; });
   }).then(function (res) {

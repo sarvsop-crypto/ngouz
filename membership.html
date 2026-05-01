@@ -239,34 +239,52 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Yuborilmoqda...';
 
-      var body = {
-        organization_name: form.tashkilot_nomi.value,
-        activity_field: form.faoliyat_sohasi.value,
-        legal_form: form.tashkiliy_shakl.value,
-        head_name: form.rahbar_fio.value,
-        phone: form.telefon.value,
-        email: form.email.value,
-        telegram: form.telegram_raqam.value,
-        region: form.hudud.value
-      };
+      var orgName  = form.tashkilot_nomi.value.trim();
+      var activity = form.faoliyat_sohasi.value.trim();
+      var legal    = form.tashkiliy_shakl.value;
+      var leader   = form.rahbar_fio.value.trim();
+      var phone    = form.telefon.value.trim();
+      var email    = form.email.value.trim();
+      var telegram = form.telegram_raqam.value.trim();
+      var region   = form.hudud.value;
+      // Backend /v1/public/membership returns 404 — endpoint not yet
+      // implemented. Route applications to /v1/public/contact (which
+      // works) so admins still see them in the contact inbox. Body
+      // packs the structured fields as plain text for human review;
+      // when the dedicated endpoint exists this can revert to a real
+      // /membership POST.
+      var bodyText =
+        "Tashkilot: " + orgName +
+        "\nFaoliyat sohasi: " + activity +
+        "\nTashkiliy shakl: " + legal +
+        "\nHudud: " + region +
+        "\nTelefon: " + phone +
+        "\nTelegram: " + telegram;
 
-      fetchT(API + '/public/membership', {
+      fetchT(API + '/public/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(body)
+        body: JSON.stringify({
+          full_name: leader,
+          phone: phone,
+          email: email,
+          subject: "A'zolik arizasi: " + orgName,
+          body: bodyText
+        })
       })
-      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; }); })
       .then(function (res) {
         if (res.ok) {
           form.innerHTML = '<div style="text-align:center;padding:32px 0">'
             + '<h3 style="color:#065f46;margin-bottom:12px">Ariza qabul qilindi!</h3>'
-            + '<p>Arizangiz muvaffaqiyatli yuborildi. Tez orada siz bilan bog\'lanamiz.</p>'
+            + '<p style="margin-bottom:12px">Murojaat ID: <strong>' + (res.data && res.data.id ? '#' + res.data.id : '—') + '</strong></p>'
+            + '<p>Arizangiz qabul qilindi. 15 ish kuni ichida ko‘rsatilgan telefon yoki email orqali bog‘lanamiz.</p>'
             + '<a class="btn" href="/" style="margin-top:16px;display:inline-block">Bosh sahifaga qaytish</a>'
             + '</div>';
         } else {
           submitBtn.disabled = false;
           submitBtn.textContent = 'Ariza yuborish';
-          alert('Xatolik: ' + (res.data.message || 'Iltimos qaytadan urinib ko\'ring.'));
+          alert('Xatolik: ' + ((res.data && res.data.message) || 'Iltimos qaytadan urinib ko\'ring.'));
         }
       })
       .catch(function () {
