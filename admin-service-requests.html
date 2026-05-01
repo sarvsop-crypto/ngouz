@@ -221,8 +221,7 @@
       </div>
       <div class="modal__foot">
         <button type="button" class="btn btn--secondary" data-modal-close>Yopish</button>
-        <button type="button" class="btn btn--secondary" data-modal-close><i class="ph ph-user-plus"></i> Mas&rsquo;ul tayinlash</button>
-        <button type="button" class="btn btn--primary" data-modal-close><i class="ph ph-paper-plane-tilt"></i> Javob yuborish</button>
+        <button type="button" class="btn btn--primary" id="svcMarkHandledBtn"><i class="ph ph-check-circle"></i> Javob berilgan deb belgilash</button>
       </div>
     </div>
   </div>
@@ -264,6 +263,7 @@
         var label = STATUS_LABEL[item.status] || item.status;
         var contact = esc(item.email || item.phone || '');
         var nameHtml = esc(item.full_name || '—') + (contact ? '<br><span class="u-text-muted-sm">' + contact + '</span>' : '');
+        var idNum = parseInt(item.id, 10) || 0;
         return '<tr data-status="' + (item.status || '') + '">' +
           '<td><input type="checkbox" aria-label="Tanlash" /></td>' +
           '<td><strong>XZM-' + esc(item.id) + '</strong></td>' +
@@ -272,9 +272,43 @@
           '<td>' + fmtDate(item.created_at) + '</td>' +
           '<td><span class="badge badge--' + badge + '"><span class="badge__dot"></span>' + label + '</span></td>' +
           '<td>' + esc(item.assigned_to || '—') + '</td>' +
-          '<td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="serviceReviewModal"><i class="ph ph-eye"></i> Ko\'rish</button></td>' +
+          '<td><button type="button" class="btn btn--sm btn--secondary" onclick="openServiceReview(' + idNum + ')"><i class="ph ph-eye"></i> Ko\'rish</button></td>' +
         '</tr>';
       }).join('');
+    }
+
+    var reviewingId = null;
+    window.openServiceReview = function (id) {
+      var item = items.find(function (i) { return parseInt(i.id, 10) === id; });
+      if (!item) return;
+      reviewingId = id;
+      document.getElementById('svcReviewId').textContent       = 'XZM-' + item.id;
+      document.getElementById('svcReviewDate').textContent     = (item.created_at || '').slice(0, 16).replace('T', ' ');
+      document.getElementById('svcReviewName').textContent     = item.full_name || '—';
+      document.getElementById('svcReviewContact').textContent  = (item.email || '') + (item.phone ? ' / ' + item.phone : '');
+      document.getElementById('svcReviewType').textContent     = item.subject || item.category || '—';
+      document.getElementById('svcReviewAssignee').textContent = item.assigned_to || 'Tayinlanmagan';
+      document.getElementById('svcReviewBody').textContent     = item.body || '';
+      if (window.AdminModal) window.AdminModal.open('serviceReviewModal');
+    };
+
+    var markHandledBtn = document.getElementById('svcMarkHandledBtn');
+    if (markHandledBtn) {
+      markHandledBtn.addEventListener('click', function () {
+        if (!reviewingId) return;
+        markHandledBtn.disabled = true;
+        NgoApi.patch('/admin/contact-messages/' + reviewingId, { status: 'handled' })
+          .then(function () {
+            var idx = items.findIndex(function (i) { return parseInt(i.id, 10) === reviewingId; });
+            if (idx !== -1) items[idx].status = 'handled';
+            renderTable(); renderKpi();
+            if (window.AdminModal) window.AdminModal.close('serviceReviewModal');
+          })
+          .catch(function (err) {
+            alert('Saqlashda xatolik: ' + ((err && err.message) || 'noma\'lum'));
+          })
+          .then(function () { markHandledBtn.disabled = false; });
+      });
     }
 
     function renderKpi() {
