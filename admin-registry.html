@@ -98,7 +98,7 @@
       <div class="main__header">
         <h1 class="main__title">NNT Ro&rsquo;yxati</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary"><i class="ph ph-download-simple"></i> Eksport</button>
+          <button type="button" class="btn btn--secondary" id="exportRegistryBtn"><i class="ph ph-download-simple"></i> Eksport</button>
           <button type="button" class="btn btn--primary" id="addNntBtn"><i class="ph ph-plus"></i> NNT qo'shish</button>
         </div>
       </div>
@@ -346,6 +346,21 @@
     });
 
     loadPage();
+
+    // Eksport (CSV) — uses the in-memory items array (loadPage
+    // pages through the entire registry on initial load when not
+    // searching). Was a totally unwired button.
+    var exportBtn = document.getElementById('exportRegistryBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', function () {
+        if (!items.length) { alert('Eksport qilish uchun NNT yo\'q'); return; }
+        window.exportCsv(
+          'nnt-royxati-' + new Date().toISOString().slice(0, 10) + '.csv',
+          items,
+          ['id', 'name', 'slug', 'region_code', 'leader_name', 'address', 'member_since', 'registered_at', 'soha', 'status']
+        );
+      });
+    }
   })();
   </script>
 </body>
