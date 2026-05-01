@@ -130,13 +130,18 @@
           // uppercased in innerHTML. esc() the fallback path.
           var cl   = catLabel[cat] || esc(cat.toUpperCase());
           var excerpt = esc(n.excerpt || n.summary || (n.body || '').slice(0, 120));
+          // 'Batafsil' was href='#' — clicking did nothing. Link to
+          // the public news-detail page (with an id) so cabinet
+          // members can read the full article. Use ../ since cabinet
+          // pages live under /cabinet/.
+          var detailHref = '../news-detail?id=' + encodeURIComponent(n.id || '');
           return '<div class="news-card">' +
             '<div class="news-card__img ' + img + '"><i class="ph ' + icon + '"></i></div>' +
             '<div class="news-card__body">' +
               '<span class="news-card__cat ' + cc + '">' + cl + '</span>' +
               '<h3 class="news-card__title">' + esc(n.title) + '</h3>' +
               '<p class="news-card__excerpt">' + excerpt + '</p>' +
-              '<div class="news-card__footer"><span class="news-card__date">' + fmtDate(n.published_at || n.created_at) + '</span><a href="#" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>' +
+              '<div class="news-card__footer"><span class="news-card__date">' + fmtDate(n.published_at || n.created_at) + '</span><a href="' + detailHref + '" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>' +
             '</div></div>';
         }).join('');
       })
