@@ -259,7 +259,7 @@
 
       var tbody = document.getElementById('tasksTableRows');
       if (!items.length) {
-        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--grey-400)">Arizalar topilmadi</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:32px;color:var(--grey-400)">Hozircha topshiriq yo\'q. Yangi a\'zolik arizalari tushganda bu yerda paydo bo\'ladi.</td></tr>';
         return;
       }
       tbody.innerHTML = items.map(function(a) {

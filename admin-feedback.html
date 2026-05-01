@@ -263,7 +263,7 @@
       });
       var tbody = document.getElementById('feedbackTableBody');
       if (!filtered.length) {
-        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="7">Xabar topilmadi</td></tr>';
+        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="7">Hozircha qayta aloqa xabarlari yo\'q. /qayta-aloqa orqali yuborilgan barcha murojaatlar bu yerda ko\'rinadi.</td></tr>';
         return;
       }
       tbody.innerHTML = filtered.map(function (item) {

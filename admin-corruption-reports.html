@@ -261,7 +261,7 @@
       });
       var tbody = document.getElementById('corruptionTableBody');
       if (!filtered.length) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--grey-400);">Murojaat topilmadi</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--grey-400);">Korrupsiyaga oid murojaatlar yo\'q. Foydalanuvchilar /korrupsiya-murojaat orqali yuborgan murojaatlar bu yerda paydo bo\'ladi.</td></tr>';
         return;
       }
       tbody.innerHTML = filtered.map(function (item) {
