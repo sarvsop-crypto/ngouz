@@ -150,7 +150,16 @@
       if (filter === 'unread') filtered = allItems.filter(function (n) { return !n.is_read; });
       else if (filter === 'system') filtered = allItems.filter(function (n) { return n.type === 'system' || n.type === 'security'; });
       if (!filtered.length) {
-        list.innerHTML = '<div style="text-align:center;color:var(--grey-400);padding:32px;">Bildirishnomalar topilmadi</div>';
+        // Differentiate 'truly empty' from 'filter shows nothing' so the
+        // user knows whether to clear the filter or wait for new
+        // notifications. allItems.length === 0 means no notifications
+        // received at all; otherwise the filter just hides them.
+        var msg = !allItems.length
+          ? 'Hozircha bildirishnomalar yo‘q. Yangi xabarlar va ogohlantirishlar bu yerda ko‘rinadi.'
+          : (filter === 'unread'
+              ? 'O‘qilmagan bildirishnoma yo‘q. Hammasi o‘qib bo‘lingan.'
+              : 'Tanlangan filtr bo‘yicha xabar topilmadi.');
+        list.innerHTML = '<div style="text-align:center;color:var(--grey-400);padding:32px;">' + msg + '</div>';
         return;
       }
       list.innerHTML = filtered.map(renderNotif).join('');
