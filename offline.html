@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Oflayn — ngo.uz</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <style>
+    :root { --bg:#0d2738; --fg:#fff; --muted:#9fb1bf; --primary:#0e7490; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 16px/1.55 'Montserrat', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      padding: 24px;
+    }
+    .card {
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+    }
+    .icon {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 20px;
+      stroke: var(--primary);
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 12px;
+    }
+    p {
+      font-size: 15px;
+      color: var(--muted);
+      margin: 0 0 24px;
+    }
+    button {
+      background: var(--primary);
+      color: #fff;
+      border: 0;
+      padding: 12px 24px;
+      font: inherit;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { filter: brightness(1.1); }
+    a { color: var(--primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M1 1l22 22" />
+      <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55" />
+      <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39" />
+      <path d="M10.71 5.05A16 16 0 0 1 22.58 9" />
+      <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88" />
+      <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
+      <line x1="12" y1="20" x2="12.01" y2="20" />
+    </svg>
+    <h1>Internet aloqasi yo'q</h1>
+    <p>Sahifa yuklanishi uchun internetga ulanishingiz kerak. Ulanishni tekshirib qaytadan urinib ko'ring.</p>
+    <button type="button" onclick="location.reload()">Qayta urinish</button>
+    <p style="margin-top:24px;font-size:13px"><a href="/">Bosh sahifaga qaytish</a></p>
+  </div>
+</body>
+</html>
