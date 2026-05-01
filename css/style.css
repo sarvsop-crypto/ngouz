@@ -1198,6 +1198,44 @@ body.a11y-grayscale { filter: grayscale(1); }
   100% { transform:translateX(18%) skewY(-7deg); opacity:.1; }
 }
 
+/* ============================================================
+   PRINT — hide chrome, render the article cleanly
+   ============================================================ */
+@media print {
+  /* Hide navigation, footer, sidebar, share buttons, language
+     switcher etc. The detail pages have a window.print() button
+     in the article header; clicking it should produce a clean
+     printable copy of just the article body. */
+  .site-header,
+  .site-footer,
+  .footer-legal,
+  .test-mode-banner,
+  .skip-link,
+  .topbar,
+  .sidebar,
+  .search-overlay,
+  .a11y-panel,
+  .mobile-nav,
+  .detail-sidebar,
+  .detail-share-row,
+  .detail-print-btn,
+  .detail-tags,
+  .scroll-fade,
+  .gov-news-overlay,
+  noscript {
+    display: none !important;
+  }
+  body { background: #fff !important; color: #000 !important; }
+  a { color: #000; text-decoration: underline; }
+  /* Spell out external link targets so printed pages preserve
+     citation context. */
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 90%; }
+  .detail-paper { box-shadow: none !important; padding: 0 !important; max-width: 100% !important; }
+  .detail-cover { display: none; }
+  h1, h2, h3 { page-break-after: avoid; }
+  img { max-width: 100% !important; height: auto !important; page-break-inside: avoid; }
+}
+
 @media (prefers-reduced-motion: reduce){
   /* Global reduced-motion: zero out durations on every element
      instead of listing classes. The rule also covers smooth-scroll
