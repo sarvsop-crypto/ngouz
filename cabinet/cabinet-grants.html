@@ -156,78 +156,23 @@
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
     function fmtDate(d) { if (!d) return '—'; var p = d.slice(0,10).split('-'); return p[2] + '.' + p[1] + '.' + p[0]; }
 
-    // Cabinet grants shows only THIS user's grant applications (not public grants)
-    // Since there's no grant_applications table yet, show empty state
-    (function () {
-        var grants = [];
-        var applied = [];
-        var won = [];
+    // Cabinet grants shows THIS user's grant applications. There's
+    // no grant_applications backend table yet — both tabs render
+    // honest empty states; KPI cards and tab counts read 0.
+    // Previous version kept full render code that operated on
+    // hardcoded empty arrays (40+ lines never executed). Removed.
+    document.getElementById('appliedGrantsBody').innerHTML =
+      '<tr><td colspan="5" class="empty-state">'
+      + 'Hali grant topshirilmagan. <a href="../grants" style="color:var(--primary-500);text-decoration:underline">Faol grantlar ro‘yxatini ko‘ring</a> yoki <a href="../grant-tanlovlari" style="color:var(--primary-500);text-decoration:underline">AI yordamida sizga mos grantni toping</a>.'
+      + '</td></tr>';
+    document.getElementById('wonGrantsBody').innerHTML =
+      '<tr><td colspan="6" class="empty-state">Hali yutib olingan grant yo‘q. Topshirilgan arizalar tasdiqlangach bu yerda ko‘rinadi.</td></tr>';
 
-        // Applied tab
-        var tbody1 = document.getElementById('appliedGrantsBody');
-        if (!applied.length) {
-          tbody1.innerHTML = '<tr><td colspan="5" class="empty-state">'
-            + 'Hali grant topshirilmagan. <a href="../grants" style="color:var(--primary-500);text-decoration:underline">Faol grantlar ro‘yxatini ko‘ring</a> yoki <a href="../grant-tanlovlari" style="color:var(--primary-500);text-decoration:underline">AI yordamida sizga mos grantni toping</a>.'
-            + '</td></tr>';
-        } else {
-          tbody1.innerHTML = applied.map(function (g) {
-            var statusMap = { 'pending': 'warning', 'approved': 'success', 'rejected': 'error', 'active': 'success', 'completed': 'pending', 'draft': 'neutral' };
-            var labelMap  = { 'pending': "Ko'rib chiqilmoqda", 'approved': 'Tasdiqlandi', 'rejected': 'Rad etildi', 'active': 'Faol', 'completed': 'Yakunlangan', 'draft': 'Qoralama' };
-            var badge = statusMap[g.status] || 'neutral';
-            // Fallback to g.status (raw) was XSS — esc the unmapped path.
-            var label = labelMap[g.status] || esc(g.status || '—');
-            return '<tr>' +
-              '<td style="font-weight:500;">' + esc(g.title || g.name || '—') + '</td>' +
-              '<td>' + esc(g.donor || g.organization || '—') + '</td>' +
-              '<td class="text-bold-sm">' + esc(g.amount || g.budget || '—') + '</td>' +
-              '<td>' + fmtDate(g.deadline || g.created_at) + '</td>' +
-              '<td><span class="badge badge--' + badge + '"><span class="badge__dot"></span>' + label + '</span></td>' +
-            '</tr>';
-          }).join('');
-        }
-
-        // Won tab
-        var tbody2 = document.getElementById('wonGrantsBody');
-        if (!won.length) {
-          tbody2.innerHTML = '<tr><td colspan="6" class="empty-state">Hali yutib olingan grant yo‘q. Topshirilgan arizalar tasdiqlangach bu yerda ko‘rinadi.</td></tr>';
-        } else {
-          tbody2.innerHTML = won.map(function (g) {
-            var badge = g.status === 'completed' ? 'pending' : 'success';
-            var label = g.status === 'completed' ? 'Yakunlangan' : 'Faol';
-            return '<tr>' +
-              '<td style="font-weight:500;">' + esc(g.title || g.name || '—') + '</td>' +
-              '<td>' + esc(g.donor || g.organization || '—') + '</td>' +
-              '<td class="text-bold-sm">' + esc(g.amount || g.budget || '—') + '</td>' +
-              '<td>' + fmtDate(g.start_date || g.created_at) + '</td>' +
-              '<td>' + fmtDate(g.end_date || g.deadline) + '</td>' +
-              '<td><span class="badge badge--' + badge + '"><span class="badge__dot"></span>' + label + '</span></td>' +
-            '</tr>';
-          }).join('');
-        }
-
-        // Update tab counts
-        var tabs = document.querySelectorAll('#grantTabs .tab .tab__count');
-        if (tabs[0]) tabs[0].textContent = applied.length;
-        if (tabs[1]) tabs[1].textContent = won.length;
-
-        // Update applied KPI cards
-        var appliedCards = document.querySelectorAll('#panel-applied .card__value');
-        var pendingGrants = applied.filter(function (g) { return g.status === 'pending'; }).length;
-        var approvedGrants = applied.filter(function (g) { return g.status === 'approved' || g.status === 'active'; }).length;
-        var rejectedGrants = applied.filter(function (g) { return g.status === 'rejected'; }).length;
-        if (appliedCards[0]) appliedCards[0].textContent = applied.length;
-        if (appliedCards[1]) appliedCards[1].textContent = pendingGrants;
-        if (appliedCards[2]) appliedCards[2].textContent = approvedGrants;
-        if (appliedCards[3]) appliedCards[3].textContent = rejectedGrants;
-
-        // Update won KPI cards
-        var wonCards = document.querySelectorAll('#panel-won .card__value');
-        var activeGrants = won.filter(function (g) { return g.status === 'active'; }).length;
-        var completedGrants = won.filter(function (g) { return g.status === 'completed'; }).length;
-        if (wonCards[0]) wonCards[0].textContent = won.length;
-        if (wonCards[1]) wonCards[1].textContent = activeGrants;
-        if (wonCards[2]) wonCards[2].textContent = completedGrants;
-    })();
+    var grantTabCounts = document.querySelectorAll('#grantTabs .tab .tab__count');
+    if (grantTabCounts[0]) grantTabCounts[0].textContent = '0';
+    if (grantTabCounts[1]) grantTabCounts[1].textContent = '0';
+    document.querySelectorAll('#panel-applied .card__value, #panel-won .card__value')
+      .forEach(function (el) { el.textContent = '0'; });
   })();
   </script>
   <script src="js/cabinet-chrome.js" defer></script>
