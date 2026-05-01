@@ -177,19 +177,26 @@
 
         var token = '';
         try { token = localStorage.getItem('ngo_api_token') || ''; } catch(e) {}
-        fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/admin/upload', {
+        var ctrl = (typeof AbortController === 'function') ? new AbortController() : null;
+        var to = ctrl ? setTimeout(function () { ctrl.abort(); }, 60000) : null;
+        var init = {
           method: 'POST',
           headers: token ? { 'Authorization': 'Bearer ' + token } : {},
           body: formData
-        })
+        };
+        if (ctrl) init.signal = ctrl.signal;
+        fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/admin/upload', init)
         .then(function (r) { return r.json(); })
         .then(function (data) {
+          if (to) clearTimeout(to);
           if (data.error) throw new Error(data.message || 'Upload xatosi');
           alert('Hujjat muvaffaqiyatli yuklandi!');
           location.reload();
         })
         .catch(function (err) {
-          alert('Xatolik: ' + (err.message || 'Yuklashda xatolik'));
+          if (to) clearTimeout(to);
+          var msg = (err && err.name === 'AbortError') ? 'Yuklash juda uzoq cho’zildi' : (err.message || 'Yuklashda xatolik');
+          alert('Xatolik: ' + msg);
           panelSubmitBtn.disabled = false;
           panelSubmitBtn.innerHTML = '<i class="ph ph-upload-simple"></i> Yuklash';
         });

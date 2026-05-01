@@ -230,11 +230,13 @@
             var formData = new FormData();
             formData.append('file', file);
             formData.append('type', 'report');
-            uploadPromise = fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/admin/upload', {
-              method: 'POST',
-              headers: authHeaders,
-              body: formData
-            }).then(function (r) { return r.json(); }).then(function (d) { return d.path || d.file_path || ''; });
+            var ctrl = (typeof AbortController === 'function') ? new AbortController() : null;
+            var to = ctrl ? setTimeout(function () { ctrl.abort(); }, 60000) : null;
+            var init = { method: 'POST', headers: authHeaders, body: formData };
+            if (ctrl) init.signal = ctrl.signal;
+            uploadPromise = fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/admin/upload', init)
+              .then(function (r) { if (to) clearTimeout(to); return r.json(); }, function (err) { if (to) clearTimeout(to); throw err; })
+              .then(function (d) { return d.path || d.file_path || ''; });
           } else {
             uploadPromise = Promise.resolve('');
           }
