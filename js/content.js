@@ -291,8 +291,21 @@
 
   function renderEventsPage(items, container) {
     if (!items.length) { container.innerHTML = '<p>Tadbirlar topilmadi.</p>'; return; }
-    var upcoming = items.filter(function (e) { return e.status === 'upcoming'; });
-    var past     = items.filter(function (e) { return e.status === 'past'; });
+    // Upstream may set status='upcoming'/'past' explicitly, or omit
+    // it entirely. The previous filter (status==='upcoming' /
+    // status==='past') silently dropped events with any other
+    // status value (e.g. 'active', undefined, or a stray casing
+    // mismatch from the PHP API). Fall back to comparing the date
+    // against today so missing/unexpected statuses still render.
+    var todayMs = new Date().setHours(0, 0, 0, 0);
+    function isUpcoming(e) {
+      if (e.status === 'upcoming') return true;
+      if (e.status === 'past') return false;
+      var t = e.date ? new Date(e.date).getTime() : NaN;
+      return !isNaN(t) && t >= todayMs;
+    }
+    var upcoming = items.filter(isUpcoming);
+    var past     = items.filter(function (e) { return !isUpcoming(e); });
 
     function sectionHTML(arr, label) {
       if (!arr.length) return '';
