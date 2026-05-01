@@ -167,7 +167,7 @@
         + '</tr>';
     }
 
-    NgoApi.get('/cabinet/reports', { loginPage: 'cabinet-login.html' }).then(function (res) {
+    NgoApi.get('/cabinet/reports', { loginPage: 'cabinet-login' }).then(function (res) {
       var items = res.items || [];
       var tbody = document.getElementById('reportsTableBody');
       if (!items.length) {
@@ -246,7 +246,7 @@
               file_path: filePath,
               note: note,
               submit: true
-            }, { loginPage: 'cabinet-login.html' });
+            }, { loginPage: 'cabinet-login' });
           }).then(function () {
             location.reload();
           }).catch(function (err) {

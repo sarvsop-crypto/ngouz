@@ -152,7 +152,7 @@
       list.querySelectorAll('.notif-item--unread').forEach(function (el) {
         el.addEventListener('click', function () {
           var id = el.getAttribute('data-notif-id');
-          NgoApi.post('/cabinet/notifications/' + id + '/mark-read', {}, { loginPage: 'cabinet-login.html' }).then(function () {
+          NgoApi.post('/cabinet/notifications/' + id + '/mark-read', {}, { loginPage: 'cabinet-login' }).then(function () {
             el.classList.remove('notif-item--unread');
             var dot = el.querySelector('.notif-item__dot');
             if (dot) dot.remove();
@@ -173,7 +173,7 @@
       if (tabs[2]) tabs[2].textContent = systemCount;
     }
 
-    NgoApi.get('/cabinet/notifications', { loginPage: 'cabinet-login.html' }).then(function (res) {
+    NgoApi.get('/cabinet/notifications', { loginPage: 'cabinet-login' }).then(function (res) {
       allItems = res.items || [];
       updateCounts();
       renderList('all');
@@ -197,7 +197,7 @@
     var markAllBtn = document.querySelector('.main__btns .btn--secondary');
     if (markAllBtn) {
       markAllBtn.addEventListener('click', function () {
-        NgoApi.post('/cabinet/notifications/mark-read', {}, { loginPage: 'cabinet-login.html' }).then(function () {
+        NgoApi.post('/cabinet/notifications/mark-read', {}, { loginPage: 'cabinet-login' }).then(function () {
           allItems.forEach(function (n) { n.is_read = true; });
           updateCounts();
           renderList('all');

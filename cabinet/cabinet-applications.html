@@ -130,7 +130,7 @@
         + '</tr>';
     }
 
-    NgoApi.get('/cabinet/membership', { loginPage: 'cabinet-login.html' }).then(function (res) {
+    NgoApi.get('/cabinet/membership', { loginPage: 'cabinet-login' }).then(function (res) {
       var items = res.items || [];
       var tbody = document.getElementById('applicationsTableBody');
       if (!items.length) {
