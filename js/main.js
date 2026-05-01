@@ -372,7 +372,15 @@
     searchOverlayForm.onsubmit = function () {
       var inp = document.getElementById('searchInput');
       var val = inp ? inp.value.trim() : '';
-      if (val) location.href = 'search-results?q=' + encodeURIComponent(val);
+      if (val) {
+        location.href = 'search-results?q=' + encodeURIComponent(val);
+      } else if (inp) {
+        // Empty submit gave no feedback — refocus the input so the
+        // user knows where to type. Native required+browser validation
+        // doesn't fire because the page-level onsubmit returns false
+        // synchronously.
+        try { inp.focus(); } catch (e) {}
+      }
       return false;
     };
   }
@@ -526,6 +534,7 @@
     // dialog so AT users get the standard "menu opened" cue.
     hamburgerBtn.setAttribute('aria-controls', 'mobileNav');
     hamburgerBtn.setAttribute('aria-expanded', 'false');
+    hamburgerBtn.setAttribute('aria-haspopup', 'dialog');
     mobileNav.setAttribute('role', 'dialog');
     mobileNav.setAttribute('aria-modal', 'true');
     mobileNav.setAttribute('aria-label', 'Asosiy menyu');
