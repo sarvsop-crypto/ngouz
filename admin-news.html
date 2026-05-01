@@ -502,20 +502,11 @@
     });
 
     document.getElementById('publishBtn').addEventListener('click', function () {
-      var token = localStorage.getItem('admin_github_token');
-      if (!token) {
-        toast('Nashr qilish sozlanmagan. Tizim administratoriga murojaat qiling.', 'warning');
-        return;
-      }
-      var btn = this;
-      btn.innerHTML = '<span class="spinner"></span> Nashr etilmoqda...';
-      btn.disabled  = true;
-      AdminCMS.publish(TYPE, function (err) {
-        btn.innerHTML = '<i class="ph ph-cloud-arrow-up"></i> Nashr qilish';
-        btn.disabled  = false;
-        if (err) toast('Xatolik yuz berdi. Qayta urinib ko\'ring.', 'error');
-        else toast('Sayt muvaffaqiyatli yangilandi!', 'success');
-      });
+      // Legacy GitHub-based publish workflow was replaced with direct
+      // API-backed CMS in iter context — every save now persists to
+      // the live database, no manual publish step. Keep the button
+      // visible (admin muscle memory) but explain it's a no-op.
+      toast('Saqlash avtomatik bajariladi. Maqola yaratilgan zahoti saytda paydo bo\'ladi.', 'info');
     });
 
     // close modal on backdrop click

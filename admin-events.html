@@ -458,14 +458,7 @@
     });
 
     document.getElementById('publishBtn').addEventListener('click', function () {
-      if (!localStorage.getItem('admin_github_token')) { toast('Nashr qilish sozlanmagan. Tizim administratoriga murojaat qiling.', 'warning'); return; }
-      var btn = this;
-      btn.innerHTML = '<span class="spinner"></span> Nashr etilmoqda...'; btn.disabled = true;
-      AdminCMS.publish(TYPE, function (err) {
-        btn.innerHTML = '<i class="ph ph-cloud-arrow-up"></i> Nashr qilish'; btn.disabled = false;
-        if (err) toast('Xatolik yuz berdi. Qayta urinib ko\'ring.', 'error');
-        else toast('Sayt muvaffaqiyatli yangilandi!', 'success');
-      });
+      toast('Saqlash avtomatik bajariladi. Tadbir yaratilgan zahoti saytda paydo bo\'ladi.', 'info');
     });
 
     document.getElementById('formModal').addEventListener('click',   function (e) { if (e.target === this) closeModal('formModal'); });
