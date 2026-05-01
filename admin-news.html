@@ -337,7 +337,13 @@
       });
       var tbody = document.getElementById('newsTableBody');
       if (!filtered.length) {
-        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6">Ma\'lumot topilmadi</td></tr>';
+        // Distinguish 'no items at all' (admin should add the first
+        // article) from 'filter is hiding everything' (admin should
+        // clear the filter).
+        var msg = !items.length
+          ? 'Hozircha maqolalar yo\'q. Yuqoridagi <strong>“Yangi maqola”</strong> tugmasi orqali birinchi yangilikni qo\'shing.'
+          : 'Tanlangan filtr yoki qidiruv bo\'yicha hech narsa topilmadi.';
+        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6">' + msg + '</td></tr>';
         return;
       }
       tbody.innerHTML = filtered.map(function (item) {

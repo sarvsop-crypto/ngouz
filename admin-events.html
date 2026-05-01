@@ -321,7 +321,11 @@
       });
       var tbody = document.getElementById('eventsTableBody');
       if (!filtered.length) {
-        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="7">Ma\'lumot topilmadi</td></tr>';
+        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="7">' +
+          (!items.length
+            ? 'Hozircha tadbirlar yo\'q. Yuqoridagi <strong>“Yangi tadbir”</strong> tugmasi orqali birinchi tadbirni qo\'shing.'
+            : 'Tanlangan filtr yoki qidiruv bo\'yicha hech narsa topilmadi.') +
+          '</td></tr>';
         return;
       }
       tbody.innerHTML = filtered.map(function (item) {

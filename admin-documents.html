@@ -303,7 +303,11 @@
       });
       var tbody = document.getElementById('docsTableBody');
       if (!filtered.length) {
-        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6">Hujjat topilmadi</td></tr>';
+        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6">' +
+          (!items.length
+            ? 'Hozircha hujjatlar yo\'q. Yuqoridagi <strong>“Yangi hujjat”</strong> tugmasi orqali birinchi hujjatni qo\'shing.'
+            : 'Tanlangan filtr yoki qidiruv bo\'yicha hech narsa topilmadi.') +
+          '</td></tr>';
         return;
       }
       tbody.innerHTML = filtered.map(function (item) {

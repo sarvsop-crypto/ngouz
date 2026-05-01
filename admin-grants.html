@@ -327,7 +327,11 @@
       });
       var tbody = document.getElementById('grantsTableBody');
       if (!filtered.length) {
-        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="8">Ma\'lumot topilmadi</td></tr>';
+        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="8">' +
+          (!items.length
+            ? 'Hozircha grantlar yo\'q. Yuqoridagi <strong>“Yangi grant”</strong> tugmasi orqali birinchi grantni qo\'shing.'
+            : 'Tanlangan filtr yoki qidiruv bo\'yicha hech narsa topilmadi.') +
+          '</td></tr>';
         return;
       }
       tbody.innerHTML = filtered.map(function (item) {
