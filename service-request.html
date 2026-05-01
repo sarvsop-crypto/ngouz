@@ -114,7 +114,7 @@
 <section class="section">
 <div class="container">
 <div class="card">
-<form action="service-request-status" method="get" novalidate="" data-validate>
+<form id="serviceRequestForm">
 <div class="form-grid">
 <div class="form-field">
 <label class="form-label" for="sr-fio">F.I.Sh.</label>
@@ -207,5 +207,59 @@
   </div>
 </div>
 <script src="js/search-overlay.js" defer></script>
+<script>
+// service-request previously used <form action="service-request-status"
+// method="get"> — submitting just navigated to a static page that
+// hardcoded a fake "REQ-2026-0411" tracking number. No data ever
+// reached the backend. Now POST to /v1/public/contact (the same route
+// /qayta-aloqa and /korrupsiya-murojaat use) with subject prefixed by
+// the chosen topic so it lands in the same admin inbox.
+(function () {
+  var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+  var form = document.getElementById('serviceRequestForm');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    var fio     = document.getElementById('sr-fio').value.trim();
+    var phone   = document.getElementById('sr-phone').value.trim();
+    var email   = document.getElementById('sr-email').value.trim();
+    var topic   = document.getElementById('sr-topic').value;
+    var message = document.getElementById('sr-message').value.trim();
+    var btn = form.querySelector('button[type="submit"]');
+    var defaultLabel = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
+    fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        full_name: fio,
+        phone: phone,
+        email: email,
+        subject: "Xizmat so'rovi: " + topic,
+        body: message
+      })
+    })
+    .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; }); })
+    .then(function (res) {
+      if (res.ok) {
+        form.innerHTML = '<div style="text-align:center;padding:32px 0">'
+          + '<h3 style="color:#0e7490;margin-bottom:10px">Murojaatingiz qabul qilindi</h3>'
+          + '<p style="margin-bottom:18px">Murojaat ID: <strong>' + (res.data && res.data.id ? '#' + res.data.id : '—') + '</strong></p>'
+          + '<p>Tez orada siz bilan ko‘rsatilgan telefon yoki email orqali bog‘lanamiz.</p>'
+          + '<a class="btn" href="/" style="margin-top:18px;display:inline-block">Bosh sahifaga qaytish</a>'
+          + '</div>';
+      } else {
+        btn.disabled = false; btn.textContent = defaultLabel;
+        alert((res.data && res.data.message) || "Xatolik yuz berdi. Qaytadan urinib ko‘ring.");
+      }
+    })
+    .catch(function () {
+      btn.disabled = false; btn.textContent = defaultLabel;
+      alert('Tarmoq xatosi. Internet aloqangizni tekshiring.');
+    });
+  });
+})();
+</script>
 </body>
 </html>
