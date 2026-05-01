@@ -257,12 +257,64 @@
       + sectionHTML(past, "Bo'lib o'tgan tadbirlar");
   }
 
+  function injectEventJsonLd(item) {
+    try {
+      var existing = document.getElementById('event-jsonld');
+      if (existing) existing.remove();
+      var pageUrl = window.location.href;
+      var coverImg = (item.cover_image_url || item.cover_url || '');
+      if (coverImg && coverImg.indexOf('http') !== 0) {
+        coverImg = MEDIA_BASE + encodeURIComponent(coverImg);
+      }
+      var statusKey = item.status || '';
+      var data = {
+        '@context': 'https://schema.org',
+        '@type': 'Event',
+        'name': String(item.title || '').slice(0, 300),
+        'description': String(item.description || '').slice(0, 500),
+        'startDate': item.start_date || item.date || item.event_date || '',
+        'endDate': item.end_date || item.start_date || item.date || '',
+        'eventStatus': statusKey === 'upcoming'
+          ? 'https://schema.org/EventScheduled'
+          : 'https://schema.org/EventScheduled',
+        'eventAttendanceMode': 'https://schema.org/OfflineEventAttendanceMode',
+        'inLanguage': 'uz-UZ',
+        'url': pageUrl,
+        'organizer': {
+          '@type': 'Organization',
+          'name': "O'zNNTMA",
+          'url': 'https://www.ngo.uz/'
+        }
+      };
+      if (item.location) {
+        data.location = {
+          '@type': 'Place',
+          'name': String(item.location).slice(0, 200),
+          'address': { '@type': 'PostalAddress', 'addressLocality': 'Toshkent', 'addressCountry': 'UZ' }
+        };
+      } else {
+        data.location = {
+          '@type': 'VirtualLocation',
+          'url': pageUrl
+        };
+        data.eventAttendanceMode = 'https://schema.org/OnlineEventAttendanceMode';
+      }
+      if (coverImg) data.image = [coverImg];
+      var s = document.createElement('script');
+      s.type = 'application/ld+json';
+      s.id = 'event-jsonld';
+      s.textContent = JSON.stringify(data);
+      document.head.appendChild(s);
+    } catch (e) { /* swallow */ }
+  }
+
   function renderEventDetail(items, container, id) {
     var item = id ? items.find(function (e) { return e.id === id; }) : null;
     if (!item) item = items[0];
     if (!item) { container.innerHTML = '<p>Tadbir topilmadi.</p>'; return; }
 
     document.title = item.title + ' - ngo.uz';
+    injectEventJsonLd(item);
     var pageUrl = window.location.href;
     var statusKey = item.status || '';
     var statusLabel = statusKey === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
