@@ -257,9 +257,21 @@
   }
 
   /* ── Events ───────────────────────────────────────────────── */
+  // Resolve an event's effective status from explicit field + date
+  // fallback. Used by both the card render and the events page
+  // section split so a future-dated event with no status still
+  // shows up as 'Rejalashtirilgan' (planned) instead of 'Bo'lib
+  // o'tdi' (past).
+  function eventStatus(e) {
+    if (e.status === 'upcoming' || e.status === 'past') return e.status;
+    var t = e.date ? new Date(e.date).getTime() : NaN;
+    if (!isNaN(t) && t >= new Date().setHours(0, 0, 0, 0)) return 'upcoming';
+    return 'past';
+  }
+
   function eventCardHTML(e) {
     var url = 'event-detail?id=' + encodeURIComponent(e.id);
-    var cat = e.status || 'past';
+    var cat = eventStatus(e);
     var label = cat === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
     var archiveBadge = (e.is_archive === '1' || e.is_archive === 1)
       ? '<span class="gov-news-archive-badge">Arxiv</span>' : '';
@@ -291,21 +303,8 @@
 
   function renderEventsPage(items, container) {
     if (!items.length) { container.innerHTML = '<p>Tadbirlar topilmadi.</p>'; return; }
-    // Upstream may set status='upcoming'/'past' explicitly, or omit
-    // it entirely. The previous filter (status==='upcoming' /
-    // status==='past') silently dropped events with any other
-    // status value (e.g. 'active', undefined, or a stray casing
-    // mismatch from the PHP API). Fall back to comparing the date
-    // against today so missing/unexpected statuses still render.
-    var todayMs = new Date().setHours(0, 0, 0, 0);
-    function isUpcoming(e) {
-      if (e.status === 'upcoming') return true;
-      if (e.status === 'past') return false;
-      var t = e.date ? new Date(e.date).getTime() : NaN;
-      return !isNaN(t) && t >= todayMs;
-    }
-    var upcoming = items.filter(isUpcoming);
-    var past     = items.filter(function (e) { return !isUpcoming(e); });
+    var upcoming = items.filter(function (e) { return eventStatus(e) === 'upcoming'; });
+    var past     = items.filter(function (e) { return eventStatus(e) === 'past'; });
 
     function sectionHTML(arr, label) {
       if (!arr.length) return '';
