@@ -33,6 +33,13 @@
       if (!hrefSlug) hrefSlug = 'index';
       if (hrefSlug === currentSlug) {
         a.setAttribute('aria-current', 'page');
+        // If the active link sits inside a dropdown, also mark the
+        // parent .nav-item so CSS can keep the trigger visually
+        // highlighted while the user is on the subpage. Without this,
+        // navigating to /our-team gives no signal in the top nav that
+        // you're in the "Assotsiatsiya haqida" section.
+        var parentItem = a.closest('.nav-item.has-dropdown');
+        if (parentItem) parentItem.classList.add('is-section-active');
       }
     });
   } catch (e) { /* swallow */ }
