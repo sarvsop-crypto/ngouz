@@ -5,7 +5,7 @@
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://unpkg.com; img-src 'self' data: blob: https:; connect-src 'self' https://ngo-api-proxy.sarvsop.workers.dev https://api.ngo.uz https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://yandex.uz; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://api.ngo.uz https://ngo-api-proxy.sarvsop.workers.dev; object-src 'none'; upgrade-insecure-requests; report-uri https://ngo-api-proxy.sarvsop.workers.dev/v1/errlog; report-to ngo-csp
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://unpkg.com; img-src 'self' data: blob: https:; connect-src 'self' https://ngo-api-proxy.sarvsop.workers.dev https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://yandex.uz; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://ngo-api-proxy.sarvsop.workers.dev; object-src 'none'; upgrade-insecure-requests; report-uri https://ngo-api-proxy.sarvsop.workers.dev/v1/errlog; report-to ngo-csp
   Reporting-Endpoints: ngo-csp="https://ngo-api-proxy.sarvsop.workers.dev/v1/errlog"
 
 /css/*
