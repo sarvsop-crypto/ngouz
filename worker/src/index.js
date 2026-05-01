@@ -33,10 +33,12 @@ export default {
       );
     }
 
-    // /v1/errlog: lightweight client error reporting endpoint.
-    // Accepts a JSON beacon, logs via console.log (visible in
-    // `wrangler tail`), returns 204 with no body. Capped at 8 KB to
-    // protect against pathological payloads. Never forwards upstream.
+    // /v1/errlog: lightweight reporting endpoint for both client JS
+    // errors and CSP violations. Accepts JSON beacons (errlog.js),
+    // application/csp-report bodies (CSP report-uri), and
+    // application/reports+json (Reporting API). 8 KB cap, no upstream
+    // forward, 204 response. console.log emits one structured line per
+    // request for `wrangler tail`.
     if (url.pathname === '/v1/errlog' && request.method === 'POST') {
       const headers = new Headers({
         'Cache-Control': 'no-store',
@@ -52,13 +54,18 @@ export default {
             headers: { ...Object.fromEntries(headers), 'Content-Type': 'application/json' },
           });
         }
+        const ct = (request.headers.get('Content-Type') || '').toLowerCase();
         let payload = null;
         try { payload = JSON.parse(raw); } catch { payload = { raw }; }
+        let kind = 'errlog';
+        if (ct.includes('csp-report')) kind = 'csp-report';
+        else if (ct.includes('reports+json')) kind = 'report-api';
+        else if (payload && payload['csp-report']) kind = 'csp-report';
         const ip = request.headers.get('CF-Connecting-IP') || '';
         const country = request.headers.get('CF-IPCountry') || '';
         const ua = request.headers.get('User-Agent') || '';
         console.log(JSON.stringify({
-          kind: 'errlog',
+          kind,
           ts: new Date().toISOString(),
           origin,
           ip,
