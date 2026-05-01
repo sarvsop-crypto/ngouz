@@ -72,7 +72,11 @@
             // /admin-login would re-redirect back to itself — infinite loop.
             if (!/\/(admin-login|cabinet-login)(\.html)?$/.test(location.pathname)) {
               var next = encodeURIComponent(location.pathname + location.search);
-              location.href = (opts.loginPage || LOGIN_PAGE) + '?next=' + next;
+              // authRedirect=true only fires from requireAuth's /me check
+              // — i.e. a previously valid token just stopped working.
+              // Tag with error=session_expired so iter 152/153's login
+              // banner can explain why the user got bounced.
+              location.href = (opts.loginPage || LOGIN_PAGE) + '?error=session_expired&next=' + next;
             }
           }
         }
