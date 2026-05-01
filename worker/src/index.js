@@ -33,6 +33,45 @@ export default {
       );
     }
 
+    // /v1/errlog: lightweight client error reporting endpoint.
+    // Accepts a JSON beacon, logs via console.log (visible in
+    // `wrangler tail`), returns 204 with no body. Capped at 8 KB to
+    // protect against pathological payloads. Never forwards upstream.
+    if (url.pathname === '/v1/errlog' && request.method === 'POST') {
+      const headers = new Headers({
+        'Cache-Control': 'no-store',
+        'X-Proxied-By': 'ngo-api-proxy',
+      });
+      setCors(headers, origin);
+      appendVary(headers, 'Origin');
+      try {
+        const raw = await request.text();
+        if (raw.length > 8192) {
+          return new Response(JSON.stringify({ error: 'payload_too_large' }), {
+            status: 413,
+            headers: { ...Object.fromEntries(headers), 'Content-Type': 'application/json' },
+          });
+        }
+        let payload = null;
+        try { payload = JSON.parse(raw); } catch { payload = { raw }; }
+        const ip = request.headers.get('CF-Connecting-IP') || '';
+        const country = request.headers.get('CF-IPCountry') || '';
+        const ua = request.headers.get('User-Agent') || '';
+        console.log(JSON.stringify({
+          kind: 'errlog',
+          ts: new Date().toISOString(),
+          origin,
+          ip,
+          country,
+          ua,
+          payload,
+        }));
+      } catch (e) {
+        // Swallow — error reporting itself must not error.
+      }
+      return new Response(null, { status: 204, headers });
+    }
+
     // Only /v1/* paths are valid frontend traffic. Reject anything else
     // before forwarding so the worker isn't an open relay to upstream.
     if (!url.pathname.startsWith('/v1/') && url.pathname !== '/v1') {
