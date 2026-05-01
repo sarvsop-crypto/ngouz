@@ -173,7 +173,7 @@
         <table class="table">
           <caption class="u-visually-hidden">Hududlar bo'yicha NNT taqsimoti</caption>
           <thead>
-            <tr><th scope="col">Viloyat</th><th scope="col">Jami NNT</th><th scope="col">Faol</th><th scope="col">Yangi (2026)</th><th scope="col">Ulush</th></tr>
+            <tr><th scope="col">Viloyat</th><th scope="col">Jami NNT</th><th scope="col">Ulush</th></tr>
           </thead>
           <tbody id="dashboardRegionRows"></tbody>
         </table>
@@ -267,7 +267,7 @@
       var tbody = document.getElementById('dashboardRegionRows');
       if (!tbody) return;
       var regions = res.items || [];
-      if (!regions.length) { tbody.innerHTML = '<tr><td colspan="5" class="empty-state">Ma\'lumot yo\'q</td></tr>'; return; }
+      if (!regions.length) { tbody.innerHTML = '<tr><td colspan="3" class="empty-state">Ma\'lumot yo\'q</td></tr>'; return; }
       var promises = regions.map(function (r) {
         var orgCode = regionCodeMap[r.code] || r.code.toLowerCase();
         return fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?region=' + orgCode + '&limit=1')
@@ -282,7 +282,7 @@
           // through esc() before innerHTML — backend-controlled, but
           // a single misencoded record shouldn't break the row.
           // d.total is already a number from `d.total || 0` above.
-          return '<tr><td>' + esc(d.name) + '</td><td>' + d.total + '</td><td>' + d.total + '</td><td>—</td><td>' + pct + '%</td></tr>';
+          return '<tr><td>' + esc(d.name) + '</td><td>' + d.total + '</td><td>' + pct + '%</td></tr>';
         }).join('');
       });
     }).catch(function () {});
