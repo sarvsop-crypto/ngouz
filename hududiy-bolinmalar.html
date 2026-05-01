@@ -271,9 +271,16 @@
   }
 
   filters.forEach(function(btn) {
+    if (!btn.hasAttribute('aria-pressed')) {
+      btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
+    }
     btn.addEventListener('click', function() {
       activeFilter = btn.getAttribute('data-filter');
-      filters.forEach(function(x) { x.classList.toggle('active', x === btn); });
+      filters.forEach(function(x) {
+        var isActive = x === btn;
+        x.classList.toggle('active', isActive);
+        x.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
       render();
     });
   });
