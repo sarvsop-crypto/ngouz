@@ -187,6 +187,11 @@
         if (!items.length || !latest) {
           stepsEl.style.display = 'none';
         } else {
+          // CSS sets app-steps-box { display:none } as the default
+          // (it was hidden until JS finished loading the API). Now
+          // that we have data, force display:block so the timeline
+          // becomes visible.
+          stepsEl.style.display = 'block';
           var STEPS = [
             { key: 'submitted',          label: 'Topshirilgan' },
             { key: 'review',             label: 'Tekshirilmoqda' },
