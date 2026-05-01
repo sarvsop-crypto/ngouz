@@ -98,7 +98,7 @@
       <div class="main__header">
         <h1 class="main__title">Tahliliy ma&rsquo;lumotlar</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" data-action="export" data-export-title="Tahlil eksport"><i class="ph ph-download-simple"></i> Eksport</button>
+          <button type="button" class="btn btn--secondary" id="exportAnalyticsBtn"><i class="ph ph-download-simple"></i> Eksport</button>
         </div>
       </div>
 
@@ -205,6 +205,7 @@
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
     // Region table
+    var regionData = [];
     NgoApi.get('/public/regions').then(function (res) {
       var regions = res.items || [];
       var tbody = document.getElementById('analyticsRegionRows');
@@ -219,6 +220,7 @@
       });
 
       Promise.all(promises).then(function (data) {
+        regionData = data;
         var grandTotal = data.reduce(function (s, d) { return s + d.total; }, 0);
         // Drop fake columns Faol/Noaktiv/Yangi(2026)/Faollik (was 7
         // cols, 4 held fabricated values: total again, 0, —, 100%).
@@ -230,6 +232,28 @@
         }).join('');
       });
     }).catch(function () {});
+
+    var exportBtn = document.getElementById('exportAnalyticsBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', function () {
+        if (!regionData.length) { alert('Tahlil ma\'lumotlari hali yuklanmagan'); return; }
+        // Compute the share % the same way the table does so the CSV
+        // matches what the admin sees, not raw counts only.
+        var grandTotal = regionData.reduce(function (s, d) { return s + d.total; }, 0);
+        var rows = regionData.map(function (d) {
+          return {
+            hudud: d.name,
+            jami_nnt: d.total,
+            ulush: grandTotal ? ((d.total / grandTotal) * 100).toFixed(1) + '%' : ''
+          };
+        });
+        window.exportCsv(
+          'hududlar-tahlili-' + new Date().toISOString().slice(0, 10) + '.csv',
+          rows,
+          ['hudud', 'jami_nnt', 'ulush']
+        );
+      });
+    }
 
     // Sector table — we don't have sector data in the DB, show empty
     var sectorTbody = document.getElementById('analyticsSectorRows');
