@@ -108,7 +108,7 @@
       if (NgoApi.getToken()) {
         NgoApi.me().then(function () {
           var q = new URLSearchParams(location.search);
-          location.replace(q.get('next') || 'admin-dashboard.html');
+          location.replace(q.get('next') || 'admin-dashboard');
         }).catch(function () {
           NgoApi.clearToken();
         });
@@ -125,7 +125,7 @@
         btn.disabled = true;
         NgoApi.login(email, pass).then(function (res) {
           var q = new URLSearchParams(location.search);
-          location.replace(q.get('next') || 'admin-dashboard.html');
+          location.replace(q.get('next') || 'admin-dashboard');
         }).catch(function (err) {
           btn.disabled = false;
           var msg = 'Login failed';
