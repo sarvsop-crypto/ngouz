@@ -592,8 +592,8 @@
           '<td><span class="badge badge--' + statusBadge + '">' + statusLabel + '</span></td>' +
           '<td>' + esc((u.last_login_at || '—').slice(0, 10)) + '</td>' +
           '<td style="white-space:nowrap">' +
-            '<button class="btn--ghost-sm" title="Parolni yangilash" onclick="resetUserPw(' + u.id + ')"><i class="ph ph-lock-key"></i></button>' +
-            '<button class="btn--ghost-sm danger" title="O\'chirish" onclick="confirmDeleteUser(' + u.id + ')"><i class="ph ph-trash"></i></button>' +
+            '<button class="btn--ghost-sm" title="Parolni yangilash" aria-label="Parolni yangilash" onclick="resetUserPw(' + u.id + ')"><i class="ph ph-lock-key"></i></button>' +
+            '<button class="btn--ghost-sm danger" title="O\'chirish" aria-label="O\'chirish" onclick="confirmDeleteUser(' + u.id + ')"><i class="ph ph-trash"></i></button>' +
           '</td>' +
         '</tr>';
       }).join('');

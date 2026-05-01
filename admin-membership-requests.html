@@ -314,7 +314,7 @@
           '<td style="white-space:nowrap">' +
             (a.status === 'pending' ?
               '<button class="btn btn--sm btn--primary" onclick="approveApp(' + a.id + ',' + (a.organization_id || 'null') + ')"><i class="ph ph-check"></i> Tasdiqlash</button> ' +
-              '<button class="btn btn--sm btn--secondary" onclick="rejectApp(' + a.id + ')"><i class="ph ph-x"></i></button>'
+              '<button class="btn btn--sm btn--secondary" aria-label="Rad etish" onclick="rejectApp(' + a.id + ')"><i class="ph ph-x"></i></button>'
             : '—') +
           '</td></tr>';
       }).join('');

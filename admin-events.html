@@ -337,8 +337,8 @@
           '<td>' + statusBadge + '</td>' +
           '<td>' + (item.participants ? AdminCMS.esc(String(item.participants)) : '—') + '</td>' +
           '<td style="white-space:nowrap">' +
-            '<button class="btn--ghost-sm" title="Tahrirlash" onclick="editItem(\'' + item.id + '\')"><i class="ph ph-pencil-simple"></i></button>' +
-            '<button class="btn--ghost-sm danger" title="O\'chirish" onclick="confirmDelete(\'' + item.id + '\')"><i class="ph ph-trash"></i></button>' +
+            '<button class="btn--ghost-sm" title="Tahrirlash" aria-label="Tahrirlash" onclick="editItem(\'' + item.id + '\')"><i class="ph ph-pencil-simple"></i></button>' +
+            '<button class="btn--ghost-sm danger" title="O\'chirish" aria-label="O\'chirish" onclick="confirmDelete(\'' + item.id + '\')"><i class="ph ph-trash"></i></button>' +
           '</td>' +
         '</tr>';
       }).join('');

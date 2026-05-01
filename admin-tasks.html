@@ -266,8 +266,8 @@
         var badge = STATUS_BADGE[a.status] || 'neutral';
         var label = STATUS_LABEL[a.status] || a.status;
         var actions = a.status === 'pending'
-          ? '<button class="btn btn--sm btn--primary" onclick="approveTask(' + a.id + ')"><i class="ph ph-check"></i></button> '
-            + '<button class="btn btn--sm btn--secondary" onclick="rejectTask(' + a.id + ')"><i class="ph ph-x"></i></button>'
+          ? '<button class="btn btn--sm btn--primary" aria-label="Tasdiqlash" onclick="approveTask(' + a.id + ')"><i class="ph ph-check"></i></button> '
+            + '<button class="btn btn--sm btn--secondary" aria-label="Rad etish" onclick="rejectTask(' + a.id + ')"><i class="ph ph-x"></i></button>'
           : '—';
         return '<tr>'
           + '<td><input type="checkbox" /></td>'
