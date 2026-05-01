@@ -82,7 +82,7 @@
             '<div class="sidebar__logo u-logo-initial">A</div>' +
             '<span class="sidebar__title">A\'zo Kabinet</span>' +
           '</div>' +
-          '<button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Collapse sidebar" aria-expanded="true">&lsaquo;</button>' +
+          '<button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Yon panelni yopish" aria-expanded="true">&lsaquo;</button>' +
         '</div>' +
         '<div class="sidebar__search" id="sidebarSearchTrigger">' +
           '<span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>' +
@@ -112,7 +112,7 @@
         '</div>' +
         '<div class="notifications-panel__footer">' +
           '<button type="button" class="notifications-panel__mark-read">Barchasini o' + RSQUO + 'qildi deb belgilash</button>' +
-          '<a href="cabinet-notifications.html" class="btn btn--primary">Barcha bildirishnomalar</a>' +
+          '<a href="cabinet-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>' +
         '</div>' +
       '</div>'
     );
