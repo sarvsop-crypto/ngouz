@@ -228,6 +228,14 @@
         }
       }
     }).catch(function (err) {
+      // Token expired or revoked while the page was open — api-client
+      // already cleared the local token on 401; bounce to login with
+      // ?next= so a re-login lands the user back here.
+      if (err && err.status === 401) {
+        var _next = encodeURIComponent(location.pathname + location.search);
+        location.replace('cabinet-login?next=' + _next);
+        return;
+      }
       console.error('Applications load error:', err);
       document.getElementById('applicationsTableBody').innerHTML = '<tr><td colspan="5" class="empty-state" style="color:var(--error-500);">Xatolik: ' + esc(err.message || 'Nomalum') + '</td></tr>';
     });

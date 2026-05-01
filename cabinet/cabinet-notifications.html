@@ -194,6 +194,11 @@
       updateCounts();
       renderList('all');
     }).catch(function (err) {
+      if (err && err.status === 401) {
+        var _next = encodeURIComponent(location.pathname + location.search);
+        location.replace('cabinet-login?next=' + _next);
+        return;
+      }
       console.error('Notifications load error:', err);
       document.getElementById('notifList').innerHTML = '<div style="text-align:center;color:var(--error-500);padding:32px;">Xatolik: ' + esc(err.message || 'Nomalum') + '</div>';
     });

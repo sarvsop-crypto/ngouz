@@ -204,6 +204,11 @@
         if (bodyEl) bodyEl.textContent = rejItem.review_note ? ('Sababli: ' + rejItem.review_note) : '';
       }
     }).catch(function (err) {
+      if (err && err.status === 401) {
+        var _next = encodeURIComponent(location.pathname + location.search);
+        location.replace('cabinet-login?next=' + _next);
+        return;
+      }
       console.error('Reports load error:', err);
       var tbody = document.getElementById('reportsTableBody');
       tbody.innerHTML = '<tr><td colspan="6" class="empty-state" style="color:var(--error-500);">Xatolik: ' + esc(err.message || 'Nomalum xato') + '</td></tr>';
