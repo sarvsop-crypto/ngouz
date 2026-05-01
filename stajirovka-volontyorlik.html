@@ -247,6 +247,7 @@
 <script>
 document.getElementById('stajirovkaForm').addEventListener('submit', function(e) {
   e.preventDefault();
+  var form = e.target;
   var name     = document.getElementById('st-name').value.trim();
   var phone    = document.getElementById('st-phone').value.trim();
   var email    = document.getElementById('st-email').value.trim();
@@ -259,15 +260,50 @@ document.getElementById('stajirovkaForm').addEventListener('submit', function(e)
     alert("Iltimos, majburiy maydonlarni to'ldiring.");
     return;
   }
-  var subject = 'Ariza: ' + yunalish + ' — ' + name;
-  var body = 'Ism Familiya: ' + name
-    + '\nTelefon: ' + (phone || '—')
-    + '\nEmail: ' + (email || '—')
-    + '\nYo\'nalish: ' + yunalish
+  var btn = form.querySelector('button[type="submit"]');
+  var defaultLabel = btn ? btn.innerHTML : '';
+  if (btn) { btn.disabled = true; btn.textContent = 'Yuborilmoqda...'; }
+
+  // Was a mailto: link — required the user to have an email client
+  // configured locally and gave admins no record at all when no
+  // client was set up. Same /v1/public/contact path the other forms
+  // use; the structured body keeps all fields so admin sees full
+  // application details in admin-feedback.
+  var body = 'Yo\'nalish: ' + yunalish
     + '\nTa\'lim muassasasi: ' + muassasa
     + (message ? '\n\nMotivatsiya xati:\n' + message : '')
-    + (resume ? '\n\nResume fayl nomi: ' + resume + '\n(Iltimos, faylni qo\'shimcha sifatida biriktiring)' : '');
-  window.location.href = 'mailto:info@ngo.uz?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    + (resume ? '\n\nResume fayl nomi: ' + resume + ' (admin orqali alohida so\'raladi)' : '');
+  fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      full_name: name,
+      phone: phone,
+      email: email,
+      subject: 'Stajirovka/volontyorlik arizasi: ' + yunalish + ' — ' + name,
+      body: body
+    })
+  })
+  .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; }); })
+  .then(function (res) {
+    if (res.ok) {
+      var card = form.closest('.card') || form.parentElement;
+      card.innerHTML = '<div role="status" tabindex="-1" id="formSuccessMsg" style="text-align:center;padding:32px 0">'
+        + '<h3 style="color:#0e7490;margin-bottom:10px">Arizangiz qabul qilindi</h3>'
+        + '<p style="margin-bottom:18px">Murojaat ID: <strong>' + (res.data && res.data.id ? '#' + res.data.id : '—') + '</strong></p>'
+        + '<p>Tez orada ko\'rsatilgan telefon yoki email orqali bog\'lanamiz. Resume faylini biriktirish uchun admin alohida murojaat qiladi.</p>'
+        + '<a class="btn" href="/" style="margin-top:18px;display:inline-block">Bosh sahifaga qaytish</a>'
+        + '</div>';
+      var sm = document.getElementById('formSuccessMsg'); if (sm) sm.focus();
+    } else {
+      if (btn) { btn.disabled = false; btn.innerHTML = defaultLabel; }
+      alert((res.data && res.data.message) || 'Xatolik yuz berdi. Qaytadan urinib ko\'ring.');
+    }
+  })
+  .catch(function () {
+    if (btn) { btn.disabled = false; btn.innerHTML = defaultLabel; }
+    alert('Tarmoq xatosi. Internet aloqangizni tekshiring.');
+  });
 });
 
 // File drop zone
