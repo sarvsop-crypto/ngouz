@@ -17,31 +17,37 @@
 (function () {
   var RSQUO = '\u2019';
 
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
   var NAV_SECTIONS = [
     {
       label: 'ASOSIY',
       items: [
-        { key: 'dashboard',     href: 'cabinet-dashboard.html',     title: 'Bosh sahifa',    icon: 'ph-squares-four',   text: 'Bosh sahifa' },
-        { key: 'organization',  href: 'cabinet-organization.html',  title: 'Tashkilotim',    icon: 'ph-buildings',      text: 'Tashkilotim' },
-        { key: 'applications',  href: 'cabinet-applications.html',  title: 'Ariza holati',   icon: 'ph-clipboard-text', text: 'Ariza holati' },
-        { key: 'reports',       href: 'cabinet-reports.html',       title: 'Hisobotlar',     icon: 'ph-chart-bar',      text: 'Hisobotlar' },
-        { key: 'documents',     href: 'cabinet-documents.html',     title: 'Hujjatlar',      icon: 'ph-files',          text: 'Hujjatlar' }
+        { key: 'dashboard',     href: 'cabinet-dashboard',     title: 'Bosh sahifa',    icon: 'ph-squares-four',   text: 'Bosh sahifa' },
+        { key: 'organization',  href: 'cabinet-organization',  title: 'Tashkilotim',    icon: 'ph-buildings',      text: 'Tashkilotim' },
+        { key: 'applications',  href: 'cabinet-applications',  title: 'Ariza holati',   icon: 'ph-clipboard-text', text: 'Ariza holati' },
+        { key: 'reports',       href: 'cabinet-reports',       title: 'Hisobotlar',     icon: 'ph-chart-bar',      text: 'Hisobotlar' },
+        { key: 'documents',     href: 'cabinet-documents',     title: 'Hujjatlar',      icon: 'ph-files',          text: 'Hujjatlar' }
       ]
     },
     {
       label: 'XABARNOMA',
       items: [
-        { key: 'events',        href: 'cabinet-events.html',        title: 'Tadbirlar',      icon: 'ph-calendar-check', text: 'Tadbirlar' },
-        { key: 'news',          href: 'cabinet-news.html',          title: 'Yangiliklar',    icon: 'ph-newspaper',      text: 'Yangiliklar' },
-        { key: 'notifications', href: 'cabinet-notifications.html', title: 'Bildirishnomalar', icon: 'ph-bell',         text: 'Bildirishnomalar' }
+        { key: 'events',        href: 'cabinet-events',        title: 'Tadbirlar',      icon: 'ph-calendar-check', text: 'Tadbirlar' },
+        { key: 'news',          href: 'cabinet-news',          title: 'Yangiliklar',    icon: 'ph-newspaper',      text: 'Yangiliklar' },
+        { key: 'notifications', href: 'cabinet-notifications', title: 'Bildirishnomalar', icon: 'ph-bell',         text: 'Bildirishnomalar' }
       ]
     },
     {
       label: 'XIZMATLAR',
       items: [
-        { key: 'grants',        href: 'cabinet-grants.html',        title: 'Grantlar',       icon: 'ph-trophy',            text: 'Grantlar' },
-        { key: 'support',       href: 'cabinet-support.html',       title: 'Murojaat',       icon: 'ph-chat-circle-text',  text: 'Murojaat' },
-        { key: 'settings',      href: 'cabinet-settings.html',      title: 'Sozlamalar',     icon: 'ph-gear',              text: 'Sozlamalar' }
+        { key: 'grants',        href: 'cabinet-grants',        title: 'Grantlar',       icon: 'ph-trophy',            text: 'Grantlar' },
+        { key: 'support',       href: 'cabinet-support',       title: 'Murojaat',       icon: 'ph-chat-circle-text',  text: 'Murojaat' },
+        { key: 'settings',      href: 'cabinet-settings',      title: 'Sozlamalar',     icon: 'ph-gear',              text: 'Sozlamalar' }
       ]
     }
   ];
@@ -169,8 +175,8 @@
         return '<div class="notifications-panel__item">' +
           '<div class="notifications-panel__icon"><i class="ph ' + icon + '"></i></div>' +
           '<div class="notifications-panel__content">' +
-            '<p class="notifications-panel__item-title">' + (n.title || '') + dot + '</p>' +
-            '<p class="notifications-panel__item-body">' + (n.body || '') + '</p>' +
+            '<p class="notifications-panel__item-title">' + esc(n.title || '') + dot + '</p>' +
+            '<p class="notifications-panel__item-body">' + esc(n.body || '') + '</p>' +
             '<p class="notifications-panel__item-time">' + relTime(n.created_at) + '</p>' +
           '</div></div>';
       }).join('');
