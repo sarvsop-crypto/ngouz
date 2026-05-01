@@ -117,7 +117,10 @@ var AdminCMS = (function () {
   }
 
   function uploadFile(fileInput, cb) {
-    if (!fileInput || !fileInput.files || !fileInput.files[0]) { cb(new Error('No file selected')); return; }
+    if (!fileInput || !fileInput.files || !fileInput.files[0]) {
+      cb(new Error('Fayl tanlanmagan'));
+      return;
+    }
     var fd = new FormData();
     fd.append('file', fileInput.files[0]);
     NgoApi.post('/admin/upload', fd)
