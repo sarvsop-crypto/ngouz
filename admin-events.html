@@ -57,6 +57,7 @@
     @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 <script src="js/errlog.js" defer></script>
+<script src="js/admin-modal.js" defer></script>
 <script src="js/sw-register.js" defer></script>
 </head>
 <body>
@@ -286,16 +287,10 @@
     var searchQ      = '';
 
     function openModal(id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      el.classList.add('is-open'); el.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
+      if (window.AdminModal) window.AdminModal.open(id);
     }
     function closeModal(id) {
-      var el = document.getElementById(id);
-      if (!el) return;
-      el.classList.remove('is-open'); el.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
+      if (window.AdminModal) window.AdminModal.close(id);
     }
 
     var toastTimer;

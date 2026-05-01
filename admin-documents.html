@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="css/pacta-foundation.css">
   <link rel="stylesheet" href="css/pacta-modal.css">
 <script src="js/errlog.js" defer></script>
+<script src="js/admin-modal.js" defer></script>
 <script src="js/sw-register.js" defer></script>
 </head>
 <body>
@@ -270,8 +271,12 @@
       'nogironlar-huquqi': 'warning', 'rasmiy-hujjat': 'neutral'
     };
 
-    function openModal(id)  { var el = document.getElementById(id); if (!el) return; el.classList.add('is-open'); el.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden'; }
-    function closeModal(id) { var el = document.getElementById(id); if (!el) return; el.classList.remove('is-open'); el.setAttribute('aria-hidden','true'); document.body.style.overflow = ''; }
+    function openModal(id) {
+      if (window.AdminModal) window.AdminModal.open(id);
+    }
+    function closeModal(id) {
+      if (window.AdminModal) window.AdminModal.close(id);
+    }
 
     var toastTimer;
     function toast(msg, type) {
