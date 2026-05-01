@@ -208,73 +208,16 @@
       var d = new Date(iso);
       return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear();
     }
-    function esc(s) {
-      return String(s == null ? '' : s)
-        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-    }
-    // Filter file URLs to http(s) / relative-only so a poisoned
-    // file_url field can't smuggle a javascript: scheme into the
-    // doc-link anchor.
-    function safeUrl(u) {
-      if (!u) return '#';
-      var t = String(u).trim();
-      if (/^(https?:\/\/|\/\/|\/|files\/|\.\.?\/)/i.test(t)) return t;
-      return '#';
-    }
-
-    function fileIcon(path) {
-      if (!path) return '<i class="ph ph-file-text"></i>';
-      if (/\.pdf$/i.test(path)) return '<i class="ph ph-file-pdf"></i>';
-      if (/\.docx?$/i.test(path)) return '<i class="ph ph-file-doc"></i>';
-      return '<i class="ph ph-file-text"></i>';
-    }
-
-    function renderRow(doc) {
-      var hasFile = doc.file_path || doc.file_url;
-      var url = safeUrl(doc.file_url || doc.file_path || '#');
-      var titleCell = hasFile
-        ? '<a href="' + esc(url) + '" class="doc-link" target="_blank" rel="noopener noreferrer">' + fileIcon(doc.file_path) + ' ' + esc(doc.title || '') + '</a>'
-        : '<i class="ph ph-clock"></i> ' + esc(doc.title || '');
-
-      var category = esc(doc.category || doc.type || '\u2014');
-
-      var statusBadge = '';
-      if (doc.status === 'approved') statusBadge = '<span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span>';
-      else if (doc.status === 'pending') statusBadge = '<span class="badge badge--pending"><span class="badge__dot"></span>Kutilmoqda</span>';
-      else if (doc.status === 'urgent') statusBadge = '<span class="badge badge--warning"><span class="badge__dot"></span>Muddatli</span>';
-      else if (doc.status === 'rejected') statusBadge = '<span class="badge badge--error"><span class="badge__dot"></span>Rad etilgan</span>';
-      else statusBadge = '<span class="badge badge--pending"><span class="badge__dot"></span>' + esc(doc.status || 'Noaniq') + '</span>';
-
-      var actionBtn = hasFile
-        ? '<button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko\u2018rish</button>'
-        : '<button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-upload-simple"></i> Yuklash</button>';
-
-      var rowCls = doc.status === 'urgent' ? ' class="table-row-warning"' : '';
-
-      return '<tr' + rowCls + '>'
-        + '<td>' + titleCell + '</td>'
-        + '<td>' + category + '</td>'
-        + '<td>' + fmtDate(doc.deadline || doc.created_at) + '</td>'
-        + '<td>' + statusBadge + '</td>'
-        + '<td>' + actionBtn + '</td>'
-        + '</tr>';
-    }
 
     // Cabinet documents shows THIS user's org documents (not public docs)
     // Empty state for new users — documents appear when admin uploads or user submits
     (function () {
-      var items = [];
       var tbody = document.getElementById('documentsTableBody');
       tbody.innerHTML = '<tr><td colspan="5" class="empty-state">'
         + '<i class="ph ph-files empty-icon"></i>'
         + 'Tashkilot hujjatlari hali yuklanmagan.<br>Ustav, guvohnoma va boshqa hujjatlarni yuklash uchun "Hujjat yuklash" tugmasini bosing.'
         + '</td></tr>';
 
-      // Update summary cards
-      var approved = items.filter(function (d) { return d.status === 'approved'; }).length;
-      var urgent = items.filter(function (d) { return d.status === 'urgent'; }).length;
-      var pending = items.filter(function (d) { return d.status === 'pending' || !d.status; }).length;
       var vals = document.querySelectorAll('.cards .card__value');
       if (vals[0]) vals[0].textContent = '0';
       if (vals[1]) vals[1].textContent = '0';
