@@ -122,6 +122,13 @@
 
     var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
 
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+    function safeOrgId(s) { return String(s == null ? '' : s).replace(/[^A-Za-z0-9_-]/g, ''); }
+
     document.getElementById('togglePassword').addEventListener('click', function () {
       var inp = document.getElementById('password');
       var icon = this.querySelector('i');
@@ -185,18 +192,25 @@
             var items = res.items || [];
             if (!items.length) { results.innerHTML = '<div style="padding:12px;color:#798384;font-size:13px">Topilmadi</div>'; results.style.display = 'block'; return; }
             results.innerHTML = items.map(function (o) {
-              return '<div style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f1f3f5;font-size:14px" onmouseover="this.style.background=\'#f0fafd\'" onmouseout="this.style.background=\'\'" data-org-id="' + o.id + '" data-org-name="' + (o.name || '').replace(/"/g, '&quot;') + '">'
-                + '<strong>' + o.name + '</strong>'
-                + '<div style="font-size:12px;color:#798384">' + (o.region_code || '') + ' · ' + (o.leader_name || '') + '</div>'
+              // Three injection surfaces in this row: data-org-id and
+              // data-org-name attributes, and the visible <strong>/<div>
+              // text. Sanitize the id to ASCII-word chars (it lands in
+              // form.orgId.value later); esc the name and meta strings.
+              return '<div style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f1f3f5;font-size:14px" onmouseover="this.style.background=\'#f0fafd\'" onmouseout="this.style.background=\'\'" data-org-id="' + safeOrgId(o.id) + '" data-org-name="' + esc(o.name || '') + '">'
+                + '<strong>' + esc(o.name || '') + '</strong>'
+                + '<div style="font-size:12px;color:#798384">' + esc(o.region_code || '') + ' · ' + esc(o.leader_name || '') + '</div>'
                 + '</div>';
             }).join('');
             results.style.display = 'block';
             results.querySelectorAll('[data-org-id]').forEach(function (el) {
               el.addEventListener('click', function () {
+                // dataset values are decoded HTML entities — so a
+                // value originally with < gets stored as the literal
+                // '<' here. esc again before innerHTML interpolation.
                 document.getElementById('orgId').value = this.dataset.orgId;
                 document.getElementById('orgSearch').value = this.dataset.orgName;
                 results.style.display = 'none';
-                document.getElementById('orgWarning').innerHTML = '<p style="margin:0;font-size:13px;color:#166534"><i class="ph ph-check-circle" style="vertical-align:middle"></i> Tanlangan: <strong>' + this.dataset.orgName + '</strong></p>';
+                document.getElementById('orgWarning').innerHTML = '<p style="margin:0;font-size:13px;color:#166534"><i class="ph ph-check-circle" style="vertical-align:middle"></i> Tanlangan: <strong>' + esc(this.dataset.orgName) + '</strong></p>';
                 document.getElementById('orgWarning').style.background = '#f0fdf4';
                 document.getElementById('orgWarning').style.borderColor = '#86efac';
               });
@@ -206,11 +220,6 @@
     });
 
     // Registration submit
-    function esc(s) {
-      return String(s == null ? '' : s)
-        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-    }
     document.getElementById('registerForm').addEventListener('submit', function (e) {
       e.preventDefault();
       // Native HTML5 validation (required + type=tel/email) covers most
