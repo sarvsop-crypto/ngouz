@@ -237,45 +237,12 @@
 
   applyLang(initialLang);
 
-  // CF Pages serves clean URLs (iter 67); normalize back to .html form
-  // so the parentMap entries below still match.
-  var path = (location.pathname.split("/").pop() || "index").toLowerCase();
-  if (!path.endsWith(".html")) path += ".html";
-  var parentMap = {
-    "who-we-are.html": "about.html",
-    "mission.html": "about.html",
-    "board-of-experts.html": "about.html",
-    "leadership.html": "about.html",
-    "our-team.html": "about.html",
-    "nnt-school.html": "about.html",
-    "online-library.html": "about.html",
-    "multimedia-room.html": "about.html",
-    "official-docs.html": "contact.html",
-    "reporting-forms.html": "contact.html",
-    "faq.html": "contact.html",
-    "membership-guide.html": "contact.html",
-    "service-request.html": "contact.html",
-    "service-request-status.html": "contact.html",
-    "report-status.html": "contact.html",
-    "publications.html": "news.html",
-    "publication-detail.html": "news.html",
-    "news-detail.html": "news.html",
-    "videos.html": "events.html",
-    "video-detail.html": "events.html",
-    "event-detail.html": "events.html",
-    "membership-status.html": "membership.html",
-    "membership-certificate.html": "membership.html",
-    "research-areas.html": "contact.html",
-    "search-results.html": "news.html",
-    "projects.html": "contact.html"
-  };
-  var activePath = parentMap[path] || path;
-  var links = document.querySelectorAll(".menu a[data-page]");
-  links.forEach(function (a) {
-    if (a.getAttribute("data-page") === activePath) {
-      a.classList.add("active");
-    }
-  });
+  // (Removed: parentMap + .menu a[data-page] section-active loop.
+  // No element in any HTML has a data-page attribute, so the loop
+  // matched zero links and the parentMap was unused. dropdown.js
+  // now handles section-active highlighting via the
+  // .nav-item.is-section-active class set when a child link's
+  // slug matches the current page (iter 211).)
 
   var reg = document.getElementById("reg-ok");
   var submit = document.getElementById("submit-membership");
