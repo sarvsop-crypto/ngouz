@@ -1,5 +1,6 @@
 /**
- * dropdown.js — click-toggle for .nav-item.has-dropdown parents.
+ * dropdown.js — click-toggle for .nav-item.has-dropdown parents +
+ * aria-current marking on the active nav link.
  *
  * CSS already shows the dropdown on .nav-item:hover and .nav-item.is-open,
  * so this script just toggles is-open + aria-expanded on click. Hover
@@ -9,8 +10,28 @@
  *   flip aria-expanded, close all other open dropdowns first.
  * - Click anywhere outside any open dropdown: close it.
  * - Escape: close any open dropdown.
+ *
+ * On load, also marks any nav <a> whose href matches the current page
+ * with aria-current="page" so screen readers announce "current page"
+ * when reading the nav.
  */
 (function () {
+  // Mark current page in the nav
+  try {
+    var currentFile = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    if (currentFile.indexOf('.html') === -1) currentFile = 'index.html';
+    document.querySelectorAll('header.site-header a[href]').forEach(function (a) {
+      var href = (a.getAttribute('href') || '').toLowerCase();
+      // Skip absolute URLs, mailto, tel, hash-only, javascript:, language switchers
+      if (!href || href.charAt(0) === '#' || href.indexOf(':') !== -1) return;
+      // Compare just the filename portion
+      var hrefFile = href.split('/').pop();
+      if (hrefFile === currentFile) {
+        a.setAttribute('aria-current', 'page');
+      }
+    });
+  } catch (e) { /* swallow */ }
+
   var triggers = document.querySelectorAll('.nav-item.has-dropdown > a[aria-haspopup]');
   if (!triggers.length) return;
 
