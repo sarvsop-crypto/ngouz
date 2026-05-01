@@ -143,6 +143,11 @@
       var d = new Date(iso);
       return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear();
     }
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
 
     function fileIcon(path) {
       if (!path) return '<i class="ph ph-file-text file-icon-inline" style="color:var(--grey-400);"></i>';
@@ -157,9 +162,9 @@
         ? '<button type="button" class="btn btn--sm btn--primary" data-modal-open="uploadReportModal"><i class="ph ph-upload-simple"></i> Qayta yuklash</button>'
         : '<button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko\u2018rish</button>';
       return '<tr' + (isDanger ? ' class="table-row-danger"' : '') + '>'
-        + '<td>' + (isDanger ? '<i class="ph ph-warning file-icon-inline" style="color:var(--error-500);"></i>' : fileIcon(r.file_path)) + (r.title || '') + '</td>'
-        + '<td>' + (r.period || '') + '</td>'
-        + '<td>' + (r.period || '') + '</td>'
+        + '<td>' + (isDanger ? '<i class="ph ph-warning file-icon-inline" style="color:var(--error-500);"></i>' : fileIcon(r.file_path)) + esc(r.title || '') + '</td>'
+        + '<td>' + esc(r.period || '') + '</td>'
+        + '<td>' + esc(r.period || '') + '</td>'
         + '<td>' + fmtDate(r.created_at) + '</td>'
         + '<td><span class="badge ' + s.cls + '"><span class="badge__dot"></span>' + s.label + '</span></td>'
         + '<td>' + actionBtn + '</td>'

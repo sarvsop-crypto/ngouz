@@ -170,7 +170,8 @@
             var statusMap = { 'pending': 'warning', 'approved': 'success', 'rejected': 'error', 'active': 'success', 'completed': 'pending', 'draft': 'neutral' };
             var labelMap  = { 'pending': "Ko'rib chiqilmoqda", 'approved': 'Tasdiqlandi', 'rejected': 'Rad etildi', 'active': 'Faol', 'completed': 'Yakunlangan', 'draft': 'Qoralama' };
             var badge = statusMap[g.status] || 'neutral';
-            var label = labelMap[g.status] || g.status || '—';
+            // Fallback to g.status (raw) was XSS — esc the unmapped path.
+            var label = labelMap[g.status] || esc(g.status || '—');
             return '<tr>' +
               '<td style="font-weight:500;">' + esc(g.title || g.name || '—') + '</td>' +
               '<td>' + esc(g.donor || g.organization || '—') + '</td>' +

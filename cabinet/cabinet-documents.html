@@ -207,6 +207,20 @@
       var d = new Date(iso);
       return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear();
     }
+    function esc(s) {
+      return String(s == null ? '' : s)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+        .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+    }
+    // Filter file URLs to http(s) / relative-only so a poisoned
+    // file_url field can't smuggle a javascript: scheme into the
+    // doc-link anchor.
+    function safeUrl(u) {
+      if (!u) return '#';
+      var t = String(u).trim();
+      if (/^(https?:\/\/|\/\/|\/|files\/|\.\.?\/)/i.test(t)) return t;
+      return '#';
+    }
 
     function fileIcon(path) {
       if (!path) return '<i class="ph ph-file-text"></i>';
@@ -217,18 +231,19 @@
 
     function renderRow(doc) {
       var hasFile = doc.file_path || doc.file_url;
+      var url = safeUrl(doc.file_url || doc.file_path || '#');
       var titleCell = hasFile
-        ? '<a href="' + (doc.file_url || doc.file_path || '#') + '" class="doc-link" target="_blank">' + fileIcon(doc.file_path) + ' ' + (doc.title || '') + '</a>'
-        : '<i class="ph ph-clock"></i> ' + (doc.title || '');
+        ? '<a href="' + esc(url) + '" class="doc-link" target="_blank" rel="noopener noreferrer">' + fileIcon(doc.file_path) + ' ' + esc(doc.title || '') + '</a>'
+        : '<i class="ph ph-clock"></i> ' + esc(doc.title || '');
 
-      var category = doc.category || doc.type || '\u2014';
+      var category = esc(doc.category || doc.type || '\u2014');
 
       var statusBadge = '';
       if (doc.status === 'approved') statusBadge = '<span class="badge badge--success"><span class="badge__dot"></span>Tasdiqlangan</span>';
       else if (doc.status === 'pending') statusBadge = '<span class="badge badge--pending"><span class="badge__dot"></span>Kutilmoqda</span>';
       else if (doc.status === 'urgent') statusBadge = '<span class="badge badge--warning"><span class="badge__dot"></span>Muddatli</span>';
       else if (doc.status === 'rejected') statusBadge = '<span class="badge badge--error"><span class="badge__dot"></span>Rad etilgan</span>';
-      else statusBadge = '<span class="badge badge--pending"><span class="badge__dot"></span>' + (doc.status || 'Noaniq') + '</span>';
+      else statusBadge = '<span class="badge badge--pending"><span class="badge__dot"></span>' + esc(doc.status || 'Noaniq') + '</span>';
 
       var actionBtn = hasFile
         ? '<button type="button" class="btn btn--sm btn--secondary"><i class="ph ph-eye"></i> Ko\u2018rish</button>'

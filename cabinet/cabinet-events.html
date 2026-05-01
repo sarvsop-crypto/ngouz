@@ -127,8 +127,12 @@
         container.innerHTML = items.map(function (ev) {
           var statusLabel = ev.status === 'upcoming' ? 'KELAYOTGAN' : "BO'LIB O'TGAN";
           var statusClass = ev.status === 'upcoming' ? 'news-card__cat--event' : 'news-card__cat--news';
-          var desc = esc(ev.description || '');
-          if (desc.length > 120) desc = desc.slice(0, 120) + '...';
+          // Slice the raw description first, THEN esc — slicing the
+          // escaped string can cut a multi-char entity (&amp; → &am)
+          // and break rendering or leak partial markup.
+          var rawDesc = String(ev.description || '');
+          if (rawDesc.length > 120) rawDesc = rawDesc.slice(0, 120) + '...';
+          var desc = esc(rawDesc);
           var loc = ev.location ? '<i class="ph ph-map-pin"></i> ' + esc(ev.location) : '';
 
           return '<div class="news-card">'
@@ -139,7 +143,7 @@
             + '<p class="news-card__excerpt">' + desc + '</p>'
             + '<div class="news-card__footer">'
             + '<span class="news-card__date">' + fmtDate(ev.date) + (loc ? ' · ' + loc : '') + '</span>'
-            + '<a href="../event-detail.html?id=' + ev.id + '" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a>'
+            + '<a href="../event-detail?id=' + encodeURIComponent(ev.id) + '" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a>'
             + '</div></div></div>';
         }).join('');
       })

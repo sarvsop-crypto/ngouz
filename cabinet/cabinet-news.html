@@ -125,7 +125,10 @@
           var icon = iconMap[cat] || iconMap['default'];
           var img  = imgClass[cat] || '';
           var cc   = catClass[cat] || 'news-card__cat--news';
-          var cl   = catLabel[cat] || cat.toUpperCase();
+          // Map fallback (catLabel[cat] || cat.toUpperCase()) was XSS:
+          // a malicious category like '><script>... would land
+          // uppercased in innerHTML. esc() the fallback path.
+          var cl   = catLabel[cat] || esc(cat.toUpperCase());
           var excerpt = esc(n.excerpt || n.summary || (n.body || '').slice(0, 120));
           return '<div class="news-card">' +
             '<div class="news-card__img ' + img + '"><i class="ph ' + icon + '"></i></div>' +
