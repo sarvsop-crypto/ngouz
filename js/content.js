@@ -654,7 +654,10 @@
           if (matched.length) {
             renderNewsPage(matched, searchResultsEl);
           } else {
-            searchResultsEl.innerHTML = '<p class="search-empty">\"' + query + '\" bo\'yicha hech narsa topilmadi.</p>';
+            // query is from ?q= URL param — must be escaped before
+            // landing in innerHTML, otherwise <script>... in the
+            // URL executes on the search page.
+            searchResultsEl.innerHTML = '<p class="search-empty">"' + esc(query) + '" bo\'yicha hech narsa topilmadi.</p>';
           }
         });
       } else {
