@@ -116,6 +116,14 @@ var AdminCMS = (function () {
     URL.revokeObjectURL(url);
   }
 
+  // Generic CSV exporter delegates to the pacta-foundation helper
+  // installed on window. Kept on AdminCMS for callers that already
+  // import this module.
+  function exportCsv(filename, rows, headers) {
+    if (typeof window.exportCsv === 'function') return window.exportCsv(filename, rows, headers);
+    return false;
+  }
+
   function uploadFile(fileInput, cb) {
     if (!fileInput || !fileInput.files || !fileInput.files[0]) {
       cb(new Error('Fayl tanlanmagan'));
@@ -143,6 +151,7 @@ var AdminCMS = (function () {
     remove    : remove,
     publish   : publish,
     exportJson: exportJson,
+    exportCsv : exportCsv,
     uploadFile: uploadFile,
     fmtDate   : fmtDate,
     today     : today,

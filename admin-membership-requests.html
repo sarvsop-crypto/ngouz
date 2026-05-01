@@ -274,23 +274,11 @@
     if (exportBtn) {
       exportBtn.addEventListener('click', function () {
         if (!items.length) { alert('Eksport qilish uchun ariza yo\'q'); return; }
-        var headers = ['id', 'created_at', 'status', 'org_name', 'applicant_name', 'phone', 'email', 'organization_id', 'review_note'];
-        function csvCell(v) {
-          var s = String(v == null ? '' : v);
-          if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
-          return s;
-        }
-        var lines = [headers.join(',')];
-        items.forEach(function (it) {
-          lines.push(headers.map(function (h) { return csvCell(it[h]); }).join(','));
-        });
-        var blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
-        var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = 'azolik-arizalari-' + new Date().toISOString().slice(0, 10) + '.csv';
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        window.exportCsv(
+          'azolik-arizalari-' + new Date().toISOString().slice(0, 10) + '.csv',
+          items,
+          ['id', 'created_at', 'status', 'org_name', 'applicant_name', 'phone', 'email', 'organization_id', 'review_note']
+        );
       });
     }
   })();

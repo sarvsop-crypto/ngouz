@@ -1,6 +1,32 @@
 ﻿(function () {
   'use strict';
 
+  // CSV export helper exposed globally so admin pages can wire
+  // their Eksport (CSV) buttons without duplicating the cell-quoting
+  // and BOM-prefix logic. Used by admin-feedback / membership-
+  // requests / corruption-reports / service-requests (iter 270-272).
+  // Excel detects UTF-8 only when a BOM (﻿) leads the file.
+  window.exportCsv = function (filename, rows, headers) {
+    if (!rows || !rows.length) return false;
+    function csvCell(v) {
+      var s = String(v == null ? '' : v);
+      if (/[",\n\r]/.test(s)) return '"' + s.replace(/"/g, '""') + '"';
+      return s;
+    }
+    var lines = [headers.join(',')];
+    rows.forEach(function (it) {
+      lines.push(headers.map(function (h) { return csvCell(it[h]); }).join(','));
+    });
+    var blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    return true;
+  };
+
   function ensureSkipLink() {
     var main = document.querySelector('main');
     if (!main) return;
