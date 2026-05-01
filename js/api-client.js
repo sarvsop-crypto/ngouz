@@ -34,15 +34,22 @@
       var ct = r.headers.get('content-type') || '';
       var parse = ct.indexOf('application/json') !== -1 ? r.json() : r.text();
       return parse.then(function (data) {
-        if (r.status === 401 && opts.authRedirect) {
+        if (r.status === 401 && !opts.noAuth) {
+          // Always clear an invalid token — keeping it means every
+          // follow-up request silently 401s with no recovery path. The
+          // caller (admin-cms etc.) gets a thrown error and shows a
+          // toast, but the next page-load goes through admin-boot's
+          // requireAuth which will redirect cleanly.
           clearToken();
-          // Match both legacy /admin-login.html and clean /admin-login
-          // (CF Pages serves both since iter 67 internal-link cleanup).
-          // Without the optional \.html, a 401 fired while already on
-          // /admin-login would re-redirect back to itself — infinite loop.
-          if (!/\/(admin-login|cabinet-login)(\.html)?$/.test(location.pathname)) {
-            var next = encodeURIComponent(location.pathname + location.search);
-            location.href = (opts.loginPage || LOGIN_PAGE) + '?next=' + next;
+          if (opts.authRedirect) {
+            // Match both legacy /admin-login.html and clean /admin-login
+            // (CF Pages serves both since iter 67 internal-link cleanup).
+            // Without the optional \.html, a 401 fired while already on
+            // /admin-login would re-redirect back to itself — infinite loop.
+            if (!/\/(admin-login|cabinet-login)(\.html)?$/.test(location.pathname)) {
+              var next = encodeURIComponent(location.pathname + location.search);
+              location.href = (opts.loginPage || LOGIN_PAGE) + '?next=' + next;
+            }
           }
         }
         if (!r.ok) {
