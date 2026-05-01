@@ -429,17 +429,50 @@
       '<a href="membership" class="mobile-nav-cta">A\'zo bo\'lish</a>';
     document.body.appendChild(mobileNav);
 
+    // a11y wiring: button announces collapsed/expanded; mobileNav is a
+    // dialog so AT users get the standard "menu opened" cue.
+    hamburgerBtn.setAttribute('aria-controls', 'mobileNav');
+    hamburgerBtn.setAttribute('aria-expanded', 'false');
+    mobileNav.setAttribute('role', 'dialog');
+    mobileNav.setAttribute('aria-modal', 'true');
+    mobileNav.setAttribute('aria-label', 'Asosiy menyu');
+
     var toggleMobileNav = function (open) {
       var isOpen = typeof open === 'boolean' ? open : !mobileNav.classList.contains('is-open');
       mobileNav.classList.toggle('is-open', isOpen);
       hamburgerBtn.classList.toggle('is-open', isOpen);
+      hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
       document.body.style.overflow = isOpen ? 'hidden' : '';
+      if (isOpen) {
+        var firstLink = mobileNav.querySelector('a');
+        if (firstLink) firstLink.focus();
+      } else {
+        // Return focus to the trigger when closing so keyboard users
+        // don't get stranded at the body's tabindex root.
+        try { hamburgerBtn.focus(); } catch (e) {}
+      }
     };
 
     hamburgerBtn.addEventListener('click', function () { toggleMobileNav(); });
 
     mobileNav.addEventListener('click', function (e) {
       if (e.target.tagName === 'A') { toggleMobileNav(false); }
+    });
+
+    // Focus trap: when nav is open, Tab/Shift+Tab cycle within it.
+    mobileNav.addEventListener('keydown', function (e) {
+      if (e.key !== 'Tab' || !mobileNav.classList.contains('is-open')) return;
+      var focusables = Array.prototype.slice.call(
+        mobileNav.querySelectorAll('a[href],button:not([disabled])')
+      ).filter(function (el) { return el.offsetParent !== null; });
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault(); last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault(); first.focus();
+      }
     });
 
     document.addEventListener('keydown', function (e) {
