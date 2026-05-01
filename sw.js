@@ -7,11 +7,11 @@
  *
  * Versioned cache name — bump CACHE_VERSION to invalidate on rollouts.
  */
-const CACHE_VERSION = 'ngo-v1';
+const CACHE_VERSION = 'ngo-v2';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 
 const PRECACHE = [
-  '/offline.html',
+  '/offline',
   '/favicon.svg',
   '/img/logo-oznntma.png',
 ];
@@ -78,7 +78,7 @@ self.addEventListener('fetch', (event) => {
         }
         return res;
       }).catch(() =>
-        caches.match(req).then((cached) => cached || caches.match('/offline.html'))
+        caches.match(req).then((cached) => cached || caches.match('/offline'))
       )
     );
     return;
