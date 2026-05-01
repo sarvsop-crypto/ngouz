@@ -135,10 +135,6 @@
             <tr>
               <th scope="col">Hudud</th>
               <th scope="col">Jami NNT</th>
-              <th scope="col">Faol</th>
-              <th scope="col">Noaktiv</th>
-              <th scope="col">Yangi (2026)</th>
-              <th scope="col">Faollik darajasi</th>
               <th scope="col">Ulush</th>
             </tr>
           </thead>
@@ -206,12 +202,14 @@
       document.getElementById('kpiTotalNnt').textContent = res.total || 0;
     }).catch(function () {});
 
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
     // Region table
     NgoApi.get('/public/regions').then(function (res) {
       var regions = res.items || [];
       var tbody = document.getElementById('analyticsRegionRows');
       if (!tbody || !regions.length) return;
-      tbody.innerHTML = '<tr><td colspan="7" class="empty-state">Yuklanmoqda...</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="3" class="empty-state">Yuklanmoqda...</td></tr>';
 
       var promises = regions.map(function (r) {
         var orgCode = regionCodeMap[r.code] || r.code.toLowerCase();
@@ -222,9 +220,13 @@
 
       Promise.all(promises).then(function (data) {
         var grandTotal = data.reduce(function (s, d) { return s + d.total; }, 0);
+        // Drop fake columns Faol/Noaktiv/Yangi(2026)/Faollik (was 7
+        // cols, 4 held fabricated values: total again, 0, —, 100%).
+        // Keep Hudud / Jami NNT / Ulush. esc() the region name for
+        // defense-in-depth.
         tbody.innerHTML = data.map(function (d) {
           var pct = grandTotal ? ((d.total / grandTotal) * 100).toFixed(1) + '%' : '—';
-          return '<tr><td>' + d.name + '</td><td>' + d.total + '</td><td>' + d.total + '</td><td>0</td><td>—</td><td>100%</td><td>' + pct + '</td></tr>';
+          return '<tr><td>' + esc(d.name) + '</td><td>' + d.total + '</td><td>' + pct + '</td></tr>';
         }).join('');
       });
     }).catch(function () {});
