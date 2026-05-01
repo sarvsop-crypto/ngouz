@@ -42,6 +42,8 @@
           <p class="form-header__subtitle">Admin paneliga kirish uchun ma&rsquo;lumotlaringizni kiriting.</p>
         </div>
 
+        <div id="loginNotice" role="alert" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:12px 14px;margin-bottom:16px;color:#991b1b;font-size:14px;"></div>
+
         <form class="form-fields" id="adminLoginForm">
           <div class="field">
             <label class="field__label" for="email">Email manzil <span>*</span></label>
@@ -104,6 +106,21 @@
   <script src="js/api-client.js" defer></script>
   <script>
     (function () {
+      // Surface the ?error=... query param that admin-boot/requireAuth
+      // passes when bouncing a user back here. Without this, a user
+      // bounced for forbidden / session_expired silently lands on
+      // login and never knows why.
+      var qParams = new URLSearchParams(location.search);
+      var err = qParams.get('error');
+      if (err) {
+        var notice = document.getElementById('loginNotice');
+        var msg = '';
+        if (err === 'forbidden') msg = "Sizning rolingiz bu sahifaga kirishga ruxsat bermaydi. Boshqa hisob bilan kiring yoki bosh administrator bilan bog'laning.";
+        else if (err === 'session_expired') msg = 'Sessiya muddati tugadi. Iltimos qaytadan kiring.';
+        else msg = "Kirish jarayonida xatolik yuz berdi. Qaytadan urinib ko'ring.";
+        notice.textContent = msg;
+        notice.style.display = 'block';
+      }
       if (NgoApi.getToken()) {
         NgoApi.me().then(function () {
           var q = new URLSearchParams(location.search);
