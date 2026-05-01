@@ -374,6 +374,9 @@
 
     var panel = document.createElement("div");
     panel.className = "a11y-panel";
+    panel.id = "a11yPanel";
+    panel.setAttribute("role", "dialog");
+    panel.setAttribute("aria-label", "Ko'rish imkoniyati");
     panel.innerHTML =
       "<h4>Ko'rish rejimi</h4>" +
       "<div class=\"a11y-row\"><label>Matn o'lchami</label><div><button type=\"button\" class=\"btn-mini\" data-a11y=\"dec\">A-</button> <button type=\"button\" class=\"btn-mini\" data-a11y=\"inc\">A+</button></div></div>" +
@@ -381,6 +384,9 @@
       "<div class=\"a11y-row\"><label>Qora-oq rejim</label><button type=\"button\" class=\"btn-mini\" data-a11y=\"gray\">Yoqish</button></div>" +
       "<div class=\"a11y-row\"><button type=\"button\" class=\"btn-mini\" data-a11y=\"reset\">Standart holat</button></div>";
     body.appendChild(panel);
+    a11yBtn.setAttribute("aria-haspopup", "dialog");
+    a11yBtn.setAttribute("aria-controls", "a11yPanel");
+    a11yBtn.setAttribute("aria-expanded", "false");
 
     var contrastBtn = panel.querySelector("[data-a11y=\"contrast\"]");
     var grayBtn = panel.querySelector("[data-a11y=\"gray\"]");
@@ -423,12 +429,24 @@
     });
 
     a11yBtn.addEventListener("click", function () {
-      panel.classList.toggle("open");
+      var nowOpen = panel.classList.toggle("open");
+      a11yBtn.setAttribute("aria-expanded", nowOpen ? "true" : "false");
     });
 
     document.addEventListener("click", function (e) {
       if (!panel.contains(e.target) && e.target !== a11yBtn) {
+        if (panel.classList.contains("open")) {
+          panel.classList.remove("open");
+          a11yBtn.setAttribute("aria-expanded", "false");
+        }
+      }
+    });
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && panel.classList.contains("open")) {
         panel.classList.remove("open");
+        a11yBtn.setAttribute("aria-expanded", "false");
+        a11yBtn.focus();
       }
     });
 
