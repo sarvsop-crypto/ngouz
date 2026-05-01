@@ -644,6 +644,11 @@
       var query = new URLSearchParams(window.location.search).get('q') || '';
       var queryDisplay = document.getElementById('search-query');
       if (queryDisplay) queryDisplay.textContent = query || 'so\'rov';
+      // Two-section page (#search-static-results above us) means
+      // main.js handles static-page matches; we only own news. On the
+      // legacy single-bucket page, keep the old 'no results found'
+      // copy since main.js shares this node.
+      var hasStaticSection = !!document.getElementById('search-static-results');
       if (query) {
         fetchJSON('news', function (items) {
           var q = query.toLowerCase();
@@ -652,16 +657,34 @@
               || (n.excerpt && n.excerpt.toLowerCase().indexOf(q) !== -1);
           });
           if (matched.length) {
-            renderNewsPage(matched, searchResultsEl);
+            var heading = hasStaticSection
+              ? '<h2 class="search-section-title">Yangiliklar (' + matched.length + ')</h2>'
+              : '';
+            searchResultsEl.innerHTML = heading;
+            // renderNewsPage replaces innerHTML; render into a temp
+            // child so the heading sticks above the news grid.
+            var grid = document.createElement('div');
+            searchResultsEl.appendChild(grid);
+            renderNewsPage(matched, grid);
+          } else if (hasStaticSection) {
+            // Static section may have its own results — silently leave
+            // dynamic empty rather than printing a duplicate empty
+            // state. If static is also empty, surface a single
+            // combined message.
+            var staticBody = (document.getElementById('search-static-results') || {}).innerHTML || '';
+            if (!staticBody.trim()) {
+              searchResultsEl.innerHTML = '<p class="search-empty">"' + esc(query) + '" bo\'yicha hech narsa topilmadi.</p>';
+            } else {
+              searchResultsEl.innerHTML = '';
+            }
           } else {
-            // query is from ?q= URL param — must be escaped before
-            // landing in innerHTML, otherwise <script>... in the
-            // URL executes on the search page.
+            // Legacy single-bucket page — query is from ?q= URL param
+            // and lands in innerHTML, so esc() is mandatory.
             searchResultsEl.innerHTML = '<p class="search-empty">"' + esc(query) + '" bo\'yicha hech narsa topilmadi.</p>';
           }
         });
       } else {
-        searchResultsEl.innerHTML = '<p class="search-empty">Qidiruv so\'rovi kiritilmagan.</p>';
+        searchResultsEl.innerHTML = hasStaticSection ? '' : '<p class="search-empty">Qidiruv so\'rovi kiritilmagan.</p>';
       }
     }
 

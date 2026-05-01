@@ -3029,6 +3029,8 @@ body.a11y-grayscale { filter: grayscale(1); }
 .load-more-wrap { text-align: center; margin: 32px 0; }
 .load-more-count { font-size: 13px; color: var(--neutral-500); margin-top: 8px; }
 .search-empty { padding: 24px 0; color: #798384; }
+.search-section-title { font-size: 18px; font-weight: 600; color: #1a1a1a; margin: 24px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--neutral-200, #e5e7eb); }
+#search-static-results .search-section-title:first-child { margin-top: 0; }
 
 /* Header nav spans full viewport with truly symmetric side padding
    so logo (flush-left) and the rightmost icon (flush-right) sit at equal distance from the edges.

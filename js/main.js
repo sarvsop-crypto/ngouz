@@ -303,9 +303,13 @@
     var params = new URLSearchParams(location.search);
     var q = (params.get("q") || "").trim().toLowerCase();
     var queryNode = document.getElementById("search-query");
-    // search-results.html uses id=dynamic-search-results; older mock had
-    // search-results-list. Accept either so the page works regardless.
-    var resultsNode = document.getElementById("dynamic-search-results")
+    // Prefer #search-static-results (renders alongside the dynamic
+    // news-search results that content.js fills #dynamic-search-results
+    // with). Fall back to the legacy single-bucket id when this page
+    // hasn't been updated to the two-section markup yet.
+    var staticNode = document.getElementById("search-static-results");
+    var resultsNode = staticNode
+      || document.getElementById("dynamic-search-results")
       || document.getElementById("search-results-list");
     if (queryNode) queryNode.textContent = q ? ("\"" + params.get("q").trim() + "\"") : "so'rov kiritilmagan";
     if (resultsNode) {
@@ -317,9 +321,18 @@
           return haystack.indexOf(q) !== -1;
         });
         if (!results.length) {
-          resultsNode.innerHTML = "<div class=\"search-item\"><h3>Natija topilmadi</h3><p>Boshqa kalit so'z bilan qayta qidirib ko'ring.</p></div>";
+          // When the dedicated static-results node exists, leave it
+          // empty rather than printing "no matches" — the dynamic
+          // results below may still surface news/event hits, and a
+          // doubled empty-state is confusing.
+          if (!staticNode) {
+            resultsNode.innerHTML = "<div class=\"search-item\"><h3>Natija topilmadi</h3><p>Boshqa kalit so'z bilan qayta qidirib ko'ring.</p></div>";
+          }
         } else {
-          resultsNode.innerHTML = results.map(function (item) {
+          var heading = staticNode
+            ? "<h2 class=\"search-section-title\">Sahifalar (" + results.length + ")</h2>"
+            : "";
+          resultsNode.innerHTML = heading + results.map(function (item) {
             // siteIndex urls were authored with .html (legacy); strip
             // the suffix so clicks hit the canonical clean URL directly
             // instead of taking a 308 round-trip.
