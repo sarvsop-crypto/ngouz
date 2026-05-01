@@ -374,10 +374,16 @@
     document.getElementById('fCoverFile').addEventListener('change', function () {
       if (!this.files[0]) return;
       var status = document.getElementById('fCoverStatus');
+      status.style.color = '';
       status.textContent = 'Yuklanmoqda...';
       AdminCMS.uploadFile(this, function (err, res) {
-        if (err) { status.textContent = 'Xatolik!'; return; }
+        if (err) {
+          status.style.color = 'var(--error-600, #dc2626)';
+          status.textContent = 'Xatolik: ' + ((err && err.message) || 'noma\'lum');
+          return;
+        }
         document.getElementById('fCoverImage').value = res.path;
+        status.style.color = '';
         status.textContent = 'Yuklandi!';
         var preview = document.getElementById('fCoverPreview');
         preview.src = res.url;
