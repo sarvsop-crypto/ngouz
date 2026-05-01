@@ -369,12 +369,20 @@ So'rovingizni yozing
     grants.forEach(function (g) {
       var card = document.createElement('div');
       card.className = 'grant-card';
+      // The AI returns g.link as a free-form string. esc() prevents
+      // attribute breakout, but a 'javascript:alert(1)' would still
+      // execute on click. Allow only http(s) and bare //-prefixed URLs.
+      var safeLink = '';
+      if (g.link) {
+        var t = String(g.link).trim();
+        if (/^(https?:\/\/|\/\/)/i.test(t)) safeLink = t;
+      }
       card.innerHTML =
         '<h4>' + esc(g.name) + '</h4>' +
         '<p class="donor">' + esc(g.donor || '') + (g.source ? ' · ' + esc(g.source) : '') + '</p>' +
         (g.deadline && g.deadline !== 'unknown' ? '<span class="deadline">' + L.deadline + esc(g.deadline) + '</span>' : '') +
         '<p class="body">' + esc(g.summary || '') + '</p>' +
-        (g.link ? '<a href="' + esc(g.link) + '" target="_blank" rel="noopener noreferrer">' + L.open + ARROW + '</a>' : '');
+        (safeLink ? '<a href="' + esc(safeLink) + '" target="_blank" rel="noopener noreferrer">' + L.open + ARROW + '</a>' : '');
       resultsEl.appendChild(card);
     });
   }

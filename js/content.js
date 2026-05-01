@@ -449,8 +449,8 @@
       html += '<div class="doc-row head"><span>Hujjat nomi</span><span>Toifa</span><span>Sana</span></div>';
       arr.forEach(function (d) {
         html += '<div class="doc-row">'
-          + '<a href="news-detail?id=' + d.id + '&type=documents" style="color:#0e7490;text-decoration:underline;font-weight:600">' + d.title + '</a>'
-          + '<span>' + label + '</span>'
+          + '<a href="news-detail?id=' + encodeURIComponent(d.id) + '&type=documents" style="color:#0e7490;text-decoration:underline;font-weight:600">' + esc(d.title) + '</a>'
+          + '<span>' + esc(label) + '</span>'
           + '<span>' + fmtDate(d.date) + '</span>'
           + '</div>';
       });
