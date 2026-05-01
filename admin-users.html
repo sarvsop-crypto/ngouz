@@ -578,7 +578,7 @@
       var nonSuper = users.filter(function (u) { return u.role !== 'super_admin'; });
       var tbody = document.getElementById('regionalAdminRows');
       if (!nonSuper.length) {
-        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6">Hududiy adminlar topilmadi</td></tr>';
+        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6">Hududiy adminlar yo\'q. Yuqoridagi <strong>“Yangi foydalanuvchi qo\'shish”</strong> tugmasi orqali admin yarating.</td></tr>';
         return;
       }
       tbody.innerHTML = nonSuper.map(function (u) {

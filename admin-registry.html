@@ -249,7 +249,14 @@
       var filtered = items;
       if (q) filtered = items.filter(function(o) { return (o.name+' '+o.leader_name+' '+o.region_code).toLowerCase().indexOf(q) !== -1; });
       var tbody = document.getElementById('registryTableBody');
-      if (!filtered.length) { tbody.innerHTML = '<tr class="u-empty-row"><td colspan="7">NNT topilmadi</td></tr>'; return; }
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="7">' +
+          (!items.length
+            ? 'Reyestrda NNT yo\'q. Yuqoridagi <strong>“NNT qo\'shish”</strong> tugmasi orqali birinchi tashkilotni qo\'shing.'
+            : 'Qidiruv bo\'yicha NNT topilmadi.') +
+          '</td></tr>';
+        return;
+      }
       tbody.innerHTML = filtered.slice(0, 100).map(function(o) {
         var badge = o.status === 'active' ? 'success' : 'warning';
         var label = o.status === 'active' ? 'Faol' : esc(o.status);
