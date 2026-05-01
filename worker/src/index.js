@@ -174,6 +174,12 @@ export default {
     setCors(responseHeaders, origin);
     responseHeaders.set('X-Proxied-By', 'ngo-api-proxy');
     appendVary(responseHeaders, 'Origin');
+    // Upstream PHP already sets nosniff, referrer-policy, x-frame; just
+    // add CORP=cross-origin so COEP-restricted client pages can still
+    // fetch responses (matches the worker-direct paths from iter 45).
+    if (!responseHeaders.has('Cross-Origin-Resource-Policy')) {
+      responseHeaders.set('Cross-Origin-Resource-Policy', 'cross-origin');
+    }
 
     return new Response(resp.body, {
       status: resp.status,
