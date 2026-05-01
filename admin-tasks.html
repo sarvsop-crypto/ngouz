@@ -98,10 +98,6 @@
 
       <div class="main__header">
         <h1 class="main__title">Topshiriqlar</h1>
-        <div class="main__btns">
-          <button type="button" class="btn btn--secondary"><i class="ph ph-download-simple"></i> Eksport</button>
-          <button type="button" class="btn btn--primary" data-modal-open="addTaskModal"><i class="ph ph-plus"></i> Topshiriq qo&rsquo;shish</button>
-        </div>
       </div>
 
       <div class="cards">
@@ -168,59 +164,6 @@
     <div class="notifications-panel__footer">
       <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
       <button type="button" class="btn btn--primary">Barcha bildirishnomalar</button>
-    </div>
-  </div>
-
-  <!-- Add Task Modal -->
-  <div class="modal-overlay" id="addTaskModal" role="dialog" aria-modal="true" aria-labelledby="addTaskTitle">
-    <div class="modal" style="max-width:540px;">
-      <div class="modal__head">
-        <h2 class="modal__title" id="addTaskTitle">Topshiriq qo&rsquo;shish</h2>
-        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
-      </div>
-      <div class="modal__body">
-        <div class="modal__field">
-          <label class="modal__label" for="task-title">Topshiriq nomi <span style="color:#dc2626">*</span></label>
-          <input type="text" id="task-title" class="modal__input" placeholder="Topshiriq nomini kiriting" />
-        </div>
-        <div class="modal__row">
-          <div class="modal__field">
-            <label class="modal__label" for="task-owner">Mas'ul shaxs <span style="color:#dc2626">*</span></label>
-            <select id="task-owner" class="modal__select">
-              <option value="">Tanlang</option>
-            </select>
-          </div>
-          <div class="modal__field">
-            <label class="modal__label" for="task-deadline">Muddat <span style="color:#dc2626">*</span></label>
-            <input type="date" id="task-deadline" class="modal__input" />
-          </div>
-        </div>
-        <div class="modal__row">
-          <div class="modal__field">
-            <label class="modal__label" for="task-priority">Ustuvorlik</label>
-            <select id="task-priority" class="modal__select">
-              <option value="high">Yuqori</option>
-              <option value="medium" selected>O'rta</option>
-              <option value="low">Past</option>
-            </select>
-          </div>
-          <div class="modal__field">
-            <label class="modal__label" for="task-status">Holat</label>
-            <select id="task-status" class="modal__select">
-              <option value="progress">Jarayonda</option>
-              <option value="done">Bajarilgan</option>
-            </select>
-          </div>
-        </div>
-        <div class="modal__field">
-          <label class="modal__label" for="task-desc">Tavsif</label>
-          <textarea id="task-desc" class="modal__textarea" placeholder="Topshiriq tavsifini kiriting..."></textarea>
-        </div>
-      </div>
-      <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
-        <button type="button" class="btn btn--primary"><i class="ph ph-plus"></i> Qo&rsquo;shish</button>
-      </div>
     </div>
   </div>
 
@@ -299,21 +242,6 @@
         });
     };
 
-    /* ── Add Task modal: save button handler ── */
-    var saveTaskBtn = document.querySelector('#addTaskModal .modal__foot .btn--primary');
-    if (saveTaskBtn) {
-      saveTaskBtn.addEventListener('click', function () {
-        var title = document.getElementById('task-title').value.trim();
-        if (!title) { alert('Topshiriq nomini kiriting.'); return; }
-        var owner = document.getElementById('task-owner').value;
-        var deadline = document.getElementById('task-deadline').value;
-        if (!deadline) { alert('Muddatni belgilang.'); return; }
-        alert('Topshiriq saqlandi: ' + title);
-        /* close modal via pacta-app closeModal convention */
-        var overlay = document.getElementById('addTaskModal');
-        if (overlay) { overlay.classList.remove('is-open'); overlay.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-      });
-    }
   })();
   </script>
 </body>
