@@ -163,7 +163,17 @@
           if (err && err.code === 'invalid_credentials') msg = "Email yoki parol noto'g'ri";
           else if (err && err.code === 'too_many_attempts') msg = "Juda ko'p noto'g'ri urinish. 15 daqiqadan so'ng qayta urining";
           else if (err && err.message) msg = "Kirish xatosi: " + err.message;
-          alert(msg);
+          // Surface in the loginNotice banner — alert() blocks the
+          // page and is a poor pattern for inline-form errors.
+          // textContent guarantees no XSS via err.message.
+          var notice = document.getElementById('loginNotice');
+          if (notice) {
+            notice.textContent = msg;
+            notice.style.display = 'block';
+            notice.scrollIntoView({ block: 'nearest' });
+          } else {
+            alert(msg);
+          }
         });
       });
     })();

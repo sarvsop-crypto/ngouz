@@ -153,8 +153,18 @@
       var email = phone + '@phone.ngo.uz';
       var pass  = document.getElementById('password').value;
       var btn   = this.querySelector('button[type="submit"]');
+      var notice = document.getElementById('loginNotice');
+      function showNotice(m) {
+        if (notice) {
+          notice.textContent = m;
+          notice.style.display = 'block';
+          notice.scrollIntoView({ block: 'nearest' });
+        } else {
+          alert(m);
+        }
+      }
       if (!phone) {
-        alert("Telefon raqamni to'g'ri kiriting (kamida 9 raqam)");
+        showNotice("Telefon raqamni to'g'ri kiriting (kamida 9 raqam)");
         return;
       }
       btn.disabled = true;
@@ -165,7 +175,7 @@
         var msg = 'Kirish xatosi';
         if (err && err.code === 'invalid_credentials') msg = "Email yoki parol noto'g'ri";
         if (err && err.code === 'too_many_attempts') msg = "Juda ko'p urinish. 15 daqiqadan so'ng qayta urining";
-        alert(msg);
+        showNotice(msg);
       });
     });
   </script>
