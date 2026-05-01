@@ -45,6 +45,10 @@
 
   function onOpen() {
     lastFocused = document.activeElement;
+    // Static markup has aria-hidden="true" — flip it so screen
+    // readers acknowledge the now-visible dialog. Without this AT
+    // saw the form fields whether the modal was open or closed.
+    modal.setAttribute('aria-hidden', 'false');
     var f = focusables();
     if (f.length) {
       // Defer to let CSS transition begin so focus ring isn't on a
@@ -54,6 +58,7 @@
   }
 
   function onClose() {
+    modal.setAttribute('aria-hidden', 'true');
     try {
       var target = (lastFocused && document.contains(lastFocused)) ? lastFocused : null;
       if (target && typeof target.focus === 'function') target.focus();
