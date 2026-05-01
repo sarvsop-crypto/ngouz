@@ -42,7 +42,7 @@
           <p class="form-header__subtitle">Admin paneliga kirish uchun ma&rsquo;lumotlaringizni kiriting.</p>
         </div>
 
-        <form class="form-fields" id="adminLoginForm" novalidate>
+        <form class="form-fields" id="adminLoginForm">
           <div class="field">
             <label class="field__label" for="email">Email manzil <span>*</span></label>
             <div class="field__input-wrap">
@@ -116,6 +116,12 @@
       var form = document.getElementById('adminLoginForm');
       form.addEventListener('submit', function (ev) {
         ev.preventDefault();
+        // Without HTML5 validation (novalidate was set previously),
+        // submitting empty credentials sent a meaningless POST that
+        // came back as 'invalid_credentials' — confusing for someone
+        // who just forgot to fill the fields. checkValidity surfaces
+        // browser tooltips on the first empty required input instead.
+        if (!form.checkValidity()) { form.reportValidity(); return; }
         var emailEl = form.querySelector('input[name="email"]');
         var passEl  = form.querySelector('input[name="password"]');
         var btn     = form.querySelector('button[type="submit"]');

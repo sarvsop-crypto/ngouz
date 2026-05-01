@@ -41,7 +41,7 @@
           <p class="form-header__subtitle">Shaxsiy kabinetga kirish uchun ma&rsquo;lumotlaringizni kiriting.</p>
         </div>
 
-        <form class="form-fields" id="loginForm" novalidate>
+        <form class="form-fields" id="loginForm">
           <div class="field">
             <label class="field__label" for="email">Telefon raqam <span>*</span></label>
             <div class="field__input-wrap">
@@ -113,12 +113,20 @@
 
     document.getElementById('loginForm').addEventListener('submit', function (e) {
       e.preventDefault();
+      // Native HTML5 validation surfaces required-field errors as
+      // browser tooltips on the first invalid field — without this
+      // (or the previous novalidate-and-silent-return) clicking Kirish
+      // on an empty form did literally nothing.
+      if (!this.checkValidity()) { this.reportValidity(); return; }
       var phone = document.getElementById('email').value.replace(/[^\d]/g, '');
       phone = phone.slice(-9);
       var email = phone + '@phone.ngo.uz';
       var pass  = document.getElementById('password').value;
       var btn   = this.querySelector('button[type="submit"]');
-      if (!phone || !pass) return;
+      if (!phone) {
+        alert("Telefon raqamni to'g'ri kiriting (kamida 9 raqam)");
+        return;
+      }
       btn.disabled = true;
       NgoApi.login(email, pass).then(function () {
         location.replace('cabinet-dashboard');
