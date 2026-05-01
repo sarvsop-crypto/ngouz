@@ -85,7 +85,7 @@
         '<nav class="sidebar__nav">' +
           sections +
           '<div class="sidebar__nav-section u-mt-auto">' +
-            '<a href="cabinet-login.html" class="sidebar__nav-link logout" title="Chiqish">' +
+            '<a href="cabinet-login" data-action="logout" class="sidebar__nav-link logout" title="Chiqish">' +
               '<span class="sidebar__nav-icon"><i class="ph ph-sign-out"></i></span>' +
               '<span class="sidebar__nav-link-text">Chiqish</span>' +
             '</a>' +
@@ -203,4 +203,23 @@
   } else {
     mount();
   }
+
+  // Logout: the sidebar link was previously a plain
+  // <a href="cabinet-login.html"> — navigation only, never cleared
+  // the token. The cabinet-login page checked for an existing token
+  // and bounced the user right back to the dashboard, so "Logout"
+  // silently never logged anyone out. Now intercepts the click,
+  // clears the token via NgoApi.logout, then navigates.
+  document.addEventListener('click', function (ev) {
+    var el = ev.target.closest && ev.target.closest('[data-action="logout"]');
+    if (!el) return;
+    ev.preventDefault();
+    var go = function () { location.replace('cabinet-login'); };
+    if (window.NgoApi && typeof NgoApi.logout === 'function') {
+      NgoApi.logout().then(go, go);
+    } else {
+      try { localStorage.removeItem('ngo_api_token'); } catch (e) { /* swallow */ }
+      go();
+    }
+  });
 })();
