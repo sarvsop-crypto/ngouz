@@ -60,24 +60,21 @@
       return parse.then(function (data) {
         if (r.status === 401 && !opts.noAuth) {
           // Always clear an invalid token — keeping it means every
-          // follow-up request silently 401s with no recovery path. The
-          // caller (admin-cms etc.) gets a thrown error and shows a
-          // toast, but the next page-load goes through admin-boot's
-          // requireAuth which will redirect cleanly.
+          // follow-up request silently 401s with no recovery path.
           clearToken();
-          if (opts.authRedirect) {
-            // Match both legacy /admin-login.html and clean /admin-login
-            // (CF Pages serves both since iter 67 internal-link cleanup).
-            // Without the optional \.html, a 401 fired while already on
-            // /admin-login would re-redirect back to itself — infinite loop.
-            if (!/\/(admin-login|cabinet-login)(\.html)?$/.test(location.pathname)) {
-              var next = encodeURIComponent(location.pathname + location.search);
-              // authRedirect=true only fires from requireAuth's /me check
-              // — i.e. a previously valid token just stopped working.
-              // Tag with error=session_expired so iter 152/153's login
-              // banner can explain why the user got bounced.
-              location.href = (opts.loginPage || LOGIN_PAGE) + '?error=session_expired&next=' + next;
-            }
+          // Auto-redirect on 401 unless caller explicitly opts out
+          // (opts.noRedirect) or we're already on a login page.
+          // Previously this required opts.authRedirect: true and most
+          // callers didn't pass it — they got 'Xatolik: HTTP 401'
+          // toast with no recovery path until the next page-load.
+          var isOnLoginPage = /\/(admin-login|cabinet-login)(\.html)?$/.test(location.pathname);
+          if (!opts.noRedirect && !isOnLoginPage) {
+            var next = encodeURIComponent(location.pathname + location.search);
+            // Auto-pick login page from URL when caller didn't say.
+            // /cabinet/* → cabinet-login, everything else → admin-login.
+            var loginPage = opts.loginPage
+              || (location.pathname.indexOf('/cabinet/') === 0 ? 'cabinet-login' : LOGIN_PAGE);
+            location.href = loginPage + '?error=session_expired&next=' + next;
           }
         }
         if (!r.ok) {
