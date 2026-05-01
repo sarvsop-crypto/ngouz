@@ -97,6 +97,8 @@
   <script src="../js/pacta-app.js"></script>
 
   <script>
+    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+
   (function () {
     if (!NgoApi.getToken()) { location.replace('cabinet-login'); return; }
 
@@ -104,7 +106,7 @@
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
     function fmtDate(d) { if (!d) return ''; var p = d.slice(0,10).split('-'); return p[2] + '.' + p[1] + '.' + p[0]; }
 
-    fetch(API + '/public/events?limit=100')
+    fetchT(API + '/public/events?limit=100')
       .then(function (r) { return r.json(); })
       .then(function (res) {
         var items = res.items || [];

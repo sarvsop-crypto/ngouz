@@ -119,6 +119,8 @@
 
   <script src="../js/api-client.js"></script>
   <script>
+    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+
     var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
 
     document.getElementById('togglePassword').addEventListener('click', function () {
@@ -144,7 +146,7 @@
         status.style.color = '#798384';
         status.style.display = 'block';
 
-        fetch(API + '/auth/verify-phone', {
+        fetchT(API + '/auth/verify-phone', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ phone: phone })
@@ -178,7 +180,7 @@
       var results = document.getElementById('orgResults');
       if (q.length < 3) { results.style.display = 'none'; return; }
       orgSearchTimer = setTimeout(function () {
-        fetch(API + '/public/organizations?q=' + encodeURIComponent(q) + '&limit=10')
+        fetchT(API + '/public/organizations?q=' + encodeURIComponent(q) + '&limit=10')
           .then(function (r) { return r.json(); })
           .then(function (res) {
             var items = res.items || [];
@@ -218,7 +220,7 @@
       var btn = this.querySelector('button[type="submit"]');
       btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
 
-      fetch(API + '/auth/register', {
+      fetchT(API + '/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: phone, full_name: name, password: pass, organization_id: orgId || null })

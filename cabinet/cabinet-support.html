@@ -177,6 +177,8 @@
   <script src="../js/pacta-app.js"></script>
   <script src="../js/api-client.js"></script>
   <script>
+    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+
   (function () {
     var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
     // Wire "Yangi murojaat" button to scroll to form
@@ -214,7 +216,7 @@
       var headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
       if (token) headers['Authorization'] = 'Bearer ' + token;
 
-      fetch(API + '/public/contact', {
+      fetchT(API + '/public/contact', {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({

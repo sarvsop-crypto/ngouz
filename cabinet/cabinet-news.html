@@ -98,6 +98,8 @@
 
   <script src="../js/api-client.js"></script>
   <script>
+    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+
   (function () {
     if (!NgoApi.getToken()) { location.replace('cabinet-login'); return; }
 
@@ -110,7 +112,7 @@
     var catClass = { 'news': 'news-card__cat--news', 'event': 'news-card__cat--event', 'grant': 'news-card__cat--grant', 'announcement': 'news-card__cat--important', 'important': 'news-card__cat--important' };
     var catLabel = { 'news': 'YANGILIK', 'event': 'TADBIR', 'grant': 'GRANT', 'announcement': 'MUHIM', 'important': 'MUHIM' };
 
-    fetch(API + '/public/news?limit=100')
+    fetchT(API + '/public/news?limit=100')
       .then(function (r) { return r.json(); })
       .then(function (res) {
         var items = res.items || res.data || [];
