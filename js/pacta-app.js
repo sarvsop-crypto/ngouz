@@ -115,7 +115,17 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     var closeBtn = e.target.closest && e.target.closest('[data-modal-close]');
     if (closeBtn) {
-      var overlay = closeBtn.closest('.modal-overlay');
+      // Two patterns supported:
+      //   <button data-modal-close>          → closest .modal-overlay
+      //   <button data-modal-close="theId">  → look up by id (used
+      //     by .modal-without-.modal-overlay markup, e.g. cabinet
+      //     uploadReportModal where the close button never had a
+      //     .modal-overlay ancestor and the original code silently
+      //     no-op'd on click).
+      var explicitId = closeBtn.getAttribute('data-modal-close');
+      var overlay = explicitId
+        ? document.getElementById(explicitId)
+        : closeBtn.closest('.modal-overlay');
       if (overlay) closeModal(overlay);
     }
   });
