@@ -7,6 +7,31 @@ const ALLOWED_ORIGINS = [
   'http://localhost:5173',
   'http://localhost:3000',
 ];
+// Pages preview URLs follow `<deployment-id>.<project>.pages.dev`.
+// Allow them so branch/PR deploys of either Pages project can use the
+// proxy without re-deploying it. Anchored to the literal suffix to
+// reject `…ngouz.pages.dev.attacker.com`.
+const ALLOWED_HOST_SUFFIXES = [
+  '.ngouz.pages.dev',
+  '.ngo-demo.pages.dev',
+];
+
+function isAllowedOrigin(origin) {
+  if (!origin) return false;
+  if (ALLOWED_ORIGINS.includes(origin)) return true;
+  let host;
+  try {
+    const u = new URL(origin);
+    if (u.protocol !== 'https:') return false;
+    host = u.host;
+  } catch {
+    return false;
+  }
+  for (const suffix of ALLOWED_HOST_SUFFIXES) {
+    if (host.endsWith(suffix) && host.length > suffix.length) return true;
+  }
+  return false;
+}
 
 export default {
   async fetch(request) {
@@ -129,7 +154,7 @@ function setCors(headers, origin) {
   // get the credentialed/* combo, which browsers reject anyway.
   if (!origin) return;
 
-  if (ALLOWED_ORIGINS.includes(origin)) {
+  if (isAllowedOrigin(origin)) {
     headers.set('Access-Control-Allow-Origin', origin);
     headers.set('Access-Control-Allow-Credentials', 'true');
     headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
