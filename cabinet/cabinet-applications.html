@@ -175,6 +175,53 @@
         var dateVal = document.querySelectorAll('.cards .card__value');
         if (dateVal[3]) dateVal[3].textContent = fmtDate(latest.created_at);
       }
+
+      // 'Ariza bosqichlari' section was permanently stuck on
+      // 'Ariza ma'lumotlari yuklanmoqda...' because nothing ever
+      // populated it. Render a simple horizontal status timeline
+      // from the latest application's status when there is one.
+      // No items → hide the section entirely (no timeline = no
+      // 'still loading' lie).
+      var stepsEl = document.getElementById('appStepsSection');
+      if (stepsEl) {
+        if (!items.length || !latest) {
+          stepsEl.style.display = 'none';
+        } else {
+          var STEPS = [
+            { key: 'submitted',          label: 'Topshirilgan' },
+            { key: 'review',             label: 'Tekshirilmoqda' },
+            { key: 'document_requested', label: 'Hujjat kutilmoqda' },
+            { key: 'signing',            label: 'Imzo kutilmoqda' },
+            { key: 'approved',           label: 'Tasdiqlangan' }
+          ];
+          var currentIdx = STEPS.findIndex(function (s) { return s.key === latest.status; });
+          if (currentIdx === -1) {
+            // pending/rejected/returned land outside the linear flow
+            // — treat 'pending' as review (1), and rejected/returned
+            // as 'rolled back to step 1 (review)' visually.
+            currentIdx = (latest.status === 'approved') ? 4 : 1;
+          }
+          var html = '<h2 class="app-steps-box__title">Ariza bosqichlari</h2>'
+            + '<ol style="display:flex;gap:8px;flex-wrap:wrap;list-style:none;padding:0;margin:12px 0 0;">';
+          STEPS.forEach(function (s, i) {
+            var done = i < currentIdx;
+            var current = i === currentIdx;
+            var bg = done ? 'var(--success-100,#dcfce7)' : current ? 'var(--primary-100,#dbeafe)' : 'var(--grey-50,#f1f3f5)';
+            var fg = done ? 'var(--success-700,#166534)' : current ? 'var(--primary-700,#1d4ed8)' : 'var(--grey-500,#6b7280)';
+            var dot = done ? 'ph-check-circle' : current ? 'ph-circle-half-tilt' : 'ph-circle';
+            html += '<li style="flex:1;min-width:140px;padding:10px 12px;border-radius:8px;background:' + bg + ';color:' + fg + ';font-size:13px;display:flex;align-items:center;gap:6px;'
+              + (current ? 'font-weight:600;' : '') + '">'
+              + '<i class="ph ' + dot + '"></i> ' + esc(s.label) + '</li>';
+          });
+          html += '</ol>';
+          if (latest.status === 'rejected' || latest.status === 'returned') {
+            html += '<p style="margin-top:10px;font-size:13px;color:var(--error-600,#dc2626);">'
+              + esc(latest.review_note || 'Ariza qaytarildi. Sababini administrator yuborgan.')
+              + '</p>';
+          }
+          stepsEl.innerHTML = html;
+        }
+      }
     }).catch(function (err) {
       console.error('Applications load error:', err);
       document.getElementById('applicationsTableBody').innerHTML = '<tr><td colspan="5" class="empty-state" style="color:var(--error-500);">Xatolik: ' + esc(err.message || 'Nomalum') + '</td></tr>';
