@@ -227,8 +227,7 @@
       </div>
       <div class="modal__foot">
         <button type="button" class="btn btn--secondary" data-modal-close>Yopish</button>
-        <button type="button" class="btn btn--secondary" data-modal-close><i class="ph ph-user-plus"></i> Tekshiruvchi tayinlash</button>
-        <button type="button" class="btn btn--primary" data-modal-close><i class="ph ph-check-circle"></i> Tekshirildi deb belgilash</button>
+        <button type="button" class="btn btn--primary"><i class="ph ph-check-circle"></i> Tekshirildi deb belgilash</button>
       </div>
     </div>
   </div>
@@ -269,6 +268,7 @@
         var label = STATUS_LABEL[item.status] || item.status;
         var name = item.full_name || '';
         var nameHtml = name ? esc(name) : '<span class="badge badge--error"><span class="badge__dot"></span>Anonim</span>';
+        var idNum = parseInt(item.id, 10) || 0;
         return '<tr data-status="' + (item.status || '') + '">' +
           '<td><input type="checkbox" aria-label="Tanlash" /></td>' +
           '<td><strong>KRP-' + esc(item.id) + '</strong></td>' +
@@ -277,9 +277,50 @@
           '<td>' + esc(item.region || '—') + '</td>' +
           '<td><span class="u-text-warning u-text-bold">—</span></td>' +
           '<td><span class="badge badge--' + badge + '"><span class="badge__dot"></span>' + label + '</span></td>' +
-          '<td><button type="button" class="btn btn--sm btn--secondary" data-modal-open="corruptionReviewModal"><i class="ph ph-eye"></i> Ko\'rish</button></td>' +
+          '<td><button type="button" class="btn btn--sm btn--secondary" onclick="openCorruptionReview(' + idNum + ')"><i class="ph ph-eye"></i> Ko\'rish</button></td>' +
         '</tr>';
       }).join('');
+    }
+
+    var reviewingId = null;
+    window.openCorruptionReview = function (id) {
+      var item = items.find(function (i) { return parseInt(i.id, 10) === id; });
+      if (!item) return;
+      reviewingId = id;
+      document.getElementById('crpReviewId').textContent      = 'KRP-' + item.id;
+      document.getElementById('crpReviewDate').textContent    = (item.created_at || '').slice(0, 16).replace('T', ' ');
+      document.getElementById('crpReviewName').textContent    = item.full_name || 'Anonim';
+      document.getElementById('crpReviewRegion').textContent  = item.region || '—';
+      document.getElementById('crpReviewStatus').textContent  = STATUS_LABEL[item.status] || item.status || '—';
+      document.getElementById('crpReviewSubject').textContent = item.subject || '—';
+      document.getElementById('crpReviewBody').textContent    = item.body || '';
+      if (window.AdminModal) window.AdminModal.open('corruptionReviewModal');
+    };
+
+    /* Wire 'Tekshirildi deb belgilash' to actually mark the item handled. */
+    var modalFootBtns = document.querySelectorAll('#corruptionReviewModal .modal__foot .btn--primary');
+    if (modalFootBtns.length) {
+      modalFootBtns[0].addEventListener('click', function (e) {
+        if (!reviewingId) return;
+        // Stop the data-modal-close from firing before the request settles
+        // — close manually after the PATCH succeeds so an error keeps the
+        // modal open and the admin can see the failure.
+        e.preventDefault();
+        e.stopPropagation();
+        var btn = e.currentTarget;
+        btn.disabled = true;
+        NgoApi.patch('/admin/contact-messages/' + reviewingId, { status: 'handled' })
+          .then(function () {
+            var idx = items.findIndex(function (i) { return parseInt(i.id, 10) === reviewingId; });
+            if (idx !== -1) items[idx].status = 'handled';
+            renderTable(); renderKpi();
+            if (window.AdminModal) window.AdminModal.close('corruptionReviewModal');
+          })
+          .catch(function (err) {
+            alert('Saqlashda xatolik: ' + ((err && err.message) || 'noma\'lum'));
+          })
+          .then(function () { btn.disabled = false; });
+      });
     }
 
     function renderKpi() {
