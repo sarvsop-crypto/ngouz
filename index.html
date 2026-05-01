@@ -186,12 +186,28 @@
 </video>
 <script>
 (function () {
+  function disableHero(reason) {
+    var v = document.getElementById('heroVideo');
+    if (!v) return;
+    v.removeAttribute('autoplay');
+    v.setAttribute('preload', 'none');
+    try { v.pause(); } catch (e) {}
+    try { v.dataset.heroDisabled = reason; } catch (e) {}
+  }
   try {
     var c = navigator.connection;
     if (c && (c.saveData || c.effectiveType === 'slow-2g' || c.effectiveType === '2g')) {
-      var v = document.getElementById('heroVideo');
-      if (v) { v.removeAttribute('autoplay'); v.setAttribute('preload', 'none'); v.pause(); }
+      disableHero('save-data');
+      return;
     }
+  } catch (e) { /* swallow */ }
+  try {
+    // WCAG 2.3.3 / prefers-reduced-motion: don't auto-loop a 24 MB
+    // drone shot for users who've opted out of motion (vestibular
+    // disorders, focus disturbance, etc). They still see the static
+    // first frame.
+    var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (rm && rm.matches) disableHero('reduced-motion');
   } catch (e) { /* swallow */ }
 })();
 </script>
