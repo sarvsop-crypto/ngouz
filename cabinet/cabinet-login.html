@@ -41,6 +41,8 @@
           <p class="form-header__subtitle">Shaxsiy kabinetga kirish uchun ma&rsquo;lumotlaringizni kiriting.</p>
         </div>
 
+        <div id="loginNotice" role="alert" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:12px 14px;margin-bottom:16px;color:#991b1b;font-size:14px;"></div>
+
         <form class="form-fields" id="loginForm">
           <div class="field">
             <label class="field__label" for="email">Telefon raqam <span>*</span></label>
@@ -90,6 +92,21 @@
 
   <script src="../js/api-client.js"></script>
   <script>
+    // Surface the ?error=... query param that requireAuth/cabinet-chrome
+    // pass when bouncing a user back here (mirror of iter 152 admin-login).
+    (function () {
+      var qParams = new URLSearchParams(location.search);
+      var err = qParams.get('error');
+      if (!err) return;
+      var notice = document.getElementById('loginNotice');
+      var msg = '';
+      if (err === 'forbidden') msg = "Ushbu sahifaga kirish uchun ruxsat yo'q. Boshqa hisob bilan kiring yoki administrator bilan bog'laning.";
+      else if (err === 'session_expired') msg = 'Sessiya muddati tugadi. Iltimos qaytadan kiring.';
+      else msg = "Kirish jarayonida xatolik yuz berdi. Qaytadan urinib ko'ring.";
+      notice.textContent = msg;
+      notice.style.display = 'block';
+    })();
+
     document.getElementById('togglePassword').addEventListener('click', function () {
       var inp = document.getElementById('password');
       var icon = this.querySelector('i');
