@@ -58,29 +58,33 @@ export default {
       );
     }
 
-    // /v1/news.rss: RSS 2.0 feed built from /v1/public/news. Fetches
-    // up to 50 latest items from upstream, wraps them in <item> tags
-    // with title/link/description/pubDate/guid. 5-minute edge cache so
-    // popular feed readers don't hammer the PHP backend.
-    if (url.pathname === '/v1/news.rss' && (request.method === 'GET' || request.method === 'HEAD')) {
-      try {
-        const upstreamRes = await fetch(ORIGIN + '/v1/public/news?limit=50', {
-          headers: { 'Host': 'api.ngo.uz' },
-        });
-        if (!upstreamRes.ok) {
-          return new Response('upstream_failed', { status: 502 });
+    // /v1/news.rss + /v1/events.rss: RSS 2.0 feeds built from upstream.
+    // 5-minute edge cache so feed readers don't hammer PHP backend.
+    {
+      const rssMatch = (
+        url.pathname === '/v1/news.rss' ? 'news' :
+        url.pathname === '/v1/events.rss' ? 'events' : null
+      );
+      if (rssMatch && (request.method === 'GET' || request.method === 'HEAD')) {
+        try {
+          const upstreamRes = await fetch(ORIGIN + '/v1/public/' + rssMatch + '?limit=50', {
+            headers: { 'Host': 'api.ngo.uz' },
+          });
+          if (!upstreamRes.ok) {
+            return new Response('upstream_failed', { status: 502 });
+          }
+          const data = await upstreamRes.json();
+          const items = (data && data.items) ? data.items : [];
+          const xml = buildRss(items, rssMatch);
+          const headers = new Headers({
+            'Content-Type': 'application/rss+xml; charset=utf-8',
+            'Cache-Control': 'public, max-age=300, s-maxage=300',
+            'X-Proxied-By': 'ngo-api-proxy',
+          });
+          return new Response(xml, { status: 200, headers });
+        } catch (e) {
+          return new Response('error', { status: 500 });
         }
-        const data = await upstreamRes.json();
-        const items = (data && data.items) ? data.items : [];
-        const xml = buildRss(items);
-        const headers = new Headers({
-          'Content-Type': 'application/rss+xml; charset=utf-8',
-          'Cache-Control': 'public, max-age=300, s-maxage=300',
-          'X-Proxied-By': 'ngo-api-proxy',
-        });
-        return new Response(xml, { status: 200, headers });
-      } catch (e) {
-        return new Response('error', { status: 500 });
       }
     }
 
@@ -226,27 +230,47 @@ function rfc822(date) {
   return d.toUTCString();
 }
 
-function buildRss(items) {
+const RSS_FEEDS = {
+  news: {
+    title: 'Yangiliklar — ngo.uz',
+    description: "O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi yangiliklari.",
+    listUrl: 'https://www.ngo.uz/news.html',
+    selfUrl: 'https://ngo-api-proxy.sarvsop.workers.dev/v1/news.rss',
+    detailPath: '/news-detail.html',
+  },
+  events: {
+    title: 'Tadbirlar — ngo.uz',
+    description: "Assotsiatsiya tadbirlari, treninglar va anjumanlar.",
+    listUrl: 'https://www.ngo.uz/events.html',
+    selfUrl: 'https://ngo-api-proxy.sarvsop.workers.dev/v1/events.rss',
+    detailPath: '/event-detail.html',
+  },
+};
+
+function buildRss(items, kind) {
+  const cfg = RSS_FEEDS[kind] || RSS_FEEDS.news;
   const lines = [];
   lines.push('<?xml version="1.0" encoding="UTF-8"?>');
   lines.push('<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">');
   lines.push('  <channel>');
-  lines.push('    <title>Yangiliklar — ngo.uz</title>');
-  lines.push('    <link>https://www.ngo.uz/news.html</link>');
-  lines.push('    <atom:link href="https://ngo-api-proxy.sarvsop.workers.dev/v1/news.rss" rel="self" type="application/rss+xml" />');
-  lines.push("    <description>O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi yangiliklari.</description>");
+  lines.push('    <title>' + xmlEscape(cfg.title) + '</title>');
+  lines.push('    <link>' + xmlEscape(cfg.listUrl) + '</link>');
+  lines.push('    <atom:link href="' + xmlEscape(cfg.selfUrl) + '" rel="self" type="application/rss+xml" />');
+  lines.push('    <description>' + xmlEscape(cfg.description) + '</description>');
   lines.push('    <language>uz-UZ</language>');
   lines.push('    <lastBuildDate>' + new Date().toUTCString() + '</lastBuildDate>');
   for (const it of items) {
     const id = it.id || '';
-    const link = 'https://www.ngo.uz/news-detail.html?id=' + encodeURIComponent(id);
+    const link = 'https://www.ngo.uz' + cfg.detailPath + '?id=' + encodeURIComponent(id);
+    const dateField = it.published_at || it.date || it.start_date || it.event_date || it.created_at;
     lines.push('    <item>');
     lines.push('      <title>' + xmlEscape(it.title || '') + '</title>');
     lines.push('      <link>' + xmlEscape(link) + '</link>');
     lines.push('      <guid isPermaLink="true">' + xmlEscape(link) + '</guid>');
-    lines.push('      <pubDate>' + rfc822(it.published_at || it.date || it.created_at) + '</pubDate>');
+    lines.push('      <pubDate>' + rfc822(dateField) + '</pubDate>');
     if (it.category) lines.push('      <category>' + xmlEscape(it.category) + '</category>');
-    lines.push('      <description>' + xmlEscape(it.excerpt || it.title || '') + '</description>');
+    const desc = it.excerpt || it.description || it.title || '';
+    lines.push('      <description>' + xmlEscape(desc) + '</description>');
     lines.push('    </item>');
   }
   lines.push('  </channel>');
