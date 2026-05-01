@@ -22,6 +22,11 @@
     var el = ev.target.closest && ev.target.closest('[data-action="logout"]');
     if (!el) return;
     ev.preventDefault();
-    NgoApi.logout().then(function () { location.replace('admin-login'); });
+    // Optimistic: clear local state + navigate immediately. /auth/logout
+    // still fires fire-and-forget so the backend session record gets
+    // revoked, but the user doesn't wait up to 15 s on a slow network.
+    try { localStorage.removeItem('ngo_api_token'); localStorage.removeItem('ngo_api_user'); } catch (e) {}
+    NgoApi.logout().catch(function () {});
+    location.replace('admin-login');
   });
 })();

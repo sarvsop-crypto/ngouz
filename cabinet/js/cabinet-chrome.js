@@ -220,12 +220,19 @@
     var el = ev.target.closest && ev.target.closest('[data-action="logout"]');
     if (!el) return;
     ev.preventDefault();
-    var go = function () { location.replace('cabinet-login'); };
+    // Optimistic logout: clear the token + navigate immediately so
+    // the user sees the login page within ~50 ms instead of waiting
+    // for the /auth/logout POST to complete (up to 15 s on a slow
+    // network). The fetch is fire-and-forget — backend cleans up its
+    // session record when it eventually receives the call. If the
+    // user was offline entirely, the navigation still happens since
+    // the token is already gone client-side.
+    try { localStorage.removeItem('ngo_api_token'); localStorage.removeItem('ngo_api_user'); } catch (e) { /* swallow */ }
     if (window.NgoApi && typeof NgoApi.logout === 'function') {
-      NgoApi.logout().then(go, go);
-    } else {
-      try { localStorage.removeItem('ngo_api_token'); } catch (e) { /* swallow */ }
-      go();
+      // logout() also clears the token internally — that's fine, it's
+      // idempotent. We don't await it.
+      NgoApi.logout().catch(function () {});
     }
+    location.replace('cabinet-login');
   });
 })();
