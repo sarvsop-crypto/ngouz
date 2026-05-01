@@ -164,7 +164,9 @@
         // Applied tab
         var tbody1 = document.getElementById('appliedGrantsBody');
         if (!applied.length) {
-          tbody1.innerHTML = '<tr><td colspan="5" class="empty-state">Grant topilmadi</td></tr>';
+          tbody1.innerHTML = '<tr><td colspan="5" class="empty-state">'
+            + 'Hali grant topshirilmagan. <a href="../grants" style="color:var(--primary-500);text-decoration:underline">Faol grantlar ro‘yxatini ko‘ring</a> yoki <a href="../grant-tanlovlari" style="color:var(--primary-500);text-decoration:underline">AI yordamida sizga mos grantni toping</a>.'
+            + '</td></tr>';
         } else {
           tbody1.innerHTML = applied.map(function (g) {
             var statusMap = { 'pending': 'warning', 'approved': 'success', 'rejected': 'error', 'active': 'success', 'completed': 'pending', 'draft': 'neutral' };
@@ -185,7 +187,7 @@
         // Won tab
         var tbody2 = document.getElementById('wonGrantsBody');
         if (!won.length) {
-          tbody2.innerHTML = '<tr><td colspan="6" class="empty-state">Erishilgan grant topilmadi</td></tr>';
+          tbody2.innerHTML = '<tr><td colspan="6" class="empty-state">Hali yutib olingan grant yo‘q. Topshirilgan arizalar tasdiqlangach bu yerda ko‘rinadi.</td></tr>';
         } else {
           tbody2.innerHTML = won.map(function (g) {
             var badge = g.status === 'completed' ? 'pending' : 'success';
