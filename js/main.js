@@ -391,42 +391,42 @@
     // Mirror desktop nav (kept as the single source of truth).
     mobileNav.innerHTML =
       '<span class="mobile-nav-label">Assotsiatsiya haqida</span>' +
-      '<a href="about.html">Assotsiatsiya haqida</a>' +
+      '<a href="about">Assotsiatsiya haqida</a>' +
       '<div class="mobile-nav-sub">' +
-        '<a href="mission.html">Maqsad va vazifalar</a>' +
-        '<a href="board-of-experts.html">Kengash a\'zolari</a>' +
-        '<a href="leadership.html">Rahbariyat</a>' +
-        '<a href="our-team.html">Bizning jamoa</a>' +
-        '<a href="hududiy-bolinmalar.html">Hududiy bo\'linmalar</a>' +
-        '<a href="structure.html">Assotsiatsiya tuzilmasi</a>' +
+        '<a href="mission">Maqsad va vazifalar</a>' +
+        '<a href="board-of-experts">Kengash a\'zolari</a>' +
+        '<a href="leadership">Rahbariyat</a>' +
+        '<a href="our-team">Bizning jamoa</a>' +
+        '<a href="hududiy-bolinmalar">Hududiy bo\'linmalar</a>' +
+        '<a href="structure">Assotsiatsiya tuzilmasi</a>' +
       '</div>' +
       '<span class="mobile-nav-label">NNTlar reyestri</span>' +
-      '<a href="nntlar.html">Assotsiatsiyaga a\'zo NNTlar</a>' +
+      '<a href="nntlar">Assotsiatsiyaga a\'zo NNTlar</a>' +
       '<div class="mobile-nav-sub">' +
-        '<a href="sustainability-index.html">NNTlar barqarorlik indeksi</a>' +
-        '<a href="sustainability-cert.html">"Barqaror NNT" sertifikatiga ega NNTlar</a>' +
+        '<a href="sustainability-index">NNTlar barqarorlik indeksi</a>' +
+        '<a href="sustainability-cert">"Barqaror NNT" sertifikatiga ega NNTlar</a>' +
       '</div>' +
-      '<a href="projects.html">Loyihalar</a>' +
+      '<a href="projects">Loyihalar</a>' +
       '<span class="mobile-nav-label">Hamkorlar</span>' +
-      '<a href="awards.html">Xorijiy hamkorlar</a>' +
+      '<a href="awards">Xorijiy hamkorlar</a>' +
       '<div class="mobile-nav-sub">' +
-        '<a href="mahalliy-hamkorlar.html">Mahalliy hamkorlar</a>' +
-        '<a href="jamoatchilik-kengashi.html">Jamoatchilik kengashi a\'zolari</a>' +
+        '<a href="mahalliy-hamkorlar">Mahalliy hamkorlar</a>' +
+        '<a href="jamoatchilik-kengashi">Jamoatchilik kengashi a\'zolari</a>' +
       '</div>' +
       '<span class="mobile-nav-label">Ochiq ma\'lumotlar</span>' +
-      '<a href="contact.html">Bog\'lanish</a>' +
+      '<a href="contact">Bog\'lanish</a>' +
       '<div class="mobile-nav-sub">' +
-        '<a href="grant-tanlovlari.html">Grant tanlovlari - AI qidiruv</a>' +
-        '<a href="official-docs.html">Normativ-huquqiy hujjatlar</a>' +
-        '<a href="multimedia-room.html">Media</a>' +
-        '<a href="events.html">Tadbirlar</a>' +
-        '<a href="reporting-forms.html">Hisobotlar</a>' +
-        '<a href="dayjestlar.html">Dayjestlar</a>' +
-        '<a href="vacancies.html">Bo\'sh ish o\'rinlari</a>' +
-        '<a href="talim-rivojlanish.html">Virtual akademiya</a>' +
-        '<a href="stajirovka-volontyorlik.html">Stajirovka va volontyorlik</a>' +
+        '<a href="grant-tanlovlari">Grant tanlovlari - AI qidiruv</a>' +
+        '<a href="official-docs">Normativ-huquqiy hujjatlar</a>' +
+        '<a href="multimedia-room">Media</a>' +
+        '<a href="events">Tadbirlar</a>' +
+        '<a href="reporting-forms">Hisobotlar</a>' +
+        '<a href="dayjestlar">Dayjestlar</a>' +
+        '<a href="vacancies">Bo\'sh ish o\'rinlari</a>' +
+        '<a href="talim-rivojlanish">Virtual akademiya</a>' +
+        '<a href="stajirovka-volontyorlik">Stajirovka va volontyorlik</a>' +
       '</div>' +
-      '<a href="membership.html" class="mobile-nav-cta">A\'zo bo\'lish</a>';
+      '<a href="membership" class="mobile-nav-cta">A\'zo bo\'lish</a>';
     document.body.appendChild(mobileNav);
 
     var toggleMobileNav = function (open) {
