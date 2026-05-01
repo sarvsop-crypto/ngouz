@@ -130,7 +130,7 @@
                   <p class="security-feature__desc">Google Authenticator yoki Authy orqali</p>
                 </div>
               </div>
-              <button type="button" class="btn btn--secondary btn--text-sm" id="enable2faBtn">Yoqish</button>
+              <button type="button" class="btn btn--secondary btn--text-sm" disabled aria-disabled="true" title="Tez orada ishga tushiriladi">Tez orada</button>
             </div>
           </div>
 
@@ -204,14 +204,6 @@
           btn.disabled = false;
         });
     });
-
-    /* ── 2FA "Yoqish" button ── */
-    var btn2fa = document.getElementById('enable2faBtn');
-    if (btn2fa) {
-      btn2fa.addEventListener('click', function () {
-        alert('Tez orada ishga tushiriladi');
-      });
-    }
 
     /* ── Populate current session card from navigator.userAgent ──
        Was hardcoded 'Windows · Chrome / Toshkent — Joriy seans'. */
