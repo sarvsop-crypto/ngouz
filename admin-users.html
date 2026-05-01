@@ -150,6 +150,7 @@
     .modal-tab-panel.is-active { display: block; }
   </style>
 <script src="js/errlog.js" defer></script>
+<script src="js/admin-modal.js" defer></script>
 <script src="js/sw-register.js" defer></script>
 </head>
 <body>
@@ -550,8 +551,12 @@
 
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-    function openModal(id)  { var el = document.getElementById(id); if (el) { el.classList.add('is-open'); el.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; } }
-    function closeModal(id) { var el = document.getElementById(id); if (el) { el.classList.remove('is-open'); el.setAttribute('aria-hidden','true'); document.body.style.overflow=''; } }
+    function openModal(id) {
+      if (window.AdminModal) window.AdminModal.open(id);
+    }
+    function closeModal(id) {
+      if (window.AdminModal) window.AdminModal.close(id);
+    }
 
     var toastEl;
     function toast(msg, type) {
