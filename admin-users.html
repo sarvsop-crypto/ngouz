@@ -585,15 +585,16 @@
         var badge = ROLE_BADGE[u.role] || 'neutral';
         var statusBadge = u.status === 'active' ? 'success' : 'error';
         var statusLabel = u.status === 'active' ? 'Faol' : 'Nofaol';
+        var idNum = parseInt(u.id, 10) || 0;
         return '<tr>' +
           '<td>' + esc(u.full_name) + '<br><span class="u-text-muted-sm">' + esc(u.email) + '</span></td>' +
           '<td>' + (u.region_code ? '<span class="region-flag">' + esc(u.region_code) + '</span>' : '—') + '</td>' +
-          '<td><span class="badge badge--' + badge + '">' + (ROLE_LABEL[u.role] || u.role) + '</span></td>' +
+          '<td><span class="badge badge--' + badge + '">' + esc(ROLE_LABEL[u.role] || u.role) + '</span></td>' +
           '<td><span class="badge badge--' + statusBadge + '">' + statusLabel + '</span></td>' +
           '<td>' + esc((u.last_login_at || '—').slice(0, 10)) + '</td>' +
           '<td style="white-space:nowrap">' +
-            '<button type="button" class="btn--ghost-sm" title="Parolni yangilash" aria-label="Parolni yangilash" onclick="resetUserPw(' + u.id + ')"><i class="ph ph-lock-key"></i></button>' +
-            '<button type="button" class="btn--ghost-sm danger" title="O\'chirish" aria-label="O\'chirish" onclick="confirmDeleteUser(' + u.id + ')"><i class="ph ph-trash"></i></button>' +
+            '<button type="button" class="btn--ghost-sm" title="Parolni yangilash" aria-label="Parolni yangilash" onclick="resetUserPw(' + idNum + ')"><i class="ph ph-lock-key"></i></button>' +
+            '<button type="button" class="btn--ghost-sm danger" title="O\'chirish" aria-label="O\'chirish" onclick="confirmDeleteUser(' + idNum + ')"><i class="ph ph-trash"></i></button>' +
           '</td>' +
         '</tr>';
       }).join('');
