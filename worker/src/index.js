@@ -42,9 +42,11 @@ export default {
       return corsResponse(origin, 204);
     }
 
-    // /healthz returns OK without touching the upstream so external
-    // monitors can check the worker without consuming PHP backend.
-    if (url.pathname === '/healthz') {
+    // /healthz (and /v1/healthz alias) return OK without touching the
+    // upstream so external monitors can check the worker without
+    // consuming the PHP backend. /v1/healthz alias added because some
+    // monitoring tools probe the versioned API path by default.
+    if (url.pathname === '/healthz' || url.pathname === '/v1/healthz') {
       const headers = new Headers({
         'Content-Type': 'application/json; charset=utf-8',
         'Cache-Control': 'no-store',
@@ -61,8 +63,8 @@ export default {
           time: new Date().toISOString(),
           // Bump on each meaningful change so external monitors can detect
           // a deploy without diffing other fields. Increments naturally
-          // line up with our iteration log; latest = iter 196.
-          version: 262,
+          // line up with our iteration log; latest = iter 394.
+          version: 394,
         }),
         { status: 200, headers },
       );
@@ -264,11 +266,25 @@ export default {
     setCors(responseHeaders, origin);
     responseHeaders.set('X-Proxied-By', 'ngo-api-proxy');
     appendVary(responseHeaders, 'Origin');
-    // Upstream PHP already sets nosniff, referrer-policy, x-frame; just
-    // add CORP=cross-origin so COEP-restricted client pages can still
-    // fetch responses (matches the worker-direct paths from iter 45).
+    // Defensively enforce the security headers we set on direct
+    // responses (iter 393) — upstream PHP usually sets these but if
+    // the backend ever drops them the worker still gives clients a
+    // safe response. Only add when missing so we don't override
+    // upstream-specific values.
     if (!responseHeaders.has('Cross-Origin-Resource-Policy')) {
       responseHeaders.set('Cross-Origin-Resource-Policy', 'cross-origin');
+    }
+    if (!responseHeaders.has('X-Content-Type-Options')) {
+      responseHeaders.set('X-Content-Type-Options', 'nosniff');
+    }
+    if (!responseHeaders.has('Referrer-Policy')) {
+      responseHeaders.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+    }
+    if (!responseHeaders.has('Strict-Transport-Security')) {
+      responseHeaders.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+    }
+    if (!responseHeaders.has('X-Frame-Options')) {
+      responseHeaders.set('X-Frame-Options', 'DENY');
     }
     // API responses are JSON for browsers; tell crawlers not to index
     // them. Without this, a stray <a> link to a public API URL
@@ -330,6 +346,14 @@ function setSecurityHeaders(headers) {
   headers.set('X-Content-Type-Options', 'nosniff');
   headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
   headers.set('Cross-Origin-Resource-Policy', 'cross-origin');
+  // HSTS binds per-origin in the browser, so the worker origin needs
+  // its own header; without it, a single MITM on a fresh visitor
+  // could downgrade to http://. 1y matches CF Pages _headers.
+  headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+  // X-Frame-Options DENY since none of the worker responses (JSON,
+  // RSS XML) need framing — defends against any clickjacking or
+  // confused-deputy patterns.
+  headers.set('X-Frame-Options', 'DENY');
 }
 
 function xmlEscape(s) {
@@ -374,6 +398,15 @@ const RSS_FEEDS = {
 
 function buildRss(items, kind) {
   const cfg = RSS_FEEDS[kind] || RSS_FEEDS.news;
+  // RSS spec convention is reverse-chronological. Backend doesn't
+  // guarantee order, so sort by the same date proxy used per-item
+  // below (published_at → date → ... → deadline) so readers display
+  // newest first regardless of source ordering.
+  const sorted = items.slice().sort((a, b) => {
+    const da = a.published_at || a.date || a.start_date || a.event_date || a.created_at || a.deadline;
+    const db = b.published_at || b.date || b.start_date || b.event_date || b.created_at || b.deadline;
+    return (new Date(db).getTime() || 0) - (new Date(da).getTime() || 0);
+  });
   const lines = [];
   lines.push('<?xml version="1.0" encoding="UTF-8"?>');
   lines.push('<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">');
@@ -384,21 +417,39 @@ function buildRss(items, kind) {
   lines.push('    <description>' + xmlEscape(cfg.description) + '</description>');
   lines.push('    <language>uz-UZ</language>');
   lines.push('    <lastBuildDate>' + new Date().toUTCString() + '</lastBuildDate>');
-  for (const it of items) {
+  for (const it of sorted) {
     const id = it.id || '';
-    // News and events have dedicated detail pages that read ?id=. Grants
-    // share /grants — there is no per-grant detail page, so feed items
-    // linked to ?id=X just landed on the bare grant list. Use #fragment
-    // anchors so the page can scroll to the matching <article id=X>.
+    // News items can be in special-section categories (nashrlar, video)
+    // that have their own detail pages — route accordingly so RSS
+    // readers don't all land on /news-detail and lose context.
+    let detailPath = cfg.detailPath;
+    if (kind === 'news') {
+      const cat = String(it.category || '').toLowerCase();
+      if (cat === 'nashrlar') detailPath = '/publication-detail';
+      else if (cat === 'video') detailPath = '/video-detail';
+    }
+    // News, publication, video, events have dedicated detail pages
+    // that read ?id=. Grants share /grants — there is no per-grant
+    // detail page, so feed items linked to ?id=X just landed on the
+    // bare grant list. Use #fragment anchors so the page can scroll
+    // to the matching <article id=X>.
     const useFragment = kind === 'grants';
-    const link = 'https://www.ngo.uz' + cfg.detailPath
+    const link = 'https://www.ngo.uz' + detailPath
       + (useFragment ? '#' : '?id=') + encodeURIComponent(id);
-    const dateField = it.published_at || it.date || it.start_date || it.event_date || it.created_at;
+    // Grants don't carry published_at/created_at, only `deadline` —
+    // without falling back to that, every grant shows the current time
+    // as pubDate, which makes RSS readers re-mark all items as 'new'
+    // on every poll. The deadline is stable and meaningful (the date
+    // by which the grant matters), so use it as the dateField proxy.
+    const dateField = it.published_at || it.date || it.start_date || it.event_date || it.created_at || it.deadline;
     lines.push('    <item>');
     lines.push('      <title>' + xmlEscape(it.title || '') + '</title>');
     lines.push('      <link>' + xmlEscape(link) + '</link>');
     lines.push('      <guid isPermaLink="true">' + xmlEscape(link) + '</guid>');
-    lines.push('      <pubDate>' + rfc822(dateField) + '</pubDate>');
+    // Only emit pubDate when we have a real date; otherwise RSS
+    // readers see "now" and treat the item as freshly published on
+    // every poll, marking every old item as new.
+    if (dateField) lines.push('      <pubDate>' + rfc822(dateField) + '</pubDate>');
     if (it.category) lines.push('      <category>' + xmlEscape(it.category) + '</category>');
     const desc = it.excerpt || it.description || it.title || '';
     lines.push('      <description>' + xmlEscape(desc) + '</description>');

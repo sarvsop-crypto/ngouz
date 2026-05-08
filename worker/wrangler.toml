@@ -1,6 +1,7 @@
 name = "ngo-api-proxy"
 main = "src/index.js"
 compatibility_date = "2026-04-30"
+workers_dev = true
 
 # Cloudflare Observability — structured logs queryable in the dashboard
 # without keeping `wrangler tail` open. Captures the iter-23 errlog beacons
