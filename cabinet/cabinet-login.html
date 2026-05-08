@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="../favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Kirish — O'zNNTMA Kabinet</title>
 <meta name="theme-color" content="#0f6a57" />
@@ -20,6 +22,8 @@
   <link rel="stylesheet" href="../css/pacta-tokens.css">
   <link rel="stylesheet" href="../css/pacta-auth.page.css">
 <script src="../js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
+<script src="../js/sw-register.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
@@ -30,11 +34,11 @@
       <h1 class="header__title">O&rsquo;zNNTMA</h1>
     </header>
 
-    <main id="main-content" class="main">      <div class="form-card">
+    <main id="main-content" tabindex="-1" class="main">      <div class="form-card">
         <div class="form-header">
           <div class="form-header__icon-wrap">
             <div class="form-header__icon-inner">
-              <i class="ph ph-lock-open" style="font-size:24px;color:var(--primary-500);"></i>
+              <i class="ph ph-lock-open" style="font-size:24px;color:var(--primary-500);" aria-hidden="true"></i>
             </div>
           </div>
           <h2 class="form-header__title">Xush kelibsiz</h2>
@@ -45,18 +49,18 @@
 
         <form class="form-fields" id="loginForm">
           <div class="field">
-            <label class="field__label" for="email">Telefon raqam <span>*</span></label>
+            <label class="field__label" for="email">Telefon raqam <span aria-hidden="true">*</span></label>
             <div class="field__input-wrap">
-              <input type="tel" id="email" class="field__input" name="email" placeholder="+998 __ ___ __ __" required autocomplete="tel" />
+              <input type="tel" id="email" class="field__input" name="email" placeholder="+998 __ ___ __ __" required autocomplete="tel" inputmode="tel" maxlength="40" />
             </div>
           </div>
 
           <div class="field">
-            <label class="field__label" for="password">Parol <span>*</span></label>
+            <label class="field__label" for="password">Parol <span aria-hidden="true">*</span></label>
             <div class="field__input-wrap">
-              <input type="password" id="password" class="field__input" name="password" placeholder="Parolingizni kiriting" required autocomplete="current-password" />
+              <input type="password" id="password" class="field__input" name="password" placeholder="Parolingizni kiriting" required autocomplete="current-password" maxlength="128" minlength="6" />
               <button type="button" class="field__toggle" id="togglePassword" aria-label="Parolni ko'rsatish">
-                <i class="ph ph-eye"></i>
+                <i class="ph ph-eye" aria-hidden="true"></i>
               </button>
             </div>
           </div>
@@ -70,7 +74,7 @@
           </div>
 
           <button type="submit" class="btn-auth">
-            <i class="ph ph-sign-in"></i> Kirish
+            <i class="ph ph-sign-in" aria-hidden="true"></i> Kirish
           </button>
         </form>
 
@@ -82,20 +86,21 @@
 
   <footer class="footer">
     <p class="footer__copyright">&copy; 2026 O&rsquo;zNNTMA. Barcha huquqlar himoyalangan.</p>
-    <nav class="footer__links">
-      <a href="mailto:info@ngo.uz" class="footer__link"><i class="ph ph-envelope"></i> info@ngo.uz</a>
-      <a href="../maxfiylik-siyosati" class="footer__link"><i class="ph ph-shield"></i> Maxfiylik</a>
-      <a href="../foydalanish-shartlari" class="footer__link"><i class="ph ph-file-text"></i> Shartlar</a>
-      <a href="cabinet-support" class="footer__link"><i class="ph ph-question"></i> Yordam</a>
+    <nav class="footer__links" aria-label="Yordam havolalari">
+      <a href="mailto:info@ngo.uz" class="footer__link"><i class="ph ph-envelope" aria-hidden="true"></i> info@ngo.uz</a>
+      <a href="../maxfiylik-siyosati" class="footer__link"><i class="ph ph-shield" aria-hidden="true"></i> Maxfiylik</a>
+      <a href="../foydalanish-shartlari" class="footer__link"><i class="ph ph-file-text" aria-hidden="true"></i> Shartlar</a>
+      <a href="cabinet-support" class="footer__link"><i class="ph ph-question" aria-hidden="true"></i> Yordam</a>
     </nav>
   </footer>
 
   <script src="../js/api-client.js"></script>
   <script>
+    var qParams = new URLSearchParams(location.search);
+
     // Surface the ?error=... query param that requireAuth/cabinet-chrome
     // pass when bouncing a user back here (mirror of iter 152 admin-login).
     (function () {
-      var qParams = new URLSearchParams(location.search);
       var err = qParams.get('error');
       if (!err) return;
       var notice = document.getElementById('loginNotice');
@@ -110,8 +115,15 @@
     document.getElementById('togglePassword').addEventListener('click', function () {
       var inp = document.getElementById('password');
       var icon = this.querySelector('i');
-      if (inp.type === 'password') { inp.type = 'text'; icon.className = 'ph ph-eye-slash'; }
-      else { inp.type = 'password'; icon.className = 'ph ph-eye'; }
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        icon.className = 'ph ph-eye-slash';
+        this.setAttribute('aria-label', 'Parolni yashirish');
+      } else {
+        inp.type = 'password';
+        icon.className = 'ph ph-eye';
+        this.setAttribute('aria-label', 'Parolni ko\'rsatish');
+      }
     });
 
     // Sanitize the ?next= param: only allow same-origin relative paths
@@ -120,8 +132,13 @@
       var n = qParams.get('next');
       if (!n) return 'cabinet-dashboard';
       try { n = decodeURIComponent(n); } catch (e) { return 'cabinet-dashboard'; }
-      // Reject schemes (http://, javascript:, data:) and protocol-relative //
-      if (/^[a-z]+:/i.test(n) || n.charAt(0) === '/' && n.charAt(1) === '/') {
+      // Reject schemes (http://, javascript:, data:), protocol-relative //,
+      // and backslash variants — legacy IE/Edge normalized `/\evil.com`
+      // to `//evil.com`, which is an open-redirect bypass that slipped
+      // past the //-only check.
+      if (/^[a-z]+:/i.test(n)
+          || (n.charAt(0) === '/' && (n.charAt(1) === '/' || n.charAt(1) === '\\'))
+          || n.charAt(0) === '\\') {
         return 'cabinet-dashboard';
       }
       return n;
@@ -148,10 +165,11 @@
       // (or the previous novalidate-and-silent-return) clicking Kirish
       // on an empty form did literally nothing.
       if (!this.checkValidity()) { this.reportValidity(); return; }
-      var phone = document.getElementById('email').value.replace(/[^\d]/g, '');
-      phone = phone.slice(-9);
+      var phoneRaw = document.getElementById('email').value.replace(/[^\d]/g, '');
+      var phone = phoneRaw.slice(-9);
       var email = phone + '@phone.ngo.uz';
       var pass  = document.getElementById('password').value;
+      var remember = !!this.querySelector('input[name="remember"]').checked;
       var btn   = this.querySelector('button[type="submit"]');
       var notice = document.getElementById('loginNotice');
       function showNotice(m) {
@@ -163,18 +181,26 @@
           alert(m);
         }
       }
-      if (!phone) {
+      if (phone.length < 9) {
         showNotice("Telefon raqamni to'g'ri kiriting (kamida 9 raqam)");
+        try { document.getElementById('email').focus(); } catch (e) {}
         return;
       }
+      var loginLabel = btn.innerHTML;
       btn.disabled = true;
-      NgoApi.login(email, pass).then(function () {
+      btn.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i> Kirilmoqda...';
+      this.setAttribute('aria-busy', 'true');
+      NgoApi.login(email, pass, { persistent: remember }).then(function () {
         location.replace(safeNext());
       }).catch(function (err) {
         btn.disabled = false;
+        btn.innerHTML = loginLabel;
+        var lf = document.getElementById('loginForm'); if (lf) lf.setAttribute('aria-busy', 'false');
         var msg = 'Kirish xatosi';
-        if (err && err.code === 'invalid_credentials') msg = "Email yoki parol noto'g'ri";
-        if (err && err.code === 'too_many_attempts') msg = "Juda ko'p urinish. 15 daqiqadan so'ng qayta urining";
+        if (err && err.code === 'invalid_credentials') msg = "Telefon raqam yoki parol noto'g'ri";
+        else if (err && err.code === 'too_many_attempts') msg = "Juda ko'p urinish. 15 daqiqadan so'ng qayta urining";
+        else if (err && err.code === 'account_disabled') msg = "Hisob faolsizlantirilgan. Administrator bilan bog'laning.";
+        else if (err && err.message) msg = "Kirish xatosi: " + err.message;
         showNotice(msg);
       });
     });
