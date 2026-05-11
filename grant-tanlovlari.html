@@ -308,7 +308,10 @@ So'rovingizni yozing
 </div>
 </section>
 <script>
-    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+    // Grants-search pipeline runs end-to-end ~15-25s (router LLM + DDG via
+    // BrightData + 8 parallel page fetches + synthesizer LLM + cache merge).
+    // 45s covers the slow tail; PHP backend caps itself at 90s anyway.
+    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 45000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
 
 (function () {
   var form = document.getElementById('grantsForm');
