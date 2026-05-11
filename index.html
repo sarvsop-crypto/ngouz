@@ -642,7 +642,11 @@ window.addEventListener('load', function(){
     'UZ-AN': 'andijon'
   };
 
-  (function initMap(){
+  // uzmap.js was made `defer` in iter 822713b, but this inline <script>
+  // can't be deferred, so it used to run before UZ_MAP_SVG was defined
+  // and silently bailed. Wait for DOMContentLoaded — defer scripts have
+  // executed by then.
+  function initMap(){
     var box = document.getElementById('mapBox');
     if (!box || typeof UZ_MAP_SVG === 'undefined') return;
     box.innerHTML = UZ_MAP_SVG;
@@ -714,7 +718,12 @@ window.addEventListener('load', function(){
         })
         .catch(function(){ /* keep hardcoded fallback on network error */ });
     })(0, []);
-  })();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMap);
+  } else {
+    initMap();
+  }
 })();
 </script>
 <script>
