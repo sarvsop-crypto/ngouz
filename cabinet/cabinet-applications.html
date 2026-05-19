@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="../favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ariza holati — A'zo Kabinet</title>
 <meta name="theme-color" content="#0f6a57" />
@@ -26,6 +28,8 @@
   <link rel="stylesheet" href="../css/pacta-modal.css">
   <link rel="stylesheet" href="../css/pacta-foundation.css">
 <script src="../js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
+<script src="../js/sw-register.js" defer></script>
 </head>
 <body data-nav-active="applications">
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
@@ -33,13 +37,13 @@
   <div class="layout">
     <div id="cabinet-sidebar-root"></div>
 
-    <main id="main-content" class="main">      <header class="topbar">
+    <main id="main-content" tabindex="-1" class="main">      <header class="topbar">
         <div class="topbar-left">
           <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="cabinet-dashboard">Bosh sahifa</a> / <span aria-current="page">Ariza holati</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -58,32 +62,32 @@
         <p class="page-header__desc">A&rsquo;zolik arizangizning joriy holati va bosqichlari.</p>
       </div>
 
-      <div class="tabs">
-        <button type="button" class="tab is-active">Faol <span class="tab__count">&mdash;</span></button>
-        <button type="button" class="tab">Tasdiqlangan <span class="tab__count">&mdash;</span></button>
-        <button type="button" class="tab">Arxiv <span class="tab__count">&mdash;</span></button>
+      <div class="tabs" id="appTabs" role="group" aria-label="Arizalar holatini filtrlash">
+        <button type="button" class="tab is-active" data-app-tab="active" aria-pressed="true" aria-controls="applicationsTableBody">Faol <span class="tab__count">&mdash;</span></button>
+        <button type="button" class="tab" data-app-tab="approved" aria-pressed="false" aria-controls="applicationsTableBody">Tasdiqlangan <span class="tab__count">&mdash;</span></button>
+        <button type="button" class="tab" data-app-tab="archive" aria-pressed="false" aria-controls="applicationsTableBody">Arxiv <span class="tab__count">&mdash;</span></button>
       </div>
 
       <div class="cards">
-        <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Joriy holat</p><p class="card__value" style="font-size:16px;color:var(--warning-700);">&mdash;</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-steps"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Bosqich</p><p class="card__value">&mdash;</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-files"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Hujjatlar</p><p class="card__value">&mdash;</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-calendar"></i></div><span class="card__info"><i class="ph ph-info"></i></span></div><div class="card__body"><div><p class="card__label">Topshirilgan</p><p class="card__value" style="font-size:16px;">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock" aria-hidden="true"></i></div><span class="card__info"><i class="ph ph-info" aria-hidden="true"></i></span></div><div class="card__body"><div><p class="card__label">Joriy holat</p><p class="card__value" id="appKpiStatus" style="font-size:16px;color:var(--warning-700);">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-steps" aria-hidden="true"></i></div><span class="card__info"><i class="ph ph-info" aria-hidden="true"></i></span></div><div class="card__body"><div><p class="card__label">Bosqich</p><p class="card__value" id="appKpiStage">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-files" aria-hidden="true"></i></div><span class="card__info"><i class="ph ph-info" aria-hidden="true"></i></span></div><div class="card__body"><div><p class="card__label">Hujjatlar</p><p class="card__value" id="appKpiDocs">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-calendar" aria-hidden="true"></i></div><span class="card__info"><i class="ph ph-info" aria-hidden="true"></i></span></div><div class="card__body"><div><p class="card__label">Topshirilgan</p><p class="card__value" id="appKpiSubmitted" style="font-size:16px;">&mdash;</p></div></div></div>
       </div>
 
       <!-- Application steps - hidden until API data is loaded -->
       <div id="appStepsSection" class="app-steps-box">
         <h2 class="app-steps-box__title">Ariza bosqichlari</h2>
-        <div class="text-dim" style="text-align:center;padding:16px 0;">Ariza ma'lumotlari yuklanmoqda...</div>
+        <div class="text-dim" role="status" style="text-align:center;padding:16px 0;">Ariza ma'lumotlari yuklanmoqda...</div>
       </div>
 
       <section class="table-section">
         <div class="table-section__head"><h2 class="table-section__title">Ariza tarixi</h2></div>
         <table class="table">
           <caption class="u-visually-hidden">A'zolik arizalari tarixi</caption>
-          <thead><tr><th>Tadbir</th><th>Tavsif</th><th>Sana</th><th>Kim tomonidan</th><th>Holat</th></tr></thead>
-          <tbody id="applicationsTableBody">
-            <tr><td colspan="5" class="empty-state">Yuklanmoqda...</td></tr>
+          <thead><tr><th scope="col">Tashkilot</th><th scope="col">Izoh</th><th scope="col">Topshirilgan</th><th scope="col">Ko&rsquo;rib chiqqan</th><th scope="col">Holat</th></tr></thead>
+          <tbody id="applicationsTableBody" aria-live="polite" aria-busy="true">
+            <tr><td colspan="5" role="status" class="empty-state">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -107,6 +111,11 @@
       approved:  { label: 'Tasdiqlangan', cls: 'badge--success' },
       pending:   { label: "Ko\u2018rib chiqilmoqda", cls: 'badge--warning' },
       rejected:  { label: 'Rad etilgan', cls: 'badge--error' },
+      // 'returned' = sent back for revision; was missing from this map
+      // so returned applications fell back to pending and displayed as
+      // "Ko'rib chiqilmoqda" \u2014 the user couldn't tell the application
+      // had actually been bounced back and needed their action.
+      returned:  { label: 'Qaytarildi', cls: 'badge--error' },
       submitted: { label: 'Yuborildi', cls: 'badge--success' },
       review:    { label: 'Tekshiruvda', cls: 'badge--warning' },
       document_requested: { label: 'Hujjat kutilmoqda', cls: 'badge--warning' },
@@ -116,6 +125,9 @@
     function fmtDate(iso) {
       if (!iso) return '\u2014';
       var d = new Date(iso);
+      // Malformed iso \u2192 NaN.NaN.NaN otherwise; show the raw string so
+      // an admin/user can still see what the backend returned.
+      if (isNaN(d.getTime())) return String(iso);
       return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear();
     }
     function esc(s) {
@@ -127,9 +139,9 @@
     function renderRow(a) {
       var s = statusMap[a.status] || statusMap.pending;
       return '<tr>'
-        + '<td class="flex-row-sm"><i class="ph ph-clipboard-text"></i> ' + esc(a.org_name || 'Ariza') + '</td>'
+        + '<td class="flex-row-sm"><i class="ph ph-clipboard-text" aria-hidden="true"></i> ' + esc(a.org_name || 'Ariza') + '</td>'
         + '<td>' + esc(a.review_note || a.status || '') + '</td>'
-        + '<td>' + fmtDate(a.created_at) + '</td>'
+        + '<td>' + (a.created_at ? '<time datetime="' + esc(String(a.created_at).slice(0,10)) + '">' + fmtDate(a.created_at) + '</time>' : '') + '</td>'
         + '<td>\u2014</td>'
         + '<td><span class="badge ' + s.cls + '"><span class="badge__dot"></span>' + s.label + '</span></td>'
         + '</tr>';
@@ -146,34 +158,100 @@
         return tb - ta;
       });
       var tbody = document.getElementById('applicationsTableBody');
+      tbody.setAttribute('aria-busy', 'false');
       if (!items.length) {
-        tbody.innerHTML = '<tr><td colspan="5" class="empty-state">'
+        tbody.innerHTML = '<tr><td colspan="5" role="status" class="empty-state">'
           + 'Hali a‘zolik arizasi topshirilmagan. <a href="../membership" style="color:var(--primary-500);text-decoration:underline">Yangi ariza yuborish</a>.'
           + '</td></tr>';
         return;
       }
-      tbody.innerHTML = items.map(renderRow).join('');
+      // Tab-filter helpers — mirror the count categorization below.
+      function bucket(i) {
+        if (i.status === 'approved') return 'approved';
+        if (i.status === 'rejected' || i.status === 'returned' || i.is_archive) return 'archive';
+        return 'active';
+      }
+      var activeTab = 'active';
+      function renderTable() {
+        var rows = items.filter(function (i) { return bucket(i) === activeTab; });
+        if (!rows.length) {
+          tbody.innerHTML = '<tr><td colspan="5" role="status" class="empty-state">Bu bo&rsquo;limda arizalar yo&rsquo;q.</td></tr>';
+        } else {
+          tbody.innerHTML = rows.map(renderRow).join('');
+        }
+      }
+      document.querySelectorAll('#appTabs .tab').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          document.querySelectorAll('#appTabs .tab').forEach(function (b) {
+            b.classList.remove('is-active');
+            b.setAttribute('aria-pressed', 'false');
+          });
+          this.classList.add('is-active');
+          this.setAttribute('aria-pressed', 'true');
+          activeTab = this.dataset.appTab;
+          renderTable();
+        });
+      });
+      renderTable();
 
       // Update summary cards
       var active = items.filter(function (i) { return i.status !== 'approved' && i.status !== 'rejected'; });
       var approved = items.filter(function (i) { return i.status === 'approved'; });
       var archived = items.filter(function (i) { return i.status === 'rejected' || i.status === 'returned' || i.is_archive; });
-      var tabs = document.querySelectorAll('.tabs .tab .tab__count');
-      if (tabs[0]) tabs[0].textContent = active.length;
-      if (tabs[1]) tabs[1].textContent = approved.length;
+      // Use data-app-tab attribute selectors so tab reordering doesn't
+      // silently mismap counts. Same pattern as iter-953/954 KPI fixes.
+      var tcActive = document.querySelector('[data-app-tab="active"] .tab__count');
+      var tcApproved = document.querySelector('[data-app-tab="approved"] .tab__count');
+      var tcArchive = document.querySelector('[data-app-tab="archive"] .tab__count');
+      if (tcActive) tcActive.textContent = active.length;
+      if (tcApproved) tcApproved.textContent = approved.length;
       // Was unset — Arxiv tab always read '—' even when there
       // were rejected or returned applications.
-      if (tabs[2]) tabs[2].textContent = archived.length;
+      if (tcArchive) tcArchive.textContent = archived.length;
 
       // Update the status card with latest application
       var latest = items[0];
       if (latest) {
         var sInfo = statusMap[latest.status] || statusMap.pending;
-        var statusVal = document.querySelector('.cards .card__value');
-        if (statusVal) statusVal.textContent = sInfo.label;
-        // Update date card
-        var dateVal = document.querySelectorAll('.cards .card__value');
-        if (dateVal[3]) dateVal[3].textContent = fmtDate(latest.created_at);
+        // ID-based lookup replaces the brittle '.cards .card__value'
+        // selector — index-based access broke silently if a future
+        // card was added/removed/reordered. Now each KPI value has a
+        // stable id that can't drift.
+        var statusEl    = document.getElementById('appKpiStatus');
+        var stageEl     = document.getElementById('appKpiStage');
+        var docsEl      = document.getElementById('appKpiDocs');
+        var submittedEl = document.getElementById('appKpiSubmitted');
+        if (statusEl) {
+          statusEl.textContent = sInfo.label;
+          // Color the status text by outcome — earlier the warning
+          // color was hardcoded in markup and stayed yellow even when
+          // the application became approved or rejected. Map the
+          // statusMap badge class to a CSS color var.
+          var statusColor = (latest.status === 'approved')
+            ? 'var(--success-600)'
+            : (latest.status === 'rejected' || latest.status === 'returned')
+            ? 'var(--error-600)'
+            : 'var(--warning-700)';
+          statusEl.style.color = statusColor;
+        }
+        // Bosqich (stage): derive a simple ordinal from status so the
+        // card is no longer permanently '—'. Mirrors the timeline below.
+        // 'returned' = bounced back from review; treat as stage 2
+        // (the review stage is where it stopped). Was missing before
+        // and fell through to stage 1 — looked indistinguishable from
+        // a fresh "submitted" application even though the user had
+        // already gotten review feedback they need to address.
+        var STAGE_NUM = { submitted: 1, pending: 1, review: 2, document_requested: 3, signing: 4, approved: 5, rejected: 5, returned: 2 };
+        var stage = STAGE_NUM[latest.status] || 1;
+        if (stageEl) stageEl.textContent = stage + ' / 5';
+        // Hujjatlar: count any document_count field the API may return,
+        // else show 0 (honest empty) instead of '—'.
+        if (docsEl) docsEl.textContent = (latest.document_count != null ? latest.document_count : 0);
+        if (submittedEl) {
+          submittedEl.innerHTML = latest.created_at
+            ? '<time datetime="' + esc(String(latest.created_at).slice(0,10)) + '">' + esc(fmtDate(latest.created_at)) + '</time>'
+            : '—';
+        }
       }
 
       // 'Ariza bosqichlari' section was permanently stuck on
@@ -200,23 +278,51 @@
             { key: 'approved',           label: 'Tasdiqlangan' }
           ];
           var currentIdx = STEPS.findIndex(function (s) { return s.key === latest.status; });
+          var halted = (latest.status === 'rejected' || latest.status === 'returned');
+          // 'approved' = whole flow complete, all steps done. The
+          // earlier code mapped approved to step 4 and treated it as
+          // 'current' (half-circle blue) — but the application IS
+          // approved, not still being approved.
+          var fullyDone = (latest.status === 'approved');
           if (currentIdx === -1) {
-            // pending/rejected/returned land outside the linear flow
-            // — treat 'pending' as review (1), and rejected/returned
-            // as 'rolled back to step 1 (review)' visually.
-            currentIdx = (latest.status === 'approved') ? 4 : 1;
+            // pending → review (1); rejected/returned → halted at
+            // step 1 (rendered red, not 'current').
+            currentIdx = fullyDone ? STEPS.length : 1;
           }
           var html = '<h2 class="app-steps-box__title">Ariza bosqichlari</h2>'
             + '<ol style="display:flex;gap:8px;flex-wrap:wrap;list-style:none;padding:0;margin:12px 0 0;">';
           STEPS.forEach(function (s, i) {
-            var done = i < currentIdx;
-            var current = i === currentIdx;
-            var bg = done ? 'var(--success-100,#dcfce7)' : current ? 'var(--primary-100,#dbeafe)' : 'var(--grey-50,#f1f3f5)';
-            var fg = done ? 'var(--success-700,#166534)' : current ? 'var(--primary-700,#1d4ed8)' : 'var(--grey-500,#6b7280)';
-            var dot = done ? 'ph-check-circle' : current ? 'ph-circle-half-tilt' : 'ph-circle';
-            html += '<li style="flex:1;min-width:140px;padding:10px 12px;border-radius:8px;background:' + bg + ';color:' + fg + ';font-size:13px;display:flex;align-items:center;gap:6px;'
-              + (current ? 'font-weight:600;' : '') + '">'
-              + '<i class="ph ' + dot + '"></i> ' + esc(s.label) + '</li>';
+            var done = i < currentIdx || fullyDone;
+            var current = i === currentIdx && !halted && !fullyDone;
+            var stopped = i === currentIdx && halted;
+            var bg = stopped ? 'var(--error-100,#fee2e2)'
+                   : done ? 'var(--success-100,#dcfce7)'
+                   : current ? 'var(--primary-100,#dbeafe)'
+                   : 'var(--grey-50,#f1f3f5)';
+            var fg = stopped ? 'var(--error-700,#b91c1c)'
+                   : done ? 'var(--success-700,#166534)'
+                   : current ? 'var(--primary-700,#1d4ed8)'
+                   : 'var(--grey-500,#6b7280)';
+            var dot = stopped ? 'ph-x-circle'
+                    : done ? 'ph-check-circle'
+                    : current ? 'ph-circle-half-tilt'
+                    : 'ph-circle';
+            // aria-current="step" tags the current/stopped step so SR
+            // users hear "current step" alongside the label. Without
+            // it the visual color was the only cue, invisible to AT.
+            // Visually-hidden status text ("Bajarilgan", "Joriy",
+            // "To'xtatilgan") replaces what the icon conveys to sighted
+            // users.
+            var statusLabel = stopped ? 'To\'xtatilgan'
+                            : done    ? 'Bajarilgan'
+                            : current ? 'Joriy bosqich'
+                            : 'Kutmoqda';
+            var ariaCurrent = (current || stopped) ? ' aria-current="step"' : '';
+            html += '<li' + ariaCurrent + ' style="flex:1;min-width:140px;padding:10px 12px;border-radius:8px;background:' + bg + ';color:' + fg + ';font-size:13px;display:flex;align-items:center;gap:6px;'
+              + ((current || stopped) ? 'font-weight:600;' : '') + '">'
+              + '<i class="ph ' + dot + '" aria-hidden="true"></i> '
+              + '<span class="u-visually-hidden">' + statusLabel + ': </span>'
+              + esc(s.label) + '</li>';
           });
           html += '</ol>';
           if (latest.status === 'rejected' || latest.status === 'returned') {
@@ -237,7 +343,9 @@
         return;
       }
       console.error('Applications load error:', err);
-      document.getElementById('applicationsTableBody').innerHTML = '<tr><td colspan="5" class="empty-state" style="color:var(--error-500);">Xatolik: ' + esc(err.message || 'Nomalum') + '</td></tr>';
+      var tbodyEl = document.getElementById('applicationsTableBody');
+      tbodyEl.setAttribute('aria-busy', 'false');
+      tbodyEl.innerHTML = '<tr><td colspan="5" role="alert" class="empty-state" style="color:var(--error-500);">Xatolik: ' + esc(err.message || 'Nomalum') + '</td></tr>';
     });
   })();
   </script>

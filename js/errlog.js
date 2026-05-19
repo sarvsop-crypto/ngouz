@@ -19,6 +19,15 @@
       rec.url = location.href;
       rec.referrer = document.referrer || '';
       rec.viewport = window.innerWidth + 'x' + window.innerHeight;
+      // Include SW activation state so triage can correlate errors with
+      // a specific cache version (the cache name embeds CACHE_VERSION).
+      // Helps spot whether a deployed bug only affects users still on
+      // an older SW. controller is null on first visit before SW takes
+      // over — that's a meaningful signal too ("no SW" → "fresh load").
+      try {
+        var ctrl = navigator.serviceWorker && navigator.serviceWorker.controller;
+        rec.sw = ctrl ? 'active' : 'none';
+      } catch (e) { /* swallow — feature-detect failed */ }
       var body = JSON.stringify(rec);
       var blob = new Blob([body], { type: 'application/json' });
       if (navigator.sendBeacon && navigator.sendBeacon(ENDPOINT, blob)) return;

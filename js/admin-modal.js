@@ -50,7 +50,19 @@
     stack.push(entry);
     el.classList.add('is-open');
     el.setAttribute('aria-hidden', 'false');
+    // Body-only overflow:hidden left the page scrollable through the
+    // modal on iOS Safari and any browser that scrolls <html> rather
+    // than <body>. The .is-modal-open class on <html> (defined in
+    // pacta-foundation.css) covers both elements; keep the inline
+    // body style as a belt-and-braces fallback for pages that load
+    // admin-modal without pacta-foundation.css.
+    document.documentElement.classList.add('is-modal-open');
     document.body.style.overflow = 'hidden';
+    // Flip aria-expanded on every trigger that opens this dialog so
+    // screen readers announce the open state. Without this, SR users
+    // hear nothing when the dialog appears.
+    var triggers = document.querySelectorAll('[data-modal-open="' + id + '"]');
+    triggers.forEach(function (t) { t.setAttribute('aria-expanded', 'true'); });
     // Defer focus so any open animation has started.
     setTimeout(function () {
       var f = getFocusable(el);
@@ -71,10 +83,24 @@
       el.setAttribute('aria-hidden', 'true');
     }
     if (!stack.length) {
+      document.documentElement.classList.remove('is-modal-open');
       document.body.style.overflow = '';
     }
+    var triggers = document.querySelectorAll('[data-modal-open="' + id + '"]');
+    triggers.forEach(function (t) { t.setAttribute('aria-expanded', 'false'); });
     if (entry.opener && document.contains(entry.opener)) {
       try { entry.opener.focus(); } catch (e) { /* swallow */ }
+    } else {
+      // Opener was removed from the DOM (e.g., the table row that
+      // launched the modal got re-rendered after a successful PATCH).
+      // Without a fallback target, focus stays inside the now-hidden
+      // dialog, leaving keyboard users stranded. Focus the main
+      // landmark instead so Tab continues somewhere sensible.
+      var mainEl = document.getElementById('main-content') || document.querySelector('main');
+      if (mainEl) {
+        if (!mainEl.hasAttribute('tabindex')) mainEl.setAttribute('tabindex', '-1');
+        try { mainEl.focus({ preventScroll: true }); } catch (e) { try { mainEl.focus(); } catch (_) {} }
+      }
     }
   }
 
@@ -108,6 +134,23 @@
     if (!el || !el.classList.contains('is-open')) return;
     if (e.target === el) close(top.id);
   });
+
+  // Mark every [data-modal-open] trigger as a dialog opener so screen
+  // readers announce them properly even before the dialog is opened.
+  // Idempotent — only fills attributes the page didn't already set.
+  function decorateTriggers() {
+    document.querySelectorAll('[data-modal-open]').forEach(function (btn) {
+      var targetId = btn.getAttribute('data-modal-open');
+      if (!btn.hasAttribute('aria-haspopup')) btn.setAttribute('aria-haspopup', 'dialog');
+      if (targetId && !btn.hasAttribute('aria-controls')) btn.setAttribute('aria-controls', targetId);
+      if (!btn.hasAttribute('aria-expanded')) btn.setAttribute('aria-expanded', 'false');
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', decorateTriggers);
+  } else {
+    decorateTriggers();
+  }
 
   window.AdminModal = { open: open, close: close };
 })();

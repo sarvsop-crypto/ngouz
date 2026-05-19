@@ -23,6 +23,16 @@
 
   var lastFocused = null;
 
+  // Hero CTA + nav links use href="#membership-modal" to open the
+  // dialog. They have aria-haspopup="dialog" + aria-controls but
+  // historically lacked aria-expanded toggling — so screen readers
+  // never announced "expanded" / "collapsed" on the trigger.
+  function setTriggersExpanded(expanded) {
+    document.querySelectorAll('[aria-controls="' + MODAL_ID + '"]').forEach(function (t) {
+      t.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
+  }
+
   function isOpen() {
     return location.hash === '#' + MODAL_ID;
   }
@@ -49,6 +59,8 @@
     // readers acknowledge the now-visible dialog. Without this AT
     // saw the form fields whether the modal was open or closed.
     modal.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('is-modal-open');
+    setTriggersExpanded(true);
     var f = focusables();
     if (f.length) {
       // Defer to let CSS transition begin so focus ring isn't on a
@@ -59,9 +71,27 @@
 
   function onClose() {
     modal.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('is-modal-open');
+    setTriggersExpanded(false);
     try {
       var target = (lastFocused && document.contains(lastFocused)) ? lastFocused : null;
-      if (target && typeof target.focus === 'function') target.focus();
+      if (target && typeof target.focus === 'function') {
+        target.focus();
+      } else {
+        // Opener was detached — fall back to any modal trigger still in
+        // the DOM (e.g., a hero CTA), then to <main>, so keyboard users
+        // don't get stranded with focus on the now-hidden dialog.
+        var trigger = document.querySelector('[aria-controls="' + MODAL_ID + '"]');
+        if (trigger && typeof trigger.focus === 'function') {
+          trigger.focus();
+        } else {
+          var mainEl = document.getElementById('main-content') || document.querySelector('main');
+          if (mainEl) {
+            if (!mainEl.hasAttribute('tabindex')) mainEl.setAttribute('tabindex', '-1');
+            try { mainEl.focus({ preventScroll: true }); } catch (e2) { try { mainEl.focus(); } catch (_) {} }
+          }
+        }
+      }
     } catch (e) { /* swallow */ }
     lastFocused = null;
   }
@@ -94,6 +124,23 @@
   });
 
   window.addEventListener('hashchange', onHashChange);
+
+  // Intercept clicks on .membership-close (and any data-modal-dismiss
+  // anchors) so close() runs replaceState instead of pushing a "#"
+  // entry into history. Without this, pressing back after close
+  // re-opened the modal and the URL kept a stray "#".
+  modal.addEventListener('click', function (ev) {
+    var closeEl = ev.target && ev.target.closest && ev.target.closest('.membership-close, [data-modal-dismiss]');
+    if (!closeEl) return;
+    ev.preventDefault();
+    close();
+  });
+
+  // Initial state: pre-set aria-expanded="false" on all triggers so
+  // assistive tech reads a complete state before the user interacts
+  // (otherwise the attribute is missing and announcement is "haspopup
+  // dialog" without expanded/collapsed context).
+  setTriggersExpanded(isOpen());
 
   // If page is loaded directly with #membership-modal in the URL, fire
   // the open behavior so focus lands inside.

@@ -63,7 +63,7 @@
     var ariaCurrent = isActive ? ' aria-current="page"' : '';
     return (
       '<a href="' + item.href + '" class="sidebar__nav-link' + activeClass + '" title="' + item.title + '"' + ariaCurrent + '>' +
-        '<span class="sidebar__nav-icon"><i class="ph ' + item.icon + '"></i></span>' +
+        '<span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ' + item.icon + '"></i></span>' +
         '<span class="sidebar__nav-link-text">' + item.text + '</span>' +
       '</a>'
     );
@@ -91,13 +91,13 @@
         '</div>' +
         '<div class="sidebar__search" id="sidebarSearchTrigger">' +
           '<span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>' +
-          '<input type="text" placeholder="Qidirish" aria-label="Qidirish" />' +
+          '<input type="search" enterkeyhint="search" maxlength="200" placeholder="Qidirish" aria-label="Menyu boyicha qidirish" />' +
         '</div>' +
         '<nav class="sidebar__nav" aria-label="Kabinet menyusi">' +
           sections +
           '<div class="sidebar__nav-section u-mt-auto">' +
             '<a href="cabinet-login" data-action="logout" class="sidebar__nav-link logout" title="Chiqish">' +
-              '<span class="sidebar__nav-icon"><i class="ph ph-sign-out"></i></span>' +
+              '<span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-sign-out"></i></span>' +
               '<span class="sidebar__nav-link-text">Chiqish</span>' +
             '</a>' +
           '</div>' +
@@ -111,9 +111,10 @@
       '<div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">' +
         '<div class="notifications-panel__header">' +
           '<h2 class="notifications-panel__title">Bildirishnomalar</h2>' +
+          '<button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>' +
         '</div>' +
-        '<div class="notifications-panel__list" id="notifPanelList">' +
-          '<div class="notif-empty">Yuklanmoqda...</div>' +
+        '<div class="notifications-panel__list" id="notifPanelList" aria-live="polite" aria-busy="true">' +
+          '<div class="notif-empty" role="status">Yuklanmoqda...</div>' +
         '</div>' +
         '<div class="notifications-panel__footer">' +
           '<button type="button" class="notifications-panel__mark-read">Barchasini o' + RSQUO + 'qildi deb belgilash</button>' +
@@ -160,7 +161,11 @@
     };
     function relTime(iso) {
       if (!iso) return '';
-      var diff = (Date.now() - new Date(iso).getTime()) / 1000;
+      var ms = new Date(iso).getTime();
+      // Same NaN guard as pacta-foundation's relTime — malformed backend
+      // timestamps produce 'NaN kun oldin' otherwise.
+      if (isNaN(ms)) return String(iso);
+      var diff = (Date.now() - ms) / 1000;
       if (diff < 60) return 'Hozir';
       if (diff < 3600) return Math.floor(diff / 60) + ' daqiqa oldin';
       if (diff < 86400) return Math.floor(diff / 3600) + ' soat oldin';
@@ -171,18 +176,23 @@
       var listEl = document.getElementById('notifPanelList');
       if (!listEl) return;
       if (!items.length) {
-        listEl.innerHTML = '<div class="notif-empty">Bildirishnomalar yo\u2018q</div>';
+        listEl.innerHTML = '<div class="notif-empty" role="status">Bildirishnomalar yo\u2018q</div>';
+        listEl.setAttribute('aria-busy', 'false');
         return;
       }
       listEl.innerHTML = items.map(function (n) {
         var icon = typeIcons[n.type] || 'ph-bell';
         var dot = n.is_read ? '' : ' <span class="notifications-panel__dot"></span>';
+        var ts = String(n.created_at || '');
+        var timeHtml = ts
+          ? '<time datetime="' + esc(ts.slice(0, 10)) + '">' + relTime(ts) + '</time>'
+          : '';
         return '<div class="notifications-panel__item">' +
-          '<div class="notifications-panel__icon"><i class="ph ' + icon + '"></i></div>' +
+          '<div class="notifications-panel__icon"><i class="ph ' + icon + '" aria-hidden="true"></i></div>' +
           '<div class="notifications-panel__content">' +
             '<p class="notifications-panel__item-title">' + esc(n.title || '') + dot + '</p>' +
             '<p class="notifications-panel__item-body">' + esc(n.body || '') + '</p>' +
-            '<p class="notifications-panel__item-time">' + relTime(n.created_at) + '</p>' +
+            '<p class="notifications-panel__item-time">' + timeHtml + '</p>' +
           '</div></div>';
       }).join('');
       // Update badge count
@@ -192,7 +202,63 @@
         badge.textContent = unread || '';
         badge.style.display = unread ? '' : 'none';
       }
-    }).catch(function () {});
+      // Reflect unread count in the bell button's accessible name so
+      // SR users hear "Bildirishnomalar, 5 yangi" rather than just
+      // "Bildirishnomalar". The badge itself is aria-hidden so the
+      // count must live on the button.
+      var bellBtn = document.getElementById('notificationsBtn');
+      if (bellBtn) {
+        bellBtn.setAttribute('aria-label',
+          unread ? 'Bildirishnomalar, ' + unread + ' yangi' : 'Bildirishnomalar');
+      }
+      // Hide the "Mark all read" CTA when there's nothing to mark —
+      // keeps the panel footer clean and avoids a no-op click.
+      var markBtn = document.querySelector('.notifications-panel__mark-read');
+      if (markBtn) {
+        if (unread) markBtn.removeAttribute('hidden');
+        else markBtn.setAttribute('hidden', '');
+      }
+      listEl.setAttribute('aria-busy', 'false');
+    }).catch(function () {
+      // Without a visible failure state, a notifications-API outage
+      // left the slide-out panel stuck on "Yuklanmoqda..." forever
+      // (silent .catch was swallowing every error). Surface it so
+      // users know to retry.
+      var listEl = document.getElementById('notifPanelList');
+      if (listEl) {
+        listEl.innerHTML = '<div class="notif-empty" role="alert" style="color:var(--error-600,#dc2626);">Bildirishnomalarni yuklab bo‘lmadi. Internet aloqangizni tekshirib, sahifani yangilang.</div>';
+        listEl.setAttribute('aria-busy', 'false');
+      }
+    });
+  }
+
+  // Wire the "Mark all read" button in the slide-out panel — it was
+  // decorative since the panel template ships it without an id.
+  // POSTs /cabinet/notifications/mark-read (same endpoint the dedicated
+  // cabinet-notifications page uses), then re-runs hydrateNotifPanel
+  // to refresh the list, badge, and bell aria-label.
+  function wireMarkAllRead() {
+    var btn = document.querySelector('.notifications-panel__mark-read');
+    if (!btn || btn.dataset.wired === '1') return;
+    btn.dataset.wired = '1';
+    btn.addEventListener('click', function () {
+      if (typeof NgoApi === 'undefined' || !NgoApi.getToken || !NgoApi.getToken()) return;
+      var prev = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Belgilanmoqda...';
+      var listEl = document.getElementById('notifPanelList');
+      if (listEl) listEl.setAttribute('aria-busy', 'true');
+      NgoApi.post('/cabinet/notifications/mark-read', {}, { loginPage: 'cabinet-login' })
+        .then(function () { hydrateNotifPanel(); })
+        .catch(function () { /* swallow — UX recovers on next tick */ })
+        .then(function () {
+          btn.disabled = false;
+          btn.textContent = prev;
+          // hydrateNotifPanel sets aria-busy=false on success; only
+          // clear it here defensively for the catch path.
+          if (listEl && listEl.getAttribute('aria-busy') === 'true') listEl.setAttribute('aria-busy', 'false');
+        });
+    });
   }
 
   function mount() {
@@ -206,6 +272,7 @@
     setTimeout(function () {
       hydrateProfile();
       hydrateNotifPanel();
+      wireMarkAllRead();
     }, 50);
   }
 
@@ -225,19 +292,19 @@
     var el = ev.target.closest && ev.target.closest('[data-action="logout"]');
     if (!el) return;
     ev.preventDefault();
-    // Optimistic logout: clear the token + navigate immediately so
-    // the user sees the login page within ~50 ms instead of waiting
-    // for the /auth/logout POST to complete (up to 15 s on a slow
-    // network). The fetch is fire-and-forget — backend cleans up its
-    // session record when it eventually receives the call. If the
-    // user was offline entirely, the navigation still happens since
-    // the token is already gone client-side.
-    try { localStorage.removeItem('ngo_api_token'); localStorage.removeItem('ngo_api_user'); } catch (e) { /* swallow */ }
+    // Optimistic logout: fire /auth/logout (fire-and-forget) THEN clear
+    // the local token + navigate immediately. Earlier this cleared the
+    // token first, which meant the in-flight POST went without the
+    // Authorization header — backend couldn't identify the session to
+    // revoke, so /auth/logout was effectively a no-op and zombie
+    // sessions accumulated server-side.
     if (window.NgoApi && typeof NgoApi.logout === 'function') {
-      // logout() also clears the token internally — that's fine, it's
-      // idempotent. We don't await it.
       NgoApi.logout().catch(function () {});
     }
+    try {
+      localStorage.removeItem('ngo_api_token'); localStorage.removeItem('ngo_api_user');
+      sessionStorage.removeItem('ngo_api_token'); sessionStorage.removeItem('ngo_api_user');
+    } catch (e) { /* swallow */ }
     location.replace('cabinet-login');
   });
 })();

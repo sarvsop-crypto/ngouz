@@ -3,10 +3,12 @@
 <head>
 <meta charset="utf-8"/>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
   <link rel="manifest" href="/manifest.webmanifest" />
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>A'zo bo'lishning afzalliklari - O'zNNTMA</title>
-<meta property="og:type" content="article" />
+<meta property="og:type" content="website" />
 <meta property="og:site_name" content="ngo.uz" />
 <meta property="og:locale" content="uz_UZ" />
 <meta property="og:title" content="A'zo bo'lishning afzalliklari - O'zNNTMA" />
@@ -20,6 +22,7 @@
 <meta name="twitter:title" content="A'zo bo'lishning afzalliklari - O'zNNTMA" />
 <meta name="twitter:description" content="A'zolik afzalliklari — O'zNNTMAga a'zo bo'lish orqali huquqiy himoya, hamkorlik imkoniyatlari va institutsional rivojlanish resurslari." />
 <meta name="twitter:image" content="https://www.ngo.uz/img/og-image.png" />
+<meta name="twitter:image:alt" content="O'ZNNTMA — ngo.uz" />
 
 <script type="application/ld+json">
 {
@@ -61,7 +64,7 @@
 <link crossorigin="" href="https://unpkg.com" rel="preconnect"/>
 <link crossorigin="" href="https://ngo-api-proxy.sarvsop.workers.dev" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<link href="css/style.css?v=23" rel="stylesheet"/>
+<link href="css/style.css?v=27" rel="stylesheet"/>
 <style>
 /* ── About block ── */
 .about-block {
@@ -221,10 +224,10 @@
 
 <header class="site-header">
 <div class="container nav">
-<a class="topbar-building" href="/"><img alt="O'ZNNTMA" src="img/logo-oznntma.png" decoding="async" width="60" height="60" /></a>
+<a class="topbar-building" href="/" aria-label="Bosh sahifa"><img alt="O'ZNNTMA" src="img/logo-oznntma.png" decoding="async" width="60" height="60" /></a>
 <nav aria-label="Asosiy menyu" class="menu">
 <div class="nav-item has-dropdown">
-<a href="about">Assotsiatsiya haqida <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
+<a href="about">Assotsiatsiya haqida <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
 <div class="dropdown">
 <a href="about">Assotsiatsiya haqida</a>
 <a href="mission">Maqsad va vazifalar</a>
@@ -236,7 +239,7 @@
 </div>
 </div>
 <div class="nav-item has-dropdown">
-<a href="#" aria-haspopup="true" aria-expanded="false">NNTlar reyestri <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
+<a href="nntlar" aria-haspopup="true" aria-expanded="false">NNTlar reyestri <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
 <div class="dropdown">
 <a href="nntlar">Assotsiatsiyaga a'zo NNTlar</a>
 <a href="sustainability-index">NNTlar barqarorlik indeksi</a>
@@ -245,7 +248,7 @@
 </div>
 <a href="projects">Loyihalar</a>
 <div class="nav-item has-dropdown">
-<a href="awards">Hamkorlar <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
+<a href="awards">Hamkorlar <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
 <div class="dropdown">
 <a href="awards">Xorijiy hamkorlar</a>
 <a href="mahalliy-hamkorlar">Mahalliy hamkorlar</a>
@@ -253,7 +256,7 @@
 </div>
 </div>
 <div class="nav-item has-dropdown">
-<a href="#" aria-haspopup="true" aria-expanded="false">Ochiq maʼlumotlar <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
+<a href="official-docs" aria-haspopup="true" aria-expanded="false">Ochiq maʼlumotlar <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
 <div class="dropdown">
 <a href="contact">Bog'lanish</a>
 <a href="grant-tanlovlari">Grant tanlovlari - AI qidiruv</a>
@@ -276,18 +279,18 @@
 <span class="topbar-fond-name-sub">jamoat fondi</span>
 </div>
 </div>
-<a class="topbar-lang" href="#">O'zbekcha</a>
-<a class="topbar-lang" href="#">Русский</a>
-<a class="topbar-lang" href="#">English</a>
-<button aria-label="Ko'rish imkoniyati" class="vis-btn" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="17"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
-<button aria-label="Qidirish" class="search-btn" id="searchToggle" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24" width="17"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg></button>
+<a class="topbar-lang" href="/uz/" hreflang="uz">O’zbekcha</a>
+<a class="topbar-lang" href="/ru/" hreflang="ru" lang="ru">Русский</a>
+<a class="topbar-lang" href="/en/" hreflang="en" lang="en">English</a>
+<button aria-label="Ko'rish imkoniyati" class="vis-btn" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" width="17"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button aria-label="Qidirish" class="search-btn" id="searchToggle" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="17"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg></button>
 </div>
 <button aria-label="Menyu" class="hamburger" id="hamburgerBtn" type="button">
 <span></span><span></span><span></span>
 </button>
 </div>
 </header>
-<main id="main-content">
+<main id="main-content" tabindex="-1">
 <!-- ══ HERO ══════════════════════════════════════════════════════════════ -->
 <section class="grid-bg">
 <div class="container hero" style="padding: 68px 0 56px; max-width: 820px;">
@@ -295,7 +298,7 @@
   <h1 style="margin:0 0 16px;">Assotsiatsiyaga a'zo bo'lishning afzalliklari</h1>
   <p class="sub" style="margin:0 0 28px;">O'zbekiston NNT Milliy Assotsiatsiyasiga a'zo bo'lish orqali tashkilotingiz uchun huquqiy himoya, hamkorlik imkoniyatlari va institutsional rivojlanish resurslaridan bahramand bo'ling.</p>
   <a class="hero-member-btn" href="/#membership-modal" style="display:inline-flex;">
-    <svg aria-hidden="true" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>
+    <svg aria-hidden="true" fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="20"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>
     <span class="btn-label">
       Hoziroq ariza topshirish
       <span class="btn-label-sub">O'zNNTMA · Rasmiy a'zolik</span>
@@ -325,7 +328,7 @@
     <div class="about-meta">
       <div class="about-meta-row">
         <div class="about-meta-icon">
-          <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          <svg aria-hidden="true" focusable="false" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18"><rect height="11" rx="2" ry="2" width="18" x="3" y="11"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
         </div>
         <div class="about-meta-text">
           <strong>Ro'yxatdan o'tgan sana</strong>
@@ -334,7 +337,7 @@
       </div>
       <div class="about-meta-row">
         <div class="about-meta-icon">
-          <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+          <svg aria-hidden="true" focusable="false" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
         </div>
         <div class="about-meta-text">
           <strong>Ro'yxat raqami</strong>
@@ -343,7 +346,7 @@
       </div>
       <div class="about-meta-row">
         <div class="about-meta-icon">
-          <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <svg aria-hidden="true" focusable="false" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
         </div>
         <div class="about-meta-text">
           <strong>Yuridik manzil</strong>
@@ -352,7 +355,7 @@
       </div>
       <div class="about-meta-row">
         <div class="about-meta-icon">
-          <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          <svg aria-hidden="true" focusable="false" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
         </div>
         <div class="about-meta-text">
           <strong>Tashkiliy shakl</strong>
@@ -374,7 +377,7 @@
 
     <div class="benefit-card">
       <div class="benefit-icon">
-        <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <svg aria-hidden="true" focusable="false" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
       </div>
       <h3>Huquqiy himoya va ifodalash</h3>
       <p>NNTlarning huquqlari va qonuniy manfaatlarini davlat organlarida, sudlarda, xalqaro va xorijiy tashkilotlarda ifoda etish hamda himoya qilish.</p>
@@ -382,7 +385,7 @@
 
     <div class="benefit-card">
       <div class="benefit-icon">
-        <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+        <svg aria-hidden="true" focusable="false" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
       </div>
       <h3>Hamkorlikni rivojlantirish</h3>
       <p>NNTlar, tadbirkorlik sub'ektlari, xalqaro va xorijiy tashkilotlar hamda davlat organlari o'rtasida o'zaro manfaatli hamkorlikni rivojlantirishda ishtirok etish.</p>
@@ -390,7 +393,7 @@
 
     <div class="benefit-card">
       <div class="benefit-icon">
-        <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
+        <svg aria-hidden="true" focusable="false" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4l3 3"></path></svg>
       </div>
       <h3>Qulay muhit yaratish</h3>
       <p>NNT tashabbuslarini amalga oshirish uchun qulay huquqiy, iqtisodiy va ijtimoiy sharoitlar yaratishga ko'maklashish.</p>
@@ -398,7 +401,7 @@
 
     <div class="benefit-card">
       <div class="benefit-icon">
-        <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        <svg aria-hidden="true" focusable="false" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
       </div>
       <h3>Demokratik jarayonlarni qo'llab-quvvatlash</h3>
       <p>Mamlakatda demokratik jarayonlarni barqaror rivojlantirish va ilgari surishda a'zolar hamda hamkorlarning sa'y-harakatlarini birlashtirish.</p>
@@ -406,7 +409,7 @@
 
     <div class="benefit-card">
       <div class="benefit-icon">
-        <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+        <svg aria-hidden="true" focusable="false" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
       </div>
       <h3>Qonunchilikni takomillashtirish</h3>
       <p>NNTlarning huquqlari va qonuniy manfaatlariga daxldor normativ-huquqiy hujjatlar loyihalarini ishlab chiqishda ishtirok etish va sohani tartibga soluvchi qonunchilikni takomillashtirish yuzasidan takliflar tayyorlash.</p>
@@ -414,7 +417,7 @@
 
     <div class="benefit-card">
       <div class="benefit-icon">
-        <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+        <svg aria-hidden="true" focusable="false" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
       </div>
       <h3>Salohiyatni oshirish</h3>
       <p>NNT rahbarlari va xodimlarining tashkilotni samarali boshqarish, moliyaviy barqarorlikka erishish, ijtimoiy muhim loyihalarni ishlab chiqish, volontyorlik va xayriya resurslarini jalb qilish bo'yicha bilim va ko'nikmalarini oshirish.</p>
@@ -422,7 +425,7 @@
 
     <div class="benefit-card">
       <div class="benefit-icon">
-        <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+        <svg aria-hidden="true" focusable="false" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
       </div>
       <h3>Ta'lim va metodik ta'minot</h3>
       <p>NNT vakillari uchun qo'llanmalar, o'quv dasturlari va kitoblar hamda mamlakat sharoitiga mos nazariy va amaliy yondashuvlarni ishlab chiqish.</p>
@@ -430,7 +433,7 @@
 
     <div class="benefit-card">
       <div class="benefit-icon">
-        <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22"><rect height="11" rx="2" ry="2" width="20" x="2" y="7"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+        <svg aria-hidden="true" focusable="false" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><rect height="11" rx="2" ry="2" width="20" x="2" y="7"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
       </div>
       <h3>Ijtimoiy sheriklik</h3>
       <p>Davlat ijtimoiy buyurtmalari va ijtimoiy sheriklik loyihalarining yagona bazasini yuritish; mamlakatni modernizatsiya qilishda iqtisodiy, ijtimoiy va madaniy salohiyatni yuksaltirish.</p>
@@ -438,7 +441,7 @@
 
     <div class="benefit-card">
       <div class="benefit-icon">
-        <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+        <svg aria-hidden="true" focusable="false" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
       </div>
       <h3>Ehtiyojmand aholini qo'llab-quvvatlash</h3>
       <p>Ayollar, yoshlar, keksalar, nogironligi bo'lgan va hayotda og'ir vaziyatga tushgan fuqarolarni qo'llab-quvvatlashda a'zolarning intellektual, moddiy va moliyaviy resurslarini safarbar qilish.</p>
@@ -446,7 +449,7 @@
 
     <div class="benefit-card">
       <div class="benefit-icon">
-        <svg fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+        <svg aria-hidden="true" focusable="false" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="22"><circle cx="12" cy="12" r="10"></circle><line x1="2" x2="22" y1="12" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
       </div>
       <h3>Xalqaro hamkorlik</h3>
       <p>Xalqaro va chet el NNTlari, moliya institutlari va xorijiy donorlar bilan hamkorlik aloqalarini mustahkamlash, ularning ijobiy tajribalarini o'rganish.</p>
@@ -461,7 +464,7 @@
       <p>Ariza topshirish va ko'rib chiqish jarayoni haqida batafsil ma'lumot oling.</p>
     </div>
     <a class="join-cta-btn" href="/#membership-modal">
-      <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>
+      <svg aria-hidden="true" focusable="false" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><line x1="19" x2="19" y1="8" y2="14"></line><line x1="22" x2="16" y1="11" y2="11"></line></svg>
       Ariza topshirish
     </a>
   </div>
@@ -478,21 +481,21 @@
 <img alt="O'ZNNTMA" class="footer-logo-img" src="img/logo-oznntma.png" loading="lazy" decoding="async" width="200" height="60" />
 </a>
 </div><div class="footer-col">
-<h3 class="footer-col-title">Manzil</h3>
+<h2 class="footer-col-title">Manzil</h2>
 <p>100170, O&#x2BB;zbekiston Respublikasi, Toshkent shahri, Shayxontohur tumani, Furqat ko&#x2BC;chasi, 1A</p>
 </div><div class="footer-col">
-<h3 class="footer-col-title">Aloqa</h3>
+<h2 class="footer-col-title">Aloqa</h2>
 <p>Tel: <a href="tel:+998555030512">(+998 55) 503-05-12</a></p>
 <p>Email: <a href="mailto:info@ngo.uz">info@ngo.uz</a></p>
 </div><div class="footer-col">
-<h3 class="footer-col-title">Ijtimoiy tarmoqlar</h3>
+<h2 class="footer-col-title">Ijtimoiy tarmoqlar</h2>
 <div class="social-links">
-<a href="https://facebook.com/uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Facebook" style="--sc:#1877F2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg><span>Facebook</span></a>
-<a href="https://instagram.com/uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Instagram" style="--sc:#E1306C"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg><span>Instagram</span></a>
-<a href="https://t.me/UzNNTMA1" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Telegram" style="--sc:#229ED9"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg><span>Telegram</span></a>
-<a href="https://youtube.com/@uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="YouTube" style="--sc:#FF0000"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg><span>YouTube</span></a>
-<a href="https://www.linkedin.com/company/ngo-association-uzbekistan/" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn" style="--sc:#0A66C2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg><span>LinkedIn</span></a>
-<a href="contact" class="social-link" aria-label="Bog'lanish" style="--sc:#0e7490"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.103 0-2 .897-2 2v18l4-4h14c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"/></svg><span>Bog'lanish</span></a>
+<a href="https://facebook.com/uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Facebook" style="--sc:#1877F2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg><span>Facebook</span></a>
+<a href="https://instagram.com/uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Instagram" style="--sc:#E1306C"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg><span>Instagram</span></a>
+<a href="https://t.me/UzNNTMA1" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Telegram" style="--sc:#229ED9"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg><span>Telegram</span></a>
+<a href="https://youtube.com/@uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="YouTube" style="--sc:#FF0000"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg><span>YouTube</span></a>
+<a href="https://www.linkedin.com/company/ngo-association-uzbekistan/" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn" style="--sc:#0A66C2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg><span>LinkedIn</span></a>
+<a href="contact" class="social-link" aria-label="Bog'lanish" style="--sc:#0e7490"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20 2H4c-1.103 0-2 .897-2 2v18l4-4h14c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"/></svg><span>Bog'lanish</span></a>
 </div>
 </div>
 </div>
@@ -502,7 +505,7 @@
 <nav class="footer-legal-links" aria-label="Huquqiy ma'lumotlar">
 <a href="maxfiylik-siyosati">Maxfiylik siyosati</a>
 <a href="foydalanish-shartlari">Foydalanish shartlari</a>
-<a href="qayta-aloqa">Bog'lanish</a>
+<a href="contact">Bog'lanish</a>
 </nav>
 </div>
 </footer>
@@ -511,9 +514,9 @@
 
 <div class="search-overlay" id="searchOverlay" role="dialog" aria-label="Qidirish" aria-modal="true" aria-hidden="true">
   <div class="search-overlay__box">
-    <form class="search-overlay__form" role="search" onsubmit="return false;">
+    <form class="search-overlay__form" role="search" action="/search-results" method="get">
       <svg aria-hidden="true" fill="none" height="18" stroke="#9ca3af" stroke-width="1.8" viewBox="0 0 24 24" width="18"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg>
-      <input autofocus id="searchInput" aria-label="Qidirish" placeholder="Sayt bo'ylab qidirish..." type="search"/>
+      <input id="searchInput" name="q" aria-label="Qidirish" placeholder="Sayt bo’ylab qidirish..." type="search" enterkeyhint="search" maxlength="200"/>
       <button aria-label="Yopish" class="search-overlay__close" id="searchClose" type="button">&times;</button>
     </form>
   </div>

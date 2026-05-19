@@ -6,11 +6,11 @@
       '<div class="modal u-modal-max-400">' +
         '<div class="modal__head">' +
           '<h2 class="modal__title" id="logoutModalTitle">Tizimdan chiqish</h2>' +
-          '<button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>' +
+          '<button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>' +
         '</div>' +
         '<div class="modal__body">' +
           '<div class="u-logout-intro">' +
-            '<div class="u-logout-icon-box"><i class="ph ph-sign-out"></i></div>' +
+            '<div class="u-logout-icon-box"><i class="ph ph-sign-out" aria-hidden="true"></i></div>' +
             '<div>' +
               '<p class="u-logout-title">Haqiqatan ham chiqmoqchimisiz?</p>' +
               '<p class="u-logout-copy">Tizimdan chiqsangiz, qayta kirishingiz kerak bo\'ladi.</p>' +
@@ -19,7 +19,7 @@
         '</div>' +
         '<div class="modal__foot">' +
           '<button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>' +
-          '<button type="button" class="btn btn--danger" id="logoutConfirmBtn"><i class="ph ph-sign-out"></i> Ha, chiqish</button>' +
+          '<button type="button" class="btn btn--danger" id="logoutConfirmBtn"><i class="ph ph-sign-out" aria-hidden="true"></i> Ha, chiqish</button>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -66,6 +66,19 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // Sync aria-expanded on every trigger that points at this overlay.
+  // The aria-haspopup="dialog" + aria-controls pairing was set up in
+  // the iter-104 init pass; the missing piece was aria-expanded
+  // toggling on open/close so screen readers announce "expanded" /
+  // "collapsed" on the trigger.
+  function setTriggersExpanded(overlayId, expanded) {
+    if (!overlayId) return;
+    var sel = '[data-modal-open="' + overlayId + '"], [aria-controls="' + overlayId + '"]';
+    document.querySelectorAll(sel).forEach(function (t) {
+      t.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+    });
+  }
+
   function openModal(id, triggerEl) {
     var overlay = document.getElementById(id);
     if (!overlay) return;
@@ -77,8 +90,14 @@ document.addEventListener('DOMContentLoaded', function () {
     lastFocusedElement = triggerEl || document.activeElement;
     overlay.classList.add('is-open');
     overlay.setAttribute('aria-hidden', 'false');
+    // Body-only overflow:hidden left iOS Safari and any browser
+    // where <html> is the scrolling element able to scroll the page
+    // behind the modal. The .is-modal-open class on <html> covers
+    // both elements via pacta-foundation.css.
+    document.documentElement.classList.add('is-modal-open');
     document.body.style.overflow = 'hidden';
     activeModal = overlay;
+    setTriggersExpanded(id, true);
 
     var focusables = getFocusableElements(overlay);
     if (focusables.length) focusables[0].focus();
@@ -90,12 +109,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
     overlay.classList.remove('is-open');
     overlay.setAttribute('aria-hidden', 'true');
+    setTriggersExpanded(overlay.id, false);
 
     if (!document.querySelector('.modal-overlay.is-open')) {
+      document.documentElement.classList.remove('is-modal-open');
       document.body.style.overflow = '';
       activeModal = null;
-      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function'
+          && document.contains(lastFocusedElement)) {
         lastFocusedElement.focus();
+      } else {
+        // Opener was removed from the DOM (e.g., a table row re-rendered
+        // after a successful PATCH). Without a fallback, focus stays in
+        // the now-hidden modal and keyboard users get stranded. Land on
+        // the main landmark so Tab continues from somewhere sensible.
+        var mainEl = document.getElementById('main-content') || document.querySelector('main');
+        if (mainEl) {
+          if (!mainEl.hasAttribute('tabindex')) mainEl.setAttribute('tabindex', '-1');
+          try { mainEl.focus({ preventScroll: true }); } catch (e) { try { mainEl.focus(); } catch (_) {} }
+        }
       }
       lastFocusedElement = null;
     }
@@ -135,6 +167,16 @@ document.addEventListener('DOMContentLoaded', function () {
     overlay.addEventListener('click', function (e) {
       if (e.target === overlay) closeModal(overlay);
     });
+  });
+
+  // Tag every modal-trigger with the right ARIA so screen readers
+  // announce them as dialog openers, not generic buttons. Idempotent
+  // — only sets attributes that are missing.
+  document.querySelectorAll('[data-modal-open]').forEach(function (btn) {
+    var targetId = btn.getAttribute('data-modal-open');
+    if (!btn.hasAttribute('aria-haspopup')) btn.setAttribute('aria-haspopup', 'dialog');
+    if (targetId && !btn.hasAttribute('aria-controls')) btn.setAttribute('aria-controls', targetId);
+    if (!btn.hasAttribute('aria-expanded')) btn.setAttribute('aria-expanded', 'false');
   });
 
   document.addEventListener('keydown', function (e) {
@@ -293,23 +335,74 @@ document.addEventListener('DOMContentLoaded', function () {
   // window.exportCsv from pacta-foundation.js — no element in any
   // HTML still carries the data-action attribute.)
 
+  // Cabinet pages have their own optimistic-logout flow in
+  // cabinet-chrome.js (instant token clear + redirect, no modal).
+  // Skip wiring this admin-side modal flow there — both handlers
+  // would otherwise fire and flicker the confirm modal mid-navigation.
+  var IS_CABINET = location.pathname.indexOf('/cabinet/') === 0;
   document.querySelectorAll('.logout').forEach(function (link) {
+    if (IS_CABINET) return;
+    // Decorate the logout link as a dialog opener so SR users hear
+    // "expanded/collapsed" + "has popup, dialog" instead of a plain
+    // link. setTriggersExpanded only matches [data-modal-open=...],
+    // so add the attrs here once on init.
+    if (!link.hasAttribute('aria-haspopup')) link.setAttribute('aria-haspopup', 'dialog');
+    if (!link.hasAttribute('aria-controls')) link.setAttribute('aria-controls', 'logoutModal');
+    if (!link.hasAttribute('aria-expanded')) link.setAttribute('aria-expanded', 'false');
     link.addEventListener('click', function (e) {
       e.preventDefault();
-      var dest = link.getAttribute('href');
+      // Pick the post-logout destination from a data-attribute first
+      // (lets pages opt in to a custom URL), otherwise default to
+      // admin-login. Previously this read link.getAttribute('href')
+      // which is hardcoded to "#" — so confirming logout left a stale
+      // token in localStorage and just appended a fragment to the URL.
+      var dest = link.getAttribute('data-logout-href') || 'admin-login';
       var confirmBtn = document.getElementById('logoutConfirmBtn');
       if (confirmBtn) {
         confirmBtn.onclick = function () {
-          window.location.href = dest || 'admin-login';
+          if (window.NgoApi && typeof window.NgoApi.logout === 'function') {
+            window.NgoApi.logout().then(function () {
+              window.location.href = dest;
+            });
+          } else {
+            // Fall back to manual token clear if api-client didn't load.
+            try {
+              localStorage.removeItem('ngo_api_token');
+              localStorage.removeItem('ngo_api_user');
+              sessionStorage.removeItem('ngo_api_token');
+              sessionStorage.removeItem('ngo_api_user');
+            } catch (e) { /* swallow */ }
+            window.location.href = dest;
+          }
         };
       }
       openModal('logoutModal', link);
     });
   });
 
+  // Filter rows wrap a live-search input + filter chips in
+  // <form role="search"> for landmark semantics. Without onsubmit
+  // intercepted, pressing Enter in the search field submitted the form
+  // — and since the input has no name attribute, the form GET-reloaded
+  // the admin page with an empty query string, dropping any in-progress
+  // edit state. Block the navigation; the live `input` listener already
+  // applies the filter on every keystroke.
+  document.querySelectorAll('form[role="search"]').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+    });
+  });
+
   var sidebarToggle = document.getElementById('sidebarToggle');
   var sidebar = document.querySelector('.sidebar');
   if (sidebarToggle && sidebar) {
+    // Give the sidebar an id (matches setupMobileSidebar's choice in
+    // pacta-foundation.js) so aria-controls on the collapse button
+    // resolves. Idempotent — first writer wins.
+    if (!sidebar.id) sidebar.id = 'pactaSidebar';
+    if (!sidebarToggle.hasAttribute('aria-controls')) {
+      sidebarToggle.setAttribute('aria-controls', sidebar.id);
+    }
     var SIDEBAR_KEY = 'ngo_sidebar_collapsed_v1';
     function applySidebarState(collapsed) {
       sidebar.classList.toggle('is-collapsed', collapsed);
@@ -352,29 +445,69 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // --- Tabs: radio-group + optional panel show/hide via data-tab ---
   document.querySelectorAll('.tabs, .modal-tabs').forEach(function (tabBar) {
-    var tabs = tabBar.querySelectorAll('.tab, .modal-tab');
+    var tabs = Array.prototype.slice.call(tabBar.querySelectorAll('.tab, .modal-tab'));
+    // WAI-ARIA tab pattern: when the tabbar has role="tablist", the
+    // active tab is the only one in the tab order (tabindex=0); the
+    // rest are -1 and reachable only via Left/Right arrows. Without
+    // this, every tab grabbed Tab focus and arrow keys did nothing.
+    var isAriaTablist = tabBar.getAttribute('role') === 'tablist';
     tabs.forEach(function (tab) {
-      // Initialize aria-pressed on first sight (true if .is-active
-      // in markup) so AT users get the right state before any click.
       if (!tab.hasAttribute('aria-pressed')) {
         tab.setAttribute('aria-pressed', tab.classList.contains('is-active') ? 'true' : 'false');
       }
+      if (isAriaTablist && !tab.hasAttribute('tabindex')) {
+        tab.setAttribute('tabindex', tab.classList.contains('is-active') ? '0' : '-1');
+      }
       tab.addEventListener('click', function (e) {
         e.preventDefault();
-        tabs.forEach(function (t) {
-          t.classList.remove('is-active');
-          t.setAttribute('aria-pressed', 'false');
-        });
-        tab.classList.add('is-active');
-        tab.setAttribute('aria-pressed', 'true');
-        var target = tab.getAttribute('data-tab');
-        if (!target) return;
-        var root = tabBar.parentElement || document;
-        root.querySelectorAll('.modal-tab-panel').forEach(function (panel) {
-          panel.classList.toggle('is-active', panel.id === 'tab-' + target);
-        });
+        activateTab(tab);
       });
     });
+
+    function activateTab(tab) {
+      tabs.forEach(function (t) {
+        t.classList.remove('is-active');
+        t.setAttribute('aria-pressed', 'false');
+        if (isAriaTablist) {
+          t.setAttribute('aria-selected', 'false');
+          t.setAttribute('tabindex', '-1');
+        }
+      });
+      tab.classList.add('is-active');
+      tab.setAttribute('aria-pressed', 'true');
+      if (isAriaTablist) {
+        tab.setAttribute('aria-selected', 'true');
+        tab.setAttribute('tabindex', '0');
+      }
+      var target = tab.getAttribute('data-tab');
+      if (!target) return;
+      var root = tabBar.parentElement || document;
+      root.querySelectorAll('.modal-tab-panel').forEach(function (panel) {
+        panel.classList.toggle('is-active', panel.id === 'tab-' + target);
+      });
+    }
+
+    if (isAriaTablist) {
+      tabBar.addEventListener('keydown', function (e) {
+        var key = e.key;
+        if (key !== 'ArrowLeft' && key !== 'ArrowRight' && key !== 'Home' && key !== 'End') return;
+        var idx = tabs.indexOf(document.activeElement);
+        if (idx === -1) return;
+        e.preventDefault();
+        var next = idx;
+        if (key === 'ArrowLeft')  next = (idx - 1 + tabs.length) % tabs.length;
+        if (key === 'ArrowRight') next = (idx + 1) % tabs.length;
+        if (key === 'Home')       next = 0;
+        if (key === 'End')        next = tabs.length - 1;
+        try { tabs[next].focus(); } catch (err) {}
+        // Synthesize a click so any page-specific click listeners
+        // (e.g. cabinet-applications' renderTable) run alongside the
+        // pacta-app activation. Otherwise arrow keys flip the visual
+        // tab but the bound content stays on the previous tab.
+        // This also covers activateTab() via the existing click hook.
+        try { tabs[next].click(); } catch (err) { activateTab(tabs[next]); }
+      });
+    }
   });
 
   // --- Table row filtering inside <section class="table-section"> ---
@@ -500,10 +633,11 @@ document.addEventListener('DOMContentLoaded', function () {
       if (headerRow) colCount = headerRow.children.length;
       emptyRow = document.createElement('tr');
       emptyRow.className = 'table__empty-row';
-      emptyRow.setAttribute('aria-hidden', 'true');
       emptyRow.innerHTML =
         '<td colspan="' + colCount + '">' +
-          '<i class="ph ph-magnifying-glass"></i> Hech narsa topilmadi' +
+          '<span role="status">' +
+            '<i class="ph ph-magnifying-glass" aria-hidden="true"></i> Hech narsa topilmadi' +
+          '</span>' +
         '</td>';
       return emptyRow;
     }

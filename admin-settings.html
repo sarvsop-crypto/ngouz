@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Sozlamalar — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
@@ -25,6 +27,7 @@
   <link rel="stylesheet" href="css/pacta-app.css">
   <link rel="stylesheet" href="css/pacta-foundation.css">
 <script src="js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
 <script src="js/sw-register.js" defer></script>
 </head>
 <body>
@@ -40,47 +43,49 @@
         <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Yon panelni yopish" aria-expanded="true">&lsaquo;</button>
       </div>
       <div class="sidebar__search" id="sidebarSearchTrigger">
-        <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>
-        <input type="text" placeholder="Qidirish" aria-label="Qidirish" />
+        <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass" aria-hidden="true"></i></span>
+        <input type="search" enterkeyhint="search" placeholder="Qidirish" aria-label="Qidirish" maxlength="200" />
       </div>
       <nav class="sidebar__nav" aria-label="Admin menyusi">
         <div class="sidebar__nav-section">
           <div class="sidebar__nav-label">ASOSIY MENYU</div>
-          <a href="admin-dashboard" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
-          <a href="admin-membership-requests" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
-          <a href="admin-registry" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
-          <a href="admin-regions" class="sidebar__nav-link" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin"></i></span><span class="sidebar__nav-link-text">Hududlar</span></a>
-          <a href="admin-documents" class="sidebar__nav-link" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
-          <a href="admin-tasks" class="sidebar__nav-link" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square"></i></span><span class="sidebar__nav-link-text">Topshiriqlar</span></a>
-          <a href="admin-users" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
-          <a href="admin-reports" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar"></i></span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
-          <a href="admin-analytics" class="sidebar__nav-link" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up"></i></span><span class="sidebar__nav-link-text">Tahliliy ma'lumotlar</span></a>
+          <a href="admin-dashboard" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
+          <a href="admin-membership-requests" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
+          <a href="admin-grant-applications" class="sidebar__nav-link" title="Grant arizalari"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Grant arizalari</span></a>
+          <a href="admin-registry" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
+          <a href="admin-regions" class="sidebar__nav-link" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Hududlar</span></a>
+          <a href="admin-documents" class="sidebar__nav-link" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
+          <a href="admin-tasks" class="sidebar__nav-link" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Topshiriqlar</span></a>
+          <a href="admin-users" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
+          <a href="admin-reports" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
+          <a href="admin-analytics" class="sidebar__nav-link" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Tahliliy ma'lumotlar</span></a>
         </div>
         <div class="sidebar__nav-section">
           <div class="sidebar__nav-label">MUROJAATLAR</div>
-          <a href="admin-service-requests" class="sidebar__nav-link" title="Xizmat so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-wrench"></i></span><span class="sidebar__nav-link-text">Xizmat so'rovlari</span></a>
-          <a href="admin-corruption-reports" class="sidebar__nav-link" title="Korrupsiya murojaatlari"><span class="sidebar__nav-icon"><i class="ph ph-shield-warning"></i></span><span class="sidebar__nav-link-text">Korrupsiya murojaatlari</span></a>
-          <a href="admin-feedback" class="sidebar__nav-link" title="Qayta aloqa"><span class="sidebar__nav-icon"><i class="ph ph-chat-dots"></i></span><span class="sidebar__nav-link-text">Qayta aloqa</span></a>
+          <a href="admin-service-requests" class="sidebar__nav-link" title="Xizmat so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-wrench" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Xizmat so'rovlari</span></a>
+          <a href="admin-corruption-reports" class="sidebar__nav-link" title="Korrupsiya murojaatlari"><span class="sidebar__nav-icon"><i class="ph ph-shield-warning" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Korrupsiya murojaatlari</span></a>
+          <a href="admin-feedback" class="sidebar__nav-link" title="Qayta aloqa"><span class="sidebar__nav-icon"><i class="ph ph-chat-dots" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Qayta aloqa</span></a>
+          <a href="admin-password-reset-requests" class="sidebar__nav-link" title="Parol tiklash so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-key" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Parol tiklash</span></a>
         </div>
         <div class="sidebar__nav-section">
           <div class="sidebar__nav-label">KONTENT</div>
-          <a href="admin-news" class="sidebar__nav-link" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper"></i></span><span class="sidebar__nav-link-text">Yangiliklar</span></a>
-          <a href="admin-events" class="sidebar__nav-link" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank"></i></span><span class="sidebar__nav-link-text">Tadbirlar</span></a>
-          <a href="admin-grants" class="sidebar__nav-link" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins"></i></span><span class="sidebar__nav-link-text">Grantlar</span></a>
-          <a href="admin-settings" class="sidebar__nav-link is-active" aria-current="page" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
+          <a href="admin-news" class="sidebar__nav-link" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Yangiliklar</span></a>
+          <a href="admin-events" class="sidebar__nav-link" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Tadbirlar</span></a>
+          <a href="admin-grants" class="sidebar__nav-link" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Grantlar</span></a>
+          <a href="admin-settings" class="sidebar__nav-link is-active" aria-current="page" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
         </div>
         <div class="sidebar__nav-section u-mt-auto">
-          <a data-action="logout" href="#" class="sidebar__nav-link logout" id="logoutTrigger" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
+          <a data-action="logout" href="admin-login" class="sidebar__nav-link logout" id="logoutTrigger" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
         </div>
       </nav>
     </aside>
-    <main id="main-content" class="main">      <header class="topbar">
+    <main id="main-content" tabindex="-1" class="main">      <header class="topbar">
         <div class="topbar-left">
           <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="admin-dashboard">Boshqaruv</a> / <span aria-current="page">Sozlamalar</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -99,21 +104,21 @@
       </div>
 
       <div class="settings-layout" style="display:grid;grid-template-columns:220px 1fr;gap:24px;">
-        <nav style="display:flex;flex-direction:column;gap:4px;">
-          <a href="admin-settings" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ph ph-user"></i> Profil</a>
-          <a href="admin-settings-notifications" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-bell"></i> Bildirishnomalar</a>
-          <a href="admin-settings-security" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
-          <a href="admin-settings-system" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-sliders"></i> Tizim</a>
+        <nav style="display:flex;flex-direction:column;gap:4px;" aria-label="Sozlamalar bo&rsquo;limlari">
+          <a href="admin-settings" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ph ph-user" aria-hidden="true"></i> Profil</a>
+          <a href="admin-settings-notifications" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-bell" aria-hidden="true"></i> Bildirishnomalar</a>
+          <a href="admin-settings-security" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-shield-check" aria-hidden="true"></i> Xavfsizlik</a>
+          <a href="admin-settings-system" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-sliders" aria-hidden="true"></i> Tizim</a>
         </nav>
         <div>
           <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
             <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Profil ma&rsquo;lumotlari</h2>
             <p style="font-size:13px;color:var(--grey-500);margin:0 0 18px;">Sizning admin profilingizning faqat o&rsquo;qish uchun ko&rsquo;rinishi. O&rsquo;zgartirish uchun <a href="admin-users" style="color:var(--primary-500);text-decoration:underline">Foydalanuvchilar</a> bo&rsquo;limi yoki bosh administratorga murojaat qiling.</p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div><label for="profileName" style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Ism</label><input type="text" id="profileName" value="" readonly style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-25);box-sizing:border-box;" /></div>
-              <div><label for="profileEmail" style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Email</label><input type="email" id="profileEmail" value="" readonly style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-25);box-sizing:border-box;" /></div>
-              <div><label for="profilePhone" style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Telefon</label><input type="tel" id="profilePhone" value="" readonly style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-25);box-sizing:border-box;" /></div>
-              <div><label for="profileRole" style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Rol</label><input type="text" id="profileRole" value="" readonly style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-25);box-sizing:border-box;" /></div>
+              <div><label for="profileName" style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Ism</label><input type="text" id="profileName" value="" readonly autocomplete="name" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-25);box-sizing:border-box;" /></div>
+              <div><label for="profileEmail" style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Email</label><input type="email" id="profileEmail" value="" readonly autocomplete="email" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-25);box-sizing:border-box;" /></div>
+              <div><label for="profilePhone" style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Telefon</label><input type="tel" id="profilePhone" value="" readonly autocomplete="tel" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-25);box-sizing:border-box;" /></div>
+              <div><label for="profileRole" style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Rol</label><input type="text" id="profileRole" value="" readonly autocomplete="organization-title" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-25);box-sizing:border-box;" /></div>
             </div>
           </div>
 
@@ -125,8 +130,9 @@
   <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header">
       <h2 class="notifications-panel__title">Bildirishnomalar</h2>
+    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
-    <div class="notifications-panel__list" id="notifPanelList">
+    <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
       <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
@@ -134,7 +140,7 @@
       <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
     </div>
   </div>
-  <script src="js/api-client.js" defer></script>
+  <script src="js/api-client.js"></script>
   <script src="js/admin-boot.js" defer></script>
   <script>
   (function () {
@@ -156,6 +162,19 @@
       })
       .catch(function (err) {
         console.error('Profile load error:', err);
+        if (err && err.status === 401) return; // api-client redirects
+        // Inline alert so admin sees the failure rather than 4 blank
+        // readonly fields. Was console.error only — silent for users.
+        if (document.getElementById('profileLoadErr')) return;
+        var box = document.createElement('p');
+        box.id = 'profileLoadErr';
+        box.setAttribute('role', 'alert');
+        box.style.cssText = 'background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;margin:0 0 16px;font-size:14px;';
+        box.textContent = 'Profil ma\'lumotlarini yuklashda xatolik. Sahifani yangilang yoki internet aloqangizni tekshiring.';
+        var main = document.querySelector('.main');
+        var firstSection = main && main.querySelector('section, .settings-card, .card');
+        if (firstSection) firstSection.parentNode.insertBefore(box, firstSection);
+        else if (main) main.insertBefore(box, main.firstChild);
       });
   })();
   </script>

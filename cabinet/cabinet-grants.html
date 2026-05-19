@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="../favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Grantlar — A'zo Kabinet</title>
 <meta name="theme-color" content="#0f6a57" />
@@ -26,6 +28,8 @@
   <link rel="stylesheet" href="../css/pacta-modal.css">
   <link rel="stylesheet" href="../css/pacta-foundation.css">
 <script src="../js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
+<script src="../js/sw-register.js" defer></script>
 </head>
 <body data-nav-active="grants">
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
@@ -33,13 +37,13 @@
   <div class="layout">
     <div id="cabinet-sidebar-root"></div>
 
-    <main id="main-content" class="main">      <header class="topbar">
+    <main id="main-content" tabindex="-1" class="main">      <header class="topbar">
         <div class="topbar-left">
           <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="cabinet-dashboard">Bosh sahifa</a> / <span aria-current="page">Grantlar</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -59,18 +63,18 @@
       </div>
 
       <!-- Tabs -->
-      <div class="tabs" id="grantTabs">
-        <button type="button" class="tab is-active" data-tab="applied">Ariza yuborilgan <span class="tab__count">&mdash;</span></button>
-        <button type="button" class="tab" data-tab="won">Erishilgan <span class="tab__count">&mdash;</span></button>
+      <div class="tabs" id="grantTabs" role="tablist" aria-label="Grantlar holati">
+        <button type="button" role="tab" id="grant-tab-applied" class="tab is-active" data-tab="applied" aria-selected="true" aria-controls="panel-applied">Ariza yuborilgan <span class="tab__count">&mdash;</span></button>
+        <button type="button" role="tab" id="grant-tab-won" class="tab" data-tab="won" aria-selected="false" aria-controls="panel-won">Erishilgan <span class="tab__count">&mdash;</span></button>
       </div>
 
       <!-- ── Tab: Ariza yuborilgan grantlar ── -->
-      <div id="panel-applied">
+      <div id="panel-applied" role="tabpanel" aria-labelledby="grant-tab-applied" tabindex="0">
         <div class="cards">
-          <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-paper-plane-tilt"></i></div></div><div class="card__body"><div><p class="card__label">Jami ariza</p><p class="card__value">&mdash;</p></div></div></div>
-          <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock"></i></div></div><div class="card__body"><div><p class="card__label">Ko&rsquo;rib chiqilmoqda</p><p class="card__value" style="color:var(--warning-700);">&mdash;</p></div></div></div>
-          <div class="card"><div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div></div><div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value" style="color:var(--success-600);">&mdash;</p></div></div></div>
-          <div class="card"><div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-x-circle"></i></div></div><div class="card__body"><div><p class="card__label">Rad etildi</p><p class="card__value" style="color:var(--error-600);">&mdash;</p></div></div></div>
+          <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Jami ariza</p><p class="card__value" id="grantKpiAppliedTotal">&mdash;</p></div></div></div>
+          <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Ko&rsquo;rib chiqilmoqda</p><p class="card__value" id="grantKpiAppliedReview" style="color:var(--warning-700);">&mdash;</p></div></div></div>
+          <div class="card"><div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value" id="grantKpiAppliedApproved" style="color:var(--success-600);">&mdash;</p></div></div></div>
+          <div class="card"><div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-x-circle" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Rad etildi</p><p class="card__value" id="grantKpiAppliedRejected" style="color:var(--error-600);">&mdash;</p></div></div></div>
         </div>
 
         <section class="table-section">
@@ -81,27 +85,27 @@
             <caption class="u-visually-hidden">Ariza yuborilgan grant loyihalari ro'yxati</caption>
             <thead>
               <tr>
-                <th>Grant nomi</th>
-                <th>Donor / Tashkilot</th>
-                <th>So&rsquo;ralgan summa</th>
-                <th>Topshirilgan sana</th>
-                <th>Holat</th>
+                <th scope="col">Grant nomi</th>
+                <th scope="col">Donor / Tashkilot</th>
+                <th scope="col">So&rsquo;ralgan summa</th>
+                <th scope="col">Topshirilgan sana</th>
+                <th scope="col">Holat</th>
               </tr>
             </thead>
-            <tbody id="appliedGrantsBody">
-              <tr><td colspan="5" class="empty-state">Yuklanmoqda...</td></tr>
+            <tbody id="appliedGrantsBody" aria-live="polite">
+              <tr><td colspan="5" role="status" class="empty-state">Yuklanmoqda...</td></tr>
             </tbody>
           </table>
         </section>
       </div>
 
       <!-- ── Tab: Erishilgan grantlar ── -->
-      <div id="panel-won" style="display:none;">
+      <div id="panel-won" role="tabpanel" aria-labelledby="grant-tab-won" tabindex="0" style="display:none;">
         <div class="cards">
-          <div class="card"><div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-trophy"></i></div></div><div class="card__body"><div><p class="card__label">Jami erishilgan</p><p class="card__value">&mdash;</p></div></div></div>
-          <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-lightning"></i></div></div><div class="card__body"><div><p class="card__label">Faol loyihalar</p><p class="card__value" style="color:var(--primary-600);">&mdash;</p></div></div></div>
-          <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-flag-checkered"></i></div></div><div class="card__body"><div><p class="card__label">Yakunlangan</p><p class="card__value">&mdash;</p></div></div></div>
-          <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-currency-dollar"></i></div></div><div class="card__body"><div><p class="card__label">Jami jalb etilgan</p><p class="card__value" style="font-size:16px;">&mdash;</p></div></div></div>
+          <div class="card"><div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-trophy" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Jami erishilgan</p><p class="card__value" id="grantKpiWonTotal">&mdash;</p></div></div></div>
+          <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-lightning" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Faol loyihalar</p><p class="card__value" id="grantKpiWonActive" style="color:var(--primary-600);">&mdash;</p></div></div></div>
+          <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-flag-checkered" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Yakunlangan</p><p class="card__value" id="grantKpiWonDone">&mdash;</p></div></div></div>
+          <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-currency-dollar" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Jami jalb etilgan</p><p class="card__value" id="grantKpiWonAmount" style="font-size:16px;">&mdash;</p></div></div></div>
         </div>
 
         <section class="table-section">
@@ -112,16 +116,16 @@
             <caption class="u-visually-hidden">Yutib olingan va yakunlangan grant loyihalari</caption>
             <thead>
               <tr>
-                <th>Grant nomi</th>
-                <th>Donor / Tashkilot</th>
-                <th>Summa</th>
-                <th>Boshlangan</th>
-                <th>Tugash</th>
-                <th>Holat</th>
+                <th scope="col">Grant nomi</th>
+                <th scope="col">Donor / Tashkilot</th>
+                <th scope="col">Summa</th>
+                <th scope="col">Boshlangan</th>
+                <th scope="col">Tugash</th>
+                <th scope="col">Holat</th>
               </tr>
             </thead>
-            <tbody id="wonGrantsBody">
-              <tr><td colspan="6" class="empty-state">Yuklanmoqda...</td></tr>
+            <tbody id="wonGrantsBody" aria-live="polite">
+              <tr><td colspan="6" role="status" class="empty-state">Yuklanmoqda...</td></tr>
             </tbody>
           </table>
         </section>
@@ -137,8 +141,12 @@
       var tabs = document.querySelectorAll('#grantTabs .tab');
       tabs.forEach(function (tab) {
         tab.addEventListener('click', function () {
-          tabs.forEach(function (t) { t.classList.remove('is-active'); });
+          tabs.forEach(function (t) {
+            t.classList.remove('is-active');
+            t.setAttribute('aria-selected', 'false');
+          });
           tab.classList.add('is-active');
+          tab.setAttribute('aria-selected', 'true');
           var target = tab.getAttribute('data-tab');
           document.getElementById('panel-applied').style.display = target === 'applied' ? '' : 'none';
           document.getElementById('panel-won').style.display = target === 'won' ? '' : 'none';
@@ -151,28 +159,30 @@
   (function () {
     if (!NgoApi.getToken()) { var _next=encodeURIComponent(location.pathname + location.search); location.replace('cabinet-login?next=' + _next); return; }
 
-    var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
-
-    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-    function fmtDate(d) { if (!d) return '—'; var p = d.slice(0,10).split('-'); return p[2] + '.' + p[1] + '.' + p[0]; }
-
-    // Cabinet grants shows THIS user's grant applications. There's
-    // no grant_applications backend table yet — both tabs render
+    // No grant_applications backend table yet — both tabs render
     // honest empty states; KPI cards and tab counts read 0.
-    // Previous version kept full render code that operated on
-    // hardcoded empty arrays (40+ lines never executed). Removed.
     document.getElementById('appliedGrantsBody').innerHTML =
-      '<tr><td colspan="5" class="empty-state">'
+      '<tr><td colspan="5" role="status" class="empty-state">'
       + 'Hali grant topshirilmagan. <a href="../grants" style="color:var(--primary-500);text-decoration:underline">Faol grantlar ro‘yxatini ko‘ring</a> yoki <a href="../grant-tanlovlari" style="color:var(--primary-500);text-decoration:underline">AI yordamida sizga mos grantni toping</a>.'
       + '</td></tr>';
     document.getElementById('wonGrantsBody').innerHTML =
-      '<tr><td colspan="6" class="empty-state">Hali yutib olingan grant yo‘q. Topshirilgan arizalar tasdiqlangach bu yerda ko‘rinadi.</td></tr>';
+      '<tr><td colspan="6" role="status" class="empty-state">Hali yutib olingan grant yo‘q. Topshirilgan arizalar tasdiqlangach bu yerda ko‘rinadi.</td></tr>';
 
-    var grantTabCounts = document.querySelectorAll('#grantTabs .tab .tab__count');
-    if (grantTabCounts[0]) grantTabCounts[0].textContent = '0';
-    if (grantTabCounts[1]) grantTabCounts[1].textContent = '0';
-    document.querySelectorAll('#panel-applied .card__value, #panel-won .card__value')
-      .forEach(function (el) { el.textContent = '0'; });
+    // Use data-tab attributes instead of position-indexed lookup so a
+    // future tab reorder doesn't silently mismap counts. The tab counts
+    // are inside each tab's <span class="tab__count">.
+    var appliedCount = document.querySelector('#grantTabs [data-tab="applied"] .tab__count');
+    var wonCount     = document.querySelector('#grantTabs [data-tab="won"] .tab__count');
+    if (appliedCount) appliedCount.textContent = '0';
+    if (wonCount)     wonCount.textContent     = '0';
+    // Stable id-based zero-out instead of position-indexed selectors.
+    // Backend grant_applications doesn't exist yet, so all KPIs read 0.
+    [
+      'grantKpiAppliedTotal', 'grantKpiAppliedReview', 'grantKpiAppliedApproved', 'grantKpiAppliedRejected',
+      'grantKpiWonTotal', 'grantKpiWonActive', 'grantKpiWonDone', 'grantKpiWonAmount'
+    ].forEach(function (id) {
+      var el = document.getElementById(id); if (el) el.textContent = '0';
+    });
   })();
   </script>
   <script src="js/cabinet-chrome.js" defer></script>

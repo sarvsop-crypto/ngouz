@@ -1,6 +1,31 @@
 /* pacta-auth.page.css — shared styles for all auth screens */
 * { box-sizing: border-box; }
 
+/* Phosphor's ph-spinner is static. Auth pages don't load
+   pacta-foundation.css so the keyframe rule there isn't visible —
+   re-declare here so admin-login / cabinet-login submit buttons
+   actually spin during the request. */
+@keyframes ph-spin { to { transform: rotate(360deg); } }
+.ph.ph-spinner { display: inline-block; animation: ph-spin 1s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .ph.ph-spinner { animation: none; }
+}
+
+/* Skip-link — auth pages skipped pacta-foundation.css and weren't
+   styled, so the "Asosiy kontentga o'tish" link rendered as raw text
+   above the logo. Mirror the foundation rule: off-screen by default,
+   slides in on focus. */
+.skip-link {
+  position: fixed; top: 0; left: 0; z-index: 2000;
+  transform: translateY(-120%);
+  background: var(--primary-500, #0e7490);
+  color: #fff; padding: 13px 18px; border-radius: 0 0 10px 0;
+  font-size: 16px; font-weight: 600; text-decoration: none;
+}
+.skip-link:focus-visible { transform: translateY(0); }
+main#main-content:focus { outline: none; }
+
+
 body {
   margin: 0; min-height: 100vh;
   font-family: var(--font-body);

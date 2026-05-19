@@ -88,6 +88,20 @@
   });
 
   document.addEventListener('keydown', function (ev) {
-    if (ev.key === 'Escape') closeAll();
+    if (ev.key !== 'Escape') return;
+    // Return focus to the currently-open trigger before collapsing,
+    // so keyboard users don't get dumped onto <body>. Pick the open
+    // dropdown that contains document.activeElement when available;
+    // otherwise fall back to any open dropdown's trigger.
+    var openItems = document.querySelectorAll('.nav-item.has-dropdown.is-open');
+    if (!openItems.length) return;
+    var target = null;
+    for (var i = 0; i < openItems.length; i++) {
+      if (openItems[i].contains(document.activeElement)) { target = openItems[i]; break; }
+    }
+    if (!target) target = openItems[0];
+    var trig = target.querySelector('a[aria-haspopup]');
+    closeAll();
+    if (trig && typeof trig.focus === 'function') trig.focus();
   });
 })();

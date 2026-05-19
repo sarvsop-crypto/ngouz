@@ -38,11 +38,17 @@
     var el = ev.target.closest && ev.target.closest('[data-action="logout"]');
     if (!el) return;
     ev.preventDefault();
-    // Optimistic: clear local state + navigate immediately. /auth/logout
-    // still fires fire-and-forget so the backend session record gets
-    // revoked, but the user doesn't wait up to 15 s on a slow network.
-    try { localStorage.removeItem('ngo_api_token'); localStorage.removeItem('ngo_api_user'); } catch (e) {}
+    // Optimistic: fire /auth/logout BEFORE clearing the local token, so
+    // the in-flight POST still carries the Authorization header and the
+    // backend can revoke the right session. Earlier order (clear-then-
+    // POST) sent /auth/logout without auth, leaving zombie sessions on
+    // the server. The local clear + navigate still happen immediately
+    // so the user lands on the login page in ~50 ms.
     NgoApi.logout().catch(function () {});
+    try {
+      localStorage.removeItem('ngo_api_token'); localStorage.removeItem('ngo_api_user');
+      sessionStorage.removeItem('ngo_api_token'); sessionStorage.removeItem('ngo_api_user');
+    } catch (e) {}
     location.replace('admin-login');
   });
 })();

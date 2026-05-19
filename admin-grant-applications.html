@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>A'zolik arizalari — O'zNNTMA Admin</title>
+  <title>Grant arizalari — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -52,8 +52,8 @@
         <div class="sidebar__nav-section">
           <div class="sidebar__nav-label">ASOSIY MENYU</div>
           <a href="admin-dashboard" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
-          <a href="admin-membership-requests" class="sidebar__nav-link is-active" aria-current="page" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
-          <a href="admin-grant-applications" class="sidebar__nav-link" title="Grant arizalari"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Grant arizalari</span></a>
+          <a href="admin-membership-requests" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
+          <a href="admin-grant-applications" class="sidebar__nav-link is-active" aria-current="page" title="Grant arizalari"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Grant arizalari</span></a>
           <a href="admin-registry" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
           <a href="admin-regions" class="sidebar__nav-link" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Hududlar</span></a>
           <a href="admin-documents" class="sidebar__nav-link" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
@@ -84,7 +84,7 @@
     <main class="main" id="main-content" tabindex="-1">
       <header class="topbar">
         <div class="topbar-left">
-          <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="admin-dashboard">Boshqaruv</a> / <span aria-current="page">A'zolik arizalari</span></nav>
+          <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="admin-dashboard">Boshqaruv</a> / <span aria-current="page">Grant arizalari</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
@@ -103,20 +103,20 @@
       </header>
 
       <div class="main__header">
-        <h1 class="main__title">A&rsquo;zolik arizalari</h1>
+        <h1 class="main__title">Grant arizalari</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" id="exportMembershipBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport (CSV)</button>
+          <button type="button" class="btn btn--secondary" id="exportGrantAppsBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport (CSV)</button>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-file-text" aria-hidden="true"></i></div></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></div></div>
           <div class="card__body"><div><p class="card__label">Jami arizalar</p><p class="card__value" id="kpiTotal">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Kutilmoqda</p><p class="card__value" id="kpiPending">—</p></div></div>
+          <div class="card__body"><div><p class="card__label">Ko'rib chiqilmoqda</p><p class="card__value" id="kpiPending">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle" aria-hidden="true"></i></div></div>
@@ -124,32 +124,32 @@
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-x-circle" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Rad etilgan</p><p class="card__value" id="kpiRejected">—</p></div></div>
+          <div class="card__body"><div><p class="card__label">Rad etilgan</p><p class="card__value" id="kpiDeclined">—</p></div></div>
         </div>
       </div>
 
-      <section class="table-section" aria-labelledby="membershipTableTitle">
+      <section class="table-section" aria-labelledby="grantAppsTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="membershipTableTitle">Arizalar va holati</h2>
+          <h2 class="table-section__title" id="grantAppsTableTitle">Arizalar va holati</h2>
         </div>
         <form class="u-filter-row" role="search" aria-label="Arizalarni filtrlash">
-          <input id="membershipSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" placeholder="Tashkilot nomi..." aria-label="Qidirish" maxlength="200" />
-          <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="membershipRequestRows" data-status-filter="all">Barchasi</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="membershipRequestRows" data-status-filter="pending">Kutilmoqda</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="membershipRequestRows" data-status-filter="approved">Tasdiqlangan</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="membershipRequestRows" data-status-filter="returned">Qaytarilgan</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="membershipRequestRows" data-status-filter="rejected">Rad etilgan</button>
+          <input id="grantAppsSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" placeholder="Sarlavha, tashkilot..." aria-label="Qidirish" maxlength="200" />
+          <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="grantAppsRows" data-status-filter="all">Barchasi</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantAppsRows" data-status-filter="submitted">Yuborilgan</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantAppsRows" data-status-filter="review">Ko'rib chiqilmoqda</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantAppsRows" data-status-filter="approved">Tasdiqlangan</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantAppsRows" data-status-filter="declined">Rad etilgan</button>
         </form>
         <table class="table">
-          <caption class="u-visually-hidden">A'zolik arizalari jadvali</caption>
+          <caption class="u-visually-hidden">Grant arizalari jadvali</caption>
           <thead>
             <tr>
-              <th scope="col"><span class="u-visually-hidden">Tanlash</span></th><th scope="col">#</th><th scope="col">Tashkilot</th><th scope="col">Ariza beruvchi</th>
-              <th scope="col">Sana</th><th scope="col">Holat</th><th scope="col"><span class="u-visually-hidden">Amallar</span></th>
+              <th scope="col"><span class="u-visually-hidden">Tanlash</span></th><th scope="col">#</th><th scope="col">Sarlavha</th><th scope="col">Tashkilot</th>
+              <th scope="col">Byudjet</th><th scope="col">Yuborilgan</th><th scope="col">Holat</th><th scope="col"><span class="u-visually-hidden">Amallar</span></th>
             </tr>
           </thead>
-          <tbody id="membershipRequestRows" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="7" role="status">Yuklanmoqda...</td></tr>
+          <tbody id="grantAppsRows" aria-live="polite" aria-busy="true">
+            <tr class="u-empty-row"><td colspan="8" role="status">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -159,7 +159,7 @@
   <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header">
       <h2 class="notifications-panel__title">Bildirishnomalar</h2>
-    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
       <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
@@ -191,23 +191,16 @@
       toastTimer = setTimeout(function () { el.classList.remove('show'); }, 4000);
     }
 
-    var STATUS_BADGE = { 'pending': 'warning', 'approved': 'success', 'returned': 'info', 'rejected': 'error' };
-    var STATUS_LABEL = { 'pending': 'Kutilmoqda', 'approved': 'Tasdiqlangan', 'returned': 'Qaytarilgan', 'rejected': 'Rad etilgan' };
+    var STATUS_BADGE = { 'draft': 'neutral', 'submitted': 'info', 'review': 'warning', 'approved': 'success', 'declined': 'error' };
+    var STATUS_LABEL = { 'draft': 'Qoralama', 'submitted': 'Yuborilgan', 'review': "Ko'rib chiqilmoqda", 'approved': 'Tasdiqlangan', 'declined': 'Rad etilgan' };
 
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
-    function openModal(id) {
-      if (window.AdminModal) window.AdminModal.open(id);
-    }
-    function closeModal(id) {
-      if (window.AdminModal) window.AdminModal.close(id);
-    }
-
     function renderKpi() {
       document.getElementById('kpiTotal').textContent    = items.length;
-      document.getElementById('kpiPending').textContent  = items.filter(function(i){return i.status==='pending';}).length;
+      document.getElementById('kpiPending').textContent  = items.filter(function(i){return i.status==='submitted' || i.status==='review';}).length;
       document.getElementById('kpiApproved').textContent = items.filter(function(i){return i.status==='approved';}).length;
-      document.getElementById('kpiRejected').textContent = items.filter(function(i){return i.status==='rejected'||i.status==='returned';}).length;
+      document.getElementById('kpiDeclined').textContent = items.filter(function(i){return i.status==='declined';}).length;
     }
 
     function renderTable() {
@@ -215,97 +208,101 @@
       var filtered = items.filter(function (item) {
         if (statusFilter !== 'all' && item.status !== statusFilter) return false;
         if (q) {
-          // String coercion of null/undefined produces 'null'/'undefined'
-          // which polluted the haystack — typing 'null' matched every
-          // row that had a null name. Guard each field with || ''.
-          var hay = ((item.org_name || '') + ' ' + (item.applicant_name || '')).toLowerCase();
+          var hay = ((item.title || '') + ' ' + (item.org_name || '') + ' ' + (item.user_name || '')).toLowerCase();
           if (hay.indexOf(q) === -1) return false;
         }
         return true;
       });
-      var tbody = document.getElementById('membershipRequestRows');
-      if (!filtered.length) { tbody.innerHTML = '<tr class="u-empty-row"><td colspan="7" role="status">Ariza topilmadi</td></tr>'; return; }
+      var tbody = document.getElementById('grantAppsRows');
+      if (!filtered.length) { tbody.innerHTML = '<tr class="u-empty-row"><td colspan="8" role="status">Ariza topilmadi</td></tr>'; return; }
       tbody.innerHTML = filtered.map(function (a) {
         var badge = STATUS_BADGE[a.status] || 'neutral';
         var label = esc(STATUS_LABEL[a.status] || a.status || '');
-        var verified = (a.note || '').indexOf('tasdiqlangan') !== -1;
-        var verBadge = verified
-          ? '<span class="badge badge--success" style="font-size:10px">Tasdiqlangan</span>'
-          : '<span class="badge badge--warning" style="font-size:10px">Tekshirilmagan</span>';
-        // Numeric ids land inside an inline onclick — coerce to int so
-        // a stray non-digit can't escape the JS arg list.
         var idNum = parseInt(a.id, 10) || 0;
-        var orgIdNum = a.organization_id == null ? 'null' : (parseInt(a.organization_id, 10) || 'null');
+        var canAct = a.status === 'submitted' || a.status === 'review';
         return '<tr>' +
           '<td><input type="checkbox" aria-label="#' + esc(a.id) + ' arizasini tanlash" /></td>' +
           '<td><strong>#' + esc(a.id) + '</strong></td>' +
-          '<td>' + esc(a.org_name) + '<br>' + verBadge + '</td>' +
-          '<td>' + esc(a.applicant_name) + '<br><span style="font-size:12px;color:#798384">' + esc(a.phone || '') + '</span></td>' +
-          '<td>' + (a.created_at ? '<time datetime="' + esc(String(a.created_at).slice(0,10)) + '">' + esc(String(a.created_at).slice(0,10)) + '</time>' : '') + '</td>' +
+          '<td><div style="max-width:280px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + esc(a.title) + '">' + esc(a.title) + '</div>' +
+            (a.grant_title ? '<br><span style="font-size:11.5px;color:#798384">' + esc(a.grant_title) + '</span>' : '') + '</td>' +
+          '<td>' + esc(a.org_name || '—') + '<br><span style="font-size:12px;color:#798384">' + esc(a.user_name || '') + '</span></td>' +
+          '<td style="white-space:nowrap">' + esc(a.budget || '—') + '</td>' +
+          '<td>' + (a.submitted_at ? '<time datetime="' + esc(String(a.submitted_at).slice(0,10)) + '">' + esc(String(a.submitted_at).slice(0,10)) + '</time>' : '—') + '</td>' +
           '<td><span class="badge badge--' + badge + '">' + label + '</span></td>' +
           '<td style="white-space:nowrap">' +
-            (a.status === 'pending' ?
-              '<button type="button" class="btn btn--sm btn--primary" aria-label="#' + esc(a.id) + ' arizasini tasdiqlash" onclick="approveApp(' + idNum + ',' + orgIdNum + ')"><i class="ph ph-check" aria-hidden="true"></i> Tasdiqlash</button> ' +
-              '<button type="button" class="btn btn--sm btn--secondary" aria-label="#' + esc(a.id) + ' arizasini rad etish" onclick="rejectApp(' + idNum + ')"><i class="ph ph-x" aria-hidden="true"></i></button>'
-            : '—') +
+            '<button type="button" class="btn btn--sm btn--secondary" aria-label="#' + esc(a.id) + ' arizasini ko\'rib chiqish" onclick="openAppReview(' + idNum + ')"><i class="ph ph-eye" aria-hidden="true"></i> Ko\'rish</button> ' +
+            (canAct ?
+              '<button type="button" class="btn btn--sm btn--primary" aria-label="#' + esc(a.id) + ' arizasini tasdiqlash" onclick="approveApp(' + idNum + ')"><i class="ph ph-check" aria-hidden="true"></i></button> ' +
+              '<button type="button" class="btn btn--sm btn--secondary" aria-label="#' + esc(a.id) + ' arizasini rad etish" onclick="declineApp(' + idNum + ')"><i class="ph ph-x" aria-hidden="true"></i></button>'
+            : '') +
           '</td></tr>';
       }).join('');
     }
 
     function setRowsBusy(busy) {
-      var t = document.getElementById('membershipRequestRows');
+      var t = document.getElementById('grantAppsRows');
       if (t) {
         t.setAttribute('aria-busy', busy ? 'true' : 'false');
-        // Disable all row-action buttons during a PATCH so a slow API
-        // can't queue duplicate requests from rapid double-clicks.
-        // reload() re-renders the rows so we don't need to undo this
-        // explicitly on success — only on the catch path.
-        t.querySelectorAll('button[onclick^="approveApp"], button[onclick^="rejectApp"]').forEach(function (b) {
+        t.querySelectorAll('button[onclick^="approveApp"], button[onclick^="declineApp"], button[onclick^="openAppReview"]').forEach(function (b) {
           b.disabled = !!busy;
         });
       }
     }
-    window.approveApp = function (id, currentOrgId) {
-      var orgIdStr = prompt('Tashkilot ID raqamini kiriting yoki tasdiqlang:', currentOrgId || '');
-      if (orgIdStr === null) return;
-      var orgId = parseInt(orgIdStr, 10) || null;
-      if (!orgId) { toast('Tashkilot ID raqami kerak. NNT ro\'yxatidan toping.', 'error'); return; }
-      setRowsBusy(true);
-      NgoApi.patch('/admin/membership-requests/' + id, { status: 'approved', organization_id: orgId })
-        .then(function () { toast('Tasdiqlandi! Foydalanuvchi kabineti faollashtirildi.', 'success'); reload(); })
-        .catch(function (err) { setRowsBusy(false); toast('Tasdiqlashda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); });
+
+    window.openAppReview = function (id) {
+      var a = items.filter(function (x) { return parseInt(x.id, 10) === id; })[0];
+      if (!a) return;
+      var detailLines = [];
+      detailLines.push('Sarlavha: ' + (a.title || '—'));
+      detailLines.push('Tashkilot: ' + (a.org_name || '—'));
+      detailLines.push('Foydalanuvchi: ' + (a.user_name || '—'));
+      detailLines.push('Byudjet: ' + (a.budget || '—'));
+      detailLines.push('Grant: ' + (a.grant_title || a.grant_id || '—'));
+      detailLines.push('Yuborilgan: ' + (a.submitted_at || a.created_at || '—'));
+      if (a.summary) detailLines.push('\nLoyiha bayoni:\n' + a.summary);
+      if (a.file_path) detailLines.push('\nFayl: ' + a.file_path);
+      alert(detailLines.join('\n'));
     };
-    window.rejectApp = function (id) {
+
+    window.approveApp = function (id) {
+      var note = prompt('Tasdiqlash izohi (ixtiyoriy):', '');
+      if (note === null) return;
+      setRowsBusy(true);
+      NgoApi.patch('/admin/grant-applications/' + id, { status: 'approved', review_note: note || null })
+        .then(function () { toast('Ariza tasdiqlandi.', 'success'); reload(); })
+        .catch(function (err) { setRowsBusy(false); toast('Tasdiqlashda xatolik: ' + ((err && err.message) || "noma'lum"), 'error'); });
+    };
+
+    window.declineApp = function (id) {
       var note = prompt('Rad etish sababi:');
       if (note === null) return;
       note = (note || '').trim();
-      if (!note) { toast('Rad etish sababi bo\'sh bo\'lishi mumkin emas.', 'error'); return; }
+      if (!note) { toast("Rad etish sababi bo'sh bo'lishi mumkin emas.", 'error'); return; }
       setRowsBusy(true);
-      NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', review_note: note })
-        .then(function () { toast('Ariza qaytarildi.', 'success'); reload(); })
-        .catch(function (err) { setRowsBusy(false); toast('Rad etishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); });
+      NgoApi.patch('/admin/grant-applications/' + id, { status: 'declined', review_note: note })
+        .then(function () { toast('Ariza rad etildi.', 'success'); reload(); })
+        .catch(function (err) { setRowsBusy(false); toast('Rad etishda xatolik: ' + ((err && err.message) || "noma'lum"), 'error'); });
     };
 
     function reload() {
-      NgoApi.get('/admin/membership-requests?limit=200')
+      NgoApi.get('/admin/grant-applications?limit=200')
         .then(function (res) {
-          // Newest-first triage order — was raw API order.
           items = (res.items || []).sort(function (a, b) {
             return (new Date(b.created_at).getTime() || 0) - (new Date(a.created_at).getTime() || 0);
           });
           renderTable(); renderKpi();
         })
         .catch(function (err) {
-          var tbody = document.getElementById('membershipRequestRows');
-          if (tbody) tbody.innerHTML = '<tr class="u-empty-row"><td colspan="7" role="alert" style="color:var(--error-600)">Yuklashda xatolik: ' + esc((err && err.message) || 'noma\'lum') + '</td></tr>';
+          var tbody = document.getElementById('grantAppsRows');
+          if (tbody) tbody.innerHTML = '<tr class="u-empty-row"><td colspan="8" role="alert" style="color:var(--error-600)">Yuklashda xatolik: ' + esc((err && err.message) || "noma'lum") + '</td></tr>';
         })
         .then(function () {
-          var t = document.getElementById('membershipRequestRows');
+          var t = document.getElementById('grantAppsRows');
           if (t) t.setAttribute('aria-busy', 'false');
         });
     }
 
-    document.getElementById('membershipSearch').addEventListener('input', function () { searchQ = this.value; renderTable(); });
+    document.getElementById('grantAppsSearch').addEventListener('input', function () { searchQ = this.value; renderTable(); });
 
     document.querySelectorAll('[data-status-filter]').forEach(function (btn) {
       btn.addEventListener('click', function () {
@@ -322,18 +319,14 @@
 
     reload();
 
-    // CSV export — was alert('… tez orada') via pacta-app's
-    // data-action="export" delegate. Build a real CSV from the
-    // in-memory items array. UTF-8 BOM for Excel; cell quoting
-    // matches admin-feedback's exporter (iter 270).
-    var exportBtn = document.getElementById('exportMembershipBtn');
+    var exportBtn = document.getElementById('exportGrantAppsBtn');
     if (exportBtn) {
       exportBtn.addEventListener('click', function () {
-        if (!items.length) { toast('Eksport qilish uchun ariza yo\'q', 'info'); return; }
+        if (!items.length) { toast("Eksport qilish uchun ariza yo'q", 'info'); return; }
         window.exportCsv(
-          'azolik-arizalari-' + new Date().toISOString().slice(0, 10) + '.csv',
+          'grant-arizalari-' + new Date().toISOString().slice(0, 10) + '.csv',
           items,
-          ['id', 'created_at', 'status', 'org_name', 'applicant_name', 'phone', 'email', 'organization_id', 'review_note']
+          ['id', 'created_at', 'submitted_at', 'reviewed_at', 'status', 'title', 'org_name', 'user_name', 'budget', 'grant_title', 'review_note']
         );
       });
     }

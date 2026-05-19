@@ -4,7 +4,14 @@ Disallow: /admin-*
 Disallow: /cabinet/
 Disallow: /functions/
 Disallow: /api/
-Disallow: /*?*
+Disallow: /search-results
+# Status-lookup pages and the SW offline fallback are all noindex; tell
+# crawlers up-front so they don't burn budget fetching pages whose meta
+# robots will exclude them anyway.
+Disallow: /membership-status
+Disallow: /report-status
+Disallow: /service-request-status
+Disallow: /offline
 
 # Crawl rate hint (most bots ignore but Yandex/Bing honor it).
 Crawl-delay: 1

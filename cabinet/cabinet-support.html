@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="../favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Murojaat — A'zo Kabinet</title>
 <meta name="theme-color" content="#0f6a57" />
@@ -26,6 +28,8 @@
   <link rel="stylesheet" href="../css/pacta-modal.css">
   <link rel="stylesheet" href="../css/pacta-foundation.css">
 <script src="../js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
+<script src="../js/sw-register.js" defer></script>
 </head>
 <body data-nav-active="support">
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
@@ -33,13 +37,13 @@
   <div class="layout">
     <div id="cabinet-sidebar-root"></div>
 
-    <main id="main-content" class="main">      <header class="topbar">
+    <main id="main-content" tabindex="-1" class="main">      <header class="topbar">
         <div class="topbar-left">
           <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="cabinet-dashboard">Bosh sahifa</a> / <span aria-current="page">Murojaat</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -58,7 +62,7 @@
           <h1 class="help-header__title">Murojaat &amp; Yordam</h1>
           <p class="support-header-sub">Ko&rsquo;p so&rsquo;raladigan savollarga javob toping yoki bizga yozing.</p>
         </div>
-        <button type="button" class="btn btn--primary"><i class="ph ph-plus"></i> Yangi murojaat</button>
+        <button type="button" class="btn btn--primary"><i class="ph ph-plus" aria-hidden="true"></i> Yangi murojaat</button>
       </div>
 
       <div class="support-layout">
@@ -102,10 +106,10 @@
           <!-- Contact info card -->
           <div class="support-side-card">
             <p class="support-kicker support-kicker--tight">BOG&rsquo;LANISH</p>
-            <table class="support-contact-table">
+            <table class="support-contact-table" role="presentation">
               <tr>
                 <td class="support-contact-icon-cell">
-                  <div class="support-contact-icon"><i class="ph ph-phone"></i></div>
+                  <div class="support-contact-icon"><i class="ph ph-phone" aria-hidden="true"></i></div>
                 </td>
                 <td class="support-contact-cell">
                   <div class="support-contact-label">Telefon</div>
@@ -114,7 +118,7 @@
               </tr>
               <tr>
                 <td class="support-contact-icon-cell">
-                  <div class="support-contact-icon"><i class="ph ph-envelope"></i></div>
+                  <div class="support-contact-icon"><i class="ph ph-envelope" aria-hidden="true"></i></div>
                 </td>
                 <td class="support-contact-cell">
                   <div class="support-contact-label">Email</div>
@@ -123,7 +127,7 @@
               </tr>
               <tr>
                 <td class="support-contact-icon-cell support-contact-icon-cell--last">
-                  <div class="support-contact-icon"><i class="ph ph-map-pin"></i></div>
+                  <div class="support-contact-icon"><i class="ph ph-map-pin" aria-hidden="true"></i></div>
                 </td>
                 <td class="support-contact-cell support-contact-cell--last">
                   <div class="support-contact-label">Manzil</div>
@@ -136,10 +140,10 @@
           <!-- Submit form card -->
           <div class="support-side-card">
             <p class="support-kicker support-kicker--tight">MUROJAAT YUBORISH</p>
-            <div class="support-form">
+            <div class="support-form" id="supportForm">
               <div>
-                <label class="support-form-label">Mavzu</label>
-                <select aria-label="Mavzu" class="support-form-control">
+                <label class="support-form-label" for="supportSubject">Mavzu</label>
+                <select id="supportSubject" class="support-form-control">
                   <option>Hujjatlar bo&rsquo;yicha</option>
                   <option>Ariza holati</option>
                   <option>Texnik muammo</option>
@@ -147,18 +151,18 @@
                 </select>
               </div>
               <div>
-                <label class="support-form-label">Muhimlik darajasi</label>
-                <select aria-label="Muhimlik darajasi" class="support-form-control">
+                <label class="support-form-label" for="supportPriority">Muhimlik darajasi</label>
+                <select id="supportPriority" class="support-form-control">
                   <option>Oddiy</option>
                   <option>O&rsquo;rta</option>
                   <option>Shoshilinch</option>
                 </select>
               </div>
               <div>
-                <label class="support-form-label">Xabar</label>
-                <textarea aria-label="Xabar" rows="4" placeholder="Muammoingizni batafsil yozing..." class="support-form-control support-form-control--textarea"></textarea>
+                <label class="support-form-label" for="supportMessage">Xabar</label>
+                <textarea id="supportMessage" rows="4" maxlength="5000" placeholder="Muammoingizni batafsil yozing..." class="support-form-control support-form-control--textarea"></textarea>
               </div>
-              <button type="button" class="btn btn--primary support-submit-btn"><i class="ph ph-paper-plane-tilt"></i> Yuborish</button>
+              <button type="button" class="btn btn--primary support-submit-btn" id="supportSubmitBtn"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i> Yuborish</button>
             </div>
           </div>
 
@@ -184,33 +188,57 @@
     var newRequestBtn = document.querySelector('.help-header .btn--primary');
     if (newRequestBtn) {
       newRequestBtn.addEventListener('click', function () {
-        var formCard = document.querySelector('.support-form');
-        if (formCard) formCard.scrollIntoView({ behavior: 'smooth' });
+        var formCard = document.getElementById('supportForm');
+        if (formCard) {
+          var rm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          formCard.scrollIntoView({ behavior: rm ? 'auto' : 'smooth' });
+        }
       });
     }
 
-    var btn = document.querySelector('.support-submit-btn');
+    var btn = document.getElementById('supportSubmitBtn');
     if (!btn) return;
 
-    btn.addEventListener('click', function () {
-      var formEl = document.querySelector('.support-form');
+    function showFormStatus(msg, kind) {
+      var formEl = document.getElementById('supportForm');
       if (!formEl) return;
-      var selects = formEl.querySelectorAll('select');
-      var textarea = formEl.querySelector('textarea');
-      var subject = selects[0] ? selects[0].value : '';
-      var priority = selects[1] ? selects[1].value : 'Oddiy';
+      var box = document.getElementById('supportFormStatus');
+      if (!box) {
+        box = document.createElement('p');
+        box.id = 'supportFormStatus';
+        formEl.appendChild(box);
+      }
+      var palette = kind === 'error'
+        ? 'background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;'
+        : 'background:#dcfce7;color:#166534;border:1px solid #86efac;';
+      box.style.cssText = palette + 'border-radius:8px;padding:10px 14px;margin:12px 0 0;font-size:14px;';
+      box.setAttribute('role', kind === 'error' ? 'alert' : 'status');
+      box.textContent = msg;
+    }
+
+    btn.addEventListener('click', function () {
+      var formEl = document.getElementById('supportForm');
+      if (!formEl) return;
+      var subjEl = document.getElementById('supportSubject');
+      var prioEl = document.getElementById('supportPriority');
+      var textarea = document.getElementById('supportMessage');
+      var subject = subjEl ? subjEl.value : '';
+      var priority = prioEl ? prioEl.value : 'Oddiy';
       var message = textarea ? textarea.value.trim() : '';
 
+      var prevStatus = document.getElementById('supportFormStatus');
+      if (prevStatus) prevStatus.remove();
+
       if (!message) {
-        alert('Iltimos xabar yozing.');
+        showFormStatus('Iltimos xabar yozing.', 'error');
+        if (textarea) try { textarea.focus(); } catch (_) {}
         return;
       }
 
       btn.disabled = true;
-      btn.innerHTML = '<i class="ph ph-spinner"></i> Yuborilmoqda...';
+      btn.innerHTML = '<i class=\"ph ph-spinner\" aria-hidden=\"true\"></i> Yuborilmoqda...';
 
-      var token = '';
-      try { token = localStorage.getItem('ngo_api_token') || ''; } catch(e) {}
+      var token = (NgoApi && NgoApi.getToken) ? NgoApi.getToken() : '';
 
       var headers = { 'Content-Type': 'application/json', 'Accept': 'application/json' };
       if (token) headers['Authorization'] = 'Bearer ' + token;
@@ -229,22 +257,22 @@
       .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; }); })
       .then(function (res) {
         btn.disabled = false;
-        btn.innerHTML = '<i class="ph ph-paper-plane-tilt"></i> Yuborish';
+        btn.innerHTML = '<i class=\"ph ph-paper-plane-tilt\" aria-hidden=\"true\"></i> Yuborish';
         if (res.ok) {
           if (textarea) textarea.value = '';
           var idStr = res.data && res.data.id ? '#' + res.data.id : '';
-          alert('Murojaatingiz qabul qilindi' + (idStr ? ' (' + idStr + ')' : '') + '. Tez orada javob beramiz.');
+          showFormStatus('Murojaatingiz qabul qilindi' + (idStr ? ' (' + idStr + ')' : '') + '. Tez orada javob beramiz.', 'success');
         } else {
           // Backend error path — earlier this swallowed any non-2xx and
           // showed the success alert anyway, so users with a rejected
           // submission thought it went through and never re-tried.
-          alert('Xatolik: ' + ((res.data && res.data.message) || 'Iltimos qaytadan urinib ko‘ring.'));
+          showFormStatus('Xatolik: ' + ((res.data && res.data.message) || 'Iltimos qaytadan urinib ko‘ring.'), 'error');
         }
       })
       .catch(function () {
         btn.disabled = false;
-        btn.innerHTML = '<i class="ph ph-paper-plane-tilt"></i> Yuborish';
-        alert('Tarmoq xatosi. Internet aloqangizni tekshiring.');
+        btn.innerHTML = '<i class=\"ph ph-paper-plane-tilt\" aria-hidden=\"true\"></i> Yuborish';
+        showFormStatus('Tarmoq xatosi. Internet aloqangizni tekshiring va qayta urinib ko‘ring.', 'error');
       });
     });
 

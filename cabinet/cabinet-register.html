@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="../favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ro'yxatdan o'tish — O'zNNTMA Kabinet</title>
 <meta name="theme-color" content="#0f6a57" />
@@ -20,6 +22,8 @@
   <link rel="stylesheet" href="../css/pacta-tokens.css">
   <link rel="stylesheet" href="../css/pacta-auth.page.css">
 <script src="../js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
+<script src="../js/sw-register.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
@@ -30,11 +34,11 @@
       <h1 class="header__title">O&rsquo;zNNTMA</h1>
     </header>
 
-    <main id="main-content" class="main">      <div class="form-card">
+    <main id="main-content" tabindex="-1" class="main">      <div class="form-card">
         <div class="form-header">
           <div class="form-header__icon-wrap">
             <div class="form-header__icon-inner">
-              <i class="ph ph-user-plus" style="font-size:24px;color:var(--primary-500);"></i>
+              <i class="ph ph-user-plus" style="font-size:24px;color:var(--primary-500);" aria-hidden="true"></i>
             </div>
           </div>
           <h2 class="form-header__title">Hisob yaratish</h2>
@@ -43,44 +47,44 @@
 
         <form class="form-fields" id="registerForm">
           <div class="field">
-            <label class="field__label" for="phone">Telefon raqam <span>*</span></label>
+            <label class="field__label" for="phone">Telefon raqam <span aria-hidden="true">*</span></label>
             <div class="field__input-wrap">
-              <input type="tel" id="phone" class="field__input" name="phone" placeholder="+998 __ ___ __ __" required autocomplete="tel" />
+              <input type="tel" id="phone" class="field__input" name="phone" placeholder="+998 __ ___ __ __" required autocomplete="tel" inputmode="tel" maxlength="40" />
             </div>
-            <p id="phoneStatus" style="font-size:13px;margin:6px 0 0;display:none"></p>
+            <p id="phoneStatus" role="status" aria-live="polite" style="font-size:13px;margin:6px 0 0;display:none"></p>
           </div>
 
-          <div id="orgInfo" style="display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px 16px;margin:4px 0 8px;">
-            <p style="margin:0;font-size:13px;color:#166534"><i class="ph ph-seal-check" style="vertical-align:middle"></i> Tasdiqlangan tashkilot:</p>
+          <div id="orgInfo" role="status" aria-live="polite" style="display:none;background:#f0fdf4;border:1px solid #86efac;border-radius:8px;padding:12px 16px;margin:4px 0 8px;">
+            <p style="margin:0;font-size:13px;color:#166534"><i class="ph ph-seal-check" style="vertical-align:middle" aria-hidden="true"></i> Tasdiqlangan tashkilot:</p>
             <p id="orgName" style="margin:4px 0 0;font-weight:600;color:#166534"></p>
             <p id="orgLeader" style="margin:2px 0 0;font-size:13px;color:#166534"></p>
           </div>
 
-          <div id="orgWarning" style="display:none;background:#fef9c3;border:1px solid #fde047;border-radius:8px;padding:12px 16px;margin:4px 0 8px;">
-            <p style="margin:0;font-size:13px;color:#854d0e"><i class="ph ph-warning" style="vertical-align:middle"></i> Bu telefon raqam a'zolar ro'yxatida topilmadi. Ariza yuborishingiz mumkin, lekin administrator tekshiradi.</p>
+          <div id="orgWarning" role="status" aria-live="polite" style="display:none;background:#fef9c3;border:1px solid #fde047;border-radius:8px;padding:12px 16px;margin:4px 0 8px;">
+            <p style="margin:0;font-size:13px;color:#854d0e"><i class="ph ph-warning" style="vertical-align:middle" aria-hidden="true"></i> Bu telefon raqam a'zolar ro'yxatida topilmadi. Ariza yuborishingiz mumkin, lekin administrator tekshiradi.</p>
           </div>
 
           <div class="field">
-            <label class="field__label" for="fullname">To&rsquo;liq ism <span>*</span></label>
+            <label class="field__label" for="fullname">To&rsquo;liq ism <span aria-hidden="true">*</span></label>
             <div class="field__input-wrap">
-              <input type="text" id="fullname" class="field__input" name="fullname" placeholder="Ism va familiyangizni kiriting" required autocomplete="name" />
+              <input type="text" id="fullname" class="field__input" name="fullname" placeholder="Ism va familiyangizni kiriting" required autocomplete="name" maxlength="200" />
             </div>
           </div>
 
           <div class="field" id="orgSearchField" style="display:none">
-            <label class="field__label" for="orgSearch">Tashkilotingizni tanlang <span>*</span></label>
+            <label class="field__label" for="orgSearch">Tashkilotingizni tanlang <span aria-hidden="true">*</span></label>
             <div class="field__input-wrap">
-              <input type="text" id="orgSearch" class="field__input" placeholder="Tashkilot nomini yozing..." autocomplete="off" />
+              <input type="search" enterkeyhint="search" id="orgSearch" class="field__input" placeholder="Tashkilot nomini yozing..." autocomplete="off" maxlength="300" role="combobox" aria-autocomplete="list" aria-controls="orgResults" aria-expanded="false" />
             </div>
-            <div id="orgResults" style="max-height:200px;overflow-y:auto;border:1px solid #e4e7e7;border-radius:8px;margin-top:4px;display:none"></div>
+            <div id="orgResults" role="listbox" aria-label="Topilgan tashkilotlar" style="max-height:200px;overflow-y:auto;border:1px solid #e4e7e7;border-radius:8px;margin-top:4px;display:none"></div>
           </div>
 
           <div class="field">
-            <label class="field__label" for="password">Parol <span>*</span></label>
+            <label class="field__label" for="password">Parol <span aria-hidden="true">*</span></label>
             <div class="field__input-wrap">
-              <input type="password" id="password" class="field__input" name="password" placeholder="Kamida 8 ta belgi" required minlength="8" autocomplete="new-password" />
+              <input type="password" id="password" class="field__input" name="password" placeholder="Kamida 12 ta belgi" required minlength="12" maxlength="128" autocomplete="new-password" />
               <button type="button" class="field__toggle" id="togglePassword" aria-label="Parolni ko'rsatish">
-                <i class="ph ph-eye"></i>
+                <i class="ph ph-eye" aria-hidden="true"></i>
               </button>
             </div>
           </div>
@@ -96,7 +100,7 @@
           <input type="hidden" id="orgId" value="" />
 
           <button type="submit" class="btn-auth">
-            <i class="ph ph-user-check"></i> Ariza yuborish
+            <i class="ph ph-user-check" aria-hidden="true"></i> Ariza yuborish
           </button>
         </form>
 
@@ -108,11 +112,11 @@
 
   <footer class="footer">
     <p class="footer__copyright">&copy; 2026 O&rsquo;zNNTMA. Barcha huquqlar himoyalangan.</p>
-    <nav class="footer__links">
-      <a href="mailto:info@ngo.uz" class="footer__link"><i class="ph ph-envelope"></i> info@ngo.uz</a>
-      <a href="../maxfiylik-siyosati" class="footer__link"><i class="ph ph-shield"></i> Maxfiylik</a>
-      <a href="../foydalanish-shartlari" class="footer__link"><i class="ph ph-file-text"></i> Shartlar</a>
-      <a href="cabinet-support" class="footer__link"><i class="ph ph-question"></i> Yordam</a>
+    <nav class="footer__links" aria-label="Yordam havolalari">
+      <a href="mailto:info@ngo.uz" class="footer__link"><i class="ph ph-envelope" aria-hidden="true"></i> info@ngo.uz</a>
+      <a href="../maxfiylik-siyosati" class="footer__link"><i class="ph ph-shield" aria-hidden="true"></i> Maxfiylik</a>
+      <a href="../foydalanish-shartlari" class="footer__link"><i class="ph ph-file-text" aria-hidden="true"></i> Shartlar</a>
+      <a href="cabinet-support" class="footer__link"><i class="ph ph-question" aria-hidden="true"></i> Yordam</a>
     </nav>
   </footer>
 
@@ -132,12 +136,25 @@
     document.getElementById('togglePassword').addEventListener('click', function () {
       var inp = document.getElementById('password');
       var icon = this.querySelector('i');
-      if (inp.type === 'password') { inp.type = 'text'; icon.className = 'ph ph-eye-slash'; }
-      else { inp.type = 'password'; icon.className = 'ph ph-eye'; }
+      if (inp.type === 'password') {
+        inp.type = 'text';
+        icon.className = 'ph ph-eye-slash';
+        this.setAttribute('aria-label', 'Parolni yashirish');
+      } else {
+        inp.type = 'password';
+        icon.className = 'ph ph-eye';
+        this.setAttribute('aria-label', "Parolni ko'rsatish");
+      }
     });
 
     // Phone verification on blur
     var verifyTimer;
+    // Monotonic seq guards against stale responses overwriting newer
+    // ones — without it, typing 998111 then quickly editing to
+    // 998222 could resolve in either order, and a 998111 response
+    // landing last would mislabel the 998222 phone's org. Each new
+    // request bumps verifySeq; resolutions check it before applying.
+    var verifySeq = 0;
     document.getElementById('phone').addEventListener('input', function () {
       clearTimeout(verifyTimer);
       var phone = this.value.replace(/[^\d]/g, '');
@@ -147,6 +164,7 @@
       if (phone.length < 9) return;
 
       verifyTimer = setTimeout(function () {
+        var mySeq = ++verifySeq;
         var status = document.getElementById('phoneStatus');
         status.textContent = 'Tekshirilmoqda...';
         status.style.color = '#798384';
@@ -157,8 +175,12 @@
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ phone: phone })
         })
-        .then(function (r) { return r.json(); })
+        .then(function (r) {
+          if (!r.ok) { var e = new Error('http_' + r.status); e.status = r.status; throw e; }
+          return r.json();
+        })
         .then(function (res) {
+          if (mySeq !== verifySeq) return; // stale — newer request in flight
           if (res.verified && res.organization) {
             document.getElementById('orgInfo').style.display = 'block';
             document.getElementById('orgName').textContent = res.organization.name;
@@ -174,97 +196,219 @@
             status.style.color = '#854d0e';
           }
         })
-        .catch(function () { status.style.display = 'none'; });
+        .catch(function () {
+          if (mySeq !== verifySeq) return; // stale failure shouldn't override newer in-flight UI
+          // Silent hide previously hid all signal of failure — user
+          // typed the phone, saw "Tekshirilmoqda..." flash and vanish,
+          // and was stuck without knowing whether to type more or to
+          // pick from the search dropdown. Surface a recoverable
+          // error and unblock the search path so they can still
+          // proceed by picking the org manually.
+          status.textContent = 'Telefonni tekshirib bo\'lmadi. Tashkilotingizni qidiruv orqali tanlang.';
+          status.style.color = 'var(--error-600, #dc2626)';
+          status.style.display = 'block';
+          document.getElementById('orgSearchField').style.display = 'block';
+        });
       }, 500);
     });
 
     // Org search for unverified phones
     var orgSearchTimer;
+    // Monotonic seq guards against stale "ngo" results overwriting
+    // newer "ngouz" results when the slower request resolves last.
+    var orgSearchSeq = 0;
+    function setOrgResultsVisible(visible) {
+      var results = document.getElementById('orgResults');
+      var searchEl = document.getElementById('orgSearch');
+      if (results) results.style.display = visible ? 'block' : 'none';
+      if (searchEl) searchEl.setAttribute('aria-expanded', visible ? 'true' : 'false');
+    }
     document.getElementById('orgSearch').addEventListener('input', function () {
       clearTimeout(orgSearchTimer);
       var q = this.value.trim();
       var results = document.getElementById('orgResults');
-      if (q.length < 3) { results.style.display = 'none'; return; }
+      if (q.length < 3) { setOrgResultsVisible(false); return; }
       orgSearchTimer = setTimeout(function () {
+        var mySeq = ++orgSearchSeq;
+        // Show a loading hint so the user knows the search is in
+        // flight — without it the dropdown stays blank for the round
+        // trip and feels unresponsive on slow networks.
+        results.innerHTML = '<div role="status" style="padding:12px;color:#798384;font-size:13px"><i class="ph ph-spinner" aria-hidden="true"></i> Qidirilmoqda...</div>';
+        setOrgResultsVisible(true);
         fetchT(API + '/public/organizations?q=' + encodeURIComponent(q) + '&limit=10')
-          .then(function (r) { return r.json(); })
+          .then(function (r) {
+            if (!r.ok) { var e = new Error('http_' + r.status); e.status = r.status; throw e; }
+            return r.json();
+          })
           .then(function (res) {
+            if (mySeq !== orgSearchSeq) return; // stale — newer query in flight
             var items = res.items || [];
-            if (!items.length) { results.innerHTML = '<div style="padding:12px;color:#798384;font-size:13px">Topilmadi</div>'; results.style.display = 'block'; return; }
+            if (!items.length) { results.innerHTML = '<div role="status" style="padding:12px;color:#798384;font-size:13px">Topilmadi</div>'; setOrgResultsVisible(true); return; }
             results.innerHTML = items.map(function (o) {
               // Three injection surfaces in this row: data-org-id and
               // data-org-name attributes, and the visible <strong>/<div>
               // text. Sanitize the id to ASCII-word chars (it lands in
               // form.orgId.value later); esc the name and meta strings.
-              return '<div style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f1f3f5;font-size:14px" onmouseover="this.style.background=\'#f0fafd\'" onmouseout="this.style.background=\'\'" data-org-id="' + safeOrgId(o.id) + '" data-org-name="' + esc(o.name || '') + '">'
+              // role=button + tabindex=0 makes each result reachable
+              // and activatable via Tab/Enter; the click handler below
+              // also handles Enter/Space via the keydown listener.
+              return '<div role="option" tabindex="0" aria-selected="false" style="padding:10px 14px;cursor:pointer;border-bottom:1px solid #f1f3f5;font-size:14px" onmouseover="this.style.background=\'#f0fafd\'" onmouseout="this.style.background=\'\'" onfocus="this.style.background=\'#f0fafd\'" onblur="this.style.background=\'\'" data-org-id="' + safeOrgId(o.id) + '" data-org-name="' + esc(o.name || '') + '">'
                 + '<strong>' + esc(o.name || '') + '</strong>'
                 + '<div style="font-size:12px;color:#798384">' + esc(o.region_code || '') + ' · ' + esc(o.leader_name || '') + '</div>'
                 + '</div>';
             }).join('');
-            results.style.display = 'block';
+            setOrgResultsVisible(true);
             results.querySelectorAll('[data-org-id]').forEach(function (el) {
+              el.addEventListener('keydown', function (ev) {
+                if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); el.click(); }
+              });
               el.addEventListener('click', function () {
                 // dataset values are decoded HTML entities — so a
                 // value originally with < gets stored as the literal
                 // '<' here. esc again before innerHTML interpolation.
                 document.getElementById('orgId').value = this.dataset.orgId;
                 document.getElementById('orgSearch').value = this.dataset.orgName;
-                results.style.display = 'none';
-                document.getElementById('orgWarning').innerHTML = '<p style="margin:0;font-size:13px;color:#166534"><i class="ph ph-check-circle" style="vertical-align:middle"></i> Tanlangan: <strong>' + esc(this.dataset.orgName) + '</strong></p>';
+                // listbox/option pattern needs aria-selected to track
+                // the picked entry. Clear all then mark this one — SR
+                // users who reopen the listbox now hear "selected" on
+                // the right row instead of seeing all as unselected.
+                results.querySelectorAll('[role="option"]').forEach(function (o) {
+                  o.setAttribute('aria-selected', 'false');
+                });
+                this.setAttribute('aria-selected', 'true');
+                setOrgResultsVisible(false);
+                document.getElementById('orgWarning').innerHTML = '<p style="margin:0;font-size:13px;color:#166534"><i class="ph ph-check-circle" style="vertical-align:middle" aria-hidden="true"></i> Tanlangan: <strong>' + esc(this.dataset.orgName) + '</strong></p>';
                 document.getElementById('orgWarning').style.background = '#f0fdf4';
                 document.getElementById('orgWarning').style.borderColor = '#86efac';
               });
             });
+          })
+          .catch(function () {
+            if (mySeq !== orgSearchSeq) return; // stale failure — newer query already running
+            // Without this, a backend failure left the dropdown blank
+            // and users on the unverified-phone path had no way to
+            // proceed (they couldn't pick an org). Surface the error
+            // so the user knows to retry.
+            results.innerHTML = '<div role="alert" style="padding:12px;color:var(--error-600,#dc2626);font-size:13px"><i class="ph ph-warning" aria-hidden="true"></i> Tashkilotlarni qidirib bo\'lmadi. Internet aloqasini tekshiring va qaytadan yozing.</div>';
+            setOrgResultsVisible(true);
           });
       }, 300);
     });
 
+    // Close orgResults on Escape (with focus return) and on outside click.
+    document.addEventListener('keydown', function (ev) {
+      if (ev.key !== 'Escape') return;
+      var results = document.getElementById('orgResults');
+      if (!results || results.style.display === 'none') return;
+      setOrgResultsVisible(false);
+      try { document.getElementById('orgSearch').focus(); } catch (e) {}
+    });
+    document.addEventListener('click', function (ev) {
+      var results = document.getElementById('orgResults');
+      var search = document.getElementById('orgSearch');
+      if (!results || results.style.display === 'none') return;
+      if (results.contains(ev.target) || (search && search.contains(ev.target))) return;
+      setOrgResultsVisible(false);
+    });
+
     // Registration submit
+    function showRegisterError(msg) {
+      var form = document.getElementById('registerForm');
+      var box = document.getElementById('registerFormErr');
+      if (!box) {
+        box = document.createElement('p');
+        box.id = 'registerFormErr';
+        box.setAttribute('role', 'alert');
+        box.style.cssText = 'background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;margin:12px 0 0;font-size:14px;';
+        var actions = form.querySelector('button[type="submit"]');
+        if (actions && actions.parentNode) actions.parentNode.insertBefore(box, actions);
+        else form.appendChild(box);
+      }
+      box.textContent = msg;
+    }
+
     document.getElementById('registerForm').addEventListener('submit', function (e) {
       e.preventDefault();
       // Native HTML5 validation (required + type=tel/email) covers most
-      // of the empty-field cases; the alerts below only fire after the
-      // browser-level checks pass (or for finer rules like 9-digit
-      // phone after stripping non-digits).
+      // of the empty-field cases; the inline errors below only fire
+      // after the browser-level checks pass (or for finer rules like
+      // 9-digit phone after stripping non-digits).
       if (!this.checkValidity()) { this.reportValidity(); return; }
+      var prevErr = document.getElementById('registerFormErr');
+      if (prevErr) prevErr.remove();
       var phone = document.getElementById('phone').value.replace(/[^\d]/g, '');
       var name  = document.getElementById('fullname').value.trim();
       var pass  = document.getElementById('password').value;
       var orgId = document.getElementById('orgId').value;
-      if (!phone || phone.length < 9) { alert('Telefon raqamni to‘g‘ri kiriting (9 raqam).'); return; }
-      if (!name) { alert('Ismingizni kiriting.'); return; }
-      if (pass.length < 8) { alert('Parol kamida 8 belgidan iborat bo\'lishi kerak.'); return; }
+      if (!phone || phone.length < 9) {
+        showRegisterError('Telefon raqamni to‘g‘ri kiriting (kamida 9 raqam).');
+        try { document.getElementById('phone').focus(); } catch (_) {}
+        return;
+      }
+      if (!name) {
+        showRegisterError('Ismingizni kiriting.');
+        try { document.getElementById('fullname').focus(); } catch (_) {}
+        return;
+      }
+      if (pass.length < 12) {
+        showRegisterError('Parol kamida 12 belgidan iborat bo\'lishi kerak.');
+        try { document.getElementById('password').focus(); } catch (_) {}
+        return;
+      }
 
       var btn = this.querySelector('button[type="submit"]');
-      btn.disabled = true; btn.textContent = 'Yuborilmoqda...';
+      btn.disabled = true;
+      btn.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i> Yuborilmoqda...';
+      this.setAttribute('aria-busy', 'true');
 
       fetchT(API + '/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: phone, full_name: name, password: pass, organization_id: orgId || null })
       })
-      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }); })
+      // Pair r.json() with a fallback so a non-JSON 500/502 body
+      // doesn't reject the whole promise — that path used to surface
+      // as "Tarmoq xatosi" (network error), misleading users into
+      // thinking the issue was on their end when it was actually a
+      // backend failure with an HTML body.
+      .then(function (r) {
+        return r.json().then(
+          function (d) { return { ok: r.ok, data: d, status: r.status }; },
+          function () { return { ok: r.ok, data: {}, status: r.status }; }
+        );
+      })
       .then(function (res) {
         if (res.ok) {
           // res.data.message lands in innerHTML — it's server-controlled
           // not user-supplied, but the legacy PHP backend's escaping is
           // unknown. Defensive esc().
           document.querySelector('.form-card').innerHTML =
-            '<div style="text-align:center;padding:40px 20px">'
-            + '<i class="ph ph-check-circle" style="font-size:48px;color:#16a34a"></i>'
+            '<div role="status" tabindex="-1" id="registerSuccessMsg" style="text-align:center;padding:40px 20px">'
+            + '<i class="ph ph-check-circle" aria-hidden="true" style="font-size:48px;color:#16a34a"></i>'
             + '<h2 style="margin:16px 0 8px">' + (res.data.verified ? 'Ariza tasdiqlandi!' : 'Ariza qabul qilindi!') + '</h2>'
             + '<p style="color:#6b7280">' + esc(res.data.message || '') + '</p>'
             + '<p style="color:#6b7280;margin-top:8px">Administrator arizangizni ko\'rib chiqgach, kabinetga kirishingiz mumkin.</p>'
-            + '<a href="cabinet-login" class="btn-auth" style="margin-top:20px;display:inline-block;text-decoration:none"><i class="ph ph-sign-in"></i> Kirishga o\'tish</a>'
+            + '<a href="cabinet-login" class="btn-auth" style="margin-top:20px;display:inline-block;text-decoration:none"><i class="ph ph-sign-in" aria-hidden="true"></i> Kirishga o\'tish</a>'
             + '</div>';
+          var sm = document.getElementById('registerSuccessMsg'); if (sm) try { sm.focus(); } catch (e) {}
         } else {
           var msg = res.data.message || 'Xatolik yuz berdi.';
           if (res.data.error === 'duplicate_phone') msg = 'Bu telefon raqam allaqachon ro\'yxatdan o\'tgan.';
-          alert(msg);
-          btn.disabled = false; btn.textContent = 'Ariza yuborish';
+          else if (res.data.error === 'weak_password') msg = "Parol juda oddiy — kuchliroq parol tanlang (kamida 12 ta belgi, harf+raqam).";
+          else if (res.status >= 500) msg = 'Server xatosi (' + res.status + '). Birozdan keyin qayta urining.';
+          else if (!res.data.message) msg = 'Ariza yuborilmadi (xato kodi: ' + res.status + ').';
+          showRegisterError(msg);
+          btn.disabled = false;
+          btn.innerHTML = '<i class="ph ph-user-check" aria-hidden="true"></i> Ariza yuborish';
+          var f1 = document.getElementById('registerForm'); if (f1) f1.setAttribute('aria-busy', 'false');
         }
       })
-      .catch(function () { alert('Tarmoq xatosi.'); btn.disabled = false; btn.textContent = 'Ariza yuborish'; });
+      .catch(function () {
+        showRegisterError('Tarmoq xatosi. Internet aloqangizni tekshiring va qayta urinib ko\'ring.');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="ph ph-user-check" aria-hidden="true"></i> Ariza yuborish';
+        var f2 = document.getElementById('registerForm'); if (f2) f2.setAttribute('aria-busy', 'false');
+      });
     });
   </script>
 </body>

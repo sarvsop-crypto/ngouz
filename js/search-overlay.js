@@ -31,12 +31,14 @@
     lastFocused = document.activeElement;
     overlay.classList.add('open');
     overlay.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('is-modal-open');
     toggle.setAttribute('aria-expanded', 'true');
     if (input) setTimeout(function () { input.focus(); }, 50);
   }
   function closeSearch() {
     overlay.classList.remove('open');
     overlay.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('is-modal-open');
     toggle.setAttribute('aria-expanded', 'false');
     // Return focus to whatever opened the overlay, or fall back to the
     // toggle button. Wrapped in try/catch since the previous element

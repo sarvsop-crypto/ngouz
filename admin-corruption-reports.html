@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Korrupsiya murojaatlari — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
@@ -26,6 +28,7 @@
   <link rel="stylesheet" href="css/pacta-foundation.css">
   <link rel="stylesheet" href="css/pacta-modal.css">
 <script src="js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
 <script src="js/sw-register.js" defer></script>
 </head>
 <body>
@@ -41,48 +44,50 @@
         <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Yon panelni yopish" aria-expanded="true">&lsaquo;</button>
       </div>
       <div class="sidebar__search" id="sidebarSearchTrigger">
-        <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>
-        <input type="text" placeholder="Qidirish" aria-label="Qidirish" />
+        <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass" aria-hidden="true"></i></span>
+        <input type="search" enterkeyhint="search" placeholder="Qidirish" aria-label="Qidirish" maxlength="200" />
       </div>
       <nav class="sidebar__nav" aria-label="Admin menyusi">
         <div class="sidebar__nav-section">
           <div class="sidebar__nav-label">ASOSIY MENYU</div>
-          <a href="admin-dashboard" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
-          <a href="admin-membership-requests" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
-          <a href="admin-registry" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
-          <a href="admin-regions" class="sidebar__nav-link" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin"></i></span><span class="sidebar__nav-link-text">Hududlar</span></a>
-          <a href="admin-documents" class="sidebar__nav-link" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
-          <a href="admin-tasks" class="sidebar__nav-link" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square"></i></span><span class="sidebar__nav-link-text">Topshiriqlar</span></a>
-          <a href="admin-users" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
-          <a href="admin-reports" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar"></i></span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
-          <a href="admin-analytics" class="sidebar__nav-link" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up"></i></span><span class="sidebar__nav-link-text">Tahliliy ma'lumotlar</span></a>
+          <a href="admin-dashboard" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
+          <a href="admin-membership-requests" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
+          <a href="admin-grant-applications" class="sidebar__nav-link" title="Grant arizalari"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Grant arizalari</span></a>
+          <a href="admin-registry" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
+          <a href="admin-regions" class="sidebar__nav-link" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Hududlar</span></a>
+          <a href="admin-documents" class="sidebar__nav-link" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
+          <a href="admin-tasks" class="sidebar__nav-link" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Topshiriqlar</span></a>
+          <a href="admin-users" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
+          <a href="admin-reports" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
+          <a href="admin-analytics" class="sidebar__nav-link" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Tahliliy ma'lumotlar</span></a>
         </div>
         <div class="sidebar__nav-section">
           <div class="sidebar__nav-label">MUROJAATLAR</div>
-          <a href="admin-service-requests" class="sidebar__nav-link" title="Xizmat so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-wrench"></i></span><span class="sidebar__nav-link-text">Xizmat so'rovlari</span></a>
-          <a href="admin-corruption-reports" class="sidebar__nav-link is-active" aria-current="page" title="Korrupsiya murojaatlari"><span class="sidebar__nav-icon"><i class="ph ph-shield-warning"></i></span><span class="sidebar__nav-link-text">Korrupsiya murojaatlari</span></a>
-          <a href="admin-feedback" class="sidebar__nav-link" title="Qayta aloqa"><span class="sidebar__nav-icon"><i class="ph ph-chat-dots"></i></span><span class="sidebar__nav-link-text">Qayta aloqa</span></a>
+          <a href="admin-service-requests" class="sidebar__nav-link" title="Xizmat so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-wrench" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Xizmat so'rovlari</span></a>
+          <a href="admin-corruption-reports" class="sidebar__nav-link is-active" aria-current="page" title="Korrupsiya murojaatlari"><span class="sidebar__nav-icon"><i class="ph ph-shield-warning" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Korrupsiya murojaatlari</span></a>
+          <a href="admin-feedback" class="sidebar__nav-link" title="Qayta aloqa"><span class="sidebar__nav-icon"><i class="ph ph-chat-dots" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Qayta aloqa</span></a>
+          <a href="admin-password-reset-requests" class="sidebar__nav-link" title="Parol tiklash so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-key" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Parol tiklash</span></a>
         </div>
         <div class="sidebar__nav-section">
           <div class="sidebar__nav-label">KONTENT</div>
-          <a href="admin-news" class="sidebar__nav-link" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper"></i></span><span class="sidebar__nav-link-text">Yangiliklar</span></a>
-          <a href="admin-events" class="sidebar__nav-link" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank"></i></span><span class="sidebar__nav-link-text">Tadbirlar</span></a>
-          <a href="admin-grants" class="sidebar__nav-link" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins"></i></span><span class="sidebar__nav-link-text">Grantlar</span></a>
-          <a href="admin-settings" class="sidebar__nav-link" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
+          <a href="admin-news" class="sidebar__nav-link" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Yangiliklar</span></a>
+          <a href="admin-events" class="sidebar__nav-link" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Tadbirlar</span></a>
+          <a href="admin-grants" class="sidebar__nav-link" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Grantlar</span></a>
+          <a href="admin-settings" class="sidebar__nav-link" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
         </div>
         <div class="sidebar__nav-section u-mt-auto">
-          <a data-action="logout" href="#" class="sidebar__nav-link logout" id="logoutTrigger" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
+          <a data-action="logout" href="admin-login" class="sidebar__nav-link logout" id="logoutTrigger" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
         </div>
       </nav>
     </aside>
-    <main class="main" id="main-content">
+    <main class="main" id="main-content" tabindex="-1">
       <header class="topbar">
         <div class="topbar-left">
           <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="admin-dashboard">Boshqaruv</a> / <span aria-current="page">Korrupsiya murojaatlari</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -99,50 +104,53 @@
       <div class="main__header">
         <h1 class="main__title">Korrupsiya murojaatlari</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" id="exportCorruptionBtn"><i class="ph ph-download-simple"></i> Eksport (CSV)</button>
+          <button type="button" class="btn btn--secondary" id="exportCorruptionBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport (CSV)</button>
         </div>
       </div>
 
       <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#991b1b;">
-        <i class="ph ph-lock-key" style="font-size:18px;flex-shrink:0;margin-top:1px;"></i>
+        <i class="ph ph-lock-key" style="font-size:18px;flex-shrink:0;margin-top:1px;" aria-hidden="true"></i>
         <span>Ushbu bo&rsquo;lim maxfiy ma&rsquo;lumotlarni o&rsquo;z ichiga oladi. Anonim murojaatlar arizachining shaxsini oshkor qilmaydi. Har bir harakat audit jurnaliga yoziladi.</span>
       </div>
 
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-shield-warning"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami murojaatlar</p><p class="card__value">&mdash;</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 4%</span></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-shield-warning" aria-hidden="true"></i></div><span class="card__info" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Jami murojaatlar</p><p class="card__value" id="crpKpiTotal">&mdash;</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-envelope-simple-open"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Yangi</p><p class="card__value">&mdash;</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 2%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-envelope-simple-open" aria-hidden="true"></i></div><span class="card__info" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Yangi</p><p class="card__value" id="crpKpiNew">&mdash;</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-magnifying-glass"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Tekshirilmoqda</p><p class="card__value">&mdash;</p></div><span class="card__trend"><i class="ph ph-arrow-up-right"></i> 1%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-magnifying-glass" aria-hidden="true"></i></div><span class="card__info" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Tekshirilmoqda</p><p class="card__value" id="crpKpiRead">&mdash;</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div><span class="card__info" title="Info"><i class="ph ph-info"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Yopilgan</p><p class="card__value">&mdash;</p></div><span class="card__trend"><i class="ph ph-arrow-down-right"></i> 3%</span></div>
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle" aria-hidden="true"></i></div><span class="card__info" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
+          <div class="card__body"><div><p class="card__label">Yopilgan</p><p class="card__value" id="crpKpiHandled">&mdash;</p></div></div>
         </div>
       </div>
 
       <section class="table-section" aria-labelledby="corruptionTableTitle">
         <div class="table-section__head">
           <h2 class="table-section__title" id="corruptionTableTitle">Kelib tushgan murojaatlar</h2>
-          <div class="table-section__tools">
-            <button type="button" class="btn btn--secondary"><i class="ph ph-download-simple"></i> Eksport (CSV)</button>
-          </div>
         </div>
         <form class="u-filter-row" role="search" aria-label="Murojaatlarni filtrlash">
           <label for="corruptionSearch" class="u-visually-hidden">Murojaat raqami yoki mavzu bo'yicha qidirish</label>
-          <input id="corruptionSearch" type="search" class="table-section__search u-search-260" placeholder="Murojaat #, mavzu..." aria-label="Qidirish" />
-          <button type="button" class="filter-chip is-active" data-filter="all">Barchasi <span class="filter-chip__count">&mdash;</span></button>
-          <button type="button" class="filter-chip" data-filter="new">Yangi <span class="filter-chip__count">&mdash;</span></button>
-          <button type="button" class="filter-chip" data-filter="review">Tekshirilmoqda <span class="filter-chip__count">&mdash;</span></button>
-          <button type="button" class="filter-chip" data-filter="closed">Yopilgan <span class="filter-chip__count">&mdash;</span></button>
+          <input id="corruptionSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" placeholder="Murojaat #, mavzu..." aria-label="Qidirish" maxlength="200" />
+          <button type="button" class="filter-chip is-active" data-filter="all" aria-pressed="true" aria-controls="corruptionTableBody">Barchasi <span class="filter-chip__count" id="crpChipCountAll">&mdash;</span></button>
+          <button type="button" class="filter-chip" data-filter="new" aria-pressed="false" aria-controls="corruptionTableBody">Yangi <span class="filter-chip__count" id="crpChipCountNew">&mdash;</span></button>
+          <button type="button" class="filter-chip" data-filter="review" aria-pressed="false" aria-controls="corruptionTableBody">Tekshirilmoqda <span class="filter-chip__count" id="crpChipCountReview">&mdash;</span></button>
+          <button type="button" class="filter-chip" data-filter="closed" aria-pressed="false" aria-controls="corruptionTableBody">Yopilgan <span class="filter-chip__count" id="crpChipCountClosed">&mdash;</span></button>
+          <button type="button" class="filter-chip" data-filter="spam" aria-pressed="false" aria-controls="corruptionTableBody">Spam <span class="filter-chip__count" id="crpChipCountSpam">&mdash;</span></button>
+          <!-- Severity filter is hidden until the backend tracks per-
+               message severity. The dedicated table column also reads
+               '—' for every row right now (see line 289 below); leaving
+               an enabled select that does nothing is worse UX than
+               hiding it. -->
           <label for="corruptionSeverity" class="u-visually-hidden">Darajasi bo'yicha filter</label>
-          <select id="corruptionSeverity" class="table-section__search u-search-160" aria-label="Darajasi">
+          <select id="corruptionSeverity" class="table-section__search u-search-160" aria-label="Darajasi" hidden>
             <option value="">Barcha darajalar</option>
             <option>Yuqori</option>
             <option>O&rsquo;rta</option>
@@ -153,13 +161,12 @@
           <caption class="u-visually-hidden">Korrupsiya murojaatlari jadvali</caption>
           <thead>
             <tr>
-              <th scope="col"><input type="checkbox" aria-label="Barchasini tanlash" /></th>
               <th scope="col">Murojaat #</th><th scope="col">Arizachi</th><th scope="col">Mavzu</th>
-              <th scope="col">Hudud</th><th scope="col">Darajasi</th><th scope="col">Holat</th><th scope="col"></th>
+              <th scope="col">Hudud</th><th scope="col">Darajasi</th><th scope="col">Holat</th><th scope="col"><span class="u-visually-hidden">Amallar</span></th>
             </tr>
           </thead>
-          <tbody id="corruptionTableBody">
-            <tr><td colspan="8" style="text-align:center;color:var(--grey-400);">Yuklanmoqda...</td></tr>
+          <tbody id="corruptionTableBody" aria-live="polite" aria-busy="true">
+            <tr><td colspan="7" role="status" style="text-align:center;color:var(--grey-400);">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -169,8 +176,9 @@
   <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header">
       <h2 class="notifications-panel__title">Bildirishnomalar</h2>
+    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
-    <div class="notifications-panel__list" id="notifPanelList">
+    <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
       <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
@@ -179,11 +187,11 @@
     </div>
   </div>
 
-  <div class="modal-overlay" id="corruptionReviewModal" role="dialog" aria-modal="true" aria-labelledby="corruptionReviewTitle">
+  <div class="modal-overlay" id="corruptionReviewModal" role="dialog" aria-modal="true" aria-labelledby="corruptionReviewTitle" aria-hidden="true">
     <div class="modal u-modal-max-600">
       <div class="modal__head">
         <h2 class="modal__title" id="corruptionReviewTitle">Murojaat tafsilotlari</h2>
-        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button>
+        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body">
         <div class="u-modal-grid-2">
@@ -218,21 +226,23 @@
         </div>
         <div class="modal__field">
           <label class="modal__label">Batafsil matn</label>
-          <div class="u-modal-value" id="crpReviewBody">&mdash;</div>
+          <div class="u-modal-value" id="crpReviewBody" style="white-space:pre-wrap">&mdash;</div>
         </div>
         <div class="modal__field">
-          <label class="modal__label">Mas&rsquo;ul tayinlash / Izoh</label>
-          <textarea aria-label="Mas'ul tayinlash / Izoh" class="modal__textarea" placeholder="Tekshiruvchi tayinlang yoki izoh qoldiring..."></textarea>
+          <label class="modal__label" for="crpReviewNote">Mas&rsquo;ul tayinlash / Izoh</label>
+          <textarea id="crpReviewNote" class="modal__textarea" maxlength="5000" placeholder="Tekshiruvchi tayinlang yoki izoh qoldiring..."></textarea>
         </div>
       </div>
       <div class="modal__foot">
         <button type="button" class="btn btn--secondary" data-modal-close>Yopish</button>
-        <button type="button" class="btn btn--primary"><i class="ph ph-check-circle"></i> Tekshirildi deb belgilash</button>
+        <button type="button" class="btn btn--primary" id="crpMarkHandledBtn"><i class="ph ph-check-circle" aria-hidden="true"></i> Tekshirildi deb belgilash</button>
       </div>
     </div>
   </div>
 
-  <script src="js/api-client.js" defer></script>
+  <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-modal.js" defer></script>
   <script src="js/admin-boot.js" defer></script>
   <script>
   (function () {
@@ -240,11 +250,21 @@
     var statusFilter = 'all';
     var searchQ = '';
 
+    var toastTimer;
+    function toast(msg, type) {
+      var el = document.getElementById('cmsToast');
+      if (!el) return;
+      el.textContent = msg;
+      el.className = 'cms-toast cms-toast--' + (type || 'info') + ' show';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { el.classList.remove('show'); }, 4000);
+    }
+
     var CORRUPTION_KEYWORDS = ['korrupsiya', 'corruption', 'poraxo\'rlik', 'pora', 'suiiste\'mol', 'qonunbuzarlik', 'noqonuniy', 'firibgarlik'];
     var STATUS_BADGE = { 'new': 'warning', 'read': 'warning', 'handled': 'success', 'spam': 'error' };
     var STATUS_LABEL = { 'new': 'Yangi', 'read': 'Tekshirilmoqda', 'handled': 'Yopilgan', 'spam': 'Spam' };
 
-    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
     function isCorruptionRelated(item) {
       var text = ((item.subject || '') + ' ' + (item.body || '') + ' ' + (item.category || '')).toLowerCase();
@@ -260,24 +280,23 @@
       });
       var tbody = document.getElementById('corruptionTableBody');
       if (!filtered.length) {
-        tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--grey-400);">Korrupsiyaga oid murojaatlar yo\'q. Foydalanuvchilar /korrupsiya-murojaat orqali yuborgan murojaatlar bu yerda paydo bo\'ladi.</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="7" role="status" style="text-align:center;color:var(--grey-400);">Korrupsiyaga oid murojaatlar yo\'q. Foydalanuvchilar /korrupsiya-murojaat orqali yuborgan murojaatlar bu yerda paydo bo\'ladi.</td></tr>';
         return;
       }
       tbody.innerHTML = filtered.map(function (item) {
         var badge = STATUS_BADGE[item.status] || 'neutral';
-        var label = STATUS_LABEL[item.status] || item.status;
+        var label = esc(STATUS_LABEL[item.status] || item.status || '');
         var name = item.full_name || '';
         var nameHtml = name ? esc(name) : '<span class="badge badge--error"><span class="badge__dot"></span>Anonim</span>';
         var idNum = parseInt(item.id, 10) || 0;
-        return '<tr data-status="' + (item.status || '') + '">' +
-          '<td><input type="checkbox" aria-label="Tanlash" /></td>' +
+        return '<tr data-status="' + esc(item.status || '') + '">' +
           '<td><strong>KRP-' + esc(item.id) + '</strong></td>' +
           '<td>' + nameHtml + '</td>' +
           '<td>' + esc(item.subject || '—') + '</td>' +
           '<td>' + esc(item.region || '—') + '</td>' +
           '<td><span class="u-text-warning u-text-bold">—</span></td>' +
           '<td><span class="badge badge--' + badge + '"><span class="badge__dot"></span>' + label + '</span></td>' +
-          '<td><button type="button" class="btn btn--sm btn--secondary" onclick="openCorruptionReview(' + idNum + ')"><i class="ph ph-eye"></i> Ko\'rish</button></td>' +
+          '<td><button type="button" class="btn btn--sm btn--secondary" aria-label="KRP-' + esc(item.id) + ' murojaatini ko\'rib chiqish" onclick="openCorruptionReview(' + idNum + ')"><i class="ph ph-eye" aria-hidden="true"></i> Ko\'rish</button></td>' +
         '</tr>';
       }).join('');
     }
@@ -288,19 +307,28 @@
       if (!item) return;
       reviewingId = id;
       document.getElementById('crpReviewId').textContent      = 'KRP-' + item.id;
-      document.getElementById('crpReviewDate').textContent    = (item.created_at || '').slice(0, 16).replace('T', ' ');
+      // Use innerHTML so we can wrap the visible string in <time> with
+      // a machine-readable datetime attribute. esc() is unnecessary
+      // here — both the dt slice and the visible string are derived
+      // from the same backend ISO string, no user-controlled content.
+      var crpDateRaw = String(item.created_at || '');
+      var crpDateVis = crpDateRaw.slice(0, 16).replace('T', ' ');
+      var crpDateDt  = crpDateRaw.slice(0, 10);
+      document.getElementById('crpReviewDate').innerHTML = crpDateVis ? '<time datetime="' + crpDateDt + '">' + crpDateVis + '</time>' : '—';
       document.getElementById('crpReviewName').textContent    = item.full_name || 'Anonim';
       document.getElementById('crpReviewRegion').textContent  = item.region || '—';
       document.getElementById('crpReviewStatus').textContent  = STATUS_LABEL[item.status] || item.status || '—';
       document.getElementById('crpReviewSubject').textContent = item.subject || '—';
       document.getElementById('crpReviewBody').textContent    = item.body || '';
+      var noteEl = document.getElementById('crpReviewNote');
+      if (noteEl) noteEl.value = '';
       if (window.AdminModal) window.AdminModal.open('corruptionReviewModal');
     };
 
     /* Wire 'Tekshirildi deb belgilash' to actually mark the item handled. */
-    var modalFootBtns = document.querySelectorAll('#corruptionReviewModal .modal__foot .btn--primary');
-    if (modalFootBtns.length) {
-      modalFootBtns[0].addEventListener('click', function (e) {
+    var crpMarkBtn = document.getElementById('crpMarkHandledBtn');
+    if (crpMarkBtn) {
+      crpMarkBtn.addEventListener('click', function (e) {
         if (!reviewingId) return;
         // Stop the data-modal-close from firing before the request settles
         // — close manually after the PATCH succeeds so an error keeps the
@@ -308,27 +336,53 @@
         e.preventDefault();
         e.stopPropagation();
         var btn = e.currentTarget;
+        var defaultLabel = btn.innerHTML;
         btn.disabled = true;
-        NgoApi.patch('/admin/contact-messages/' + reviewingId, { status: 'handled' })
+        btn.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i> Saqlanmoqda...';
+        var crpModal = document.getElementById('corruptionReviewModal');
+        if (crpModal) crpModal.setAttribute('aria-busy', 'true');
+        var noteEl = document.getElementById('crpReviewNote');
+        var note = noteEl ? noteEl.value.trim() : '';
+        var body = { status: 'handled' };
+        if (note) body.note = note;
+        NgoApi.patch('/admin/contact-messages/' + reviewingId, body)
           .then(function () {
             var idx = items.findIndex(function (i) { return parseInt(i.id, 10) === reviewingId; });
             if (idx !== -1) items[idx].status = 'handled';
+            reviewingId = null;
             renderTable(); renderKpi();
+            if (noteEl) noteEl.value = '';
             if (window.AdminModal) window.AdminModal.close('corruptionReviewModal');
+            toast('Murojaat tekshirilgan deb belgilandi.', 'success');
           })
           .catch(function (err) {
-            alert('Saqlashda xatolik: ' + ((err && err.message) || 'noma\'lum'));
+            toast('Saqlashda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error');
           })
-          .then(function () { btn.disabled = false; });
+          .then(function () {
+            btn.disabled = false; btn.innerHTML = defaultLabel;
+            if (crpModal) crpModal.setAttribute('aria-busy', 'false');
+          });
       });
     }
 
     function renderKpi() {
-      var cards = document.querySelectorAll('.card .card__value');
-      if (cards[0]) cards[0].textContent = items.length;
-      if (cards[1]) cards[1].textContent = items.filter(function (i) { return i.status === 'new'; }).length;
-      if (cards[2]) cards[2].textContent = items.filter(function (i) { return i.status === 'read'; }).length;
-      if (cards[3]) cards[3].textContent = items.filter(function (i) { return i.status === 'handled'; }).length;
+      var total = items.length;
+      var newC = items.filter(function (i) { return i.status === 'new'; }).length;
+      var readC = items.filter(function (i) { return i.status === 'read'; }).length;
+      var handledC = items.filter(function (i) { return i.status === 'handled'; }).length;
+      var spamC = items.filter(function (i) { return i.status === 'spam'; }).length;
+      // ID-based KPI lookup — index access via querySelectorAll silently
+      // mismaps when cards are reordered or added. Stable ids match
+      // the iter-953 pattern in cabinet-applications.html.
+      var elT = document.getElementById('crpKpiTotal');     if (elT) elT.textContent = total;
+      var elN = document.getElementById('crpKpiNew');       if (elN) elN.textContent = newC;
+      var elR = document.getElementById('crpKpiRead');      if (elR) elR.textContent = readC;
+      var elH = document.getElementById('crpKpiHandled');   if (elH) elH.textContent = handledC;
+      var cAll = document.getElementById('crpChipCountAll');         if (cAll) cAll.textContent = total;
+      var cNew = document.getElementById('crpChipCountNew');         if (cNew) cNew.textContent = newC;
+      var cRev = document.getElementById('crpChipCountReview');      if (cRev) cRev.textContent = readC;
+      var cCls = document.getElementById('crpChipCountClosed');      if (cCls) cCls.textContent = handledC;
+      var cSpm = document.getElementById('crpChipCountSpam');        if (cSpm) cSpm.textContent = spamC;
     }
 
     var searchEl = document.getElementById('corruptionSearch');
@@ -336,10 +390,14 @@
 
     document.querySelectorAll('[data-filter]').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        document.querySelectorAll('[data-filter]').forEach(function (b) { b.classList.remove('is-active'); });
+        document.querySelectorAll('[data-filter]').forEach(function (b) {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-pressed', 'false');
+        });
         this.classList.add('is-active');
+        this.setAttribute('aria-pressed', 'true');
         var f = this.dataset.filter;
-        var map = { 'all': 'all', 'new': 'new', 'review': 'read', 'closed': 'handled' };
+        var map = { 'all': 'all', 'new': 'new', 'review': 'read', 'closed': 'handled', 'spam': 'spam' };
         statusFilter = map[f] || 'all';
         renderTable();
       });
@@ -348,13 +406,20 @@
     NgoApi.get('/admin/contact-messages?limit=200')
       .then(function (res) {
         var all = res.items || [];
-        items = all.filter(isCorruptionRelated);
+        items = all.filter(isCorruptionRelated).sort(function (a, b) {
+          // Newest report first — corruption triage is time-sensitive.
+          return (new Date(b.created_at).getTime() || 0) - (new Date(a.created_at).getTime() || 0);
+        });
         renderTable();
         renderKpi();
       })
       .catch(function (err) {
         console.error('Corruption reports fetch error:', err);
-        document.getElementById('corruptionTableBody').innerHTML = '<tr><td colspan="8" style="text-align:center;color:var(--error-600);">Xatolik yuz berdi</td></tr>';
+        document.getElementById('corruptionTableBody').innerHTML = '<tr><td colspan="7" role="alert" style="text-align:center;color:var(--error-600);">Xatolik yuz berdi</td></tr>';
+      })
+      .then(function () {
+        var t = document.getElementById('corruptionTableBody');
+        if (t) t.setAttribute('aria-busy', 'false');
       });
 
     // CSV export — same pattern as admin-feedback (iter 270) +
@@ -364,7 +429,7 @@
     var exportBtn = document.getElementById('exportCorruptionBtn');
     if (exportBtn) {
       exportBtn.addEventListener('click', function () {
-        if (!items.length) { alert('Eksport qilish uchun murojaat yo\'q'); return; }
+        if (!items.length) { toast('Eksport qilish uchun murojaat yo\'q', 'info'); return; }
         window.exportCsv(
           'korrupsiya-murojaatlari-' + new Date().toISOString().slice(0, 10) + '.csv',
           items,

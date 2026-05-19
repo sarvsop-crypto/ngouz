@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="../favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bildirishnomalar — A'zo Kabinet</title>
 <meta name="theme-color" content="#0f6a57" />
@@ -26,6 +28,8 @@
   <link rel="stylesheet" href="../css/pacta-modal.css">
   <link rel="stylesheet" href="../css/pacta-foundation.css">
 <script src="../js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
+<script src="../js/sw-register.js" defer></script>
 </head>
 <body data-nav-active="settings">
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
@@ -33,13 +37,13 @@
   <div class="layout">
     <div id="cabinet-sidebar-root"></div>
 
-    <main id="main-content" class="main">      <header class="topbar">
+    <main id="main-content" tabindex="-1" class="main">      <header class="topbar">
         <div class="topbar-left">
           <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="cabinet-dashboard">Bosh sahifa</a> / <a href="cabinet-settings">Sozlamalar</a> / <span aria-current="page">Bildirishnomalar</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -58,11 +62,11 @@
       </div>
 
       <div class="settings-layout">
-        <nav class="settings-side-nav">
-          <a href="cabinet-settings" class="settings-side-link"><i class="ph ph-user"></i> Profil</a>
-          <a href="cabinet-settings-org" class="settings-side-link"><i class="ph ph-buildings"></i> Tashkilot</a>
-          <a href="cabinet-settings-security" class="settings-side-link"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
-          <a href="cabinet-settings-notifications" class="settings-side-link is-active"><i class="ph ph-bell"></i> Bildirishnomalar</a>
+        <nav class="settings-side-nav" aria-label="Sozlamalar bo&rsquo;limlari">
+          <a href="cabinet-settings" class="settings-side-link"><i class="ph ph-user" aria-hidden="true"></i> Profil</a>
+          <a href="cabinet-settings-org" class="settings-side-link"><i class="ph ph-buildings" aria-hidden="true"></i> Tashkilot</a>
+          <a href="cabinet-settings-security" class="settings-side-link"><i class="ph ph-shield-check" aria-hidden="true"></i> Xavfsizlik</a>
+          <a href="cabinet-settings-notifications" class="settings-side-link is-active"><i class="ph ph-bell" aria-hidden="true"></i> Bildirishnomalar</a>
         </nav>
         <div>
           <div class="settings-panel">
@@ -71,38 +75,39 @@
             <div class="notif-channel-list">
               <div class="notif-channel-item">
                 <div class="notif-channel-text">
-                  <p class="notif-channel-title"><i class="ph ph-envelope"></i> Email bildirishnomalar</p>
+                  <p class="notif-channel-title"><i class="ph ph-envelope" aria-hidden="true"></i> Email bildirishnomalar</p>
                   <p class="notif-channel-desc">Ariza holati va muhim xabarlar emailga yuboriladi</p>
                 </div>
-                <input type="checkbox" checked class="settings-checkbox" />
+                <input type="checkbox" checked class="settings-checkbox" aria-label="Email bildirishnomalar" />
               </div>
               <div class="notif-channel-item">
                 <div class="notif-channel-text">
-                  <p class="notif-channel-title"><i class="ph ph-device-mobile"></i> SMS bildirishnomalar</p>
+                  <p class="notif-channel-title"><i class="ph ph-device-mobile" aria-hidden="true"></i> SMS bildirishnomalar</p>
                   <p class="notif-channel-desc">Muhim xabarlar telefon raqamingizga yuboriladi</p>
                 </div>
-                <input type="checkbox" class="settings-checkbox" />
+                <input type="checkbox" class="settings-checkbox" aria-label="SMS bildirishnomalar" />
               </div>
               <div class="notif-channel-item">
                 <div class="notif-channel-text">
-                  <p class="notif-channel-title"><i class="ph ph-paper-plane-tilt"></i> Telegram bildirishnomalar</p>
+                  <p class="notif-channel-title"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i> Telegram bildirishnomalar</p>
                   <p class="notif-channel-desc">Telegram bot orqali tezkor xabarlar</p>
                 </div>
-                <input type="checkbox" checked class="settings-checkbox" />
+                <input type="checkbox" checked class="settings-checkbox" aria-label="Telegram bildirishnomalar" />
               </div>
             </div>
           </div>
           <div class="settings-panel">
             <h2 class="settings-section-title">Xabarnoma turlari</h2>
+            <p class="settings-section-sub">Hozircha bu sozlamalar faqat shu brauzerda saqlanadi. Server orqali sinxronlash keyingi bosqichga qoldirilgan.</p>
             <div class="notif-type-list">
-              <label class="notif-type-item"><span class="notif-type-label"><i class="ph ph-clipboard-text"></i> Ariza holati o&rsquo;zgarganda</span><input type="checkbox" checked class="settings-checkbox" /></label>
-              <label class="notif-type-item"><span class="notif-type-label"><i class="ph ph-trophy"></i> Yangi grant e&rsquo;loni</span><input type="checkbox" checked class="settings-checkbox" /></label>
-              <label class="notif-type-item"><span class="notif-type-label"><i class="ph ph-calendar"></i> Tadbir eslatmalari</span><input type="checkbox" checked class="settings-checkbox" /></label>
-              <label class="notif-type-item"><span class="notif-type-label"><i class="ph ph-file-text"></i> Hisobot muddati eslatmasi</span><input type="checkbox" checked class="settings-checkbox" /></label>
-              <label class="notif-type-item"><span class="notif-type-label"><i class="ph ph-newspaper"></i> Yangiliklar va e&rsquo;lonlar</span><input type="checkbox" class="settings-checkbox" /></label>
+              <label class="notif-type-item"><span class="notif-type-label"><i class="ph ph-clipboard-text" aria-hidden="true"></i> Ariza holati o&rsquo;zgarganda</span><input type="checkbox" checked class="settings-checkbox" /></label>
+              <label class="notif-type-item"><span class="notif-type-label"><i class="ph ph-trophy" aria-hidden="true"></i> Yangi grant e&rsquo;loni</span><input type="checkbox" checked class="settings-checkbox" /></label>
+              <label class="notif-type-item"><span class="notif-type-label"><i class="ph ph-calendar" aria-hidden="true"></i> Tadbir eslatmalari</span><input type="checkbox" checked class="settings-checkbox" /></label>
+              <label class="notif-type-item"><span class="notif-type-label"><i class="ph ph-file-text" aria-hidden="true"></i> Hisobot muddati eslatmasi</span><input type="checkbox" checked class="settings-checkbox" /></label>
+              <label class="notif-type-item"><span class="notif-type-label"><i class="ph ph-newspaper" aria-hidden="true"></i> Yangiliklar va e&rsquo;lonlar</span><input type="checkbox" class="settings-checkbox" /></label>
             </div>
             <div class="settings-actions-row">
-              <button type="button" class="btn btn--primary"><i class="ph ph-floppy-disk"></i> Saqlash</button>
+              <button type="button" class="btn btn--primary"><i class="ph ph-floppy-disk" aria-hidden="true"></i> Saqlash</button>
             </div>
           </div>
         </div>
@@ -130,7 +135,20 @@
     var checkboxes = document.querySelectorAll('.settings-checkbox');
     var saveBtn = document.querySelector('.settings-actions-row .btn--primary');
 
-    // Restore saved state from localStorage
+    function announce(msg) {
+      var live = document.getElementById('notificationPrefsStatus');
+      if (!live) {
+        live = document.createElement('p');
+        live.id = 'notificationPrefsStatus';
+        live.setAttribute('role', 'status');
+        live.style.cssText = 'font-size:13px;color:var(--grey-500);margin:10px 0 0;';
+        if (saveBtn && saveBtn.parentNode) saveBtn.parentNode.parentNode.insertBefore(live, saveBtn.parentNode.nextSibling);
+      }
+      live.textContent = msg;
+    }
+
+    // Restore saved state from localStorage. There is no backend prefs
+    // endpoint yet, so keep the persistence label browser-scoped.
     try {
       var saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
       if (saved && Array.isArray(saved) && saved.length === checkboxes.length) {
@@ -144,10 +162,11 @@
         var states = [];
         checkboxes.forEach(function (cb) { states.push(cb.checked); });
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(states)); } catch (e) {}
-        saveBtn.innerHTML = '<i class="ph ph-check-circle"></i> Saqlandi!';
+        saveBtn.innerHTML = '<i class=\"ph ph-check-circle\" aria-hidden=\"true\"></i> Brauzerda saqlandi';
+        announce('Sozlamalar ushbu qurilma brauzerida saqlandi. Boshqa qurilmalarga hali sinxronlanmaydi.');
         saveBtn.disabled = true;
         setTimeout(function () {
-          saveBtn.innerHTML = '<i class="ph ph-floppy-disk"></i> Saqlash';
+          saveBtn.innerHTML = '<i class=\"ph ph-floppy-disk\" aria-hidden=\"true\"></i> Saqlash';
           saveBtn.disabled = false;
         }, 2000);
       });

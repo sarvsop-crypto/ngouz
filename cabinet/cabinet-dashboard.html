@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="../favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Bosh sahifa — A'zo Kabinet</title>
 <meta name="theme-color" content="#0f6a57" />
@@ -26,6 +28,8 @@
   <link rel="stylesheet" href="../css/pacta-modal.css">
   <link rel="stylesheet" href="../css/pacta-foundation.css">
 <script src="../js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
+<script src="../js/sw-register.js" defer></script>
 </head>
 <body data-nav-active="dashboard">
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
@@ -33,13 +37,13 @@
   <div class="layout">
     <div id="cabinet-sidebar-root"></div>
 
-    <main id="main-content" class="main">      <header class="topbar">
+    <main id="main-content" tabindex="-1" class="main">      <header class="topbar">
         <div class="topbar-left">
           <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="cabinet-dashboard">Bosh sahifa</a> / <span aria-current="page">Bosh sahifa</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -56,31 +60,31 @@
       <div class="main__header">
         <h1 class="main__title">Bosh sahifa</h1>
         <div class="main__btns">
-          <a href="cabinet-documents" class="btn btn--secondary"><i class="ph ph-files"></i> Hujjatlar</a>
-          <a href="cabinet-applications" class="btn btn--primary"><i class="ph ph-clipboard-text"></i> Ariza holatim</a>
+          <a href="cabinet-documents" class="btn btn--secondary"><i class="ph ph-files" aria-hidden="true"></i> Hujjatlar</a>
+          <a href="cabinet-applications" class="btn btn--primary"><i class="ph ph-clipboard-text" aria-hidden="true"></i> Ariza holatim</a>
         </div>
       </div>
 
       <div id="dashAlert" class="dash-alert">
-        <i class="ph ph-warning"></i>
+        <i class="ph ph-warning" aria-hidden="true"></i>
         <span id="dashAlertText"></span>
       </div>
 
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-buildings"></i></div></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-buildings" aria-hidden="true"></i></div></div>
           <div class="card__body"><div><p class="card__label">Tashkilot</p><p class="card__value" id="kpiOrg" style="font-size:16px;">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--info"><i class="ph ph-file-text"></i></div></div>
+          <div class="card__head"><div class="card__icon card__icon--info"><i class="ph ph-file-text" aria-hidden="true"></i></div></div>
           <div class="card__body"><div><p class="card__label">Hisobotlar</p><p class="card__value" id="kpiReports">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-bell"></i></div></div>
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-bell" aria-hidden="true"></i></div></div>
           <div class="card__body"><div><p class="card__label">Bildirishnomalar</p><p class="card__value" id="kpiNotifs">—</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-calendar-blank"></i></div></div>
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-calendar-blank" aria-hidden="true"></i></div></div>
           <div class="card__body"><div><p class="card__label">Tadbirlar</p><p class="card__value" id="kpiEvents">—</p></div></div>
         </div>
       </div>
@@ -104,7 +108,7 @@
               <dt>Telefon:</dt>
               <dd id="dashOrgPhone">—</dd>
             </dl>
-            <a href="cabinet-organization" class="dash-detail-link">Batafsil <i class="ph ph-arrow-right"></i></a>
+            <a href="cabinet-organization" class="dash-detail-link">Batafsil <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
           </div>
         </div>
         <div class="chart-card chart-card--narrow">
@@ -112,10 +116,10 @@
             <h2 class="chart-card__title">Tezkor havolalar</h2>
           </div>
           <div class="quick-links">
-            <a href="cabinet-reports"><i class="ph ph-chart-bar"></i> Hisobotlar</a>
-            <a href="cabinet-documents"><i class="ph ph-files"></i> Hujjatlar</a>
-            <a href="cabinet-notifications"><i class="ph ph-bell"></i> Bildirishnomalar</a>
-            <a href="cabinet-events"><i class="ph ph-calendar-check"></i> Tadbirlar</a>
+            <a href="cabinet-reports"><i class="ph ph-chart-bar" aria-hidden="true"></i> Hisobotlar</a>
+            <a href="cabinet-documents"><i class="ph ph-files" aria-hidden="true"></i> Hujjatlar</a>
+            <a href="cabinet-notifications"><i class="ph ph-bell" aria-hidden="true"></i> Bildirishnomalar</a>
+            <a href="cabinet-events"><i class="ph ph-calendar-check" aria-hidden="true"></i> Tadbirlar</a>
           </div>
         </div>
       </div>
@@ -124,14 +128,14 @@
       <div class="dash-grid">
         <div class="card">
           <div class="card-header"><h3 class="card-title">So'nggi bildirishnomalar</h3></div>
-          <ul class="alert-list" id="dashRecentNotifs">
-            <li class="alert-item" style="justify-content:center;"><span class="text-dim">Yuklanmoqda...</span></li>
+          <ul class="alert-list" id="dashRecentNotifs" aria-live="polite" aria-busy="true">
+            <li class="alert-item" style="justify-content:center;" role="status"><span class="text-dim">Yuklanmoqda...</span></li>
           </ul>
         </div>
         <div class="card">
           <div class="card-header"><h3 class="card-title">Kelayotgan tadbirlar</h3></div>
-          <div id="dashUpcomingEvents" class="dash-events-col">
-            <div class="text-dim" style="text-align:center;padding:16px 0;">Yuklanmoqda...</div>
+          <div id="dashUpcomingEvents" class="dash-events-col" aria-live="polite" aria-busy="true">
+            <div class="text-dim" style="text-align:center;padding:16px 0;" role="status">Yuklanmoqda...</div>
           </div>
         </div>
       </div>
@@ -152,6 +156,7 @@
     function fmtDate(iso) {
       if (!iso) return '';
       var d = new Date(iso);
+      if (isNaN(d.getTime())) return String(iso);
       return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear();
     }
     // HTML-escape API-returned strings before innerHTML interpolation.
@@ -164,16 +169,23 @@
         .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
     }
 
+    function clearAuthAndRedirect() {
+      try {
+        localStorage.removeItem('ngo_api_token'); localStorage.removeItem('ngo_api_user');
+        sessionStorage.removeItem('ngo_api_token'); sessionStorage.removeItem('ngo_api_user');
+      } catch(e) {}
+      // Pass ?next= so post-login lands the user back on the dashboard
+      // (matches the pattern used by every other cabinet page).
+      var _next = encodeURIComponent(location.pathname + location.search);
+      location.replace('cabinet-login?next=' + _next);
+    }
     NgoApi.get('/me').then(function (me) {
       if (!me || !me.user || me.user.status !== 'active') {
-        try { localStorage.removeItem('ngo_api_token'); localStorage.removeItem('ngo_api_user'); } catch(e) {}
-        location.replace('cabinet-login');
+        clearAuthAndRedirect();
         return;
       }
     }).catch(function () {
-      try { localStorage.removeItem('ngo_api_token'); localStorage.removeItem('ngo_api_user'); } catch(e) {}
-      location.replace('cabinet-login');
-      return;
+      clearAuthAndRedirect();
     });
 
     NgoApi.get('/cabinet/dashboard').then(function (d) {
@@ -199,30 +211,50 @@
         document.getElementById('dashOrgSection').style.display = '';
       }
 
-      // Upcoming events section
-      var events = d.upcoming_events || [];
+      // Upcoming events section \u2014 defensive sort: even though the
+      // backend returns d.upcoming_events as filtered, the order isn't
+      // guaranteed. Sort soonest-first so the next 3 are genuinely
+      // the 3 closest events.
+      var events = (d.upcoming_events || []).slice().sort(function (a, b) {
+        var ta = new Date(a.date || a.event_date || 0).getTime() || 0;
+        var tb = new Date(b.date || b.event_date || 0).getTime() || 0;
+        return ta - tb;
+      });
       var evContainer = document.getElementById('dashUpcomingEvents');
+      evContainer.removeAttribute('aria-busy');
       if (!events.length) {
-        evContainer.innerHTML = '<div class="text-dim" style="text-align:center;padding:16px 0;">Kelayotgan tadbirlar yo\u2018q</div>';
+        evContainer.innerHTML = '<div class="text-dim" role="status" style="text-align:center;padding:16px 0;">Kelayotgan tadbirlar yo\u2018q</div>';
       } else {
         evContainer.innerHTML = events.slice(0, 3).map(function (ev) {
           return '<div class="event-preview">'
             + '<span class="event-preview__badge">TADBIR</span>'
             + '<div class="event-preview__title">' + esc(ev.title || '') + '</div>'
-            + '<div class="event-preview__date">' + fmtDate(ev.date || ev.event_date) + '</div>'
+            + '<div class="event-preview__date"><time datetime="' + esc(String(ev.date || ev.event_date || '').slice(0,10)) + '">' + fmtDate(ev.date || ev.event_date) + '</time></div>'
             + '</div>';
         }).join('');
       }
     }).catch(function (err) {
-      if (err && err.status === 401) location.replace('cabinet-login');
+      // 401 already handled by api-client auto-redirect (iter 287);
+      // for other errors, show a clear failure on the org KPI so the
+      // user knows the data isn't loading rather than seeing forever-
+      // dashes.
+      if (!err || err.status === 401) return;
+      var orgKpi = document.getElementById('kpiOrg');
+      if (orgKpi) orgKpi.textContent = 'Yuklashda xatolik';
+      var ec = document.getElementById('dashUpcomingEvents');
+      if (ec) {
+        ec.removeAttribute('aria-busy');
+        ec.innerHTML = '<div class="text-dim" role="alert" style="text-align:center;padding:16px 0;color:var(--error-600,#dc2626);">Yuklab bo‘lmadi</div>';
+      }
     });
 
     // Load recent notifications for the dashboard timeline
     NgoApi.get('/cabinet/notifications').then(function (res) {
       var items = (res.items || []).slice(0, 5);
       var list = document.getElementById('dashRecentNotifs');
+      list.removeAttribute('aria-busy');
       if (!items.length) {
-        list.innerHTML = '<li class="alert-item" style="justify-content:center;"><span class="text-dim">Bildirishnomalar yo\u2018q</span></li>';
+        list.innerHTML = '<li class="alert-item" role="status" style="justify-content:center;"><span class="text-dim">Bildirishnomalar yo\u2018q</span></li>';
         return;
       }
       var dotColors = {
@@ -234,10 +266,12 @@
         var color = dotColors[n.type] || 'var(--primary-500)';
         return '<li class="alert-item"><span class="alert-dot" style="background:' + color + ';"></span>'
           + '<div class="alert-text"><div class="alert-title">' + esc(n.title || '') + '</div>'
-          + '<div class="alert-meta">' + fmtDate(n.created_at) + '</div></div></li>';
+          + '<div class="alert-meta"><time datetime="' + esc(String(n.created_at || '').slice(0,10)) + '">' + fmtDate(n.created_at) + '</time></div></div></li>';
       }).join('');
     }).catch(function () {
-      document.getElementById('dashRecentNotifs').innerHTML = '<li class="alert-item" style="justify-content:center;"><span class="text-dim">Yuklab bo\u2018lmadi</span></li>';
+      var l = document.getElementById('dashRecentNotifs');
+      l.removeAttribute('aria-busy');
+      l.innerHTML = '<li class="alert-item" role="alert" style="justify-content:center;color:var(--error-600,#dc2626);"><span>Yuklab bo\u2018lmadi</span></li>';
     });
   })();
   </script>

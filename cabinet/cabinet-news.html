@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="../favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Yangiliklar — A'zo Kabinet</title>
 <meta name="theme-color" content="#0f6a57" />
@@ -48,6 +50,8 @@
     .news-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;}
   </style>
 <script src="../js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
+<script src="../js/sw-register.js" defer></script>
 </head>
 <body data-nav-active="news">
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
@@ -55,13 +59,13 @@
   <div class="layout">
     <div id="cabinet-sidebar-root"></div>
 
-    <main id="main-content" class="main">      <header class="topbar">
+    <main id="main-content" tabindex="-1" class="main">      <header class="topbar">
         <div class="topbar-left">
           <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="cabinet-dashboard">Bosh sahifa</a> / <span aria-current="page">Yangiliklar</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -80,15 +84,15 @@
       </div>
 
       <div class="news-filters" role="group" aria-label="Yangiliklarni filtrlash">
-        <button type="button" class="filter-chip is-active" data-news-cat="all">Hammasi</button>
-        <button type="button" class="filter-chip" data-news-cat="news">Yangiliklar</button>
-        <button type="button" class="filter-chip" data-news-cat="announcement">E&rsquo;lonlar</button>
-        <button type="button" class="filter-chip" data-news-cat="event">Tadbirlar</button>
-        <button type="button" class="filter-chip" data-news-cat="grant">Grantlar</button>
+        <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="newsGrid" data-news-cat="all">Hammasi</button>
+        <button type="button" class="filter-chip" aria-pressed="false" aria-controls="newsGrid" data-news-cat="e'lon">E&rsquo;lonlar</button>
+        <button type="button" class="filter-chip" aria-pressed="false" aria-controls="newsGrid" data-news-cat="tadbir">Tadbirlar</button>
+        <button type="button" class="filter-chip" aria-pressed="false" aria-controls="newsGrid" data-news-cat="tahlil">Tahlil</button>
+        <button type="button" class="filter-chip" aria-pressed="false" aria-controls="newsGrid" data-news-cat="press">Press</button>
       </div>
 
-      <div class="news-grid" id="newsGrid">
-        <div style="grid-column:1/-1;text-align:center;color:var(--grey-400);padding:40px 0;">Yuklanmoqda...</div>
+      <div class="news-grid" id="newsGrid" aria-live="polite" aria-busy="true">
+        <div role="status" style="grid-column:1/-1;text-align:center;color:var(--grey-400);padding:40px 0;">Yuklanmoqda...</div>
       </div>
     </main>
   </div>
@@ -103,13 +107,19 @@
     if (!NgoApi.getToken()) { var _next=encodeURIComponent(location.pathname + location.search); location.replace('cabinet-login?next=' + _next); return; }
 
     var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
-    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    // Also escape ' so esc() output is safe in single-quoted attrs;
+    // every other esc() across the codebase already does — this one
+    // was the lone deviation. Defense-in-depth.
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
     function fmtDate(d) { if (!d) return ''; var p = d.slice(0,10).split('-'); return p[2] + '.' + p[1] + '.' + p[0]; }
 
-    var iconMap  = { 'news': 'ph-newspaper', 'event': 'ph-calendar', 'grant': 'ph-trophy', 'announcement': 'ph-megaphone', 'default': 'ph-file-text' };
-    var imgClass = { 'event': 'news-card__img--event', 'grant': 'news-card__img--grant', 'partner': 'news-card__img--partner', 'urgent': 'news-card__img--urgent' };
-    var catClass = { 'news': 'news-card__cat--news', 'event': 'news-card__cat--event', 'grant': 'news-card__cat--grant', 'announcement': 'news-card__cat--important', 'important': 'news-card__cat--important' };
-    var catLabel = { 'news': 'YANGILIK', 'event': 'TADBIR', 'grant': 'GRANT', 'announcement': 'MUHIM', 'important': 'MUHIM' };
+    var iconMap  = { 'e\'lon': 'ph-megaphone', 'tadbir': 'ph-calendar', 'tahlil': 'ph-chart-line', 'press': 'ph-newspaper', 'default': 'ph-file-text' };
+    var imgClass = { 'tadbir': 'news-card__img--event', 'e\'lon': 'news-card__img--urgent' };
+    var catClass = { 'e\'lon': 'news-card__cat--important', 'tadbir': 'news-card__cat--event', 'tahlil': 'news-card__cat--news', 'press': 'news-card__cat--news' };
+    // Mixed-case so screen readers don't spell out ALL-CAPS letter-by-
+    // letter; CSS .news-card__cat has text-transform:uppercase for the
+    // visual look. Same fix as iter 934 in cabinet-events.html.
+    var catLabel = { 'e\'lon': 'E\'lon', 'tadbir': 'Tadbir', 'tahlil': 'Tahlil', 'press': 'Press' };
 
     // archive=0: hide archived items, matching the public /news listing.
     // Cabinet members previously saw archived news mixed with current —
@@ -124,24 +134,34 @@
       var icon = iconMap[cat] || iconMap['default'];
       var img  = imgClass[cat] || '';
       var cc   = catClass[cat] || 'news-card__cat--news';
-      // Map fallback (catLabel[cat] || cat.toUpperCase()) was XSS:
-      // a malicious category like '><script>... would land
-      // uppercased in innerHTML. esc() the fallback path.
-      var cl   = catLabel[cat] || esc(cat.toUpperCase());
+      // Map fallback (catLabel[cat] || cat) was XSS: a malicious
+      // category like '><script>... would land in innerHTML. esc()
+      // the fallback. Drop the .toUpperCase() — CSS handles the
+      // visual uppercase, and SR users now hear natural-cased text.
+      var cl   = catLabel[cat] || esc(cat);
       var excerpt = esc(n.excerpt || n.summary || (n.body || '').slice(0, 120));
-      // 'Batafsil' was href='#' — clicking did nothing. Link to the
-      // public news-detail page (with an id) so cabinet members can
-      // read the full article. Use ../ since cabinet pages live
-      // under /cabinet/.
-      var detailHref = '../news-detail?id=' + encodeURIComponent(n.id || '');
-      return '<div class="news-card">' +
-        '<div class="news-card__img ' + img + '"><i class="ph ' + icon + '"></i></div>' +
+      // Route to the correct public detail page based on category —
+      // 'nashrlar' → /publication-detail, 'video' → /video-detail,
+      // else /news-detail. ../ since cabinet pages live under /cabinet/.
+      var detailRoute = cat === 'nashrlar' ? 'publication-detail'
+                      : cat === 'video' ? 'video-detail'
+                      : 'news-detail';
+      var detailHref = '../' + detailRoute + '?id=' + encodeURIComponent(n.id || '');
+      // Surface admin-uploaded cover image when present (admin-news has
+      // had cover-upload since iter 317-era); else fall back to category-
+      // styled icon. Streams via the proxy media.php.
+      var coverPath = n.cover_image || '';
+      var imgInner = coverPath
+        ? '<div style="background:url(\'https://ngo-api-proxy.sarvsop.workers.dev/media.php?path=' + encodeURIComponent(coverPath) + '\') center/cover no-repeat;width:100%;height:100%"></div>'
+        : '<i class="ph ' + icon + '" aria-hidden="true"></i>';
+      return '<article class="news-card">' +
+        '<div class="news-card__img ' + img + '">' + imgInner + '</div>' +
         '<div class="news-card__body">' +
           '<span class="news-card__cat ' + cc + '">' + cl + '</span>' +
-          '<h3 class="news-card__title">' + esc(n.title) + '</h3>' +
+          '<h2 class="news-card__title">' + esc(n.title) + '</h2>' +
           '<p class="news-card__excerpt">' + excerpt + '</p>' +
-          '<div class="news-card__footer"><span class="news-card__date">' + fmtDate(n.published_at || n.created_at) + '</span><a href="' + detailHref + '" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a></div>' +
-        '</div></div>';
+          '<div class="news-card__footer"><time class="news-card__date" datetime="' + esc(String(n.date || n.published_at || n.created_at || '').slice(0, 10)) + '">' + fmtDate(n.date || n.published_at || n.created_at) + '</time><a href="' + detailHref + '" class="news-card__link" aria-label="' + esc(n.title) + ' haqida batafsil o\'qish">Batafsil <i class="ph ph-arrow-right" aria-hidden="true"></i></a></div>' +
+        '</div></article>';
     }
 
     function render() {
@@ -151,32 +171,46 @@
         : allItems.filter(function (n) {
             return (n.category || n.type || 'news').toLowerCase() === activeCat;
           });
+      grid.removeAttribute('aria-busy');
       if (!filtered.length) {
         var msg = !allItems.length
-          ? 'Yangilik topilmadi'
+          ? 'Hozircha yangilik e‘lon qilinmagan.<br><a href="../news" style="color:var(--primary-500);text-decoration:underline;font-weight:500">Yangiliklar arxivini ko‘rish</a>'
           : 'Tanlangan turdagi yangiliklar yo‘q';
-        grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--grey-400);padding:40px 0;">' + msg + '</div>';
+        grid.innerHTML = '<div role="status" style="grid-column:1/-1;text-align:center;color:var(--grey-400);padding:40px 0;">' + msg + '</div>';
         return;
       }
       grid.innerHTML = filtered.map(cardHtml).join('');
     }
 
     fetchT(API + '/public/news?limit=100&archive=0')
-      .then(function (r) { return r.json(); })
+      .then(function (r) {
+        // Without an r.ok check, a 500 returning valid JSON like
+        // {error:'foo'} fed res.items=undefined → allItems=[] →
+        // render() showed "Yangiliklar topilmadi" — same misleading
+        // empty-state copy used for genuine empty DB.
+        if (!r.ok) { var e = new Error('http_' + r.status); e.status = r.status; throw e; }
+        return r.json();
+      })
       .then(function (res) {
         allItems = res.items || res.data || [];
         render();
       })
       .catch(function (err) {
         console.error('News fetch error:', err);
-        document.getElementById('newsGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;color:var(--error-600);padding:40px 0;">Xatolik yuz berdi</div>';
+        var g = document.getElementById('newsGrid');
+        g.removeAttribute('aria-busy');
+        g.innerHTML = '<div role="alert" style="grid-column:1/-1;text-align:center;color:var(--error-600);padding:40px 0;">Yangiliklar yuklanmadi. Internet aloqangizni tekshirib, sahifani yangilang.</div>';
       });
 
     /* Wire filter chips */
     document.querySelectorAll('[data-news-cat]').forEach(function (btn) {
       btn.addEventListener('click', function () {
-        document.querySelectorAll('[data-news-cat]').forEach(function (b) { b.classList.remove('is-active'); });
+        document.querySelectorAll('[data-news-cat]').forEach(function (b) {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-pressed', 'false');
+        });
         this.classList.add('is-active');
+        this.setAttribute('aria-pressed', 'true');
         activeCat = this.dataset.newsCat;
         render();
       });

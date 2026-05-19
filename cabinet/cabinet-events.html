@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="../favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tadbirlar — A'zo Kabinet</title>
 <meta name="theme-color" content="#0f6a57" />
@@ -42,6 +44,8 @@
     .news-card__link{font-size:13px;color:var(--primary-500);text-decoration:none;}
   </style>
 <script src="../js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
+<script src="../js/sw-register.js" defer></script>
 </head>
 <body data-nav-active="events">
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
@@ -49,13 +53,13 @@
   <div class="layout">
     <div id="cabinet-sidebar-root"></div>
 
-    <main id="main-content" class="main">      <header class="topbar">
+    <main id="main-content" tabindex="-1" class="main">      <header class="topbar">
         <div class="topbar-left">
           <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="cabinet-dashboard">Bosh sahifa</a> / <span aria-current="page">Tadbirlar</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -74,14 +78,14 @@
       </div>
 
       <div class="cards">
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-calendar"></i></div></div><div class="card__body"><div><p class="card__label">Jami</p><p class="card__value">&mdash;</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></div></div><div class="card__body"><div><p class="card__label">Qatnashilgan</p><p class="card__value">&mdash;</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-calendar-check"></i></div></div><div class="card__body"><div><p class="card__label">Ro&rsquo;yxatga olingan</p><p class="card__value">&mdash;</p></div></div></div>
-        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-clock"></i></div></div><div class="card__body"><div><p class="card__label">Kelayotgan</p><p class="card__value">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-calendar" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Jami</p><p class="card__value" id="evKpiTotal">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Qatnashilgan</p><p class="card__value" id="evKpiPast">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-calendar-check" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Ro&rsquo;yxatga olingan</p><p class="card__value" id="evKpiRegistered">&mdash;</p></div></div></div>
+        <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-clock" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Kelayotgan</p><p class="card__value" id="evKpiUpcoming">&mdash;</p></div></div></div>
       </div>
 
-      <div class="news-grid" id="eventsContainer">
-        <div class="grid-empty-state">Yuklanmoqda...</div>
+      <div class="news-grid" id="eventsContainer" aria-live="polite" aria-busy="true">
+        <div class="grid-empty-state" role="status">Yuklanmoqda...</div>
       </div>
     </main>
   </div>
@@ -102,19 +106,33 @@
     if (!NgoApi.getToken()) { var _next=encodeURIComponent(location.pathname + location.search); location.replace('cabinet-login?next=' + _next); return; }
 
     var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
-    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    // Defense-in-depth: also escape single-quote so esc() output is
+     // safe to drop in single-quoted attributes (every other esc() in
+     // the codebase escapes ' too — this one was the lone deviation).
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
     function fmtDate(d) { if (!d) return ''; var p = d.slice(0,10).split('-'); return p[2] + '.' + p[1] + '.' + p[0]; }
 
     // archive=0: hide archived events, matching the public /events
     // listing (content.js renderEventsPage uses the same archive=0
     // upstream filter).
     fetchT(API + '/public/events?limit=100&archive=0')
-      .then(function (r) { return r.json(); })
+      .then(function (r) {
+        // Without an r.ok check, a 500 returning valid JSON like
+        // {error:'foo'} fed res.items=[] and rendered the misleading
+        // "Hozircha tadbir e'lon qilinmagan" copy used for genuine
+        // empty DB.
+        if (!r.ok) { var e = new Error('http_' + r.status); e.status = r.status; throw e; }
+        return r.json();
+      })
       .then(function (res) {
         var items = res.items || [];
         var container = document.getElementById('eventsContainer');
+        container.removeAttribute('aria-busy');
         if (!items.length) {
-          container.innerHTML = '<div class="grid-empty-state">Tadbirlar topilmadi</div>';
+          container.innerHTML = '<div class="grid-empty-state" role="status">'
+            + 'Hozircha tadbir e‘lon qilinmagan.<br>'
+            + '<a href="../events" style="color:var(--primary-500);text-decoration:underline;font-weight:500">Tadbirlar arxivini ko‘rish</a>'
+            + '</div>';
           return;
         }
 
@@ -125,20 +143,36 @@
           var t = e.date ? new Date(e.date).getTime() : NaN;
           return !isNaN(t) && t >= todayMs;
         }
-        var upcoming = items.filter(isUpcoming);
-        var past = items.filter(function (e) { return !isUpcoming(e); });
+        var upcoming = items.filter(isUpcoming).sort(function (a, b) {
+          return (new Date(a.date).getTime() || 0) - (new Date(b.date).getTime() || 0);
+        });
+        var past = items.filter(function (e) { return !isUpcoming(e); }).sort(function (a, b) {
+          return (new Date(b.date).getTime() || 0) - (new Date(a.date).getTime() || 0);
+        });
+        // Render upcoming first, past second — was raw API order which
+        // could put a 2020 event before a 2026 one.
+        items = upcoming.concat(past);
 
-        var vals = document.querySelectorAll('.cards .card__value');
-        if (vals[0]) vals[0].textContent = items.length;
-        if (vals[1]) vals[1].textContent = past.length;
-        if (vals[3]) vals[3].textContent = upcoming.length;
+        // Stable id-based KPI updates — index access via querySelectorAll
+        // mismaps when cards are reordered. Same iter-953/954/955 pattern.
+        var elT = document.getElementById('evKpiTotal');      if (elT) elT.textContent = items.length;
+        var elP = document.getElementById('evKpiPast');       if (elP) elP.textContent = past.length;
+        // Per-user 'registered for' is not tracked by the public API;
+        // show 0 instead of forever-em-dash. Populate from a future
+        // /cabinet/event-registrations endpoint when it ships.
+        var elR = document.getElementById('evKpiRegistered'); if (elR) elR.textContent = 0;
+        var elU = document.getElementById('evKpiUpcoming');   if (elU) elU.textContent = upcoming.length;
 
         container.innerHTML = items.map(function (ev) {
           // Use the same status resolution the rest of the site does
           // (iter 238) — explicit field wins, fallback to date so
           // future-dated events with no status read 'KELAYOTGAN'.
           var isUp = isUpcoming(ev);
-          var statusLabel = isUp ? 'KELAYOTGAN' : "BO'LIB O'TGAN";
+          // Source string in mixed case; CSS .news-card__cat already
+          // applies text-transform:uppercase for the visual look. SR
+          // users now hear "Kelayotgan" / "Bo'lib o'tgan" instead of
+          // letter-by-letter ALL-CAPS announcements.
+          var statusLabel = isUp ? 'Kelayotgan' : "Bo'lib o'tgan";
           var statusClass = isUp ? 'news-card__cat--event' : 'news-card__cat--news';
           // Slice the raw description first, THEN esc — slicing the
           // escaped string can cut a multi-char entity (&amp; → &am)
@@ -146,22 +180,34 @@
           var rawDesc = String(ev.description || '');
           if (rawDesc.length > 120) rawDesc = rawDesc.slice(0, 120) + '...';
           var desc = esc(rawDesc);
-          var loc = ev.location ? '<i class="ph ph-map-pin"></i> ' + esc(ev.location) : '';
+          var loc = ev.location ? '<i class=\"ph ph-map-pin\" aria-hidden=\"true\"></i> ' + esc(ev.location) : '';
+          // Show admin-uploaded cover when present (iter 317), fall
+          // back to the calendar icon. media.php streams the file
+          // through the API proxy with proper auth.
+          var coverPath = ev.cover_image || '';
+          var imgInner = coverPath
+            ? '<div style="background:url(\'https://ngo-api-proxy.sarvsop.workers.dev/media.php?path=' + encodeURIComponent(coverPath) + '\') center/cover no-repeat;width:100%;height:100%"></div>'
+            : '<i class=\"ph ph-calendar-blank\" aria-hidden=\"true\"></i>';
 
-          return '<div class="news-card">'
-            + '<div class="news-card__img news-card__img--event"><i class="ph ph-calendar-blank"></i></div>'
+          return '<article class="news-card">'
+            + '<div class="news-card__img news-card__img--event">' + imgInner + '</div>'
             + '<div class="news-card__body">'
             + '<span class="news-card__cat ' + statusClass + '">' + statusLabel + '</span>'
-            + '<h3 class="news-card__title">' + esc(ev.title) + '</h3>'
+            + '<h2 class="news-card__title">' + esc(ev.title) + '</h2>'
             + '<p class="news-card__excerpt">' + desc + '</p>'
             + '<div class="news-card__footer">'
-            + '<span class="news-card__date">' + fmtDate(ev.date) + (loc ? ' · ' + loc : '') + '</span>'
-            + '<a href="../event-detail?id=' + encodeURIComponent(ev.id) + '" class="news-card__link">Batafsil <i class="ph ph-arrow-right"></i></a>'
-            + '</div></div></div>';
+            + '<span class="news-card__date">'
+              + '<time datetime="' + esc(String(ev.date || '').slice(0, 10)) + '">' + fmtDate(ev.date) + '</time>'
+              + (loc ? ' · ' + loc : '')
+            + '</span>'
+            + '<a href="../event-detail?id=' + encodeURIComponent(ev.id) + '" class="news-card__link" aria-label="' + esc(ev.title) + ' tadbiri haqida batafsil">Batafsil <i class="ph ph-arrow-right" aria-hidden="true"></i></a>'
+            + '</div></div></article>';
         }).join('');
       })
       .catch(function () {
-        document.getElementById('eventsContainer').innerHTML = '<div class="grid-empty-state" style="color:var(--error-600);">Xatolik yuz berdi</div>';
+        var c = document.getElementById('eventsContainer');
+        c.removeAttribute('aria-busy');
+        c.innerHTML = '<div class="grid-empty-state" role="alert" style="color:var(--error-600);">Tadbirlar yuklanmadi. Internet aloqangizni tekshirib, sahifani yangilang.</div>';
       });
   })();
   </script>

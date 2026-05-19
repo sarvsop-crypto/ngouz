@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="../favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Xavfsizlik — A'zo Kabinet</title>
 <meta name="theme-color" content="#0f6a57" />
@@ -26,6 +28,8 @@
   <link rel="stylesheet" href="../css/pacta-modal.css">
   <link rel="stylesheet" href="../css/pacta-foundation.css">
 <script src="../js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
+<script src="../js/sw-register.js" defer></script>
 </head>
 <body data-nav-active="settings">
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
@@ -33,13 +37,13 @@
   <div class="layout">
     <div id="cabinet-sidebar-root"></div>
 
-    <main id="main-content" class="main">      <header class="topbar">
+    <main id="main-content" tabindex="-1" class="main">      <header class="topbar">
         <div class="topbar-left">
           <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="cabinet-dashboard">Bosh sahifa</a> / <a href="cabinet-settings">Sozlamalar</a> / <span aria-current="page">Xavfsizlik</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -58,30 +62,30 @@
       </div>
 
       <div class="settings-layout">
-        <nav class="settings-side-nav">
-          <a href="cabinet-settings" class="settings-side-link"><i class="ph ph-user"></i> Profil</a>
-          <a href="cabinet-settings-org" class="settings-side-link"><i class="ph ph-buildings"></i> Tashkilot</a>
-          <a href="cabinet-settings-security" class="settings-side-link is-active"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
-          <a href="cabinet-settings-notifications" class="settings-side-link"><i class="ph ph-bell"></i> Bildirishnomalar</a>
+        <nav class="settings-side-nav" aria-label="Sozlamalar bo&rsquo;limlari">
+          <a href="cabinet-settings" class="settings-side-link"><i class="ph ph-user" aria-hidden="true"></i> Profil</a>
+          <a href="cabinet-settings-org" class="settings-side-link"><i class="ph ph-buildings" aria-hidden="true"></i> Tashkilot</a>
+          <a href="cabinet-settings-security" class="settings-side-link is-active"><i class="ph ph-shield-check" aria-hidden="true"></i> Xavfsizlik</a>
+          <a href="cabinet-settings-notifications" class="settings-side-link"><i class="ph ph-bell" aria-hidden="true"></i> Bildirishnomalar</a>
         </nav>
         <div>
-          <div class="settings-panel">
+          <div class="settings-panel" id="changePwPanel">
             <h2 class="settings-section-title">Parolni o&rsquo;zgartirish</h2>
             <div class="settings-grid-two">
-              <div><label for="cpCurrent" class="settings-form-label">Joriy parol</label><input id="cpCurrent" class="settings-form-control" type="password" placeholder="Joriy parol" /></div>
+              <div><label for="cpCurrent" class="settings-form-label">Joriy parol</label><input id="cpCurrent" class="settings-form-control" type="password" placeholder="Joriy parol" autocomplete="current-password" maxlength="128" /></div>
               <div></div>
-              <div><label for="cpNew" class="settings-form-label">Yangi parol (kamida 12 belgi)</label><input id="cpNew" class="settings-form-control" type="password" placeholder="Yangi parol" /></div>
-              <div><label for="cpConfirm" class="settings-form-label">Yangi parolni tasdiqlang</label><input id="cpConfirm" class="settings-form-control" type="password" placeholder="Takrorlab kiriting" /></div>
+              <div><label for="cpNew" class="settings-form-label">Yangi parol (kamida 12 belgi)</label><input id="cpNew" class="settings-form-control" type="password" placeholder="Yangi parol" autocomplete="new-password" minlength="12" maxlength="128" /></div>
+              <div><label for="cpConfirm" class="settings-form-label">Yangi parolni tasdiqlang</label><input id="cpConfirm" class="settings-form-control" type="password" placeholder="Takrorlab kiriting" autocomplete="new-password" minlength="12" maxlength="128" /></div>
             </div>
-            <p id="cpMsg" style="font-size:13px;margin:8px 0 0;display:none"></p>
-            <div class="settings-actions-row"><button type="button" class="btn btn--primary" id="cpSaveBtn"><i class="ph ph-lock-key"></i> Yangilash</button></div>
+            <p id="cpMsg" role="alert" aria-live="assertive" style="font-size:13px;margin:8px 0 0;display:none"></p>
+            <div class="settings-actions-row"><button type="button" class="btn btn--primary" id="cpSaveBtn"><i class="ph ph-lock-key" aria-hidden="true"></i> Yangilash</button></div>
           </div>
           <div class="settings-panel">
             <h2 class="settings-section-title settings-section-title--tight">Ikki bosqichli tasdiqlash</h2>
             <p class="settings-section-sub">Hisobingizni qo&rsquo;shimcha himoya bilan ta&rsquo;minlang</p>
             <div class="security-feature">
               <div class="security-feature__left">
-                <i class="ph ph-shield-check security-feature__icon"></i>
+                <i class="ph ph-shield-check security-feature__icon" aria-hidden="true"></i>
                 <div>
                   <p class="security-feature__title">Autentifikator ilovasi</p>
                   <p class="security-feature__desc">Google Authenticator yoki Authy orqali</p>
@@ -155,22 +159,38 @@
       var np  = document.getElementById('cpNew').value;
       var cf  = document.getElementById('cpConfirm').value;
       var msg = document.getElementById('cpMsg');
-      if (!cur || !np) { msg.textContent = 'Barcha maydonlarni to\'ldiring.'; msg.style.color='#dc2626'; msg.style.display='block'; return; }
-      if (np.length < 12) { msg.textContent = 'Kamida 12 belgi.'; msg.style.color='#dc2626'; msg.style.display='block'; return; }
-      if (np !== cf) { msg.textContent = 'Parollar mos kelmaydi.'; msg.style.color='#dc2626'; msg.style.display='block'; return; }
-      var btn = this; btn.disabled = true;
+      function showErr(text, focusId) {
+        msg.textContent = text; msg.style.color='#dc2626'; msg.style.display='block';
+        if (focusId) try { document.getElementById(focusId).focus(); } catch (_) {}
+      }
+      if (!cur) { showErr('Joriy parolni kiriting.', 'cpCurrent'); return; }
+      if (!np)  { showErr('Yangi parolni kiriting.', 'cpNew'); return; }
+      if (np.length < 12) { showErr('Yangi parol kamida 12 ta belgidan iborat bo\'lishi kerak.', 'cpNew'); return; }
+      if (np !== cf) { showErr('Yangi parol va tasdiq mos kelmaydi.', 'cpConfirm'); return; }
+      var btn = this;
+      var defaultLabel = btn.innerHTML;
+      btn.disabled = true;
+      btn.innerHTML = '<i class=\"ph ph-spinner\" aria-hidden=\"true\"></i> Saqlanmoqda...';
+      var pwPanel = document.getElementById('changePwPanel');
+      if (pwPanel) pwPanel.setAttribute('aria-busy', 'true');
       NgoApi.post('/auth/change-password', { current_password: cur, new_password: np })
         .then(function () {
           msg.textContent = 'Parol yangilandi!'; msg.style.color='#0e7490'; msg.style.display='block';
           document.getElementById('cpCurrent').value=''; document.getElementById('cpNew').value=''; document.getElementById('cpConfirm').value='';
+          btn.innerHTML = defaultLabel;
           btn.disabled = false;
+          if (pwPanel) pwPanel.setAttribute('aria-busy', 'false');
         })
         .catch(function (err) {
           var t = 'Xatolik.';
           if (err && err.code === 'wrong_password') t = 'Joriy parol noto\'g\'ri.';
-          else if (err && err.code === 'weak_password') t = 'Parol talablariga javob bermaydi (kamida 8 belgi).';
+          else if (err && err.code === 'weak_password') t = 'Parol talablariga javob bermaydi (kamida 12 belgi).';
+          else if (err && err.code === 'reused_password') t = 'Yangi parol joriy parol bilan bir xil bo\'lmasligi kerak.';
           else if (err && err.message) t = 'Xatolik: ' + err.message;
-          msg.textContent = t; msg.style.color='#dc2626'; msg.style.display='block'; btn.disabled = false;
+          msg.textContent = t; msg.style.color='#dc2626'; msg.style.display='block';
+          btn.innerHTML = defaultLabel;
+          btn.disabled = false;
+          if (pwPanel) pwPanel.setAttribute('aria-busy', 'false');
         });
     });
   })();

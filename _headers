@@ -1,18 +1,23 @@
 /*
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://unpkg.com; img-src 'self' data: blob: https:; connect-src 'self' https://ngo-api-proxy.sarvsop.workers.dev https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://yandex.uz; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://ngo-api-proxy.sarvsop.workers.dev; object-src 'none'; upgrade-insecure-requests; report-uri https://ngo-api-proxy.sarvsop.workers.dev/v1/errlog; report-to ngo-csp
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://unpkg.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline' https://unpkg.com https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://unpkg.com; img-src 'self' data: blob: https:; connect-src 'self' https://ngo-api-proxy.sarvsop.workers.dev https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com https://yandex.uz; frame-ancestors 'self'; base-uri 'self'; form-action 'self' https://ngo-api-proxy.sarvsop.workers.dev; manifest-src 'self'; worker-src 'self'; object-src 'none'; upgrade-insecure-requests; report-uri https://ngo-api-proxy.sarvsop.workers.dev/v1/errlog; report-to ngo-csp
   Reporting-Endpoints: ngo-csp="https://ngo-api-proxy.sarvsop.workers.dev/v1/errlog"
 
 /css/*
   Cache-Control: public, max-age=86400
 
 /js/*
-  Cache-Control: public, max-age=86400
+  # Short TTL with revalidation — JS includes don't carry ?v= cache-
+  # busters (unlike /css/*), so a 24h max-age trapped repeat visitors
+  # on stale code for a full day after deploys. 300s + must-revalidate
+  # gets fresh JS within 5min via cheap 304s on the ETag.
+  Cache-Control: public, max-age=300, must-revalidate
 
 /img/*
   Cache-Control: public, max-age=2592000
@@ -26,6 +31,14 @@
 
 /.well-known/security.txt
   Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=86400
+
+/robots.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=86400
+
+/sitemap.xml
+  Content-Type: application/xml; charset=utf-8
   Cache-Control: public, max-age=86400
 
 /sw.js
@@ -46,3 +59,14 @@
 
 /
   Cache-Control: public, max-age=300, must-revalidate
+
+# Defense-in-depth: HTTP-level noindex for admin + cabinet so even
+# crawlers that ignore <meta name="robots"> (or hit responses without
+# HTML parsing — e.g. HEAD probes, certain link-preview bots) honor
+# the directive. Robots.txt already disallows these paths but rogue
+# bots ignore it; X-Robots-Tag is the authoritative no-listing signal.
+/admin-*
+  X-Robots-Tag: noindex, nofollow
+
+/cabinet/*
+  X-Robots-Tag: noindex, nofollow

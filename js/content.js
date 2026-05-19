@@ -41,61 +41,140 @@
     var url = API_BASE + kind + '?limit=100&_=' + Date.now();
     if (extraParams) url += '&' + extraParams;
     fetchWithTimeout(url)
-      .then(function (r) { return r.ok ? r.json() : { items: [], total: 0 }; })
+      .then(function (r) {
+        // Distinguish "API replied but with non-2xx" (treat as empty
+        // for graceful UX on home strips, but flag __error so list
+        // pages can render a recoverable alert) from a clean response.
+        if (!r.ok) return { items: [], total: 0, __error: true };
+        return r.json();
+      })
       .then(function (data) {
         cb(data && data.items ? data.items : (Array.isArray(data) ? data : []), data);
       })
-      .catch(function () { cb([], { total: 0 }); });
+      .catch(function () { cb([], { total: 0, __error: true }); });
   }
 
+  // Common pattern: fetch a kind into a container. If the API erred or
+  // timed out, surface a recoverable alert instead of the render-fn's
+  // generic "no items" copy — users on a flaky network previously saw
+  // "Yangiliklar topilmadi" and assumed there was no content.
+  function fillContainer(kind, container, render, extraParams) {
+    try { container.setAttribute('aria-busy', 'true'); } catch (e) {}
+    fetchJSON(kind, function (items, data) {
+      try { container.setAttribute('aria-busy', 'false'); } catch (e) {}
+      if (data && data.__error) {
+        container.innerHTML = '<p role="alert" class="text-muted-light">Ma\'lumotlarni yuklab bo\'lmadi. Sahifani qayta yuklang yoki keyinroq urinib ko\'ring.</p>';
+        return;
+      }
+      render(items, container);
+    }, extraParams);
+  }
+
+  // Detail pages need to distinguish "API said 404" (genuinely not
+  // found — show error page + noindex) from "network/5xx" (transient,
+  // do NOT noindex). Pass a second arg to cb when it's transient so
+  // detail handlers can render a recoverable error instead of the
+  // permanent "topilmadi" copy.
   function fetchOne(kind, id, cb) {
     fetchWithTimeout(API_BASE + kind + '/' + encodeURIComponent(id) + '?_=' + Date.now())
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (data) { cb(data); })
-      .catch(function () { cb(null); });
+      .then(function (r) {
+        if (r.status === 404) { cb(null); return; }
+        if (!r.ok) { cb(null, { __error: true, status: r.status }); return; }
+        return r.json().then(function (data) { cb(data); });
+      })
+      .catch(function () { cb(null, { __error: true, status: 0 }); });
   }
 
   function mediaUrl(path) {
     if (!path) return '';
-    if (path.indexOf('http') === 0) return path;
+    if (/^https?:\/\//.test(path)) return path;
     return MEDIA_BASE + encodeURIComponent(path);
   }
 
   function coverStyle(item) {
     var img = mediaUrl(item.cover_image);
-    if (img) return 'background:url(\'' + img + '\') center/cover no-repeat';
+    if (img) {
+      // url() argument lives in a CSS string literal that lands in
+      // a style attribute. encodeURIComponent already covers the
+      // relative path, but the absolute-URL fast-path in mediaUrl
+      // returns the value as-is; defensively escape ' \\ \n in case a
+      // backend cover_image contains characters that would otherwise
+      // break out of url('...') or the style="..." attribute.
+      var safe = String(img).replace(/\\/g, '\\\\').replace(/'/g, '%27').replace(/\n|\r/g, '');
+      return 'background:url(\'' + safe + '\') center/cover no-repeat';
+    }
     return 'background:' + coverGradient(item.category || item.status || '');
   }
 
   var UZ_MONTHS = ['Yan','Feb','Mar','Apr','May','Iyn','Iyl','Avg','Sen','Okt','Noy','Dek'];
 
-  function fmtDate(iso) {
+  // Trim datetime suffix (T-separated time, or space-separated time
+  // some backends return) before splitting — without this a datetime
+  // like '2026-05-01T10:30:00Z' parses to '01T10:30:00Z.05.2026'.
+  function _datePart(iso) {
     if (!iso) return '';
-    var p = iso.split('-');
+    return String(iso).slice(0, 10);
+  }
+  function fmtDate(iso) {
+    var d = _datePart(iso);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return '';
+    var p = d.split('-');
     return p[2] + '.' + p[1] + '.' + p[0];
   }
 
   function dateDay(iso) {
-    if (!iso) return '';
-    return iso.split('-')[2] || '';
+    var d = _datePart(iso);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return '';
+    return d.split('-')[2] || '';
   }
 
   function dateMonthAbbr(iso) {
-    if (!iso) return '';
-    var m = parseInt(iso.split('-')[1], 10);
+    var d = _datePart(iso);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return '';
+    var m = parseInt(d.split('-')[1], 10);
     return UZ_MONTHS[m - 1] || '';
   }
 
+  // Linkify http(s):// URLs that appear as plain text in admin-edited
+  // article bodies. Operate on the already-esc'd string so the URL
+  // chars are HTML-encoded; we still need to undo the encoding for the
+  // href attribute (browsers want the raw URL there). Restrict to
+  // safe schemes and add rel/noopener.
+  function linkifyEscaped(escapedText) {
+    return escapedText.replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)\]'"])/g, function (match) {
+      // The match is the HTML-escaped form (& → &amp;). For the href
+      // we need the un-escaped raw URL so the browser navigates
+      // correctly. Then wrap in an <a> with the escaped form as
+      // visible text + as href (esc again, ensuring no breakout).
+      var raw = match.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
+      return '<a href="' + esc(raw) + '" target="_blank" rel="noopener noreferrer">' + match + '</a>';
+    });
+  }
   function bodyToHTML(text) {
     if (!text) return '';
+    // Escape before paragraph/newline-splitting so admin-entered HTML
+    // (or copy-pasted content with stray <script>/<img onerror>) gets
+    // rendered as text, not executed. Result: only the <p>/<br> we
+    // synthesize survive as live markup. Then linkify http(s):// URLs
+    // so admins don't have to author HTML to make a citation clickable.
     return text.split(/\n\n+/).map(function (p) {
-      return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+      return '<p>' + linkifyEscaped(esc(p).replace(/\n/g, '<br>')) + '</p>';
     }).join('');
   }
 
   /* ── News ─────────────────────────────────────────────────── */
+  // Route news cards to the matching detail page so list-page clicks
+  // stay in context. publications.html (category=nashrlar) used to
+  // link every card to /news-detail; same for videos.html.
+  function newsDetailRouteFor(category) {
+    var c = String(category || '').toLowerCase();
+    if (c === 'nashrlar') return 'publication-detail';
+    if (c === 'video')    return 'video-detail';
+    return 'news-detail';
+  }
+
   function newsCardHTML(n) {
-    var url = 'news-detail?id=' + encodeURIComponent(n.id);
+    var url = newsDetailRouteFor(n.category) + '?id=' + encodeURIComponent(n.id);
     var cat = n.category || '';
     var archiveBadge = (n.is_archive === '1' || n.is_archive === 1)
       ? '<span class="gov-news-archive-badge">Arxiv</span>' : '';
@@ -105,21 +184,30 @@
       + '<div class="gov-news-overlay"></div>' + archiveBadge + '</a>'
       + '<div class="gov-news-content">'
       + '<div class="gov-news-header">'
-      + '<div class="gov-news-date"><b>' + dateDay(n.date) + '</b><span>' + dateMonthAbbr(n.date) + '</span></div>'
+      + '<time class="gov-news-date" datetime="' + esc(_datePart(n.date) || '') + '" aria-hidden="true"><b>' + dateDay(n.date) + '</b><span>' + dateMonthAbbr(n.date) + '</span></time>'
       + '<h3 class="gov-news-title"><a href="' + url + '">' + esc(n.title) + '</a></h3>'
       + '</div>'
       + '<a href="' + url + '" class="gov-news-excerpt">' + esc(n.excerpt) + '</a>'
-      + '<div class="gov-news-footer"><span>' + fmtDate(n.date) + '</span><a href="' + url + '">' + esc(cat) + '</a></div>'
+      + '<div class="gov-news-footer"><time datetime="' + esc(_datePart(n.date) || '') + '">' + fmtDate(n.date) + '</time><a href="' + url + '">' + esc(cat) + '</a></div>'
       + '</div></article>';
   }
 
+  // Newest-first sort: ensure home strip and listing pages don't
+  // depend on backend order. Falls back to 0 for items with no date
+  // so they sink to the bottom.
+  function sortNewsByDateDesc(items) {
+    return items.slice().sort(function (a, b) {
+      return (new Date(b.date).getTime() || 0) - (new Date(a.date).getTime() || 0);
+    });
+  }
+
   function renderNewsHome(items, container) {
-    var latest = items.slice(0, 3);
+    var latest = sortNewsByDateDesc(items).slice(0, 3);
     if (!latest.length) {
       // Was an early return — left the section header above with an
       // empty area beneath it. Show a placeholder so the layout flow
       // doesn't break and the user sees what's intended.
-      container.innerHTML = '<p class="text-muted-light" style="padding:16px 0;">So‘nggi yangiliklar topilmadi.</p>';
+      container.innerHTML = '<p role="status" class="text-muted-light" style="padding:16px 0;">So‘nggi yangiliklar topilmadi.</p>';
       return;
     }
     var html = '<div class="gov-news-grid">';
@@ -129,22 +217,28 @@
   }
 
   function renderNewsPage(items, container) {
-    if (!items.length) { container.innerHTML = '<p class="text-muted-light">Yangiliklar topilmadi.</p>'; return; }
+    if (!items.length) { container.innerHTML = '<p role="status" class="text-muted-light">Yangiliklar topilmadi.</p>'; return; }
+    var sorted = sortNewsByDateDesc(items);
     var html = '<div class="gov-news-grid">';
-    items.forEach(function (n) { html += newsCardHTML(n); });
+    sorted.forEach(function (n) { html += newsCardHTML(n); });
     html += '</div>';
     container.innerHTML = html;
   }
 
   function coverGradient(key) {
+    // Normalize key — backend rows mix uppercase ('TADBIR') and lower
+    // ('tadbir') for the same category. Without normalization, the
+    // lowercase rows fell through to the fallback gradient even
+    // though their category had a dedicated color. Match by uppercase.
+    var k = String(key || '').toUpperCase();
     var map = {
       'TADBIR':   'linear-gradient(135deg,#1a3a5c 0%,#2563eb 100%)',
       'TAHLIL':   'linear-gradient(135deg,#3b1a5c 0%,#7c3aed 100%)',
       "E'LON":    'linear-gradient(135deg,#5c3a1a 0%,#d97706 100%)',
       'PRESS':    'linear-gradient(135deg,#1a4a5c 0%,#0891b2 100%)',
-      'upcoming': 'linear-gradient(135deg,#1a3a5c 0%,#2563eb 100%)',
+      'UPCOMING': 'linear-gradient(135deg,#1a3a5c 0%,#2563eb 100%)',
     };
-    return map[key] || 'linear-gradient(135deg,#1a5c35 0%,#2e7d52 100%)';
+    return map[k] || 'linear-gradient(135deg,#1a5c35 0%,#2e7d52 100%)';
   }
 
   function shareButtons(pageUrl, title) {
@@ -159,13 +253,13 @@
     return '<div class="detail-share-row">'
       + '<span class="detail-share-label">Ulashish:</span>'
       + '<a href="' + fb + '" target="_blank" rel="noopener noreferrer" class="detail-share-btn" aria-label="Facebook">'
-      + '<svg width="15" height="15" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>'
+      + '<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>'
       + '<a href="' + tg + '" target="_blank" rel="noopener noreferrer" class="detail-share-btn" aria-label="Telegram">'
-      + '<svg width="15" height="15" viewBox="0 0 496 512"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239-92.1c11.1-4 20.8 2.7 17.3 19.4z"/></svg></a>'
+      + '<svg width="15" height="15" viewBox="0 0 496 512" aria-hidden="true" focusable="false"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239-92.1c11.1-4 20.8 2.7 17.3 19.4z"/></svg></a>'
       + '<a href="' + tw + '" target="_blank" rel="noopener noreferrer" class="detail-share-btn" aria-label="X / Twitter">'
-      + '<svg width="14" height="14" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>'
+      + '<svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.748l7.73-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>'
       + '<a href="' + li + '" target="_blank" rel="noopener noreferrer" class="detail-share-btn" aria-label="LinkedIn">'
-      + '<svg width="15" height="15" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>'
+      + '<svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>'
       + '</div>';
   }
 
@@ -179,16 +273,75 @@
     link.href = url;
   }
 
+  // Detail page resolved to no item — keep the URL out of search
+  // indexes (Google would otherwise crawl every ?id=N variant) and
+  // update the title so browser tab/history reflects the 404 state.
+  function markNotFound(title) {
+    try { document.title = title; } catch (e) {}
+    var meta = document.querySelector('meta[name="robots"]');
+    if (!meta) {
+      meta = document.createElement('meta');
+      meta.name = 'robots';
+      document.head.appendChild(meta);
+    }
+    meta.content = 'noindex, follow';
+  }
+
+  // Build a canonical URL that ignores marketing params (utm_*,
+  // fbclid, gclid, ref, etc.) so shared/clicked links don't fragment
+  // SEO signals across query variants. Keeps `id` and `type` since
+  // those disambiguate which article/event/document the page is
+  // showing — without `type=documents` the canonical for a document
+  // URL would point to /news-detail?id=X which the page handler
+  // would treat as a news article, surfacing wrong/missing content
+  // to crawlers and link-preview bots.
+  function canonicalDetailUrl() {
+    var p = new URLSearchParams(window.location.search);
+    var id = p.get('id') || '';
+    var type = p.get('type') || '';
+    var base = window.location.origin + window.location.pathname;
+    if (!id) return base;
+    var qs = '?id=' + encodeURIComponent(id);
+    if (type) qs += '&type=' + encodeURIComponent(type);
+    return base + qs;
+  }
+
+  // Without per-article OG/Twitter updates, every shared link previews
+  // as the generic news-detail / event-detail meta. Update the tags
+  // in place so Facebook/Twitter/LinkedIn/Telegram render the actual
+  // article title + excerpt + cover image.
+  function setMetaContent(selector, value) {
+    var el = document.head.querySelector(selector);
+    if (el && value != null) el.setAttribute('content', value);
+  }
+  function updateSocialMeta(title, description, imageUrl, pageUrl) {
+    var t = title || '';
+    var d = String(description || '').slice(0, 280);
+    setMetaContent('meta[name="description"]', d);
+    setMetaContent('meta[property="og:title"]', t);
+    setMetaContent('meta[property="og:description"]', d);
+    setMetaContent('meta[property="og:url"]', pageUrl);
+    setMetaContent('meta[name="twitter:title"]', t);
+    setMetaContent('meta[name="twitter:description"]', d);
+    if (imageUrl) {
+      setMetaContent('meta[property="og:image"]', imageUrl);
+      setMetaContent('meta[property="og:image:alt"]', t);
+      setMetaContent('meta[name="twitter:image"]', imageUrl);
+      setMetaContent('meta[name="twitter:image:alt"]', t);
+    }
+  }
+
   function injectArticleJsonLd(item) {
     try {
       var existing = document.getElementById('news-article-jsonld');
       if (existing) existing.remove();
-      var pageUrl = window.location.href;
+      var pageUrl = canonicalDetailUrl();
       setCanonical(pageUrl);
       var coverImg = (item.cover_image_url || item.cover_url || '');
-      if (coverImg && coverImg.indexOf('http') !== 0) {
+      if (coverImg && !/^https?:\/\//.test(coverImg)) {
         coverImg = MEDIA_BASE + encodeURIComponent(coverImg);
       }
+      updateSocialMeta(item.title, item.excerpt, coverImg, pageUrl);
       var data = {
         '@context': 'https://schema.org',
         '@type': 'NewsArticle',
@@ -221,44 +374,122 @@
       s.id = 'news-article-jsonld';
       s.textContent = JSON.stringify(data);
       document.head.appendChild(s);
+      injectBreadcrumbJsonLd(item, pageUrl);
     } catch (e) { /* swallow — JSON-LD failure must not break the page */ }
+  }
+
+  // Inject 3-level BreadcrumbList JSON-LD: Home → Section → Article.
+  // Section is derived from the document URL (news/event/publication/
+  // video). Static breadcrumbs would have to ship without the article
+  // title, so we do this dynamically once the item is loaded — Google
+  // and other crawlers all execute JS for JSON-LD now.
+  function injectBreadcrumbJsonLd(item, pageUrl) {
+    try {
+      var existing = document.getElementById('detail-breadcrumb-jsonld');
+      if (existing) existing.remove();
+      var page = (location.pathname.split('/').pop() || '').replace(/\.html$/, '');
+      var sectionMap = {
+        'news-detail':        { name: 'Yangiliklar',     url: 'https://www.ngo.uz/news' },
+        'event-detail':       { name: 'Tadbirlar',       url: 'https://www.ngo.uz/events' },
+        'publication-detail': { name: 'Publikatsiyalar', url: 'https://www.ngo.uz/publications' },
+        'video-detail':       { name: 'Videolar',        url: 'https://www.ngo.uz/videos' }
+      };
+      var section = sectionMap[page];
+      // news-detail also serves documents via ?type=documents — relabel
+      // the section so the breadcrumb reflects /official-docs, not /news.
+      var qsType = new URLSearchParams(location.search).get('type');
+      if (page === 'news-detail' && qsType === 'documents') {
+        section = { name: 'Hujjatlar', url: 'https://www.ngo.uz/official-docs' };
+      }
+      if (!section) return;
+      var data = {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          { '@type': 'ListItem', 'position': 1, 'name': 'Bosh sahifa',  'item': 'https://www.ngo.uz/' },
+          { '@type': 'ListItem', 'position': 2, 'name': section.name,    'item': section.url },
+          { '@type': 'ListItem', 'position': 3, 'name': String(item.title || '').slice(0, 200), 'item': pageUrl }
+        ]
+      };
+      var s = document.createElement('script');
+      s.type = 'application/ld+json';
+      s.id = 'detail-breadcrumb-jsonld';
+      s.textContent = JSON.stringify(data);
+      document.head.appendChild(s);
+    } catch (e) { /* swallow */ }
   }
 
   function renderNewsDetail(items, container, id) {
     var item = id ? items.find(function (n) { return n.id === id; }) : null;
     if (!item) item = items[0];
-    if (!item) { container.innerHTML = '<p>Yangilik topilmadi.</p>'; return; }
+    if (!item) { container.innerHTML = '<p role="status">Yangilik topilmadi.</p>'; return; }
 
     document.title = item.title + ' - ngo.uz';
     injectArticleJsonLd(item);
     var cat = item.category || '';
     var pageUrl = window.location.href;
 
-    var others = items.filter(function (n) { return n !== item; }).slice(0, 8);
-    var sidebar = '<aside class="detail-sidebar"><p class="detail-sidebar-heading">Boshqa yangiliklar</p>';
+    // Filter by id, not reference: this list comes from a SEPARATE
+    // fetchJSON call than fetchOne (which produced `item`), so the
+    // same article shows up as a different object instance. With the
+    // old `n !== item` reference check, the current article appeared
+    // as the first "Boshqa yangiliklar" sidebar entry — a clearly
+    // wrong "see also" suggestion.
+    var others = items.filter(function (n) { return String(n.id) !== String(item.id); }).slice(0, 8);
+    // Sidebar heading reflects the page context; each entry's link
+    // uses the correct per-category detail route so a 'nashrlar'
+    // article in the news-detail sidebar still goes to /publication-
+    // detail, not /news-detail.
+    var pn = (window.location.pathname.split('/').pop() || '').replace(/\.html$/, '');
+    var sidebarHeading = (pn === 'publication-detail') ? 'Boshqa publikatsiyalar'
+                       : (pn === 'video-detail') ? 'Boshqa videolar'
+                       : 'Boshqa yangiliklar';
+    // Real <h2> heading instead of styled <p> so screen readers
+    // announce the sidebar landmark with its actual purpose ("Boshqa
+    // yangiliklar, heading 2") instead of just "complementary,
+    // paragraph". The CSS class already has margin:0 so visuals match.
+    // aria-labelledby ties the <aside> complementary landmark to its
+    // own heading so SR users hear "Boshqa yangiliklar, complementary
+    // landmark" rather than an unnamed "complementary".
+    var sidebar = '<aside class="detail-sidebar" aria-labelledby="detailSidebarHeading"><h2 id="detailSidebarHeading" class="detail-sidebar-heading">' + sidebarHeading + '</h2>';
     others.forEach(function (n) {
-      sidebar += '<a href="news-detail?id=' + encodeURIComponent(n.id) + '" class="detail-sidebar-item">'
-        + '<p class="detail-sidebar-item-date">' + fmtDate(n.date) + ' · ' + esc(n.category || '') + '</p>'
+      sidebar += '<a href="' + newsDetailRouteFor(n.category) + '?id=' + encodeURIComponent(n.id) + '" class="detail-sidebar-item">'
+        + '<p class="detail-sidebar-item-date"><time datetime="' + esc(_datePart(n.date) || '') + '">' + fmtDate(n.date) + '</time> · ' + esc(n.category || '') + '</p>'
         + '<p class="detail-sidebar-item-title">' + esc(n.title) + '</p>'
         + '</a>';
     });
     sidebar += '</aside>';
 
+    // Breadcrumb / category links should reflect the current detail
+    // route — same fix as the sidebar above. /news for news-detail,
+    // /publications for publication-detail, /videos for video-detail.
+    // /news-detail?type=documents → /official-docs route + Hujjatlar.
+    var qsType = new URLSearchParams(location.search).get('type');
+    var isDocRoute = (pn === 'news-detail' && qsType === 'documents');
+    var listRoute = isDocRoute ? 'official-docs'
+                  : (pn === 'publication-detail') ? 'publications'
+                  : (pn === 'video-detail') ? 'videos'
+                  : 'news';
+    var listLabel = isDocRoute ? 'Hujjatlar'
+                  : (pn === 'publication-detail') ? 'Publikatsiyalar'
+                  : (pn === 'video-detail') ? 'Videolar'
+                  : 'Yangiliklar';
     container.innerHTML = '<div class="detail-layout">'
       + '<div class="detail-paper">'
       + '<div class="detail-top-bar">'
-      + '<p class="detail-breadcrumbs"><a href="index">Bosh sahifa</a><span class="detail-bc-sep">›</span><a href="news">Yangiliklar</a><span class="detail-bc-sep">›</span><span>' + esc(cat) + '</span></p>'
+      + '<nav aria-label="Sahifa joylashuvi"><p class="detail-breadcrumbs"><a href="index">Bosh sahifa</a><span class="detail-bc-sep" aria-hidden="true">›</span><a href="' + listRoute + '">' + listLabel + '</a><span class="detail-bc-sep" aria-hidden="true">›</span><span aria-current="page">' + esc(cat) + '</span></p></nav>'
       + '<button class="detail-print-btn" onclick="window.print()" aria-label="Chop etish"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>'
       + '</div>'
       + '<h1 class="detail-title">' + esc(item.title) + '</h1>'
-      + '<p class="detail-meta"><span>' + fmtDate(item.date) + '</span><span class="detail-meta-sep">/</span><a href="news">' + esc(cat) + '</a></p>'
+      + '<p class="detail-meta"><time datetime="' + esc(_datePart(item.date) || '') + '">' + fmtDate(item.date) + '</time><span class="detail-meta-sep">/</span><a href="' + listRoute + '">' + esc(cat) + '</a></p>'
       + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
       + '<div class="detail-body">' + bodyToHTML(item.body || item.excerpt) + '</div>'
-      + '<div class="detail-tags"><a href="news" class="detail-tag">' + esc(cat) + '</a></div>'
+      + '<div class="detail-tags"><a href="' + listRoute + '" class="detail-tag">' + esc(cat) + '</a></div>'
       + shareButtons(pageUrl, item.title)
       + '</div>'
       + sidebar
       + '</div>';
+    try { container.setAttribute('aria-busy', 'false'); } catch (e) {}
   }
 
   /* ── Events ───────────────────────────────────────────────── */
@@ -286,18 +517,25 @@
       + '<div class="gov-news-overlay"></div>' + archiveBadge + '</a>'
       + '<div class="gov-news-content">'
       + '<div class="gov-news-header">'
-      + '<div class="gov-news-date"><b>' + dateDay(e.date) + '</b><span>' + dateMonthAbbr(e.date) + '</span></div>'
+      + '<time class="gov-news-date" datetime="' + esc(_datePart(e.date) || '') + '" aria-hidden="true"><b>' + dateDay(e.date) + '</b><span>' + dateMonthAbbr(e.date) + '</span></time>'
       + '<h3 class="gov-news-title"><a href="' + url + '">' + esc(e.title) + '</a></h3>'
       + '</div>'
       + '<a href="' + url + '" class="gov-news-excerpt">' + esc(e.description || '') + '</a>'
-      + '<div class="gov-news-footer"><span>' + esc(e.dateLabel || fmtDate(e.date)) + '</span><a href="' + url + '">' + label + '</a></div>'
+      + '<div class="gov-news-footer"><time datetime="' + esc(_datePart(e.date) || '') + '">' + esc(e.dateLabel || fmtDate(e.date)) + '</time><a href="' + url + '">' + label + '</a></div>'
       + '</div></article>';
   }
 
   function renderEventsHome(items, container) {
-    var latest = items.slice(0, 3);
+    // The section header reads "Yaqin tadbirlar" (Upcoming events) —
+    // surface only upcoming, soonest first, max 3. Was raw API order
+    // limited to 3, which could promote a past event over an
+    // upcoming one when the backend didn't return events in date
+    // order.
+    var upcoming = items.filter(function (e) { return eventStatus(e) === 'upcoming'; })
+      .sort(function (a, b) { return (new Date(a.date).getTime() || 0) - (new Date(b.date).getTime() || 0); });
+    var latest = upcoming.slice(0, 3);
     if (!latest.length) {
-      container.innerHTML = '<p class="text-muted-light" style="padding:16px 0;">Yaqin tadbirlar topilmadi.</p>';
+      container.innerHTML = '<p role="status" class="text-muted-light" style="padding:16px 0;">Yaqin tadbirlar topilmadi.</p>';
       return;
     }
     var html = '<div class="gov-news-grid">';
@@ -307,9 +545,14 @@
   }
 
   function renderEventsPage(items, container) {
-    if (!items.length) { container.innerHTML = '<p>Tadbirlar topilmadi.</p>'; return; }
-    var upcoming = items.filter(function (e) { return eventStatus(e) === 'upcoming'; });
-    var past     = items.filter(function (e) { return eventStatus(e) === 'past'; });
+    if (!items.length) { container.innerHTML = '<p role="status">Tadbirlar topilmadi.</p>'; return; }
+    // Within each section: soonest upcoming first, most recent past
+    // first. Without sort the API order leaked through; admins
+    // reorganized via the admin-events table couldn't reorder.
+    var upcoming = items.filter(function (e) { return eventStatus(e) === 'upcoming'; })
+      .sort(function (a, b) { return (new Date(a.date).getTime() || 0) - (new Date(b.date).getTime() || 0); });
+    var past = items.filter(function (e) { return eventStatus(e) === 'past'; })
+      .sort(function (a, b) { return (new Date(b.date).getTime() || 0) - (new Date(a.date).getTime() || 0); });
 
     function sectionHTML(arr, label) {
       if (!arr.length) return '';
@@ -327,12 +570,13 @@
     try {
       var existing = document.getElementById('event-jsonld');
       if (existing) existing.remove();
-      var pageUrl = window.location.href;
+      var pageUrl = canonicalDetailUrl();
       setCanonical(pageUrl);
       var coverImg = (item.cover_image_url || item.cover_url || '');
-      if (coverImg && coverImg.indexOf('http') !== 0) {
+      if (coverImg && !/^https?:\/\//.test(coverImg)) {
         coverImg = MEDIA_BASE + encodeURIComponent(coverImg);
       }
+      updateSocialMeta(item.title, item.description, coverImg, pageUrl);
       var data = {
         '@context': 'https://schema.org',
         '@type': 'Event',
@@ -373,13 +617,14 @@
       s.id = 'event-jsonld';
       s.textContent = JSON.stringify(data);
       document.head.appendChild(s);
+      injectBreadcrumbJsonLd(item, pageUrl);
     } catch (e) { /* swallow */ }
   }
 
   function renderEventDetail(items, container, id) {
     var item = id ? items.find(function (e) { return e.id === id; }) : null;
     if (!item) item = items[0];
-    if (!item) { container.innerHTML = '<p>Tadbir topilmadi.</p>'; return; }
+    if (!item) { container.innerHTML = '<p role="status">Tadbir topilmadi.</p>'; return; }
 
     document.title = item.title + ' - ngo.uz';
     injectEventJsonLd(item);
@@ -391,13 +636,17 @@
     var body = bodyToHTML(item.description)
       + (item.location ? '<p><strong>Joyi:</strong> ' + esc(item.location) + '</p>' : '')
       + (item.participants ? '<p><strong>Ishtirokchilar:</strong> ' + esc(item.participants) + ' kishi</p>' : '')
-      + (item.deadline ? '<p><strong>Ariza muddati:</strong> ' + esc(item.deadlineLabel) + '</p>' : '');
+      + (item.deadline ? '<p><strong>Ariza muddati:</strong> <time datetime="' + esc(_datePart(item.deadline) || '') + '">' + esc(item.deadlineLabel || fmtDate(item.deadline)) + '</time></p>' : '');
 
-    var others = items.filter(function (e) { return e !== item; }).slice(0, 8);
-    var sidebar = '<aside class="detail-sidebar"><p class="detail-sidebar-heading">Boshqa tadbirlar</p>';
+    // Filter by id, not reference — see news-detail equivalent for
+    // why: items comes from a different fetch than `item`, so two
+    // separate object instances with the same id sneak the current
+    // event into the "Boshqa tadbirlar" sidebar.
+    var others = items.filter(function (e) { return String(e.id) !== String(item.id); }).slice(0, 8);
+    var sidebar = '<aside class="detail-sidebar" aria-labelledby="detailEventSidebarHeading"><h2 id="detailEventSidebarHeading" class="detail-sidebar-heading">Boshqa tadbirlar</h2>';
     others.forEach(function (e) {
       sidebar += '<a href="event-detail?id=' + encodeURIComponent(e.id) + '" class="detail-sidebar-item">'
-        + '<p class="detail-sidebar-item-date">' + esc(e.dateLabel) + '</p>'
+        + '<p class="detail-sidebar-item-date"><time datetime="' + esc(_datePart(e.date) || '') + '">' + esc(e.dateLabel || fmtDate(e.date)) + '</time></p>'
         + '<p class="detail-sidebar-item-title">' + esc(e.title) + '</p>'
         + '</a>';
     });
@@ -406,11 +655,11 @@
     container.innerHTML = '<div class="detail-layout">'
       + '<div class="detail-paper">'
       + '<div class="detail-top-bar">'
-      + '<p class="detail-breadcrumbs"><a href="index">Bosh sahifa</a><span class="detail-bc-sep">›</span><a href="events">Tadbirlar</a><span class="detail-bc-sep">›</span><span>' + statusLabel + '</span></p>'
+      + '<nav aria-label="Sahifa joylashuvi"><p class="detail-breadcrumbs"><a href="index">Bosh sahifa</a><span class="detail-bc-sep" aria-hidden="true">›</span><a href="events">Tadbirlar</a><span class="detail-bc-sep" aria-hidden="true">›</span><span aria-current="page">' + statusLabel + '</span></p></nav>'
       + '<button class="detail-print-btn" onclick="window.print()" aria-label="Chop etish"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>'
       + '</div>'
       + '<h1 class="detail-title">' + esc(item.title) + '</h1>'
-      + '<p class="detail-meta"><span>' + esc(item.dateLabel) + '</span><span class="detail-meta-sep">/</span><a href="events">' + statusLabel + '</a></p>'
+      + '<p class="detail-meta"><time datetime="' + esc(_datePart(item.date) || '') + '">' + esc(item.dateLabel || fmtDate(item.date)) + '</time><span class="detail-meta-sep">/</span><a href="events">' + statusLabel + '</a></p>'
       + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
       + '<div class="detail-body">' + body + '</div>'
       + '<div class="detail-tags"><a href="events" class="detail-tag">Tadbir</a><a href="events" class="detail-tag">' + statusLabel + '</a></div>'
@@ -418,6 +667,7 @@
       + '</div>'
       + sidebar
       + '</div>';
+    try { container.setAttribute('aria-busy', 'false'); } catch (e) {}
   }
 
   /* ── Grants ───────────────────────────────────────────────── */
@@ -436,20 +686,40 @@
 
   function renderGrantsPage(items, container) {
     if (!items.length) { container.innerHTML = '<p class="text-muted-light">Faol grant yoki tanlov mavjud emas.</p>'; return; }
+    // Active grants first (nearest deadline first — most actionable),
+    // closed grants second (most-recent first). Was raw API order.
+    var sorted = items.slice().sort(function (a, b) {
+      var aActive = grantStatus(a) === 'active' ? 1 : 0;
+      var bActive = grantStatus(b) === 'active' ? 1 : 0;
+      if (aActive !== bActive) return bActive - aActive;
+      var ad = new Date(a.deadline || 0).getTime() || 0;
+      var bd = new Date(b.deadline || 0).getTime() || 0;
+      return aActive ? (ad - bd) : (bd - ad);
+    });
     var html = '<div class="cards">';
-    items.forEach(function (g) {
+    sorted.forEach(function (g) {
       // Restrict to ascii word/dash chars; backend grant ids match
       // /^[a-z0-9-]+$/, but be defensive — this id lands directly in
       // an HTML attribute and an RSS link target.
       var safeId = String(g.id || '').replace(/[^A-Za-z0-9_-]/g, '');
       var id = safeId ? ' id="' + safeId + '"' : '';
+      var cover = g.cover_image
+        ? '<div class="card-cover" style="' + coverStyle(g) + '" aria-hidden="true"></div>'
+        : '';
+      var isActive = grantStatus(g) === 'active';
+      // Hide the "Ariza topshirish" CTA on closed grants — applications
+      // wouldn't be accepted, so the button just frustrates users.
+      var cta = isActive
+        ? '<a class="btn btn-inline" href="service-request">Ariza topshirish</a>'
+        : '<span class="btn btn-inline" style="opacity:.55;cursor:not-allowed" aria-disabled="true">Tanlov yopilgan</span>';
       html += '<article class="card"' + id + '>'
-        + '<span class="tag">' + esc(g.category) + (grantStatus(g) === 'active' ? ' · Faol' : ' · Yopilgan') + '</span>'
+        + cover
+        + '<span class="tag">' + esc(g.category) + (isActive ? ' · Faol' : ' · Yopilgan') + '</span>'
         + '<h3>' + esc(g.title) + '</h3>'
         + '<p>' + esc(g.description) + '</p>'
         + (g.amount ? '<p class="grant-amount">Miqdor: ' + esc(g.amount) + '</p>' : '')
-        + (g.deadlineLabel ? '<p class="grant-deadline">Muddat: ' + esc(g.deadlineLabel) + '</p>' : '')
-        + '<a class="btn btn-inline" href="service-request">Ariza topshirish</a>'
+        + (g.deadline || g.deadlineLabel ? '<p class="grant-deadline">Muddat: <time datetime="' + esc(_datePart(g.deadline) || '') + '">' + esc(g.deadlineLabel || fmtDate(g.deadline)) + '</time></p>' : '')
+        + cta
         + '</article>';
     });
     html += '</div>';
@@ -472,7 +742,7 @@
   };
 
   function renderDocumentsPage(items, container) {
-    if (!items.length) { container.innerHTML = '<p>Hujjatlar topilmadi.</p>'; return; }
+    if (!items.length) { container.innerHTML = '<p role="status">Hujjatlar topilmadi.</p>'; return; }
     var byCat = {};
     items.forEach(function (d) {
       var cat = d.category || 'boshqa';
@@ -484,6 +754,11 @@
     order.forEach(function (cat) {
       var arr = byCat[cat];
       if (!arr || !arr.length) return;
+      // Newest documents first within each category — was raw API
+      // order, so a 2025 decree could sit below a 2018 one.
+      arr.sort(function (a, b) {
+        return (new Date(b.date).getTime() || 0) - (new Date(a.date).getTime() || 0);
+      });
       var label = DOC_CATEGORY_LABELS[cat] || cat;
       html += '<h2 class="section-title mt-section">' + label + '</h2>';
       html += '<div class="doc-table">';
@@ -492,7 +767,7 @@
         html += '<div class="doc-row">'
           + '<a href="news-detail?id=' + encodeURIComponent(d.id) + '&type=documents" style="color:#0e7490;text-decoration:underline;font-weight:600">' + esc(d.title) + '</a>'
           + '<span>' + esc(label) + '</span>'
-          + '<span>' + fmtDate(d.date) + '</span>'
+          + '<time datetime="' + esc(_datePart(d.date) || '') + '">' + fmtDate(d.date) + '</time>'
           + '</div>';
       });
       html += '</div>';
@@ -507,16 +782,45 @@
     var total = 0;
     var gridEl = null;
     var loadMoreBtn = null;
+    var inFlight = false;
 
     function loadPage() {
+      // Guard against double-fire from rapid clicks on the load-more
+      // button — the click could land twice before the network
+      // request returned, duplicating items in the grid.
+      if (inFlight) return;
+      inFlight = true;
+      // aria-busy lets screen readers defer announcing partial DOM
+      // changes until the load completes. Without this, the
+      // aria-live="polite" container would announce each rendered
+      // card as it lands during pagination, flooding the SR queue.
+      try { container.setAttribute('aria-busy', 'true'); } catch (e) {}
+      var btnEl = loadMoreBtn && loadMoreBtn.querySelector('#loadMoreBtn');
+      var btnLabel = btnEl ? btnEl.innerHTML : '';
+      if (btnEl) {
+        btnEl.disabled = true;
+        btnEl.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i> Yuklanmoqda...';
+      }
       // Match the homepage news/events strips and cabinet listings
       // by hiding archived items by default. Without this, the
       // full-page /news, /events, /grants listings showed archived
       // alongside current — inconsistent with every other surface
       // that fetches the same data.
       var url = kind + '?limit=100&offset=' + offset + '&archive=0';
+      // Drop any stale mid-pagination error notice from a prior retry —
+      // if this fetch succeeds we don't want it to linger above the
+      // newly appended items.
+      var staleErr = container.querySelector('.load-more-err');
+      if (staleErr) staleErr.parentNode.removeChild(staleErr);
       fetchWithTimeout(API_BASE + url + '&_=' + Date.now())
-        .then(function (r) { return r.ok ? r.json() : { items: [], total: 0 }; })
+        .then(function (r) {
+          // Throw on non-2xx so .catch() handles error UI uniformly.
+          // Previously we returned an empty page on 5xx, which fed
+          // through the success path: first-load showed "topilmadi"
+          // and mid-pagination silently hid the load-more button.
+          if (!r.ok) { var e = new Error('http_' + r.status); e.status = r.status; throw e; }
+          return r.json();
+        })
         .then(function (data) {
           var items = data.items || [];
           total = data.total || 0;
@@ -552,43 +856,96 @@
             var btn = container.querySelector('#loadMoreBtn');
             if (btn) btn.style.display = 'none';
           }
+          inFlight = false;
+          try { container.setAttribute('aria-busy', 'false'); } catch (e) {}
+          var btnReEnable = loadMoreBtn && loadMoreBtn.querySelector('#loadMoreBtn');
+          if (btnReEnable) {
+            btnReEnable.disabled = false;
+            if (btnLabel) btnReEnable.innerHTML = btnLabel;
+          }
         })
         .catch(function () {
-          if (!allItems.length) container.innerHTML = '<p>Yuklanmadi.</p>';
+          inFlight = false;
+          try { container.setAttribute('aria-busy', 'false'); } catch (e) {}
+          var btnReEnable = loadMoreBtn && loadMoreBtn.querySelector('#loadMoreBtn');
+          if (btnReEnable) {
+            btnReEnable.disabled = false;
+            if (btnLabel) btnReEnable.innerHTML = btnLabel;
+          }
+          if (!allItems.length) {
+            container.innerHTML = '<p role="alert">Yuklanmadi. Internet aloqangizni tekshirib, sahifani yangilang.</p>';
+          } else if (loadMoreBtn) {
+            // Mid-pagination failure: keep loaded items + button
+            // visible (so retry works), but make the failure visible.
+            // Previously the click silently re-enabled the button
+            // and the user assumed nothing happened.
+            if (!container.querySelector('.load-more-err')) {
+              var msg = document.createElement('p');
+              msg.className = 'load-more-err';
+              msg.setAttribute('role', 'alert');
+              msg.style.cssText = 'color:var(--error-600,#dc2626);font-size:13px;text-align:center;margin:8px 0 0;';
+              msg.textContent = 'Keyingi yozuvlarni yuklab bo\'lmadi. Tugmani qaytadan bosing yoki keyinroq urinib ko\'ring.';
+              loadMoreBtn.parentNode.insertBefore(msg, loadMoreBtn);
+            }
+          }
         });
     }
 
-    container.innerHTML = '<p class="loading-text">Yuklanmoqda...</p>';
+    container.innerHTML = '<p class="loading-text" role="status">Yuklanmoqda...</p>';
     loadPage();
   }
 
   /* ── Auto-init on page load ───────────────────────────────── */
   function init() {
-    // Hero stat: total registered member organizations. The other 6
-    // hero stats are organization-internal numbers (legal aid count,
-    // media appearances, trained NNTs etc) with no live source —
-    // leave them hardcoded. Only this one is derivable from the API.
+    // Format integer with space-separated thousands (1 234) to match
+    // hardcoded fallback values around live stats.
+    function fmtNum(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+
+    // Hero stat: total registered member organizations.
     var liveOrgEl = document.querySelector('[data-live-stat="member-orgs"]');
     if (liveOrgEl) {
-      fetch(API_BASE + 'organizations?limit=1')
+      fetchWithTimeout(API_BASE + 'organizations?limit=1')
         .then(function (r) { return r.json(); })
         .then(function (d) {
-          if (typeof d.total === 'number') {
-            // Match the 1 234-style space-separated thousands grouping
-            // used by the hardcoded values around it.
-            liveOrgEl.textContent = String(d.total).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-          }
+          if (typeof d.total === 'number') liveOrgEl.textContent = fmtNum(d.total);
         })
         .catch(function () { /* fall back to hardcoded value */ });
     }
 
+    // Hero stat: total events held (past). Compute as totalEvents -
+    // upcomingEvents via two cheap 1-row requests. Hardcoded fallback
+    // (1 411) is the historic pre-API count; only update if the live
+    // number exceeds the fallback so we don't downgrade.
+    var liveEventsHeldEl = document.querySelector('[data-live-stat="events-held"]');
+    if (liveEventsHeldEl) {
+      Promise.all([
+        fetchWithTimeout(API_BASE + 'events?limit=1').then(function (r) { return r.json(); }),
+        fetchWithTimeout(API_BASE + 'events?limit=1&archive=0').then(function (r) { return r.json(); })
+      ])
+        .then(function (results) {
+          var t = (results[0] && typeof results[0].total === 'number') ? results[0].total : null;
+          var u = (results[1] && typeof results[1].total === 'number') ? results[1].total : null;
+          if (t === null || u === null) return;
+          var held = Math.max(0, t - u);
+          var fallback = parseInt(String(liveEventsHeldEl.textContent || '').replace(/\D/g, ''), 10) || 0;
+          if (held > fallback) liveEventsHeldEl.textContent = fmtNum(held);
+        })
+        .catch(function () { /* keep hardcoded fallback */ });
+    }
+
     // Home page — news (current only)
     var newsHomeEl = document.getElementById('dynamic-news-home');
-    if (newsHomeEl) fetchJSON('news', function (items) { renderNewsHome(items, newsHomeEl); }, 'archive=0');
+    if (newsHomeEl) fetchJSON('news', function (items) {
+      renderNewsHome(items, newsHomeEl);
+      try { newsHomeEl.setAttribute('aria-busy', 'false'); } catch (e) {}
+    }, 'archive=0');
 
     // Home page — events (current only)
     var eventsHomeEl = document.getElementById('dynamic-events-home');
-    if (eventsHomeEl) fetchJSON('events', function (items) { renderEventsHome(items, eventsHomeEl); }, 'archive=0');
+    if (eventsHomeEl) fetchJSON('events', function (items) {
+      renderEventsHome(items, eventsHomeEl);
+      try { eventsHomeEl.setAttribute('aria-busy', 'false'); } catch (e) {}
+    }, 'archive=0');
 
     // news.html full page — all articles with pagination
     var newsPageEl = document.getElementById('dynamic-news-page');
@@ -604,13 +961,23 @@
     if (newsDetailEl && detailType !== 'documents') {
       var newsId = new URLSearchParams(window.location.search).get('id');
       if (newsId) {
-        fetchOne('news', newsId, function (item) {
+        fetchOne('news', newsId, function (item, errInfo) {
           if (item) {
-            fetchJSON('news', function (others) { renderNewsDetail([item].concat(others), newsDetailEl, newsId); });
+            // renderNewsDetail toggles aria-busy=false itself once
+            // it appends content; the others-fetch is best-effort.
+            fetchJSON('news', function (others) { renderNewsDetail([item].concat(others), newsDetailEl, newsId); }, 'archive=0');
+          } else if (errInfo && errInfo.__error) {
+            newsDetailEl.innerHTML = '<p role="alert">Ma\'lumotni yuklab bo\'lmadi. Sahifani qayta yuklang yoki keyinroq urinib ko\'ring.</p>';
+            try { newsDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
           } else {
-            newsDetailEl.innerHTML = '<p>Yangilik topilmadi.</p>';
+            newsDetailEl.innerHTML = '<p role="alert">Yangilik topilmadi. <a href="news">Yangiliklar ro\'yxatiga qaytish</a></p>';
+            try { newsDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
+            markNotFound('Yangilik topilmadi - ngo.uz');
           }
         });
+      } else {
+        newsDetailEl.innerHTML = '<p role="status">Yangilik ID ko\'rsatilmagan.</p>';
+        try { newsDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
       }
     }
 
@@ -619,13 +986,21 @@
     if (eventDetailEl) {
       var eventId = new URLSearchParams(window.location.search).get('id');
       if (eventId) {
-        fetchOne('events', eventId, function (item) {
+        fetchOne('events', eventId, function (item, errInfo) {
           if (item) {
-            fetchJSON('events', function (others) { renderEventDetail([item].concat(others), eventDetailEl, eventId); });
+            fetchJSON('events', function (others) { renderEventDetail([item].concat(others), eventDetailEl, eventId); }, 'archive=0');
+          } else if (errInfo && errInfo.__error) {
+            eventDetailEl.innerHTML = '<p role="alert">Ma\'lumotni yuklab bo\'lmadi. Sahifani qayta yuklang yoki keyinroq urinib ko\'ring.</p>';
+            try { eventDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
           } else {
-            eventDetailEl.innerHTML = '<p>Tadbir topilmadi.</p>';
+            eventDetailEl.innerHTML = '<p role="alert">Tadbir topilmadi. <a href="events">Tadbirlar ro\'yxatiga qaytish</a></p>';
+            try { eventDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
+            markNotFound('Tadbir topilmadi - ngo.uz');
           }
         });
+      } else {
+        eventDetailEl.innerHTML = '<p role="status">Tadbir ID ko\'rsatilmagan.</p>';
+        try { eventDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
       }
     }
 
@@ -635,25 +1010,33 @@
 
     // official-docs.html — documents
     var docsEl = document.getElementById('dynamic-documents-page');
-    if (docsEl) fetchJSON('documents', function (items) { renderDocumentsPage(items, docsEl); });
+    if (docsEl) fillContainer('documents', docsEl, renderDocumentsPage);
 
     // news-detail.html — handle documents via ?type=documents
     if (newsDetailEl && detailType === 'documents') {
       var docId = new URLSearchParams(window.location.search).get('id');
       if (docId) {
-        fetchOne('documents', docId, function (item) {
+        fetchOne('documents', docId, function (item, errInfo) {
           if (item) {
             renderNewsDetail([item], newsDetailEl, docId);
+          } else if (errInfo && errInfo.__error) {
+            newsDetailEl.innerHTML = '<p role="alert">Ma\'lumotni yuklab bo\'lmadi. Sahifani qayta yuklang yoki keyinroq urinib ko\'ring.</p>';
+            try { newsDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
           } else {
-            newsDetailEl.innerHTML = '<p>Hujjat topilmadi.</p>';
+            newsDetailEl.innerHTML = '<p role="alert">Hujjat topilmadi. <a href="official-docs">Hujjatlar ro\'yxatiga qaytish</a></p>';
+            try { newsDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
+            markNotFound('Hujjat topilmadi - ngo.uz');
           }
         });
+      } else {
+        newsDetailEl.innerHTML = '<p role="status">Hujjat ID ko\'rsatilmagan.</p>';
+        try { newsDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
       }
     }
 
     // publications.html — nashrlar category
     var pubsEl = document.getElementById('dynamic-publications-page');
-    if (pubsEl) fetchJSON('news', function (items) { renderNewsPage(items, pubsEl); }, 'category=nashrlar');
+    if (pubsEl) fillContainer('news', pubsEl, renderNewsPage, 'category=nashrlar&archive=0');
 
     // video-detail.html — single video by ID. The id may belong to
     // a different news category; reject those so /video-detail?
@@ -663,15 +1046,21 @@
     if (videoDetailEl) {
       var vidId = new URLSearchParams(window.location.search).get('id');
       if (vidId) {
-        fetchOne('news', vidId, function (item) {
+        fetchOne('news', vidId, function (item, errInfo) {
           if (item && (item.category || '').toLowerCase() === 'video') {
-            fetchJSON('news', function (others) { renderNewsDetail([item].concat(others), videoDetailEl, vidId); }, 'category=video');
+            fetchJSON('news', function (others) { renderNewsDetail([item].concat(others), videoDetailEl, vidId); }, 'category=video&archive=0');
+          } else if (!item && errInfo && errInfo.__error) {
+            videoDetailEl.innerHTML = '<p role="alert">Ma\'lumotni yuklab bo\'lmadi. Sahifani qayta yuklang yoki keyinroq urinib ko\'ring.</p>';
+            try { videoDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
           } else {
-            videoDetailEl.innerHTML = '<p>Video topilmadi.</p>';
+            videoDetailEl.innerHTML = '<p role="alert">Video topilmadi. <a href="videos">Videolar ro\'yxatiga qaytish</a></p>';
+            try { videoDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
+            markNotFound('Video topilmadi - ngo.uz');
           }
         });
       } else {
-        videoDetailEl.innerHTML = '<p>Video ID ko\'rsatilmagan.</p>';
+        videoDetailEl.innerHTML = '<p role="status">Video ID ko\'rsatilmagan.</p>';
+        try { videoDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
       }
     }
 
@@ -679,22 +1068,28 @@
     var pubDetailEl = document.getElementById('detail-publication-content');
     if (pubDetailEl) {
       var pubId = new URLSearchParams(window.location.search).get('id');
-      if (pubId) {
-        fetchOne('news', pubId, function (item) {
+      if (!pubId) {
+        pubDetailEl.innerHTML = '<p role="status">Publikatsiya ID ko\'rsatilmagan.</p>';
+        try { pubDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
+      } else {
+        fetchOne('news', pubId, function (item, errInfo) {
           if (item && (item.category || '').toLowerCase() === 'nashrlar') {
-            fetchJSON('news', function (others) { renderNewsDetail([item].concat(others), pubDetailEl, pubId); }, 'category=nashrlar');
+            fetchJSON('news', function (others) { renderNewsDetail([item].concat(others), pubDetailEl, pubId); }, 'category=nashrlar&archive=0');
+          } else if (!item && errInfo && errInfo.__error) {
+            pubDetailEl.innerHTML = '<p role="alert">Ma\'lumotni yuklab bo\'lmadi. Sahifani qayta yuklang yoki keyinroq urinib ko\'ring.</p>';
+            try { pubDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
           } else {
-            pubDetailEl.innerHTML = '<p>Publikatsiya topilmadi.</p>';
+            pubDetailEl.innerHTML = '<p role="alert">Publikatsiya topilmadi. <a href="publications">Publikatsiyalar ro\'yxatiga qaytish</a></p>';
+            try { pubDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
+            markNotFound('Publikatsiya topilmadi - ngo.uz');
           }
         });
-      } else {
-        pubDetailEl.innerHTML = '<p>Publikatsiya ID ko\'rsatilmagan.</p>';
       }
     }
 
     // projects.html — grants as project cards
     var projGrantsEl = document.getElementById('dynamic-projects-grants');
-    if (projGrantsEl) fetchJSON('grants', function (items) { renderGrantsPage(items, projGrantsEl); });
+    if (projGrantsEl) fillContainer('grants', projGrantsEl, renderGrantsPage, 'archive=0');
 
     // search-results.html — client-side search
     var searchResultsEl = document.getElementById('dynamic-search-results');
@@ -702,13 +1097,31 @@
       var query = new URLSearchParams(window.location.search).get('q') || '';
       var queryDisplay = document.getElementById('search-query');
       if (queryDisplay) queryDisplay.textContent = query || 'so\'rov';
+      // Reflect the query in the browser tab + back-forward history
+      // labels — landing on /search-results from a Telegram link
+      // previously showed only the generic "Qidiruv natijalari" tab
+      // title, indistinguishable from any other search.
+      if (query) {
+        try { document.title = '"' + query.slice(0, 60) + '" — Qidiruv natijalari - ngo.uz'; } catch (e) {}
+      }
       // Two-section page (#search-static-results above us) means
       // main.js handles static-page matches; we only own news. On the
       // legacy single-bucket page, keep the old 'no results found'
       // copy since main.js shares this node.
       var hasStaticSection = !!document.getElementById('search-static-results');
       if (query) {
-        fetchJSON('news', function (items) {
+        fetchJSON('news', function (items, data) {
+          // API failure shouldn't surface as "no matches" — that
+          // misleads the user into thinking the query has no hits
+          // when actually the backend is down. Show a recoverable
+          // alert instead, leaving the static-results section alone
+          // so any static-page matches still render.
+          if (data && data.__error) {
+            var errCopy = '<p role="alert" class="search-empty">Yangiliklar bo\'yicha qidiruv natijalarini yuklab bo\'lmadi. Internet aloqasini tekshirib, sahifani yangilang.</p>';
+            searchResultsEl.innerHTML = errCopy;
+            try { searchResultsEl.setAttribute('aria-busy', 'false'); } catch (e) {}
+            return;
+          }
           var q = query.toLowerCase();
           var matched = items.filter(function (n) {
             return (n.title && n.title.toLowerCase().indexOf(q) !== -1)
@@ -740,35 +1153,37 @@
             // and lands in innerHTML, so esc() is mandatory.
             searchResultsEl.innerHTML = '<p class="search-empty">"' + esc(query) + '" bo\'yicha hech narsa topilmadi.</p>';
           }
+          try { searchResultsEl.setAttribute('aria-busy', 'false'); } catch (e) {}
         });
       } else {
         searchResultsEl.innerHTML = hasStaticSection ? '' : '<p class="search-empty">Qidiruv so\'rovi kiritilmagan.</p>';
+        try { searchResultsEl.setAttribute('aria-busy', 'false'); } catch (e) {}
       }
     }
 
     // about.html — biz-haqimizda articles
     var aboutEl = document.getElementById('dynamic-about-page');
-    if (aboutEl) fetchJSON('news', function (items) { renderNewsPage(items, aboutEl); }, 'category=biz-haqimizda');
+    if (aboutEl) fillContainer('news', aboutEl, renderNewsPage, 'category=biz-haqimizda&archive=0');
 
     // services.html — xalqaro-faoliyat articles
     var intlEl = document.getElementById('dynamic-intl-page');
-    if (intlEl) fetchJSON('news', function (items) { renderNewsPage(items, intlEl); }, 'category=xalqaro-faoliyat');
+    if (intlEl) fillContainer('news', intlEl, renderNewsPage, 'category=xalqaro-faoliyat&archive=0');
 
     // videos.html — video category
     var videoEl = document.getElementById('dynamic-video-page');
-    if (videoEl) fetchJSON('news', function (items) { renderNewsPage(items, videoEl); }, 'category=video');
+    if (videoEl) fillContainer('news', videoEl, renderNewsPage, 'category=video&archive=0');
 
     // dayjestlar.html — digest articles
     var digestEl = document.getElementById('dynamic-digest-page');
-    if (digestEl) fetchJSON('news', function (items) { renderNewsPage(items, digestEl); }, 'category=daydjest');
+    if (digestEl) fillContainer('news', digestEl, renderNewsPage, 'category=daydjest&archive=0');
 
     // jamoatchilik-kengashi.html — kengash articles
     var councilEl = document.getElementById('dynamic-council-page');
-    if (councilEl) fetchJSON('news', function (items) { renderNewsPage(items, councilEl); }, 'category=kengash');
+    if (councilEl) fillContainer('news', councilEl, renderNewsPage, 'category=kengash&archive=0');
 
     // leadership.html — rahbariyat articles
     var leaderEl = document.getElementById('dynamic-leadership-page');
-    if (leaderEl) fetchJSON('news', function (items) { renderNewsPage(items, leaderEl); }, 'category=rahbariyat');
+    if (leaderEl) fillContainer('news', leaderEl, renderNewsPage, 'category=rahbariyat&archive=0');
   }
 
   if (document.readyState === 'loading') {

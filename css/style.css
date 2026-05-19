@@ -1,4 +1,22 @@
-﻿:root {
+﻿html.is-modal-open, html.is-modal-open body { overflow: hidden; }
+
+/* Sticky .site-header (top:0, ~72px tall) overlapped anchor-jump
+   targets — clicking #foo or skip-link landed the heading flush with
+   the viewport top, where the header was now drawn over it. scroll-
+   padding-top reserves the header's worth of space so the browser's
+   native anchor-snap lands the heading visible just below the bar. */
+html { scroll-padding-top: 80px; }
+
+/* Phosphor's ph-spinner is static. Public form submit buttons reuse
+   the icon; without a keyframe rule it just sat there during the
+   request. Mirror the rule from pacta-foundation.css. */
+@keyframes ph-spin { to { transform: rotate(360deg); } }
+.ph.ph-spinner { display: inline-block; animation: ph-spin 1s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .ph.ph-spinner { animation: none; }
+}
+
+:root {
   --green-500: #0e7490;
   --green-800: #155e75;
   --bg-light: #f1f8f8;
@@ -62,6 +80,12 @@ html, body { margin:0; padding:0; font-family:'Montserrat',system-ui,-apple-syst
   font-weight: 700;
 }
 .skip-link:focus { top: 10px; }
+
+/* iter 451 added tabindex="-1" to <main id="main-content"> so the
+   skip-link reliably focuses the region. Suppress the resulting
+   focus ring around the entire main — it's not actionable and the
+   skip-link arrival is already announced by screen readers. */
+main#main-content:focus { outline: none; }
 
 /* Screen-reader-only utility — visually invisible but readable to AT.
    Used for chart-data tables and any other content that's redundant
@@ -435,8 +459,8 @@ body.a11y-grayscale { filter: grayscale(1); }
   height: 12px;
 }
 .nav-item > a { display:flex; align-items:center; gap:5px; cursor:pointer; }
-.nav-item > a ph-caret-down { font-size:10px; width:10px; height:10px; flex-shrink:0; opacity:.55; transition:transform .2s; }
-.nav-item:hover > a ph-caret-down, .nav-item.is-open > a ph-caret-down, .nav-item:focus-within > a ph-caret-down { transform:rotate(180deg); opacity:1; }
+.nav-item > a .ph-caret-down { font-size:10px; flex-shrink:0; opacity:.55; transition:transform .2s; }
+.nav-item:hover > a .ph-caret-down, .nav-item.is-open > a .ph-caret-down, .nav-item:focus-within > a .ph-caret-down { transform:rotate(180deg); opacity:1; }
 /* Subpage residence cue — see dropdown.js. Without this, navigating
    into a dropdown's child page gives no top-nav highlighting at all. */
 .nav-item.has-dropdown.is-section-active > a { color: var(--green-600, #255f40); font-weight: 600; }
@@ -519,7 +543,14 @@ body.a11y-grayscale { filter: grayscale(1); }
 .hero-cinematic { position:relative; overflow:hidden; min-height:76vh; background:#023347; color:#fff; }
 .hero-cinematic::before { content:""; position:absolute; inset:0; background:linear-gradient(180deg, rgba(2,51,71,.2) 0%, rgba(2,51,71,.64) 100%); pointer-events:none; z-index:0; }
 .hero-cinematic::after { content:""; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size:72px 72px; opacity:.16; pointer-events:none; z-index:0; }
-.hero-cinematic-bg { position:absolute; inset:0; pointer-events:none; }
+/* Cinematic hero. The .hero-cinematic-video has its autoplay attr
+   stripped on slow networks / save-data / prefers-reduced-motion, so
+   give the wrapper a CSS gradient fallback that holds the brand
+   colours instead of leaving a black void behind the H1. */
+.hero-cinematic-bg {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(135deg, #0d2738 0%, #1b5c67 60%, #0e7490 100%);
+}
 .hero-cinematic-video { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; filter:saturate(.95) contrast(1.02) brightness(.62); transform:scale(1.02); }
 .orb { position:absolute; border-radius:50%; filter:blur(24px); opacity:.28; animation:heroDrift 16s ease-in-out infinite; }
 .orb-1 { width:520px; height:520px; left:-130px; top:8%; background:radial-gradient(circle,#0e7490 0%, rgba(37,99,235,0) 72%); }
@@ -681,7 +712,7 @@ body.a11y-grayscale { filter: grayscale(1); }
 }
 .home-page .dropdown a { color: rgba(255,255,255,0.85); border-bottom-color: rgba(255,255,255,0.07); }
 .home-page .dropdown a:hover { background: rgba(255,255,255,0.08); color: #00c9dd; }
-.home-page .nav-item > a ph-caret-down { color: rgba(255,255,255,0.6); }
+.home-page .nav-item > a .ph-caret-down { color: rgba(255,255,255,0.6); }
 .entry-hero { position:relative; z-index:1; padding:78px 0 64px; text-align:center; }
 .entry-hero h1 { margin:0 0 14px; font-size:clamp(40px,7vw,64px); line-height:1.15; font-weight:700; }
 .entry-hero .lead { margin:0 auto 26px; max-width:860px; color:var(--neutral-500); font-size:20px; line-height:1.4; }
@@ -896,8 +927,10 @@ body.a11y-grayscale { filter: grayscale(1); }
 .open-data-card a { color:var(--green-500); font-weight:700; font-size:14px; }
 .cards { display:grid; grid-template-columns:repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap:18px; margin-top:36px; }
 .card { background:#fff; border:1px solid var(--neutral-200); box-shadow:0 3px 6px rgba(100,100,100,.2); padding:20px; border-radius:8px; }
+.card h2,
 .card h3 { margin:0 0 10px; font-size:24px; line-height:1.35; }
 .card p { margin:0; color:var(--neutral-500); line-height:1.6; }
+.card-cover { aspect-ratio: 16 / 9; border-radius: 6px; margin: -4px -4px 14px; background-position: center; background-size: cover; }
 .media {
   width: 100%;
   aspect-ratio: 16 / 10;
@@ -909,7 +942,8 @@ body.a11y-grayscale { filter: grayscale(1); }
 .list { display:grid; gap:12px; margin-top:18px; }
 .list .item { border:1px solid var(--neutral-200); background:#fff; padding:16px; border-radius:8px; transition: border-color .18s ease, box-shadow .18s ease; }
 .list a.item:hover { border-color: var(--green-500); box-shadow: 0 4px 14px rgba(1,61,140,.12); }
-.list .item h4 { margin:0 0 6px; font-size:20px; }
+.list .item h4,
+.list .item h3 { margin:0 0 6px; font-size:20px; }
 .list .item p { margin:0; color:var(--neutral-500); }
 /* ── Hero stats bar (glassmorphism) ── */
 .hero-stats-bar {
@@ -1137,7 +1171,8 @@ body.a11y-grayscale { filter: grayscale(1); }
 .useful-link-card { background:#fff; border:1px solid var(--neutral-200); box-shadow:0 3px 6px rgba(100,100,100,.2); padding:14px 12px; border-radius:8px; text-decoration:none; display:flex; flex-direction:column; align-items:center; text-align:center; gap:8px; }
 .useful-link-card:hover { border-color:var(--green-500); }
 .useful-link-card .ul-icon { width:44px; height:44px; display:block; object-fit:contain; }
-.useful-link-card h4 { margin:0; font-size:11px; font-weight:600; color:var(--neutral-500); line-height:1.4; }
+.useful-link-card h4,
+.useful-link-card h3 { margin:0; font-size:11px; font-weight:600; color:var(--neutral-500); line-height:1.4; }
 .useful-link-card p { margin:0; color:var(--neutral-500); line-height:1.5; }
 .search-results { display:grid; gap:12px; margin-top:20px; }
 .search-item { background:#fff; border:1px solid var(--neutral-200); box-shadow:0 3px 6px rgba(100,100,100,.2); padding:16px; border-radius:8px; }
@@ -1659,9 +1694,11 @@ body.a11y-grayscale { filter: grayscale(1); }
 .team-meta { font-size: 15px; }
 .team-contacts .fact small { font-size: 15px; }
 .team-cta p { font-size: 20px; line-height: 1.6; }
-.useful-link-card h4 { font-size: 11px; }
+.useful-link-card h4,
+.useful-link-card h3 { font-size: 11px; }
 .search-item h3 { font-size: 24px; }
-.list .item h4 { font-size: 22px; }
+.list .item h4,
+.list .item h3 { font-size: 22px; }
 .faq .q h4 { font-size: 22px; }
 .faq-toggle { font-size: 22px; }
 .footer-col a, .footer-col p { font-size: 15px; }
@@ -2699,6 +2736,17 @@ body.a11y-grayscale { filter: grayscale(1); }
 .map-svg-box svg path[id="UZ-AS"] { fill: #d4eef4; pointer-events: none; }
 .map-svg-box svg path[id^="UZ-"].hovered { fill: #c3e7ef; }
 .map-svg-box svg path[id^="UZ-"].active  { fill: #80d2de; }
+/* Visible focus ring for keyboard navigation across regions
+   (paths get tabindex=0 + role=link in initMap). The default UA outline
+   on SVG path is rendered around the bounding rect, which is okay; we
+   force its color so it shows against the light fills. */
+.map-svg-box svg path[id^="UZ-"]:focus {
+  outline: 2px solid #16566c;
+  outline-offset: 1px;
+}
+.map-svg-box svg path[id^="UZ-"]:focus:not(:focus-visible) {
+  outline: none;
+}
 
 /* Overlay labels */
 .map-label {

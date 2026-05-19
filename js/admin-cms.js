@@ -57,24 +57,25 @@ var AdminCMS = (function () {
     return item;
   }
 
-  // ── API (loads from api.ngo.uz) ──────────────────────────
+  // ── API (loads through the Cloudflare Worker proxy) ──────
+
+  // Newest-first sort by date/created_at/published_at — extracted so
+  // create() and update() can re-apply after mutating the cache,
+  // keeping the in-memory order aligned with the load-time order.
+  function _sortNewestFirst(arr) {
+    arr.sort(function (a, b) {
+      var ta = new Date(a.date || a.created_at || a.published_at || 0).getTime() || 0;
+      var tb = new Date(b.date || b.created_at || b.published_at || 0).getTime() || 0;
+      return tb - ta;
+    });
+    return arr;
+  }
 
   function load(type, cb) {
     if (!window.NgoApi) { cb(new Error('api_client_not_loaded')); return; }
     NgoApi.get('/admin/' + type + '?limit=200')
       .then(function (res) {
-        var items = res.items || [];
-        // Sort newest-first by date/created_at so admins editing
-        // news/events/grants/documents see fresh content at the top
-        // of the table. Backend ordering is not guaranteed; without
-        // this admins were sometimes presented with stale 2024 items
-        // first while their newly-created article sat at the bottom.
-        items.sort(function (a, b) {
-          var ta = new Date(a.date || a.created_at || a.published_at || 0).getTime() || 0;
-          var tb = new Date(b.date || b.created_at || b.published_at || 0).getTime() || 0;
-          return tb - ta;
-        });
-        cache[type] = items;
+        cache[type] = _sortNewestFirst(res.items || []);
         cb(null, cache[type]);
       })
       .catch(function (err) { cache[type] = []; cb(err); });
@@ -91,7 +92,12 @@ var AdminCMS = (function () {
     _addDateLabels(type, fields);
     return NgoApi.post('/admin/' + type, fields).then(function (res) {
       if (res && res.item) {
+        // unshift puts the just-created item at front; re-sort because
+        // admin could have backdated the new item (e.g., entering an
+        // older event after-the-fact), in which case it should land
+        // chronologically not at the top.
         cache[type].unshift(res.item);
+        _sortNewestFirst(cache[type]);
       }
       return res && res.item;
     });
@@ -104,6 +110,8 @@ var AdminCMS = (function () {
         for (var i = 0; i < cache[type].length; i++) {
           if (cache[type][i].id === id) { cache[type][i] = res.item; break; }
         }
+        // Re-sort in case the date field changed during edit.
+        _sortNewestFirst(cache[type]);
       }
       return res && res.item;
     });
@@ -125,7 +133,10 @@ var AdminCMS = (function () {
     var url  = URL.createObjectURL(blob);
     var a    = document.createElement('a');
     a.href   = url;
-    a.download = type + '.json';
+    // Date-stamped filename so successive exports don't overwrite each
+    // other in the admin's Downloads folder. Matches the iter 282-era
+    // convention used by every CSV export across the admin pages.
+    a.download = type + '-' + new Date().toISOString().slice(0, 10) + '.json';
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     URL.revokeObjectURL(url);
   }
@@ -143,8 +154,29 @@ var AdminCMS = (function () {
       cb(new Error('Fayl tanlanmagan'));
       return;
     }
+    var picked = fileInput.files[0];
+    // MIME-type guard. The <input accept="image/*"> attribute is only
+    // a file-picker hint — users can override via the "All files"
+    // dropdown and pick a .pdf or .exe. Backend validates the file
+    // bytes (magic-number check) but a wrong-type upload rides 90s
+    // of bandwidth before the server rejects, and the UX shows a
+    // generic "Xatolik" instead of explaining the type mismatch.
+    // Only enforce this for inputs that declared accept="image/*"
+    // to leave non-image upload paths (cabinet-reports PDFs) alone.
+    var accept = (fileInput.getAttribute('accept') || '').trim();
+    if (accept === 'image/*' && picked.type && picked.type.indexOf('image/') !== 0) {
+      cb(new Error("Faqat rasm (image) fayllar yuklanadi. Tanlangan fayl turi: " + (picked.type || 'noma\'lum')));
+      return;
+    }
+    // Client-side cap on cover images. Backend has its own limit but
+    // surfacing it here saves the admin a minute of upload-and-reject
+    // for images > 10 MB. Most photo cover images are 200 KB–2 MB.
+    if (picked.size > 10 * 1024 * 1024) {
+      cb(new Error('Fayl hajmi 10 MB dan oshmasligi kerak (' + (picked.size / (1024 * 1024)).toFixed(1) + ' MB tanlangan).'));
+      return;
+    }
     var fd = new FormData();
-    fd.append('file', fileInput.files[0]);
+    fd.append('file', picked);
     // Uploads need more headroom than the 15s api-client default —
     // a 10 MB cover image on a slow connection routinely exceeds it
     // and the user just sees 'Xatolik!'. 90s matches the 60s used by

@@ -1,6 +1,7 @@
 /**
  * api-client.js — shared API client for admin + cabinet pages.
- * Uses bearer token in localStorage so it works across ngo.uz / ngouz.pages.dev / admin.ngo.uz.
+ * Uses bearer token in localStorage (persistent) or sessionStorage
+ * (tab-only) so it works across ngo.uz / ngouz.pages.dev / admin.ngo.uz.
  *
  * Loaded by admin-*.html and cabinet/*.html before any page-specific JS.
  */
@@ -11,18 +12,64 @@
   var USER_KEY   = 'ngo_api_user';
   var LOGIN_PAGE = 'admin-login';
 
-  function getToken() { try { return localStorage.getItem(TOKEN_KEY) || ''; } catch (e) { return ''; } }
-  function setToken(t) { try { localStorage.setItem(TOKEN_KEY, t || ''); } catch (e) {} }
-  function clearToken() { try { localStorage.removeItem(TOKEN_KEY); localStorage.removeItem(USER_KEY); } catch (e) {} }
+  // Read from localStorage first (persistent "Tizimda qolish"), then
+  // sessionStorage (tab-only). Write to whichever the user picked at
+  // login; default is localStorage to preserve the previous behavior
+  // for callers that don't pass a persistent flag.
+  function getToken() {
+    try { return localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY) || ''; }
+    catch (e) { return ''; }
+  }
+  // If `persistent` is omitted, infer from where the existing token
+  // lives — keeps requireAuth()'s setUser(res.user) refresh from
+  // accidentally upgrading a tab-only session to permanent.
+  function setToken(t, persistent) {
+    try {
+      if (persistent === undefined) {
+        persistent = !sessionStorage.getItem(TOKEN_KEY);
+      }
+      if (persistent === false) {
+        sessionStorage.setItem(TOKEN_KEY, t || '');
+        localStorage.removeItem(TOKEN_KEY);
+      } else {
+        localStorage.setItem(TOKEN_KEY, t || '');
+        sessionStorage.removeItem(TOKEN_KEY);
+      }
+    } catch (e) {}
+  }
+  function clearToken() {
+    try {
+      localStorage.removeItem(TOKEN_KEY); localStorage.removeItem(USER_KEY);
+      sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(USER_KEY);
+    } catch (e) {}
+  }
 
-  function getUser()  { try { return JSON.parse(localStorage.getItem(USER_KEY) || 'null'); } catch (e) { return null; } }
-  function setUser(u) { try { localStorage.setItem(USER_KEY, JSON.stringify(u || null)); } catch (e) {} }
+  function getUser()  {
+    try { return JSON.parse(localStorage.getItem(USER_KEY) || sessionStorage.getItem(USER_KEY) || 'null'); }
+    catch (e) { return null; }
+  }
+  function setUser(u, persistent) {
+    try {
+      var s = JSON.stringify(u || null);
+      if (persistent === undefined) {
+        persistent = !sessionStorage.getItem(TOKEN_KEY);
+      }
+      if (persistent === false) {
+        sessionStorage.setItem(USER_KEY, s);
+        localStorage.removeItem(USER_KEY);
+      } else {
+        localStorage.setItem(USER_KEY, s);
+        sessionStorage.removeItem(USER_KEY);
+      }
+    } catch (e) {}
+  }
 
   var DEFAULT_TIMEOUT_MS = 15000;
 
   function request(method, path, body, opts) {
     opts = opts || {};
-    var url = path.indexOf('http') === 0 ? path : API_BASE + path;
+    var isAbsolute = /^https?:\/\//.test(path);
+    var url = isAbsolute ? path : API_BASE + path;
     var headers = { 'Accept': 'application/json' };
     if (body !== undefined && !(body instanceof FormData)) headers['Content-Type'] = 'application/json';
     var t = getToken();
@@ -32,6 +79,12 @@
     if (body !== undefined && body !== null) {
       init.body = (body instanceof FormData) ? body : JSON.stringify(body);
     }
+    // Survive navigation — caller passes opts.keepalive: true for
+    // fire-and-forget requests like logout where the page redirects
+    // before the response would normally land. Without keepalive, the
+    // browser cancels the in-flight fetch on navigation and the
+    // backend never sees the logout, leaving a zombie session.
+    if (opts.keepalive) init.keepalive = true;
 
     // 15s default timeout — admin/cabinet are auth-walled and a slow
     // backend mustn't hang the user's only path back to login. Pass
@@ -89,19 +142,20 @@
     });
   }
 
-  function login(email, password) {
+  function login(email, password, opts) {
+    var persistent = !opts || opts.persistent !== false;
     return request('POST', '/auth/login', { email: email, password: password, client: 'mobile' }, { noAuth: true, noRedirect: true })
       .then(function (res) {
         if (res && res.token) {
-          setToken(res.token);
-          setUser(res.user);
+          setToken(res.token, persistent);
+          setUser(res.user, persistent);
         }
         return res;
       });
   }
 
   function logout() {
-    return request('POST', '/auth/logout').catch(function () {}).then(function () {
+    return request('POST', '/auth/logout', undefined, { keepalive: true }).catch(function () {}).then(function () {
       clearToken();
     });
   }
@@ -117,7 +171,7 @@
       location.replace((opts.loginPage || LOGIN_PAGE) + '?next=' + next);
       return Promise.reject(new Error('no_token'));
     }
-    return request('GET', '/me', undefined, { authRedirect: true, loginPage: opts.loginPage }).then(function (res) {
+    return request('GET', '/me', undefined, { loginPage: opts.loginPage }).then(function (res) {
       setUser(res.user);
       if (opts.minRole) {
         var levels = { super_admin: 100, regional_admin: 60, portal_moderator: 40, member_manager: 20, member_user: 10 };

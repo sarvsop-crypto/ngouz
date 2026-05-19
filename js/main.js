@@ -90,6 +90,7 @@
     { title: "Jamoatchilik kengashi", url: "jamoatchilik-kengashi", summary: "Jamoatchilik kengashi a'zolari va ularning faoliyat sohalari.", keywords: "jamoatchilik kengash a'zo public council" },
     { title: "Loyihalar", url: "projects", summary: "Faol loyihalar, grant tanlovlari va NNTlar uchun moliyaviy yordam.", keywords: "loyiha proyekt grant project" },
     { title: "Grant tanlovlari (AI)", url: "grant-tanlovlari", summary: "AI yordamida grant tanlovlarini topish — sun'iy intellektga savol bering.", keywords: "grant ai sunatik intellekt search ai chat" },
+    { title: "Grantlar", url: "grants", summary: "Faol grant tanlovlari ro'yxati — donor, summa, ariza muddati va tafsilotlar.", keywords: "grant donor summa ariza muddat funding tanlov" },
     { title: "Bog'lanish", url: "contact", summary: "Manzil, telefon, email va ijtimoiy tarmoqlar.", keywords: "kontakt bog'lanish manzil aloqa" },
     { title: "Qayta aloqa", url: "qayta-aloqa", summary: "Savol, taklif yoki murojaat yuborish uchun forma.", keywords: "qayta aloqa feedback murojaat savol" },
     { title: "Korrupsiya murojaati", url: "korrupsiya-murojaat", summary: "Korrupsiyani oldini olish — anonim murojaat shakli.", keywords: "korrupsiya anti-corruption murojaat anonim" },
@@ -142,7 +143,16 @@
     var _langShort = { uz: "O\u02BBzbekcha", ru: "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", en: "English" };
     langLinks.forEach(function (a) {
       var code = a.getAttribute("data-lang");
-      a.classList.toggle("active-lang", code === lang);
+      var isActive = code === lang;
+      a.classList.toggle("active-lang", isActive);
+      // The lang menu uses role="listbox" + role="option" on each link
+      // (set in main.js init below). For listbox semantics SR users
+      // need aria-selected on each option to announce the current
+      // selection \u2014 without it, listbox just lists options with no
+      // current state.
+      if (a.getAttribute("role") === "option") {
+        a.setAttribute("aria-selected", isActive ? "true" : "false");
+      }
     });
     var labelEl = document.getElementById("topbarLangLabel");
     if (labelEl) labelEl.textContent = _langShort[lang] || lang.toUpperCase();
@@ -169,13 +179,19 @@
   languageLinks = document.querySelectorAll(".topbar-lang[data-lang]");
   // CF Pages serves clean URLs (no .html). The .html stubs in /uz/,
   // /ru/, /en/ are also accessible without the suffix, so build the
-  // switcher href the same way: /<code>/<slug>.
-  var currentSlug = (location.pathname.split("/").pop() || "index").toLowerCase();
+  // switcher href the same way: /<code>/<slug>. Preserve the query
+  // string so /news-detail?id=123 → /ru/news-detail?id=123 keeps the
+  // article reference; without this, the language-switched detail
+  // page lost the id and rendered the empty/first article instead.
+  var currentSlug = (location.pathname.split("/").pop() || "").toLowerCase();
   if (currentSlug.endsWith(".html")) currentSlug = currentSlug.slice(0, -5);
-  if (!currentSlug) currentSlug = "index";
+  // Empty slug (root path '/' or '/uz/') → omit so href becomes '/ru/'
+  // not '/ru/index'. The /index URL also works on CF Pages but is
+  // ugly in the address bar after clicking the language switcher.
+  var currentQuery = location.search || "";
   languageLinks.forEach(function (a) {
     var code = a.getAttribute("data-lang");
-    a.setAttribute("href", "/" + code + "/" + currentSlug);
+    a.setAttribute("href", "/" + code + "/" + currentSlug + currentQuery);
     a.addEventListener("click", function (e) {
       e.preventDefault();
       applyLang(code);
@@ -206,6 +222,11 @@
   langMenu.setAttribute("role", "listbox");
   Array.prototype.forEach.call(document.querySelectorAll(".topbar-lang[data-lang]"), function(a) {
     a.setAttribute("role", "option");
+    // Initial aria-selected mirrors the .active-lang class set by
+    // applyLang() above. applyLang() will keep this in sync on every
+    // language change. Without this initial pass, options had no
+    // selected state until the user clicked one.
+    a.setAttribute("aria-selected", a.classList.contains("active-lang") ? "true" : "false");
     langMenu.appendChild(a);
   });
   langDrop.appendChild(langTrigger);
@@ -244,6 +265,11 @@
   // .nav-item.is-section-active class set when a child link's
   // slug matches the current page (iter 211).)
 
+  // Nav dropdown click/keyboard handling lives in dropdown.js. It
+  // attaches before main.js (loaded earlier in the document) so don't
+  // double-up here — duplicate handlers race-toggle is-open and the
+  // menu opens-then-closes on the same click.
+
   var reg = document.getElementById("reg-ok");
   var submit = document.getElementById("submit-membership");
   if (reg && submit) {
@@ -267,23 +293,68 @@
   var faqSearch = document.getElementById("faq-search");
   var faqItems = Array.prototype.slice.call(document.querySelectorAll("[data-faq-item]"));
   if (faqItems.length) {
-    faqItems.forEach(function (item) {
+    faqItems.forEach(function (item, idx) {
       item.classList.add("is-collapsed");
       var toggle = item.querySelector(".faq-toggle");
+      var answer = item.querySelector("p");
       if (toggle) {
+        toggle.setAttribute("aria-expanded", "false");
+        if (answer) {
+          if (!answer.id) answer.id = "faq-answer-" + idx;
+          toggle.setAttribute("aria-controls", answer.id);
+        }
         toggle.addEventListener("click", function () {
-          item.classList.toggle("is-collapsed");
+          var collapsed = item.classList.toggle("is-collapsed");
+          toggle.setAttribute("aria-expanded", collapsed ? "false" : "true");
         });
       }
     });
   }
   if (faqSearch && faqItems.length) {
+    var faqEmpty = null;
+    // Visually-hidden live region so SR users hear the count change
+    // ("3 ta savol topildi") without sighted users seeing a redundant
+    // counter on screen — the visible result is the filtered list.
+    var faqCount = document.createElement("p");
+    faqCount.id = "faqSearchCount";
+    faqCount.className = "visually-hidden";
+    faqCount.setAttribute("role", "status");
+    faqCount.setAttribute("aria-live", "polite");
+    var faqListEl = document.getElementById("faqList") || document.querySelector(".faq.faq-list-spaced");
+    if (faqListEl && faqListEl.parentNode) faqListEl.parentNode.insertBefore(faqCount, faqListEl);
+    var faqAnnounceTimer = null;
     faqSearch.addEventListener("input", function () {
       var query = faqSearch.value.toLowerCase().trim();
+      var visibleCount = 0;
       faqItems.forEach(function (item) {
         var text = item.textContent.toLowerCase();
-        item.style.display = !query || text.indexOf(query) !== -1 ? "" : "none";
+        var match = !query || text.indexOf(query) !== -1;
+        item.style.display = match ? "" : "none";
+        if (match) visibleCount += 1;
       });
+      if (visibleCount === 0 && query) {
+        if (!faqEmpty) {
+          faqEmpty = document.createElement("p");
+          faqEmpty.setAttribute("role", "status");
+          faqEmpty.style.padding = "12px";
+          faqEmpty.style.color = "#6b7280";
+          faqEmpty.textContent = "Hech narsa topilmadi";
+          var faqList = document.getElementById("faqList") || document.querySelector(".faq.faq-list-spaced");
+          if (faqList) faqList.appendChild(faqEmpty);
+        }
+        if (faqEmpty) faqEmpty.style.display = "";
+      } else if (faqEmpty) {
+        faqEmpty.style.display = "none";
+      }
+      // Debounce SR announcement so each keystroke doesn't queue a
+      // separate utterance — SR queues are FIFO and a fast typer
+      // would hear stale counts for several seconds after stopping.
+      if (faqAnnounceTimer) clearTimeout(faqAnnounceTimer);
+      faqAnnounceTimer = setTimeout(function () {
+        faqCount.textContent = query
+          ? (visibleCount + " ta savol topildi")
+          : "";
+      }, 350);
     });
   }
 
@@ -301,6 +372,15 @@
       || document.getElementById("dynamic-search-results")
       || document.getElementById("search-results-list");
     if (queryNode) queryNode.textContent = q ? ("\"" + params.get("q").trim() + "\"") : "so'rov kiritilmagan";
+    // Reflect the search query in <title> so browser tabs / history /
+    // bookmarks disambiguate searches instead of all reading
+    // "Qidiruv natijalari - ngo.uz".
+    if (q) {
+      try {
+        var qDisp = params.get("q").trim().slice(0, 80);
+        document.title = qDisp + " — Qidiruv natijalari · ngo.uz";
+      } catch (e) {}
+    }
     if (resultsNode) {
       if (!q) {
         resultsNode.innerHTML = "<div class=\"search-item\"><h3>Qidiruv so'rovi bo'sh</h3><p>Iltimos, yuqoridagi qidiruv maydoniga kalit so'z kiriting.</p></div>";
@@ -321,12 +401,21 @@
           var heading = staticNode
             ? "<h2 class=\"search-section-title\">Sahifalar (" + results.length + ")</h2>"
             : "";
+          var escSearch = function (s) {
+            return String(s == null ? "" : s)
+              .replace(/&/g, "&amp;").replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;").replace(/"/g, "&quot;")
+              .replace(/'/g, "&#39;");
+          };
           resultsNode.innerHTML = heading + results.map(function (item) {
             // siteIndex urls were authored with .html (legacy); strip
             // the suffix so clicks hit the canonical clean URL directly
             // instead of taking a 308 round-trip.
             var href = String(item.url).replace(/\.html$/, "");
-            return "<a class=\"search-item\" href=\"" + href + "\"><h3>" + item.title + "</h3><p>" + item.summary + "</p></a>";
+            // siteIndex is a static array, but defense-in-depth: a copy-
+            // paste typo or future i18n source could land special chars
+            // in title/summary; esc keeps innerHTML safe.
+            return "<a class=\"search-item\" href=\"" + escSearch(href) + "\"><h3>" + escSearch(item.title) + "</h3><p>" + escSearch(item.summary) + "</p></a>";
           }).join("");
         }
       }
@@ -373,9 +462,13 @@
     panel.className = "a11y-panel";
     panel.id = "a11yPanel";
     panel.setAttribute("role", "dialog");
-    panel.setAttribute("aria-label", "Ko'rish imkoniyati");
+    // aria-labelledby points at the visible h4 so SR users hear exactly
+    // the heading text rather than a parallel aria-label that drifted
+    // ("Ko'rish imkoniyati" vs "Ko'rish rejimi"). Matches the iter 927
+    // pattern in cabinet-organization editOrgModal.
+    panel.setAttribute("aria-labelledby", "a11yPanelTitle");
     panel.innerHTML =
-      "<h4>Ko'rish rejimi</h4>" +
+      "<h4 id=\"a11yPanelTitle\">Ko'rish rejimi</h4>" +
       "<div class=\"a11y-row\"><label>Matn o'lchami</label><div><button type=\"button\" class=\"btn-mini\" data-a11y=\"dec\">A-</button> <button type=\"button\" class=\"btn-mini\" data-a11y=\"inc\">A+</button></div></div>" +
       "<div class=\"a11y-row\"><label>Yuqori kontrast</label><button type=\"button\" class=\"btn-mini\" data-a11y=\"contrast\">Yoqish</button></div>" +
       "<div class=\"a11y-row\"><label>Qora-oq rejim</label><button type=\"button\" class=\"btn-mini\" data-a11y=\"gray\">Yoqish</button></div>" +
@@ -431,7 +524,13 @@
     });
 
     document.addEventListener("click", function (e) {
-      if (!panel.contains(e.target) && e.target !== a11yBtn) {
+      // a11yBtn contains an SVG icon; e.target is the SVG, not the
+      // button. The previous `e.target !== a11yBtn` check missed this
+      // and the document handler closed the panel right after the
+      // button handler opened it — clicking the icon appeared to do
+      // nothing. Use .contains() so any descendant of the button
+      // (svg/path/etc) counts as the toggle source.
+      if (!panel.contains(e.target) && !a11yBtn.contains(e.target)) {
         if (panel.classList.contains("open")) {
           panel.classList.remove("open");
           a11yBtn.setAttribute("aria-expanded", "false");
@@ -505,12 +604,21 @@
     mobileNav.setAttribute('role', 'dialog');
     mobileNav.setAttribute('aria-modal', 'true');
     mobileNav.setAttribute('aria-label', 'Asosiy menyu');
+    // Initial state — display:none alone hides from AT today, but
+    // aria-hidden="true" makes intent explicit and survives any future
+    // CSS override that switches to visibility/opacity instead.
+    mobileNav.setAttribute('aria-hidden', 'true');
 
     var toggleMobileNav = function (open) {
       var isOpen = typeof open === 'boolean' ? open : !mobileNav.classList.contains('is-open');
       mobileNav.classList.toggle('is-open', isOpen);
       hamburgerBtn.classList.toggle('is-open', isOpen);
       hamburgerBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      mobileNav.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+      // body-only overflow:hidden left iOS Safari scrollable behind
+      // the open mobile nav. .is-modal-open on <html> covers both
+      // elements via the foundation CSS rule (iter 687).
+      document.documentElement.classList.toggle('is-modal-open', isOpen);
       document.body.style.overflow = isOpen ? 'hidden' : '';
       if (isOpen) {
         var firstLink = mobileNav.querySelector('a');
@@ -545,7 +653,13 @@
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') toggleMobileNav(false);
+      // Guard against stealing focus when the user presses Escape with
+      // the nav already closed — toggleMobileNav(false) unconditionally
+      // calls hamburgerBtn.focus() in its else branch, which would yank
+      // focus away from whatever element the user was on.
+      if (e.key === 'Escape' && mobileNav.classList.contains('is-open')) {
+        toggleMobileNav(false);
+      }
     });
   }
 
@@ -559,31 +673,12 @@
     onHeaderScroll();
   }
 
-  var homeVideoFrame = document.getElementById("home-video-frame");
-  if (homeVideoFrame) {
-    var videoTitle = document.getElementById("home-video-title");
-    var videoDesc = document.getElementById("home-video-desc");
-    var videoMeta = document.getElementById("home-video-meta");
-    var videoItems = Array.prototype.slice.call(document.querySelectorAll(".video-hub-item"));
-
-    var setVideo = function (btn) {
-      if (!btn) return;
-      var embed = btn.getAttribute("data-embed");
-      if (embed) {
-        var withAutoplay = embed.indexOf("autoplay=1") === -1
-          ? embed + (embed.indexOf("?") === -1 ? "?autoplay=1" : "&autoplay=1")
-          : embed;
-        homeVideoFrame.src = withAutoplay;
-      }
-      if (videoTitle) videoTitle.textContent = btn.getAttribute("data-title") || "";
-      if (videoDesc) videoDesc.textContent = btn.getAttribute("data-desc") || "";
-      if (videoMeta) videoMeta.textContent = btn.getAttribute("data-meta") || "";
-      videoItems.forEach(function (x) { x.classList.toggle("is-active", x === btn); });
-    };
-
-    videoItems.forEach(function (btn) {
-      btn.addEventListener("click", function () { setVideo(btn); });
-    });
-  }
+  // Phosphor icons are decorative font glyphs — without aria-hidden,
+  // some screen readers announce them as "graphic" or read the empty
+  // <i> tag, cluttering surrounding link/button labels. Mirrors the
+  // sweep in pacta-foundation.js (admin/cabinet) for public pages.
+  document.querySelectorAll('i[class*="ph-"]').forEach(function (icon) {
+    if (!icon.hasAttribute('aria-hidden')) icon.setAttribute('aria-hidden', 'true');
+  });
 
 })();

@@ -2,6 +2,7 @@
   "name": "O'zNNTMA — ngo.uz",
   "short_name": "ngo.uz",
   "description": "O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi rasmiy portali.",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
@@ -41,6 +42,36 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Yangiliklar",
+      "short_name": "Yangiliklar",
+      "description": "So'nggi yangiliklar va press-relizlar",
+      "url": "/news",
+      "icons": [{ "src": "/img/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Tadbirlar",
+      "short_name": "Tadbirlar",
+      "description": "Bo'lib o'tgan va rejalashtirilgan tadbirlar",
+      "url": "/events",
+      "icons": [{ "src": "/img/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Grantlar",
+      "short_name": "Grantlar",
+      "description": "Amaldagi grant tanlovlari",
+      "url": "/grants",
+      "icons": [{ "src": "/img/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "A'zo NNTlar",
+      "short_name": "NNTlar",
+      "description": "Assotsiatsiyaga a'zo NNTlar reyestri",
+      "url": "/nntlar",
+      "icons": [{ "src": "/img/icon-192.png", "sizes": "192x192" }]
     }
   ]
 }

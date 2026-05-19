@@ -7,7 +7,7 @@
  *
  * Versioned cache name — bump CACHE_VERSION to invalidate on rollouts.
  */
-const CACHE_VERSION = 'ngo-v11';
+const CACHE_VERSION = 'ngo-v512';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 
 const PRECACHE = [
@@ -17,9 +17,16 @@ const PRECACHE = [
 ];
 
 self.addEventListener('install', (event) => {
+  // cache.addAll() is atomic — a single 404 (e.g., /offline mid-deploy
+  // or a renamed asset) discards the entire SW install, leaving users
+  // stuck on the previous version with no precache refresh. Per-entry
+  // cache.add() inside Promise.allSettled lets each precache target
+  // succeed independently; a broken /offline never blocks /favicon.svg
+  // from caching, and the SW activates regardless.
   event.waitUntil(
-    caches.open(STATIC_CACHE).then((cache) => cache.addAll(PRECACHE))
-      .then(() => self.skipWaiting())
+    caches.open(STATIC_CACHE).then((cache) =>
+      Promise.allSettled(PRECACHE.map((url) => cache.add(url).catch(() => {})))
+    ).then(() => self.skipWaiting())
   );
 });
 

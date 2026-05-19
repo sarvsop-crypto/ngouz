@@ -4,6 +4,37 @@
    - Accessibility and interaction hardening
 */
 
+html.is-modal-open, html.is-modal-open body { overflow: hidden; }
+
+/* Mobile cabinet/admin topbar is sticky (top:0). Without scroll-
+   padding-top, anchor jumps and skip-link Tab-focus would land
+   targets flush with the viewport top, hidden behind the topbar.
+   Desktop has a scroll-padding fallback too — harmless when the
+   topbar isn't sticky. */
+html { scroll-padding-top: 64px; }
+
+/* news-card titles bumped from h3 to h2 (iter 772, WCAG 2.4.6 — no
+   skip from page h1 to card h3). Default h2 is ~32px which would
+   dwarf the card; keep the original h3-ish size. */
+.news-card__title {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px;
+  line-height: 1.35;
+  color: var(--grey-900, #0d0d12);
+}
+
+/* Phosphor's ph-spinner is a static icon — give it the canonical
+   1s linear rotation so async submit buttons (cabinet-support /
+   cabinet-reports / cabinet-documents / cabinet-settings-org and
+   any future caller) show real motion while the request is in
+   flight. WCAG 2.3.3 / prefers-reduced-motion respected. */
+@keyframes ph-spin { to { transform: rotate(360deg); } }
+.ph.ph-spinner { display: inline-block; animation: ph-spin 1s linear infinite; }
+@media (prefers-reduced-motion: reduce) {
+  .ph.ph-spinner { animation: none; }
+}
+
 :root {
   --space-1: 5px;
   --space-2: 10px;
@@ -123,6 +154,11 @@ td {
   transform: translateY(0);
   box-shadow: none;
 }
+
+/* Mirror of the public-site rule — main has tabindex="-1" for skip
+   navigation, but we don't want a giant focus ring around the entire
+   admin/cabinet workspace when the skip-link fires. */
+main#main-content:focus { outline: none; }
 
 .u-inline-stack {
   display: inline-flex;
@@ -627,6 +663,15 @@ td {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
+}
+
+/* Keyboard-scrollable wrapper. JS adds tabindex=0 + role=region;
+   give it a visible focus ring so keyboard users see where they are
+   when they tab into a horizontally-scrolling table on narrow widths. */
+.table-responsive:focus-visible {
+  outline: 2px solid var(--primary-500, #0e7490);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 .table-responsive > table {
@@ -1218,7 +1263,45 @@ td {
   font-size: 15px;
 }
 
+/* Print rules — admins/staff occasionally print KPI dashboards or
+   single-record detail views. Hide the sidebar, topbar, modals, skip
+   link, and notifications panel so the printed page contains only the
+   content area. Mirrors the public-site print rules in style.css. */
+@media print {
+  .sidebar,
+  .topbar,
+  .skip-link,
+  .modal-overlay,
+  #notificationsPanel,
+  .topbar-notifications-btn,
+  noscript {
+    display: none !important;
+  }
+  .main {
+    margin-left: 0 !important;
+    padding: 0 !important;
+  }
+  body { background: #fff !important; color: #000 !important; }
+  a { color: #000; text-decoration: underline; }
+  .card, .table-section { box-shadow: none !important; border-color: #ccc !important; }
+}
 
-
-
+/* Shared cms-toast — was inline on admin-events / admin-news /
+   admin-grants only (iter 270); pages that gained a cmsToast in
+   later iters (analytics, dashboard, membership-requests, corruption-
+   reports, documents, feedback) had no styles, leaving toasts
+   invisible. Living here keeps every admin page consistent. */
+.cms-toast {
+  position: fixed; bottom: 24px; right: 24px; z-index: 9999;
+  padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 500;
+  color: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.18);
+  opacity: 0; transform: translateY(10px);
+  transition: opacity .22s, transform .22s; pointer-events: none;
+  max-width: calc(100vw - 48px);
+}
+.cms-toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.cms-toast--success { background: #16a34a; }
+.cms-toast--error   { background: #dc2626; }
+.cms-toast--info    { background: #0284c7; }
+.cms-toast--warning { background: #d97706; }
 

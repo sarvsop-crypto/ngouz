@@ -4,10 +4,12 @@
 <head>
 <meta charset="utf-8"/>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
   <link rel="manifest" href="/manifest.webmanifest" />
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
 <title>Stajirovka va volontyorlik — O'zNNTMA | ngo.uz</title>
-<meta property="og:type" content="article" />
+<meta property="og:type" content="website" />
 <meta property="og:site_name" content="ngo.uz" />
 <meta property="og:locale" content="uz_UZ" />
 <meta property="og:title" content="Stajirovka va volontyorlik — O'zNNTMA | ngo.uz" />
@@ -21,6 +23,7 @@
 <meta name="twitter:title" content="Stajirovka va volontyorlik — O'zNNTMA | ngo.uz" />
 <meta name="twitter:description" content="Stajirovka va volontyorlik dasturlari — Talabalar va yoshlar uchun amaliyot imkoniyatlari hamda assotsiatsiyada volontyorlik faoliyati." />
 <meta name="twitter:image" content="https://www.ngo.uz/img/og-image.png" />
+<meta name="twitter:image:alt" content="O'ZNNTMA — ngo.uz" />
 
 <script type="application/ld+json">
 {
@@ -56,7 +59,7 @@
 <link crossorigin="" href="https://unpkg.com" rel="preconnect"/>
 <link crossorigin="" href="https://ngo-api-proxy.sarvsop.workers.dev" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="css/style.css?v=23" rel="stylesheet">
+<link href="css/style.css?v=27" rel="stylesheet">
 <style>
   .file-drop {
     display: flex;
@@ -85,7 +88,7 @@
   }
   .btn--sm { font-size: 14px; padding: 8px 18px; cursor: pointer; }
 </style>
-</link><script src="js/errlog.js" defer></script>
+<script src="js/errlog.js" defer></script>
 <script src="js/sw-register.js" defer></script>
 <script src="js/dropdown.js" defer></script>
 </head>
@@ -93,10 +96,10 @@
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
 <header class="site-header">
 <div class="container nav">
-<a class="topbar-building" href="/"><img alt="O'ZNNTMA" src="img/logo-oznntma.png" decoding="async" width="60" height="60" /></a>
+<a class="topbar-building" href="/" aria-label="Bosh sahifa"><img alt="O'ZNNTMA" src="img/logo-oznntma.png" decoding="async" width="60" height="60" /></a>
 <nav aria-label="Asosiy menyu" class="menu">
 <div class="nav-item has-dropdown">
-<a href="about">Assotsiatsiya haqida <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
+<a href="about">Assotsiatsiya haqida <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
 <div class="dropdown">
 <a href="about">Assotsiatsiya haqida</a>
 <a href="mission">Maqsad va vazifalar</a>
@@ -108,7 +111,7 @@
 </div>
 </div>
 <div class="nav-item has-dropdown">
-<a href="#" aria-haspopup="true" aria-expanded="false">NNTlar reyestri <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
+<a href="nntlar" aria-haspopup="true" aria-expanded="false">NNTlar reyestri <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
 <div class="dropdown">
 <a href="nntlar">Assotsiatsiyaga a'zo NNTlar</a>
 <a href="sustainability-index">NNTlar barqarorlik indeksi</a>
@@ -117,7 +120,7 @@
 </div>
 <a href="projects">Loyihalar</a>
 <div class="nav-item has-dropdown">
-<a href="awards">Hamkorlar <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
+<a href="awards">Hamkorlar <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
 <div class="dropdown">
 <a href="awards">Xorijiy hamkorlar</a>
 <a href="mahalliy-hamkorlar">Mahalliy hamkorlar</a>
@@ -125,7 +128,7 @@
 </div>
 </div>
 <div class="nav-item has-dropdown">
-<a href="#" aria-haspopup="true" aria-expanded="false">Ochiq maʼlumotlar <ph-caret-down aria-hidden="true" weight="bold"></ph-caret-down></a>
+<a href="official-docs" aria-haspopup="true" aria-expanded="false">Ochiq maʼlumotlar <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
 <div class="dropdown">
 <a href="contact">Bog'lanish</a>
 <a href="grant-tanlovlari">Grant tanlovlari - AI qidiruv</a>
@@ -148,18 +151,18 @@
 <span class="topbar-fond-name-sub">jamoat fondi</span>
 </div>
 </div>
-<a class="topbar-lang" href="#">O'zbekcha</a>
-<a class="topbar-lang" href="#">Русский</a>
-<a class="topbar-lang" href="#">English</a>
-<button aria-label="Ko'rish imkoniyati" class="vis-btn" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.6" viewbox="0 0 24 24" width="17"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
-<button aria-label="Qidirish" class="search-btn" id="searchToggle" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.8" viewbox="0 0 24 24" width="17"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg></button>
+<a class="topbar-lang" href="/uz/" hreflang="uz">O’zbekcha</a>
+<a class="topbar-lang" href="/ru/" hreflang="ru" lang="ru">Русский</a>
+<a class="topbar-lang" href="/en/" hreflang="en" lang="en">English</a>
+<button aria-label="Ko'rish imkoniyati" class="vis-btn" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" width="17"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button aria-label="Qidirish" class="search-btn" id="searchToggle" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="17"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg></button>
 </div>
 <button aria-label="Menyu" class="hamburger" id="hamburgerBtn" type="button">
 <span></span><span></span><span></span>
 </button>
 </div>
 </header>
-<main id="main-content">
+<main id="main-content" tabindex="-1">
 <section class="grid-bg">
 <div class="container hero center">
 <h1>Stajirovka va volontyorlik dasturlari</h1>
@@ -171,15 +174,15 @@
 <div class="cards" style="grid-template-columns:repeat(2,1fr)">
 <article class="card">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-<svg fill="none" height="28" stroke="var(--green-500)" stroke-width="1.8" viewbox="0 0 24 24" width="28"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-<h3 style="margin:0;">Stajirovka dasturlari</h3>
+<svg aria-hidden="true" focusable="false" fill="none" height="28" stroke="var(--green-500)" stroke-width="1.8" viewBox="0 0 24 24" width="28"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
+<h2 style="margin:0;">Stajirovka dasturlari</h2>
 </div>
 <p>Oliy ta'lim muassasalari talabalari uchun tashkil etiladigan amaliyot (stajirovka) dasturlari. NNT sektori, loyiha boshqaruvi, huquq va kommunikatsiya yo'nalishlarida haqiqiy ish tajribasi orttirish imkoniyati. Arizalar yil davomida qabul qilinadi.</p>
 </article>
 <article class="card">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px;">
-<svg fill="none" height="28" stroke="var(--green-500)" stroke-width="1.8" viewbox="0 0 24 24" width="28"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-<h3 style="margin:0;">Volontyorlik faoliyati</h3>
+<svg aria-hidden="true" focusable="false" fill="none" height="28" stroke="var(--green-500)" stroke-width="1.8" viewBox="0 0 24 24" width="28"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+<h2 style="margin:0;">Volontyorlik faoliyati</h2>
 </div>
 <p>Assotsiatsiyada amalga oshirilayotgan volontyorlik dasturlari haqida to'liq ma'lumot. Tadbirlarni tashkil etish, NNT sektori rivojiga hissa qo'shish va fuqarolik jamiyati qurishda faol ishtirok etish imkoniyatlari.</p>
 </article>
@@ -190,22 +193,22 @@
 <div class="container">
 <div class="card" style="max-width:720px;margin:0 auto">
 <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
-<svg fill="none" height="28" stroke="var(--green-500)" stroke-width="1.8" viewbox="0 0 24 24" width="28"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line></svg>
-<h3 style="margin:0;">Onlayn ariza topshirish</h3>
+<svg aria-hidden="true" focusable="false" fill="none" height="28" stroke="var(--green-500)" stroke-width="1.8" viewBox="0 0 24 24" width="28"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" x2="8" y1="13" y2="13"></line><line x1="16" x2="8" y1="17" y2="17"></line></svg>
+<h2 style="margin:0;">Onlayn ariza topshirish</h2>
 </div>
 <form id="stajirovkaForm" novalidate="">
 <div class="form-grid">
 <div class="form-field">
 <label class="form-label" for="st-name">Ism Familiya *</label>
-<input autocomplete="name" id="st-name" name="name" placeholder="To'liq ismingiz" required=""/>
+<input autocomplete="name" id="st-name" name="name" placeholder="To'liq ismingiz" required="" maxlength="200"/>
 </div>
 <div class="form-field">
 <label class="form-label" for="st-phone">Telefon</label>
-<input autocomplete="tel" id="st-phone" inputmode="tel" name="phone" placeholder="+998 __ ___ __ __"/>
+<input autocomplete="tel" id="st-phone" inputmode="tel" name="phone" placeholder="+998 __ ___ __ __" maxlength="40"/>
 </div>
 <div class="form-field">
 <label class="form-label" for="st-email">Email</label>
-<input autocomplete="email" id="st-email" name="email" placeholder="email@example.com" type="email"/>
+<input autocomplete="email" id="st-email" name="email" placeholder="email@example.com" inputmode="email" type="email" maxlength="200"/>
 </div>
 <div class="form-field">
 <label class="form-label" for="st-yunalish">Yo'nalish *</label>
@@ -217,16 +220,16 @@
 </div>
 <div class="form-field form-field--full">
 <label class="form-label" for="st-muassasa">Tahsil olgan/olayotgan ta'lim muassasangiz nomi *</label>
-<input id="st-muassasa" name="muassasa" placeholder="Masalan: Toshkent davlat yuridik universiteti" required=""/>
+<input id="st-muassasa" name="muassasa" placeholder="Masalan: Toshkent davlat yuridik universiteti" required="" maxlength="300"/>
 </div>
 <div class="form-field form-field--full">
 <label class="form-label" for="st-message">Motivatsiya xati</label>
-<textarea id="st-message" name="message" placeholder="Nima uchun ishtirok etmoqchisiz?" rows="4"></textarea>
+<textarea id="st-message" name="message" placeholder="Nima uchun ishtirok etmoqchisiz?" rows="4" maxlength="3000"></textarea>
 </div>
 <div class="form-field form-field--full">
 <label class="form-label">Resume biriktirish</label>
 <div class="file-drop" id="fileDropZone">
-  <svg fill="none" height="32" stroke="var(--green-500)" stroke-width="1.6" viewbox="0 0 24 24" width="32"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
+  <svg aria-hidden="true" focusable="false" fill="none" height="32" stroke="var(--green-500)" stroke-width="1.6" viewBox="0 0 24 24" width="32"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" x2="12" y1="3" y2="15"/></svg>
   <p class="file-drop__hint">Faylni shu yerga tashlang yoki</p>
   <label class="btn btn--sm file-drop__btn" for="st-resume">Fayl tanlash</label>
   <p class="file-drop__types">PDF, DOC, DOCX · 5 MB gacha</p>
@@ -237,7 +240,7 @@
 </div>
 <div class="form-actions">
 <button class="btn" type="submit">
-<svg aria-hidden="true" fill="currentColor" height="16" style="margin-right:6px;vertical-align:middle" viewbox="0 0 24 24" width="16"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.75a2.25 2.25 0 0 0 .126 4.238l3.918 1.176 1.77 5.522a.75.75 0 0 0 1.317.209l2.352-2.938 4.552 3.31a2.25 2.25 0 0 0 3.478-1.464l2.25-15.75a2.25 2.25 0 0 0-2.241-2.268z"></path></svg>
+<svg aria-hidden="true" fill="currentColor" height="16" style="margin-right:6px;vertical-align:middle" viewBox="0 0 24 24" width="16"><path d="M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.75a2.25 2.25 0 0 0 .126 4.238l3.918 1.176 1.77 5.522a.75.75 0 0 0 1.317.209l2.352-2.938 4.552 3.31a2.25 2.25 0 0 0 3.478-1.464l2.25-15.75a2.25 2.25 0 0 0-2.241-2.268z"></path></svg>
             Ariza yuborish
           </button>
 </div>
@@ -246,9 +249,37 @@
 </div>
 </section>
 <script>
-document.getElementById('stajirovkaForm').addEventListener('submit', function(e) {
+(function () {
+  var form = document.getElementById('stajirovkaForm');
+  if (!form) return;
+  var fetchT = function (url, init) {
+    if (typeof AbortController !== 'function') return fetch(url, init || {});
+    var c = new AbortController();
+    var t = setTimeout(function () { c.abort(); }, 15000);
+    init = init || {};
+    init.signal = c.signal;
+    return fetch(url, init).finally(function () { clearTimeout(t); });
+  };
+  function showFormError(msg) {
+    var box = document.getElementById('stajirovkaFormErr');
+    if (!box) {
+      box = document.createElement('p');
+      box.id = 'stajirovkaFormErr';
+      box.setAttribute('role', 'alert');
+      box.style.cssText = 'background:#fee2e2;color:#991b1b;border:1px solid #fca5a5;border-radius:8px;padding:10px 14px;margin:12px 0 0;font-size:14px;';
+      form.appendChild(box);
+    }
+    box.textContent = msg;
+  }
+  form.addEventListener('submit', function(e) {
   e.preventDefault();
-  var form = e.target;
+  var prevErr = document.getElementById('stajirovkaFormErr');
+  if (prevErr) prevErr.remove();
+  // Form has novalidate so the manual error UX below isn't pre-empted
+  // by the browser; still call checkValidity() to enforce required +
+  // email + maxlength + minlength constraints and surface the first
+  // invalid field via reportValidity().
+  if (!form.checkValidity()) { form.reportValidity(); return; }
   var name     = document.getElementById('st-name').value.trim();
   var phone    = document.getElementById('st-phone').value.trim();
   var email    = document.getElementById('st-email').value.trim();
@@ -256,14 +287,24 @@ document.getElementById('stajirovkaForm').addEventListener('submit', function(e)
   var muassasa = document.getElementById('st-muassasa').value.trim();
   var message  = document.getElementById('st-message').value.trim();
   var resumeEl = document.getElementById('st-resume');
-  var resume   = resumeEl.files.length ? resumeEl.files[0].name : '';
+  var resumeFile = resumeEl.files.length ? resumeEl.files[0] : null;
+  var resume   = resumeFile ? resumeFile.name : '';
   if (!name || !yunalish || !muassasa) {
-    alert("Iltimos, majburiy maydonlarni to'ldiring.");
+    showFormError("Iltimos, majburiy maydonlarni to'ldiring.");
+    return;
+  }
+  // Resume file label says "5 MB gacha"; honor it client-side so the
+  // user doesn't successfully submit a name for a giant resume that
+  // admin then can't accept when they request it.
+  if (resumeFile && resumeFile.size > 5 * 1024 * 1024) {
+    showFormError('Resume fayl hajmi 5 MB dan oshmasligi kerak. Tanlangan fayl: ' + (resumeFile.size / (1024 * 1024)).toFixed(1) + ' MB.');
+    try { resumeEl.focus(); } catch (e) {}
     return;
   }
   var btn = form.querySelector('button[type="submit"]');
   var defaultLabel = btn ? btn.innerHTML : '';
-  if (btn) { btn.disabled = true; btn.textContent = 'Yuborilmoqda...'; }
+  if (btn) { btn.disabled = true; btn.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i> Yuborilmoqda...'; }
+  form.setAttribute('aria-busy', 'true');
 
   // Was a mailto: link — required the user to have an email client
   // configured locally and gave admins no record at all when no
@@ -274,7 +315,7 @@ document.getElementById('stajirovkaForm').addEventListener('submit', function(e)
     + '\nTa\'lim muassasasi: ' + muassasa
     + (message ? '\n\nMotivatsiya xati:\n' + message : '')
     + (resume ? '\n\nResume fayl nomi: ' + resume + ' (admin orqali alohida so\'raladi)' : '');
-  fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
+  fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
@@ -288,24 +329,33 @@ document.getElementById('stajirovkaForm').addEventListener('submit', function(e)
   .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; }); })
   .then(function (res) {
     if (res.ok) {
+      // HTML-escape res.data.id before innerHTML — defense-in-depth
+      // matching iter 869/900 in membership.html and reporting-forms.html.
+      var rawId = res.data && res.data.id;
+      var idStr = (rawId !== undefined && rawId !== null && rawId !== '')
+        ? '#' + String(rawId).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')
+        : '—';
       var card = form.closest('.card') || form.parentElement;
       card.innerHTML = '<div role="status" tabindex="-1" id="formSuccessMsg" style="text-align:center;padding:32px 0">'
         + '<h3 style="color:#0e7490;margin-bottom:10px">Arizangiz qabul qilindi</h3>'
-        + '<p style="margin-bottom:18px">Murojaat ID: <strong>' + (res.data && res.data.id ? '#' + res.data.id : '—') + '</strong></p>'
+        + '<p style="margin-bottom:18px">Murojaat ID: <strong>' + idStr + '</strong></p>'
         + '<p>Tez orada ko\'rsatilgan telefon yoki email orqali bog\'lanamiz. Resume faylini biriktirish uchun admin alohida murojaat qiladi.</p>'
         + '<a class="btn" href="/" style="margin-top:18px;display:inline-block">Bosh sahifaga qaytish</a>'
         + '</div>';
       var sm = document.getElementById('formSuccessMsg'); if (sm) sm.focus();
     } else {
       if (btn) { btn.disabled = false; btn.innerHTML = defaultLabel; }
-      alert((res.data && res.data.message) || 'Xatolik yuz berdi. Qaytadan urinib ko\'ring.');
+      form.setAttribute('aria-busy', 'false');
+      showFormError((res.data && (res.data.message || res.data.detail)) || 'Xatolik yuz berdi. Qaytadan urinib ko\'ring.');
     }
   })
   .catch(function () {
     if (btn) { btn.disabled = false; btn.innerHTML = defaultLabel; }
-    alert('Tarmoq xatosi. Internet aloqangizni tekshiring.');
+    form.setAttribute('aria-busy', 'false');
+    showFormError('Tarmoq xatosi. Internet aloqangizni tekshiring va qayta urinib ko\'ring.');
   });
-});
+  });
+})();
 
 // File drop zone
 (function(){
@@ -354,21 +404,21 @@ document.getElementById('stajirovkaForm').addEventListener('submit', function(e)
 <img alt="O'ZNNTMA" class="footer-logo-img" src="img/logo-oznntma.png" loading="lazy" decoding="async" width="200" height="60" />
 </a>
 </div><div class="footer-col">
-<h3 class="footer-col-title">Manzil</h3>
+<h2 class="footer-col-title">Manzil</h2>
 <p>100170, O&#x2BB;zbekiston Respublikasi, Toshkent shahri, Shayxontohur tumani, Furqat ko&#x2BC;chasi, 1A</p>
 </div><div class="footer-col">
-<h3 class="footer-col-title">Aloqa</h3>
+<h2 class="footer-col-title">Aloqa</h2>
 <p>Tel: <a href="tel:+998555030512">(+998 55) 503-05-12</a></p>
 <p>Email: <a href="mailto:info@ngo.uz">info@ngo.uz</a></p>
 </div><div class="footer-col">
-<h3 class="footer-col-title">Ijtimoiy tarmoqlar</h3>
+<h2 class="footer-col-title">Ijtimoiy tarmoqlar</h2>
 <div class="social-links">
-<a href="https://facebook.com/uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Facebook" style="--sc:#1877F2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg><span>Facebook</span></a>
-<a href="https://instagram.com/uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Instagram" style="--sc:#E1306C"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg><span>Instagram</span></a>
-<a href="https://t.me/UzNNTMA1" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Telegram" style="--sc:#229ED9"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg><span>Telegram</span></a>
-<a href="https://youtube.com/@uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="YouTube" style="--sc:#FF0000"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg><span>YouTube</span></a>
-<a href="https://www.linkedin.com/company/ngo-association-uzbekistan/" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn" style="--sc:#0A66C2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg><span>LinkedIn</span></a>
-<a href="contact" class="social-link" aria-label="Bog'lanish" style="--sc:#0e7490"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M20 2H4c-1.103 0-2 .897-2 2v18l4-4h14c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"/></svg><span>Bog'lanish</span></a>
+<a href="https://facebook.com/uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Facebook" style="--sc:#1877F2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg><span>Facebook</span></a>
+<a href="https://instagram.com/uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Instagram" style="--sc:#E1306C"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg><span>Instagram</span></a>
+<a href="https://t.me/UzNNTMA1" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Telegram" style="--sc:#229ED9"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg><span>Telegram</span></a>
+<a href="https://youtube.com/@uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="YouTube" style="--sc:#FF0000"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg><span>YouTube</span></a>
+<a href="https://www.linkedin.com/company/ngo-association-uzbekistan/" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn" style="--sc:#0A66C2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg><span>LinkedIn</span></a>
+<a href="contact" class="social-link" aria-label="Bog'lanish" style="--sc:#0e7490"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20 2H4c-1.103 0-2 .897-2 2v18l4-4h14c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"/></svg><span>Bog'lanish</span></a>
 </div>
 </div>
 </div>
@@ -379,7 +429,7 @@ document.getElementById('stajirovkaForm').addEventListener('submit', function(e)
 <nav class="footer-legal-links" aria-label="Huquqiy ma'lumotlar">
 <a href="maxfiylik-siyosati">Maxfiylik siyosati</a>
 <a href="foydalanish-shartlari">Foydalanish shartlari</a>
-<a href="qayta-aloqa">Bog'lanish</a>
+<a href="contact">Bog'lanish</a>
 </nav>
 </div>
 </footer>
@@ -387,9 +437,9 @@ document.getElementById('stajirovkaForm').addEventListener('submit', function(e)
 
 <div class="search-overlay" id="searchOverlay" role="dialog" aria-label="Qidirish" aria-modal="true" aria-hidden="true">
   <div class="search-overlay__box">
-    <form class="search-overlay__form" role="search" onsubmit="return false;">
+    <form class="search-overlay__form" role="search" action="/search-results" method="get">
       <svg aria-hidden="true" fill="none" height="18" stroke="#9ca3af" stroke-width="1.8" viewBox="0 0 24 24" width="18"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg>
-      <input autofocus id="searchInput" aria-label="Qidirish" placeholder="Sayt bo'ylab qidirish..." type="search"/>
+      <input id="searchInput" name="q" aria-label="Qidirish" placeholder="Sayt bo’ylab qidirish..." type="search" enterkeyhint="search" maxlength="200"/>
       <button aria-label="Yopish" class="search-overlay__close" id="searchClose" type="button">&times;</button>
     </form>
   </div>

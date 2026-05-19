@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tizim — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
@@ -25,6 +27,7 @@
   <link rel="stylesheet" href="css/pacta-app.css">
   <link rel="stylesheet" href="css/pacta-foundation.css">
 <script src="js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
 <script src="js/sw-register.js" defer></script>
 </head>
 <body>
@@ -39,47 +42,49 @@
         </div>
       </div>
       <div class="sidebar__search" id="sidebarSearchTrigger">
-        <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>
-        <input type="text" placeholder="Qidirish" aria-label="Qidirish" />
+        <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass" aria-hidden="true"></i></span>
+        <input type="search" enterkeyhint="search" placeholder="Qidirish" aria-label="Qidirish" maxlength="200" />
       </div>
       <nav class="sidebar__nav" aria-label="Admin menyusi">
         <div class="sidebar__nav-section">
           <div class="sidebar__nav-label">ASOSIY MENYU</div>
-          <a href="admin-dashboard" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
-          <a href="admin-membership-requests" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
-          <a href="admin-registry" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
-          <a href="admin-regions" class="sidebar__nav-link" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin"></i></span><span class="sidebar__nav-link-text">Hududlar</span></a>
-          <a href="admin-documents" class="sidebar__nav-link" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
-          <a href="admin-tasks" class="sidebar__nav-link" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square"></i></span><span class="sidebar__nav-link-text">Topshiriqlar</span></a>
-          <a href="admin-users" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
-          <a href="admin-reports" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar"></i></span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
-          <a href="admin-analytics" class="sidebar__nav-link" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up"></i></span><span class="sidebar__nav-link-text">Tahliliy ma'lumotlar</span></a>
+          <a href="admin-dashboard" class="sidebar__nav-link" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
+          <a href="admin-membership-requests" class="sidebar__nav-link" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
+          <a href="admin-grant-applications" class="sidebar__nav-link" title="Grant arizalari"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Grant arizalari</span></a>
+          <a href="admin-registry" class="sidebar__nav-link" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
+          <a href="admin-regions" class="sidebar__nav-link" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Hududlar</span></a>
+          <a href="admin-documents" class="sidebar__nav-link" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
+          <a href="admin-tasks" class="sidebar__nav-link" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Topshiriqlar</span></a>
+          <a href="admin-users" class="sidebar__nav-link" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Foydalanuvchilar</span></a>
+          <a href="admin-reports" class="sidebar__nav-link" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Hisobotlar</span></a>
+          <a href="admin-analytics" class="sidebar__nav-link" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Tahliliy ma'lumotlar</span></a>
         </div>
         <div class="sidebar__nav-section">
           <div class="sidebar__nav-label">MUROJAATLAR</div>
-          <a href="admin-service-requests" class="sidebar__nav-link" title="Xizmat so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-wrench"></i></span><span class="sidebar__nav-link-text">Xizmat so'rovlari</span></a>
-          <a href="admin-corruption-reports" class="sidebar__nav-link" title="Korrupsiya murojaatlari"><span class="sidebar__nav-icon"><i class="ph ph-shield-warning"></i></span><span class="sidebar__nav-link-text">Korrupsiya murojaatlari</span></a>
-          <a href="admin-feedback" class="sidebar__nav-link" title="Qayta aloqa"><span class="sidebar__nav-icon"><i class="ph ph-chat-dots"></i></span><span class="sidebar__nav-link-text">Qayta aloqa</span></a>
+          <a href="admin-service-requests" class="sidebar__nav-link" title="Xizmat so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-wrench" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Xizmat so'rovlari</span></a>
+          <a href="admin-corruption-reports" class="sidebar__nav-link" title="Korrupsiya murojaatlari"><span class="sidebar__nav-icon"><i class="ph ph-shield-warning" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Korrupsiya murojaatlari</span></a>
+          <a href="admin-feedback" class="sidebar__nav-link" title="Qayta aloqa"><span class="sidebar__nav-icon"><i class="ph ph-chat-dots" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Qayta aloqa</span></a>
+          <a href="admin-password-reset-requests" class="sidebar__nav-link" title="Parol tiklash so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-key" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Parol tiklash</span></a>
         </div>
         <div class="sidebar__nav-section">
           <div class="sidebar__nav-label">KONTENT</div>
-          <a href="admin-news" class="sidebar__nav-link" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper"></i></span><span class="sidebar__nav-link-text">Yangiliklar</span></a>
-          <a href="admin-events" class="sidebar__nav-link" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank"></i></span><span class="sidebar__nav-link-text">Tadbirlar</span></a>
-          <a href="admin-grants" class="sidebar__nav-link" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins"></i></span><span class="sidebar__nav-link-text">Grantlar</span></a>
-          <a href="admin-settings" class="sidebar__nav-link is-active" aria-current="page" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
+          <a href="admin-news" class="sidebar__nav-link" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Yangiliklar</span></a>
+          <a href="admin-events" class="sidebar__nav-link" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Tadbirlar</span></a>
+          <a href="admin-grants" class="sidebar__nav-link" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Grantlar</span></a>
+          <a href="admin-settings" class="sidebar__nav-link is-active" aria-current="page" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Sozlamalar</span></a>
         </div>
         <div class="sidebar__nav-section u-mt-auto">
-          <a data-action="logout" href="#" class="sidebar__nav-link logout" id="logoutTrigger" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
+          <a data-action="logout" href="admin-login" class="sidebar__nav-link logout" id="logoutTrigger" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
         </div>
       </nav>
     </aside>
-    <main id="main-content" class="main">      <header class="topbar">
+    <main id="main-content" tabindex="-1" class="main">      <header class="topbar">
         <div class="topbar-left">
           <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="admin-dashboard">Boshqaruv</a> / <a href="admin-settings">Sozlamalar</a> / <span aria-current="page">Tizim</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -98,37 +103,37 @@
       </div>
 
       <div class="settings-layout" style="display:grid;grid-template-columns:220px 1fr;gap:24px;">
-        <nav style="display:flex;flex-direction:column;gap:4px;">
-          <a href="admin-settings" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-user"></i> Profil</a>
-          <a href="admin-settings-notifications" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-bell"></i> Bildirishnomalar</a>
-          <a href="admin-settings-security" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-shield-check"></i> Xavfsizlik</a>
-          <a href="admin-settings-system" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ph ph-sliders"></i> Tizim</a>
+        <nav style="display:flex;flex-direction:column;gap:4px;" aria-label="Sozlamalar bo&rsquo;limlari">
+          <a href="admin-settings" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-user" aria-hidden="true"></i> Profil</a>
+          <a href="admin-settings-notifications" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-bell" aria-hidden="true"></i> Bildirishnomalar</a>
+          <a href="admin-settings-security" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-shield-check" aria-hidden="true"></i> Xavfsizlik</a>
+          <a href="admin-settings-system" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ph ph-sliders" aria-hidden="true"></i> Tizim</a>
         </nav>
         <div>
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
+          <div id="generalCard" style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
             <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Umumiy sozlamalar</h2>
+            <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;">Bu sozlamalar hozircha faqat shu brauzerda saqlanadi; global backend sozlamalari endpointi hali qo'shilmagan.</p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Interfeys tili</label><select aria-label="Interfeys tili" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>O'zbekcha</option><option>Русский</option><option>English</option></select></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Vaqt mintaqasi</label><select aria-label="Vaqt mintaqasi" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>Asia/Tashkent (UTC+5)</option><option>Europe/Moscow (UTC+3)</option></select></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Sana formati</label><select aria-label="Sana formati" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>DD.MM.YYYY</option><option>YYYY-MM-DD</option><option>MM/DD/YYYY</option></select></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Sahifadagi yozuvlar soni</label><select aria-label="Sahifadagi yozuvlar soni" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option>10</option><option selected>25</option><option>50</option><option>100</option></select></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Interfeys tili</label><select data-pref="lang" aria-label="Interfeys tili" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>O'zbekcha</option><option>Русский</option><option>English</option></select></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Vaqt mintaqasi</label><select data-pref="tz" aria-label="Vaqt mintaqasi" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>Asia/Tashkent (UTC+5)</option><option>Europe/Moscow (UTC+3)</option></select></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Sana formati</label><select data-pref="dateFormat" aria-label="Sana formati" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>DD.MM.YYYY</option><option>YYYY-MM-DD</option><option>MM/DD/YYYY</option></select></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Sahifadagi yozuvlar soni</label><select data-pref="pageSize" aria-label="Sahifadagi yozuvlar soni" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option>10</option><option selected>25</option><option>50</option><option>100</option></select></div>
             </div>
             <div style="margin-top:20px;display:flex;gap:12px;">
-              <button type="button" class="btn btn--primary"><i class="ph ph-floppy-disk"></i> Saqlash</button>
-              <button type="button" class="btn btn--secondary">Bekor qilish</button>
+              <button type="button" class="btn btn--primary" id="generalSaveBtn"><i class="ph ph-floppy-disk" aria-hidden="true"></i> Saqlash</button>
             </div>
           </div>
-          <div style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
+          <div id="paramsCard" style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
             <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">Tizim parametrlari</h2>
-            <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;">Avtomatik jarayonlar va integratsiyalar</p>
+            <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;">Avtomatik jarayonlar va integratsiyalar. Hozircha bu tanlovlar faqat shu brauzerda saqlanadi.</p>
             <div style="display:flex;flex-direction:column;gap:14px;">
-              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-arrows-clockwise"></i> Avtomatik yangilash</span><input type="checkbox" checked style="width:18px;height:18px;" /></label>
-              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-database"></i> Avtomatik zaxira nusxa</span><input type="checkbox" checked style="width:18px;height:18px;" /></label>
-              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-file-text"></i> Audit jurnali</span><input type="checkbox" checked style="width:18px;height:18px;" /></label>
-              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-activity"></i> Foydalanuvchi faoliyatini kuzatish</span><input type="checkbox" style="width:18px;height:18px;" /></label>
+              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-arrows-clockwise" aria-hidden="true"></i> Avtomatik yangilash</span><input type="checkbox" data-pref="autoRefresh" checked style="width:18px;height:18px;" /></label>
+              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-database" aria-hidden="true"></i> Avtomatik zaxira nusxa</span><input type="checkbox" data-pref="autoBackup" checked style="width:18px;height:18px;" /></label>
+              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-file-text" aria-hidden="true"></i> Audit jurnali</span><input type="checkbox" data-pref="auditLog" checked style="width:18px;height:18px;" /></label>
+              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-activity" aria-hidden="true"></i> Foydalanuvchi faoliyatini kuzatish</span><input type="checkbox" data-pref="trackActivity" style="width:18px;height:18px;" /></label>
             </div>
             <div style="margin-top:20px;">
-              <button type="button" class="btn btn--primary"><i class="ph ph-floppy-disk"></i> Saqlash</button>
+              <button type="button" class="btn btn--primary" id="paramSaveBtn"><i class="ph ph-floppy-disk" aria-hidden="true"></i> Saqlash</button>
             </div>
           </div>
         </div>
@@ -137,8 +142,9 @@
   </div>
 
   <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
-    <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2></div>
-    <div class="notifications-panel__list" id="notifPanelList">
+    <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2>
+      <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>
+    <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
       <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
@@ -146,7 +152,7 @@
       <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
     </div>
   </div>
-  <script src="js/api-client.js" defer></script>
+  <script src="js/api-client.js"></script>
   <script src="js/admin-boot.js" defer></script>
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
@@ -156,75 +162,83 @@
     var GENERAL_KEY = 'admin_system_general';
     var PARAMS_KEY = 'admin_system_params';
 
-    // General settings — dropdowns
-    var selects = document.querySelectorAll('.settings-layout select:not(#serviceType)');
-    // Exclude the publishToken area selects — grab the ones inside the first card
-    var generalCard = document.querySelector('.settings-layout > div > div');
-    var generalSelects = generalCard ? generalCard.querySelectorAll('select') : [];
-    var generalBtns = generalCard ? generalCard.querySelectorAll('.btn--primary') : [];
-    var generalSaveBtn = generalBtns.length ? generalBtns[0] : null;
+    // Stable id-based card lookups — the previous `.settings-layout > div > div`
+    // chain broke any time the card layout changed and silently no-op'd
+    // the save button (no listener bound, click did nothing).
+    var generalCard = document.getElementById('generalCard');
+    // Keyed-by-data-pref storage. Index-based shape silently corrupted
+    // every saved value when a field was added/removed/reordered.
+    var generalSelects = generalCard ? generalCard.querySelectorAll('select[data-pref]') : [];
+    var generalSaveBtn = document.getElementById('generalSaveBtn');
 
-    // Restore general settings
+    function announceLocalSave(anchorBtn, id, msg) {
+      var live = document.getElementById(id);
+      if (!live) {
+        live = document.createElement('p');
+        live.id = id;
+        live.setAttribute('role', 'status');
+        live.style.cssText = 'font-size:13px;color:var(--grey-500);margin:10px 0 0;';
+        if (anchorBtn && anchorBtn.parentNode) anchorBtn.parentNode.appendChild(live);
+      }
+      live.textContent = msg;
+    }
+
     try {
       var savedGen = JSON.parse(localStorage.getItem(GENERAL_KEY));
-      if (savedGen && Array.isArray(savedGen) && savedGen.length === generalSelects.length) {
-        generalSelects.forEach(function (sel, i) { sel.value = savedGen[i]; });
+      if (savedGen && typeof savedGen === 'object' && !Array.isArray(savedGen)) {
+        generalSelects.forEach(function (sel) {
+          var key = sel.getAttribute('data-pref');
+          if (Object.prototype.hasOwnProperty.call(savedGen, key)) sel.value = savedGen[key];
+        });
       }
     } catch (e) {}
 
-    // Wire cancel button — restore from localStorage
-    var cancelBtn = generalCard ? generalCard.querySelector('.btn--secondary') : null;
-    if (cancelBtn) {
-      cancelBtn.addEventListener('click', function () {
-        try {
-          var savedGen = JSON.parse(localStorage.getItem(GENERAL_KEY));
-          if (savedGen && Array.isArray(savedGen) && savedGen.length === generalSelects.length) {
-            generalSelects.forEach(function (sel, i) { sel.value = savedGen[i]; });
-          }
-        } catch (e) {}
-      });
-    }
-
-    // Wire general save button
     if (generalSaveBtn) {
       generalSaveBtn.addEventListener('click', function () {
-        var vals = [];
-        generalSelects.forEach(function (sel) { vals.push(sel.value); });
+        var vals = {};
+        generalSelects.forEach(function (sel) {
+          var key = sel.getAttribute('data-pref');
+          if (key) vals[key] = sel.value;
+        });
         try { localStorage.setItem(GENERAL_KEY, JSON.stringify(vals)); } catch (e) {}
-        generalSaveBtn.innerHTML = '<i class="ph ph-check-circle"></i> Saqlandi!';
+        generalSaveBtn.innerHTML = '<i class=\"ph ph-check-circle\" aria-hidden=\"true\"></i> Brauzerda saqlandi';
+        announceLocalSave(generalSaveBtn, 'generalSettingsStatus', 'Umumiy sozlamalar ushbu admin brauzerida saqlandi. Serverga sinxronlanmaydi.');
         generalSaveBtn.disabled = true;
         setTimeout(function () {
-          generalSaveBtn.innerHTML = '<i class="ph ph-floppy-disk"></i> Saqlash';
+          generalSaveBtn.innerHTML = '<i class=\"ph ph-floppy-disk\" aria-hidden=\"true\"></i> Saqlash';
           generalSaveBtn.disabled = false;
         }, 2000);
       });
     }
 
-    // System params — checkboxes in the third card
-    var cards = document.querySelectorAll('.settings-layout > div > div');
-    var paramsCard = cards.length >= 3 ? cards[2] : null;
+    var paramsCard = document.getElementById('paramsCard');
     if (paramsCard) {
-      var paramCheckboxes = paramsCard.querySelectorAll('input[type="checkbox"]');
-      var paramSaveBtn = paramsCard.querySelector('.btn--primary');
+      var paramCheckboxes = paramsCard.querySelectorAll('input[type="checkbox"][data-pref]');
+      var paramSaveBtn = document.getElementById('paramSaveBtn');
 
-      // Restore system params
       try {
         var savedParams = JSON.parse(localStorage.getItem(PARAMS_KEY));
-        if (savedParams && Array.isArray(savedParams) && savedParams.length === paramCheckboxes.length) {
-          paramCheckboxes.forEach(function (cb, i) { cb.checked = savedParams[i]; });
+        if (savedParams && typeof savedParams === 'object' && !Array.isArray(savedParams)) {
+          paramCheckboxes.forEach(function (cb) {
+            var key = cb.getAttribute('data-pref');
+            if (Object.prototype.hasOwnProperty.call(savedParams, key)) cb.checked = !!savedParams[key];
+          });
         }
       } catch (e) {}
 
-      // Wire system params save button
       if (paramSaveBtn) {
         paramSaveBtn.addEventListener('click', function () {
-          var states = [];
-          paramCheckboxes.forEach(function (cb) { states.push(cb.checked); });
+          var states = {};
+          paramCheckboxes.forEach(function (cb) {
+            var key = cb.getAttribute('data-pref');
+            if (key) states[key] = cb.checked;
+          });
           try { localStorage.setItem(PARAMS_KEY, JSON.stringify(states)); } catch (e) {}
-          paramSaveBtn.innerHTML = '<i class="ph ph-check-circle"></i> Saqlandi!';
+          paramSaveBtn.innerHTML = '<i class=\"ph ph-check-circle\" aria-hidden=\"true\"></i> Brauzerda saqlandi';
+          announceLocalSave(paramSaveBtn, 'paramSettingsStatus', 'Tizim parametrlari ushbu admin brauzerida saqlandi. Backend jarayonlarini hali o‘zgartirmaydi.');
           paramSaveBtn.disabled = true;
           setTimeout(function () {
-            paramSaveBtn.innerHTML = '<i class="ph ph-floppy-disk"></i> Saqlash';
+            paramSaveBtn.innerHTML = '<i class=\"ph ph-floppy-disk\" aria-hidden=\"true\"></i> Saqlash';
             paramSaveBtn.disabled = false;
           }, 2000);
         });
