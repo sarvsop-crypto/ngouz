@@ -3340,6 +3340,18 @@ body:not(.home-page) .topbar-building img { height: 58px; width: auto; }
 /* #8  test-mode-banner sometimes covered drawer/dropdowns when above z:60 */
 .test-mode-banner { z-index: 60; }
 
+/* Banner is position:fixed top:0 (z:60). Home keeps content clear via
+   .home-page .site-header { position:fixed; top:36px } + the hero's own
+   100px top padding. Sub-pages were missing the equivalent offset, so the
+   banner overlapped the sticky header and the first page section. Push the
+   body down by banner height and float the sticky header below the banner. */
+body:not(.home-page) { padding-top: 36px; }
+body:not(.home-page) .site-header { top: 36px; }
+@media (max-width: 560px) {
+  body:not(.home-page) { padding-top: 32px; }
+  body:not(.home-page) .site-header { top: 32px; }
+}
+
 /* #9  /leadership card text column overflowed because long names had no
    wrap-target — flex item default min-width:auto held them at intrinsic width.
    Force min-width:0 + word-break on the text column and slim the photo. */
