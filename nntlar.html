@@ -483,10 +483,10 @@
 
   <!-- Stats -->
   <div class="nnt-stats" aria-live="polite">
-    <div class="nnt-stat"><strong id="nntStatTotal">&mdash;</strong><span data-i18n="pages.nntlar.statsTotal">Jami a'zo NNTlar</span></div>
-    <div class="nnt-stat"><strong id="nntStatRegions">&mdash;</strong><span data-i18n="pages.nntlar.statsRegions">Hududlar</span></div>
-    <div class="nnt-stat"><strong id="nntStatSohas">&mdash;</strong><span data-i18n="pages.nntlar.statsSohas">Faoliyat sohalari</span></div>
-    <div class="nnt-stat"><strong id="nntStatYear">&mdash;</strong><span data-i18n="pages.nntlar.statsYear">Ro'yxat yangilangan</span></div>
+    <div class="nnt-stat"><strong id="nntStatTotal">2361</strong><span data-i18n="pages.nntlar.statsTotal">Jami a'zo NNTlar</span></div>
+    <div class="nnt-stat"><strong id="nntStatRegions">14</strong><span data-i18n="pages.nntlar.statsRegions">Hududlar</span></div>
+    <div class="nnt-stat"><strong id="nntStatSohas">18</strong><span data-i18n="pages.nntlar.statsSohas">Faoliyat sohalari</span></div>
+    <div class="nnt-stat"><strong id="nntStatYear">2026</strong><span data-i18n="pages.nntlar.statsYear">Ro'yxat yangilangan</span></div>
   </div>
 
   <!-- Layout -->
@@ -844,7 +844,7 @@ function render() {
         '<div class="nnt-card-body">' +
           '<div class="nnt-row"><span class="nnt-row-label">Rahbar</span><span>' + esc(nnt.rahbar) + '</span></div>' +
           '<div class="nnt-row"><span class="nnt-row-label">Manzil</span><span>' + esc(nnt.manzil) + '</span></div>' +
-          '<div class="nnt-row"><span class="nnt-row-label">Shakl</span><span>' + esc(nnt.shakl) + '</span></div>' +
+          (nnt.shakl ? '<div class="nnt-row"><span class="nnt-row-label">Shakl</span><span>' + esc(nnt.shakl) + '</span></div>' : '') +
         '</div>' +
         '<div class="nnt-card-footer">' +
           '<div class="nnt-footer-item">' +

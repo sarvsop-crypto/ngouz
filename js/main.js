@@ -530,8 +530,59 @@
         '<a href="talim-rivojlanish">Virtual akademiya</a>' +
         '<a href="stajirovka-volontyorlik">Stajirovka va volontyorlik</a>' +
       '</div>' +
-      '<a href="membership" class="mobile-nav-cta">A\'zo bo\'lish</a>';
+      '<a href="membership" class="mobile-nav-cta">A\'zo bo\'lish</a>' +
+      '<div class="mobile-nav-controls">' +
+        '<div class="lang-group" role="group" aria-label="Til">' +
+          '<button type="button" class="lang-pill" data-mobile-lang="uz">UZ</button>' +
+          '<button type="button" class="lang-pill" data-mobile-lang="ru">RU</button>' +
+          '<button type="button" class="lang-pill" data-mobile-lang="en">EN</button>' +
+        '</div>' +
+        '<button type="button" class="icon-btn" data-mobile-search aria-label="Qidirish">' +
+          '<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg>' +
+        '</button>' +
+        '<button type="button" class="icon-btn" data-mobile-a11y aria-label="Ko\'rish rejimi">' +
+          '<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3" fill="currentColor"></circle></svg>' +
+        '</button>' +
+      '</div>';
     document.body.appendChild(mobileNav);
+
+    // Mobile drawer controls: delegate to the existing topbar widgets so
+    // we don't fork the lang / search / a11y state machines.
+    var paintMobileLang = function () {
+      var current = (window.ngoI18n && window.ngoI18n.get && window.ngoI18n.get()) ||
+        (function () { try { return localStorage.getItem('ngo_lang_v1') || 'uz'; } catch (e) { return 'uz'; } })();
+      mobileNav.querySelectorAll('[data-mobile-lang]').forEach(function (btn) {
+        btn.classList.toggle('is-active', btn.getAttribute('data-mobile-lang') === current);
+      });
+    };
+    paintMobileLang();
+    if (window.ngoI18n && typeof window.ngoI18n.onChange === 'function') {
+      window.ngoI18n.onChange(paintMobileLang);
+    }
+    mobileNav.addEventListener('click', function (e) {
+      var langBtn = e.target.closest && e.target.closest('[data-mobile-lang]');
+      if (langBtn && window.ngoI18n) {
+        e.stopPropagation();
+        window.ngoI18n.set(langBtn.getAttribute('data-mobile-lang'));
+        return;
+      }
+      var searchBtn = e.target.closest && e.target.closest('[data-mobile-search]');
+      if (searchBtn) {
+        e.stopPropagation();
+        toggleMobileNav(false);
+        var trigger = document.getElementById('searchToggle');
+        if (trigger) setTimeout(function () { trigger.click(); }, 80);
+        return;
+      }
+      var a11yBtn2 = e.target.closest && e.target.closest('[data-mobile-a11y]');
+      if (a11yBtn2) {
+        e.stopPropagation();
+        toggleMobileNav(false);
+        var trigger2 = document.querySelector('.vis-btn');
+        if (trigger2) setTimeout(function () { trigger2.click(); }, 80);
+        return;
+      }
+    });
 
     // a11y wiring: button announces collapsed/expanded; mobileNav is a
     // dialog so AT users get the standard "menu opened" cue.
