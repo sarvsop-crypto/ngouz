@@ -3178,9 +3178,18 @@ body.home-page .hero-cinematic-inner { padding: 160px 0 180px; }
   .topbar-controls { display: none; }
 }
 
-/* Progressive shedding of topbar-controls items as room actually runs out. */
-@media (max-width: 1060px) { .topbar-fond-name { display: none; } }
-@media (max-width:  900px) { .topbar-fond-brand { display: none; } }
+/* Progressive shedding as room runs out. Tuned for nav-visible-from-1101.
+   Was tuned for the old hamburger-at-1480 era which left the 1100-1280 band
+   with overflowing controls (lang dropdown clipped off the right edge). */
+@media (max-width: 1280px) { .topbar-fond-name { display: none; } }
+@media (max-width: 1180px) { .topbar-fond-brand { display: none; } }
+@media (max-width: 1280px) {
+  .menu { gap: 14px; font-size: 15px; }
+  .menu > .nav-item > a,
+  .menu > a { padding: 6px 6px; }
+  .topbar-lang-trigger { padding: 6px 8px; font-size: 13px; }
+  .topbar-controls { gap: 8px; }
+}
 @media (max-width:  720px) { .topbar-lang:nth-child(n+2) { display: none; } }
 @media (max-width:  560px) { .topbar-lang { display: none; } }
 @media (max-width:  480px) { .vis-btn { display: none; } }
@@ -3300,14 +3309,9 @@ select:focus-visible,
 .footer-legal a { color: #023347; }
 .footer-legal a:hover { color: #0a4a64; text-decoration: underline; }
 
-/* #2 #7  white logo invisible on light sub-page headers — swap the image
-   bytes via content:url so the dark wordmark renders instead of a filtered
-   ghost. Width/height fall back to the img's HTML attrs. */
-body:not(.home-page) .topbar-building img {
-  content: url("../img/logo-oznntma.png");
-  height: 58px;
-  width: auto;
-}
+/* #2 #7  sub-page logo: HTML src now points to logo-oznntma.png on every
+   non-home page; only need to make sure the wide dark logo sizes right. */
+body:not(.home-page) .topbar-building img { height: 58px; width: auto; }
 
 /* #3 #4  Real fix lives at the 1480→1100 edit in the older block above; this
    ensures topbar utility row also folds away with the menu. */
