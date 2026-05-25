@@ -3168,12 +3168,14 @@ body.a11y-grayscale { filter: grayscale(1); }
 /* Home: keep the h1 clear of the fixed blurry header (height ~108px = 36 test-mode + 72 nav). */
 body.home-page .hero-cinematic-inner { padding: 160px 0 180px; }
 
-/* At ≤1480: swap menu to hamburger but KEEP topbar-controls (eye / search / lang / fond-brand) visible.
-   Use a 4-col grid: [logo | 1fr filler | controls | hamburger] so the right side has controls AND hamburger flush with container right. */
-@media (max-width: 1480px) {
+/* At ≤1100: swap menu to hamburger. Topbar-controls also fold into the drawer
+   so laptops at 1280/1366/1440 keep the desktop nav visible.
+   Was 1480 — that hid the nav on every standard laptop. */
+@media (max-width: 1100px) {
   .menu { display: none !important; }
   .hamburger { display: flex !important; justify-self: end; }
-  .nav { grid-template-columns: auto 1fr auto auto; }
+  .nav { grid-template-columns: auto 1fr auto; }
+  .topbar-controls { display: none; }
 }
 
 /* Progressive shedding of topbar-controls items as room actually runs out. */
@@ -3292,47 +3294,60 @@ select:focus-visible,
    2026-05-25 responsiveness audit pass — bundled fixes
    ============================================================ */
 
-/* #1 #18  footer copyright/legal contrast (0.55α on dark = WCAG AA fail) */
-.footer-legal { color: rgba(255,255,255,0.82); }
-.footer-legal a { color: rgba(255,255,255,0.95); }
-.footer-legal a:hover { color: #fff; }
+/* #1 #18  footer copyright contrast — actual footer bg is #E8F5FB (light blue),
+   not the dark fill the original rule expected. Force dark text + border. */
+.footer-legal { color: #374151; border-top: 1px solid #b8dce8; }
+.footer-legal a { color: #023347; }
+.footer-legal a:hover { color: #0a4a64; text-decoration: underline; }
 
-/* #2 #7  white logo invisible on sub-pages (only .home-page has dark hero bar) */
+/* #2 #7  white logo invisible on light sub-page headers — swap the image
+   bytes via content:url so the dark wordmark renders instead of a filtered
+   ghost. Width/height fall back to the img's HTML attrs. */
 body:not(.home-page) .topbar-building img {
-  filter: invert(1) saturate(0) brightness(0.18);
+  content: url("../img/logo-oznntma.png");
+  height: 58px;
+  width: auto;
 }
 
-/* #3 #4  desktop menu collapses too late on tablets — drop to drawer earlier */
-@media (max-width: 1100px) and (min-width: 981px) {
-  .menu { display: none !important; }
-  .hamburger { display: flex !important; grid-column: 3; }
-  .nav { grid-template-columns: 1fr auto 1fr; }
-  .topbar-controls { display: none; }
+/* #3 #4  Real fix lives at the 1480→1100 edit in the older block above; this
+   ensures topbar utility row also folds away with the menu. */
+@media (max-width: 1100px) {
   .utility-left { display: none; }
   .utility-right { width: 100%; justify-content: flex-end; }
 }
 
-/* #5  hero video/scan-band overflow on narrow viewports */
+/* #5  hero video/scan-band overflowed the viewport on narrow phones —
+   the video was 8px wider than the container due to scale(1.02). */
 @media (max-width: 480px) {
   .hero-cinematic, .hero-cinematic-inner { overflow: hidden; }
-  .hero-cinematic-video { max-width: 100%; }
+  .hero-cinematic-video {
+    width: 100% !important;
+    max-width: 100% !important;
+    left: 0 !important;
+    transform: none !important;
+  }
   .scan, .scan-1, .scan-2 { width: 100% !important; left: 0; right: 0; max-width: 100%; }
 }
 
-/* #6  sticky site-header sat under the mobile drawer when narrow */
-.mobile-nav { z-index: 50; padding-top: 96px; }
+/* #6  sticky site-header sat under the mobile drawer when narrow — bumped
+   padding-top to clear utility-bar (42) + nav (72) + breathing room. */
+.mobile-nav { z-index: 50; padding-top: 130px; }
 
 /* #8  test-mode-banner sometimes covered drawer/dropdowns when above z:60 */
 .test-mode-banner { z-index: 60; }
 
-/* #9  /leadership cards overflowed horizontally below 460px */
+/* #9  /leadership card text column overflowed because long names had no
+   wrap-target — flex item default min-width:auto held them at intrinsic width.
+   Force min-width:0 + word-break on the text column and slim the photo. */
+.leader-center { min-width: 0; word-break: break-word; overflow-wrap: anywhere; }
+.leader-name, .leader-role { overflow-wrap: anywhere; word-break: break-word; }
 @media (max-width: 460px) {
-  .leader-card-body { padding: 22px 16px; gap: 16px; }
-  .leader-photo { width: 112px; height: 112px; }
-  .leader-name { font-size: 1.1rem; }
-  .leader-role { font-size: .9rem; margin-bottom: 14px; }
-  .leader-btn { padding: 9px 14px; font-size: .85rem; }
-  .leader-contacts-col { padding-top: 14px; }
+  .leader-card-body { padding: 18px 14px; gap: 14px; }
+  .leader-photo { width: 88px; height: 88px; }
+  .leader-name { font-size: 1.05rem; }
+  .leader-role { font-size: .88rem; margin-bottom: 12px; }
+  .leader-btn { padding: 8px 12px; font-size: .82rem; }
+  .leader-contacts-col { padding-top: 12px; }
 }
 
 /* #10  homepage news heading wrapped 4 lines because "see all" link ate width */
@@ -3349,48 +3364,73 @@ body:not(.home-page) .topbar-building img {
 .doc-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .doc-table table { min-width: 640px; }
 
-/* #16  /afzalliklar hero copy hit the right edge — enforce side padding */
-@media (max-width: 460px) {
+/* #16  hero copy hit the right edge on phones — the .container baseline
+   padding wasn't reaching .hero-cinematic-copy. Force a side floor on both. */
+@media (max-width: 600px) {
   .hero-cinematic-inner,
-  .hero-cinematic-copy,
-  body.home-page .hero-cinematic-inner { padding-left: 16px; padding-right: 16px; }
+  body.home-page .hero-cinematic-inner {
+    padding-left: clamp(16px, 4vw, 24px) !important;
+    padding-right: clamp(16px, 4vw, 24px) !important;
+  }
+  .hero-cinematic-copy h1,
+  .hero-cinematic-copy p,
+  .hero-cinematic-copy .lead {
+    padding-right: 8px;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
 }
 
 /* #20  homepage stat counter strip got clipped under the sticky header */
 .home-page .hero-stats-bar { z-index: 5; }
 
-/* #17  mobile drawer needs lang + a11y + search controls (HTML wired in js/main.js) */
-.mobile-nav-controls {
+/* #17  mobile drawer lang + a11y + search controls — moved to the top of
+   the drawer (sits below the close X), styled with high-specificity
+   selectors so the underlying .mobile-nav typography doesn't bleed in. */
+.mobile-nav .mobile-nav-controls {
   display: flex;
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-  margin-top: 24px;
-  padding: 18px 0 0;
-  border-top: 1px solid #e1e1e1;
+  margin: 0 0 22px;
+  padding: 0 0 18px;
+  border-bottom: 1px solid #e1e1e1;
+  border-top: 0;
 }
-.mobile-nav-controls .lang-group { display: flex; gap: 6px; flex: 1 1 auto; }
-.mobile-nav-controls .lang-pill {
+.mobile-nav .mobile-nav-controls .lang-group {
+  display: flex;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.mobile-nav .mobile-nav-controls .lang-pill {
   flex: 1 1 0;
   border: 1px solid #cbd2d6;
   background: #fff;
-  padding: 9px 0;
-  border-radius: 6px;
+  padding: 10px 0;
+  border-radius: 999px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: .04em;
   color: #1a1a2e;
   cursor: pointer;
   text-align: center;
+  font-family: inherit;
+  line-height: 1;
+  appearance: none;
+  -webkit-appearance: none;
+  transition: background .12s ease, color .12s ease, border-color .12s ease;
 }
-.mobile-nav-controls .lang-pill.is-active {
-  background: var(--green-500);
+.mobile-nav .mobile-nav-controls .lang-pill:hover { border-color: #023347; }
+.mobile-nav .mobile-nav-controls .lang-pill.is-active {
+  background: #023347;
   color: #fff;
-  border-color: var(--green-500);
+  border-color: #023347;
 }
-.mobile-nav-controls .icon-btn {
+.mobile-nav .mobile-nav-controls .icon-btn {
   background: #fff;
   border: 1px solid #cbd2d6;
-  border-radius: 6px;
+  border-radius: 999px;
   padding: 0;
   cursor: pointer;
   color: #1a1a2e;
@@ -3400,8 +3440,18 @@ body:not(.home-page) .topbar-building img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: inherit;
 }
-.mobile-nav-controls .icon-btn svg { width: 18px; height: 18px; display: block; }
+.mobile-nav .mobile-nav-controls .icon-btn:hover { border-color: #023347; color: #023347; }
+.mobile-nav .mobile-nav-controls .icon-btn svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  stroke: currentColor;
+  fill: none;
+}
 
 /* #14 #15  skeleton loaders for news/events lists while data fetches */
 .skeleton-list {

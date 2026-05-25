@@ -492,8 +492,24 @@
     var mobileNav = document.createElement('div');
     mobileNav.className = 'mobile-nav';
     mobileNav.id = 'mobileNav';
-    // Mirror desktop nav (kept as the single source of truth).
+    // Mirror desktop nav (kept as the single source of truth). Controls row
+    // (UZ/RU/EN + search + a11y) sits at the TOP so users land on them
+    // immediately when the drawer opens — these are the highest-value
+    // utilities. Nav links follow below.
     mobileNav.innerHTML =
+      '<div class="mobile-nav-controls">' +
+        '<div class="lang-group" role="group" aria-label="Til">' +
+          '<button type="button" class="lang-pill" data-mobile-lang="uz">UZ</button>' +
+          '<button type="button" class="lang-pill" data-mobile-lang="ru">RU</button>' +
+          '<button type="button" class="lang-pill" data-mobile-lang="en">EN</button>' +
+        '</div>' +
+        '<button type="button" class="icon-btn" data-mobile-search aria-label="Qidirish">' +
+          '<svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg>' +
+        '</button>' +
+        '<button type="button" class="icon-btn" data-mobile-a11y aria-label="Ko\'rish rejimi">' +
+          '<svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>' +
+        '</button>' +
+      '</div>' +
       '<span class="mobile-nav-label">Assotsiatsiya haqida</span>' +
       '<a href="about">Assotsiatsiya haqida</a>' +
       '<div class="mobile-nav-sub">' +
@@ -530,20 +546,7 @@
         '<a href="talim-rivojlanish">Virtual akademiya</a>' +
         '<a href="stajirovka-volontyorlik">Stajirovka va volontyorlik</a>' +
       '</div>' +
-      '<a href="membership" class="mobile-nav-cta">A\'zo bo\'lish</a>' +
-      '<div class="mobile-nav-controls">' +
-        '<div class="lang-group" role="group" aria-label="Til">' +
-          '<button type="button" class="lang-pill" data-mobile-lang="uz">UZ</button>' +
-          '<button type="button" class="lang-pill" data-mobile-lang="ru">RU</button>' +
-          '<button type="button" class="lang-pill" data-mobile-lang="en">EN</button>' +
-        '</div>' +
-        '<button type="button" class="icon-btn" data-mobile-search aria-label="Qidirish">' +
-          '<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg>' +
-        '</button>' +
-        '<button type="button" class="icon-btn" data-mobile-a11y aria-label="Ko\'rish rejimi">' +
-          '<svg aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><circle cx="12" cy="12" r="3" fill="currentColor"></circle></svg>' +
-        '</button>' +
-      '</div>';
+      '<a href="membership" class="mobile-nav-cta">A\'zo bo\'lish</a>';
     document.body.appendChild(mobileNav);
 
     // Mobile drawer controls: delegate to the existing topbar widgets so
