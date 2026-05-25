@@ -1,0 +1,811 @@
+{
+  "admin": {
+    "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+    "brand": "UzNANNGO Admin",
+    "sidebarCollapse": "Collapse sidebar",
+    "menuAria": "Admin menu",
+    "sec": {
+      "main": "MAIN MENU",
+      "requests": "INQUIRIES",
+      "content": "CONTENT"
+    },
+    "breadcrumbAria": "Page location",
+    "breadcrumbRoot": "Management",
+    "pages": {
+      "analytics": { "title": "Analytics" },
+      "corruptionReports": { "title": "Corruption reports" },
+      "dashboard": { "title": "Dashboard" },
+      "documents": { "title": "Documents" },
+      "events": { "title": "Events" },
+      "feedback": { "title": "Feedback" },
+      "grantApplications": { "title": "Grant applications" },
+      "grants": { "title": "Grants" },
+      "membershipRequests": { "title": "Membership applications" },
+      "news": { "title": "News" },
+      "notifications": { "title": "Notifications" },
+      "passwordResetRequests": { "title": "Password reset requests" },
+      "regions": { "title": "Regions" },
+      "registry": { "title": "NGO registry" },
+      "serviceRequests": { "title": "Service requests" },
+      "settings": { "title": "Settings" },
+      "settingsNotifications": { "title": "Notification settings" },
+      "settingsSecurity": { "title": "Security settings" },
+      "settingsSystem": { "title": "System settings" },
+      "tasks": { "title": "Tasks" },
+      "users": { "title": "User management" }
+    },
+    "nav": {
+      "dashboard": "Dashboard",
+      "membershipRequests": "Membership applications",
+      "grantApplications": "Grant applications",
+      "registry": "NGO registry",
+      "regions": "Regions",
+      "documents": "Documents",
+      "tasks": "Tasks",
+      "users": "Users",
+      "reports": "Reports",
+      "analytics": "Analytics",
+      "serviceRequests": "Service requests",
+      "corruptionReports": "Corruption reports",
+      "feedback": "Feedback",
+      "passwordReset": "Password reset",
+      "passwordResetReq": "Password reset requests",
+      "news": "News",
+      "events": "Events",
+      "grants": "Grants",
+      "settings": "Settings",
+      "logout": "Log out"
+    }
+  },
+  "cabinet": {
+    "brand": "Member cabinet",
+    "sidebarCollapse": "Collapse sidebar",
+    "menuAria": "Cabinet menu",
+    "menuSearchAria": "Search in menu",
+    "sec": {
+      "main": "MAIN",
+      "announcements": "ANNOUNCEMENTS",
+      "services": "SERVICES"
+    },
+    "nav": {
+      "dashboard": "Home",
+      "organization": "My organization",
+      "applications": "Application status",
+      "reports": "Reports",
+      "documents": "Documents",
+      "events": "Events",
+      "news": "News",
+      "notifications": "Notifications",
+      "grants": "Grants",
+      "support": "Inquiry",
+      "settings": "Settings",
+      "logout": "Log out"
+    },
+    "notifPanelAria": "Notifications",
+    "notifPanelTitle": "Notifications",
+    "notifEmpty": "No notifications",
+    "notifLoadError": "Couldn't load notifications. Check your connection and refresh the page.",
+    "notifMarkRead": "Mark all as read",
+    "notifSeeAll": "All notifications",
+    "notifNew": "new",
+    "breadcrumbAria": "Page location",
+    "pages": {
+      "dashboard": { "title": "Home" },
+      "documents": { "title": "Documents" },
+      "events": { "title": "Events" },
+      "news": { "title": "News" },
+      "notifications": { "title": "Notifications" },
+      "organization": { "title": "My organization" },
+      "reports": { "title": "Reports" },
+      "settings": { "title": "Settings" },
+      "settingsNotifications": { "title": "Notification settings" },
+      "settingsOrg": { "title": "Organization settings" },
+      "settingsSecurity": { "title": "Security settings" }
+    }
+  },
+  "common": {
+    "skipLink": "Skip to main content",
+    "relTime": {
+      "now": "Just now",
+      "minutesAgo": "min ago",
+      "hoursAgo": "hr ago",
+      "daysAgo": "d ago"
+    },
+    "searchAria": "Search",
+    "searchPlaceholder": "Search the site...",
+    "closeAria": "Close",
+    "a11yAria": "Accessibility view",
+    "langTriggerAria": "Choose language",
+    "homeAria": "Home",
+    "mobileMenuAria": "Menu",
+    "mainMenuAria": "Main menu",
+    "noResults": "Nothing found",
+    "loading": "Loading...",
+    "rssFeed": "RSS feed",
+    "filterAll": "All",
+    "searchNoResults": "No results for your search.",
+    "partnersDirections": "<h2 class=\"section-title\">Cooperation directions</h2><div class=\"cards\"><article class=\"card\"><h3>Project cooperation</h3><p>Projects in civil society, social initiatives, and institutional development.</p></article><article class=\"card\"><h3>Analytical cooperation</h3><p>Research, monitoring reports, infographics, and socio-political reviews.</p></article><article class=\"card\"><h3>Educational cooperation</h3><p>Trainings, seminars, mentorship programmes, and capacity-building initiatives.</p></article></div>",
+    "proposalCta": "<div class=\"card\" style=\"display:flex; align-items:center; justify-content:space-between; gap:16px;\"><div><h3 style=\"margin:0 0 8px\">Submit a partnership proposal</h3><p>Get in touch with us about new partnership initiatives and submit your proposal.</p></div><a class=\"btn\" href=\"contact\">Get in touch</a></div>",
+    "loadError": "Loading error",
+    "networkError": "Network error. Please check your connection.",
+    "genericError": "An error occurred. Please try again."
+  },
+  "testBanner": {
+    "tag": "Test",
+    "text": "The site is running in test mode"
+  },
+  "topbar": {
+    "fondPrimary": "UzNANNGO",
+    "fondSub": "public foundation",
+    "fondAlt": "UzNANNGO public foundation",
+    "logoAlt": "UzNANNGO"
+  },
+  "nav": {
+    "associationGroup": "About the Association",
+    "associationItems": {
+      "about": "About the Association",
+      "mission": "Mission and objectives",
+      "board": "Council members",
+      "leadership": "Leadership",
+      "team": "Our team",
+      "regional": "Regional branches",
+      "structure": "Association structure"
+    },
+    "registryGroup": "NGO registry",
+    "registryItems": {
+      "members": "Member NGOs",
+      "sustainabilityIndex": "NGO sustainability index",
+      "sustainabilityCert": "NGOs with the \"Sustainable NGO\" certificate"
+    },
+    "projects": "Projects",
+    "partnersGroup": "Partners",
+    "partnersItems": {
+      "foreign": "International partners",
+      "local": "Local partners",
+      "public": "Public council members"
+    },
+    "openGroup": "Open data",
+    "openItems": {
+      "contact": "Contact",
+      "grantAi": "Grant competitions — AI search",
+      "normativ": "Legal and regulatory documents",
+      "media": "Media",
+      "events": "Events",
+      "reports": "Reports",
+      "digests": "Digests",
+      "vacancies": "Vacancies",
+      "academy": "Virtual academy",
+      "internship": "Internships and volunteering"
+    }
+  },
+  "footer": {
+    "addressTitle": "Address",
+    "addressLine": "100170, Republic of Uzbekistan, Tashkent, Shaykhantakhur district, 1A Furqat Street",
+    "contactTitle": "Contact",
+    "telLabel": "Tel:",
+    "emailLabel": "Email:",
+    "socialTitle": "Social media",
+    "contactAria": "Contact us",
+    "legalAria": "Legal information",
+    "privacy": "Privacy policy",
+    "terms": "Terms of use",
+    "contactLink": "Contact",
+    "copyright": "© 2026 UzNANNGO. All rights reserved."
+  },
+  "settings": {
+    "language": {
+      "title": "Language",
+      "section": "Interface language"
+    }
+  },
+  "search": {
+    "modalAria": "Search",
+    "queryEmpty": "no query entered",
+    "noResultsTitle": "No results",
+    "noResultsHint": "Try a different keyword.",
+    "emptyTitle": "Empty search query",
+    "emptyHint": "Please enter a keyword in the search field above.",
+    "pagesSection": "Pages",
+    "foundCount": "{n} questions found"
+  },
+  "pages": {
+    "afzalliklar": {
+      "title": "Benefits of joining the Association",
+      "sub": "Gain legal protection, partnership opportunities, and institutional development resources for your organization by joining the National Association of NGOs of Uzbekistan.",
+      "heroBtn": "Apply now",
+      "heroBtnSub": "UzNANNGO · Official membership",
+      "about": "<h2 class=\"section-title\">About the Association</h2><p class=\"section-sub\" style=\"margin-bottom:32px;\">National Association of Non-Governmental Non-Commercial Organizations of Uzbekistan (UzNANNGO)</p><div class=\"about-block\"><div><p style=\"font-size:16px; line-height:1.8; color:#4a5464; margin:0 0 16px;\">UzNANNGO was state-registered by the Ministry of Justice of the Republic of Uzbekistan on 10 June 2005 under registration number <strong>612</strong>.</p><p style=\"font-size:16px; line-height:1.8; color:#4a5464; margin:0 0 16px;\">The Association is a voluntary union of NGOs registered in accordance with the legislation of the Republic of Uzbekistan, organized in the legal form of an NGO union.</p><p style=\"font-size:16px; line-height:1.8; color:#4a5464; margin:0;\"><strong>Main goal:</strong> uniting local NGOs, coordinating, supporting, and developing their activities, and contributing to improving the effectiveness and quality of NGO work.</p></div><div class=\"about-meta\"><div class=\"about-meta-row\"><div class=\"about-meta-text\"><strong>Registration date</strong><span>10 June 2005</span></div></div><div class=\"about-meta-row\"><div class=\"about-meta-text\"><strong>Registration number</strong><span>No. 612</span></div></div><div class=\"about-meta-row\"><div class=\"about-meta-text\"><strong>Legal address</strong><span>100170, Republic of Uzbekistan, Tashkent, Shaykhantakhur district, 1A Furqat Street</span></div></div><div class=\"about-meta-row\"><div class=\"about-meta-text\"><strong>Organizational form</strong><span>Union of non-governmental non-commercial organizations</span></div></div></div></div>",
+      "benefits": "<h2 class=\"section-title\">What does the Association offer?</h2><p class=\"section-sub\">10 key areas your organization can take advantage of through membership.</p><div class=\"benefits-grid\"><div class=\"benefit-card\"><h3>Legal protection and representation</h3><p>Representing and defending the rights and lawful interests of NGOs before state bodies, courts, and international and foreign organizations.</p></div><div class=\"benefit-card\"><h3>Developing cooperation</h3><p>Participating in the development of mutually beneficial cooperation between NGOs, business entities, international and foreign organizations, and state bodies.</p></div><div class=\"benefit-card\"><h3>Creating an enabling environment</h3><p>Helping to create favourable legal, economic, and social conditions for implementing NGO initiatives.</p></div><div class=\"benefit-card\"><h3>Supporting democratic processes</h3><p>Uniting the efforts of members and partners to sustainably develop and promote democratic processes in the country.</p></div><div class=\"benefit-card\"><h3>Improving legislation</h3><p>Participating in drafting legal and regulatory acts that affect NGO rights and lawful interests, and preparing proposals to improve sector legislation.</p></div><div class=\"benefit-card\"><h3>Building capacity</h3><p>Raising NGO directors' and staff's knowledge and skills in effective organizational management, financial sustainability, designing socially important projects, volunteering, and attracting charitable resources.</p></div><div class=\"benefit-card\"><h3>Education and methodological support</h3><p>Producing guides, curricula, and books for NGO representatives, plus theoretical and practical approaches suited to the country's conditions.</p></div><div class=\"benefit-card\"><h3>Social partnership</h3><p>Maintaining a single database of state social orders and social-partnership projects; advancing economic, social, and cultural capacity in the country's modernization.</p></div><div class=\"benefit-card\"><h3>Supporting vulnerable populations</h3><p>Mobilizing members' intellectual, material, and financial resources to support women, youth, the elderly, persons with disabilities, and citizens in difficult life situations.</p></div><div class=\"benefit-card\"><h3>International cooperation</h3><p>Strengthening ties with international and foreign NGOs, financial institutions, and foreign donors, and learning from their positive experience.</p></div></div><div class=\"join-cta\"><div><h3>Join the Association</h3><p>Get detailed information on the application and review process.</p></div><a class=\"join-cta-btn\" href=\"/#membership-modal\">Apply</a></div>"
+    },
+    "awards": {
+      "title": "International partners",
+      "sub": "International organizations and foreign institutions cooperating with UzNANNGO.",
+      "partners": "<h2 class=\"section-title\">International partners</h2><p class=\"section-sub\">Long-term strategic partnership has been established with international institutions.</p><div class=\"partner-grid\"><div class=\"partner\"><img alt=\"OSCE\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/3/34/OSCE_logo.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"UNDP\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/9/9f/UNDP_logo.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"GIZ\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/f/f4/Deutsche_Gesellschaft_f%C3%BCr_Internationale_Zusammenarbeit_Logo.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"USAID\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/1/17/USAID-Identity.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"UNICEF\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_UNICEF.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"Diakonie Katastrophenhilfe\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/b/b2/Logo_Diakonie_Katastrophenhilfe.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"UK Aid\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/e/e0/UKaid.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div></div>",
+      "metrics": "<h2 class=\"section-title\">Cooperation metrics</h2><div class=\"kpi-grid\"><div class=\"kpi\"><strong>24</strong><span>International partners</span></div><div class=\"kpi\"><strong>63</strong><span>Local partners</span></div><div class=\"kpi\"><strong>37+</strong><span>Joint projects</span></div><div class=\"kpi\"><strong>14</strong><span>Regional coverage</span></div></div>"
+    },
+    "boardOfExperts": {
+      "title": "Council members",
+      "sub": "List of members of the Council of the National Association of NGOs of Uzbekistan.",
+      "statTotal": "Total positions",
+      "statFounder": "Founder representatives",
+      "statRegion": "Regional representatives",
+      "statVacant": "Vacancies",
+      "section1Label": "Part I",
+      "section1Title": "Founder representatives",
+      "section1Sub": "Representatives of organizations that are founders of the Association Council.",
+      "section2Label": "Part II",
+      "section2Title": "Member representatives",
+      "section2Sub": "Regional representatives by region and city.",
+      "vacant": "Vacant",
+      "vacantPos": "Open position"
+    },
+    "dayjestlar": {
+      "title": "Digests",
+      "sub": "Information digests and analytical materials on UzNANNGO activities.",
+      "table": "<div class=\"doc-table\"><div class=\"doc-row head\"><span>Title</span><span>Date</span><span>Format</span><span>Download</span></div><div class=\"doc-row\" style=\"grid-column:1/-1;text-align:center;padding:40px 0;color:var(--neutral-400,#9ca3af);font-size:15px;\">Digests will be added soon.</div></div>"
+    },
+    "eventDetail": {
+      "title": "Event details",
+      "noscriptHint": "JavaScript is required to view this event. <a href=\"events\">Events list</a>"
+    },
+    "foydalanishShartlari": {
+      "title": "Terms of use",
+      "sub": "General rules for using the ngo.uz portal and its services.",
+      "body": "<p style=\"color:#6b7280;font-size:13px;margin:0 0 8px\"><em>Last updated: 30 April 2026</em></p><p>By using the ngo.uz portal, you agree to the following terms. If any part of the terms does not work for you, please do not use the portal.</p><h2 style=\"margin-top:24px\">1. Key terms</h2><ul><li><strong>Association</strong> — National Association of Non-Governmental Non-Commercial Organizations of Uzbekistan (UzNANNGO);</li><li><strong>Portal</strong> — the official website at <a href=\"https://www.ngo.uz\">ngo.uz</a> and its cabinet;</li><li><strong>User</strong> — any natural or legal person using the portal;</li><li><strong>Content</strong> — any text, image, video, document, or other information placed on the portal.</li></ul><h2 style=\"margin-top:24px\">2. Use of the portal</h2><p>Information and services on the portal are provided within the framework of the laws of the Republic of Uzbekistan, the Association's charter, and its code of ethics. The user:</p><ul><li>Ensures the data they provide is accurate and complete;</li><li>Does not violate the rights of others;</li><li>Refrains from any action that harms the portal (server attacks, automated mass requests, viruses, etc.).</li></ul><h2 style=\"margin-top:24px\">3. Account and password</h2><p>Registration is required to use the portal cabinet. The user:</p><ul><li>Keeps the password confidential and does not disclose it to third parties;</li><li>Is responsible for all actions taken through their account;</li><li>Promptly notifies the Association upon detecting any unauthorized access to their account.</li></ul><h2 style=\"margin-top:24px\">4. Intellectual property</h2><p>All portal content (logo, design, text, images, code) belongs to the Association unless otherwise indicated. Commercial use requires written permission. When quoting, the source (ngo.uz) must be cited.</p><h2 style=\"margin-top:24px\">5. Limitation of liability</h2><p>The Association takes all reasonable measures to ensure the accuracy of the information posted, but:</p><ul><li>Bears no responsibility for damage caused by technical malfunctions, downtime, or incomplete data;</li><li>Is not liable for the content of external sites linked from the portal;</li><li>Is not liable for situations arising from incorrect data entered by the user.</li></ul><h2 style=\"margin-top:24px\">6. Privacy</h2><p>Personal data is processed in accordance with the <a href=\"maxfiylik-siyosati\">Privacy policy</a>.</p><h2 style=\"margin-top:24px\">7. Changes to the terms</h2><p>The Association reserves the right to unilaterally amend the terms of use. Updated terms take effect from the moment of publication on the portal.</p><h2 style=\"margin-top:24px\">8. Disputes</h2><p>Any disputes related to use of the portal are resolved on the basis of the laws of the Republic of Uzbekistan. Before going to court, the parties must attempt to reach agreement through negotiation.</p><h2 style=\"margin-top:24px\">9. Contact</h2><p>For questions about the terms of use, contact us:</p><ul><li>Email: <a href=\"mailto:info@ngo.uz\">info@ngo.uz</a></li><li>Phone: <a href=\"tel:+998555030512\">(+998 55) 503-05-12</a></li><li><a href=\"qayta-aloqa\">Inquiry form</a></li></ul>"
+    },
+    "grantTanlovlari": {
+      "title": "Grant announcements — AI search",
+      "sub": "Open grant competitions announced by donors and partner organizations.",
+      "eyebrow": "AI assistant",
+      "h2": "Find a grant matched to your field",
+      "intro": "Freely describe your situation or project idea — we'll find the most relevant open grants from reliable donor and state sources.",
+      "noscript": "<strong>AI grant search requires JavaScript.</strong> Please enable JavaScript in your browser or browse the <a href=\"grants\" style=\"color:#7a5800;font-weight:600\">list of active grant competitions</a>.",
+      "panelLabel": "Enter your query",
+      "queryExample": "Example: Is there a grant for an NGO that helps children with autism spectrum disorder?",
+      "submitBtn": "Find grants"
+    },
+    "hududiyBolinmalar": {
+      "title": "Regional branches",
+      "sub": "List of staff of UzNANNGO regional branches.",
+      "listAria": "Regional branches list",
+      "chipTotal": "Total: 28 positions",
+      "chipBranches": "Regional branches: 14",
+      "chipHeads": "Heads: 14",
+      "chipSpecialists": "Specialists: 11",
+      "chipVacancies": "Vacancies: 3",
+      "searchAria": "Search and filter regional branches",
+      "searchPlaceholder": "Search by name, region, or position",
+      "filterHeads": "Heads",
+      "filterSpecialists": "Specialists",
+      "filterVacancies": "Vacancies"
+    },
+    "infographics": {
+      "title": "Infographics",
+      "sub": "Visual statistics and analytical infographics on the NGO sector in Uzbekistan.",
+      "gallery": "<h2 id=\"infographicsTitle\" class=\"visually-hidden\">Infographics collection</h2><p style=\"margin:0 0 20px;padding:14px 18px;background:#f8fbf9;border:1px solid #d4e8dd;border-radius:10px;font-size:14px;color:var(--neutral-500,#587585);\"><i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;color:var(--green-600,#255f40);\"></i> The infographics below are being prepared. PDF download links will be activated once work is complete.</p><div><div class=\"infographic-grid\"><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>NGOs of Uzbekistan: 2026 indicators</h3><p>Number of active NGOs in the country, regional distribution, and sectoral analysis.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Coming soon</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>NGO sector sustainability index — 2026</h3><p>Sustainability-index figures by region and change dynamics.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Coming soon</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>Geography of member organizations</h3><p>Distribution and count of UzNANNGO member NGOs by region.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Coming soon</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>NGO activity areas</h3><p>NGO distribution by area: education, healthcare, environment, and others.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Coming soon</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>NGO sector development dynamics 2019–2026</h3><p>Comparative 7-year analysis: organization count, membership, projects, and funding.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Coming soon</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>International cooperation map</h3><p>Geography of UzNANNGO international partners, projects, and funding sources.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Coming soon</div></div></div></div>"
+    },
+    "jamoatchilikKengashi": {
+      "title": "Public council members",
+      "sub": "UzNANNGO representatives included in public councils under state bodies.",
+      "statAgencies": "State-body public councils",
+      "statReps": "UzNANNGO representatives appointed",
+      "tableCaption": "Public councils under ministries and the UzNANNGO representatives on them",
+      "thAgency": "Ministry / Agency",
+      "thRep": "UzNANNGO representative"
+    },
+    "korrupsiyaMurojaat": {
+      "title": "Anti-corruption inquiry",
+      "sub": "Confidential form for reporting corruption incidents.",
+      "formAria": "Anti-corruption inquiry form",
+      "noscript": "<strong>This form requires JavaScript.</strong> Please enable JavaScript in your browser or send your inquiry to <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a> (confidentiality guaranteed).",
+      "submitBtn": "<svg aria-hidden=\"true\" fill=\"currentColor\" height=\"16\" style=\"margin-right:6px;vertical-align:middle\" viewBox=\"0 0 24 24\" width=\"16\"><path d=\"M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.75a2.25 2.25 0 0 0 .126 4.238l3.918 1.176 1.77 5.522a.75.75 0 0 0 1.317.209l2.352-2.938 4.552 3.31a2.25 2.25 0 0 0 3.478-1.464l2.25-15.75a2.25 2.25 0 0 0-2.241-2.268z\"></path></svg> Submit inquiry",
+      "f": {
+        "name": "Name (optional — may be left anonymous)",
+        "namePh": "You may leave this anonymous",
+        "phone": "Phone (optional)",
+        "org": "Organization name (optional)",
+        "orgPh": "Which organization the inquiry concerns",
+        "message": "Inquiry content <span aria-hidden=\"true\">*</span>",
+        "messagePh": "Describe the situation, date, location, and other details…",
+        "messageHelp": "Enter at least 20 characters (to clearly describe date, location, and situation)."
+      }
+    },
+    "mahalliyHamkorlar": {
+      "title": "Local partners",
+      "sub": "Local organizations, civic associations and institutions cooperating with UzNANNGO.",
+      "partners": "<h2 class=\"section-title\">Local partners</h2><p class=\"section-sub\">Cooperation with regional institutions, educational establishments, and civic associations.</p><div class=\"partner-grid\"><div class=\"partner\">Ministry of Justice</div><div class=\"partner\">Agency for Youth Affairs</div><div class=\"partner\">Mahalla and Nuroniy</div><div class=\"partner\">Higher-education institutions</div><div class=\"partner\">Public foundations</div><div class=\"partner\">Regional NGO centres</div></div>",
+      "metrics": "<h2 class=\"section-title\">Cooperation metrics</h2><div class=\"kpi-grid\"><div class=\"kpi\"><strong>63</strong><span>Local partners</span></div><div class=\"kpi\"><strong>14</strong><span>Regions and cities</span></div><div class=\"kpi\"><strong>37+</strong><span>Joint events</span></div><div class=\"kpi\"><strong data-live-stat=\"member-orgs\">2382</strong><span>Member NGOs</span></div></div>"
+    },
+    "maxfiylikSiyosati": {
+      "title": "Privacy policy",
+      "sub": "Personal data processing rules and user rights on the ngo.uz portal.",
+      "body": "<p style=\"color:#6b7280;font-size:13px;margin:0 0 8px\"><em>Last updated: 30 April 2026</em></p><p>This document sets out the procedure for processing personal data collected via the <a href=\"https://www.ngo.uz\">ngo.uz</a> portal by the National Association of Non-Governmental Non-Commercial Organizations of Uzbekistan (hereinafter — \"the Association\", \"we\"). It has been developed in accordance with the Law of the Republic of Uzbekistan \"On Personal Data\".</p><h2 style=\"margin-top:24px\">1. Data we collect</h2><p>The following data may be collected while using the portal and its services:</p><ul><li>Data you provide — first and last name, phone number, email, organization name, and certificate number;</li><li>Additional information from inquiry and reporting forms;</li><li>Technical data — IP address, browser type, login time, and page-navigation statistics on the portal.</li></ul><h2 style=\"margin-top:24px\">2. Purposes of data use</h2><p>Collected data is used only for the following purposes:</p><ul><li>Association membership and service delivery;</li><li>Responding to inquiries, questions, and complaints;</li><li>Statistical analysis and improving portal quality;</li><li>Other cases provided for by law.</li></ul><h2 style=\"margin-top:24px\">3. Transfer to third parties</h2><p>Personal data is not transferred to third parties without the user's consent. Exceptions:</p><ul><li>At the request of the law and the official request of authorized state bodies;</li><li>Technical service providers (over an encrypted channel, under strict confidentiality terms).</li></ul><h2 style=\"margin-top:24px\">4. Data retention period</h2><p>Data is retained until the purpose of processing is fulfilled. You may request removal of your data (see clause 4).</p><h2 style=\"margin-top:24px\">5. User rights</h2><p>You have the following rights:</p><ul><li>Access and correction of data about yourself;</li><li>Withdraw consent;</li><li>Request deletion of data;</li><li>Object to processing.</li></ul><h2 style=\"margin-top:24px\">6. Cookies</h2><p>The portal uses cookies to improve user experience, maintain session state, and for statistical analysis. You can disable them in browser settings, but this may affect some portal functionality.</p><h2 style=\"margin-top:24px\">7. Security measures</h2><p>Data is transmitted via HTTPS encryption and stored on secured servers. Our staff have access to personal data only within the scope of their duties.</p><h2 style=\"margin-top:24px\">8. Changes</h2><p>This policy may be updated from time to time. The updated version is published on this page, with the effective date shown above.</p><h2 style=\"margin-top:24px\">9. Contact</h2><p>For any questions about your data, contact us:</p><ul><li>Email: <a href=\"mailto:info@ngo.uz\">info@ngo.uz</a></li><li>Phone: <a href=\"tel:+998555030512\">(+998 55) 503-05-12</a></li><li>Address: 100170, Tashkent, Shaykhantakhur district, 1A Furqat Street</li><li>Or via the <a href=\"qayta-aloqa\">inquiry form</a>.</li></ul>"
+    },
+    "membershipCertificate": {
+      "title": "Membership certificate",
+      "sub": "Procedure for obtaining and viewing your organization's membership certificate.",
+      "howTo": "<h2 style=\"margin:0 0 12px;font-size:24px\">How to obtain the certificate</h2><p style=\"margin:0 0 12px;color:var(--neutral-500)\">After your organization successfully completes the membership stage, an administrator issues the certificate in your personal cabinet.</p><ol style=\"margin:0 0 16px;padding-left:20px;color:var(--neutral-700)\"><li style=\"margin-bottom:6px\">Fill in the <a href=\"membership\">membership form</a> and submit your application.</li><li style=\"margin-bottom:6px\">An administrator reviews the application within 15 business days.</li><li style=\"margin-bottom:6px\">Once approved, download the certificate as PDF via the <a href=\"cabinet/cabinet-login\">personal cabinet</a>.</li></ol><p style=\"margin:0 0 18px;font-size:14px;color:var(--neutral-500)\">The certificate number and validity period are generated individually for each organization and displayed on the cabinet page.</p><div style=\"display:flex;gap:10px;flex-wrap:wrap\"><a class=\"btn\" href=\"membership\">Membership application</a><a class=\"btn\" href=\"cabinet/cabinet-login\" style=\"background:#1b5c67\">Log in to cabinet</a><a class=\"btn\" href=\"qayta-aloqa\" style=\"background:transparent;color:#1b5c67;border:1px solid #1b5c67\">Ask a question</a></div>"
+    },
+    "multimediaRoom": {
+      "title": "Media",
+      "sub": "Collection of video lessons, talks and infographic materials.",
+      "cards": "<h2 id=\"mediaContentTitle\" class=\"visually-hidden\">Media sections</h2><div class=\"cards\"><article class=\"card\"><div class=\"media\"></div><h3>Webinars</h3><p>Recorded webinars on NGO management and project management.</p><div class=\"card-action\"><a class=\"btn\" href=\"videos\">Watch videos <i class=\"ph ph-arrow-right\" aria-hidden=\"true\"></i></a></div></article><article class=\"card\"><div class=\"media\"></div><h3>Briefings</h3><p>Official statements, press conferences, and public addresses.</p><div class=\"card-action\"><a class=\"btn\" href=\"news\">News <i class=\"ph ph-arrow-right\" aria-hidden=\"true\"></i></a></div></article><article class=\"card\"><div class=\"media\"></div><h3>Infographics</h3><p>Visual presentation of analytical indicators and methodological guides.</p><div class=\"card-action\"><a class=\"btn\" href=\"infographics\">Infographics <i class=\"ph ph-arrow-right\" aria-hidden=\"true\"></i></a></div></article></div>"
+    },
+    "newsDetail": {
+      "title": "News details",
+      "noscriptHint": "JavaScript is required to view this news item. <a href=\"news\">News list</a>"
+    },
+    "nntSchool": {
+      "title": "NGO School",
+      "sub": "Practical learning platform for NGO directors and staff.",
+      "courses": "<h2 id=\"schoolCoursesTitle\" class=\"visually-hidden\">Course tracks</h2><div class=\"cards\"><article class=\"card\"><h3>Core courses</h3><p>Modules on organizational management, grant management and accountability.</p></article><article class=\"card\"><h3>Short trainings</h3><p>Sessions on legal literacy, public engagement, and information policy.</p></article><article class=\"card\"><h3>Certification</h3><p>At course end, learners who pass the assessment receive a certificate.</p></article></div>",
+      "links": "<a class=\"page-link-card\" href=\"online-library\"><h3>Online library</h3><p>Course materials and methodological guides.</p></a><a class=\"page-link-card\" href=\"multimedia-room\"><h3>Multimedia room</h3><p>Video lessons and presentations.</p></a><a class=\"page-link-card\" href=\"about\"><h3>About us</h3><p>Return to the organization's general activities.</p></a>"
+    },
+    "nntlar": {
+      "title": "Member NGOs of the Association",
+      "sub": "Full list of NGOs that are UzNANNGO members, by region",
+      "statsTotal": "Total member NGOs",
+      "statsRegions": "Regions",
+      "statsSohas": "Activity areas",
+      "statsYear": "List updated",
+      "regionsAria": "Region filter",
+      "regionFilterLabel": "By region",
+      "searchAria": "NGO search",
+      "searchInputAria": "Search NGOs",
+      "searchPlaceholder": "Search by NGO name, director, or activity area...",
+      "loadingList": "Loading NGO list...",
+      "noscript": "The NGO list loads via JavaScript. Alternatively you can <a href=\"contact\">contact us</a> to request the information."
+    },
+    "officialDocs": {
+      "title": "Official NGO documents",
+      "sub": "Unified database of laws, decisions, state programmes, and practical guides.",
+      "listAria": "Documents list",
+      "noscript": "JavaScript is required to view the documents database. You can request an explanation about a document: <a href=\"service-request\">Submit an inquiry</a>.",
+      "inquiryCta": "<div class=\"card split-inline\"><div><h3 style=\"margin:0 0 8px\">Submit an official inquiry</h3><p>Send a request for clarification or legal commentary on documents.</p></div><a class=\"btn\" href=\"service-request\">Submit inquiry</a></div>"
+    },
+    "onlineLibrary": {
+      "title": "Online library",
+      "sub": "Library of methodological manuals, documents and learning materials for NGOs.",
+      "topics": "<h2 id=\"libraryTopicsTitle\" class=\"visually-hidden\">Sections</h2><div class=\"cards\"><article class=\"card\"><h3>NGO governance</h3><p>Guides on charter, governance model, and internal policies.</p></article><article class=\"card\"><h3>Financial reporting</h3><p>Materials on report preparation, accounting discipline, and monitoring.</p></article><article class=\"card\"><h3>Project writing</h3><p>Grant application templates, project logic, and evaluation-indicator examples.</p></article></div>"
+    },
+    "ourTeam": {
+      "title": "Our team",
+      "sub": "Staff of the UzNANNGO Executive Office.",
+      "listAria": "Team members list",
+      "totalChip": "Total: 16 staff",
+      "searchAria": "Search and filter the team",
+      "searchInputAria": "Staff search",
+      "searchPlaceholder": "Search by name or position",
+      "filterStaff": "Staff"
+    },
+    "projects": {
+      "title": "Projects",
+      "sub": "List of ongoing, completed and planned Association projects.",
+      "filterAria": "Filter projects",
+      "filterAllPill": "All <span class=\"pill-n\">17</span>",
+      "filterActivePill": "Active <span class=\"pill-n\">2</span>",
+      "filterDonePill": "Completed <span class=\"pill-n\">1</span>",
+      "filterPlannedPill": "Planned <span class=\"pill-n\">14</span>",
+      "statusActive": "Active",
+      "statusPlanned": "Planned",
+      "statusDone": "Completed"
+    },
+    "publicationDetail": {
+      "title": "Publication details",
+      "noscriptHint": "JavaScript is required to view this publication. <a href=\"publications\">Publications list</a>"
+    },
+    "publications": {
+      "title": "Publications",
+      "sub": "Library of analytical articles, reviews and methodological publications.",
+      "listAria": "Publications list",
+      "noscript": "JavaScript is required to view the publications list. You can also follow news and publications via <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/news.rss\">RSS feed</a>."
+    },
+    "qaytaAloqa": {
+      "title": "Feedback",
+      "sub": "To submit a question, suggestion or inquiry, fill out the form below.",
+      "formAria": "Feedback form",
+      "noscript": "<strong>This form requires JavaScript.</strong> Please enable JavaScript in your browser or send your inquiry to <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a> or call <a href=\"tel:+998555030512\" style=\"color:#7a5800;font-weight:600\">+998 (55) 503-05-12</a>.",
+      "submitBtn": "Submit",
+      "f": {
+        "name": "First and last name <span aria-hidden=\"true\">*</span>",
+        "namePh": "Your full name",
+        "phone": "Phone <span class=\"form-help\" style=\"font-weight:normal;color:var(--neutral-500,#587585);font-size:13px;\">(or email)</span>",
+        "email": "Email <span class=\"form-help\" style=\"font-weight:normal;color:var(--neutral-500,#587585);font-size:13px;\">(or phone)</span>",
+        "topic": "Inquiry topic <span aria-hidden=\"true\">*</span>",
+        "message": "Message <span aria-hidden=\"true\">*</span>",
+        "messagePh": "Enter your inquiry text…",
+        "messageHelp": "Minimum 10 characters, maximum 3000 characters."
+      },
+      "opt": {
+        "choose": "Select…",
+        "membership": "Membership question",
+        "legal": "Legal advice",
+        "grants": "Projects and grants",
+        "training": "Seminars and trainings",
+        "partnership": "Partnership proposal",
+        "other": "Other"
+      }
+    },
+    "reportingForms": {
+      "title": "NGO reporting forms",
+      "sub": "Report types, deadlines, and the online submission form.",
+      "table": "<div class=\"doc-table\"><div class=\"doc-row head\"><span>Report type</span><span>Deadline</span><span>Format</span><span>Form</span></div><div class=\"doc-row\"><span>Annual financial report</span><span>1 February</span><span>XLSX/PDF</span><a href=\"reporting-forms\">Download</a></div><div class=\"doc-row\"><span>Semi-annual activity report</span><span>15 July</span><span>DOCX/PDF</span><a href=\"reporting-forms\">Download</a></div><div class=\"doc-row\"><span>Grant-project final report</span><span>within 30 days</span><span>DOCX</span><a href=\"reporting-forms\">Download</a></div></div>",
+      "formSectionTitle": "Submit a report",
+      "noscript": "<strong>This form requires JavaScript.</strong> Please enable JavaScript in your browser or send the report to <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a>.",
+      "submitBtn": "Submit report",
+      "confirmLabel": "I confirm the accuracy of the information.",
+      "f": {
+        "org": "Organization name",
+        "stir": "TIN",
+        "stirPh": "9-digit TIN",
+        "stirTitle": "TIN — 9 to 14 digits",
+        "stirHelp": "Taxpayer identification number, 9 to 14 digits.",
+        "fio": "Responsible person's full name",
+        "email": "Email",
+        "type": "Report type",
+        "period": "Reporting period"
+      },
+      "opt": {
+        "choose": "Select report type",
+        "annual": "Annual financial report",
+        "halfYear": "Semi-annual activity report",
+        "grantFinal": "Grant-project final report"
+      }
+    },
+    "researchAreas": {
+      "title": "Research areas",
+      "sub": "Priority blocks and topics of UzNANNGO analytical activity.",
+      "tracks": "<h2 class=\"section-title\">Main tracks</h2><p class=\"section-sub\">For each track we run monitoring, analysis, and practical recommendations.</p><div class=\"research-grid\"><article class=\"research-card\"><h3>Civil society development</h3><p>NGO sector dynamics, institutional capacity, and regional-activity indicators.</p></article><article class=\"research-card\"><h3>Social partnership</h3><p>Effectiveness of cooperation mechanisms between state bodies and NGOs.</p></article><article class=\"research-card\"><h3>Legislative analysis</h3><p>Legal-regulatory acts on NGO activity and a package of proposals.</p></article><article class=\"research-card\"><h3>Social services</h3><p>NGO participation in services for the public and assessment of effectiveness.</p></article><article class=\"research-card\"><h3>Youth and women's initiatives</h3><p>Inclusive projects, civic engagement, and a model for working with communities.</p></article><article class=\"research-card\"><h3>Digital transformation</h3><p>Digital platforms for the NGO registry, open data, and e-services.</p></article></div>",
+      "panels": "<div><h2 class=\"section-title\">Publication formats</h2><div class=\"list\"><div class=\"item\"><h3 class=\"research-format-title\">Quarterly review</h3><p>Key indicators, trends, and a regional breakdown.</p></div><div class=\"item\"><h3 class=\"research-format-title\">Analytical report</h3><p>Detailed document on problem issues and solutions.</p></div><div class=\"item\"><h3 class=\"research-format-title\">Policy brief</h3><p>Concise recommendations for decision-makers.</p></div></div></div><div><h2 class=\"section-title\">Related sections</h2><div class=\"list\"><a class=\"item\" href=\"news\"><h3 class=\"research-format-title\">Analytical materials</h3><p>Latest analyses and official announcements.</p></a><a class=\"item\" href=\"publications\"><h3 class=\"research-format-title\">Publications</h3><p>Articles, collections, and methodological materials.</p></a><a class=\"item\" href=\"projects\"><h3 class=\"research-format-title\">Projects</h3><p>Practical initiatives based on research findings.</p></a></div></div>"
+    },
+    "serviceRequest": {
+      "title": "Submit an official inquiry",
+      "sub": "Submit a question or suggestion about interactive services.",
+      "noscript": "<strong>This form requires JavaScript.</strong> Please enable JavaScript in your browser or send your request to <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a>.",
+      "consent": "I consent to the processing of my personal data in accordance with the <a href=\"maxfiylik-siyosati\" target=\"_blank\" rel=\"noopener noreferrer\">Privacy policy</a>.",
+      "submitBtn": "Submit",
+      "f": {
+        "fio": "Full name <span aria-hidden=\"true\">*</span>",
+        "phone": "Phone <span aria-hidden=\"true\">*</span>",
+        "email": "Email <span aria-hidden=\"true\">*</span>",
+        "topic": "Inquiry topic <span aria-hidden=\"true\">*</span>",
+        "message": "Inquiry text <span aria-hidden=\"true\">*</span>",
+        "messageHelp": "Minimum 10 characters, maximum 3000 characters."
+      },
+      "opt": {
+        "choose": "Select a topic",
+        "legal": "Legal advice",
+        "report": "Reporting question",
+        "membership": "Membership question",
+        "other": "Other"
+      }
+    },
+    "services": {
+      "title": "International cooperation",
+      "sub": "Joint projects, experience exchange and institutional development with international organizations and partner institutions.",
+      "partnersTitle": "Partner institutions",
+      "forms": "<h2 class=\"section-title\">Forms of cooperation</h2><p class=\"section-sub\">Strategic partnership, joint events, and capacity-building programmes.</p><div class=\"cards\"><article class=\"card\"><h3>Joint projects</h3><p>Socially oriented projects with international donors and institutions.</p></article><article class=\"card\"><h3>Experience exchange</h3><p>Knowledge sharing through seminars, forums, and expert meetings.</p></article><article class=\"card\"><h3>Institutional support</h3><p>Methodological support for NGO governance, monitoring, and sustainability.</p></article></div>",
+      "initiatives": "<h2 class=\"section-title\">Current initiatives</h2><div class=\"list\"><div class=\"item\"><h3>“NGO registry governance standards” programme</h3><p>Partner: international expert group · Period: 2025–2026 · Track: institutional development and internal governance.</p></div><div class=\"item\"><h3>Regional social-partnership forum</h3><p>Partner: regional centres · Period: quarterly · Track: state–NGO dialogue and cooperation mechanisms.</p></div><div class=\"item\"><h3>Monitoring and evaluation lab</h3><p>Partner: international methodological network · Period: 2025–2027 · Track: performance indicators and evaluation.</p></div></div>",
+      "results": "<h2 class=\"section-title\">Results</h2><div class=\"kpi-grid\"><div class=\"kpi\"><strong>37+</strong><span>Joint initiatives</span></div><div class=\"kpi\"><strong>12</strong><span>International partners</span></div><div class=\"kpi\"><strong>950+</strong><span>Participating NGOs</span></div><div class=\"kpi\"><strong>14</strong><span>Regional coverage</span></div></div>"
+    },
+    "socialOrders": {
+      "title": "State social orders",
+      "sub": "Database of state social orders implemented with NGO participation in 2021–2023.",
+      "statTotal": "Total orders",
+      "statPeriod": "Coverage period",
+      "statAgencies": "State agencies",
+      "statOrgs": "NGOs and civic organizations"
+    },
+    "stajirovkaVolontyorlik": {
+      "title": "Internship and volunteer programmes",
+      "sub": "Internship opportunities for students and youth, plus volunteer activity at the Association.",
+      "programs": "<article class=\"card\"><h2 style=\"margin:0 0 12px;\">Internship programmes</h2><p>Practical (internship) programmes for university students. Opportunity to gain real professional experience in the NGO sector, project management, law, and communications. Applications accepted year-round.</p></article><article class=\"card\"><h2 style=\"margin:0 0 12px;\">Volunteer activity</h2><p>Full information on the Association's volunteer programmes. Opportunities to organize events, contribute to NGO-sector development, and actively participate in building civil society.</p></article>",
+      "formTitle": "Submit an application online",
+      "submitBtn": "<svg aria-hidden=\"true\" fill=\"currentColor\" height=\"16\" style=\"margin-right:6px;vertical-align:middle\" viewBox=\"0 0 24 24\" width=\"16\"><path d=\"M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.75a2.25 2.25 0 0 0 .126 4.238l3.918 1.176 1.77 5.522a.75.75 0 0 0 1.317.209l2.352-2.938 4.552 3.31a2.25 2.25 0 0 0 3.478-1.464l2.25-15.75a2.25 2.25 0 0 0-2.241-2.268z\"></path></svg> Submit application",
+      "f": {
+        "name": "First and last name *",
+        "namePh": "Your full name",
+        "phone": "Phone",
+        "email": "Email",
+        "track": "Track *",
+        "school": "Name of educational institution where you studied/study *",
+        "schoolPh": "For example: Tashkent State University of Law",
+        "motivation": "Motivation letter",
+        "motivationPh": "Why do you want to participate?",
+        "resume": "Attach resume",
+        "dropHint": "Drop the file here or",
+        "chooseFile": "Choose file",
+        "fileTypes": "PDF, DOC, DOCX · up to 5 MB"
+      },
+      "opt": {
+        "choose": "Select…",
+        "internship": "Internship",
+        "volunteer": "Volunteering"
+      }
+    },
+    "structure": {
+      "title": "Executive Office structure",
+      "sub": "Organizational structure of the UzNANNGO Executive Office.",
+      "statTotal": "Total management staff",
+      "statExec": "Executive Office staff",
+      "statRegional": "Regional branch staff",
+      "statNormNum": "Per norm",
+      "statNormLabel": "The number of auxiliary and technical staff is set according to approved norms"
+    },
+    "sustainabilityCert": {
+      "title": "\"Sustainable NGO\"",
+      "sub": "Open list of NGOs that received the sustainability index certificate",
+      "body": "<p style=\"max-width:780px;font-size:16px;line-height:1.8;color:var(--neutral-700,#374151);margin:0 auto 8px;\">The \"Sustainable NGO\" certificate is an official recognition awarded to organizations that score high on the sustainability index. It is issued in three tiers: Tier 3, Tier 2, and Tier 1. It confirms the organization's reliability and gives an advantage in grants and partnership with the state.</p><p style=\"margin:24px 0 28px;padding:14px 18px;background:#f8fbf9;border:1px solid #d4e8dd;border-radius:10px;font-size:14px;color:var(--neutral-500,#587585);\"><i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;color:var(--green-600,#255f40);\"></i> Tier and statistics figures will appear here once the official registry of certified organizations is connected.</p><p class=\"section-label\">Certificate tiers</p><div class=\"cert-levels\"><div class=\"cert-level-card cert-level-card--bronze\"><div><span class=\"cert-badge cert-badge--bronze\"><i aria-hidden=\"true\" class=\"ph ph-medal\"></i> Tier 3</span></div><h2 class=\"cert-level-h\">Tier 3 certificate</h2><p>For organizations that meet the basic sustainability requirements. Governance and financial-transparency systems are in place.</p><div class=\"cert-requirement\"><span class=\"cert-score-range cert-score-range--bronze\">60–79 points</span> on the sustainability index</div></div><div class=\"cert-level-card cert-level-card--silver\"><div><span class=\"cert-badge cert-badge--silver\"><i aria-hidden=\"true\" class=\"ph ph-medal\"></i> Tier 2</span></div><h2 class=\"cert-level-h\">Tier 2 certificate</h2><p>Organizations that have proven their sustainability through strong governance, financial stability, and effective programmes.</p><div class=\"cert-requirement\"><span class=\"cert-score-range cert-score-range--silver\">80–89 points</span> on the sustainability index</div></div><div class=\"cert-level-card cert-level-card--gold\"><div><span class=\"cert-badge cert-badge--gold\"><i aria-hidden=\"true\" class=\"ph ph-medal\"></i> Tier 1</span></div><h2 class=\"cert-level-h\">Tier 1 certificate</h2><p>The highest recognition for NGOs that score highly across all criteria and lead their sector.</p><div class=\"cert-requirement\"><span class=\"cert-score-range cert-score-range--gold\">90–100 points</span> on the sustainability index</div></div></div><p class=\"section-label\">Certified organizations</p><h2 style=\"margin:0 0 16px;font-size:22px;\">Registry — 2024</h2><p style=\"margin-top:8px;font-size:14px;color:var(--neutral-500,#587585);\">A tier-based filter will be added once the registry is connected.</p><div class=\"reg-table-wrap\"><table class=\"reg-table\"><caption class=\"u-visually-hidden\">Registry of organizations with the \"Sustainable NGO\" certificate</caption><thead><tr><th scope=\"col\" style=\"width:32px;\">#</th><th scope=\"col\">Organization name</th><th scope=\"col\">Region / City</th><th scope=\"col\">Score</th><th scope=\"col\">Tier</th><th scope=\"col\">Issued</th><th scope=\"col\">Valid until</th></tr></thead><tbody id=\"certTableBody\" aria-live=\"polite\"><tr><td colspan=\"7\" role=\"status\" style=\"text-align:center;color:var(--neutral-400,#9ca3af);padding:24px;\">Loading...</td></tr></tbody></table></div><p style=\"font-size:15px;color:var(--neutral-400,#9ca3af);margin-top:12px;\">* Only some of the certified organizations are shown. You can request the full registry via an inquiry.</p><div style=\"margin-top:56px;\"><p class=\"section-label\">How to apply for certification</p><h2 style=\"margin:0 0 4px;font-size:22px;\">4 steps</h2><p style=\"font-size:16px;color:var(--neutral-500,#587585);margin:0 0 4px;\">Follow these steps to obtain the certificate.</p><ol class=\"apply-steps\"><li class=\"apply-step\"><h3>Submit an application</h3><p>Fill out the assessment application via the member cabinet and upload the required documents.</p></li><li class=\"apply-step\"><h3>Document review</h3><p>UzNANNGO specialists review all materials and may request additional information.</p></li><li class=\"apply-step\"><h3>On-site assessment</h3><p>If required, the organization's activities are observed on site and scored.</p></li><li class=\"apply-step\"><h3>Certificate issuance</h3><p>At a score of 60 points or above, the corresponding tier certificate is formally awarded.</p></li></ol></div>"
+    },
+    "sustainabilityIndex": {
+      "title": "NGO sustainability index <span style=\"font-size:0.45em; font-weight:500; opacity:0.72; white-space:nowrap;\">(planned project)</span>",
+      "sub": "System for assessing the institutional sustainability of NGOs in Uzbekistan",
+      "body": "<p style=\"max-width:780px;font-size:16px;line-height:1.8;color:var(--neutral-700,#374151);margin:0 auto 8px;\">The NGO sustainability index is a tool that assesses an organization's long-term viability across six core criteria. The index is calculated annually by UzNANNGO and the results are published openly. The aim: help NGOs identify their strengths and weaknesses and set development directions.</p><p style=\"margin:24px 0 28px;padding:14px 18px;background:#f8fbf9;border:1px solid #d4e8dd;border-radius:10px;font-size:14px;color:var(--neutral-500,#587585);\"><i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;color:var(--green-600,#255f40);\"></i> The number of assessed NGOs and average score figures will appear here once the index registry is connected.</p><p class=\"section-label\">Assessment criteria</p><h2 style=\"margin:0 0 4px;font-size:22px;\">Six criteria, 100 points total</h2><p style=\"font-size:16px;color:var(--neutral-500,#587585);margin:0 0 4px;\">Maximum points are shown per criterion.</p><div class=\"criteria-grid\"><div class=\"criterion-card\"><h3>Governance and transparency</h3><p>Council structure, annual reports, financial audit, and internal-control systems.</p><span class=\"criterion-max\">max 20 points</span></div><div class=\"criterion-card\"><h3>Financial sustainability</h3><p>Diversity of funding, financial reserves, and effective budget management.</p><span class=\"criterion-max\">max 20 points</span></div><div class=\"criterion-card\"><h3>Programme effectiveness</h3><p>Activity outcomes, beneficiary count, and the social impact of projects.</p><span class=\"criterion-max\">max 20 points</span></div><div class=\"criterion-card\"><h3>Human resources</h3><p>Staff retention, professional development, volunteers, and personnel capacity.</p><span class=\"criterion-max\">max 15 points</span></div><div class=\"criterion-card\"><h3>Cooperation and network</h3><p>Ties with state bodies, the business community, and international organizations.</p><span class=\"criterion-max\">max 15 points</span></div><div class=\"criterion-card\"><h3>Infrastructure and IT</h3><p>Website, social networks, databases, and management systems.</p><span class=\"criterion-max\">max 10 points</span></div></div><p class=\"section-label\" style=\"margin-top:32px;\">Levels</p><div class=\"level-row\"><div class=\"level-badge level--dev\"><span class=\"level-badge-dot\"></span>Developing — 0–39 points</div><div class=\"level-badge level--grow\"><span class=\"level-badge-dot\"></span>Growing — 40–59 points</div><div class=\"level-badge level--cons\"><span class=\"level-badge-dot\"></span>Consolidating — 60–79 points</div><div class=\"level-badge level--sus\"><span class=\"level-badge-dot\"></span>Sustainable — 80–100 points</div></div><p class=\"section-label\">2024 results (selected)</p><h2 style=\"margin:0 0 16px;font-size:22px;\">Assessment results</h2><div class=\"idx-table-wrap\"><table class=\"idx-table\"><caption class=\"u-visually-hidden\">NGO sustainability index ranking and regional distribution</caption><thead><tr><th scope=\"col\" style=\"width:32px;\">#</th><th scope=\"col\">Organization name</th><th scope=\"col\">Region</th><th scope=\"col\" class=\"score-cell\">Score (of 100)</th><th scope=\"col\">Level</th></tr></thead><tbody id=\"sustainabilityTableBody\" aria-live=\"polite\"><tr><td colspan=\"5\" role=\"status\" style=\"text-align:center;color:var(--neutral-400,#9ca3af);padding:24px;\">Loading...</td></tr></tbody></table></div><p style=\"font-size:15px;color:var(--neutral-400,#9ca3af);margin-top:12px;\">* The table shows some of the assessed organizations. You can request the full list via an inquiry.</p>"
+    },
+    "talimRivojlanish": {
+      "title": "Education and development",
+      "sub": "Continuing education programmes, trainings and learning opportunities for staff and NGO representatives.",
+      "cards": "<article class=\"card\"><h2 style=\"margin:0 0 12px;\">Continuing-education programmes and trainings</h2><p>Information about regularly held continuing-education courses and professional trainings for staff. Curricula on NGO-sector development, project management, and financial literacy.</p><div class=\"card-action\"><a class=\"btn\" href=\"qayta-aloqa\">Register</a></div></article><article class=\"card\"><h2 style=\"margin:0 0 12px;\">Webinars and online courses</h2><p>Distance-learning opportunities: webinars on NGO activity, online courses, and certification programmes. Virtual trainings and seminars held jointly with international organizations.</p><div class=\"card-action\"><a class=\"btn\" href=\"qayta-aloqa\">Learn more</a></div></article><article class=\"card\"><h2 style=\"margin:0 0 12px;\">Training programme calendar</h2><p>Schedule of internal and external training programmes. Full calendar of trainings, seminars, master classes, and conferences planned for the year. Helps participants stay informed in time.</p><div class=\"card-action\"><a class=\"btn\" href=\"qayta-aloqa\">View calendar</a></div></article>"
+    },
+    "vacancies": {
+      "title": "Vacancies",
+      "sub": "Open vacancies and competitions at UzNANNGO.",
+      "list": "<h2 id=\"vacanciesListTitle\" class=\"visually-hidden\">List of open positions</h2><div class=\"cards\"><article class=\"card\"><h3>Branch head</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">Full-time · Navoiy Region</p><p>Lead and coordinate activities of the regional branch in Navoiy Region.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Apply</a></div></article><article class=\"card\"><h3>Specialist</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">Full-time · Samarkand Region</p><p>Work with and support member NGOs in the Samarkand Region branch.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Apply</a></div></article><article class=\"card\"><h3>Specialist</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">Full-time · Fergana Region</p><p>Work with and support member NGOs in the Fergana Region branch.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Apply</a></div></article></div>"
+    },
+    "videoDetail": {
+      "title": "Video details",
+      "noscriptHint": "JavaScript is required to view this video. <a href=\"videos\">Videos list</a>"
+    },
+    "videos": {
+      "title": "Videos",
+      "sub": "Archive of briefings, presentations and interviews.",
+      "featured": "<h2 id=\"featuredVideosTitle\" class=\"visually-hidden\">Featured videos</h2><div class=\"cards\"><article class=\"card\"><div class=\"media\"></div><h3>Press briefing</h3><p class=\"meta-line\">02.04.2026 · 18 minutes</p><div style=\"margin-top:10px\"><a class=\"btn\" href=\"video-detail\">Watch</a></div></article><article class=\"card\"><div class=\"media\"></div><h3>Training webinar: project management</h3><p class=\"meta-line\">30.03.2026 · 42 minutes</p><div style=\"margin-top:10px\"><a class=\"btn\" href=\"video-detail\">Watch</a></div></article><article class=\"card\"><div class=\"media\"></div><h3>Expert interview</h3><p class=\"meta-line\">27.03.2026 · 21 minutes</p><div style=\"margin-top:10px\"><a class=\"btn\" href=\"video-detail\">Watch</a></div></article><h2 class=\"section-title\" style=\"margin-top:3rem\">Video archive</h2><div id=\"dynamic-video-page\" aria-live=\"polite\" aria-busy=\"true\"><p role=\"status\">Loading...</p></div><noscript><p style=\"margin-top:16px\">JavaScript is required to view the video archive. Videos are also available on <a href=\"https://youtube.com/@uznntma\" rel=\"noopener noreferrer external\" target=\"_blank\">our YouTube channel</a>.</p></noscript>"
+    },
+    "notFound": {
+      "title": "Page not found",
+      "body": "The page you're looking for doesn't exist or has been moved.<br/>You can choose one of the links below.",
+      "btnHome": "Home",
+      "btnNews": "News",
+      "btnGrants": "Grants",
+      "btnRegistry": "NGO registry",
+      "btnContact": "Contact"
+    },
+    "offline": {
+      "title": "No internet connection",
+      "body": "An internet connection is required to load this page. Check your connection and try again.",
+      "retryBtn": "Retry",
+      "backHome": "Back to home",
+      "reconnected": "Internet connection restored. Click the link below or refresh the page to return home.",
+      "goHomeBtn": "Go to home"
+    },
+    "searchResults": {
+      "title": "Search results",
+      "subSuffix": "— pages found.",
+      "noscript": "Site search works with JavaScript. Use the main sections directly: <a href=\"news\">News</a>, <a href=\"events\">Events</a>, <a href=\"grants\">Grants</a>, <a href=\"official-docs\">Documents</a>, <a href=\"nntlar\">NGOs</a>."
+    },
+    "membershipStatus": {
+      "title": "Application status",
+      "sub": "Check the current stage of your membership application.",
+      "cardTitle": "Your membership application status",
+      "body1": "Your application ID and submission date are on the confirmation card sent at submission. Online status lookup by number will be added in the next version.",
+      "body2": "To check your current status now, submit your application number via the <a href=\"qayta-aloqa\">feedback form</a> or email <a href=\"mailto:info@ngo.uz\">info@ngo.uz</a> — we reply within 15 business days.",
+      "btnNew": "Submit a new application",
+      "btnContact": "Feedback"
+    },
+    "serviceRequestStatus": {
+      "title": "Request status",
+      "body1": "Your request number and submission date are on the confirmation card sent at submission. Online lookup by number will be added in the next version.",
+      "body2": "To get the current status now, submit your request number via the <a href=\"qayta-aloqa\">feedback form</a> or email <a href=\"mailto:info@ngo.uz\">info@ngo.uz</a>.",
+      "btnNew": "Submit a new request",
+      "btnContact": "Feedback"
+    },
+    "reportStatus": {
+      "title": "Report status",
+      "body1": "Report submission and online tracking of processing stages are available to member NGOs via the personal cabinet.",
+      "body2": "Member organizations — <a href=\"cabinet/cabinet-login\">log in to the cabinet</a> and view the current status in the \"Reports\" section. Non-member organizations continue to submit via the channels specified in the agreement on the <a href=\"reporting-forms\">reporting forms</a> page.",
+      "btnCabinet": "Log in to cabinet",
+      "btnForms": "Reporting forms"
+    },
+    "mission": {
+      "title": "Mission and objectives",
+      "sub": "UzNANNGO's mission, priority directions and strategic goals.",
+      "contentAria": "Mission and objectives content",
+      "body": "<h3>Mission</h3><p>The National Association of Non-Governmental Non-Commercial Organizations of Uzbekistan (UzNANNGO) was established in 2005 to strengthen civil society, develop the non-governmental sector, and raise the legal, organizational and professional capacity of NGOs. The Association operates in accordance with the legislation of the Republic of Uzbekistan and has become the coordination centre of the NGO sector.</p><h3>Main goals</h3><ol><li>Support the activities of non-governmental non-commercial organizations and strengthen their role in society.</li><li>Ensure dialogue and cooperation between civil society institutions and state bodies.</li><li>Develop transparency, sustainability and professional governance in the NGO sector.</li><li>Strengthen the global integration of Uzbekistan's civil society through international cooperation.</li></ol><h3>Main objectives</h3><ol><li>Strengthen NGOs' legal status, defend their interests before state bodies, and submit proposals to improve legislation.</li><li>Raise the professional skills of NGO directors and staff; organize training courses, seminars and workshops.</li><li>Analyse the activities of civil society institutions, conduct monitoring and develop practical recommendations.</li><li>Ensure information exchange among NGOs and bring their activities to the wider public.</li><li>Establish relations with international organizations and foreign partners; implement cooperation programmes.</li><li>Calculate the NGO sustainability index and run the \"Sustainable NGO\" certification system.</li><li>Develop government–civil-society partnership; design proposals and projects to improve social-order mechanisms.</li></ol><h3>Functions</h3><ol><li><strong>Coordination:</strong> coordinate the activities of regional branches, member organizations and partner institutions.</li><li><strong>Database:</strong> maintain the registry of NGOs in Uzbekistan and collect and analyse data on their activities.</li><li><strong>Education:</strong> systematic training and skill-raising through the \"NGO School\" programme.</li><li><strong>Legal aid:</strong> consult member organizations on registration, reporting and compliance with legislation.</li><li><strong>Cooperation:</strong> implement joint projects with UNDP, USAID, GIZ, UNICEF and other international organizations.</li><li><strong>Monitoring:</strong> track the development dynamics of the NGO sector and prepare reports.</li></ol><h3>Strategic goals (2026–2028)</h3><ol><li>Strengthen the regional network — ensure active branches operate in all 14 regions and Karakalpakstan.</li><li>Digitalize services — introduce online membership, electronic reporting and interactive services.</li><li>Raise analytical capacity — expand the quality and coverage of the annual NGO sustainability index.</li></ol>"
+    },
+    "whoWeAre": {
+      "title": "National Association of NGOs of Uzbekistan",
+      "tag1": "Cooperation",
+      "tag2": "Development",
+      "tag3": "Civil society",
+      "body": "<p>The National Association of Non-Governmental Non-Commercial Organizations of Uzbekistan (UzNANNGO) is a national body established to strengthen civil society, coordinate NGO activities and support them. Registered with the Ministry of Justice of the Republic of Uzbekistan, it has operated since 2019.</p><p>The Association's main objectives include developing recommendations to improve the legal environment for NGOs, strengthening the cooperation between the non-governmental sector and state bodies, supporting the growth of NGOs' organizational capacity, and expanding their international cooperation.</p><p>The Association works closely with the Oliy Majlis of the Republic of Uzbekistan and the executive authorities. It actively participates in discussions of legislative initiatives related to civil society and regularly submits analytical materials and proposals on the NGO sector to the relevant authorities.</p><div class=\"mission-block\"><blockquote>“Our main goal is to defend the legal rights of every non-governmental non-commercial organization in Uzbekistan, strengthen their role in society, and contribute meaningfully to the formation of a sustainable civil society.”</blockquote><cite>— Head of the UzNANNGO Executive Office</cite></div><p>The Association's NGO registry serves as a venue for sharing knowledge, gaining experience and establishing cooperation. Through the NGO School, the online library and regional trainings, methodological and practical support reaches hundreds of organizations. At the same time, research, talks and open discussions are held with representatives of the business community, academia and international organizations.</p><p>The Association was founded to unite all NGOs in Uzbekistan, defend their interests and contribute to the formation of a healthy civil society in our country. The Executive Office is located in Tashkent — on Furqat Street in the Shaykhantakhur district; 28 regional staff operate across all regions of the republic.</p>"
+    },
+    "about": {
+      "title": "About the Association",
+      "sub": "The National Association of Non-Governmental Non-Commercial Organizations of Uzbekistan — an organization dedicated to developing civil society and raising NGO capacity.",
+      "intro": "<div class=\"about-intro-grid\"><div class=\"about-intro-text\"><h2 class=\"section-title\">About the organization</h2><p>The National Association of Non-Governmental Non-Commercial Organizations of Uzbekistan (UzNANNGO) was state-registered by the Ministry of Justice of the Republic of Uzbekistan on 10 June 2005 under registration number 612.</p><p>The Association is a voluntary union of NGOs registered in accordance with current legislation of the Republic of Uzbekistan, organized in the legal form of an NGO union.</p></div><div class=\"about-reg-card\"><h3>Registration details</h3><div class=\"about-reg-row\"><span>Registration date</span><span>10 June 2005</span></div><div class=\"about-reg-row\"><span>Registration number</span><span>No. 612</span></div><div class=\"about-reg-row\"><span>Organizational form</span><span>Union of NGOs</span></div><div class=\"about-reg-row\"><span>Legal address</span><span>100170, Republic of Uzbekistan, Tashkent, Shaykhantakhur district, 1A Furqat Street</span></div></div></div>",
+      "goal": "<div class=\"about-goal-block\"><div class=\"about-goal-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"28\" stroke=\"currentColor\" stroke-width=\"1.8\" viewBox=\"0 0 24 24\" width=\"28\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><circle cx=\"12\" cy=\"12\" r=\"6\"/><circle cx=\"12\" cy=\"12\" r=\"2\"/></svg></div><div><h2>Main goal</h2><p>The Association's main goal is to unite local NGOs, coordinate, support, and develop their activities, and contribute to improving the effectiveness and quality of NGO work.</p></div></div>",
+      "tasks": "<h2 class=\"section-title\">Main objectives</h2><p class=\"section-sub\">The Association acts in the interests of its members and civil society in the following areas.</p><div class=\"vazifalar-grid\"><div class=\"vazifa-card\"><div class=\"vazifa-num\">1</div><div class=\"vazifa-body\"><h3>Legal protection and representation</h3><p>Representing and defending the rights and lawful interests of NGOs before state bodies, courts, and international and foreign organizations.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">2</div><div class=\"vazifa-body\"><h3>Developing cooperation</h3><p>Participating in the development of mutually beneficial cooperation between NGOs, business entities, international and foreign organizations, and state bodies.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">3</div><div class=\"vazifa-body\"><h3>Creating an enabling environment</h3><p>Helping create favourable legal, economic, and social conditions for implementing NGO initiatives.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">4</div><div class=\"vazifa-body\"><h3>Supporting democratic processes</h3><p>Uniting the efforts of members and partners to sustainably develop and promote democratic processes in the country.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">5</div><div class=\"vazifa-body\"><h3>Improving legislation</h3><p>Participating in drafting legal and regulatory acts that affect NGO rights and lawful interests, and preparing proposals to improve sector legislation.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">6</div><div class=\"vazifa-body\"><h3>Building capacity</h3><p>Raising NGO directors' and staff's knowledge and skills in effective organizational management, financial sustainability, designing socially important projects, volunteering, and attracting charitable resources.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">7</div><div class=\"vazifa-body\"><h3>Education and methodological support</h3><p>Producing guides, curricula, and books for NGO representatives, plus theoretical and practical approaches suited to the country's conditions.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">8</div><div class=\"vazifa-body\"><h3>Social partnership</h3><p>Maintaining a single database of state social orders and social-partnership projects; advancing economic, social, and cultural capacity in the country's modernization.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">9</div><div class=\"vazifa-body\"><h3>Supporting vulnerable populations</h3><p>Mobilizing members' intellectual, material, and financial resources to support women, youth, the elderly, persons with disabilities, and citizens in difficult life situations.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">10</div><div class=\"vazifa-body\"><h3>International cooperation</h3><p>Strengthening ties with international and foreign NGOs, financial institutions, and foreign donors, and learning from their positive experience.</p></div></div></div>",
+      "articlesTitle": "Articles about the organization"
+    },
+    "contact": {
+      "title": "Contact",
+      "sub": "Get in touch — address, phone, and social media.",
+      "body": "<h2 class=\"contact-section-title\" style=\"margin-top:0\">Submit an inquiry</h2><div class=\"contact-action-cards\" style=\"margin-bottom:36px\"><a class=\"contact-action-card\" href=\"qayta-aloqa\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"></path></svg><div><strong>Feedback</strong><span>Send a question, suggestion, or complaint</span></div></a><a class=\"contact-action-card\" href=\"korrupsiya-murojaat\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"></path></svg><div><strong>Anti-corruption inquiry</strong><span>Submit a confidential inquiry</span></div></a></div><div class=\"contact-grid\"><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\"></path><circle cx=\"12\" cy=\"10\" r=\"3\"></circle></svg></div><div><div class=\"contact-info-label\">Address</div><div class=\"contact-info-value\">100170, Republic of Uzbekistan, Tashkent, Shaykhantakhur district, 1A Furqat Street</div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z\"></path></svg></div><div><div class=\"contact-info-label\">Phone</div><div class=\"contact-info-value\"><a href=\"tel:+998555030512\">(+998 55) 503-05-12</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\"></path><polyline points=\"22,6 12,13 2,6\"></polyline></svg></div><div><div class=\"contact-info-label\">Email</div><div class=\"contact-info-value\"><a href=\"mailto:info@ngo.uz\">info@ngo.uz</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><polyline points=\"12 6 12 12 16 14\"></polyline></svg></div><div><div class=\"contact-info-label\">Office hours</div><div class=\"contact-info-value\">Mon–Fri: 9:00–18:00<br/>Sat–Sun: closed</div></div></div></div><h2 class=\"contact-section-title\">Social media</h2><div class=\"contact-social-row\"><a class=\"contact-social-btn contact-social-fb\" href=\"https://facebook.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Facebook</a><a class=\"contact-social-btn contact-social-ig\" href=\"https://instagram.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Instagram</a><a class=\"contact-social-btn contact-social-tg\" href=\"https://t.me/UzNNTMA1\" rel=\"noopener noreferrer\" target=\"_blank\">Telegram</a><a class=\"contact-social-btn contact-social-yt\" href=\"https://youtube.com/@uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">YouTube</a><a href=\"https://www.linkedin.com/company/ngo-association-uzbekistan/\" rel=\"noopener noreferrer\" target=\"_blank\">LinkedIn</a></div><div class=\"contact-map\"><iframe allowfullscreen=\"\" style=\"border:0\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\" sandbox=\"allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox\" src=\"https://yandex.uz/map-widget/v1/?ll=69.240568%2C41.312565&amp;z=17&amp;pt=69.240568%2C41.312565%2Cpm2rdm\" title=\"Address map\"></iframe></div>"
+    },
+    "membership": {
+      "title": "Join",
+      "sub": "Review the membership documents, confirm the regulations, and submit your organization's details.",
+      "docs": "<h2 class=\"section-title\">Membership documents</h2><div class=\"cards\"><article class=\"card\"><h3>Admission procedure</h3><p>List of documents required for membership.</p><div class=\"card-action\"><a class=\"btn\" href=\"official-docs\">Download</a></div></article><article class=\"card\"><h3>Charter and internal rules</h3><p>Document defining membership rights and obligations.</p><div class=\"card-action\"><a class=\"btn\" href=\"official-docs\">Download</a></div></article><article class=\"card\"><h3>Opportunities regulations</h3><p>Opportunities and procedures available after joining.</p><div class=\"card-action\"><a class=\"btn\" href=\"official-docs\">Download</a></div></article></div>",
+      "reglamentTitle": "Review the regulations",
+      "reglamentSubtle": "Confirm you have reviewed the regulations before submitting the form.",
+      "reglamentConsent": "I have fully reviewed the <a href=\"foydalanish-shartlari\" target=\"_blank\" rel=\"noopener noreferrer\">regulations</a> and agree to its terms.",
+      "formTitle": "Organization details",
+      "noscript": "This form works in browsers with JavaScript enabled. Please enable JavaScript or contact us via the <a href=\"qayta-aloqa\" style=\"color:#7a5800;text-decoration:underline\">feedback form</a>.",
+      "submitBtn": "Submit application",
+      "f": {
+        "orgName": "Organization name <span aria-hidden=\"true\">*</span>",
+        "activity": "Field of activity <span aria-hidden=\"true\">*</span>",
+        "legalType": "Legal form <span aria-hidden=\"true\">*</span>",
+        "head": "Director's full name <span aria-hidden=\"true\">*</span>",
+        "phone": "Organization phone number <span aria-hidden=\"true\">*</span>",
+        "email": "Email address <span aria-hidden=\"true\">*</span>",
+        "telegram": "Telegram-linked phone number <span aria-hidden=\"true\">*</span>",
+        "region": "Operating region <span aria-hidden=\"true\">*</span>"
+      }
+    },
+    "membershipGuide": {
+      "title": "How to join",
+      "sub": "Complete the membership process step by step.",
+      "stepsAria": "Membership steps",
+      "stepsHtml": "<div class=\"item\"><h3>Step 1: Prepare documents</h3><p>Prepare the organization's certificate, TIN, director's details and contact information.</p></div><div class=\"item\"><h3>Step 2: Review the regulations</h3><p>Review the membership terms and the rights-and-obligations set.</p></div><div class=\"item\"><h3>Step 3: Submit the online form</h3><p>Fill in and submit the application in the \"Join\" section.</p></div><div class=\"item\"><h3>Step 4: Review and decision</h3><p>The application is reviewed within the timelines set by the charter; the status appears on the page.</p></div><div class=\"item\"><h3>Step 5: Certificate</h3><p>After a positive decision, the membership certificate is issued.</p></div>"
+    },
+    "news": {
+      "title": "News",
+      "sub": "Official news and press releases.",
+      "listAria": "News list",
+      "noscript": "JavaScript is required to view the news list. You can also use the RSS feed below: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/news.rss\">RSS feed</a>."
+    },
+    "events": {
+      "title": "Events",
+      "sub": "Calendar of past and upcoming events.",
+      "listAria": "Events list",
+      "noscript": "JavaScript is required to view the events list. You can also use the RSS feed below: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/events.rss\">RSS feed</a>."
+    },
+    "grants": {
+      "title": "Announced grants",
+      "sub": "Open grants and funding opportunities for NGOs and civil society organizations.",
+      "listAria": "Grants list",
+      "noscript": "JavaScript is required to view the grants list. You can also use the RSS feed below: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/grants.rss\">RSS feed</a>."
+    },
+    "leadership": {
+      "title": "Leadership",
+      "sub": "Chair and deputies of the UzNANNGO Council — leaders directing the organization's activities.",
+      "role1": "Chair of the Association Council, Head of the Executive Office",
+      "role2": "First Deputy Chair of the Council, First Deputy Head of the Executive Office",
+      "role3": "Deputy Chair of the Council, Deputy Head of the Executive Office",
+      "bioBtn": "Biography",
+      "hours1": "Tuesday 2:00 PM–5:00 PM",
+      "hours2": "Wednesday 10:00 AM–1:00 PM",
+      "hours3": "Friday 3:00 PM–5:00 PM",
+      "bioPending": "<strong>Biography:</strong> Information will be added soon.",
+      "aboutTitle": "About the leadership"
+    },
+    "faq": {
+      "title": "Q&A",
+      "sub": "Frequently asked questions and answers on interactive services.",
+      "listAria": "Questions and answers list",
+      "searchLabel": "Search a question",
+      "searchPlaceholder": "For example: report, membership, legal advice",
+      "q1": "What documents are needed to join the Association?",
+      "a1": "An organization certificate, director's details, an application, and confirmation that the charter has been accepted are required.",
+      "q2": "Where do I submit reports?",
+      "a2": "Download the forms from the \"NGO reporting forms\" section and submit them via the online form.",
+      "q3": "How do I get legal advice?",
+      "a3": "Submit a question via the official inquiry form. A specialist will reply.",
+      "q4": "Where can I see the status of my membership application?",
+      "a4": "After submission, the membership page automatically opens the status page for tracking."
+    },
+    "index": {
+      "title": "UzNANNGO — National Association of NGOs of Uzbekistan | ngo.uz",
+      "ogTitle": "National Association of NGOs of Uzbekistan — ngo.uz",
+      "metaDescription": "National Association of Non-Governmental Non-Commercial Organizations of Uzbekistan (UzNANNGO) — the official source of information on NGOs, grants, events, legislation and services.",
+      "heroTitle": "National Association of Non-Governmental Non-Commercial Organizations of Uzbekistan",
+      "heroMemberBtn": "Join the Association",
+      "heroMemberBtnSub": "UzNANNGO · Submit application",
+      "heroBenefitsBtn": "Benefits of joining the Association",
+      "statsAria": "Key indicators",
+      "stats": {
+        "total": "Total NGOs",
+        "members": "Our member NGOs",
+        "lawProposals": "Legislative proposals",
+        "legalAid": "Legal aid cases",
+        "events": "Events held",
+        "media": "Media appearances",
+        "training": "NGOs trained"
+      },
+      "mapTitle": "NGO indicators",
+      "mapSub": "By region",
+      "mapAria": "Map of NGOs by region",
+      "mapNoscript": "The regional map requires JavaScript.",
+      "chartTitle": "Number of NGOs that are members of the Association",
+      "chartCanvasFallback": "This element displays a chart. A detailed data table is provided below.",
+      "chartTableAria": "UzNANNGO membership dynamics",
+      "chartTableCaption": "NGO membership dynamics (2020–2025)",
+      "chartColYear": "Year",
+      "chartColCount": "Number of NGOs",
+      "chartGrowthSince2020": "Growth since 2020",
+      "chartStatus2025": "Status as of 2025",
+      "chartGrowthLabel": "Average annual growth",
+      "chartLegendBar": "Number of NGOs",
+      "chartLegendLine": "Trend",
+      "chartDlTitle": "Download image",
+      "chartDlAria": "Download chart as image",
+      "chartSource": "Source: ngo.uz",
+      "newsTitle": "Latest news and events",
+      "newsSub": "UzNANNGO activities, news and the latest events.",
+      "newsSeeAll": "All news",
+      "newsNoscript": "Latest news and events are loaded with JavaScript.",
+      "partnersTitle": "Our international partners",
+      "partnersSub": "International organizations with which UzNANNGO maintains a strategic partnership.",
+      "usefulTitle": "Useful links",
+      "usefulLinks": {
+        "president": "Official website of the President of the Republic of Uzbekistan",
+        "gov": "Government portal of the Republic of Uzbekistan",
+        "parliament": "Legislative Chamber of the Oliy Majlis of the Republic of Uzbekistan",
+        "senate": "Senate of the Oliy Majlis of the Republic of Uzbekistan",
+        "lex": "National Legislation Database of the Republic of Uzbekistan"
+      }
+    }
+  },
+  "membershipModal": {
+    "title": "Join the Association",
+    "subtitle": "Fill out the application to join the National Association of NGOs of Uzbekistan",
+    "stepsAria": "Membership steps",
+    "step1Aria": "Step 1: terms (current)",
+    "step1DoneAria": "Step 1: terms (completed)",
+    "step2Aria": "Step 2: application",
+    "step2CurrentAria": "Step 2: application (current)",
+    "termsTitle": "Membership terms and conditions",
+    "terms1": "Admission to the National Association of Non-Governmental Non-Commercial Organizations of Uzbekistan (UzNANNGO) is carried out on the basis of the UzNANNGO Charter.",
+    "terms2": "The purpose of membership is the development of civil society, ensuring the legal protection of NGOs, raising staff capacity and expanding international cooperation.",
+    "terms3": "Member organizations have the following rights: participation in Association events, access to trainings and seminars, discussion of Council decisions, and voting.",
+    "terms4": "Member organizations fulfil the following obligations: payment of the annual membership fee, submission of an annual activity report, and compliance with Association decisions.",
+    "terms5": "After the application is reviewed, UzNANNGO sends a letter on membership. The decision is made within 15 business days.",
+    "agreeLabel": "I have read and agree to the terms above",
+    "continueBtn": "Continue →",
+    "orgLabel": "Organization name *",
+    "orgPlaceholder": "Full official NGO name",
+    "leaderLabel": "Director's full name *",
+    "leaderPlaceholder": "Full name",
+    "phoneLabel": "Phone *",
+    "phonePlaceholder": "+998 __ ___ __ __",
+    "emailLabel": "Email *",
+    "emailPlaceholder": "info@organization.uz",
+    "regionLabel": "Region *",
+    "regionPlaceholder": "Select…",
+    "noteLabel": "Additional information",
+    "notePlaceholder": "Organization activity, field, or other comments (optional)",
+    "submitBtn": "Join",
+    "backBtn": "← Back",
+    "submittingBtn": "Submitting...",
+    "successTitle": "Your application has been received!",
+    "successBody": "We will contact you via the phone and email provided within 15 business days. Thank you for joining UzNANNGO.",
+    "closeBtn": "Close",
+    "regions": {
+      "tashkentCity": "Tashkent City",
+      "tashkentOblast": "Tashkent Region",
+      "andijan": "Andijan Region",
+      "bukhara": "Bukhara Region",
+      "fergana": "Fergana Region",
+      "jizzakh": "Jizzakh Region",
+      "namangan": "Namangan Region",
+      "navoi": "Navoiy Region",
+      "kashkadarya": "Kashkadarya Region",
+      "samarkand": "Samarkand Region",
+      "syrdarya": "Syrdarya Region",
+      "surkhandarya": "Surkhandarya Region",
+      "khorezm": "Khorezm Region",
+      "karakalpakstan": "Republic of Karakalpakstan"
+    }
+  }
+}

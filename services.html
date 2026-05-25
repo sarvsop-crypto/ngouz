@@ -62,73 +62,74 @@
 <script src="js/errlog.js" defer></script>
 <script src="js/sw-register.js" defer></script>
 <script src="js/dropdown.js" defer></script>
+<script src="js/i18n.js" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
 <header class="site-header">
 <div class="container nav">
-<a class="topbar-building" href="/" aria-label="Bosh sahifa"><img alt="O'ZNNTMA" src="img/logo-oznntma.png" decoding="async" width="60" height="60" /></a>
-<nav aria-label="Asosiy menyu" class="menu">
+<a class="topbar-building" href="/" data-i18n-aria-label="common.homeAria" aria-label="Bosh sahifa"><img data-i18n-alt="topbar.logoAlt" alt="O'ZNNTMA" src="img/logo-white.png" decoding="async" fetchpriority="high" width="60" height="60" /></a>
+<nav data-i18n-aria-label="common.mainMenuAria" aria-label="Asosiy menyu" class="menu">
 <div class="nav-item has-dropdown">
-<a href="about">Assotsiatsiya haqida <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
+<a href="about"><span data-i18n="nav.associationGroup">Assotsiatsiya haqida</span> <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
 <div class="dropdown">
-<a href="about">Assotsiatsiya haqida</a>
-<a href="mission">Maqsad va vazifalar</a>
-<a href="board-of-experts">Kengash a'zolari</a>
-<a href="leadership">Rahbariyat</a>
-<a href="our-team">Bizning jamoa</a>
-<a href="hududiy-bolinmalar">Hududiy bo'linmalar</a>
-<a href="structure">Assotsiatsiya tuzilmasi</a>
-</div>
-</div>
-<div class="nav-item has-dropdown">
-<a href="nntlar" aria-haspopup="true" aria-expanded="false">NNTlar reyestri <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
-<div class="dropdown">
-<a href="nntlar">Assotsiatsiyaga a'zo NNTlar</a>
-<a href="sustainability-index">NNTlar barqarorlik indeksi</a>
-<a href="sustainability-cert">"Barqaror NNT" sertifikatiga ega NNTlar</a>
-</div>
-</div>
-<a href="projects">Loyihalar</a>
-<div class="nav-item has-dropdown">
-<a href="awards">Hamkorlar <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
-<div class="dropdown">
-<a href="awards">Xorijiy hamkorlar</a>
-<a href="mahalliy-hamkorlar">Mahalliy hamkorlar</a>
-<a href="jamoatchilik-kengashi">Jamoatchilik kengashi a'zolari</a>
+<a href="about" data-i18n="nav.associationItems.about">Assotsiatsiya haqida</a>
+<a href="mission" data-i18n="nav.associationItems.mission">Maqsad va vazifalar</a>
+<a href="board-of-experts" data-i18n="nav.associationItems.board">Kengash a'zolari</a>
+<a href="leadership" data-i18n="nav.associationItems.leadership">Rahbariyat</a>
+<a href="our-team" data-i18n="nav.associationItems.team">Bizning jamoa</a>
+<a href="hududiy-bolinmalar" data-i18n="nav.associationItems.regional">Hududiy bo'linmalar</a>
+<a href="structure" data-i18n="nav.associationItems.structure">Assotsiatsiya tuzilmasi</a>
 </div>
 </div>
 <div class="nav-item has-dropdown">
-<a href="official-docs" aria-haspopup="true" aria-expanded="false">Ochiq maʼlumotlar <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
+<a href="nntlar" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav.registryGroup">NNTlar reyestri</span> <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
 <div class="dropdown">
-<a href="contact">Bog'lanish</a>
-<a href="grant-tanlovlari">Grant tanlovlari - AI qidiruv</a>
-<a href="official-docs">Normativ-huquqiy hujjatlar</a>
-<a href="multimedia-room">Media</a>
-<a href="events">Tadbirlar</a>
-<a href="reporting-forms">Hisobotlar</a>
-<a href="dayjestlar">Dayjestlar</a>
-<a href="vacancies">Bo'sh ish o'rinlari</a>
-<a href="talim-rivojlanish">Virtual akademiya</a>
-<a href="stajirovka-volontyorlik">Stajirovka va volontyorlik</a>
+<a href="nntlar" data-i18n="nav.registryItems.members">Assotsiatsiyaga a'zo NNTlar</a>
+<a href="sustainability-index" data-i18n="nav.registryItems.sustainabilityIndex">NNTlar barqarorlik indeksi</a>
+<a href="sustainability-cert" data-i18n="nav.registryItems.sustainabilityCert">"Barqaror NNT" sertifikatiga ega NNTlar</a>
+</div>
+</div>
+<a href="projects" data-i18n="nav.projects">Loyihalar</a>
+<div class="nav-item has-dropdown">
+<a href="awards"><span data-i18n="nav.partnersGroup">Hamkorlar</span> <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
+<div class="dropdown">
+<a href="awards" data-i18n="nav.partnersItems.foreign">Xorijiy hamkorlar</a>
+<a href="mahalliy-hamkorlar" data-i18n="nav.partnersItems.local">Mahalliy hamkorlar</a>
+<a href="jamoatchilik-kengashi" data-i18n="nav.partnersItems.public">Jamoatchilik kengashi a'zolari</a>
+</div>
+</div>
+<div class="nav-item has-dropdown">
+<a href="official-docs" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav.openGroup">Ochiq maʼlumotlar</span> <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
+<div class="dropdown">
+<a href="contact" data-i18n="nav.openItems.contact">Bog'lanish</a>
+<a href="grant-tanlovlari" data-i18n="nav.openItems.grantAi">Grant tanlovlari - AI qidiruv</a>
+<a href="official-docs" data-i18n="nav.openItems.normativ">Normativ-huquqiy hujjatlar</a>
+<a href="multimedia-room" data-i18n="nav.openItems.media">Media</a>
+<a href="events" data-i18n="nav.openItems.events">Tadbirlar</a>
+<a href="reporting-forms" data-i18n="nav.openItems.reports">Hisobotlar</a>
+<a href="dayjestlar" data-i18n="nav.openItems.digests">Dayjestlar</a>
+<a href="vacancies" data-i18n="nav.openItems.vacancies">Bo'sh ish o'rinlari</a>
+<a href="talim-rivojlanish" data-i18n="nav.openItems.academy">Virtual akademiya</a>
+<a href="stajirovka-volontyorlik" data-i18n="nav.openItems.internship">Stajirovka va volontyorlik</a>
 </div>
 </div>
 </nav>
 <div class="topbar-controls">
 <div class="topbar-fond-brand">
-<img src="img/logo-fond.png" class="topbar-fond-logo" alt="O'zNNTMA jamoat fondi" decoding="async" width="60" height="60" />
+<img src="img/logo-fond.png" class="topbar-fond-logo" data-i18n-alt="topbar.fondAlt" alt="O'zNNTMA jamoat fondi" decoding="async" width="60" height="60" />
 <div class="topbar-fond-name">
-<span class="topbar-fond-name-primary">O'zNNTMA</span>
-<span class="topbar-fond-name-sub">jamoat fondi</span>
+<span class="topbar-fond-name-primary" data-i18n="topbar.fondPrimary">O'zNNTMA</span>
+<span class="topbar-fond-name-sub" data-i18n="topbar.fondSub">jamoat fondi</span>
 </div>
 </div>
 <a class="topbar-lang" href="/uz/" hreflang="uz">O’zbekcha</a>
 <a class="topbar-lang" href="/ru/" hreflang="ru" lang="ru">Русский</a>
 <a class="topbar-lang" href="/en/" hreflang="en" lang="en">English</a>
-<button aria-label="Ko'rish imkoniyati" class="vis-btn" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" width="17"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
-<button aria-label="Qidirish" class="search-btn" id="searchToggle" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="17"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg></button>
+<button data-i18n-aria-label="common.a11yAria" aria-label="Ko'rish imkoniyati" class="vis-btn" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24" width="17"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+<button data-i18n-aria-label="common.searchAria" aria-label="Qidirish" class="search-btn" id="searchToggle" type="button"><svg aria-hidden="true" fill="none" height="17" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" width="17"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg></button>
 </div>
-<button aria-label="Menyu" class="hamburger" id="hamburgerBtn" type="button">
+<button data-i18n-aria-label="common.mobileMenuAria" aria-label="Menyu" class="hamburger" id="hamburgerBtn" type="button">
 <span></span><span></span><span></span>
 </button>
 </div>
@@ -137,8 +138,8 @@
 <section class="grid-bg">
 <div class="container hero split">
 <div>
-<h1>Xalqaro hamkorlik</h1>
-<p class="sub">Xalqaro tashkilotlar va hamkor institutlar bilan qo'shma loyihalar, tajriba almashish va institutsional rivojlanish yo'nalishlari.</p>
+<h1 data-i18n="pages.services.title">Xalqaro hamkorlik</h1>
+<p data-i18n="pages.services.sub" class="sub">Xalqaro tashkilotlar va hamkor institutlar bilan qo'shma loyihalar, tajriba almashish va institutsional rivojlanish yo'nalishlari.</p>
 <div style="margin-top:20px">
 <a class="btn" href="awards">Hamkorlar ro'yxati</a>
 </div>
@@ -151,7 +152,7 @@
 </div>
 </section>
 <section class="section">
-<div class="container">
+<div class="container" data-i18n-html="pages.services.forms">
 <h2 class="section-title">Hamkorlik shakllari</h2>
 <p class="section-sub">Strategik hamkorlik, qo'shma tadbirlar va salohiyatni oshirish dasturlari.</p>
 <div class="cards">
@@ -171,7 +172,7 @@
 </div>
 </section>
 <section class="section" style="padding-top:0">
-<div class="container">
+<div class="container" data-i18n-html="pages.services.initiatives">
 <h2 class="section-title">Amaldagi tashabbuslar</h2>
 <div class="list">
 <div class="item">
@@ -191,7 +192,7 @@
 </section>
 <section class="section" style="padding-top:0">
 <div class="container">
-<h2 class="section-title">Hamkor institutlar</h2>
+<h2 class="section-title" data-i18n="pages.services.partnersTitle">Hamkor institutlar</h2>
 <div class="partner-grid">
 <div class="partner">INTL PARTNER 1</div>
 <div class="partner">INTL PARTNER 2</div>
@@ -203,7 +204,7 @@
 </div>
 </section>
 <section class="section" style="padding-top:0">
-<div class="container">
+<div class="container" data-i18n-html="pages.services.results">
 <h2 class="section-title">Natijalar</h2>
 <div class="kpi-grid">
 <div class="kpi"><strong>37+</strong><span>Qo'shma tashabbus</span></div>
@@ -226,36 +227,36 @@
 <div class="footer-grid">
 <div class="footer-col footer-col-brand">
 <a class="footer-logo-link" href="/">
-<img alt="O'ZNNTMA" class="footer-logo-img" src="img/logo-oznntma.png" loading="lazy" decoding="async" width="200" height="60" />
+<img data-i18n-alt="topbar.logoAlt" alt="O'ZNNTMA" class="footer-logo-img" src="img/logo-oznntma.png" loading="lazy" decoding="async" width="200" height="60" />
 </a>
 
 </div><div class="footer-col">
-<h2 class="footer-col-title">Manzil</h2>
-<p>100170, O&#x2BB;zbekiston Respublikasi, Toshkent shahri, Shayxontohur tumani, Furqat ko&#x2BC;chasi, 1A</p>
+<h2 class="footer-col-title" data-i18n="footer.addressTitle">Manzil</h2>
+<p data-i18n="footer.addressLine">100170, O&#x2BB;zbekiston Respublikasi, Toshkent shahri, Shayxontohur tumani, Furqat ko&#x2BC;chasi, 1A</p>
 </div><div class="footer-col">
-<h2 class="footer-col-title">Aloqa</h2>
-<p>Tel: <a href="tel:+998555030512">(+998 55) 503-05-12</a></p>
-<p>Email: <a href="mailto:info@ngo.uz">info@ngo.uz</a></p>
+<h2 class="footer-col-title" data-i18n="footer.contactTitle">Aloqa</h2>
+<p><span data-i18n="footer.telLabel">Tel:</span> <a href="tel:+998555030512">(+998 55) 503-05-12</a></p>
+<p><span data-i18n="footer.emailLabel">Email:</span> <a href="mailto:info@ngo.uz">info@ngo.uz</a></p>
 </div><div class="footer-col">
-<h2 class="footer-col-title">Ijtimoiy tarmoqlar</h2>
+<h2 class="footer-col-title" data-i18n="footer.socialTitle">Ijtimoiy tarmoqlar</h2>
 <div class="social-links">
 <a href="https://facebook.com/uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Facebook" style="--sc:#1877F2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg><span>Facebook</span></a>
 <a href="https://instagram.com/uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Instagram" style="--sc:#E1306C"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg><span>Instagram</span></a>
 <a href="https://t.me/UzNNTMA1" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="Telegram" style="--sc:#229ED9"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg><span>Telegram</span></a>
 <a href="https://youtube.com/@uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="YouTube" style="--sc:#FF0000"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg><span>YouTube</span></a>
 <a href="https://www.linkedin.com/company/ngo-association-uzbekistan/" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn" style="--sc:#0A66C2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg><span>LinkedIn</span></a>
-<a href="contact" class="social-link" aria-label="Bog'lanish" style="--sc:#0e7490"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20 2H4c-1.103 0-2 .897-2 2v18l4-4h14c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"/></svg><span>Bog'lanish</span></a>
+<a href="contact" class="social-link" data-i18n-aria-label="footer.contactAria" aria-label="Bog'lanish" style="--sc:#0e7490"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20 2H4c-1.103 0-2 .897-2 2v18l4-4h14c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"/></svg><span data-i18n="footer.contactLink">Bog'lanish</span></a>
 </div>
 </div>
 </div>
 
 </div>
 <div class="footer-legal">
-<p>&copy; 2026 O&rsquo;ZNNTMA. Barcha huquqlar himoyalangan.</p>
-<nav class="footer-legal-links" aria-label="Huquqiy ma'lumotlar">
-<a href="maxfiylik-siyosati">Maxfiylik siyosati</a>
-<a href="foydalanish-shartlari">Foydalanish shartlari</a>
-<a href="contact">Bog'lanish</a>
+<p data-i18n="footer.copyright">&copy; 2026 O&rsquo;ZNNTMA. Barcha huquqlar himoyalangan.</p>
+<nav class="footer-legal-links" data-i18n-aria-label="footer.legalAria" aria-label="Huquqiy ma'lumotlar">
+<a href="maxfiylik-siyosati" data-i18n="footer.privacy">Maxfiylik siyosati</a>
+<a href="foydalanish-shartlari" data-i18n="footer.terms">Foydalanish shartlari</a>
+<a href="contact" data-i18n="footer.contactLink">Bog'lanish</a>
 </nav>
 </div>
 </footer>

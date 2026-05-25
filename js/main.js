@@ -6,57 +6,12 @@
   _ph.crossOrigin = 'anonymous';
   document.head.appendChild(_ph);
 
+  // i18n state + text replacement live in js/i18n.js (window.ngoI18n).
+  // main.js only owns the topbar lang switcher chrome — wiring clicks
+  // to ngoI18n.set(code) and reflecting the active language in the
+  // dropdown's label and selected option. This keeps page-string
+  // translations out of every per-page bundle.
   var i18nKey = "ngo_lang_v1";
-  var i18nDict = {
-    uz: {
-      nav: {
-        "about.html": "Biz haqimizda",
-        "news.html": "Yangiliklar",
-        "events.html": "Tadbirlar",
-        "contact.html": "Xizmatlar",
-        "awards.html": "Hamkorlar"
-      },
-      contactBtn: "A'zo bo'lish",
-      a11y: "Ko'z ojizlar uchun",
-      ctaBtn: "Bog'lanish",
-      footerQuick: "Tezkor havolalar",
-      footerContact: "Bog'lanish",
-      footerServices: "Xizmatlar",
-      footerSocial: "Ijtimoiy tarmoqlar"
-    },
-    ru: {
-      nav: {
-        "about.html": "О нас",
-        "news.html": "Новости",
-        "events.html": "Мероприятия",
-        "contact.html": "Услуги",
-        "awards.html": "Партнеры"
-      },
-      contactBtn: "Членство",
-      a11y: "Для слабовидящих",
-      ctaBtn: "Связаться",
-      footerQuick: "Быстрые ссылки",
-      footerContact: "Контакты",
-      footerServices: "Услуги",
-      footerSocial: "Соцсети"
-    },
-    en: {
-      nav: {
-        "about.html": "About Us",
-        "news.html": "News",
-        "events.html": "Events",
-        "contact.html": "Services",
-        "awards.html": "Partners"
-      },
-      contactBtn: "Membership",
-      a11y: "Accessibility",
-      ctaBtn: "Contact",
-      footerQuick: "Quick links",
-      footerContact: "Contact",
-      footerServices: "Services",
-      footerSocial: "Social media"
-    }
-  };
 
   var siteIndex = [
     { title: "Bosh sahifa", url: "index.html", summary: "O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi rasmiy sayti.", keywords: "nntma uznntma ngo.uz bosh sahifa" },
@@ -113,63 +68,42 @@
   ];
 
 
-  var applyLang = function (langCode) {
-    var lang = i18nDict[langCode] ? langCode : "uz";
-    var t = i18nDict[lang];
-    document.documentElement.lang = lang;
+  var _langShort = { uz: "O\u02BBzbekcha", ru: "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", en: "English" };
 
-    var menuLinks = document.querySelectorAll(".menu a[data-page]");
-    menuLinks.forEach(function (a) {
-      var key = a.getAttribute("data-page");
-      if (t.nav[key]) a.textContent = t.nav[key];
-    });
-
-    var contactBtn = document.querySelector(".contact-btn");
-    if (contactBtn) contactBtn.textContent = t.contactBtn;
-
-    var a11yBtn = document.querySelector(".vis-btn");
-    if (a11yBtn) a11yBtn.setAttribute("aria-label", t.a11y);
-
-    var ctaBtn = document.querySelector(".dark-cta .btn");
-    if (ctaBtn) ctaBtn.textContent = t.ctaBtn;
-
-    var footerTitles = document.querySelectorAll(".footer-top h4");
-    if (footerTitles[0]) footerTitles[0].textContent = t.footerQuick;
-    if (footerTitles[1]) footerTitles[1].textContent = t.footerContact;
-    if (footerTitles[2]) footerTitles[2].textContent = t.footerSocial;
-    if (footerTitles[3]) footerTitles[3].textContent = t.footerServices;
-
+  // Chrome-only update for the topbar switcher: active class, listbox
+  // aria-selected, and the trigger label. Text translation is handled
+  // by js/i18n.js \u2014 this only paints the switcher's own state so the
+  // UI reflects whichever language ngoI18n is now using.
+  var updateLangChrome = function (lang) {
     var langLinks = document.querySelectorAll(".topbar-lang[data-lang]");
-    var _langShort = { uz: "O\u02BBzbekcha", ru: "\u0420\u0443\u0441\u0441\u043a\u0438\u0439", en: "English" };
     langLinks.forEach(function (a) {
       var code = a.getAttribute("data-lang");
       var isActive = code === lang;
       a.classList.toggle("active-lang", isActive);
-      // The lang menu uses role="listbox" + role="option" on each link
-      // (set in main.js init below). For listbox semantics SR users
-      // need aria-selected on each option to announce the current
-      // selection \u2014 without it, listbox just lists options with no
-      // current state.
       if (a.getAttribute("role") === "option") {
         a.setAttribute("aria-selected", isActive ? "true" : "false");
       }
     });
     var labelEl = document.getElementById("topbarLangLabel");
     if (labelEl) labelEl.textContent = _langShort[lang] || lang.toUpperCase();
+  };
 
-    try { localStorage.setItem(i18nKey, lang); } catch (e) {}
+  // Legacy alias \u2014 a few inline handlers in older HTML still call
+  // applyLang(). Route them through ngoI18n so existing pages keep
+  // working without per-page edits.
+  var applyLang = function (langCode) {
+    var lang = (langCode === "ru" || langCode === "en" || langCode === "uz") ? langCode : "uz";
+    if (window.ngoI18n) window.ngoI18n.set(lang);
+    else updateLangChrome(lang);
     return lang;
   };
 
-  var initialLang = "uz";
-  var pathLower = (location.pathname || "").toLowerCase();
-  if (pathLower.indexOf("/ru/") !== -1) initialLang = "ru";
-  if (pathLower.indexOf("/en/") !== -1) initialLang = "en";
-  try {
-    var savedLang = localStorage.getItem(i18nKey);
-    if (savedLang && pathLower.indexOf("/ru/") === -1 && pathLower.indexOf("/en/") === -1) initialLang = savedLang;
-  } catch (e) {}
-  applyLang(initialLang);
+  // ngoI18n loads its dict async; this fires once the locale JSON
+  // applies, plus on every later switcher click.
+  if (window.ngoI18n) window.ngoI18n.onChange(function (lang) { updateLangChrome(lang); });
+
+  var initialLang = window.ngoI18n ? window.ngoI18n.get() : "uz";
+  updateLangChrome(initialLang);
 
   var languageLinks = Array.prototype.slice.call(document.querySelectorAll(".topbar-lang"));
   languageLinks.forEach(function (a, idx) {
@@ -256,7 +190,10 @@
     }
   });
 
-  applyLang(initialLang);
+  // updateLangChrome(initialLang) already ran above before the
+  // switcher DOM existed — re-run now so the listbox options that
+  // were just inserted pick up the active-lang/aria-selected state.
+  updateLangChrome(initialLang);
 
   // (Removed: parentMap + .menu a[data-page] section-active loop.
   // No element in any HTML has a data-page attribute, so the loop

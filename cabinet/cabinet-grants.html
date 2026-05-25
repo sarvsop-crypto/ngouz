@@ -30,16 +30,17 @@
 <script src="../js/errlog.js" defer></script>
 <link rel="manifest" href="/manifest.webmanifest" />
 <script src="../js/sw-register.js" defer></script>
+<script src="../js/i18n.js" defer></script>
 </head>
 <body data-nav-active="grants">
-<a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+<a class="skip-link" href="#main-content" data-i18n="common.skipLink">Asosiy kontentga o'tish</a>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
   <div class="layout">
     <div id="cabinet-sidebar-root"></div>
 
     <main id="main-content" tabindex="-1" class="main">      <header class="topbar">
         <div class="topbar-left">
-          <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="cabinet-dashboard">Bosh sahifa</a> / <span aria-current="page">Grantlar</span></nav>
+          <nav class="breadcrumbs" data-i18n-aria-label="cabinet.breadcrumbAria" aria-label="Sahifa joylashuvi"><a href="cabinet-dashboard" data-i18n="cabinet.nav.dashboard">Bosh sahifa</a> / <span aria-current="page">Grantlar</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">

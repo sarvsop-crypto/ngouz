@@ -1,5 +1,15 @@
 /security.txt /.well-known/security.txt 301
 
+# Language-prefix rewrites: /en/about, /ru/news, /uz/contact all serve
+# the corresponding root file (200 = rewrite, address bar stays prefixed).
+# js/i18n.js detects /en/ or /ru/ in pathname and applies that locale
+# on first paint AND persists it to localStorage so subsequent un-
+# prefixed navigations keep the same language. Replaces the per-page
+# bouncer HTML stubs that used to live under /en /ru /uz folders.
+/en/* /:splat 200
+/ru/* /:splat 200
+/uz/* /:splat 200
+
 # Conventional /admin /cabinet shortcuts. Users frequently guess these
 # paths (mirroring how WordPress/Drupal expose /admin); without these
 # they hit a 404. Land them on the login pages — admin-boot/cabinet-

@@ -23,31 +23,38 @@
       .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
   }
 
+  // Each item carries an i18nKey (cabinet.nav.<key>) so the emitted
+  // markup gets data-i18n attrs that js/i18n.js translates after render.
+  // The hardcoded title/text strings stay as fallback for first paint
+  // before the locale dict arrives.
   var NAV_SECTIONS = [
     {
+      labelKey: 'cabinet.sec.main',
       label: 'ASOSIY',
       items: [
-        { key: 'dashboard',     href: 'cabinet-dashboard',     title: 'Bosh sahifa',    icon: 'ph-squares-four',   text: 'Bosh sahifa' },
-        { key: 'organization',  href: 'cabinet-organization',  title: 'Tashkilotim',    icon: 'ph-buildings',      text: 'Tashkilotim' },
-        { key: 'applications',  href: 'cabinet-applications',  title: 'Ariza holati',   icon: 'ph-clipboard-text', text: 'Ariza holati' },
-        { key: 'reports',       href: 'cabinet-reports',       title: 'Hisobotlar',     icon: 'ph-chart-bar',      text: 'Hisobotlar' },
-        { key: 'documents',     href: 'cabinet-documents',     title: 'Hujjatlar',      icon: 'ph-files',          text: 'Hujjatlar' }
+        { key: 'dashboard',     href: 'cabinet-dashboard',     i18nKey: 'cabinet.nav.dashboard',     title: 'Bosh sahifa',    icon: 'ph-squares-four',   text: 'Bosh sahifa' },
+        { key: 'organization',  href: 'cabinet-organization',  i18nKey: 'cabinet.nav.organization',  title: 'Tashkilotim',    icon: 'ph-buildings',      text: 'Tashkilotim' },
+        { key: 'applications',  href: 'cabinet-applications',  i18nKey: 'cabinet.nav.applications',  title: 'Ariza holati',   icon: 'ph-clipboard-text', text: 'Ariza holati' },
+        { key: 'reports',       href: 'cabinet-reports',       i18nKey: 'cabinet.nav.reports',       title: 'Hisobotlar',     icon: 'ph-chart-bar',      text: 'Hisobotlar' },
+        { key: 'documents',     href: 'cabinet-documents',     i18nKey: 'cabinet.nav.documents',     title: 'Hujjatlar',      icon: 'ph-files',          text: 'Hujjatlar' }
       ]
     },
     {
+      labelKey: 'cabinet.sec.announcements',
       label: 'XABARNOMA',
       items: [
-        { key: 'events',        href: 'cabinet-events',        title: 'Tadbirlar',      icon: 'ph-calendar-check', text: 'Tadbirlar' },
-        { key: 'news',          href: 'cabinet-news',          title: 'Yangiliklar',    icon: 'ph-newspaper',      text: 'Yangiliklar' },
-        { key: 'notifications', href: 'cabinet-notifications', title: 'Bildirishnomalar', icon: 'ph-bell',         text: 'Bildirishnomalar' }
+        { key: 'events',        href: 'cabinet-events',        i18nKey: 'cabinet.nav.events',        title: 'Tadbirlar',      icon: 'ph-calendar-check', text: 'Tadbirlar' },
+        { key: 'news',          href: 'cabinet-news',          i18nKey: 'cabinet.nav.news',          title: 'Yangiliklar',    icon: 'ph-newspaper',      text: 'Yangiliklar' },
+        { key: 'notifications', href: 'cabinet-notifications', i18nKey: 'cabinet.nav.notifications', title: 'Bildirishnomalar', icon: 'ph-bell',         text: 'Bildirishnomalar' }
       ]
     },
     {
+      labelKey: 'cabinet.sec.services',
       label: 'XIZMATLAR',
       items: [
-        { key: 'grants',        href: 'cabinet-grants',        title: 'Grantlar',       icon: 'ph-trophy',            text: 'Grantlar' },
-        { key: 'support',       href: 'cabinet-support',       title: 'Murojaat',       icon: 'ph-chat-circle-text',  text: 'Murojaat' },
-        { key: 'settings',      href: 'cabinet-settings',      title: 'Sozlamalar',     icon: 'ph-gear',              text: 'Sozlamalar' }
+        { key: 'grants',        href: 'cabinet-grants',        i18nKey: 'cabinet.nav.grants',        title: 'Grantlar',       icon: 'ph-trophy',            text: 'Grantlar' },
+        { key: 'support',       href: 'cabinet-support',       i18nKey: 'cabinet.nav.support',       title: 'Murojaat',       icon: 'ph-chat-circle-text',  text: 'Murojaat' },
+        { key: 'settings',      href: 'cabinet-settings',      i18nKey: 'cabinet.nav.settings',      title: 'Sozlamalar',     icon: 'ph-gear',              text: 'Sozlamalar' }
       ]
     }
   ];
@@ -62,9 +69,9 @@
     // is-active class is purely visual.
     var ariaCurrent = isActive ? ' aria-current="page"' : '';
     return (
-      '<a href="' + item.href + '" class="sidebar__nav-link' + activeClass + '" title="' + item.title + '"' + ariaCurrent + '>' +
+      '<a href="' + item.href + '" class="sidebar__nav-link' + activeClass + '" data-i18n-title="' + item.i18nKey + '" title="' + item.title + '"' + ariaCurrent + '>' +
         '<span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ' + item.icon + '"></i></span>' +
-        '<span class="sidebar__nav-link-text">' + item.text + '</span>' +
+        '<span class="sidebar__nav-link-text" data-i18n="' + item.i18nKey + '">' + item.text + '</span>' +
       '</a>'
     );
   }
@@ -74,7 +81,7 @@
       var links = section.items.map(function (item) { return buildNavLink(item, activeKey); }).join('');
       return (
         '<div class="sidebar__nav-section">' +
-          '<div class="sidebar__nav-label">' + section.label + '</div>' +
+          '<div class="sidebar__nav-label" data-i18n="' + section.labelKey + '">' + section.label + '</div>' +
           links +
         '</div>'
       );
@@ -85,20 +92,20 @@
         '<div class="sidebar__header">' +
           '<div class="u-inline-stack">' +
             '<div class="sidebar__logo u-logo-initial">A</div>' +
-            '<span class="sidebar__title">A\'zo Kabinet</span>' +
+            '<span class="sidebar__title" data-i18n="cabinet.brand">A\'zo Kabinet</span>' +
           '</div>' +
-          '<button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Yon panelni yopish" aria-expanded="true">&lsaquo;</button>' +
+          '<button type="button" class="sidebar__collapse" id="sidebarToggle" data-i18n-aria-label="cabinet.sidebarCollapse" aria-label="Yon panelni yopish" aria-expanded="true">&lsaquo;</button>' +
         '</div>' +
         '<div class="sidebar__search" id="sidebarSearchTrigger">' +
           '<span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass"></i></span>' +
-          '<input type="search" enterkeyhint="search" maxlength="200" placeholder="Qidirish" aria-label="Menyu boyicha qidirish" />' +
+          '<input type="search" enterkeyhint="search" maxlength="200" data-i18n-placeholder="common.searchAria" placeholder="Qidirish" data-i18n-aria-label="cabinet.menuSearchAria" aria-label="Menyu bo‘yicha qidirish" />' +
         '</div>' +
-        '<nav class="sidebar__nav" aria-label="Kabinet menyusi">' +
+        '<nav class="sidebar__nav" data-i18n-aria-label="cabinet.menuAria" aria-label="Kabinet menyusi">' +
           sections +
           '<div class="sidebar__nav-section u-mt-auto">' +
-            '<a href="cabinet-login" data-action="logout" class="sidebar__nav-link logout" title="Chiqish">' +
+            '<a href="cabinet-login" data-action="logout" class="sidebar__nav-link logout" data-i18n-title="cabinet.nav.logout" title="Chiqish">' +
               '<span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-sign-out"></i></span>' +
-              '<span class="sidebar__nav-link-text">Chiqish</span>' +
+              '<span class="sidebar__nav-link-text" data-i18n="cabinet.nav.logout">Chiqish</span>' +
             '</a>' +
           '</div>' +
         '</nav>' +
@@ -108,17 +115,17 @@
 
   function buildNotificationsPanel() {
     return (
-      '<div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">' +
+      '<div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="cabinet.notifPanelAria" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">' +
         '<div class="notifications-panel__header">' +
-          '<h2 class="notifications-panel__title">Bildirishnomalar</h2>' +
-          '<button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>' +
+          '<h2 class="notifications-panel__title" data-i18n="cabinet.notifPanelTitle">Bildirishnomalar</h2>' +
+          '<button type="button" class="notifications-panel__close" data-i18n-aria-label="common.closeAria" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>' +
         '</div>' +
         '<div class="notifications-panel__list" id="notifPanelList" aria-live="polite" aria-busy="true">' +
-          '<div class="notif-empty" role="status">Yuklanmoqda...</div>' +
+          '<div class="notif-empty" role="status" data-i18n="common.loading">Yuklanmoqda...</div>' +
         '</div>' +
         '<div class="notifications-panel__footer">' +
-          '<button type="button" class="notifications-panel__mark-read">Barchasini o' + RSQUO + 'qildi deb belgilash</button>' +
-          '<a href="cabinet-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>' +
+          '<button type="button" class="notifications-panel__mark-read" data-i18n="cabinet.notifMarkRead">Barchasini o' + RSQUO + 'qildi deb belgilash</button>' +
+          '<a href="cabinet-notifications" class="btn btn--primary" data-i18n="cabinet.notifSeeAll">Barcha bildirishnomalar</a>' +
         '</div>' +
       '</div>'
     );
@@ -159,6 +166,9 @@
       event: 'ph-calendar', error: 'ph-x-circle', grant: 'ph-trophy',
       system: 'ph-gear', security: 'ph-lock'
     };
+    function t(key, fallback) {
+      return (window.ngoI18n && window.ngoI18n.t(key, fallback)) || fallback;
+    }
     function relTime(iso) {
       if (!iso) return '';
       var ms = new Date(iso).getTime();
@@ -166,17 +176,17 @@
       // timestamps produce 'NaN kun oldin' otherwise.
       if (isNaN(ms)) return String(iso);
       var diff = (Date.now() - ms) / 1000;
-      if (diff < 60) return 'Hozir';
-      if (diff < 3600) return Math.floor(diff / 60) + ' daqiqa oldin';
-      if (diff < 86400) return Math.floor(diff / 3600) + ' soat oldin';
-      return Math.floor(diff / 86400) + ' kun oldin';
+      if (diff < 60) return t('common.relTime.now', 'Hozir');
+      if (diff < 3600) return Math.floor(diff / 60) + ' ' + t('common.relTime.minutesAgo', 'daqiqa oldin');
+      if (diff < 86400) return Math.floor(diff / 3600) + ' ' + t('common.relTime.hoursAgo', 'soat oldin');
+      return Math.floor(diff / 86400) + ' ' + t('common.relTime.daysAgo', 'kun oldin');
     }
     NgoApi.get('/cabinet/notifications').then(function (res) {
       var items = (res.items || []).slice(0, 5);
       var listEl = document.getElementById('notifPanelList');
       if (!listEl) return;
       if (!items.length) {
-        listEl.innerHTML = '<div class="notif-empty" role="status">Bildirishnomalar yo\u2018q</div>';
+        listEl.innerHTML = '<div class="notif-empty" role="status">' + esc(t('cabinet.notifEmpty', 'Bildirishnomalar yo\u2018q')) + '</div>';
         listEl.setAttribute('aria-busy', 'false');
         return;
       }
@@ -208,8 +218,9 @@
       // count must live on the button.
       var bellBtn = document.getElementById('notificationsBtn');
       if (bellBtn) {
+        var notifLabel = t('cabinet.notifPanelTitle', 'Bildirishnomalar');
         bellBtn.setAttribute('aria-label',
-          unread ? 'Bildirishnomalar, ' + unread + ' yangi' : 'Bildirishnomalar');
+          unread ? notifLabel + ', ' + unread + ' ' + t('cabinet.notifNew', 'yangi') : notifLabel);
       }
       // Hide the "Mark all read" CTA when there's nothing to mark —
       // keeps the panel footer clean and avoids a no-op click.
@@ -226,7 +237,7 @@
       // users know to retry.
       var listEl = document.getElementById('notifPanelList');
       if (listEl) {
-        listEl.innerHTML = '<div class="notif-empty" role="alert" style="color:var(--error-600,#dc2626);">Bildirishnomalarni yuklab bo‘lmadi. Internet aloqangizni tekshirib, sahifani yangilang.</div>';
+        listEl.innerHTML = '<div class="notif-empty" role="alert" style="color:var(--error-600,#dc2626);">' + esc(t('cabinet.notifLoadError', 'Bildirishnomalarni yuklab bo‘lmadi. Internet aloqangizni tekshirib, sahifani yangilang.')) + '</div>';
         listEl.setAttribute('aria-busy', 'false');
       }
     });
@@ -267,6 +278,14 @@
     var panelRoot   = document.getElementById('cabinet-notifications-root');
     if (sidebarRoot) sidebarRoot.outerHTML = buildSidebar(activeKey);
     if (panelRoot)   panelRoot.outerHTML   = buildNotificationsPanel();
+    // The just-injected sidebar/panel markup carries data-i18n attrs.
+    // ngoI18n.apply() walks them and swaps in the active-locale string.
+    // Calling once now translates whatever's already cached; the
+    // onChange hook re-applies if the user switches language later.
+    if (window.ngoI18n) {
+      window.ngoI18n.apply(document);
+      window.ngoI18n.onChange(function () { window.ngoI18n.apply(document); });
+    }
     // Hydrate profile and notifications from API after DOM is ready
     // Use a short delay to ensure api-client.js has loaded
     setTimeout(function () {

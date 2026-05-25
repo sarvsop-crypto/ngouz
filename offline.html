@@ -75,6 +75,7 @@
     a { color: var(--primary); text-decoration: none; }
     a:hover { text-decoration: underline; }
   </style>
+<script src="js/i18n.js" defer></script>
 </head>
 <body>
   <main class="card" role="main" aria-live="polite">
@@ -87,10 +88,10 @@
       <path d="M8.53 16.11a6 6 0 0 1 6.95 0" />
       <line x1="12" y1="20" x2="12.01" y2="20" />
     </svg>
-    <h1 id="offlineTitle">Internet aloqasi yo'q</h1>
-    <p id="offlineDesc">Sahifa yuklanishi uchun internetga ulanishingiz kerak. Ulanishni tekshirib qaytadan urinib ko'ring.</p>
-    <button type="button" id="retryBtn">Qayta urinish</button>
-    <p style="margin-top:24px;font-size:13px"><a href="/">Bosh sahifaga qaytish</a></p>
+    <h1 id="offlineTitle" data-i18n="pages.offline.title">Internet aloqasi yo'q</h1>
+    <p id="offlineDesc" data-i18n="pages.offline.body">Sahifa yuklanishi uchun internetga ulanishingiz kerak. Ulanishni tekshirib qaytadan urinib ko'ring.</p>
+    <button type="button" id="retryBtn" data-i18n="pages.offline.retryBtn">Qayta urinish</button>
+    <p style="margin-top:24px;font-size:13px"><a href="/" data-i18n="pages.offline.backHome">Bosh sahifaga qaytish</a></p>
   </main>
   <script>
     (function () {
@@ -104,8 +105,10 @@
       function applyState() {
         if (navigator.onLine) {
           title.textContent = 'Aloqa tiklandi';
-          desc.textContent = 'Internetga qayta ulandingiz. Bosh sahifaga qaytish uchun pastdagi havolani bosing yoki sahifani yangilang.';
-          btn.textContent = 'Bosh sahifaga o‘tish';
+          desc.textContent = (window.ngoI18n && window.ngoI18n.t('pages.offline.reconnected'))
+            || 'Internetga qayta ulandingiz. Bosh sahifaga qaytish uchun pastdagi havolani bosing yoki sahifani yangilang.';
+          btn.textContent = (window.ngoI18n && window.ngoI18n.t('pages.offline.goHomeBtn'))
+            || 'Bosh sahifaga o‘tish';
         } else {
           title.textContent = "Internet aloqasi yo'q";
           desc.textContent = "Sahifa yuklanishi uchun internetga ulanishingiz kerak. Ulanishni tekshirib qaytadan urinib ko'ring.";
