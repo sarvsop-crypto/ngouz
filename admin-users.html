@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Foydalanuvchilar — O'zNNTMA Admin</title>
+  <title data-i18n="admin.users.docTitle">Foydalanuvchilar — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -158,8 +158,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
-  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.users.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+  <a class="skip-link" href="#main-content" data-i18n="admin.users.skipToContent">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -214,7 +221,7 @@
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -231,7 +238,7 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.users.title" class="main__title">Foydalanuvchilar boshqaruvi</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--primary" id="addUserBtn"><i class="ph ph-user-plus" aria-hidden="true"></i> Hududiy admin qo&rsquo;shish</button>
+          <button type="button" class="btn btn--primary" id="addUserBtn"><i class="ph ph-user-plus" aria-hidden="true"></i> <span data-i18n="admin.users.addRegionalAdmin">Hududiy admin qo&rsquo;shish</span></button>
         </div>
       </div>
 
@@ -239,19 +246,19 @@
       <div class="cards">
         <div class="card">
           <div class="card__head"><div class="card__icon" style="background:linear-gradient(135deg,#f6c03c,#f59e0b);color:#7a4a00;"><i class="ph ph-crown-simple" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Super admin</p><p class="card__value">1</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.users.kpi.superAdmin">Super admin</p><p class="card__value">1</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-users" aria-hidden="true"></i></div><span class="card__info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Hududiy adminlar</p><p class="card__value" id="kpiRegional">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.users.kpi.regionalAdmins">Hududiy adminlar</p><p class="card__value" id="kpiRegional">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Faol hisoblar</p><p class="card__value" id="kpiActive">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.users.kpi.activeAccounts">Faol hisoblar</p><p class="card__value" id="kpiActive">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-map-pin" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Qoplangan hududlar</p><p class="card__value" id="kpiRegions">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.users.kpi.coveredRegions">Qoplangan hududlar</p><p class="card__value" id="kpiRegions">—</p></div></div>
         </div>
       </div>
 
@@ -259,58 +266,58 @@
       <div class="superadmin-card">
         <div class="superadmin-avatar">SA</div>
         <div class="superadmin-info">
-          <div class="superadmin-badge"><i class="ph ph-crown-simple" aria-hidden="true"></i> SUPER ADMIN</div>
+          <div class="superadmin-badge"><i class="ph ph-crown-simple" aria-hidden="true"></i> <span data-i18n="admin.users.superAdminBadge">SUPER ADMIN</span></div>
           <p class="superadmin-name" id="saName">—</p>
-          <p class="superadmin-meta" id="saMeta" role="status">Yuklanmoqda...</p>
+          <p class="superadmin-meta" id="saMeta" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
         </div>
         <div class="superadmin-actions">
-          <button type="button" class="btn--ghost-white" data-modal-open="changePwModal"><i class="ph ph-lock-key" aria-hidden="true"></i> Parolni o&rsquo;zgartirish</button>
+          <button type="button" class="btn--ghost-white" data-modal-open="changePwModal"><i class="ph ph-lock-key" aria-hidden="true"></i> <span data-i18n="admin.users.changePassword">Parolni o&rsquo;zgartirish</span></button>
         </div>
       </div>
 
       <!-- Regional admins table -->
       <div class="section-hdr">
         <div>
-          <h2>Hududiy adminlar</h2>
-          <p>Har bir hududiy xodimning kirish huquqlarini alohida sozlang</p>
+          <h2 data-i18n="admin.users.regionalAdminsTitle">Hududiy adminlar</h2>
+          <p data-i18n="admin.users.regionalAdminsSubtitle">Har bir hududiy xodimning kirish huquqlarini alohida sozlang</p>
         </div>
         <div style="display:flex;gap:8px;align-items:center;">
-          <input id="userSearch" type="search" enterkeyhint="search" class="table-section__search" placeholder="Qidirish..." aria-label="Qidirish" maxlength="200" style="width:200px;" aria-controls="regionalAdminRows" />
-          <select id="userRegionFilter" class="table-section__search" style="width:180px;" aria-label="Hudud filter" aria-controls="regionalAdminRows">
-            <option value="">Barcha hududlar</option>
-            <option>Toshkent shahri</option>
-            <option>Toshkent viloyati</option>
-            <option>Samarqand viloyati</option>
-            <option>Farg'ona viloyati</option>
-            <option>Buxoro viloyati</option>
-            <option>Namangan viloyati</option>
-            <option>Andijon viloyati</option>
-            <option>Qashqadaryo viloyati</option>
-            <option>Surxondaryo viloyati</option>
-            <option>Xorazm viloyati</option>
-            <option>Jizzax viloyati</option>
-            <option>Sirdaryo viloyati</option>
-            <option>Navoiy viloyati</option>
-            <option>Qoraqalpog'iston</option>
+          <input id="userSearch" type="search" enterkeyhint="search" class="table-section__search" data-i18n-placeholder="admin.users.searchPlaceholder" placeholder="Qidirish..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" style="width:200px;" aria-controls="regionalAdminRows" />
+          <select id="userRegionFilter" class="table-section__search" style="width:180px;" data-i18n-aria-label="admin.users.regionFilterAria" aria-label="Hudud filter" aria-controls="regionalAdminRows">
+            <option value="" data-i18n="admin.users.allRegions">Barcha hududlar</option>
+            <option data-i18n="admin.users.region.tashkentCity">Toshkent shahri</option>
+            <option data-i18n="admin.users.region.tashkentRegion">Toshkent viloyati</option>
+            <option data-i18n="admin.users.region.samarkand">Samarqand viloyati</option>
+            <option data-i18n="admin.users.region.fergana">Farg'ona viloyati</option>
+            <option data-i18n="admin.users.region.bukhara">Buxoro viloyati</option>
+            <option data-i18n="admin.users.region.namangan">Namangan viloyati</option>
+            <option data-i18n="admin.users.region.andijan">Andijon viloyati</option>
+            <option data-i18n="admin.users.region.kashkadarya">Qashqadaryo viloyati</option>
+            <option data-i18n="admin.users.region.surkhandarya">Surxondaryo viloyati</option>
+            <option data-i18n="admin.users.region.khorezm">Xorazm viloyati</option>
+            <option data-i18n="admin.users.region.jizzakh">Jizzax viloyati</option>
+            <option data-i18n="admin.users.region.syrdarya">Sirdaryo viloyati</option>
+            <option data-i18n="admin.users.region.navoi">Navoiy viloyati</option>
+            <option data-i18n="admin.users.region.karakalpakstanShort">Qoraqalpog'iston</option>
           </select>
         </div>
       </div>
 
       <section class="table-section" style="margin-top:0;">
         <table class="table">
-          <caption class="u-visually-hidden">Hududiy adminlar jadvali</caption>
+          <caption class="u-visually-hidden" data-i18n="admin.users.tableCaption">Hududiy adminlar jadvali</caption>
           <thead>
             <tr>
-              <th scope="col">Xodim</th>
-              <th scope="col">Hudud</th>
-              <th scope="col">Berilgan huquqlar</th>
-              <th scope="col">Holat</th>
-              <th scope="col">Oxirgi kirish</th>
-              <th scope="col"><span class="u-visually-hidden">Amallar</span></th>
+              <th scope="col" data-i18n="admin.users.th.staff">Xodim</th>
+              <th scope="col" data-i18n="admin.table.region">Hudud</th>
+              <th scope="col" data-i18n="admin.users.th.grantedRights">Berilgan huquqlar</th>
+              <th scope="col" data-i18n="admin.table.status">Holat</th>
+              <th scope="col" data-i18n="admin.users.th.lastLogin">Oxirgi kirish</th>
+              <th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.actions">Amallar</span></th>
             </tr>
           </thead>
           <tbody id="regionalAdminRows" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="6" role="status">Yuklanmoqda...</td></tr>
+            <tr class="u-empty-row"><td colspan="6" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -318,15 +325,15 @@
   </div>
 
   <!-- Notifications panel -->
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
-    <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2>
-      <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+    <div class="notifications-panel__header"><h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+      <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.users.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
-      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+      <p class="text-dim" style="padding:20px;text-align:center" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o'qildi deb belgilash</button>
-      <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden data-i18n="admin.ui.markAllRead">Barchasini o'qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
 
@@ -334,150 +341,150 @@
   <div class="modal-overlay" id="userModal" role="dialog" aria-modal="true" aria-labelledby="userModalTitle" aria-hidden="true">
     <div class="modal modal--users">
       <div class="modal__head">
-        <h2 class="modal__title" id="userModalTitle">Hududiy admin qo&rsquo;shish</h2>
-        <button type="button" class="modal__close" id="userModalClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="userModalTitle" data-i18n="admin.users.addRegionalAdmin">Hududiy admin qo&rsquo;shish</h2>
+        <button type="button" class="modal__close" id="userModalClose" data-i18n-aria-label="admin.users.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body" style="padding-top:0;">
         <!-- Tabs -->
-        <div class="modal-tabs" role="tablist" aria-label="Foydalanuvchi sozlamalari">
-          <button type="button" role="tab" id="tab-info-btn" class="modal-tab is-active" data-tab="info" aria-selected="true" aria-controls="tab-info">Ma&rsquo;lumotlar</button>
-          <button type="button" role="tab" id="tab-perms-btn" class="modal-tab" data-tab="perms" aria-selected="false" aria-controls="tab-perms">Huquqlar <i class="ph ph-shield-check" aria-hidden="true" style="font-size:13px;"></i></button>
+        <div class="modal-tabs" role="tablist" data-i18n-aria-label="admin.users.tablistAria" aria-label="Foydalanuvchi sozlamalari">
+          <button type="button" role="tab" id="tab-info-btn" class="modal-tab is-active" data-tab="info" aria-selected="true" aria-controls="tab-info" data-i18n="admin.users.tab.info">Ma&rsquo;lumotlar</button>
+          <button type="button" role="tab" id="tab-perms-btn" class="modal-tab" data-tab="perms" aria-selected="false" aria-controls="tab-perms"><span data-i18n="admin.users.tab.perms">Huquqlar</span> <i class="ph ph-shield-check" aria-hidden="true" style="font-size:13px;"></i></button>
         </div>
 
         <!-- Tab: Ma'lumotlar -->
         <div class="modal-tab-panel is-active" id="tab-info" role="tabpanel" aria-labelledby="tab-info-btn" tabindex="0">
           <div class="modal__row">
             <div class="modal__field">
-              <label class="modal__label" for="u-firstname">Ism <span aria-hidden="true" style="color:#dc2626">*</span></label>
-              <input autocomplete="off" type="text" id="u-firstname" class="modal__input" placeholder="Ism" required maxlength="100" />
+              <label class="modal__label" for="u-firstname"><span data-i18n="admin.users.form.firstName">Ism</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
+              <input autocomplete="off" type="text" id="u-firstname" class="modal__input" data-i18n-placeholder="admin.users.form.firstName" placeholder="Ism" required maxlength="100" />
             </div>
             <div class="modal__field">
-              <label class="modal__label" for="u-lastname">Familiya <span aria-hidden="true" style="color:#dc2626">*</span></label>
-              <input autocomplete="off" type="text" id="u-lastname" class="modal__input" placeholder="Familiya" required maxlength="100" />
+              <label class="modal__label" for="u-lastname"><span data-i18n="admin.users.form.lastName">Familiya</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
+              <input autocomplete="off" type="text" id="u-lastname" class="modal__input" data-i18n-placeholder="admin.users.form.lastName" placeholder="Familiya" required maxlength="100" />
             </div>
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="u-email">Email <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <label class="modal__label" for="u-email"><span data-i18n="admin.users.form.email">Email</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
             <input autocomplete="off" type="email" id="u-email" class="modal__input" placeholder="xodim@uznntma.uz" required maxlength="200" />
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="u-phone">Telefon</label>
+            <label class="modal__label" for="u-phone" data-i18n="admin.users.form.phone">Telefon</label>
             <input autocomplete="off" type="tel" id="u-phone" class="modal__input" placeholder="+998 90 000-00-00" inputmode="tel" maxlength="40" />
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="u-region">Hudud <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <label class="modal__label" for="u-region"><span data-i18n="admin.table.region">Hudud</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
             <select id="u-region" class="modal__select" required>
-              <option value="">— Hududni tanlang —</option>
-              <option>Toshkent shahri</option>
-              <option>Toshkent viloyati</option>
-              <option>Samarqand viloyati</option>
-              <option>Farg'ona viloyati</option>
-              <option>Buxoro viloyati</option>
-              <option>Namangan viloyati</option>
-              <option>Andijon viloyati</option>
-              <option>Qashqadaryo viloyati</option>
-              <option>Surxondaryo viloyati</option>
-              <option>Xorazm viloyati</option>
-              <option>Jizzax viloyati</option>
-              <option>Sirdaryo viloyati</option>
-              <option>Navoiy viloyati</option>
-              <option>Qoraqalpog'iston Respublikasi</option>
+              <option value="" data-i18n="admin.users.form.selectRegion">— Hududni tanlang —</option>
+              <option data-i18n="admin.users.region.tashkentCity">Toshkent shahri</option>
+              <option data-i18n="admin.users.region.tashkentRegion">Toshkent viloyati</option>
+              <option data-i18n="admin.users.region.samarkand">Samarqand viloyati</option>
+              <option data-i18n="admin.users.region.fergana">Farg'ona viloyati</option>
+              <option data-i18n="admin.users.region.bukhara">Buxoro viloyati</option>
+              <option data-i18n="admin.users.region.namangan">Namangan viloyati</option>
+              <option data-i18n="admin.users.region.andijan">Andijon viloyati</option>
+              <option data-i18n="admin.users.region.kashkadarya">Qashqadaryo viloyati</option>
+              <option data-i18n="admin.users.region.surkhandarya">Surxondaryo viloyati</option>
+              <option data-i18n="admin.users.region.khorezm">Xorazm viloyati</option>
+              <option data-i18n="admin.users.region.jizzakh">Jizzax viloyati</option>
+              <option data-i18n="admin.users.region.syrdarya">Sirdaryo viloyati</option>
+              <option data-i18n="admin.users.region.navoi">Navoiy viloyati</option>
+              <option data-i18n="admin.users.region.karakalpakstan">Qoraqalpog'iston Respublikasi</option>
             </select>
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="u-password">Vaqtinchalik parol <span aria-hidden="true" style="color:#dc2626">*</span></label>
-            <input type="password" id="u-password" class="modal__input" placeholder="Kamida 12 ta belgi" required minlength="12" maxlength="128" autocomplete="new-password" />
+            <label class="modal__label" for="u-password"><span data-i18n="admin.users.form.tempPassword">Vaqtinchalik parol</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <input type="password" id="u-password" class="modal__input" data-i18n-placeholder="admin.users.form.minChars" placeholder="Kamida 12 ta belgi" required minlength="12" maxlength="128" autocomplete="new-password" />
           </div>
         </div>
 
         <!-- Tab: Huquqlar -->
         <div class="modal-tab-panel" id="tab-perms" role="tabpanel" aria-labelledby="tab-perms-btn" tabindex="0">
-          <p style="font-size:13px;color:var(--grey-400);margin:0 0 18px;">Ushbu hududiy admin faqat <strong>o&rsquo;z hududi</strong> bo&rsquo;yicha ma&rsquo;lumotlarga kiradi. Quyida qaysi bo&rsquo;limlarga kirish huquqi berishni tanlang.</p>
+          <p style="font-size:13px;color:var(--grey-400);margin:0 0 18px;" data-i18n="admin.users.perms.intro" data-i18n-html>Ushbu hududiy admin faqat <strong>o&rsquo;z hududi</strong> bo&rsquo;yicha ma&rsquo;lumotlarga kiradi. Quyida qaysi bo&rsquo;limlarga kirish huquqi berishni tanlang.</p>
 
           <div class="perm-group">
-            <p class="perm-group-title">Kontent boshqaruvi</p>
+            <p class="perm-group-title" data-i18n="admin.users.perms.contentGroup">Kontent boshqaruvi</p>
             <div class="perm-row">
               <div class="perm-label">
                 <i class="ph ph-newspaper" aria-hidden="true"></i>
-                <div><div>Yangiliklar</div><div class="perm-sublabel">Ko&rsquo;rish, qo&rsquo;shish, tahrirlash</div></div>
+                <div><div data-i18n="admin.users.perms.news">Yangiliklar</div><div class="perm-sublabel" data-i18n="admin.users.perms.viewAddEdit">Ko&rsquo;rish, qo&rsquo;shish, tahrirlash</div></div>
               </div>
               <label class="toggle"><input type="checkbox" id="p-news" /><span class="toggle-track"></span></label>
             </div>
             <div class="perm-row">
               <div class="perm-label">
                 <i class="ph ph-calendar-blank" aria-hidden="true"></i>
-                <div><div>Tadbirlar</div><div class="perm-sublabel">Ko&rsquo;rish, qo&rsquo;shish, tahrirlash</div></div>
+                <div><div data-i18n="admin.users.perms.events">Tadbirlar</div><div class="perm-sublabel" data-i18n="admin.users.perms.viewAddEdit">Ko&rsquo;rish, qo&rsquo;shish, tahrirlash</div></div>
               </div>
               <label class="toggle"><input type="checkbox" id="p-events" /><span class="toggle-track"></span></label>
             </div>
             <div class="perm-row">
               <div class="perm-label">
                 <i class="ph ph-hand-coins" aria-hidden="true"></i>
-                <div><div>Grantlar</div><div class="perm-sublabel">Ko&rsquo;rish, qo&rsquo;shish, tahrirlash</div></div>
+                <div><div data-i18n="admin.users.perms.grants">Grantlar</div><div class="perm-sublabel" data-i18n="admin.users.perms.viewAddEdit">Ko&rsquo;rish, qo&rsquo;shish, tahrirlash</div></div>
               </div>
               <label class="toggle"><input type="checkbox" id="p-grants" /><span class="toggle-track"></span></label>
             </div>
             <div class="perm-row">
               <div class="perm-label">
                 <i class="ph ph-cloud-arrow-up" aria-hidden="true"></i>
-                <div><div>Kontent nashr qilish</div><div class="perm-sublabel">Saytga chiqarish huquqi</div></div>
+                <div><div data-i18n="admin.users.perms.publish">Kontent nashr qilish</div><div class="perm-sublabel" data-i18n="admin.users.perms.publishSub">Saytga chiqarish huquqi</div></div>
               </div>
               <label class="toggle"><input type="checkbox" id="p-publish" /><span class="toggle-track"></span></label>
             </div>
           </div>
 
           <div class="perm-group">
-            <p class="perm-group-title">Ma&rsquo;lumotlarga kirish (faqat o&rsquo;z hududi)</p>
+            <p class="perm-group-title" data-i18n="admin.users.perms.dataGroup">Ma&rsquo;lumotlarga kirish (faqat o&rsquo;z hududi)</p>
             <div class="perm-row">
               <div class="perm-label">
                 <i class="ph ph-list-bullets" aria-hidden="true"></i>
-                <div><div>NNT ro&rsquo;yxati</div><div class="perm-sublabel">O&rsquo;z hududidagi NNTlarni ko&rsquo;rish</div></div>
+                <div><div data-i18n="admin.users.perms.registry">NNT ro&rsquo;yxati</div><div class="perm-sublabel" data-i18n="admin.users.perms.registrySub">O&rsquo;z hududidagi NNTlarni ko&rsquo;rish</div></div>
               </div>
               <label class="toggle"><input type="checkbox" id="p-registry" checked /><span class="toggle-track"></span></label>
             </div>
             <div class="perm-row">
               <div class="perm-label">
                 <i class="ph ph-file-text" aria-hidden="true"></i>
-                <div><div>Arizalarni ko&rsquo;rish</div><div class="perm-sublabel">O&rsquo;z hududidan kelgan arizalar</div></div>
+                <div><div data-i18n="admin.users.perms.appsView">Arizalarni ko&rsquo;rish</div><div class="perm-sublabel" data-i18n="admin.users.perms.appsViewSub">O&rsquo;z hududidan kelgan arizalar</div></div>
               </div>
               <label class="toggle"><input type="checkbox" id="p-apps-view" checked /><span class="toggle-track"></span></label>
             </div>
             <div class="perm-row">
               <div class="perm-label">
                 <i class="ph ph-pencil-simple" aria-hidden="true"></i>
-                <div><div>Arizalarni boshqarish</div><div class="perm-sublabel">Tasdiqlash, qaytarish, izoh qo&rsquo;shish</div></div>
+                <div><div data-i18n="admin.users.perms.appsManage">Arizalarni boshqarish</div><div class="perm-sublabel" data-i18n="admin.users.perms.appsManageSub">Tasdiqlash, qaytarish, izoh qo&rsquo;shish</div></div>
               </div>
               <label class="toggle"><input type="checkbox" id="p-apps-manage" /><span class="toggle-track"></span></label>
             </div>
             <div class="perm-row">
               <div class="perm-label">
                 <i class="ph ph-folder-open" aria-hidden="true"></i>
-                <div><div>Hujjatlar</div><div class="perm-sublabel">Ko&rsquo;rish va yuklash</div></div>
+                <div><div data-i18n="admin.users.perms.documents">Hujjatlar</div><div class="perm-sublabel" data-i18n="admin.users.perms.documentsSub">Ko&rsquo;rish va yuklash</div></div>
               </div>
               <label class="toggle"><input type="checkbox" id="p-docs" /><span class="toggle-track"></span></label>
             </div>
             <div class="perm-row">
               <div class="perm-label">
                 <i class="ph ph-chart-bar" aria-hidden="true"></i>
-                <div><div>Hisobotlar va tahlil</div><div class="perm-sublabel">Ko&rsquo;rish va yuklab olish</div></div>
+                <div><div data-i18n="admin.users.perms.reports">Hisobotlar va tahlil</div><div class="perm-sublabel" data-i18n="admin.users.perms.reportsSub">Ko&rsquo;rish va yuklab olish</div></div>
               </div>
               <label class="toggle"><input type="checkbox" id="p-reports" /><span class="toggle-track"></span></label>
             </div>
           </div>
 
           <div class="perm-group">
-            <p class="perm-group-title">Topshiriqlar</p>
+            <p class="perm-group-title" data-i18n="admin.users.perms.tasksGroup">Topshiriqlar</p>
             <div class="perm-row">
               <div class="perm-label">
                 <i class="ph ph-eye" aria-hidden="true"></i>
-                <div><div>Topshiriqlarni ko&rsquo;rish</div><div class="perm-sublabel">O&rsquo;ziga tayinlangan topshiriqlar</div></div>
+                <div><div data-i18n="admin.users.perms.tasksView">Topshiriqlarni ko&rsquo;rish</div><div class="perm-sublabel" data-i18n="admin.users.perms.tasksViewSub">O&rsquo;ziga tayinlangan topshiriqlar</div></div>
               </div>
               <label class="toggle"><input type="checkbox" id="p-tasks-view" checked /><span class="toggle-track"></span></label>
             </div>
             <div class="perm-row">
               <div class="perm-label">
                 <i class="ph ph-check-square" aria-hidden="true"></i>
-                <div><div>Topshiriqlar yaratish</div><div class="perm-sublabel">Yangi topshiriq qo&rsquo;shish va boshqarish</div></div>
+                <div><div data-i18n="admin.users.perms.tasksCreate">Topshiriqlar yaratish</div><div class="perm-sublabel" data-i18n="admin.users.perms.tasksCreateSub">Yangi topshiriq qo&rsquo;shish va boshqarish</div></div>
               </div>
               <label class="toggle"><input type="checkbox" id="p-tasks-manage" /><span class="toggle-track"></span></label>
             </div>
@@ -485,13 +492,13 @@
 
           <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:8px;padding:12px 14px;font-size:13px;color:#92400e;display:flex;gap:8px;align-items:flex-start;">
             <i class="ph ph-lock" style="font-size:16px;flex-shrink:0;margin-top:1px;" aria-hidden="true"></i>
-            <span>Foydalanuvchilar boshqaruvi va tizim sozlamalari faqat Super Admin uchun. Hududiy admin bu bo&rsquo;limlarga kira olmaydi.</span>
+            <span data-i18n="admin.users.perms.superAdminNotice">Foydalanuvchilar boshqaruvi va tizim sozlamalari faqat Super Admin uchun. Hududiy admin bu bo&rsquo;limlarga kira olmaydi.</span>
           </div>
         </div>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" id="userModalCancel">Bekor qilish</button>
-        <button type="button" class="btn btn--primary" id="userModalSave"><i class="ph ph-floppy-disk" aria-hidden="true"></i> Saqlash</button>
+        <button type="button" class="btn btn--secondary" id="userModalCancel" data-i18n="admin.ui.cancel">Bekor qilish</button>
+        <button type="button" class="btn btn--primary" id="userModalSave"><i class="ph ph-floppy-disk" aria-hidden="true"></i> <span data-i18n="admin.ui.save">Saqlash</span></button>
       </div>
     </div>
   </div>
@@ -500,26 +507,26 @@
   <div class="modal-overlay" id="changePwModal" role="dialog" aria-modal="true" aria-labelledby="changePwTitle" aria-hidden="true">
     <div class="modal" style="max-width:400px;">
       <div class="modal__head">
-        <h2 class="modal__title" id="changePwTitle">Parolni o&rsquo;zgartirish</h2>
-        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="changePwTitle" data-i18n="admin.users.changePassword">Parolni o&rsquo;zgartirish</h2>
+        <button type="button" class="modal__close" data-modal-close data-i18n-aria-label="admin.users.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body">
         <div class="modal__field">
-          <label class="modal__label" for="cp-current">Joriy parol <span aria-hidden="true" style="color:#dc2626">*</span></label>
+          <label class="modal__label" for="cp-current"><span data-i18n="admin.users.form.currentPassword">Joriy parol</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
           <input type="password" id="cp-current" class="modal__input" placeholder="••••••••" autocomplete="current-password" required maxlength="128" />
         </div>
         <div class="modal__field">
-          <label class="modal__label" for="cp-new">Yangi parol <span aria-hidden="true" style="color:#dc2626">*</span></label>
-          <input type="password" id="cp-new" class="modal__input" placeholder="Kamida 12 ta belgi" autocomplete="new-password" required minlength="12" maxlength="128" />
+          <label class="modal__label" for="cp-new"><span data-i18n="admin.users.form.newPassword">Yangi parol</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
+          <input type="password" id="cp-new" class="modal__input" data-i18n-placeholder="admin.users.form.minChars" placeholder="Kamida 12 ta belgi" autocomplete="new-password" required minlength="12" maxlength="128" />
         </div>
         <div class="modal__field">
-          <label class="modal__label" for="cp-confirm">Yangi parolni tasdiqlang <span aria-hidden="true" style="color:#dc2626">*</span></label>
+          <label class="modal__label" for="cp-confirm"><span data-i18n="admin.users.form.confirmNewPassword">Yangi parolni tasdiqlang</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
           <input type="password" id="cp-confirm" class="modal__input" placeholder="••••••••" autocomplete="new-password" required minlength="12" maxlength="128" />
         </div>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
-        <button type="button" class="btn btn--primary" id="changePwSaveBtn"><i class="ph ph-lock-key" aria-hidden="true"></i> O&rsquo;zgartirish</button>
+        <button type="button" class="btn btn--secondary" data-modal-close data-i18n="admin.ui.cancel">Bekor qilish</button>
+        <button type="button" class="btn btn--primary" id="changePwSaveBtn"><i class="ph ph-lock-key" aria-hidden="true"></i> <span data-i18n="admin.users.changeBtn">O&rsquo;zgartirish</span></button>
       </div>
     </div>
   </div>
@@ -532,24 +539,24 @@
   <div class="modal-overlay" id="resetPwModal" role="dialog" aria-modal="true" aria-labelledby="resetPwTitle" aria-hidden="true">
     <div class="modal" style="max-width:420px;">
       <div class="modal__head">
-        <h2 class="modal__title" id="resetPwTitle">Foydalanuvchi parolini tiklash</h2>
-        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="resetPwTitle" data-i18n="admin.users.resetPwTitle">Foydalanuvchi parolini tiklash</h2>
+        <button type="button" class="modal__close" data-modal-close data-i18n-aria-label="admin.users.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body">
-        <p style="font-size:13px;color:var(--grey-500);margin:0 0 14px;">Foydalanuvchi: <strong id="resetPwUserName">—</strong></p>
+        <p style="font-size:13px;color:var(--grey-500);margin:0 0 14px;"><span data-i18n="admin.users.resetPwUserLabel">Foydalanuvchi:</span> <strong id="resetPwUserName">—</strong></p>
         <div class="modal__field">
-          <label class="modal__label" for="resetPw-new">Yangi parol <span aria-hidden="true" style="color:#dc2626">*</span></label>
-          <input type="password" id="resetPw-new" class="modal__input" placeholder="Kamida 12 ta belgi" autocomplete="new-password" required minlength="12" maxlength="128" />
+          <label class="modal__label" for="resetPw-new"><span data-i18n="admin.users.form.newPassword">Yangi parol</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
+          <input type="password" id="resetPw-new" class="modal__input" data-i18n-placeholder="admin.users.form.minChars" placeholder="Kamida 12 ta belgi" autocomplete="new-password" required minlength="12" maxlength="128" />
         </div>
         <div class="modal__field">
-          <label class="modal__label" for="resetPw-confirm">Yangi parolni tasdiqlang <span aria-hidden="true" style="color:#dc2626">*</span></label>
+          <label class="modal__label" for="resetPw-confirm"><span data-i18n="admin.users.form.confirmNewPassword">Yangi parolni tasdiqlang</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
           <input type="password" id="resetPw-confirm" class="modal__input" placeholder="••••••••" autocomplete="new-password" required minlength="12" maxlength="128" />
         </div>
         <p id="resetPwError" role="alert" aria-live="assertive" style="color:#dc2626;font-size:13px;display:none;margin:0;"></p>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
-        <button type="button" class="btn btn--primary" id="resetPwSaveBtn"><i class="ph ph-lock-key" aria-hidden="true"></i> Parolni tiklash</button>
+        <button type="button" class="btn btn--secondary" data-modal-close data-i18n="admin.ui.cancel">Bekor qilish</button>
+        <button type="button" class="btn btn--primary" id="resetPwSaveBtn"><i class="ph ph-lock-key" aria-hidden="true"></i> <span data-i18n="admin.users.resetPwBtn">Parolni tiklash</span></button>
       </div>
     </div>
   </div>
@@ -558,18 +565,18 @@
   <div class="modal-overlay" id="deleteUserModal" role="dialog" aria-modal="true" aria-labelledby="deleteUserTitle" aria-hidden="true">
     <div class="modal modal--danger" style="max-width:400px;">
       <div class="modal__head">
-        <h2 class="modal__title" id="deleteUserTitle">Hisobni o&rsquo;chirish</h2>
-        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="deleteUserTitle" data-i18n="admin.users.deleteTitle">Hisobni o&rsquo;chirish</h2>
+        <button type="button" class="modal__close" data-modal-close data-i18n-aria-label="admin.users.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body">
         <p style="margin:0;font-size:14px;color:var(--grey-700);">
-          <strong id="deleteUserName"></strong> hisobini o&rsquo;chirmoqchimisiz?<br>
-          <span style="color:var(--grey-400);font-size:13px;">Bu amalni qaytarib bo&rsquo;lmaydi. Xodim tizimga kira olmaydi.</span>
+          <strong id="deleteUserName"></strong> <span data-i18n="admin.users.deleteConfirmQuestion">hisobini o&rsquo;chirmoqchimisiz?</span><br>
+          <span style="color:var(--grey-400);font-size:13px;" data-i18n="admin.users.deleteConfirmNote">Bu amalni qaytarib bo&rsquo;lmaydi. Xodim tizimga kira olmaydi.</span>
         </p>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
-        <button type="button" class="btn btn--danger" id="confirmDeleteUserBtn"><i class="ph ph-trash" aria-hidden="true"></i> Ha, o&rsquo;chirish</button>
+        <button type="button" class="btn btn--secondary" data-modal-close data-i18n="admin.ui.cancel">Bekor qilish</button>
+        <button type="button" class="btn btn--danger" id="confirmDeleteUserBtn"><i class="ph ph-trash" aria-hidden="true"></i> <span data-i18n="admin.ui.confirmDelete">Ha, o&rsquo;chirish</span></button>
       </div>
     </div>
   </div>

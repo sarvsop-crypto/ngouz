@@ -12,27 +12,69 @@
     "breadcrumbAria": "Расположение страницы",
     "breadcrumbRoot": "Управление",
     "pages": {
-      "analytics": { "title": "Аналитика" },
-      "corruptionReports": { "title": "Сообщения о коррупции" },
-      "dashboard": { "title": "Панель управления" },
-      "documents": { "title": "Документы" },
-      "events": { "title": "Мероприятия" },
-      "feedback": { "title": "Обратная связь" },
-      "grantApplications": { "title": "Грантовые заявки" },
-      "grants": { "title": "Гранты" },
-      "membershipRequests": { "title": "Заявки на членство" },
-      "news": { "title": "Новости" },
-      "notifications": { "title": "Уведомления" },
-      "passwordResetRequests": { "title": "Запросы на сброс пароля" },
-      "regions": { "title": "Регионы" },
-      "registry": { "title": "Реестр ННО" },
-      "serviceRequests": { "title": "Сервисные запросы" },
-      "settings": { "title": "Настройки" },
-      "settingsNotifications": { "title": "Настройки уведомлений" },
-      "settingsSecurity": { "title": "Настройки безопасности" },
-      "settingsSystem": { "title": "Системные настройки" },
-      "tasks": { "title": "Задачи" },
-      "users": { "title": "Управление пользователями" }
+      "analytics": {
+        "title": "Аналитика"
+      },
+      "corruptionReports": {
+        "title": "Сообщения о коррупции"
+      },
+      "dashboard": {
+        "title": "Панель управления"
+      },
+      "documents": {
+        "title": "Документы"
+      },
+      "events": {
+        "title": "Мероприятия"
+      },
+      "feedback": {
+        "title": "Обратная связь"
+      },
+      "grantApplications": {
+        "title": "Грантовые заявки"
+      },
+      "grants": {
+        "title": "Гранты"
+      },
+      "membershipRequests": {
+        "title": "Заявки на членство"
+      },
+      "news": {
+        "title": "Новости"
+      },
+      "notifications": {
+        "title": "Уведомления"
+      },
+      "passwordResetRequests": {
+        "title": "Запросы на сброс пароля"
+      },
+      "regions": {
+        "title": "Регионы"
+      },
+      "registry": {
+        "title": "Реестр ННО"
+      },
+      "serviceRequests": {
+        "title": "Сервисные запросы"
+      },
+      "settings": {
+        "title": "Настройки"
+      },
+      "settingsNotifications": {
+        "title": "Настройки уведомлений"
+      },
+      "settingsSecurity": {
+        "title": "Настройки безопасности"
+      },
+      "settingsSystem": {
+        "title": "Системные настройки"
+      },
+      "tasks": {
+        "title": "Задачи"
+      },
+      "users": {
+        "title": "Управление пользователями"
+      }
     },
     "nav": {
       "dashboard": "Панель управления",
@@ -55,6 +97,912 @@
       "grants": "Гранты",
       "settings": "Настройки",
       "logout": "Выйти"
+    },
+    "ui": {
+      "notifications": "Уведомления",
+      "markAllRead": "Отметить все как прочитанные",
+      "allNotifications": "Все уведомления",
+      "loading": "Загрузка...",
+      "search": "Поиск",
+      "cancel": "Отмена",
+      "save": "Сохранить",
+      "confirmDelete": "Да, удалить",
+      "delete": "Удалить",
+      "edit": "Редактировать",
+      "irreversible": "Это действие нельзя отменить."
+    },
+    "table": {
+      "name": "Название",
+      "status": "Статус",
+      "date": "Дата",
+      "region": "Регион",
+      "actions": "Действия",
+      "select": "Выбрать",
+      "type": "Тип"
+    },
+    "analytics": {
+      "docTitle": "Аналитика — Админ O'zNNTMA",
+      "noscript": "Для полноценной работы этой страницы требуется включённый JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "skipLink": "Перейти к основному содержимому",
+      "profileName": "Администратор",
+      "profileRole": "Главный администратор",
+      "export": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Экспорт",
+      "kpi": {
+        "totalNnt": "Всего ННО",
+        "news": "Новости",
+        "contacts": "Сообщения",
+        "users": "Пользователи"
+      },
+      "region": {
+        "title": "Анализ по регионам",
+        "searchTools": "Поиск по регионам в аналитике",
+        "searchPlaceholder": "Поиск региона...",
+        "caption": "Анализ ННО по регионам",
+        "colTotal": "Всего ННО",
+        "colShare": "Доля"
+      },
+      "sector": {
+        "title": "Распределение по сферам",
+        "caption": "Распределение ННО по сферам",
+        "colSector": "Сфера",
+        "colCount": "Число ННО",
+        "colShare": "Доля",
+        "colTrend": "Тренд"
+      },
+      "notifClose": "Закрыть"
+    },
+    "corruptionReports": {
+      "docTitle": "Обращения о коррупции — O'zNNTMA Админ",
+      "noscript": "Для полноценной работы этой страницы должен быть включён JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "skipToContent": "Перейти к основному содержимому",
+      "profileName": "Администратор",
+      "profileRole": "Главный администратор",
+      "exportCsv": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Экспорт (CSV)",
+      "securityNotice": "Этот раздел содержит конфиденциальные данные. Анонимные обращения не раскрывают личность заявителя. Каждое действие фиксируется в журнале аудита.",
+      "kpi": {
+        "infoTitle": "Инфо",
+        "total": "Всего обращений",
+        "new": "Новые",
+        "review": "На проверке",
+        "closed": "Закрытые"
+      },
+      "tableTitle": "Поступившие обращения",
+      "filter": {
+        "formAria": "Фильтрация обращений",
+        "searchLabel": "Поиск по номеру обращения или теме",
+        "searchPlaceholder": "№ обращения, тема...",
+        "all": "Все <span class=\"filter-chip__count\" id=\"crpChipCountAll\">&mdash;</span>",
+        "new": "Новые <span class=\"filter-chip__count\" id=\"crpChipCountNew\">&mdash;</span>",
+        "review": "На проверке <span class=\"filter-chip__count\" id=\"crpChipCountReview\">&mdash;</span>",
+        "closed": "Закрытые <span class=\"filter-chip__count\" id=\"crpChipCountClosed\">&mdash;</span>",
+        "spam": "Спам <span class=\"filter-chip__count\" id=\"crpChipCountSpam\">&mdash;</span>",
+        "severityLabel": "Фильтр по уровню",
+        "severityAria": "Уровень",
+        "allSeverities": "Все уровни",
+        "severityHigh": "Высокий",
+        "severityMedium": "Средний",
+        "severityLow": "Низкий"
+      },
+      "tableCaption": "Таблица обращений о коррупции",
+      "col": {
+        "reportNo": "№ обращения",
+        "applicant": "Заявитель",
+        "subject": "Тема",
+        "severity": "Уровень"
+      },
+      "modal": {
+        "close": "Закрыть",
+        "title": "Детали обращения",
+        "reportNumber": "Номер обращения",
+        "submitted": "Подано",
+        "fullText": "Полный текст",
+        "assignNote": "Назначение ответственного / Комментарий",
+        "notePlaceholder": "Назначьте проверяющего или оставьте комментарий...",
+        "markHandled": "<i class=\"ph ph-check-circle\" aria-hidden=\"true\"></i> Отметить как проверенное"
+      }
+    },
+    "dashboard": {
+      "title": "Панель управления — O'zNNTMA Admin",
+      "export": "Экспорт",
+      "newRequest": "Новая заявка",
+      "kpi": {
+        "news": "Новости",
+        "events": "Мероприятия",
+        "newMessages": "Новые сообщения",
+        "documents": "Документы",
+        "memberNgos": "ННО-члены",
+        "pendingRequests": "Ожидающие заявки",
+        "users": "Пользователи",
+        "grants": "Гранты"
+      },
+      "operationalBlocks": "Операционные блоки",
+      "urgentRequests": "Срочные заявки",
+      "viewAll": "Все",
+      "recentMessagesCaption": "Поступившие новые сообщения обратной связи",
+      "col": {
+        "messageNo": "Сообщение №",
+        "name": "Имя",
+        "contact": "Контакт",
+        "subject": "Тема",
+        "province": "Область",
+        "totalNgo": "Всего ННО",
+        "share": "Доля"
+      },
+      "regionTitle": "Распределение ННО по регионам",
+      "regionCaption": "Распределение ННО по регионам",
+      "close": "Закрыть"
+    },
+    "documents": {
+      "docTitle": "Документы — Админ O'zNNTMA",
+      "noscript": "Для полной работы этой страницы должен быть включён JavaScript. Пожалуйста, включите JavaScript в вашем браузере.",
+      "skipLink": "Перейти к основному содержимому",
+      "profileRole": "Главный администратор",
+      "export": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Экспорт",
+      "newDoc": "<i class=\"ph ph-plus\" aria-hidden=\"true\"></i> Новый документ",
+      "kpi": {
+        "total": "Всего документов",
+        "laws": "Законы",
+        "statePrograms": "Государственные программы",
+        "disabilityRights": "Права людей с инвалидностью"
+      },
+      "tableTitle": "Таблица документов",
+      "searchDocsAria": "Поиск документов",
+      "searchPlaceholder": "Поиск по названию документа...",
+      "filterDocsAria": "Фильтрация документов",
+      "filter": {
+        "all": "Все",
+        "laws": "Законы",
+        "statePrograms": "Государственные программы",
+        "disabilityRights": "Права людей с инвалидностью",
+        "official": "Официальный документ"
+      },
+      "col": {
+        "title": "Название документа",
+        "category": "Категория"
+      },
+      "close": "Закрыть",
+      "newDocTitle": "Новый документ",
+      "form": {
+        "heading": "Заголовок <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "headingPlaceholder": "Введите заголовок документа",
+        "date": "Дата <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "category": "Категория <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "selectPlaceholder": "— Выберите —",
+        "catLawsDecrees": "Законы и постановления",
+        "excerpt": "Краткий текст",
+        "excerptPlaceholder": "Краткое описание документа",
+        "body": "Полный текст <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "bodyPlaceholder": "Полный текст документа",
+        "cover": "Изображение обложки",
+        "coverAlt": "Загруженное изображение обложки"
+      },
+      "saveBtn": "<i class=\"ph ph-floppy-disk\" aria-hidden=\"true\"></i> Сохранить",
+      "deleteTitle": "Удаление документа",
+      "deletePrompt": "— удалить этот документ?"
+    },
+    "events": {
+      "docTitle": "Мероприятия — Админ O'zNNTMA",
+      "noscript": "Для полноценной работы этой страницы должен быть включён JavaScript. Пожалуйста, включите JavaScript в вашем браузере.",
+      "skipToMain": "Перейти к основному содержимому",
+      "profileName": "Администратор",
+      "profileRole": "Главный администратор",
+      "newEvent": "Новое мероприятие",
+      "kpiTotal": "Всего мероприятий",
+      "kpiUpcoming": "Запланированные",
+      "kpiPast": "Прошедшие",
+      "kpiParticipants": "Всего участников",
+      "tableTitle": "Список мероприятий",
+      "filterAria": "Фильтрация мероприятий",
+      "searchPlaceholder": "По названию или месту...",
+      "filterAll": "Все",
+      "filterUpcoming": "Запланированные",
+      "filterPast": "Прошедшие",
+      "tableCaption": "Таблица мероприятий",
+      "colLocation": "Место",
+      "colParticipants": "Участники",
+      "close": "Закрыть",
+      "form": {
+        "titlePh": "Введите название мероприятия",
+        "locationPh": "Адрес",
+        "participants": "Количество участников",
+        "deadline": "Срок подачи заявок",
+        "description": "Описание",
+        "descriptionPh": "Подробная информация о мероприятии",
+        "cover": "Изображение обложки",
+        "coverAlt": "Загруженное изображение обложки"
+      },
+      "modal": {
+        "deleteTitle": "Удалить мероприятие",
+        "deletePrompt": "— удалить это мероприятие?"
+      }
+    },
+    "feedback": {
+      "docTitle": "Обратная связь — O'zNNTMA Admin",
+      "noscript": "Для полноценной работы этой страницы необходимо включить JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "skipLink": "Перейти к основному содержимому",
+      "exportCsv": "Экспорт (CSV)",
+      "kpi": {
+        "total": "Всего сообщений",
+        "new": "Новые",
+        "handled": "Рассмотрено",
+        "spam": "Спам"
+      },
+      "tableTitle": "Поступившие сообщения",
+      "filterAria": "Фильтрация сообщений",
+      "searchPlaceholder": "Имя, email, тема...",
+      "filter": {
+        "all": "Все",
+        "new": "Новые",
+        "read": "Прочитанные",
+        "handled": "Рассмотренные",
+        "spam": "Спам"
+      },
+      "tableCaption": "Таблица сообщений обратной связи",
+      "col": {
+        "sender": "Отправитель",
+        "subject": "Тема"
+      },
+      "close": "Закрыть",
+      "modal": {
+        "title": "Детали сообщения",
+        "number": "Номер",
+        "name": "Имя",
+        "contact": "Контакт",
+        "subject": "Тема",
+        "message": "Сообщение",
+        "changeStatus": "Изменить статус"
+      }
+    },
+    "forgotPassword": {
+      "title": "Восстановление пароля — Администратор O'zNNTMA",
+      "skipToContent": "Перейти к основному содержимому",
+      "noscript": "Для полноценной работы этой страницы должен быть включён JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "headerTitle": "O&rsquo;zNNTMA Администратор",
+      "heading": "Забыли пароль?",
+      "subtitle": "Автоматическое восстановление онлайн пока недоступно. Администратор восстановит ваш пароль вручную — укажите свой email и имя учётной записи администратора.",
+      "contactPrompt": "Обратитесь к главному администратору:",
+      "orPhone": "или <a href=\"tel:+998555030512\" style=\"color:var(--primary-600);font-weight:600\">+998 (55) 503-05-12</a>",
+      "rememberedPassword": "Вспомнили пароль? <a href=\"admin-login\">Вернуться ко входу</a>",
+      "copyright": "&copy; 2026 O&rsquo;zNNTMA. Все права защищены.",
+      "helpLinks": "Ссылки помощи",
+      "footerPrivacy": "Конфиденциальность",
+      "footerTerms": "Условия",
+      "footerHelp": "Помощь"
+    },
+    "grantApplications": {
+      "docTitle": "Грантовые заявки — O'zNNTMA Admin",
+      "noscript": "Для полноценной работы этой страницы требуется включённый JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "skipToContent": "Перейти к основному содержимому",
+      "profileName": "Администратор",
+      "profileRole": "Главный администратор",
+      "exportCsv": "Экспорт (CSV)",
+      "kpiTotal": "Всего заявок",
+      "kpiPending": "На рассмотрении",
+      "kpiApproved": "Одобрено",
+      "kpiDeclined": "Отклонено",
+      "tableTitle": "Заявки и их статус",
+      "filterAria": "Фильтрация заявок",
+      "searchPlaceholder": "Заголовок, организация...",
+      "filter": {
+        "all": "Все",
+        "submitted": "Отправлено",
+        "review": "На рассмотрении",
+        "approved": "Одобрено",
+        "declined": "Отклонено"
+      },
+      "tableCaption": "Таблица грантовых заявок",
+      "col": {
+        "title": "Заголовок",
+        "organization": "Организация",
+        "budget": "Бюджет",
+        "submitted": "Отправлено"
+      },
+      "notifClose": "Закрыть"
+    },
+    "grants": {
+      "pageTitle": "Гранты — O'zNNTMA Admin",
+      "noscript": "Для полной работы этой страницы необходимо включить JavaScript. Пожалуйста, включите JavaScript в вашем браузере.",
+      "skipLink": "Перейти к основному содержимому",
+      "profileName": "Администратор",
+      "profileRole": "Главный администратор",
+      "newGrant": "Новый грант",
+      "kpi": {
+        "total": "Всего грантов",
+        "active": "Активные",
+        "closed": "Закрытые",
+        "soon": "Срок близок (&le;30 дней)"
+      },
+      "tableTitle": "Список грантов",
+      "filterAria": "Фильтрация грантов",
+      "searchPlaceholder": "По названию или организации...",
+      "filter": {
+        "all": "Все",
+        "active": "Активные",
+        "closed": "Закрытые"
+      },
+      "tableCaption": "Таблица грантов",
+      "col": {
+        "organizer": "Организация",
+        "category": "Категория",
+        "amount": "Сумма",
+        "deadline": "Срок"
+      },
+      "close": "Закрыть",
+      "form": {
+        "titlePh": "Введите название гранта",
+        "organizerPh": "Организация-грантодатель",
+        "categoryPh": "Экология, Образование, Социальная...",
+        "amountPh": "Например: 5 000 – 15 000 USD",
+        "deadline": "Срок подачи заявки",
+        "description": "Описание",
+        "descriptionPh": "Подробная информация о гранте",
+        "cover": "Обложка",
+        "coverAlt": "Загруженная обложка"
+      },
+      "modal": {
+        "deleteTitle": "Удалить грант",
+        "deletePrompt": "хотите удалить этот грант?"
+      }
+    },
+    "login": {
+      "title": "Вход — O'zNNTMA Admin",
+      "skipToContent": "Перейти к основному содержанию",
+      "noscript": "Для полноценной работы этой страницы должен быть включён JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "welcome": "Добро пожаловать",
+      "subtitle": "Введите свои данные для входа в панель администратора.",
+      "form": {
+        "emailLabel": "Электронная почта <span aria-hidden=\"true\">*</span>",
+        "emailPlaceholder": "Введите свою электронную почту",
+        "passwordLabel": "Пароль <span aria-hidden=\"true\">*</span>",
+        "passwordPlaceholder": "Введите свой пароль",
+        "showPassword": "Показать пароль",
+        "rememberMe": "Оставаться в системе",
+        "forgotPassword": "Забыли пароль?",
+        "submit": "Войти"
+      },
+      "footer": {
+        "copyright": "&copy; 2026 O&rsquo;zNNTMA. Все права защищены.",
+        "helpLinks": "Ссылки помощи",
+        "privacy": "Конфиденциальность",
+        "terms": "Условия",
+        "help": "Помощь"
+      }
+    },
+    "membershipRequests": {
+      "docTitle": "Заявки на членство — O'zNNTMA Admin",
+      "noscript": "Для полноценной работы этой страницы должен быть включён JavaScript. Пожалуйста, включите JavaScript в вашем браузере.",
+      "skipLink": "Перейти к основному содержимому",
+      "profileName": "Администратор",
+      "profileRole": "Главный администратор",
+      "exportCsv": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Экспорт (CSV)",
+      "kpi": {
+        "total": "Всего заявок",
+        "pending": "В ожидании",
+        "approved": "Одобрено",
+        "rejected": "Отклонено"
+      },
+      "tableTitle": "Заявки и их статус",
+      "filterAria": "Фильтрация заявок",
+      "searchPlaceholder": "Название организации...",
+      "filter": {
+        "all": "Все",
+        "pending": "В ожидании",
+        "approved": "Одобрено",
+        "returned": "Возвращено",
+        "rejected": "Отклонено"
+      },
+      "tableCaption": "Таблица заявок на членство",
+      "col": {
+        "org": "Организация",
+        "applicant": "Заявитель"
+      },
+      "notifClose": "Закрыть"
+    },
+    "news": {
+      "docTitle": "Новости — Админ O'zNNTMA",
+      "noscript": "Для полноценной работы этой страницы должен быть включён JavaScript. Пожалуйста, включите JavaScript в вашем браузере.",
+      "skipLink": "Перейти к основному содержимому",
+      "newArticleBtn": "<i class=\"ph ph-plus\" aria-hidden=\"true\"></i> Новая статья",
+      "kpi": {
+        "total": "Всего статей",
+        "featured": "Рекомендуемые",
+        "announce": "Объявления",
+        "analysis": "Аналитика / Пресса"
+      },
+      "tableTitle": "Список статей",
+      "filterAria": "Фильтрация статей",
+      "searchPlaceholder": "По заголовку или тексту...",
+      "filter": {
+        "all": "Все",
+        "announce": "Объявление",
+        "event": "Мероприятие",
+        "analysis": "Аналитика",
+        "press": "Пресса"
+      },
+      "tableCaption": "Таблица новостей",
+      "col": {
+        "title": "Заголовок",
+        "category": "Категория",
+        "featured": "Рекомендуемое"
+      },
+      "close": "Закрыть",
+      "modal": {
+        "createTitle": "Новая статья",
+        "deleteTitle": "Удалить статью",
+        "deletePrompt": "— удалить эту статью?"
+      },
+      "form": {
+        "title": "Заголовок <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "titlePh": "Введите заголовок статьи",
+        "date": "Дата <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "category": "Категория <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "selectOption": "— Выберите —",
+        "optPublications": "Публикации (publications)",
+        "optDigest": "Дайджест",
+        "optAbout": "О нас",
+        "optIntl": "Международная деятельность",
+        "optCouncil": "Члены совета",
+        "optLeadership": "Руководство",
+        "excerpt": "Краткий текст (excerpt) <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "excerptPh": "Краткое описание статьи (отображается в карточке)",
+        "body": "Полный текст <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "bodyPh": "Полный текст статьи",
+        "cover": "Изображение обложки",
+        "coverAlt": "Загруженное изображение обложки",
+        "featured": "Рекомендовать на главной странице (featured)"
+      },
+      "saveBtn": "<i class=\"ph ph-floppy-disk\" aria-hidden=\"true\"></i> Сохранить",
+      "confirmDeleteBtn": "<i class=\"ph ph-trash\" aria-hidden=\"true\"></i> Да, удалить"
+    },
+    "notifications": {
+      "docTitle": "Уведомления — O'zNNTMA Admin",
+      "noscript": "Для полноценной работы этой страницы необходимо включить JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "skipLink": "Перейти к основному содержимому",
+      "sendNew": "Отправить новое сообщение",
+      "sentMessages": "Отправленные сообщения",
+      "close": "Закрыть",
+      "modal": {
+        "title": "Новое уведомление",
+        "send": "Отправить"
+      },
+      "form": {
+        "titleLabel": "Заголовок <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "titlePlaceholder": "Введите заголовок сообщения",
+        "bodyLabel": "Текст",
+        "bodyPlaceholder": "Введите текст сообщения..."
+      },
+      "type": {
+        "info": "Информация",
+        "warning": "Предупреждение",
+        "success": "Успех",
+        "action": "Требуется действие"
+      }
+    },
+    "passwordResetRequests": {
+      "docTitle": "Запросы на сброс пароля — O'zNNTMA Admin",
+      "noscript": "Для полноценной работы этой страницы должен быть включён JavaScript.",
+      "skipToContent": "Перейти к основному содержимому",
+      "exportCsv": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Экспорт (CSV)",
+      "intro": "<strong>Процесс:</strong> Когда пользователь забывает пароль, он оставляет запрос в этой очереди. Свяжитесь с ним по телефону или электронной почте, подтвердите личность, затем на странице <a href=\"admin-users\" style=\"color:var(--primary-600);font-weight:600\">Пользователи</a> найдите соответствующего пользователя и заново задайте пароль. После этого вернитесь сюда и отметьте запрос как <em>Решён</em>.",
+      "kpi": {
+        "total": "Всего запросов",
+        "pending": "В ожидании",
+        "resolved": "Решено",
+        "rejected": "Отклонено"
+      },
+      "queueTitle": "Очередь запросов",
+      "filter": {
+        "aria": "Фильтрация запросов",
+        "pending": "В ожидании",
+        "all": "Все",
+        "resolved": "Решено",
+        "rejected": "Отклонено"
+      },
+      "searchPlaceholder": "Телефон, имя...",
+      "tableCaption": "Таблица запросов на сброс пароля",
+      "table": {
+        "phone": "Телефон",
+        "user": "Пользователь",
+        "note": "Примечание"
+      },
+      "notifClose": "Закрыть"
+    },
+    "regions": {
+      "docTitle": "Регионы — Админ O'zNNTMA",
+      "noscript": "Для полной работы этой страницы должен быть включён JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "skipToContent": "Перейти к основному содержимому",
+      "export": "Экспорт",
+      "analyze": "Аналитика",
+      "kpi": {
+        "totalRegions": "Всего регионов",
+        "totalOrgs": "Всего ННО",
+        "topRegion": "Самый активный регион",
+        "avgPerRegion": "В среднем по региону"
+      },
+      "tableTitle": "Список областей и регионов",
+      "searchRegions": "Поиск регионов",
+      "searchPlaceholder": "Поиск региона...",
+      "tableCaption": "Распределение ННО по регионам",
+      "col": {
+        "code": "Код",
+        "regionName": "Название региона",
+        "totalOrgs": "Всего ННО",
+        "share": "Доля"
+      },
+      "close": "Закрыть"
+    },
+    "registry": {
+      "docTitle": "Реестр ННО — Админ O'zNNTMA",
+      "skipToContent": "Перейти к основному содержимому",
+      "noscript": "Для полноценной работы этой страницы необходимо включить JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "export": "Экспорт",
+      "addNnt": "Добавить ННО",
+      "kpiTotal": "Всего ННО",
+      "kpiActive": "Активные",
+      "kpiRegions": "Регионы",
+      "tableTitle": "Таблица ННО",
+      "searchAria": "Поиск по реестру ННО",
+      "searchPlaceholder": "Поиск...",
+      "tableCaption": "Зарегистрированные организации ННО",
+      "colName": "Название ННО",
+      "colLeader": "Руководитель",
+      "colMemberSince": "Член с",
+      "close": "Закрыть",
+      "form": {
+        "orgName": "Название организации",
+        "orgNamePlaceholder": "Введите полное название ННО",
+        "typeSelect": "Выберите тип",
+        "region": "Область",
+        "regionSelect": "Выберите область",
+        "memberYear": "Год вступления",
+        "contact": "Контактные данные",
+        "contactPlaceholder": "Телефон или email"
+      },
+      "type": {
+        "social": "Социальный",
+        "charity": "Благотворительный",
+        "education": "Образование",
+        "ecology": "Экология",
+        "youth": "Молодёжь",
+        "cultural": "Культурный",
+        "family": "Семья",
+        "sport": "Спорт"
+      },
+      "region": {
+        "toshkentSh": "город Ташкент",
+        "toshkentV": "Ташкентская область",
+        "samarqand": "Самаркандская область",
+        "fargona": "Ферганская область",
+        "buxoro": "Бухарская область",
+        "namangan": "Наманганская область",
+        "andijon": "Андижанская область",
+        "qashqadaryo": "Кашкадарьинская область",
+        "surxondaryo": "Сурхандарьинская область",
+        "xorazm": "Хорезмская область",
+        "jizzax": "Джизакская область",
+        "sirdaryo": "Сырдарьинская область",
+        "navoiy": "Навоийская область",
+        "karakalpakstan": "Республика Каракалпакстан"
+      },
+      "status": {
+        "active": "Активный",
+        "pending": "Новый",
+        "inactive": "Неактивный"
+      },
+      "modal": {
+        "addSubmit": "Добавить",
+        "deleteTitle": "Удалить ННО",
+        "deleteBody": "Удалить указанную ННО? Это действие нельзя отменить."
+      }
+    },
+    "reports": {
+      "docTitle": "Отчёты — Администрирование O'zNNTMA",
+      "noscript": "Для полной работы этой страницы должен быть включён JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "skipToContent": "Перейти к основному содержанию",
+      "breadcrumbAria": "Расположение страницы",
+      "breadcrumbHome": "Управление",
+      "title": "Отчёты",
+      "profileName": "Администратор",
+      "profileRole": "Главный администратор",
+      "newReport": "Новый отчёт",
+      "export": "Экспорт",
+      "tableTitle": "Таблица отчётов",
+      "searchAria": "Поиск отчётов",
+      "searchLabel": "Поиск по отчётам",
+      "searchPlaceholder": "Поиск...",
+      "tableCaption": "Список отчётов и их статус",
+      "colName": "Название отчёта",
+      "colOrg": "Организация",
+      "colPeriod": "Период",
+      "colCreated": "Создано",
+      "closePanel": "Закрыть"
+    },
+    "serviceRequests": {
+      "pageTitle": "Запросы на услуги — O'zNNTMA Admin",
+      "noscript": "Для полноценной работы этой страницы требуется включённый JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "skipToContent": "Перейти к основному содержимому",
+      "exportCsv": "Экспорт (CSV)",
+      "kpi": {
+        "total": "Всего запросов",
+        "new": "Новые",
+        "inProgress": "В процессе",
+        "handled": "Отвечено"
+      },
+      "tableTitle": "Поступившие запросы",
+      "filter": {
+        "formAria": "Фильтрация запросов",
+        "searchLabel": "Поиск по номеру запроса или заявителю",
+        "searchPlaceholder": "№ запроса, имя заявителя...",
+        "all": "Все",
+        "new": "Новые",
+        "inProgress": "В процессе",
+        "done": "Отвечено",
+        "typeLabel": "Фильтр по типу запроса",
+        "allTypes": "Все типы"
+      },
+      "type": {
+        "registration": "Регистрация",
+        "reference": "Справка",
+        "consultation": "Консультация",
+        "certificate": "Сертификат",
+        "documentCopy": "Копия документа",
+        "other": "Другое"
+      },
+      "tableCaption": "Таблица запросов на услуги",
+      "col": {
+        "requestNo": "№ запроса",
+        "applicant": "Заявитель",
+        "submitted": "Подано",
+        "assignee": "Ответственный"
+      },
+      "close": "Закрыть",
+      "modal": {
+        "title": "Детали запроса",
+        "requestNo": "Номер запроса",
+        "contact": "Контакт",
+        "requestText": "Текст запроса",
+        "replyText": "Текст ответа",
+        "replyPlaceholder": "Введите ответ заявителю...",
+        "close": "Закрыть",
+        "markHandled": "Отметить как отвеченный"
+      },
+      "unassigned": "Не назначен"
+    },
+    "settingsNotifications": {
+      "docTitle": "Уведомления — Админ O'zNNTMA",
+      "skipLink": "Перейти к основному содержимому",
+      "noscript": "Для полноценной работы этой страницы должен быть включён JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "breadcrumbSettings": "Настройки",
+      "subnavAria": "Разделы настроек",
+      "subnav": {
+        "profile": "Профиль",
+        "notifications": "Уведомления",
+        "security": "Безопасность",
+        "system": "Система"
+      },
+      "channels": {
+        "heading": "Каналы уведомлений",
+        "helper": "Настройте, через какие каналы получать уведомления. Пока эти настройки сохраняются только в этом браузере.",
+        "emailTitle": "Email-уведомления",
+        "emailDesc": "Новые заявки и системные сообщения отправляются на email",
+        "smsTitle": "SMS-уведомления",
+        "smsDesc": "Важные сообщения отправляются на ваш номер телефона",
+        "telegramTitle": "Telegram-уведомления",
+        "telegramDesc": "Подключитесь к Telegram-боту и получайте сообщения",
+        "inappTitle": "Уведомления внутри системы",
+        "inappDesc": "Через панель уведомлений внутри приложения"
+      },
+      "types": {
+        "heading": "Типы уведомлений",
+        "newApplication": "При поступлении новой заявки",
+        "newUser": "При регистрации нового пользователя",
+        "reportSubmitted": "При отправке отчёта",
+        "applicationApproved": "При одобрении заявки",
+        "systemError": "При возникновении системной ошибки"
+      },
+      "panel": {
+        "close": "Закрыть"
+      }
+    },
+    "settingsSecurity": {
+      "docTitle": "Безопасность — O'zNNTMA Admin",
+      "skipLink": "Перейти к основному содержимому",
+      "noscript": "Для полноценной работы этой страницы необходимо включить JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "sideNavAria": "Разделы настроек",
+      "sideNav": {
+        "profile": "Профиль",
+        "system": "Система"
+      },
+      "password": {
+        "title": "Изменить пароль",
+        "currentLabel": "Текущий пароль",
+        "currentPlaceholder": "Введите текущий пароль",
+        "newLabel": "Новый пароль (минимум 12 символов)",
+        "newPlaceholder": "Введите новый пароль",
+        "confirmLabel": "Подтвердите новый пароль",
+        "confirmPlaceholder": "Введите ещё раз",
+        "submit": "Обновить пароль"
+      },
+      "twoFa": {
+        "title": "Двухфакторная аутентификация",
+        "sub": "Защитите свою учётную запись дополнительным уровнем безопасности",
+        "appTitle": "Приложение-аутентификатор",
+        "appDesc": "Через Google Authenticator или Authy",
+        "comingSoon": "Скоро",
+        "comingSoonTitle": "Будет запущено в ближайшее время"
+      },
+      "session": {
+        "title": "Активный сеанс",
+        "sub": "Информация о текущем устройстве. Если вы входили с других устройств, измените пароль.",
+        "meta": "Текущий сеанс",
+        "pill": "Текущий"
+      },
+      "notif": {
+        "close": "Закрыть"
+      }
+    },
+    "settingsSystem": {
+      "docTitle": "Система — Администрирование O'zNNTMA",
+      "skipToContent": "Перейти к основному содержимому",
+      "noscript": "Для полноценной работы этой страницы должен быть включён JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "breadcrumbSettings": "Настройки",
+      "subnavAria": "Разделы настроек",
+      "tabProfile": "Профиль",
+      "tabNotifications": "Уведомления",
+      "tabSecurity": "Безопасность",
+      "tabSystem": "Система",
+      "general": {
+        "title": "Общие настройки",
+        "note": "Пока эти настройки сохраняются только в этом браузере; эндпоинт глобальных серверных настроек ещё не добавлен.",
+        "lang": "Язык интерфейса",
+        "tz": "Часовой пояс",
+        "dateFormat": "Формат даты",
+        "pageSize": "Количество записей на странице"
+      },
+      "params": {
+        "title": "Параметры системы",
+        "note": "Автоматические процессы и интеграции. Пока эти настройки сохраняются только в этом браузере.",
+        "autoRefresh": "Автоматическое обновление",
+        "autoBackup": "Автоматическое резервное копирование",
+        "auditLog": "Журнал аудита",
+        "trackActivity": "Отслеживание активности пользователей"
+      },
+      "close": "Закрыть"
+    },
+    "settings": {
+      "docTitle": "Настройки — O'zNNTMA Admin",
+      "skipToContent": "Перейти к основному содержимому",
+      "noscript": "Для полноценной работы этой страницы должен быть включён JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "sectionsAria": "Разделы настроек",
+      "tab": {
+        "profile": "Профиль",
+        "notifications": "Уведомления",
+        "security": "Безопасность",
+        "system": "Система"
+      },
+      "profile": {
+        "heading": "Данные профиля",
+        "readOnlyNote": "Это представление вашего профиля администратора только для чтения. Для изменения обратитесь в раздел <a href=\"admin-users\" style=\"color:var(--primary-500);text-decoration:underline\">Пользователи</a> или к главному администратору.",
+        "name": "Имя",
+        "email": "Электронная почта",
+        "phone": "Телефон",
+        "role": "Роль"
+      },
+      "notifClose": "Закрыть"
+    },
+    "tasks": {
+      "docTitle": "Задачи — O'zNNTMA Admin",
+      "noscript": "Для полноценной работы этой страницы необходимо включить JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "skipLink": "Перейти к основному содержанию",
+      "profileName": "Администратор",
+      "profileRole": "Главный администратор",
+      "kpiPending": "Ожидающие заявки",
+      "kpiApproved": "Одобрено",
+      "kpiMessages": "Новые сообщения",
+      "kpiRejected": "Отклонено",
+      "tableTitle": "Задачи — поступившие заявки на членство",
+      "searchTasksAria": "Поиск задач",
+      "searchPlaceholder": "Название организации...",
+      "tableCaption": "Таблица поступивших заявок на членство (задач)",
+      "colAppId": "ID заявки",
+      "colOrg": "Организация",
+      "colApplicant": "Заявитель",
+      "colSubmitted": "Подано",
+      "notifClose": "Закрыть"
+    },
+    "users": {
+      "docTitle": "Пользователи — O'zNNTMA Admin",
+      "noscript": "Для полноценной работы этой страницы должен быть включён JavaScript. Пожалуйста, включите JavaScript в браузере.",
+      "skipToContent": "Перейти к основному содержимому",
+      "addRegionalAdmin": "Добавить регионального администратора",
+      "kpi": {
+        "superAdmin": "Супер админ",
+        "regionalAdmins": "Региональные администраторы",
+        "activeAccounts": "Активные учётные записи",
+        "coveredRegions": "Охваченные регионы"
+      },
+      "superAdminBadge": "СУПЕР АДМИН",
+      "changePassword": "Изменить пароль",
+      "regionalAdminsTitle": "Региональные администраторы",
+      "regionalAdminsSubtitle": "Настройте права доступа каждого регионального сотрудника отдельно",
+      "searchPlaceholder": "Поиск...",
+      "regionFilterAria": "Фильтр по региону",
+      "allRegions": "Все регионы",
+      "region": {
+        "tashkentCity": "город Ташкент",
+        "tashkentRegion": "Ташкентская область",
+        "samarkand": "Самаркандская область",
+        "fergana": "Ферганская область",
+        "bukhara": "Бухарская область",
+        "namangan": "Наманганская область",
+        "andijan": "Андижанская область",
+        "kashkadarya": "Кашкадарьинская область",
+        "surkhandarya": "Сурхандарьинская область",
+        "khorezm": "Хорезмская область",
+        "jizzakh": "Джизакская область",
+        "syrdarya": "Сырдарьинская область",
+        "navoi": "Навоийская область",
+        "karakalpakstanShort": "Каракалпакстан",
+        "karakalpakstan": "Республика Каракалпакстан"
+      },
+      "tableCaption": "Таблица региональных администраторов",
+      "th": {
+        "staff": "Сотрудник",
+        "grantedRights": "Предоставленные права",
+        "lastLogin": "Последний вход"
+      },
+      "close": "Закрыть",
+      "tablistAria": "Настройки пользователя",
+      "tab": {
+        "info": "Данные",
+        "perms": "Права"
+      },
+      "form": {
+        "firstName": "Имя",
+        "lastName": "Фамилия",
+        "email": "Эл. почта",
+        "phone": "Телефон",
+        "selectRegion": "— Выберите регион —",
+        "tempPassword": "Временный пароль",
+        "minChars": "Не менее 12 символов",
+        "currentPassword": "Текущий пароль",
+        "newPassword": "Новый пароль",
+        "confirmNewPassword": "Подтвердите новый пароль"
+      },
+      "perms": {
+        "intro": "Этот региональный администратор получает доступ только к данным <strong>своего региона</strong>. Ниже выберите, к каким разделам предоставить доступ.",
+        "contentGroup": "Управление контентом",
+        "news": "Новости",
+        "events": "Мероприятия",
+        "grants": "Гранты",
+        "publish": "Публикация контента",
+        "viewAddEdit": "Просмотр, добавление, редактирование",
+        "publishSub": "Право публикации на сайте",
+        "dataGroup": "Доступ к данным (только свой регион)",
+        "registry": "Реестр ННО",
+        "registrySub": "Просмотр ННО своего региона",
+        "appsView": "Просмотр заявок",
+        "appsViewSub": "Заявки из своего региона",
+        "appsManage": "Управление заявками",
+        "appsManageSub": "Одобрение, возврат, добавление комментариев",
+        "documents": "Документы",
+        "documentsSub": "Просмотр и загрузка",
+        "reports": "Отчёты и аналитика",
+        "reportsSub": "Просмотр и скачивание",
+        "tasksGroup": "Задачи",
+        "tasksView": "Просмотр задач",
+        "tasksViewSub": "Назначенные ему задачи",
+        "tasksCreate": "Создание задач",
+        "tasksCreateSub": "Добавление и управление новыми задачами",
+        "superAdminNotice": "Управление пользователями и системные настройки доступны только Супер Админу. Региональный администратор не может зайти в эти разделы."
+      },
+      "changeBtn": "Изменить",
+      "resetPwTitle": "Сброс пароля пользователя",
+      "resetPwUserLabel": "Пользователь:",
+      "resetPwBtn": "Сбросить пароль",
+      "deleteTitle": "Удалить учётную запись",
+      "deleteConfirmQuestion": "учётную запись хотите удалить?",
+      "deleteConfirmNote": "Это действие необратимо. Сотрудник не сможет войти в систему."
     }
   },
   "cabinet": {
@@ -90,17 +1038,39 @@
     "notifNew": "новых",
     "breadcrumbAria": "Расположение страницы",
     "pages": {
-      "dashboard": { "title": "Главная" },
-      "documents": { "title": "Документы" },
-      "events": { "title": "Мероприятия" },
-      "news": { "title": "Новости" },
-      "notifications": { "title": "Уведомления" },
-      "organization": { "title": "Моя организация" },
-      "reports": { "title": "Отчёты" },
-      "settings": { "title": "Настройки" },
-      "settingsNotifications": { "title": "Настройки уведомлений" },
-      "settingsOrg": { "title": "Настройки организации" },
-      "settingsSecurity": { "title": "Настройки безопасности" }
+      "dashboard": {
+        "title": "Главная"
+      },
+      "documents": {
+        "title": "Документы"
+      },
+      "events": {
+        "title": "Мероприятия"
+      },
+      "news": {
+        "title": "Новости"
+      },
+      "notifications": {
+        "title": "Уведомления"
+      },
+      "organization": {
+        "title": "Моя организация"
+      },
+      "reports": {
+        "title": "Отчёты"
+      },
+      "settings": {
+        "title": "Настройки"
+      },
+      "settingsNotifications": {
+        "title": "Настройки уведомлений"
+      },
+      "settingsOrg": {
+        "title": "Настройки организации"
+      },
+      "settingsSecurity": {
+        "title": "Настройки безопасности"
+      }
     }
   },
   "common": {

@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grant arizalari — O'zNNTMA Admin</title>
+  <title data-i18n="admin.grantApplications.docTitle">Grant arizalari — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -34,8 +34,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
-  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.grantApplications.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+  <a class="skip-link" href="#main-content" data-i18n="admin.grantApplications.skipToContent">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -89,15 +96,15 @@
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
             <div class="main__profile-avatar u-avatar-badge-sm">A</div>
             <div>
-              <div class="main__profile-name" data-user-name>Administrator</div>
-              <div class="main__profile-role" data-user-role>Bosh admin</div>
+              <div class="main__profile-name" data-user-name data-i18n="admin.grantApplications.profileName">Administrator</div>
+              <div class="main__profile-role" data-user-role data-i18n="admin.grantApplications.profileRole">Bosh admin</div>
             </div>
           </div>
         </div>
@@ -106,68 +113,68 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.grantApplications.title" class="main__title">Grant arizalari</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" id="exportGrantAppsBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport (CSV)</button>
+          <button type="button" class="btn btn--secondary" id="exportGrantAppsBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> <span data-i18n="admin.grantApplications.exportCsv">Eksport (CSV)</span></button>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Jami arizalar</p><p class="card__value" id="kpiTotal">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.grantApplications.kpiTotal">Jami arizalar</p><p class="card__value" id="kpiTotal">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Ko'rib chiqilmoqda</p><p class="card__value" id="kpiPending">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.grantApplications.kpiPending">Ko'rib chiqilmoqda</p><p class="card__value" id="kpiPending">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value" id="kpiApproved">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.grantApplications.kpiApproved">Tasdiqlangan</p><p class="card__value" id="kpiApproved">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-x-circle" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Rad etilgan</p><p class="card__value" id="kpiDeclined">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.grantApplications.kpiDeclined">Rad etilgan</p><p class="card__value" id="kpiDeclined">—</p></div></div>
         </div>
       </div>
 
       <section class="table-section" aria-labelledby="grantAppsTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="grantAppsTableTitle">Arizalar va holati</h2>
+          <h2 class="table-section__title" id="grantAppsTableTitle" data-i18n="admin.grantApplications.tableTitle">Arizalar va holati</h2>
         </div>
-        <form class="u-filter-row" role="search" aria-label="Arizalarni filtrlash">
-          <input id="grantAppsSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" placeholder="Sarlavha, tashkilot..." aria-label="Qidirish" maxlength="200" />
-          <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="grantAppsRows" data-status-filter="all">Barchasi</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantAppsRows" data-status-filter="submitted">Yuborilgan</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantAppsRows" data-status-filter="review">Ko'rib chiqilmoqda</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantAppsRows" data-status-filter="approved">Tasdiqlangan</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantAppsRows" data-status-filter="declined">Rad etilgan</button>
+        <form class="u-filter-row" role="search" data-i18n-aria-label="admin.grantApplications.filterAria" aria-label="Arizalarni filtrlash">
+          <input id="grantAppsSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" data-i18n-placeholder="admin.grantApplications.searchPlaceholder" placeholder="Sarlavha, tashkilot..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" />
+          <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="grantAppsRows" data-status-filter="all" data-i18n="admin.grantApplications.filter.all">Barchasi</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantAppsRows" data-status-filter="submitted" data-i18n="admin.grantApplications.filter.submitted">Yuborilgan</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantAppsRows" data-status-filter="review" data-i18n="admin.grantApplications.filter.review">Ko'rib chiqilmoqda</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantAppsRows" data-status-filter="approved" data-i18n="admin.grantApplications.filter.approved">Tasdiqlangan</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantAppsRows" data-status-filter="declined" data-i18n="admin.grantApplications.filter.declined">Rad etilgan</button>
         </form>
         <table class="table">
-          <caption class="u-visually-hidden">Grant arizalari jadvali</caption>
+          <caption class="u-visually-hidden" data-i18n="admin.grantApplications.tableCaption">Grant arizalari jadvali</caption>
           <thead>
             <tr>
-              <th scope="col"><span class="u-visually-hidden">Tanlash</span></th><th scope="col">#</th><th scope="col">Sarlavha</th><th scope="col">Tashkilot</th>
-              <th scope="col">Byudjet</th><th scope="col">Yuborilgan</th><th scope="col">Holat</th><th scope="col"><span class="u-visually-hidden">Amallar</span></th>
+              <th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.select">Tanlash</span></th><th scope="col">#</th><th scope="col" data-i18n="admin.grantApplications.col.title">Sarlavha</th><th scope="col" data-i18n="admin.grantApplications.col.organization">Tashkilot</th>
+              <th scope="col" data-i18n="admin.grantApplications.col.budget">Byudjet</th><th scope="col" data-i18n="admin.grantApplications.col.submitted">Yuborilgan</th><th scope="col" data-i18n="admin.table.status">Holat</th><th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.actions">Amallar</span></th>
             </tr>
           </thead>
           <tbody id="grantAppsRows" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="8" role="status">Yuklanmoqda...</td></tr>
+            <tr class="u-empty-row"><td colspan="8" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header">
-      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
-      <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+      <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.grantApplications.notifClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
-      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+      <p class="text-dim" style="padding:20px;text-align:center" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
-      <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden data-i18n="admin.ui.markAllRead">Barchasini o&rsquo;qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
   <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>

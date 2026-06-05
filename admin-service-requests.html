@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Xizmat so'rovlari — O'zNNTMA Admin</title>
+  <title data-i18n="admin.serviceRequests.pageTitle">Xizmat so'rovlari — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -33,8 +33,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
-  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.serviceRequests.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+  <a class="skip-link" href="#main-content" data-i18n="admin.serviceRequests.skipToContent">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -88,7 +95,7 @@
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -105,126 +112,126 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.serviceRequests.title" class="main__title">Xizmat so&rsquo;rovlari</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" id="exportServiceBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport (CSV)</button>
+          <button type="button" class="btn btn--secondary" id="exportServiceBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> <span data-i18n="admin.serviceRequests.exportCsv">Eksport (CSV)</span></button>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-wrench" aria-hidden="true"></i></div><span class="card__info" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami so&rsquo;rovlar</p><p class="card__value" id="svcKpiTotal">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.serviceRequests.kpi.total">Jami so&rsquo;rovlar</p><p class="card__value" id="svcKpiTotal">&mdash;</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-envelope-simple-open" aria-hidden="true"></i></div><span class="card__info" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Yangi</p><p class="card__value" id="svcKpiNew">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.serviceRequests.kpi.new">Yangi</p><p class="card__value" id="svcKpiNew">&mdash;</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock" aria-hidden="true"></i></div><span class="card__info" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jarayonda</p><p class="card__value" id="svcKpiRead">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.serviceRequests.kpi.inProgress">Jarayonda</p><p class="card__value" id="svcKpiRead">&mdash;</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle" aria-hidden="true"></i></div><span class="card__info" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Javob berilgan</p><p class="card__value" id="svcKpiHandled">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.serviceRequests.kpi.handled">Javob berilgan</p><p class="card__value" id="svcKpiHandled">&mdash;</p></div></div>
         </div>
       </div>
 
       <section class="table-section" aria-labelledby="serviceTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="serviceTableTitle">Kelib tushgan so&rsquo;rovlar</h2>
+          <h2 class="table-section__title" id="serviceTableTitle" data-i18n="admin.serviceRequests.tableTitle">Kelib tushgan so&rsquo;rovlar</h2>
         </div>
-        <form class="u-filter-row" role="search" aria-label="So'rovlarni filtrlash">
-          <label for="serviceSearch" class="u-visually-hidden">So'rov raqami yoki arizachi bo'yicha qidirish</label>
-          <input id="serviceSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" placeholder="So'rov #, arizachi ismi..." aria-label="Qidirish" maxlength="200" />
-          <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="serviceTableBody" data-filter="all">Barchasi <span class="filter-chip__count" id="svcChipCountAll">&mdash;</span></button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="serviceTableBody" data-filter="new">Yangi <span class="filter-chip__count" id="svcChipCountNew">&mdash;</span></button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="serviceTableBody" data-filter="progress">Jarayonda <span class="filter-chip__count" id="svcChipCountProgress">&mdash;</span></button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="serviceTableBody" data-filter="done">Javob berilgan <span class="filter-chip__count" id="svcChipCountDone">&mdash;</span></button>
-          <label for="serviceType" class="u-visually-hidden">So'rov turi bo'yicha filter</label>
-          <select id="serviceType" class="table-section__search u-search-160" aria-label="Turi">
-            <option value="">Barcha turlar</option>
-            <option>Ro&rsquo;yxatga olish</option>
-            <option>Ma&rsquo;lumotnoma</option>
-            <option>Maslahat</option>
-            <option>Sertifikat</option>
-            <option>Hujjat nusxasi</option>
-            <option>Boshqa</option>
+        <form class="u-filter-row" role="search" data-i18n-aria-label="admin.serviceRequests.filter.formAria" aria-label="So'rovlarni filtrlash">
+          <label for="serviceSearch" class="u-visually-hidden" data-i18n="admin.serviceRequests.filter.searchLabel">So'rov raqami yoki arizachi bo'yicha qidirish</label>
+          <input id="serviceSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" data-i18n-placeholder="admin.serviceRequests.filter.searchPlaceholder" placeholder="So'rov #, arizachi ismi..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" />
+          <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="serviceTableBody" data-filter="all"><span data-i18n="admin.serviceRequests.filter.all">Barchasi</span> <span class="filter-chip__count" id="svcChipCountAll">&mdash;</span></button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="serviceTableBody" data-filter="new"><span data-i18n="admin.serviceRequests.filter.new">Yangi</span> <span class="filter-chip__count" id="svcChipCountNew">&mdash;</span></button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="serviceTableBody" data-filter="progress"><span data-i18n="admin.serviceRequests.filter.inProgress">Jarayonda</span> <span class="filter-chip__count" id="svcChipCountProgress">&mdash;</span></button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="serviceTableBody" data-filter="done"><span data-i18n="admin.serviceRequests.filter.done">Javob berilgan</span> <span class="filter-chip__count" id="svcChipCountDone">&mdash;</span></button>
+          <label for="serviceType" class="u-visually-hidden" data-i18n="admin.serviceRequests.filter.typeLabel">So'rov turi bo'yicha filter</label>
+          <select id="serviceType" class="table-section__search u-search-160" data-i18n-aria-label="admin.table.type" aria-label="Turi">
+            <option value="" data-i18n="admin.serviceRequests.filter.allTypes">Barcha turlar</option>
+            <option data-i18n="admin.serviceRequests.type.registration">Ro&rsquo;yxatga olish</option>
+            <option data-i18n="admin.serviceRequests.type.reference">Ma&rsquo;lumotnoma</option>
+            <option data-i18n="admin.serviceRequests.type.consultation">Maslahat</option>
+            <option data-i18n="admin.serviceRequests.type.certificate">Sertifikat</option>
+            <option data-i18n="admin.serviceRequests.type.documentCopy">Hujjat nusxasi</option>
+            <option data-i18n="admin.serviceRequests.type.other">Boshqa</option>
           </select>
         </form>
         <table class="table">
-          <caption class="u-visually-hidden">Xizmat so'rovlari jadvali</caption>
+          <caption class="u-visually-hidden" data-i18n="admin.serviceRequests.tableCaption">Xizmat so'rovlari jadvali</caption>
           <thead>
             <tr>
-              <th scope="col">So&rsquo;rov #</th><th scope="col">Arizachi</th><th scope="col">Turi</th>
-              <th scope="col">Topshirilgan</th><th scope="col">Holat</th><th scope="col">Mas&rsquo;ul</th><th scope="col"><span class="u-visually-hidden">Amallar</span></th>
+              <th scope="col" data-i18n="admin.serviceRequests.col.requestNo">So&rsquo;rov #</th><th scope="col" data-i18n="admin.serviceRequests.col.applicant">Arizachi</th><th scope="col" data-i18n="admin.table.type">Turi</th>
+              <th scope="col" data-i18n="admin.serviceRequests.col.submitted">Topshirilgan</th><th scope="col" data-i18n="admin.table.status">Holat</th><th scope="col" data-i18n="admin.serviceRequests.col.assignee">Mas&rsquo;ul</th><th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.actions">Amallar</span></th>
             </tr>
           </thead>
           <tbody id="serviceTableBody" aria-live="polite" aria-busy="true">
-            <tr><td colspan="7" role="status" style="text-align:center;color:var(--grey-400);">Yuklanmoqda...</td></tr>
+            <tr><td colspan="7" role="status" style="text-align:center;color:var(--grey-400);" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header">
-      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
-    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+    <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.serviceRequests.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
-      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+      <p class="text-dim" style="padding:20px;text-align:center" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
-      <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden data-i18n="admin.ui.markAllRead">Barchasini o&rsquo;qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
 
   <div class="modal-overlay" id="serviceReviewModal" role="dialog" aria-modal="true" aria-labelledby="serviceReviewTitle" aria-hidden="true">
     <div class="modal u-modal-max-600">
       <div class="modal__head">
-        <h2 class="modal__title" id="serviceReviewTitle">So&rsquo;rov tafsilotlari</h2>
-        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="serviceReviewTitle" data-i18n="admin.serviceRequests.modal.title">So&rsquo;rov tafsilotlari</h2>
+        <button type="button" class="modal__close" data-modal-close data-i18n-aria-label="admin.serviceRequests.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body">
         <div class="u-modal-grid-2">
           <div class="modal__field">
-            <label class="modal__label">So&rsquo;rov raqami</label>
+            <label class="modal__label" data-i18n="admin.serviceRequests.modal.requestNo">So&rsquo;rov raqami</label>
             <div class="u-modal-value u-modal-value-strong" id="svcReviewId">&mdash;</div>
           </div>
           <div class="modal__field">
-            <label class="modal__label">Topshirilgan</label>
+            <label class="modal__label" data-i18n="admin.serviceRequests.col.submitted">Topshirilgan</label>
             <div class="u-modal-value" id="svcReviewDate">&mdash;</div>
           </div>
           <div class="modal__field">
-            <label class="modal__label">Arizachi</label>
+            <label class="modal__label" data-i18n="admin.serviceRequests.col.applicant">Arizachi</label>
             <div class="u-modal-value u-modal-value-medium" id="svcReviewName">&mdash;</div>
           </div>
           <div class="modal__field">
-            <label class="modal__label">Aloqa</label>
+            <label class="modal__label" data-i18n="admin.serviceRequests.modal.contact">Aloqa</label>
             <div class="u-modal-value" id="svcReviewContact">&mdash;</div>
           </div>
           <div class="modal__field">
-            <label class="modal__label">Turi</label>
+            <label class="modal__label" data-i18n="admin.table.type">Turi</label>
             <div class="u-modal-value" id="svcReviewType">&mdash;</div>
           </div>
           <div class="modal__field">
-            <label class="modal__label">Mas&rsquo;ul</label>
-            <div class="u-modal-value" id="svcReviewAssignee">Tayinlanmagan</div>
+            <label class="modal__label" data-i18n="admin.serviceRequests.col.assignee">Mas&rsquo;ul</label>
+            <div class="u-modal-value" id="svcReviewAssignee" data-i18n="admin.serviceRequests.unassigned">Tayinlanmagan</div>
           </div>
         </div>
         <div class="modal__field">
-          <label class="modal__label">So&rsquo;rov matni</label>
+          <label class="modal__label" data-i18n="admin.serviceRequests.modal.requestText">So&rsquo;rov matni</label>
           <div class="u-modal-value" id="svcReviewBody" style="white-space:pre-wrap">&mdash;</div>
         </div>
         <div class="modal__field">
-          <label class="modal__label" for="svcReplyText">Javob matni</label>
-          <textarea id="svcReplyText" class="modal__textarea" maxlength="10000" placeholder="Arizachiga javobni kiriting..."></textarea>
+          <label class="modal__label" for="svcReplyText" data-i18n="admin.serviceRequests.modal.replyText">Javob matni</label>
+          <textarea id="svcReplyText" class="modal__textarea" maxlength="10000" data-i18n-placeholder="admin.serviceRequests.modal.replyPlaceholder" placeholder="Arizachiga javobni kiriting..."></textarea>
         </div>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" data-modal-close>Yopish</button>
-        <button type="button" class="btn btn--primary" id="svcMarkHandledBtn"><i class="ph ph-check-circle" aria-hidden="true"></i> Javob berilgan deb belgilash</button>
+        <button type="button" class="btn btn--secondary" data-modal-close data-i18n="admin.serviceRequests.modal.close">Yopish</button>
+        <button type="button" class="btn btn--primary" id="svcMarkHandledBtn"><i class="ph ph-check-circle" aria-hidden="true"></i> <span data-i18n="admin.serviceRequests.modal.markHandled">Javob berilgan deb belgilash</span></button>
       </div>
     </div>
   </div>

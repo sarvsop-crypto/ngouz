@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hujjatlar — O'zNNTMA Admin</title>
+  <title data-i18n="admin.documents.docTitle">Hujjatlar — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -34,8 +34,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
-  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.documents.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+  <a class="skip-link" href="#main-content" data-i18n="admin.documents.skipLink">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -89,7 +96,7 @@
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -97,7 +104,7 @@
             <div class="main__profile-avatar u-avatar-badge-sm">A</div>
             <div>
               <div class="main__profile-name" data-user-name>Administrator</div>
-              <div class="main__profile-role" data-user-role>Bosh admin</div>
+              <div class="main__profile-role" data-user-role data-i18n="admin.documents.profileRole">Bosh admin</div>
             </div>
           </div>
         </div>
@@ -106,74 +113,74 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.documents.title" class="main__title">Hujjatlar</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" id="exportBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport</button>
-          <button type="button" class="btn btn--primary" id="newItemBtn"><i class="ph ph-plus" aria-hidden="true"></i> Yangi hujjat</button>
+          <button type="button" class="btn btn--secondary" id="exportBtn" data-i18n="admin.documents.export" data-i18n-html><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport</button>
+          <button type="button" class="btn btn--primary" id="newItemBtn" data-i18n="admin.documents.newDoc" data-i18n-html><i class="ph ph-plus" aria-hidden="true"></i> Yangi hujjat</button>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-files" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Jami hujjatlar</p><p class="card__value" id="kpiTotal">0</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.documents.kpi.total">Jami hujjatlar</p><p class="card__value" id="kpiTotal">0</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--info"><i class="ph ph-scales" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Qonunlar</p><p class="card__value" id="kpiQonunlar">0</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.documents.kpi.laws">Qonunlar</p><p class="card__value" id="kpiQonunlar">0</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-flag-banner" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Davlat dasturlari</p><p class="card__value" id="kpiDasturlar">0</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.documents.kpi.statePrograms">Davlat dasturlari</p><p class="card__value" id="kpiDasturlar">0</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-shield-check" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Nogironlar huquqi</p><p class="card__value" id="kpiNogironlar">0</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.documents.kpi.disabilityRights">Nogironlar huquqi</p><p class="card__value" id="kpiNogironlar">0</p></div></div>
         </div>
       </div>
 
       <section class="table-section" aria-labelledby="docsTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="docsTableTitle">Hujjatlar jadvali</h2>
-          <div class="table-section__tools" role="search" aria-label="Hujjatlarni qidirish">
-            <input type="search" enterkeyhint="search" class="table-section__search" id="cmsSearch" placeholder="Hujjat nomini qidirish..." aria-label="Qidirish" maxlength="200" />
+          <h2 class="table-section__title" id="docsTableTitle" data-i18n="admin.documents.tableTitle">Hujjatlar jadvali</h2>
+          <div class="table-section__tools" role="search" data-i18n-aria-label="admin.documents.searchDocsAria" aria-label="Hujjatlarni qidirish">
+            <input type="search" enterkeyhint="search" class="table-section__search" id="cmsSearch" data-i18n-placeholder="admin.documents.searchPlaceholder" placeholder="Hujjat nomini qidirish..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" />
           </div>
         </div>
-        <form class="u-filter-row" role="search" aria-label="Hujjatlarni filtrlash">
-          <button type="button" class="filter-chip is-active" aria-pressed="true" data-cat-filter="all">Barchasi</button>
-          <button type="button" class="filter-chip" aria-pressed="false" data-cat-filter="qonunlar">Qonunlar</button>
-          <button type="button" class="filter-chip" aria-pressed="false" data-cat-filter="davlat-dasturlari">Davlat dasturlari</button>
-          <button type="button" class="filter-chip" aria-pressed="false" data-cat-filter="nogironlar-huquqi">Nogironlar huquqi</button>
-          <button type="button" class="filter-chip" aria-pressed="false" data-cat-filter="rasmiy-hujjat">Rasmiy hujjat</button>
+        <form class="u-filter-row" role="search" data-i18n-aria-label="admin.documents.filterDocsAria" aria-label="Hujjatlarni filtrlash">
+          <button type="button" class="filter-chip is-active" aria-pressed="true" data-cat-filter="all" data-i18n="admin.documents.filter.all">Barchasi</button>
+          <button type="button" class="filter-chip" aria-pressed="false" data-cat-filter="qonunlar" data-i18n="admin.documents.filter.laws">Qonunlar</button>
+          <button type="button" class="filter-chip" aria-pressed="false" data-cat-filter="davlat-dasturlari" data-i18n="admin.documents.filter.statePrograms">Davlat dasturlari</button>
+          <button type="button" class="filter-chip" aria-pressed="false" data-cat-filter="nogironlar-huquqi" data-i18n="admin.documents.filter.disabilityRights">Nogironlar huquqi</button>
+          <button type="button" class="filter-chip" aria-pressed="false" data-cat-filter="rasmiy-hujjat" data-i18n="admin.documents.filter.official">Rasmiy hujjat</button>
         </form>
         <table class="table">
-          <caption class="u-visually-hidden">Hujjatlar jadvali</caption>
+          <caption class="u-visually-hidden" data-i18n="admin.documents.tableTitle">Hujjatlar jadvali</caption>
           <thead>
             <tr>
-              <th scope="col">Hujjat nomi</th>
-              <th scope="col">Sana</th>
-              <th scope="col">Toifa</th>
-              <th scope="col">Holat</th>
-              <th scope="col"><span class="u-visually-hidden">Amallar</span></th>
+              <th scope="col" data-i18n="admin.documents.col.title">Hujjat nomi</th>
+              <th scope="col" data-i18n="admin.table.date">Sana</th>
+              <th scope="col" data-i18n="admin.documents.col.category">Toifa</th>
+              <th scope="col" data-i18n="admin.table.status">Holat</th>
+              <th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.actions">Amallar</span></th>
             </tr>
           </thead>
           <tbody id="docsTableBody" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="5" role="status">Yuklanmoqda...</td></tr>
+            <tr class="u-empty-row"><td colspan="5" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header">
-      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
-    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+    <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.documents.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
-      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+      <p class="text-dim" style="padding:20px;text-align:center" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
-      <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden data-i18n="admin.ui.markAllRead">Barchasini o&rsquo;qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
 
@@ -182,52 +189,52 @@
     <div class="modal" style="max-width:600px;">
       <form id="cmsForm" novalidate>
         <div class="modal__head">
-          <h2 class="modal__title" id="formModalTitle">Yangi hujjat</h2>
-          <button type="button" class="modal__close" id="formModalClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+          <h2 class="modal__title" id="formModalTitle" data-i18n="admin.documents.newDocTitle">Yangi hujjat</h2>
+          <button type="button" class="modal__close" id="formModalClose" data-i18n-aria-label="admin.documents.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
         </div>
         <div class="modal__body">
           <div class="modal__field">
-            <label class="modal__label" for="fTitle">Sarlavha <span aria-hidden="true" style="color:#dc2626">*</span></label>
-            <input autocomplete="off" id="fTitle" class="modal__input" type="text" required maxlength="300" placeholder="Hujjat sarlavhasini kiriting" />
+            <label class="modal__label" for="fTitle" data-i18n="admin.documents.form.heading" data-i18n-html>Sarlavha <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <input autocomplete="off" id="fTitle" class="modal__input" type="text" required maxlength="300" data-i18n-placeholder="admin.documents.form.headingPlaceholder" placeholder="Hujjat sarlavhasini kiriting" />
           </div>
           <div class="modal__grid2">
             <div class="modal__field">
-              <label class="modal__label" for="fDate">Sana <span aria-hidden="true" style="color:#dc2626">*</span></label>
+              <label class="modal__label" for="fDate" data-i18n="admin.documents.form.date" data-i18n-html>Sana <span aria-hidden="true" style="color:#dc2626">*</span></label>
               <input id="fDate" class="modal__input" type="date" required />
             </div>
             <div class="modal__field">
-              <label class="modal__label" for="fCategory">Toifa <span aria-hidden="true" style="color:#dc2626">*</span></label>
+              <label class="modal__label" for="fCategory" data-i18n="admin.documents.form.category" data-i18n-html>Toifa <span aria-hidden="true" style="color:#dc2626">*</span></label>
               <select id="fCategory" class="modal__select" required>
-                <option value="">— Tanlang —</option>
-                <option value="qonunlar">Qonunlar va qarorlar</option>
-                <option value="davlat-dasturlari">Davlat dasturlari</option>
-                <option value="nogironlar-huquqi">Nogironlar huquqi</option>
-                <option value="rasmiy-hujjat">Rasmiy hujjat</option>
+                <option value="" data-i18n="admin.documents.form.selectPlaceholder">— Tanlang —</option>
+                <option value="qonunlar" data-i18n="admin.documents.form.catLawsDecrees">Qonunlar va qarorlar</option>
+                <option value="davlat-dasturlari" data-i18n="admin.documents.filter.statePrograms">Davlat dasturlari</option>
+                <option value="nogironlar-huquqi" data-i18n="admin.documents.filter.disabilityRights">Nogironlar huquqi</option>
+                <option value="rasmiy-hujjat" data-i18n="admin.documents.filter.official">Rasmiy hujjat</option>
               </select>
             </div>
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="fExcerpt">Qisqa matn</label>
-            <textarea id="fExcerpt" class="modal__textarea" maxlength="1000" placeholder="Hujjatning qisqacha tavsifi"></textarea>
+            <label class="modal__label" for="fExcerpt" data-i18n="admin.documents.form.excerpt">Qisqa matn</label>
+            <textarea id="fExcerpt" class="modal__textarea" maxlength="1000" data-i18n-placeholder="admin.documents.form.excerptPlaceholder" placeholder="Hujjatning qisqacha tavsifi"></textarea>
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="fBody">To'liq matn <span aria-hidden="true" style="color:#dc2626">*</span></label>
-            <textarea id="fBody" class="modal__textarea modal__textarea--tall" required maxlength="100000" placeholder="Hujjatning to'liq matni"></textarea>
+            <label class="modal__label" for="fBody" data-i18n="admin.documents.form.body" data-i18n-html>To'liq matn <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <textarea id="fBody" class="modal__textarea modal__textarea--tall" required maxlength="100000" data-i18n-placeholder="admin.documents.form.bodyPlaceholder" placeholder="Hujjatning to'liq matni"></textarea>
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="fCoverFile">Muqova rasmi</label>
+            <label class="modal__label" for="fCoverFile" data-i18n="admin.documents.form.cover">Muqova rasmi</label>
             <div style="display:flex;gap:8px;align-items:center">
               <input type="file" id="fCoverFile" accept="image/*" style="font-size:13px" />
               <span id="fCoverStatus" role="status" aria-live="polite" style="font-size:12px;color:#6b7280"></span>
             </div>
             <input type="hidden" id="fCoverImage" />
-            <img id="fCoverPreview" alt="Yuklangan muqova rasmi" style="max-width:200px;max-height:120px;margin-top:8px;border-radius:4px;display:none" decoding="async" onerror="this.style.display='none'"/>
+            <img id="fCoverPreview" data-i18n-alt="admin.documents.form.coverAlt" alt="Yuklangan muqova rasmi" style="max-width:200px;max-height:120px;margin-top:8px;border-radius:4px;display:none" decoding="async" onerror="this.style.display='none'"/>
           </div>
           <p id="formError" role="alert" aria-live="assertive" style="color:#dc2626;font-size:13px;display:none;margin:0;"></p>
         </div>
         <div class="modal__foot">
-          <button type="button" class="btn btn--secondary" id="formCancelBtn">Bekor qilish</button>
-          <button type="submit" class="btn btn--primary" id="formSaveBtn"><i class="ph ph-floppy-disk" aria-hidden="true"></i> Saqlash</button>
+          <button type="button" class="btn btn--secondary" id="formCancelBtn" data-i18n="admin.ui.cancel">Bekor qilish</button>
+          <button type="submit" class="btn btn--primary" id="formSaveBtn" data-i18n="admin.documents.saveBtn" data-i18n-html><i class="ph ph-floppy-disk" aria-hidden="true"></i> Saqlash</button>
         </div>
       </form>
     </div>
@@ -237,18 +244,18 @@
   <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle" aria-hidden="true">
     <div class="modal u-modal-max-440">
       <div class="modal__head">
-        <h2 class="modal__title" id="deleteModalTitle">Hujjatni o'chirish</h2>
-        <button type="button" class="modal__close" id="deleteModalClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="deleteModalTitle" data-i18n="admin.documents.deleteTitle">Hujjatni o'chirish</h2>
+        <button type="button" class="modal__close" id="deleteModalClose" data-i18n-aria-label="admin.documents.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body">
         <p style="margin:0;font-size:14px;color:var(--grey-700,#2b2d3a);">
-          <strong id="deleteName"></strong> hujjatini o'chirmoqchimisiz?<br>
-          <span style="color:var(--grey-400,#818898)">Bu amalni qaytarib bo'lmaydi.</span>
+          <strong id="deleteName"></strong> <span data-i18n="admin.documents.deletePrompt">hujjatini o'chirmoqchimisiz?</span><br>
+          <span style="color:var(--grey-400,#818898)" data-i18n="admin.ui.irreversible">Bu amalni qaytarib bo'lmaydi.</span>
         </p>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" id="deleteCancelBtn">Bekor qilish</button>
-        <button type="button" class="btn btn--danger" id="deleteConfirmBtn"><i class="ph ph-trash" aria-hidden="true"></i> Ha, o'chirish</button>
+        <button type="button" class="btn btn--secondary" id="deleteCancelBtn" data-i18n="admin.ui.cancel">Bekor qilish</button>
+        <button type="button" class="btn btn--danger" id="deleteConfirmBtn"><i class="ph ph-trash" aria-hidden="true"></i> <span data-i18n="admin.ui.confirmDelete">Ha, o'chirish</span></button>
       </div>
     </div>
   </div>

@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Xavfsizlik — O'zNNTMA Admin</title>
+  <title data-i18n="admin.settingsSecurity.docTitle">Xavfsizlik — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -32,8 +32,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<a class="skip-link" href="#main-content" data-i18n="admin.settingsSecurity.skipLink">Asosiy kontentga o'tish</a>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.settingsSecurity.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -82,11 +89,11 @@
     </aside>
     <main id="main-content" tabindex="-1" class="main">      <header class="topbar">
         <div class="topbar-left">
-          <nav class="breadcrumbs" data-i18n-aria-label="admin.breadcrumbAria" aria-label="Sahifa joylashuvi"><a href="admin-dashboard" data-i18n="admin.breadcrumbRoot">Boshqaruv</a> / <a href="admin-settings">Sozlamalar</a> / <span aria-current="page" data-i18n="admin.pages.settingsSecurity.title">Xavfsizlik</span></nav>
+          <nav class="breadcrumbs" data-i18n-aria-label="admin.breadcrumbAria" aria-label="Sahifa joylashuvi"><a href="admin-dashboard" data-i18n="admin.breadcrumbRoot">Boshqaruv</a> / <a href="admin-settings" data-i18n="admin.nav.settings">Sozlamalar</a> / <span aria-current="page" data-i18n="admin.pages.settingsSecurity.title">Xavfsizlik</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -105,55 +112,55 @@
       </div>
 
       <div class="settings-layout">
-        <nav class="settings-side-nav" aria-label="Sozlamalar bo&rsquo;limlari">
-          <a href="admin-settings" class="settings-side-link"><i class="ph ph-user" aria-hidden="true"></i> Profil</a>
-          <a href="admin-settings-notifications" class="settings-side-link"><i class="ph ph-bell" aria-hidden="true"></i> Bildirishnomalar</a>
-          <a href="admin-settings-security" class="settings-side-link is-active"><i class="ph ph-shield-check" aria-hidden="true"></i> Xavfsizlik</a>
-          <a href="admin-settings-system" class="settings-side-link"><i class="ph ph-sliders" aria-hidden="true"></i> Tizim</a>
+        <nav class="settings-side-nav" data-i18n-aria-label="admin.settingsSecurity.sideNavAria" aria-label="Sozlamalar bo&rsquo;limlari">
+          <a href="admin-settings" class="settings-side-link"><i class="ph ph-user" aria-hidden="true"></i> <span data-i18n="admin.settingsSecurity.sideNav.profile">Profil</span></a>
+          <a href="admin-settings-notifications" class="settings-side-link"><i class="ph ph-bell" aria-hidden="true"></i> <span data-i18n="admin.ui.notifications">Bildirishnomalar</span></a>
+          <a href="admin-settings-security" class="settings-side-link is-active"><i class="ph ph-shield-check" aria-hidden="true"></i> <span data-i18n="admin.pages.settingsSecurity.title">Xavfsizlik</span></a>
+          <a href="admin-settings-system" class="settings-side-link"><i class="ph ph-sliders" aria-hidden="true"></i> <span data-i18n="admin.settingsSecurity.sideNav.system">Tizim</span></a>
         </nav>
         <div>
           <div class="settings-panel">
-            <h2 class="settings-section-title">Parolni o'zgartirish</h2>
+            <h2 class="settings-section-title" data-i18n="admin.settingsSecurity.password.title">Parolni o'zgartirish</h2>
             <div class="settings-grid-two">
-              <div><label class="settings-form-label" for="pwCurrent">Joriy parol</label><input id="pwCurrent" class="settings-form-control" type="password" placeholder="Joriy parolni kiriting" autocomplete="current-password" maxlength="128" /></div>
+              <div><label class="settings-form-label" for="pwCurrent" data-i18n="admin.settingsSecurity.password.currentLabel">Joriy parol</label><input id="pwCurrent" class="settings-form-control" type="password" data-i18n-placeholder="admin.settingsSecurity.password.currentPlaceholder" placeholder="Joriy parolni kiriting" autocomplete="current-password" maxlength="128" /></div>
               <div></div>
-              <div><label class="settings-form-label" for="pwNew">Yangi parol (kamida 12 belgi)</label><input id="pwNew" class="settings-form-control" type="password" placeholder="Yangi parolni kiriting" autocomplete="new-password" minlength="12" maxlength="128" /></div>
-              <div><label class="settings-form-label" for="pwConfirm">Yangi parolni tasdiqlang</label><input id="pwConfirm" class="settings-form-control" type="password" placeholder="Takrorlab kiriting" autocomplete="new-password" minlength="12" maxlength="128" /></div>
+              <div><label class="settings-form-label" for="pwNew" data-i18n="admin.settingsSecurity.password.newLabel">Yangi parol (kamida 12 belgi)</label><input id="pwNew" class="settings-form-control" type="password" data-i18n-placeholder="admin.settingsSecurity.password.newPlaceholder" placeholder="Yangi parolni kiriting" autocomplete="new-password" minlength="12" maxlength="128" /></div>
+              <div><label class="settings-form-label" for="pwConfirm" data-i18n="admin.settingsSecurity.password.confirmLabel">Yangi parolni tasdiqlang</label><input id="pwConfirm" class="settings-form-control" type="password" data-i18n-placeholder="admin.settingsSecurity.password.confirmPlaceholder" placeholder="Takrorlab kiriting" autocomplete="new-password" minlength="12" maxlength="128" /></div>
             </div>
             <p id="pwMsg" role="alert" aria-live="assertive" style="font-size:13px;margin:8px 0 0;display:none"></p>
             <div class="settings-actions-row">
-              <button type="button" class="btn btn--primary" id="pwSubmitBtn"><i class="ph ph-lock-key" aria-hidden="true"></i> Parolni yangilash</button>
+              <button type="button" class="btn btn--primary" id="pwSubmitBtn"><i class="ph ph-lock-key" aria-hidden="true"></i> <span data-i18n="admin.settingsSecurity.password.submit">Parolni yangilash</span></button>
             </div>
           </div>
 
           <div class="settings-panel">
-            <h2 class="settings-section-title settings-section-title--tight">Ikki bosqichli tasdiqlash</h2>
-            <p class="settings-section-sub">Hisobingizni qo'shimcha himoya qatlami bilan himoya qiling</p>
+            <h2 class="settings-section-title settings-section-title--tight" data-i18n="admin.settingsSecurity.twoFa.title">Ikki bosqichli tasdiqlash</h2>
+            <p class="settings-section-sub" data-i18n="admin.settingsSecurity.twoFa.sub">Hisobingizni qo'shimcha himoya qatlami bilan himoya qiling</p>
             <div class="security-feature">
               <div class="security-feature__left">
                 <i class="ph ph-shield-check security-feature__icon" aria-hidden="true"></i>
                 <div>
-                  <p class="security-feature__title">Autentifikator ilovasi</p>
-                  <p class="security-feature__desc">Google Authenticator yoki Authy orqali</p>
+                  <p class="security-feature__title" data-i18n="admin.settingsSecurity.twoFa.appTitle">Autentifikator ilovasi</p>
+                  <p class="security-feature__desc" data-i18n="admin.settingsSecurity.twoFa.appDesc">Google Authenticator yoki Authy orqali</p>
                 </div>
               </div>
-              <button type="button" class="btn btn--secondary btn--text-sm" disabled aria-disabled="true" title="Tez orada ishga tushiriladi">Tez orada</button>
+              <button type="button" class="btn btn--secondary btn--text-sm" disabled aria-disabled="true" data-i18n-title="admin.settingsSecurity.twoFa.comingSoonTitle" title="Tez orada ishga tushiriladi" data-i18n="admin.settingsSecurity.twoFa.comingSoon">Tez orada</button>
             </div>
           </div>
 
           <div class="settings-panel">
-            <h2 class="settings-section-title settings-section-title--tight">Faol seans</h2>
-            <p class="settings-section-sub">Joriy qurilma ma'lumoti. Boshqa qurilmalardan kirgan bo'lsangiz, parolni o'zgartiring.</p>
+            <h2 class="settings-section-title settings-section-title--tight" data-i18n="admin.settingsSecurity.session.title">Faol seans</h2>
+            <p class="settings-section-sub" data-i18n="admin.settingsSecurity.session.sub">Joriy qurilma ma'lumoti. Boshqa qurilmalardan kirgan bo'lsangiz, parolni o'zgartiring.</p>
             <div class="settings-stack">
               <div class="session-item">
                 <div class="session-item__left">
                   <i class="ph ph-monitor session-item__icon" id="sessIcon"></i>
                   <div>
                     <p class="session-item__title" id="sessTitle">&mdash;</p>
-                    <p class="session-item__meta" id="sessMeta">Joriy seans</p>
+                    <p class="session-item__meta" id="sessMeta" data-i18n="admin.settingsSecurity.session.meta">Joriy seans</p>
                   </div>
                 </div>
-                <span class="session-pill">Joriy</span>
+                <span class="session-pill" data-i18n="admin.settingsSecurity.session.pill">Joriy</span>
               </div>
             </div>
           </div>
@@ -162,15 +169,15 @@
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
-    <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2>
-      <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+    <div class="notifications-panel__header"><h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+      <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.settingsSecurity.notif.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
-      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+      <p class="text-dim" style="padding:20px;text-align:center" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o'qildi deb belgilash</button>
-      <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden data-i18n="admin.ui.markAllRead">Barchasini o'qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
   <script src="js/pacta-foundation.js" defer></script>

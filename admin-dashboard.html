@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Boshqaruv paneli — O'zNNTMA Admin</title>
+  <title data-i18n="admin.dashboard.title">Boshqaruv paneli — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -32,6 +32,13 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
 <noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
   <a class="skip-link" href="#main-content" data-i18n="common.skipLink">Asosiy kontentga o'tish</a>
   <div class="layout">
@@ -87,7 +94,7 @@
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -104,71 +111,71 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.dashboard.title" class="main__title">Boshqaruv paneli</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" id="exportDashboardBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport</button>
-          <a href="admin-membership-requests" class="btn btn--primary"><i class="ph ph-plus" aria-hidden="true"></i> Yangi ariza</a>
+          <button type="button" class="btn btn--secondary" id="exportDashboardBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> <span data-i18n="admin.dashboard.export">Eksport</span></button>
+          <a href="admin-membership-requests" class="btn btn--primary"><i class="ph ph-plus" aria-hidden="true"></i> <span data-i18n="admin.dashboard.newRequest">Yangi ariza</span></a>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-newspaper" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Yangiliklar</p><p class="card__value" id="kpiNews">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.news">Yangiliklar</p><p class="card__value" id="kpiNews">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-calendar-blank" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Tadbirlar</p><p class="card__value" id="kpiEvents">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.events">Tadbirlar</p><p class="card__value" id="kpiEvents">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-chat-dots" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Yangi xabarlar</p><p class="card__value" id="kpiContacts">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.newMessages">Yangi xabarlar</p><p class="card__value" id="kpiContacts">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--info"><i class="ph ph-files" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Hujjatlar</p><p class="card__value" id="kpiDocs">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.documents">Hujjatlar</p><p class="card__value" id="kpiDocs">—</p></div></div>
         </div>
       </div>
 
       <div class="cards" id="dashExtraKpis">
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-buildings" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">A'zo NNTlar</p><p class="card__value" id="kpiOrgs">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.memberNgos">A'zo NNTlar</p><p class="card__value" id="kpiOrgs">&mdash;</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Kutilayotgan arizalar</p><p class="card__value" id="kpiPending">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.pendingRequests">Kutilayotgan arizalar</p><p class="card__value" id="kpiPending">&mdash;</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-users" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Foydalanuvchilar</p><p class="card__value" id="kpiUsers">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.users">Foydalanuvchilar</p><p class="card__value" id="kpiUsers">&mdash;</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Grantlar</p><p class="card__value" id="kpiGrants">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.grants">Grantlar</p><p class="card__value" id="kpiGrants">&mdash;</p></div></div>
         </div>
       </div>
 
       <div class="dash-grid" aria-labelledby="dashGridTitle">
-        <h2 id="dashGridTitle" class="u-visually-hidden">Operatsion bloklar</h2>
+        <h2 id="dashGridTitle" class="u-visually-hidden" data-i18n="admin.dashboard.operationalBlocks">Operatsion bloklar</h2>
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Muddatli arizalar</h3>
-            <a href="admin-membership-requests" class="btn--ghost">Barchasi</a>
+            <h3 class="card-title" data-i18n="admin.dashboard.urgentRequests">Muddatli arizalar</h3>
+            <a href="admin-membership-requests" class="btn--ghost" data-i18n="admin.dashboard.viewAll">Barchasi</a>
           </div>
           <ul class="alert-list" id="dashboardDeadlines" aria-live="polite" aria-busy="true"></ul>
         </div>
         <div class="card u-overflow-hidden">
           <div class="card-header">
-            <h3 class="card-title">Yangi xabarlar</h3>
-            <a href="admin-feedback" class="btn--ghost">Barchasi</a>
+            <h3 class="card-title" data-i18n="admin.dashboard.kpi.newMessages">Yangi xabarlar</h3>
+            <a href="admin-feedback" class="btn--ghost" data-i18n="admin.dashboard.viewAll">Barchasi</a>
           </div>
           <div class="u-overflow-x-auto">
             <table class="table">
-              <caption class="u-visually-hidden">Kelib tushgan yangi qayta-aloqa xabarlari</caption>
+              <caption class="u-visually-hidden" data-i18n="admin.dashboard.recentMessagesCaption">Kelib tushgan yangi qayta-aloqa xabarlari</caption>
               <thead>
-                <tr><th scope="col">Xabar #</th><th scope="col">Ism</th><th scope="col">Aloqa</th><th scope="col">Mavzu</th><th scope="col">Holat</th><th scope="col">Sana</th></tr>
+                <tr><th scope="col" data-i18n="admin.dashboard.col.messageNo">Xabar #</th><th scope="col" data-i18n="admin.dashboard.col.name">Ism</th><th scope="col" data-i18n="admin.dashboard.col.contact">Aloqa</th><th scope="col" data-i18n="admin.dashboard.col.subject">Mavzu</th><th scope="col" data-i18n="admin.table.status">Holat</th><th scope="col" data-i18n="admin.table.date">Sana</th></tr>
               </thead>
               <tbody id="dashboardRecentRows" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="6" role="status">Yuklanmoqda...</td></tr>
+            <tr class="u-empty-row"><td colspan="6" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
             </table>
           </div>
@@ -177,32 +184,32 @@
 
       <section class="table-section" aria-labelledby="regionTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="regionTableTitle">Hududlar bo&rsquo;yicha NNT taqsimoti</h2>
+          <h2 class="table-section__title" id="regionTableTitle" data-i18n="admin.dashboard.regionTitle" data-i18n-html>Hududlar bo&rsquo;yicha NNT taqsimoti</h2>
         </div>
         <table class="table">
-          <caption class="u-visually-hidden">Hududlar bo'yicha NNT taqsimoti</caption>
+          <caption class="u-visually-hidden" data-i18n="admin.dashboard.regionCaption">Hududlar bo'yicha NNT taqsimoti</caption>
           <thead>
-            <tr><th scope="col">Viloyat</th><th scope="col">Jami NNT</th><th scope="col">Ulush</th></tr>
+            <tr><th scope="col" data-i18n="admin.dashboard.col.province">Viloyat</th><th scope="col" data-i18n="admin.dashboard.col.totalNgo">Jami NNT</th><th scope="col" data-i18n="admin.dashboard.col.share">Ulush</th></tr>
           </thead>
           <tbody id="dashboardRegionRows" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="3" role="status">Yuklanmoqda...</td></tr>
+            <tr class="u-empty-row"><td colspan="3" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header">
-      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
-    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+    <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.dashboard.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
-      <p class="notif-empty">Yuklanmoqda...</p>
+      <p class="notif-empty" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
-      <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" data-i18n="admin.ui.markAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
   <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>

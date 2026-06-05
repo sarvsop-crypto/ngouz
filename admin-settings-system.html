@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tizim — O'zNNTMA Admin</title>
+  <title data-i18n="admin.settingsSystem.docTitle">Tizim — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -32,8 +32,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<a class="skip-link" href="#main-content" data-i18n="admin.settingsSystem.skipToContent">Asosiy kontentga o'tish</a>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.settingsSystem.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -82,11 +89,11 @@
     </aside>
     <main id="main-content" tabindex="-1" class="main">      <header class="topbar">
         <div class="topbar-left">
-          <nav class="breadcrumbs" data-i18n-aria-label="admin.breadcrumbAria" aria-label="Sahifa joylashuvi"><a href="admin-dashboard" data-i18n="admin.breadcrumbRoot">Boshqaruv</a> / <a href="admin-settings">Sozlamalar</a> / <span aria-current="page" data-i18n="admin.pages.settingsSystem.title">Tizim</span></nav>
+          <nav class="breadcrumbs" data-i18n-aria-label="admin.breadcrumbAria" aria-label="Sahifa joylashuvi"><a href="admin-dashboard" data-i18n="admin.breadcrumbRoot">Boshqaruv</a> / <a href="admin-settings" data-i18n="admin.settingsSystem.breadcrumbSettings">Sozlamalar</a> / <span aria-current="page" data-i18n="admin.pages.settingsSystem.title">Tizim</span></nav>
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -105,37 +112,37 @@
       </div>
 
       <div class="settings-layout" style="display:grid;grid-template-columns:220px 1fr;gap:24px;">
-        <nav style="display:flex;flex-direction:column;gap:4px;" aria-label="Sozlamalar bo&rsquo;limlari">
-          <a href="admin-settings" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-user" aria-hidden="true"></i> Profil</a>
-          <a href="admin-settings-notifications" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-bell" aria-hidden="true"></i> Bildirishnomalar</a>
-          <a href="admin-settings-security" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-shield-check" aria-hidden="true"></i> Xavfsizlik</a>
-          <a href="admin-settings-system" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ph ph-sliders" aria-hidden="true"></i> Tizim</a>
+        <nav style="display:flex;flex-direction:column;gap:4px;" data-i18n-aria-label="admin.settingsSystem.subnavAria" aria-label="Sozlamalar bo&rsquo;limlari">
+          <a href="admin-settings" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-user" aria-hidden="true"></i> <span data-i18n="admin.settingsSystem.tabProfile">Profil</span></a>
+          <a href="admin-settings-notifications" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-bell" aria-hidden="true"></i> <span data-i18n="admin.settingsSystem.tabNotifications">Bildirishnomalar</span></a>
+          <a href="admin-settings-security" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-400);font-size:14px;display:flex;align-items:center;gap:8px;"><i class="ph ph-shield-check" aria-hidden="true"></i> <span data-i18n="admin.settingsSystem.tabSecurity">Xavfsizlik</span></a>
+          <a href="admin-settings-system" style="padding:10px 14px;border-radius:8px;text-decoration:none;color:var(--grey-900);font-size:14px;background:var(--primary-50);font-weight:600;display:flex;align-items:center;gap:8px;"><i class="ph ph-sliders" aria-hidden="true"></i> <span data-i18n="admin.settingsSystem.tabSystem">Tizim</span></a>
         </nav>
         <div>
           <div id="generalCard" style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-bottom:16px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;">Umumiy sozlamalar</h2>
-            <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;">Bu sozlamalar hozircha faqat shu brauzerda saqlanadi; global backend sozlamalari endpointi hali qo'shilmagan.</p>
+            <h2 style="font-size:16px;font-weight:600;margin:0 0 16px;" data-i18n="admin.settingsSystem.general.title">Umumiy sozlamalar</h2>
+            <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;" data-i18n="admin.settingsSystem.general.note">Bu sozlamalar hozircha faqat shu brauzerda saqlanadi; global backend sozlamalari endpointi hali qo'shilmagan.</p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Interfeys tili</label><select data-pref="lang" aria-label="Interfeys tili" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>O'zbekcha</option><option>Русский</option><option>English</option></select></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Vaqt mintaqasi</label><select data-pref="tz" aria-label="Vaqt mintaqasi" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>Asia/Tashkent (UTC+5)</option><option>Europe/Moscow (UTC+3)</option></select></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Sana formati</label><select data-pref="dateFormat" aria-label="Sana formati" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>DD.MM.YYYY</option><option>YYYY-MM-DD</option><option>MM/DD/YYYY</option></select></div>
-              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;">Sahifadagi yozuvlar soni</label><select data-pref="pageSize" aria-label="Sahifadagi yozuvlar soni" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option>10</option><option selected>25</option><option>50</option><option>100</option></select></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;" data-i18n="admin.settingsSystem.general.lang">Interfeys tili</label><select data-pref="lang" data-i18n-aria-label="admin.settingsSystem.general.lang" aria-label="Interfeys tili" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>O'zbekcha</option><option>Русский</option><option>English</option></select></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;" data-i18n="admin.settingsSystem.general.tz">Vaqt mintaqasi</label><select data-pref="tz" data-i18n-aria-label="admin.settingsSystem.general.tz" aria-label="Vaqt mintaqasi" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>Asia/Tashkent (UTC+5)</option><option>Europe/Moscow (UTC+3)</option></select></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;" data-i18n="admin.settingsSystem.general.dateFormat">Sana formati</label><select data-pref="dateFormat" data-i18n-aria-label="admin.settingsSystem.general.dateFormat" aria-label="Sana formati" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option selected>DD.MM.YYYY</option><option>YYYY-MM-DD</option><option>MM/DD/YYYY</option></select></div>
+              <div><label style="font-size:13px;color:var(--grey-400);display:block;margin-bottom:6px;" data-i18n="admin.settingsSystem.general.pageSize">Sahifadagi yozuvlar soni</label><select data-pref="pageSize" data-i18n-aria-label="admin.settingsSystem.general.pageSize" aria-label="Sahifadagi yozuvlar soni" style="width:100%;padding:10px 12px;border:1px solid var(--grey-100);border-radius:8px;font-size:14px;font-family:inherit;background:var(--grey-0);box-sizing:border-box;"><option>10</option><option selected>25</option><option>50</option><option>100</option></select></div>
             </div>
             <div style="margin-top:20px;display:flex;gap:12px;">
-              <button type="button" class="btn btn--primary" id="generalSaveBtn"><i class="ph ph-floppy-disk" aria-hidden="true"></i> Saqlash</button>
+              <button type="button" class="btn btn--primary" id="generalSaveBtn"><i class="ph ph-floppy-disk" aria-hidden="true"></i> <span data-i18n="admin.ui.save">Saqlash</span></button>
             </div>
           </div>
           <div id="paramsCard" style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;">
-            <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">Tizim parametrlari</h2>
-            <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;">Avtomatik jarayonlar va integratsiyalar. Hozircha bu tanlovlar faqat shu brauzerda saqlanadi.</p>
+            <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;" data-i18n="admin.settingsSystem.params.title">Tizim parametrlari</h2>
+            <p style="font-size:14px;color:var(--grey-400);margin:0 0 16px;" data-i18n="admin.settingsSystem.params.note">Avtomatik jarayonlar va integratsiyalar. Hozircha bu tanlovlar faqat shu brauzerda saqlanadi.</p>
             <div style="display:flex;flex-direction:column;gap:14px;">
-              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-arrows-clockwise" aria-hidden="true"></i> Avtomatik yangilash</span><input type="checkbox" data-pref="autoRefresh" checked style="width:18px;height:18px;" /></label>
-              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-database" aria-hidden="true"></i> Avtomatik zaxira nusxa</span><input type="checkbox" data-pref="autoBackup" checked style="width:18px;height:18px;" /></label>
-              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-file-text" aria-hidden="true"></i> Audit jurnali</span><input type="checkbox" data-pref="auditLog" checked style="width:18px;height:18px;" /></label>
-              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-activity" aria-hidden="true"></i> Foydalanuvchi faoliyatini kuzatish</span><input type="checkbox" data-pref="trackActivity" style="width:18px;height:18px;" /></label>
+              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-arrows-clockwise" aria-hidden="true"></i> <span data-i18n="admin.settingsSystem.params.autoRefresh">Avtomatik yangilash</span></span><input type="checkbox" data-pref="autoRefresh" checked style="width:18px;height:18px;" /></label>
+              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-database" aria-hidden="true"></i> <span data-i18n="admin.settingsSystem.params.autoBackup">Avtomatik zaxira nusxa</span></span><input type="checkbox" data-pref="autoBackup" checked style="width:18px;height:18px;" /></label>
+              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-file-text" aria-hidden="true"></i> <span data-i18n="admin.settingsSystem.params.auditLog">Audit jurnali</span></span><input type="checkbox" data-pref="auditLog" checked style="width:18px;height:18px;" /></label>
+              <label style="display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--grey-900);"><span style="display:flex;align-items:center;gap:8px;"><i class="ph ph-activity" aria-hidden="true"></i> <span data-i18n="admin.settingsSystem.params.trackActivity">Foydalanuvchi faoliyatini kuzatish</span></span><input type="checkbox" data-pref="trackActivity" style="width:18px;height:18px;" /></label>
             </div>
             <div style="margin-top:20px;">
-              <button type="button" class="btn btn--primary" id="paramSaveBtn"><i class="ph ph-floppy-disk" aria-hidden="true"></i> Saqlash</button>
+              <button type="button" class="btn btn--primary" id="paramSaveBtn"><i class="ph ph-floppy-disk" aria-hidden="true"></i> <span data-i18n="admin.ui.save">Saqlash</span></button>
             </div>
           </div>
         </div>
@@ -143,15 +150,15 @@
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
-    <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2>
-      <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+    <div class="notifications-panel__header"><h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+      <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.settingsSystem.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
-      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+      <p class="text-dim" style="padding:20px;text-align:center" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
-      <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" data-i18n="admin.ui.markAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
   <script src="js/api-client.js"></script>

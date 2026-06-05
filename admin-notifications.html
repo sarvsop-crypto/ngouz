@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bildirishnomalar — O'zNNTMA Admin</title>
+  <title data-i18n="admin.notifications.docTitle">Bildirishnomalar — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -55,8 +55,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
-  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.notifications.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+  <a class="skip-link" href="#main-content" data-i18n="admin.notifications.skipLink">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -110,7 +117,7 @@
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -127,63 +134,63 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.notifications.title" class="main__title">Bildirishnomalar</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--primary" id="sendNotifBtn"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i> Yangi xabar yuborish</button>
+          <button type="button" class="btn btn--primary" id="sendNotifBtn"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i> <span data-i18n="admin.notifications.sendNew">Yangi xabar yuborish</span></button>
         </div>
       </div>
 
       <section class="table-section" aria-labelledby="notifStreamTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="notifStreamTitle">Yuborilgan xabarlar</h2>
+          <h2 class="table-section__title" id="notifStreamTitle" data-i18n="admin.notifications.sentMessages">Yuborilgan xabarlar</h2>
         </div>
         <div id="notifStreamContainer" class="notif-stream" aria-live="polite" aria-busy="true">
-          <p class="text-dim" role="status" style="text-align:center;padding:32px;">Yuklanmoqda...</p>
+          <p class="text-dim" role="status" style="text-align:center;padding:32px;" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
         </div>
       </section>
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header">
-      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
-    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+    <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.notifications.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
-      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+      <p class="text-dim" style="padding:20px;text-align:center" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
-      <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" data-i18n="admin.ui.markAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
 
   <div class="modal-overlay" id="composeModal" role="dialog" aria-modal="true" aria-labelledby="composeTitle" aria-hidden="true">
     <div class="modal" style="max-width:520px;">
       <div class="modal__head">
-        <h2 class="modal__title" id="composeTitle">Yangi xabarnoma</h2>
-        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="composeTitle" data-i18n="admin.notifications.modal.title">Yangi xabarnoma</h2>
+        <button type="button" class="modal__close" data-modal-close data-i18n-aria-label="admin.notifications.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body">
         <div class="modal__field">
-          <label class="modal__label" for="cmpTitle">Sarlavha <span aria-hidden="true" style="color:#dc2626">*</span></label>
-          <input type="text" id="cmpTitle" class="modal__input" placeholder="Xabar sarlavhasini kiriting" maxlength="200" />
+          <label class="modal__label" for="cmpTitle" data-i18n-html="admin.notifications.form.titleLabel">Sarlavha <span aria-hidden="true" style="color:#dc2626">*</span></label>
+          <input type="text" id="cmpTitle" class="modal__input" data-i18n-placeholder="admin.notifications.form.titlePlaceholder" placeholder="Xabar sarlavhasini kiriting" maxlength="200" />
         </div>
         <div class="modal__field">
-          <label class="modal__label" for="cmpBody">Matn</label>
-          <textarea id="cmpBody" class="modal__textarea" rows="4" maxlength="5000" placeholder="Xabar matnini kiriting..."></textarea>
+          <label class="modal__label" for="cmpBody" data-i18n="admin.notifications.form.bodyLabel">Matn</label>
+          <textarea id="cmpBody" class="modal__textarea" rows="4" maxlength="5000" data-i18n-placeholder="admin.notifications.form.bodyPlaceholder" placeholder="Xabar matnini kiriting..."></textarea>
         </div>
         <div class="modal__field">
-          <label class="modal__label" for="cmpType">Turi</label>
+          <label class="modal__label" for="cmpType" data-i18n="admin.table.type">Turi</label>
           <select id="cmpType" class="modal__select">
-            <option value="info">Ma'lumot</option>
-            <option value="warning">Ogohlantirish</option>
-            <option value="success">Muvaffaqiyat</option>
-            <option value="action">Harakat talab qilinadi</option>
+            <option value="info" data-i18n="admin.notifications.type.info">Ma'lumot</option>
+            <option value="warning" data-i18n="admin.notifications.type.warning">Ogohlantirish</option>
+            <option value="success" data-i18n="admin.notifications.type.success">Muvaffaqiyat</option>
+            <option value="action" data-i18n="admin.notifications.type.action">Harakat talab qilinadi</option>
           </select>
         </div>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
-        <button type="button" class="btn btn--primary" id="cmpSendBtn"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i> Yuborish</button>
+        <button type="button" class="btn btn--secondary" data-modal-close data-i18n="admin.ui.cancel">Bekor qilish</button>
+        <button type="button" class="btn btn--primary" id="cmpSendBtn"><i class="ph ph-paper-plane-tilt" aria-hidden="true"></i> <span data-i18n="admin.notifications.modal.send">Yuborish</span></button>
       </div>
     </div>
   </div>

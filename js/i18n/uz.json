@@ -12,27 +12,69 @@
     "breadcrumbAria": "Sahifa joylashuvi",
     "breadcrumbRoot": "Boshqaruv",
     "pages": {
-      "analytics": { "title": "Tahliliy ma’lumotlar" },
-      "corruptionReports": { "title": "Korrupsiya murojaatlari" },
-      "dashboard": { "title": "Boshqaruv paneli" },
-      "documents": { "title": "Hujjatlar" },
-      "events": { "title": "Tadbirlar" },
-      "feedback": { "title": "Qayta aloqa" },
-      "grantApplications": { "title": "Grant arizalari" },
-      "grants": { "title": "Grantlar" },
-      "membershipRequests": { "title": "A’zolik arizalari" },
-      "news": { "title": "Yangiliklar" },
-      "notifications": { "title": "Bildirishnomalar" },
-      "passwordResetRequests": { "title": "Parol tiklash so'rovlari" },
-      "regions": { "title": "Hududlar" },
-      "registry": { "title": "NNT Ro’yxati" },
-      "serviceRequests": { "title": "Xizmat so’rovlari" },
-      "settings": { "title": "Sozlamalar" },
-      "settingsNotifications": { "title": "Sozlamalar" },
-      "settingsSecurity": { "title": "Sozlamalar" },
-      "settingsSystem": { "title": "Sozlamalar" },
-      "tasks": { "title": "Topshiriqlar" },
-      "users": { "title": "Foydalanuvchilar boshqaruvi" }
+      "analytics": {
+        "title": "Tahliliy ma’lumotlar"
+      },
+      "corruptionReports": {
+        "title": "Korrupsiya murojaatlari"
+      },
+      "dashboard": {
+        "title": "Boshqaruv paneli"
+      },
+      "documents": {
+        "title": "Hujjatlar"
+      },
+      "events": {
+        "title": "Tadbirlar"
+      },
+      "feedback": {
+        "title": "Qayta aloqa"
+      },
+      "grantApplications": {
+        "title": "Grant arizalari"
+      },
+      "grants": {
+        "title": "Grantlar"
+      },
+      "membershipRequests": {
+        "title": "A’zolik arizalari"
+      },
+      "news": {
+        "title": "Yangiliklar"
+      },
+      "notifications": {
+        "title": "Bildirishnomalar"
+      },
+      "passwordResetRequests": {
+        "title": "Parol tiklash so'rovlari"
+      },
+      "regions": {
+        "title": "Hududlar"
+      },
+      "registry": {
+        "title": "NNT Ro’yxati"
+      },
+      "serviceRequests": {
+        "title": "Xizmat so’rovlari"
+      },
+      "settings": {
+        "title": "Sozlamalar"
+      },
+      "settingsNotifications": {
+        "title": "Sozlamalar"
+      },
+      "settingsSecurity": {
+        "title": "Sozlamalar"
+      },
+      "settingsSystem": {
+        "title": "Sozlamalar"
+      },
+      "tasks": {
+        "title": "Topshiriqlar"
+      },
+      "users": {
+        "title": "Foydalanuvchilar boshqaruvi"
+      }
     },
     "nav": {
       "dashboard": "Boshqaruv paneli",
@@ -55,6 +97,912 @@
       "grants": "Grantlar",
       "settings": "Sozlamalar",
       "logout": "Chiqish"
+    },
+    "ui": {
+      "notifications": "Bildirishnomalar",
+      "markAllRead": "Barchasini o'qildi deb belgilash",
+      "allNotifications": "Barcha bildirishnomalar",
+      "loading": "Yuklanmoqda...",
+      "search": "Qidirish",
+      "cancel": "Bekor qilish",
+      "save": "Saqlash",
+      "confirmDelete": "Ha, o'chirish",
+      "delete": "O'chirish",
+      "edit": "Tahrirlash",
+      "irreversible": "Bu amalni qaytarib bo'lmaydi."
+    },
+    "table": {
+      "name": "Nomi",
+      "status": "Holat",
+      "date": "Sana",
+      "region": "Hudud",
+      "actions": "Amallar",
+      "select": "Tanlash",
+      "type": "Turi"
+    },
+    "analytics": {
+      "docTitle": "Tahliliy ma'lumotlar — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipLink": "Asosiy kontentga o'tish",
+      "profileName": "Administrator",
+      "profileRole": "Bosh admin",
+      "export": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Eksport",
+      "kpi": {
+        "totalNnt": "Jami NNTlar",
+        "news": "Yangiliklar",
+        "contacts": "Xabarlar",
+        "users": "Foydalanuvchilar"
+      },
+      "region": {
+        "title": "Hududlar bo'yicha tahlil",
+        "searchTools": "Tahliliy hududlarni qidirish",
+        "searchPlaceholder": "Hudud qidirish...",
+        "caption": "Hududlar bo'yicha NNT tahlili",
+        "colTotal": "Jami NNT",
+        "colShare": "Ulush"
+      },
+      "sector": {
+        "title": "Soha bo'yicha taqsimot",
+        "caption": "Soha bo'yicha NNT taqsimoti",
+        "colSector": "Soha",
+        "colCount": "NNT soni",
+        "colShare": "Ulush",
+        "colTrend": "Trend"
+      },
+      "notifClose": "Yopish"
+    },
+    "corruptionReports": {
+      "docTitle": "Korrupsiya murojaatlari — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipToContent": "Asosiy kontentga o'tish",
+      "profileName": "Administrator",
+      "profileRole": "Bosh admin",
+      "exportCsv": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Eksport (CSV)",
+      "securityNotice": "Ushbu bo&rsquo;lim maxfiy ma&rsquo;lumotlarni o&rsquo;z ichiga oladi. Anonim murojaatlar arizachining shaxsini oshkor qilmaydi. Har bir harakat audit jurnaliga yoziladi.",
+      "kpi": {
+        "infoTitle": "Info",
+        "total": "Jami murojaatlar",
+        "new": "Yangi",
+        "review": "Tekshirilmoqda",
+        "closed": "Yopilgan"
+      },
+      "tableTitle": "Kelib tushgan murojaatlar",
+      "filter": {
+        "formAria": "Murojaatlarni filtrlash",
+        "searchLabel": "Murojaat raqami yoki mavzu bo'yicha qidirish",
+        "searchPlaceholder": "Murojaat #, mavzu...",
+        "all": "Barchasi <span class=\"filter-chip__count\" id=\"crpChipCountAll\">&mdash;</span>",
+        "new": "Yangi <span class=\"filter-chip__count\" id=\"crpChipCountNew\">&mdash;</span>",
+        "review": "Tekshirilmoqda <span class=\"filter-chip__count\" id=\"crpChipCountReview\">&mdash;</span>",
+        "closed": "Yopilgan <span class=\"filter-chip__count\" id=\"crpChipCountClosed\">&mdash;</span>",
+        "spam": "Spam <span class=\"filter-chip__count\" id=\"crpChipCountSpam\">&mdash;</span>",
+        "severityLabel": "Darajasi bo'yicha filter",
+        "severityAria": "Darajasi",
+        "allSeverities": "Barcha darajalar",
+        "severityHigh": "Yuqori",
+        "severityMedium": "O&rsquo;rta",
+        "severityLow": "Past"
+      },
+      "tableCaption": "Korrupsiya murojaatlari jadvali",
+      "col": {
+        "reportNo": "Murojaat #",
+        "applicant": "Arizachi",
+        "subject": "Mavzu",
+        "severity": "Darajasi"
+      },
+      "modal": {
+        "close": "Yopish",
+        "title": "Murojaat tafsilotlari",
+        "reportNumber": "Murojaat raqami",
+        "submitted": "Topshirilgan",
+        "fullText": "Batafsil matn",
+        "assignNote": "Mas&rsquo;ul tayinlash / Izoh",
+        "notePlaceholder": "Tekshiruvchi tayinlang yoki izoh qoldiring...",
+        "markHandled": "<i class=\"ph ph-check-circle\" aria-hidden=\"true\"></i> Tekshirildi deb belgilash"
+      }
+    },
+    "dashboard": {
+      "title": "Boshqaruv paneli — O'zNNTMA Admin",
+      "export": "Eksport",
+      "newRequest": "Yangi ariza",
+      "kpi": {
+        "news": "Yangiliklar",
+        "events": "Tadbirlar",
+        "newMessages": "Yangi xabarlar",
+        "documents": "Hujjatlar",
+        "memberNgos": "A'zo NNTlar",
+        "pendingRequests": "Kutilayotgan arizalar",
+        "users": "Foydalanuvchilar",
+        "grants": "Grantlar"
+      },
+      "operationalBlocks": "Operatsion bloklar",
+      "urgentRequests": "Muddatli arizalar",
+      "viewAll": "Barchasi",
+      "recentMessagesCaption": "Kelib tushgan yangi qayta-aloqa xabarlari",
+      "col": {
+        "messageNo": "Xabar #",
+        "name": "Ism",
+        "contact": "Aloqa",
+        "subject": "Mavzu",
+        "province": "Viloyat",
+        "totalNgo": "Jami NNT",
+        "share": "Ulush"
+      },
+      "regionTitle": "Hududlar bo&rsquo;yicha NNT taqsimoti",
+      "regionCaption": "Hududlar bo'yicha NNT taqsimoti",
+      "close": "Yopish"
+    },
+    "documents": {
+      "docTitle": "Hujjatlar — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipLink": "Asosiy kontentga o'tish",
+      "profileRole": "Bosh admin",
+      "export": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Eksport",
+      "newDoc": "<i class=\"ph ph-plus\" aria-hidden=\"true\"></i> Yangi hujjat",
+      "kpi": {
+        "total": "Jami hujjatlar",
+        "laws": "Qonunlar",
+        "statePrograms": "Davlat dasturlari",
+        "disabilityRights": "Nogironlar huquqi"
+      },
+      "tableTitle": "Hujjatlar jadvali",
+      "searchDocsAria": "Hujjatlarni qidirish",
+      "searchPlaceholder": "Hujjat nomini qidirish...",
+      "filterDocsAria": "Hujjatlarni filtrlash",
+      "filter": {
+        "all": "Barchasi",
+        "laws": "Qonunlar",
+        "statePrograms": "Davlat dasturlari",
+        "disabilityRights": "Nogironlar huquqi",
+        "official": "Rasmiy hujjat"
+      },
+      "col": {
+        "title": "Hujjat nomi",
+        "category": "Toifa"
+      },
+      "close": "Yopish",
+      "newDocTitle": "Yangi hujjat",
+      "form": {
+        "heading": "Sarlavha <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "headingPlaceholder": "Hujjat sarlavhasini kiriting",
+        "date": "Sana <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "category": "Toifa <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "selectPlaceholder": "— Tanlang —",
+        "catLawsDecrees": "Qonunlar va qarorlar",
+        "excerpt": "Qisqa matn",
+        "excerptPlaceholder": "Hujjatning qisqacha tavsifi",
+        "body": "To'liq matn <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "bodyPlaceholder": "Hujjatning to'liq matni",
+        "cover": "Muqova rasmi",
+        "coverAlt": "Yuklangan muqova rasmi"
+      },
+      "saveBtn": "<i class=\"ph ph-floppy-disk\" aria-hidden=\"true\"></i> Saqlash",
+      "deleteTitle": "Hujjatni o'chirish",
+      "deletePrompt": "hujjatini o'chirmoqchimisiz?"
+    },
+    "events": {
+      "docTitle": "Tadbirlar — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipToMain": "Asosiy kontentga o'tish",
+      "profileName": "Administrator",
+      "profileRole": "Bosh admin",
+      "newEvent": "Yangi tadbir",
+      "kpiTotal": "Jami tadbirlar",
+      "kpiUpcoming": "Rejalashtirilgan",
+      "kpiPast": "Bo'lib o'tgan",
+      "kpiParticipants": "Jami ishtirokchilar",
+      "tableTitle": "Tadbirlar ro'yxati",
+      "filterAria": "Tadbirlarni filtrlash",
+      "searchPlaceholder": "Nom yoki joy bo'yicha...",
+      "filterAll": "Barchasi",
+      "filterUpcoming": "Rejalashtirilgan",
+      "filterPast": "Bo'lib o'tgan",
+      "tableCaption": "Tadbirlar jadvali",
+      "colLocation": "Joy",
+      "colParticipants": "Ishtirokchilar",
+      "close": "Yopish",
+      "form": {
+        "titlePh": "Tadbir nomini kiriting",
+        "locationPh": "Manzil",
+        "participants": "Ishtirokchilar soni",
+        "deadline": "Ariza topshirish muddati",
+        "description": "Tavsif",
+        "descriptionPh": "Tadbir haqida batafsil ma'lumot",
+        "cover": "Muqova rasmi",
+        "coverAlt": "Yuklangan muqova rasmi"
+      },
+      "modal": {
+        "deleteTitle": "Tadbirni o'chirish",
+        "deletePrompt": "tadbirini o'chirmoqchimisiz?"
+      }
+    },
+    "feedback": {
+      "docTitle": "Qayta aloqa — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipLink": "Asosiy kontentga o'tish",
+      "exportCsv": "Eksport (CSV)",
+      "kpi": {
+        "total": "Jami xabarlar",
+        "new": "Yangi",
+        "handled": "Ko'rib chiqilgan",
+        "spam": "Spam"
+      },
+      "tableTitle": "Kelib tushgan xabarlar",
+      "filterAria": "Xabarlarni filtrlash",
+      "searchPlaceholder": "Ism, email, mavzu...",
+      "filter": {
+        "all": "Barchasi",
+        "new": "Yangi",
+        "read": "O'qilgan",
+        "handled": "Ko'rib chiqilgan",
+        "spam": "Spam"
+      },
+      "tableCaption": "Qayta aloqa xabarlari jadvali",
+      "col": {
+        "sender": "Jo'natuvchi",
+        "subject": "Mavzu"
+      },
+      "close": "Yopish",
+      "modal": {
+        "title": "Xabar tafsilotlari",
+        "number": "Raqam",
+        "name": "Ism",
+        "contact": "Aloqa",
+        "subject": "Mavzu",
+        "message": "Xabar",
+        "changeStatus": "Holatni o'zgartirish"
+      }
+    },
+    "forgotPassword": {
+      "title": "Parolni tiklash — O'zNNTMA Admin",
+      "skipToContent": "Asosiy kontentga o'tish",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "headerTitle": "O&rsquo;zNNTMA Admin",
+      "heading": "Parolni unutdingizmi?",
+      "subtitle": "Avtomatik onlayn tiklash hozircha mavjud emas. Adminstrator parolingizni qo‘lda tiklab beradi — emailingiz va admin akkaunti nomini ko‘rsating.",
+      "contactPrompt": "Bosh administratorga murojaat qiling:",
+      "orPhone": "yoki <a href=\"tel:+998555030512\" style=\"color:var(--primary-600);font-weight:600\">+998 (55) 503-05-12</a>",
+      "rememberedPassword": "Parolni eslading? <a href=\"admin-login\">Kirishga qaytish</a>",
+      "copyright": "&copy; 2026 O&rsquo;zNNTMA. Barcha huquqlar himoyalangan.",
+      "helpLinks": "Yordam havolalari",
+      "footerPrivacy": "Maxfiylik",
+      "footerTerms": "Shartlar",
+      "footerHelp": "Yordam"
+    },
+    "grantApplications": {
+      "docTitle": "Grant arizalari — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipToContent": "Asosiy kontentga o'tish",
+      "profileName": "Administrator",
+      "profileRole": "Bosh admin",
+      "exportCsv": "Eksport (CSV)",
+      "kpiTotal": "Jami arizalar",
+      "kpiPending": "Ko'rib chiqilmoqda",
+      "kpiApproved": "Tasdiqlangan",
+      "kpiDeclined": "Rad etilgan",
+      "tableTitle": "Arizalar va holati",
+      "filterAria": "Arizalarni filtrlash",
+      "searchPlaceholder": "Sarlavha, tashkilot...",
+      "filter": {
+        "all": "Barchasi",
+        "submitted": "Yuborilgan",
+        "review": "Ko'rib chiqilmoqda",
+        "approved": "Tasdiqlangan",
+        "declined": "Rad etilgan"
+      },
+      "tableCaption": "Grant arizalari jadvali",
+      "col": {
+        "title": "Sarlavha",
+        "organization": "Tashkilot",
+        "budget": "Byudjet",
+        "submitted": "Yuborilgan"
+      },
+      "notifClose": "Yopish"
+    },
+    "grants": {
+      "pageTitle": "Grantlar — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipLink": "Asosiy kontentga o'tish",
+      "profileName": "Administrator",
+      "profileRole": "Bosh admin",
+      "newGrant": "Yangi grant",
+      "kpi": {
+        "total": "Jami grantlar",
+        "active": "Faol",
+        "closed": "Yopilgan",
+        "soon": "Muddat yaqin (&le;30 kun)"
+      },
+      "tableTitle": "Grantlar ro'yxati",
+      "filterAria": "Grantlarni filtrlash",
+      "searchPlaceholder": "Nom yoki tashkilot bo'yicha...",
+      "filter": {
+        "all": "Barchasi",
+        "active": "Faol",
+        "closed": "Yopilgan"
+      },
+      "tableCaption": "Grantlar jadvali",
+      "col": {
+        "organizer": "Tashkilot",
+        "category": "Kategoriya",
+        "amount": "Miqdor",
+        "deadline": "Muddat"
+      },
+      "close": "Yopish",
+      "form": {
+        "titlePh": "Grant nomini kiriting",
+        "organizerPh": "Grant beruvchi tashkilot",
+        "categoryPh": "Ekologiya, Ta'lim, Ijtimoiy...",
+        "amountPh": "Masalan: 5 000 – 15 000 USD",
+        "deadline": "Ariza topshirish muddati",
+        "description": "Tavsif",
+        "descriptionPh": "Grant haqida batafsil ma'lumot",
+        "cover": "Muqova rasmi",
+        "coverAlt": "Yuklangan muqova rasmi"
+      },
+      "modal": {
+        "deleteTitle": "Grantni o'chirish",
+        "deletePrompt": "grantini o'chirmoqchimisiz?"
+      }
+    },
+    "login": {
+      "title": "Kirish — O'zNNTMA Admin",
+      "skipToContent": "Asosiy kontentga o'tish",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "welcome": "Xush kelibsiz",
+      "subtitle": "Admin paneliga kirish uchun ma'lumotlaringizni kiriting.",
+      "form": {
+        "emailLabel": "Email manzil <span aria-hidden=\"true\">*</span>",
+        "emailPlaceholder": "Email manzilingizni kiriting",
+        "passwordLabel": "Parol <span aria-hidden=\"true\">*</span>",
+        "passwordPlaceholder": "Parolingizni kiriting",
+        "showPassword": "Parolni ko'rsatish",
+        "rememberMe": "Tizimda qolish",
+        "forgotPassword": "Parolni unutdingizmi?",
+        "submit": "Kirish"
+      },
+      "footer": {
+        "copyright": "&copy; 2026 O&rsquo;zNNTMA. Barcha huquqlar himoyalangan.",
+        "helpLinks": "Yordam havolalari",
+        "privacy": "Maxfiylik",
+        "terms": "Shartlar",
+        "help": "Yordam"
+      }
+    },
+    "membershipRequests": {
+      "docTitle": "A'zolik arizalari — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipLink": "Asosiy kontentga o'tish",
+      "profileName": "Administrator",
+      "profileRole": "Bosh admin",
+      "exportCsv": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Eksport (CSV)",
+      "kpi": {
+        "total": "Jami arizalar",
+        "pending": "Kutilmoqda",
+        "approved": "Tasdiqlangan",
+        "rejected": "Rad etilgan"
+      },
+      "tableTitle": "Arizalar va holati",
+      "filterAria": "Arizalarni filtrlash",
+      "searchPlaceholder": "Tashkilot nomi...",
+      "filter": {
+        "all": "Barchasi",
+        "pending": "Kutilmoqda",
+        "approved": "Tasdiqlangan",
+        "returned": "Qaytarilgan",
+        "rejected": "Rad etilgan"
+      },
+      "tableCaption": "A'zolik arizalari jadvali",
+      "col": {
+        "org": "Tashkilot",
+        "applicant": "Ariza beruvchi"
+      },
+      "notifClose": "Yopish"
+    },
+    "news": {
+      "docTitle": "Yangiliklar — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipLink": "Asosiy kontentga o'tish",
+      "newArticleBtn": "<i class=\"ph ph-plus\" aria-hidden=\"true\"></i> Yangi maqola",
+      "kpi": {
+        "total": "Jami maqolalar",
+        "featured": "Tavsiya etilgan",
+        "announce": "E'lonlar",
+        "analysis": "Tahlil / Press"
+      },
+      "tableTitle": "Maqolalar ro'yxati",
+      "filterAria": "Maqolalarni filtrlash",
+      "searchPlaceholder": "Sarlavha yoki matn bo'yicha...",
+      "filter": {
+        "all": "Barchasi",
+        "announce": "E'lon",
+        "event": "Tadbir",
+        "analysis": "Tahlil",
+        "press": "Press"
+      },
+      "tableCaption": "Yangiliklar jadvali",
+      "col": {
+        "title": "Sarlavha",
+        "category": "Kategoriya",
+        "featured": "Tavsiya"
+      },
+      "close": "Yopish",
+      "modal": {
+        "createTitle": "Yangi maqola",
+        "deleteTitle": "Maqolani o'chirish",
+        "deletePrompt": "maqolasini o'chirmoqchimisiz?"
+      },
+      "form": {
+        "title": "Sarlavha <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "titlePh": "Maqola sarlavhasini kiriting",
+        "date": "Sana <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "category": "Kategoriya <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "selectOption": "— Tanlang —",
+        "optPublications": "Nashrlar (publications)",
+        "optDigest": "Dayjest",
+        "optAbout": "Biz haqimizda",
+        "optIntl": "Xalqaro faoliyat",
+        "optCouncil": "Kengash a'zolari",
+        "optLeadership": "Rahbariyat",
+        "excerpt": "Qisqa matn (excerpt) <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "excerptPh": "Maqolaning qisqacha tavsifi (kartochkada ko'rsatiladi)",
+        "body": "To'liq matn <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "bodyPh": "Maqolaning to'liq matni",
+        "cover": "Muqova rasmi",
+        "coverAlt": "Yuklangan muqova rasmi",
+        "featured": "Bosh sahifada tavsiya etish (featured)"
+      },
+      "saveBtn": "<i class=\"ph ph-floppy-disk\" aria-hidden=\"true\"></i> Saqlash",
+      "confirmDeleteBtn": "<i class=\"ph ph-trash\" aria-hidden=\"true\"></i> Ha, o'chirish"
+    },
+    "notifications": {
+      "docTitle": "Bildirishnomalar — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipLink": "Asosiy kontentga o'tish",
+      "sendNew": "Yangi xabar yuborish",
+      "sentMessages": "Yuborilgan xabarlar",
+      "close": "Yopish",
+      "modal": {
+        "title": "Yangi xabarnoma",
+        "send": "Yuborish"
+      },
+      "form": {
+        "titleLabel": "Sarlavha <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "titlePlaceholder": "Xabar sarlavhasini kiriting",
+        "bodyLabel": "Matn",
+        "bodyPlaceholder": "Xabar matnini kiriting..."
+      },
+      "type": {
+        "info": "Ma'lumot",
+        "warning": "Ogohlantirish",
+        "success": "Muvaffaqiyat",
+        "action": "Harakat talab qilinadi"
+      }
+    },
+    "passwordResetRequests": {
+      "docTitle": "Parol tiklash so'rovlari — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak.",
+      "skipToContent": "Asosiy kontentga o'tish",
+      "exportCsv": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Eksport (CSV)",
+      "intro": "<strong>Jarayon:</strong> Foydalanuvchi parol unutganda ushbu navbatga so'rov qoldiradi. Siz telefon yoki email orqali bog'lanib, identifikatsiyani tasdiqlagandan keyin <a href=\"admin-users\" style=\"color:var(--primary-600);font-weight:600\">Foydalanuvchilar</a> sahifasida tegishli foydalanuvchini topib, parolini qayta belgilang. Keyin bu yerga qaytib so'rovni <em>Hal qilingan</em> deb belgilang.",
+      "kpi": {
+        "total": "Jami so'rovlar",
+        "pending": "Kutilmoqda",
+        "resolved": "Hal qilingan",
+        "rejected": "Rad etilgan"
+      },
+      "queueTitle": "So'rovlar navbati",
+      "filter": {
+        "aria": "So'rovlarni filtrlash",
+        "pending": "Kutilmoqda",
+        "all": "Barchasi",
+        "resolved": "Hal qilingan",
+        "rejected": "Rad etilgan"
+      },
+      "searchPlaceholder": "Telefon, ism...",
+      "tableCaption": "Parol tiklash so'rovlari jadvali",
+      "table": {
+        "phone": "Telefon",
+        "user": "Foydalanuvchi",
+        "note": "Izoh"
+      },
+      "notifClose": "Yopish"
+    },
+    "regions": {
+      "docTitle": "Hududlar — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipToContent": "Asosiy kontentga o'tish",
+      "export": "Eksport",
+      "analyze": "Tahlil",
+      "kpi": {
+        "totalRegions": "Jami hududlar",
+        "totalOrgs": "Jami NNTlar",
+        "topRegion": "Eng faol hudud",
+        "avgPerRegion": "O'rtacha hudud bo'yicha"
+      },
+      "tableTitle": "Viloyatlar va hududlar ro'yxati",
+      "searchRegions": "Hududlarni qidirish",
+      "searchPlaceholder": "Hudud qidirish...",
+      "tableCaption": "Hududlar bo'yicha NNT taqsimoti",
+      "col": {
+        "code": "Kod",
+        "regionName": "Hudud nomi",
+        "totalOrgs": "Jami NNT",
+        "share": "Ulush"
+      },
+      "close": "Yopish"
+    },
+    "registry": {
+      "docTitle": "NNT Ro'yxati — O'zNNTMA Admin",
+      "skipToContent": "Asosiy kontentga o'tish",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "export": "Eksport",
+      "addNnt": "NNT qo'shish",
+      "kpiTotal": "Jami NNTlar",
+      "kpiActive": "Faol",
+      "kpiRegions": "Hududlar",
+      "tableTitle": "NNTlar jadvali",
+      "searchAria": "NNT ro'yxatini qidirish",
+      "searchPlaceholder": "Qidirish...",
+      "tableCaption": "Ro'yxatdan o'tgan NNT tashkilotlari",
+      "colName": "NNT nomi",
+      "colLeader": "Rahbar",
+      "colMemberSince": "A'zo bo'lgan",
+      "close": "Yopish",
+      "form": {
+        "orgName": "Tashkilot nomi",
+        "orgNamePlaceholder": "NNT to'liq nomini kiriting",
+        "typeSelect": "Turini tanlang",
+        "region": "Viloyat",
+        "regionSelect": "Viloyatni tanlang",
+        "memberYear": "A'zolik yili",
+        "contact": "Aloqa ma'lumotlari",
+        "contactPlaceholder": "Telefon yoki email"
+      },
+      "type": {
+        "social": "Ijtimoiy",
+        "charity": "Xayriya",
+        "education": "Ta'lim",
+        "ecology": "Ekologiya",
+        "youth": "Yoshlar",
+        "cultural": "Madaniy",
+        "family": "Oila",
+        "sport": "Sport"
+      },
+      "region": {
+        "toshkentSh": "Toshkent shahri",
+        "toshkentV": "Toshkent viloyati",
+        "samarqand": "Samarqand viloyati",
+        "fargona": "Farg'ona viloyati",
+        "buxoro": "Buxoro viloyati",
+        "namangan": "Namangan viloyati",
+        "andijon": "Andijon viloyati",
+        "qashqadaryo": "Qashqadaryo viloyati",
+        "surxondaryo": "Surxondaryo viloyati",
+        "xorazm": "Xorazm viloyati",
+        "jizzax": "Jizzax viloyati",
+        "sirdaryo": "Sirdaryo viloyati",
+        "navoiy": "Navoiy viloyati",
+        "karakalpakstan": "Qoraqalpog'iston Respublikasi"
+      },
+      "status": {
+        "active": "Faol",
+        "pending": "Yangi",
+        "inactive": "Noaktiv"
+      },
+      "modal": {
+        "addSubmit": "Qo'shish",
+        "deleteTitle": "NNTni o'chirish",
+        "deleteBody": "Quyidagi NNTni o'chirmoqchimisiz? Bu amalni bekor qilib bo'lmaydi."
+      }
+    },
+    "reports": {
+      "docTitle": "Hisobotlar — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipToContent": "Asosiy kontentga o'tish",
+      "breadcrumbAria": "Sahifa joylashuvi",
+      "breadcrumbHome": "Boshqaruv",
+      "title": "Hisobotlar",
+      "profileName": "Administrator",
+      "profileRole": "Bosh admin",
+      "newReport": "Yangi hisobot",
+      "export": "Eksport",
+      "tableTitle": "Hisobotlar jadvali",
+      "searchAria": "Hisobotlarni qidirish",
+      "searchLabel": "Hisobot bo'yicha qidirish",
+      "searchPlaceholder": "Qidirish...",
+      "tableCaption": "Hisobotlar ro'yxati va holati",
+      "colName": "Hisobot nomi",
+      "colOrg": "Tashkilot",
+      "colPeriod": "Davr",
+      "colCreated": "Yaratildi",
+      "closePanel": "Yopish"
+    },
+    "serviceRequests": {
+      "pageTitle": "Xizmat so'rovlari — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipToContent": "Asosiy kontentga o'tish",
+      "exportCsv": "Eksport (CSV)",
+      "kpi": {
+        "total": "Jami so'rovlar",
+        "new": "Yangi",
+        "inProgress": "Jarayonda",
+        "handled": "Javob berilgan"
+      },
+      "tableTitle": "Kelib tushgan so'rovlar",
+      "filter": {
+        "formAria": "So'rovlarni filtrlash",
+        "searchLabel": "So'rov raqami yoki arizachi bo'yicha qidirish",
+        "searchPlaceholder": "So'rov #, arizachi ismi...",
+        "all": "Barchasi",
+        "new": "Yangi",
+        "inProgress": "Jarayonda",
+        "done": "Javob berilgan",
+        "typeLabel": "So'rov turi bo'yicha filter",
+        "allTypes": "Barcha turlar"
+      },
+      "type": {
+        "registration": "Ro'yxatga olish",
+        "reference": "Ma'lumotnoma",
+        "consultation": "Maslahat",
+        "certificate": "Sertifikat",
+        "documentCopy": "Hujjat nusxasi",
+        "other": "Boshqa"
+      },
+      "tableCaption": "Xizmat so'rovlari jadvali",
+      "col": {
+        "requestNo": "So'rov #",
+        "applicant": "Arizachi",
+        "submitted": "Topshirilgan",
+        "assignee": "Mas'ul"
+      },
+      "close": "Yopish",
+      "modal": {
+        "title": "So'rov tafsilotlari",
+        "requestNo": "So'rov raqami",
+        "contact": "Aloqa",
+        "requestText": "So'rov matni",
+        "replyText": "Javob matni",
+        "replyPlaceholder": "Arizachiga javobni kiriting...",
+        "close": "Yopish",
+        "markHandled": "Javob berilgan deb belgilash"
+      },
+      "unassigned": "Tayinlanmagan"
+    },
+    "settingsNotifications": {
+      "docTitle": "Bildirishnomalar — O'zNNTMA Admin",
+      "skipLink": "Asosiy kontentga o'tish",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "breadcrumbSettings": "Sozlamalar",
+      "subnavAria": "Sozlamalar bo'limlari",
+      "subnav": {
+        "profile": "Profil",
+        "notifications": "Bildirishnomalar",
+        "security": "Xavfsizlik",
+        "system": "Tizim"
+      },
+      "channels": {
+        "heading": "Bildirishnoma kanallari",
+        "helper": "Qaysi kanallar orqali xabarnomalar olishni sozlang. Hozircha bu tanlovlar faqat shu brauzerda saqlanadi.",
+        "emailTitle": "Email bildirishnomalar",
+        "emailDesc": "Yangi arizalar va tizim xabarlari emailga yuboriladi",
+        "smsTitle": "SMS bildirishnomalar",
+        "smsDesc": "Muhim xabarlar telefon raqamingizga yuboriladi",
+        "telegramTitle": "Telegram bildirishnomalar",
+        "telegramDesc": "Telegram botga ulanib xabarlar oling",
+        "inappTitle": "Tizim ichidagi bildirishnomalar",
+        "inappDesc": "Dastur ichidagi bildirishnomalar paneli orqali"
+      },
+      "types": {
+        "heading": "Bildirishnoma turlari",
+        "newApplication": "Yangi ariza kelib tushganda",
+        "newUser": "Yangi foydalanuvchi ro'yxatdan o'tganda",
+        "reportSubmitted": "Hisobot yuborilganda",
+        "applicationApproved": "Ariza tasdiqlanganda",
+        "systemError": "Tizim xatoligi yuzaga kelganda"
+      },
+      "panel": {
+        "close": "Yopish"
+      }
+    },
+    "settingsSecurity": {
+      "docTitle": "Xavfsizlik — O'zNNTMA Admin",
+      "skipLink": "Asosiy kontentga o'tish",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "sideNavAria": "Sozlamalar bo'limlari",
+      "sideNav": {
+        "profile": "Profil",
+        "system": "Tizim"
+      },
+      "password": {
+        "title": "Parolni o'zgartirish",
+        "currentLabel": "Joriy parol",
+        "currentPlaceholder": "Joriy parolni kiriting",
+        "newLabel": "Yangi parol (kamida 12 belgi)",
+        "newPlaceholder": "Yangi parolni kiriting",
+        "confirmLabel": "Yangi parolni tasdiqlang",
+        "confirmPlaceholder": "Takrorlab kiriting",
+        "submit": "Parolni yangilash"
+      },
+      "twoFa": {
+        "title": "Ikki bosqichli tasdiqlash",
+        "sub": "Hisobingizni qo'shimcha himoya qatlami bilan himoya qiling",
+        "appTitle": "Autentifikator ilovasi",
+        "appDesc": "Google Authenticator yoki Authy orqali",
+        "comingSoon": "Tez orada",
+        "comingSoonTitle": "Tez orada ishga tushiriladi"
+      },
+      "session": {
+        "title": "Faol seans",
+        "sub": "Joriy qurilma ma'lumoti. Boshqa qurilmalardan kirgan bo'lsangiz, parolni o'zgartiring.",
+        "meta": "Joriy seans",
+        "pill": "Joriy"
+      },
+      "notif": {
+        "close": "Yopish"
+      }
+    },
+    "settingsSystem": {
+      "docTitle": "Tizim — O'zNNTMA Admin",
+      "skipToContent": "Asosiy kontentga o'tish",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "breadcrumbSettings": "Sozlamalar",
+      "subnavAria": "Sozlamalar bo'limlari",
+      "tabProfile": "Profil",
+      "tabNotifications": "Bildirishnomalar",
+      "tabSecurity": "Xavfsizlik",
+      "tabSystem": "Tizim",
+      "general": {
+        "title": "Umumiy sozlamalar",
+        "note": "Bu sozlamalar hozircha faqat shu brauzerda saqlanadi; global backend sozlamalari endpointi hali qo'shilmagan.",
+        "lang": "Interfeys tili",
+        "tz": "Vaqt mintaqasi",
+        "dateFormat": "Sana formati",
+        "pageSize": "Sahifadagi yozuvlar soni"
+      },
+      "params": {
+        "title": "Tizim parametrlari",
+        "note": "Avtomatik jarayonlar va integratsiyalar. Hozircha bu tanlovlar faqat shu brauzerda saqlanadi.",
+        "autoRefresh": "Avtomatik yangilash",
+        "autoBackup": "Avtomatik zaxira nusxa",
+        "auditLog": "Audit jurnali",
+        "trackActivity": "Foydalanuvchi faoliyatini kuzatish"
+      },
+      "close": "Yopish"
+    },
+    "settings": {
+      "docTitle": "Sozlamalar — O'zNNTMA Admin",
+      "skipToContent": "Asosiy kontentga o'tish",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "sectionsAria": "Sozlamalar bo'limlari",
+      "tab": {
+        "profile": "Profil",
+        "notifications": "Bildirishnomalar",
+        "security": "Xavfsizlik",
+        "system": "Tizim"
+      },
+      "profile": {
+        "heading": "Profil ma'lumotlari",
+        "readOnlyNote": "Sizning admin profilingizning faqat o'qish uchun ko'rinishi. O'zgartirish uchun <a href=\"admin-users\" style=\"color:var(--primary-500);text-decoration:underline\">Foydalanuvchilar</a> bo'limi yoki bosh administratorga murojaat qiling.",
+        "name": "Ism",
+        "email": "Email",
+        "phone": "Telefon",
+        "role": "Rol"
+      },
+      "notifClose": "Yopish"
+    },
+    "tasks": {
+      "docTitle": "Topshiriqlar — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipLink": "Asosiy kontentga o'tish",
+      "profileName": "Administrator",
+      "profileRole": "Bosh admin",
+      "kpiPending": "Kutilayotgan arizalar",
+      "kpiApproved": "Tasdiqlangan",
+      "kpiMessages": "Yangi xabarlar",
+      "kpiRejected": "Rad etilgan",
+      "tableTitle": "Topshiriqlar — kelib tushgan a'zolik arizalari",
+      "searchTasksAria": "Topshiriqlarni qidirish",
+      "searchPlaceholder": "Tashkilot nomi...",
+      "tableCaption": "Kelib tushgan a'zolik arizalari (topshiriqlar) jadvali",
+      "colAppId": "Ariza ID",
+      "colOrg": "Tashkilot",
+      "colApplicant": "Ariza beruvchi",
+      "colSubmitted": "Topshirilgan",
+      "notifClose": "Yopish"
+    },
+    "users": {
+      "docTitle": "Foydalanuvchilar — O'zNNTMA Admin",
+      "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+      "skipToContent": "Asosiy kontentga o'tish",
+      "addRegionalAdmin": "Hududiy admin qo'shish",
+      "kpi": {
+        "superAdmin": "Super admin",
+        "regionalAdmins": "Hududiy adminlar",
+        "activeAccounts": "Faol hisoblar",
+        "coveredRegions": "Qoplangan hududlar"
+      },
+      "superAdminBadge": "SUPER ADMIN",
+      "changePassword": "Parolni o'zgartirish",
+      "regionalAdminsTitle": "Hududiy adminlar",
+      "regionalAdminsSubtitle": "Har bir hududiy xodimning kirish huquqlarini alohida sozlang",
+      "searchPlaceholder": "Qidirish...",
+      "regionFilterAria": "Hudud filter",
+      "allRegions": "Barcha hududlar",
+      "region": {
+        "tashkentCity": "Toshkent shahri",
+        "tashkentRegion": "Toshkent viloyati",
+        "samarkand": "Samarqand viloyati",
+        "fergana": "Farg'ona viloyati",
+        "bukhara": "Buxoro viloyati",
+        "namangan": "Namangan viloyati",
+        "andijan": "Andijon viloyati",
+        "kashkadarya": "Qashqadaryo viloyati",
+        "surkhandarya": "Surxondaryo viloyati",
+        "khorezm": "Xorazm viloyati",
+        "jizzakh": "Jizzax viloyati",
+        "syrdarya": "Sirdaryo viloyati",
+        "navoi": "Navoiy viloyati",
+        "karakalpakstanShort": "Qoraqalpog'iston",
+        "karakalpakstan": "Qoraqalpog'iston Respublikasi"
+      },
+      "tableCaption": "Hududiy adminlar jadvali",
+      "th": {
+        "staff": "Xodim",
+        "grantedRights": "Berilgan huquqlar",
+        "lastLogin": "Oxirgi kirish"
+      },
+      "close": "Yopish",
+      "tablistAria": "Foydalanuvchi sozlamalari",
+      "tab": {
+        "info": "Ma'lumotlar",
+        "perms": "Huquqlar"
+      },
+      "form": {
+        "firstName": "Ism",
+        "lastName": "Familiya",
+        "email": "Email",
+        "phone": "Telefon",
+        "selectRegion": "— Hududni tanlang —",
+        "tempPassword": "Vaqtinchalik parol",
+        "minChars": "Kamida 12 ta belgi",
+        "currentPassword": "Joriy parol",
+        "newPassword": "Yangi parol",
+        "confirmNewPassword": "Yangi parolni tasdiqlang"
+      },
+      "perms": {
+        "intro": "Ushbu hududiy admin faqat <strong>o'z hududi</strong> bo'yicha ma'lumotlarga kiradi. Quyida qaysi bo'limlarga kirish huquqi berishni tanlang.",
+        "contentGroup": "Kontent boshqaruvi",
+        "news": "Yangiliklar",
+        "events": "Tadbirlar",
+        "grants": "Grantlar",
+        "publish": "Kontent nashr qilish",
+        "viewAddEdit": "Ko'rish, qo'shish, tahrirlash",
+        "publishSub": "Saytga chiqarish huquqi",
+        "dataGroup": "Ma'lumotlarga kirish (faqat o'z hududi)",
+        "registry": "NNT ro'yxati",
+        "registrySub": "O'z hududidagi NNTlarni ko'rish",
+        "appsView": "Arizalarni ko'rish",
+        "appsViewSub": "O'z hududidan kelgan arizalar",
+        "appsManage": "Arizalarni boshqarish",
+        "appsManageSub": "Tasdiqlash, qaytarish, izoh qo'shish",
+        "documents": "Hujjatlar",
+        "documentsSub": "Ko'rish va yuklash",
+        "reports": "Hisobotlar va tahlil",
+        "reportsSub": "Ko'rish va yuklab olish",
+        "tasksGroup": "Topshiriqlar",
+        "tasksView": "Topshiriqlarni ko'rish",
+        "tasksViewSub": "O'ziga tayinlangan topshiriqlar",
+        "tasksCreate": "Topshiriqlar yaratish",
+        "tasksCreateSub": "Yangi topshiriq qo'shish va boshqarish",
+        "superAdminNotice": "Foydalanuvchilar boshqaruvi va tizim sozlamalari faqat Super Admin uchun. Hududiy admin bu bo'limlarga kira olmaydi."
+      },
+      "changeBtn": "O'zgartirish",
+      "resetPwTitle": "Foydalanuvchi parolini tiklash",
+      "resetPwUserLabel": "Foydalanuvchi:",
+      "resetPwBtn": "Parolni tiklash",
+      "deleteTitle": "Hisobni o'chirish",
+      "deleteConfirmQuestion": "hisobini o'chirmoqchimisiz?",
+      "deleteConfirmNote": "Bu amalni qaytarib bo'lmaydi. Xodim tizimga kira olmaydi."
     }
   },
   "cabinet": {
@@ -90,17 +1038,39 @@
     "notifNew": "yangi",
     "breadcrumbAria": "Sahifa joylashuvi",
     "pages": {
-      "dashboard": { "title": "Bosh sahifa" },
-      "documents": { "title": "Hujjatlar" },
-      "events": { "title": "Tadbirlar" },
-      "news": { "title": "Yangiliklar" },
-      "notifications": { "title": "Bildirishnomalar" },
-      "organization": { "title": "Tashkilotim" },
-      "reports": { "title": "Hisobotlar" },
-      "settings": { "title": "Sozlamalar" },
-      "settingsNotifications": { "title": "Sozlamalar" },
-      "settingsOrg": { "title": "Sozlamalar" },
-      "settingsSecurity": { "title": "Sozlamalar" }
+      "dashboard": {
+        "title": "Bosh sahifa"
+      },
+      "documents": {
+        "title": "Hujjatlar"
+      },
+      "events": {
+        "title": "Tadbirlar"
+      },
+      "news": {
+        "title": "Yangiliklar"
+      },
+      "notifications": {
+        "title": "Bildirishnomalar"
+      },
+      "organization": {
+        "title": "Tashkilotim"
+      },
+      "reports": {
+        "title": "Hisobotlar"
+      },
+      "settings": {
+        "title": "Sozlamalar"
+      },
+      "settingsNotifications": {
+        "title": "Sozlamalar"
+      },
+      "settingsOrg": {
+        "title": "Sozlamalar"
+      },
+      "settingsSecurity": {
+        "title": "Sozlamalar"
+      }
     }
   },
   "common": {

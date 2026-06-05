@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Korrupsiya murojaatlari — O'zNNTMA Admin</title>
+  <title data-i18n="admin.corruptionReports.docTitle">Korrupsiya murojaatlari — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -33,8 +33,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
-  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.corruptionReports.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+  <a class="skip-link" href="#main-content" data-i18n="admin.corruptionReports.skipToContent">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -88,15 +95,15 @@
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
             <div class="main__profile-avatar u-avatar-badge-sm">A</div>
             <div>
-              <div class="main__profile-name" data-user-name>Administrator</div>
-              <div class="main__profile-role" data-user-role>Bosh admin</div>
+              <div class="main__profile-name" data-user-name data-i18n="admin.corruptionReports.profileName">Administrator</div>
+              <div class="main__profile-role" data-user-role data-i18n="admin.corruptionReports.profileRole">Bosh admin</div>
             </div>
           </div>
         </div>
@@ -105,138 +112,138 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.corruptionReports.title" class="main__title">Korrupsiya murojaatlari</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" id="exportCorruptionBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport (CSV)</button>
+          <button type="button" class="btn btn--secondary" id="exportCorruptionBtn" data-i18n="admin.corruptionReports.exportCsv" data-i18n-html><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport (CSV)</button>
         </div>
       </div>
 
       <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:12px 16px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start;font-size:13px;color:#991b1b;">
         <i class="ph ph-lock-key" style="font-size:18px;flex-shrink:0;margin-top:1px;" aria-hidden="true"></i>
-        <span>Ushbu bo&rsquo;lim maxfiy ma&rsquo;lumotlarni o&rsquo;z ichiga oladi. Anonim murojaatlar arizachining shaxsini oshkor qilmaydi. Har bir harakat audit jurnaliga yoziladi.</span>
+        <span data-i18n="admin.corruptionReports.securityNotice">Ushbu bo&rsquo;lim maxfiy ma&rsquo;lumotlarni o&rsquo;z ichiga oladi. Anonim murojaatlar arizachining shaxsini oshkor qilmaydi. Har bir harakat audit jurnaliga yoziladi.</span>
       </div>
 
       <div class="cards">
         <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-shield-warning" aria-hidden="true"></i></div><span class="card__info" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Jami murojaatlar</p><p class="card__value" id="crpKpiTotal">&mdash;</p></div></div>
+          <div class="card__head"><div class="card__icon"><i class="ph ph-shield-warning" aria-hidden="true"></i></div><span class="card__info" data-i18n-title="admin.corruptionReports.kpi.infoTitle" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.corruptionReports.kpi.total">Jami murojaatlar</p><p class="card__value" id="crpKpiTotal">&mdash;</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-envelope-simple-open" aria-hidden="true"></i></div><span class="card__info" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Yangi</p><p class="card__value" id="crpKpiNew">&mdash;</p></div></div>
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-envelope-simple-open" aria-hidden="true"></i></div><span class="card__info" data-i18n-title="admin.corruptionReports.kpi.infoTitle" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.corruptionReports.kpi.new">Yangi</p><p class="card__value" id="crpKpiNew">&mdash;</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-magnifying-glass" aria-hidden="true"></i></div><span class="card__info" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Tekshirilmoqda</p><p class="card__value" id="crpKpiRead">&mdash;</p></div></div>
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-magnifying-glass" aria-hidden="true"></i></div><span class="card__info" data-i18n-title="admin.corruptionReports.kpi.infoTitle" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.corruptionReports.kpi.review">Tekshirilmoqda</p><p class="card__value" id="crpKpiRead">&mdash;</p></div></div>
         </div>
         <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle" aria-hidden="true"></i></div><span class="card__info" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
-          <div class="card__body"><div><p class="card__label">Yopilgan</p><p class="card__value" id="crpKpiHandled">&mdash;</p></div></div>
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle" aria-hidden="true"></i></div><span class="card__info" data-i18n-title="admin.corruptionReports.kpi.infoTitle" title="Info"><i class="ph ph-info" aria-hidden="true"></i></span></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.corruptionReports.kpi.closed">Yopilgan</p><p class="card__value" id="crpKpiHandled">&mdash;</p></div></div>
         </div>
       </div>
 
       <section class="table-section" aria-labelledby="corruptionTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="corruptionTableTitle">Kelib tushgan murojaatlar</h2>
+          <h2 class="table-section__title" id="corruptionTableTitle" data-i18n="admin.corruptionReports.tableTitle">Kelib tushgan murojaatlar</h2>
         </div>
-        <form class="u-filter-row" role="search" aria-label="Murojaatlarni filtrlash">
-          <label for="corruptionSearch" class="u-visually-hidden">Murojaat raqami yoki mavzu bo'yicha qidirish</label>
-          <input id="corruptionSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" placeholder="Murojaat #, mavzu..." aria-label="Qidirish" maxlength="200" />
-          <button type="button" class="filter-chip is-active" data-filter="all" aria-pressed="true" aria-controls="corruptionTableBody">Barchasi <span class="filter-chip__count" id="crpChipCountAll">&mdash;</span></button>
-          <button type="button" class="filter-chip" data-filter="new" aria-pressed="false" aria-controls="corruptionTableBody">Yangi <span class="filter-chip__count" id="crpChipCountNew">&mdash;</span></button>
-          <button type="button" class="filter-chip" data-filter="review" aria-pressed="false" aria-controls="corruptionTableBody">Tekshirilmoqda <span class="filter-chip__count" id="crpChipCountReview">&mdash;</span></button>
-          <button type="button" class="filter-chip" data-filter="closed" aria-pressed="false" aria-controls="corruptionTableBody">Yopilgan <span class="filter-chip__count" id="crpChipCountClosed">&mdash;</span></button>
-          <button type="button" class="filter-chip" data-filter="spam" aria-pressed="false" aria-controls="corruptionTableBody">Spam <span class="filter-chip__count" id="crpChipCountSpam">&mdash;</span></button>
+        <form class="u-filter-row" role="search" data-i18n-aria-label="admin.corruptionReports.filter.formAria" aria-label="Murojaatlarni filtrlash">
+          <label for="corruptionSearch" class="u-visually-hidden" data-i18n="admin.corruptionReports.filter.searchLabel">Murojaat raqami yoki mavzu bo'yicha qidirish</label>
+          <input id="corruptionSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" data-i18n-placeholder="admin.corruptionReports.filter.searchPlaceholder" placeholder="Murojaat #, mavzu..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" />
+          <button type="button" class="filter-chip is-active" data-filter="all" aria-pressed="true" aria-controls="corruptionTableBody" data-i18n="admin.corruptionReports.filter.all" data-i18n-html>Barchasi <span class="filter-chip__count" id="crpChipCountAll">&mdash;</span></button>
+          <button type="button" class="filter-chip" data-filter="new" aria-pressed="false" aria-controls="corruptionTableBody" data-i18n="admin.corruptionReports.filter.new" data-i18n-html>Yangi <span class="filter-chip__count" id="crpChipCountNew">&mdash;</span></button>
+          <button type="button" class="filter-chip" data-filter="review" aria-pressed="false" aria-controls="corruptionTableBody" data-i18n="admin.corruptionReports.filter.review" data-i18n-html>Tekshirilmoqda <span class="filter-chip__count" id="crpChipCountReview">&mdash;</span></button>
+          <button type="button" class="filter-chip" data-filter="closed" aria-pressed="false" aria-controls="corruptionTableBody" data-i18n="admin.corruptionReports.filter.closed" data-i18n-html>Yopilgan <span class="filter-chip__count" id="crpChipCountClosed">&mdash;</span></button>
+          <button type="button" class="filter-chip" data-filter="spam" aria-pressed="false" aria-controls="corruptionTableBody" data-i18n="admin.corruptionReports.filter.spam" data-i18n-html>Spam <span class="filter-chip__count" id="crpChipCountSpam">&mdash;</span></button>
           <!-- Severity filter is hidden until the backend tracks per-
                message severity. The dedicated table column also reads
                '—' for every row right now (see line 289 below); leaving
                an enabled select that does nothing is worse UX than
                hiding it. -->
-          <label for="corruptionSeverity" class="u-visually-hidden">Darajasi bo'yicha filter</label>
-          <select id="corruptionSeverity" class="table-section__search u-search-160" aria-label="Darajasi" hidden>
-            <option value="">Barcha darajalar</option>
-            <option>Yuqori</option>
-            <option>O&rsquo;rta</option>
-            <option>Past</option>
+          <label for="corruptionSeverity" class="u-visually-hidden" data-i18n="admin.corruptionReports.filter.severityLabel">Darajasi bo'yicha filter</label>
+          <select id="corruptionSeverity" class="table-section__search u-search-160" data-i18n-aria-label="admin.corruptionReports.filter.severityAria" aria-label="Darajasi" hidden>
+            <option value="" data-i18n="admin.corruptionReports.filter.allSeverities">Barcha darajalar</option>
+            <option data-i18n="admin.corruptionReports.filter.severityHigh">Yuqori</option>
+            <option data-i18n="admin.corruptionReports.filter.severityMedium">O&rsquo;rta</option>
+            <option data-i18n="admin.corruptionReports.filter.severityLow">Past</option>
           </select>
         </form>
         <table class="table">
-          <caption class="u-visually-hidden">Korrupsiya murojaatlari jadvali</caption>
+          <caption class="u-visually-hidden" data-i18n="admin.corruptionReports.tableCaption">Korrupsiya murojaatlari jadvali</caption>
           <thead>
             <tr>
-              <th scope="col">Murojaat #</th><th scope="col">Arizachi</th><th scope="col">Mavzu</th>
-              <th scope="col">Hudud</th><th scope="col">Darajasi</th><th scope="col">Holat</th><th scope="col"><span class="u-visually-hidden">Amallar</span></th>
+              <th scope="col" data-i18n="admin.corruptionReports.col.reportNo">Murojaat #</th><th scope="col" data-i18n="admin.corruptionReports.col.applicant">Arizachi</th><th scope="col" data-i18n="admin.corruptionReports.col.subject">Mavzu</th>
+              <th scope="col" data-i18n="admin.table.region">Hudud</th><th scope="col" data-i18n="admin.corruptionReports.col.severity">Darajasi</th><th scope="col" data-i18n="admin.table.status">Holat</th><th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.actions">Amallar</span></th>
             </tr>
           </thead>
           <tbody id="corruptionTableBody" aria-live="polite" aria-busy="true">
-            <tr><td colspan="7" role="status" style="text-align:center;color:var(--grey-400);">Yuklanmoqda...</td></tr>
+            <tr><td colspan="7" role="status" style="text-align:center;color:var(--grey-400);" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header">
-      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
-    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+    <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.corruptionReports.modal.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
-      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+      <p class="text-dim" style="padding:20px;text-align:center" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
-      <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" data-i18n="admin.ui.markAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
 
   <div class="modal-overlay" id="corruptionReviewModal" role="dialog" aria-modal="true" aria-labelledby="corruptionReviewTitle" aria-hidden="true">
     <div class="modal u-modal-max-600">
       <div class="modal__head">
-        <h2 class="modal__title" id="corruptionReviewTitle">Murojaat tafsilotlari</h2>
-        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="corruptionReviewTitle" data-i18n="admin.corruptionReports.modal.title">Murojaat tafsilotlari</h2>
+        <button type="button" class="modal__close" data-modal-close data-i18n-aria-label="admin.corruptionReports.modal.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body">
         <div class="u-modal-grid-2">
           <div class="modal__field">
-            <label class="modal__label">Murojaat raqami</label>
+            <label class="modal__label" data-i18n="admin.corruptionReports.modal.reportNumber">Murojaat raqami</label>
             <div class="u-modal-value u-modal-value-strong" id="crpReviewId">&mdash;</div>
           </div>
           <div class="modal__field">
-            <label class="modal__label">Topshirilgan</label>
+            <label class="modal__label" data-i18n="admin.corruptionReports.modal.submitted">Topshirilgan</label>
             <div class="u-modal-value" id="crpReviewDate">&mdash;</div>
           </div>
           <div class="modal__field">
-            <label class="modal__label">Arizachi</label>
+            <label class="modal__label" data-i18n="admin.corruptionReports.col.applicant">Arizachi</label>
             <div class="u-modal-value" id="crpReviewName">&mdash;</div>
           </div>
           <div class="modal__field">
-            <label class="modal__label">Hudud</label>
+            <label class="modal__label" data-i18n="admin.table.region">Hudud</label>
             <div class="u-modal-value" id="crpReviewRegion">&mdash;</div>
           </div>
           <div class="modal__field">
-            <label class="modal__label">Darajasi</label>
+            <label class="modal__label" data-i18n="admin.corruptionReports.col.severity">Darajasi</label>
             <div class="u-modal-value" id="crpReviewSeverity">&mdash;</div>
           </div>
           <div class="modal__field">
-            <label class="modal__label">Holat</label>
+            <label class="modal__label" data-i18n="admin.table.status">Holat</label>
             <div class="u-modal-value" id="crpReviewStatus">&mdash;</div>
           </div>
         </div>
         <div class="modal__field">
-          <label class="modal__label">Mavzu</label>
+          <label class="modal__label" data-i18n="admin.corruptionReports.col.subject">Mavzu</label>
           <div class="u-modal-value u-modal-value-medium" id="crpReviewSubject">&mdash;</div>
         </div>
         <div class="modal__field">
-          <label class="modal__label">Batafsil matn</label>
+          <label class="modal__label" data-i18n="admin.corruptionReports.modal.fullText">Batafsil matn</label>
           <div class="u-modal-value" id="crpReviewBody" style="white-space:pre-wrap">&mdash;</div>
         </div>
         <div class="modal__field">
-          <label class="modal__label" for="crpReviewNote">Mas&rsquo;ul tayinlash / Izoh</label>
-          <textarea id="crpReviewNote" class="modal__textarea" maxlength="5000" placeholder="Tekshiruvchi tayinlang yoki izoh qoldiring..."></textarea>
+          <label class="modal__label" for="crpReviewNote" data-i18n="admin.corruptionReports.modal.assignNote">Mas&rsquo;ul tayinlash / Izoh</label>
+          <textarea id="crpReviewNote" class="modal__textarea" maxlength="5000" data-i18n-placeholder="admin.corruptionReports.modal.notePlaceholder" placeholder="Tekshiruvchi tayinlang yoki izoh qoldiring..."></textarea>
         </div>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" data-modal-close>Yopish</button>
-        <button type="button" class="btn btn--primary" id="crpMarkHandledBtn"><i class="ph ph-check-circle" aria-hidden="true"></i> Tekshirildi deb belgilash</button>
+        <button type="button" class="btn btn--secondary" data-modal-close data-i18n="admin.corruptionReports.modal.close">Yopish</button>
+        <button type="button" class="btn btn--primary" id="crpMarkHandledBtn" data-i18n="admin.corruptionReports.modal.markHandled" data-i18n-html><i class="ph ph-check-circle" aria-hidden="true"></i> Tekshirildi deb belgilash</button>
       </div>
     </div>
   </div>

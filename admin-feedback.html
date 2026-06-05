@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Qayta aloqa — O'zNNTMA Admin</title>
+  <title data-i18n="admin.feedback.docTitle">Qayta aloqa — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -34,8 +34,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
-  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.feedback.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+  <a class="skip-link" href="#main-content" data-i18n="admin.feedback.skipLink">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -89,7 +96,7 @@
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -106,100 +113,100 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.feedback.title" class="main__title">Qayta aloqa</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" id="exportFeedbackBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport (CSV)</button>
+          <button type="button" class="btn btn--secondary" id="exportFeedbackBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> <span data-i18n="admin.feedback.exportCsv">Eksport (CSV)</span></button>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-chat-dots" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Jami xabarlar</p><p class="card__value" id="kpiTotal">0</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.feedback.kpi.total">Jami xabarlar</p><p class="card__value" id="kpiTotal">0</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-envelope-simple-open" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Yangi</p><p class="card__value" id="kpiNew">0</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.feedback.kpi.new">Yangi</p><p class="card__value" id="kpiNew">0</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Ko'rib chiqilgan</p><p class="card__value" id="kpiHandled">0</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.feedback.kpi.handled">Ko'rib chiqilgan</p><p class="card__value" id="kpiHandled">0</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-prohibit" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Spam</p><p class="card__value" id="kpiSpam">0</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.feedback.kpi.spam">Spam</p><p class="card__value" id="kpiSpam">0</p></div></div>
         </div>
       </div>
 
       <section class="table-section" aria-labelledby="feedbackTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="feedbackTableTitle">Kelib tushgan xabarlar</h2>
+          <h2 class="table-section__title" id="feedbackTableTitle" data-i18n="admin.feedback.tableTitle">Kelib tushgan xabarlar</h2>
           <div class="table-section__tools"></div>
         </div>
-        <form class="u-filter-row" role="search" aria-label="Xabarlarni filtrlash">
-          <input id="feedbackSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" placeholder="Ism, email, mavzu..." aria-label="Qidirish" maxlength="200" />
-          <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="feedbackTableBody" data-status-filter="all">Barchasi</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="feedbackTableBody" data-status-filter="new">Yangi</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="feedbackTableBody" data-status-filter="read">O'qilgan</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="feedbackTableBody" data-status-filter="handled">Ko'rib chiqilgan</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="feedbackTableBody" data-status-filter="spam">Spam</button>
+        <form class="u-filter-row" role="search" data-i18n-aria-label="admin.feedback.filterAria" aria-label="Xabarlarni filtrlash">
+          <input id="feedbackSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" data-i18n-placeholder="admin.feedback.searchPlaceholder" placeholder="Ism, email, mavzu..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" />
+          <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="feedbackTableBody" data-status-filter="all" data-i18n="admin.feedback.filter.all">Barchasi</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="feedbackTableBody" data-status-filter="new" data-i18n="admin.feedback.filter.new">Yangi</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="feedbackTableBody" data-status-filter="read" data-i18n="admin.feedback.filter.read">O'qilgan</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="feedbackTableBody" data-status-filter="handled" data-i18n="admin.feedback.filter.handled">Ko'rib chiqilgan</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="feedbackTableBody" data-status-filter="spam" data-i18n="admin.feedback.filter.spam">Spam</button>
         </form>
         <table class="table">
-          <caption class="u-visually-hidden">Qayta aloqa xabarlari jadvali</caption>
+          <caption class="u-visually-hidden" data-i18n="admin.feedback.tableCaption">Qayta aloqa xabarlari jadvali</caption>
           <thead>
             <tr>
-              <th scope="col">#</th><th scope="col">Jo'natuvchi</th><th scope="col">Mavzu</th>
-              <th scope="col">Sana</th><th scope="col">Holat</th><th scope="col"><span class="u-visually-hidden">Amallar</span></th>
+              <th scope="col">#</th><th scope="col" data-i18n="admin.feedback.col.sender">Jo'natuvchi</th><th scope="col" data-i18n="admin.feedback.col.subject">Mavzu</th>
+              <th scope="col" data-i18n="admin.table.date">Sana</th><th scope="col" data-i18n="admin.table.status">Holat</th><th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.actions">Amallar</span></th>
             </tr>
           </thead>
           <tbody id="feedbackTableBody" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="6" role="status">Yuklanmoqda...</td></tr>
+            <tr class="u-empty-row"><td colspan="6" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header">
-      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
-    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+    <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.feedback.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
-      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+      <p class="text-dim" style="padding:20px;text-align:center" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
-      <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden data-i18n="admin.ui.markAllRead">Barchasini o&rsquo;qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
 
   <div class="modal-overlay" id="reviewModal" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle" aria-hidden="true">
     <div class="modal u-modal-max-600">
       <div class="modal__head">
-        <h2 class="modal__title" id="reviewModalTitle">Xabar tafsilotlari</h2>
-        <button type="button" class="modal__close" id="reviewModalClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="reviewModalTitle" data-i18n="admin.feedback.modal.title">Xabar tafsilotlari</h2>
+        <button type="button" class="modal__close" id="reviewModalClose" data-i18n-aria-label="admin.feedback.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body">
         <div class="u-modal-grid-2">
-          <div class="modal__field"><label class="modal__label">Raqam</label><div class="u-modal-value" id="rvId"></div></div>
-          <div class="modal__field"><label class="modal__label">Sana</label><div class="u-modal-value" id="rvDate"></div></div>
-          <div class="modal__field"><label class="modal__label">Ism</label><div class="u-modal-value" id="rvName"></div></div>
-          <div class="modal__field"><label class="modal__label">Aloqa</label><div class="u-modal-value" id="rvContact"></div></div>
+          <div class="modal__field"><label class="modal__label" data-i18n="admin.feedback.modal.number">Raqam</label><div class="u-modal-value" id="rvId"></div></div>
+          <div class="modal__field"><label class="modal__label" data-i18n="admin.table.date">Sana</label><div class="u-modal-value" id="rvDate"></div></div>
+          <div class="modal__field"><label class="modal__label" data-i18n="admin.feedback.modal.name">Ism</label><div class="u-modal-value" id="rvName"></div></div>
+          <div class="modal__field"><label class="modal__label" data-i18n="admin.feedback.modal.contact">Aloqa</label><div class="u-modal-value" id="rvContact"></div></div>
         </div>
-        <div class="modal__field"><label class="modal__label">Mavzu</label><div class="u-modal-value" id="rvSubject"></div></div>
-        <div class="modal__field"><label class="modal__label">Xabar</label><div class="u-modal-value" id="rvBody" style="white-space:pre-wrap"></div></div>
+        <div class="modal__field"><label class="modal__label" data-i18n="admin.feedback.modal.subject">Mavzu</label><div class="u-modal-value" id="rvSubject"></div></div>
+        <div class="modal__field"><label class="modal__label" data-i18n="admin.feedback.modal.message">Xabar</label><div class="u-modal-value" id="rvBody" style="white-space:pre-wrap"></div></div>
         <div class="modal__field">
-          <label for="rvStatus" class="modal__label">Holatni o'zgartirish</label>
+          <label for="rvStatus" class="modal__label" data-i18n="admin.feedback.modal.changeStatus">Holatni o'zgartirish</label>
           <select id="rvStatus" class="modal__select">
-            <option value="new">Yangi</option>
-            <option value="read">O'qilgan</option>
-            <option value="handled">Ko'rib chiqilgan</option>
-            <option value="spam">Spam</option>
+            <option value="new" data-i18n="admin.feedback.filter.new">Yangi</option>
+            <option value="read" data-i18n="admin.feedback.filter.read">O'qilgan</option>
+            <option value="handled" data-i18n="admin.feedback.filter.handled">Ko'rib chiqilgan</option>
+            <option value="spam" data-i18n="admin.feedback.filter.spam">Spam</option>
           </select>
         </div>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" id="reviewCancelBtn">Yopish</button>
-        <button type="button" class="btn btn--primary" id="reviewSaveBtn"><i class="ph ph-floppy-disk" aria-hidden="true"></i> Saqlash</button>
+        <button type="button" class="btn btn--secondary" id="reviewCancelBtn" data-i18n="admin.feedback.close">Yopish</button>
+        <button type="button" class="btn btn--primary" id="reviewSaveBtn"><i class="ph ph-floppy-disk" aria-hidden="true"></i> <span data-i18n="admin.ui.save">Saqlash</span></button>
       </div>
     </div>
   </div>

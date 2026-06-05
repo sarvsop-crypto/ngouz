@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kirish — O'zNNTMA Admin</title>
+  <title data-i18n="admin.login.title">Kirish — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -27,8 +27,8 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+<a class="skip-link" href="#main-content" data-i18n="admin.login.skipToContent">Asosiy kontentga o'tish</a>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.login.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
   <div class="page">
     <header class="header">
       <div class="header__logo">N</div>
@@ -42,25 +42,25 @@
               <i class="ph ph-lock-open" style="font-size:24px;color:var(--primary-500);" aria-hidden="true"></i>
             </div>
           </div>
-          <h2 class="form-header__title">Xush kelibsiz</h2>
-          <p class="form-header__subtitle">Admin paneliga kirish uchun ma&rsquo;lumotlaringizni kiriting.</p>
+          <h2 class="form-header__title" data-i18n="admin.login.welcome">Xush kelibsiz</h2>
+          <p class="form-header__subtitle" data-i18n="admin.login.subtitle">Admin paneliga kirish uchun ma&rsquo;lumotlaringizni kiriting.</p>
         </div>
 
         <div id="loginNotice" role="alert" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:8px;padding:12px 14px;margin-bottom:16px;color:#991b1b;font-size:14px;"></div>
 
         <form class="form-fields" id="adminLoginForm">
           <div class="field">
-            <label class="field__label" for="email">Email manzil <span aria-hidden="true">*</span></label>
+            <label class="field__label" for="email" data-i18n="admin.login.form.emailLabel" data-i18n-html>Email manzil <span aria-hidden="true">*</span></label>
             <div class="field__input-wrap">
-              <input type="email" id="email" class="field__input" name="email" placeholder="Email manzilingizni kiriting" required autocomplete="email" maxlength="200" />
+              <input type="email" id="email" class="field__input" name="email" placeholder="Email manzilingizni kiriting" data-i18n-placeholder="admin.login.form.emailPlaceholder" required autocomplete="email" maxlength="200" />
             </div>
           </div>
 
           <div class="field">
-            <label class="field__label" for="password">Parol <span aria-hidden="true">*</span></label>
+            <label class="field__label" for="password" data-i18n="admin.login.form.passwordLabel" data-i18n-html>Parol <span aria-hidden="true">*</span></label>
             <div class="field__input-wrap">
-              <input type="password" id="password" class="field__input" name="password" placeholder="Parolingizni kiriting" required autocomplete="current-password" maxlength="128" minlength="6" />
-              <button type="button" class="field__toggle" id="togglePassword" aria-label="Parolni ko'rsatish">
+              <input type="password" id="password" class="field__input" name="password" placeholder="Parolingizni kiriting" data-i18n-placeholder="admin.login.form.passwordPlaceholder" required autocomplete="current-password" maxlength="128" minlength="6" />
+              <button type="button" class="field__toggle" id="togglePassword" aria-label="Parolni ko'rsatish" data-i18n-aria-label="admin.login.form.showPassword">
                 <i class="ph ph-eye" aria-hidden="true"></i>
               </button>
             </div>
@@ -69,13 +69,13 @@
           <div class="form-options">
             <label class="checkbox-wrap">
               <input type="checkbox" name="remember" />
-              <span>Tizimda qolish</span>
+              <span data-i18n="admin.login.form.rememberMe">Tizimda qolish</span>
             </label>
-            <a href="admin-forgot-password-request" class="form-options__forgot">Parolni unutdingizmi?</a>
+            <a href="admin-forgot-password-request" class="form-options__forgot" data-i18n="admin.login.form.forgotPassword">Parolni unutdingizmi?</a>
           </div>
 
           <button type="submit" class="btn-auth">
-            <i class="ph ph-sign-in" aria-hidden="true"></i> Kirish
+            <i class="ph ph-sign-in" aria-hidden="true"></i> <span data-i18n="admin.login.form.submit">Kirish</span>
           </button>
         </form>
       </div>
@@ -84,12 +84,12 @@
   </div>
 
   <footer class="footer">
-    <p class="footer__copyright">&copy; 2026 O&rsquo;zNNTMA. Barcha huquqlar himoyalangan.</p>
-    <nav class="footer__links" aria-label="Yordam havolalari">
+    <p class="footer__copyright" data-i18n="admin.login.footer.copyright" data-i18n-html>&copy; 2026 O&rsquo;zNNTMA. Barcha huquqlar himoyalangan.</p>
+    <nav class="footer__links" aria-label="Yordam havolalari" data-i18n-aria-label="admin.login.footer.helpLinks">
       <a href="mailto:info@ngo.uz" class="footer__link"><i class="ph ph-envelope" aria-hidden="true"></i> info@ngo.uz</a>
-      <a href="maxfiylik-siyosati" class="footer__link"><i class="ph ph-shield" aria-hidden="true"></i> Maxfiylik</a>
-      <a href="foydalanish-shartlari" class="footer__link"><i class="ph ph-file-text" aria-hidden="true"></i> Shartlar</a>
-      <a href="qayta-aloqa" class="footer__link"><i class="ph ph-question" aria-hidden="true"></i> Yordam</a>
+      <a href="maxfiylik-siyosati" class="footer__link"><i class="ph ph-shield" aria-hidden="true"></i> <span data-i18n="admin.login.footer.privacy">Maxfiylik</span></a>
+      <a href="foydalanish-shartlari" class="footer__link"><i class="ph ph-file-text" aria-hidden="true"></i> <span data-i18n="admin.login.footer.terms">Shartlar</span></a>
+      <a href="qayta-aloqa" class="footer__link"><i class="ph ph-question" aria-hidden="true"></i> <span data-i18n="admin.login.footer.help">Yordam</span></a>
     </nav>
   </footer>
 

@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NNT Ro'yxati — O'zNNTMA Admin</title>
+  <title data-i18n="admin.registry.docTitle">NNT Ro'yxati — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -33,8 +33,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<a class="skip-link" href="#main-content" data-i18n="admin.registry.skipToContent">Asosiy kontentga o'tish</a>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.registry.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -87,7 +94,7 @@
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -104,131 +111,131 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.registry.title" class="main__title">NNT Ro&rsquo;yxati</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" id="exportRegistryBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport</button>
-          <button type="button" class="btn btn--primary" id="addNntBtn"><i class="ph ph-plus" aria-hidden="true"></i> NNT qo'shish</button>
+          <button type="button" class="btn btn--secondary" id="exportRegistryBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> <span data-i18n="admin.registry.export">Eksport</span></button>
+          <button type="button" class="btn btn--primary" id="addNntBtn"><i class="ph ph-plus" aria-hidden="true"></i> <span data-i18n="admin.registry.addNnt">NNT qo'shish</span></button>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-buildings" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Jami NNTlar</p><p class="card__value" id="kpiTotal">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.registry.kpiTotal">Jami NNTlar</p><p class="card__value" id="kpiTotal">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Faol</p><p class="card__value" id="kpiActive">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.registry.kpiActive">Faol</p><p class="card__value" id="kpiActive">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-map-pin" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Hududlar</p><p class="card__value">15</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.registry.kpiRegions">Hududlar</p><p class="card__value">15</p></div></div>
         </div>
       </div>
 
       <section class="table-section">
         <div class="table-section__head">
-          <h2 class="table-section__title">NNTlar jadvali</h2>
-          <div class="table-section__tools" role="search" aria-label="NNT ro'yxatini qidirish">
-            <input id="registrySearch" type="search" enterkeyhint="search" class="table-section__search" placeholder="Qidirish..." aria-label="Qidirish" maxlength="200" aria-controls="registryTableBody" />
+          <h2 class="table-section__title" data-i18n="admin.registry.tableTitle">NNTlar jadvali</h2>
+          <div class="table-section__tools" role="search" data-i18n-aria-label="admin.registry.searchAria" aria-label="NNT ro'yxatini qidirish">
+            <input id="registrySearch" type="search" enterkeyhint="search" class="table-section__search" data-i18n-placeholder="admin.registry.searchPlaceholder" placeholder="Qidirish..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" aria-controls="registryTableBody" />
           </div>
         </div>
         <table class="table">
-          <caption class="u-visually-hidden">Ro'yxatdan o'tgan NNT tashkilotlari</caption>
+          <caption class="u-visually-hidden" data-i18n="admin.registry.tableCaption">Ro'yxatdan o'tgan NNT tashkilotlari</caption>
           <thead>
             <tr>
-              <th scope="col"><span class="u-visually-hidden">Tanlash</span></th><th scope="col">NNT nomi</th><th scope="col">Hudud</th><th scope="col">Rahbar</th><th scope="col">A'zo bo'lgan</th><th scope="col">Holat</th><th scope="col"><span class="u-visually-hidden">Amallar</span></th>
+              <th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.select">Tanlash</span></th><th scope="col" data-i18n="admin.registry.colName">NNT nomi</th><th scope="col" data-i18n="admin.table.region">Hudud</th><th scope="col" data-i18n="admin.registry.colLeader">Rahbar</th><th scope="col" data-i18n="admin.registry.colMemberSince">A'zo bo'lgan</th><th scope="col" data-i18n="admin.table.status">Holat</th><th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.actions">Amallar</span></th>
             </tr>
           </thead>
           <tbody id="registryTableBody" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="7" role="status">Yuklanmoqda...</td></tr>
+            <tr class="u-empty-row"><td colspan="7" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header">
-      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
-    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+    <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.registry.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
-      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+      <p class="text-dim" style="padding:20px;text-align:center" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
-      <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" data-i18n="admin.ui.markAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
   <!-- Add NNT Modal -->
   <div class="modal-overlay" id="addNntModal" role="dialog" aria-modal="true" aria-labelledby="addNntModalTitle" aria-hidden="true">
     <div class="modal" style="max-width:560px;">
       <div class="modal__head">
-        <h2 class="modal__title" id="addNntModalTitle">NNT qo&rsquo;shish</h2>
-        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="addNntModalTitle" data-i18n="admin.registry.addNnt">NNT qo&rsquo;shish</h2>
+        <button type="button" class="modal__close" data-modal-close data-i18n-aria-label="admin.registry.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body">
         <div class="modal__field">
-          <label class="modal__label" for="nnt-name">Tashkilot nomi <span aria-hidden="true" style="color:#dc2626">*</span></label>
-          <input type="text" id="nnt-name" class="modal__input" placeholder="NNT to'liq nomini kiriting" required maxlength="300" />
+          <label class="modal__label" for="nnt-name"><span data-i18n="admin.registry.form.orgName">Tashkilot nomi</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
+          <input type="text" id="nnt-name" class="modal__input" data-i18n-placeholder="admin.registry.form.orgNamePlaceholder" placeholder="NNT to'liq nomini kiriting" required maxlength="300" />
         </div>
         <div class="modal__row">
           <div class="modal__field">
-            <label class="modal__label" for="nnt-type">Turi <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <label class="modal__label" for="nnt-type"><span data-i18n="admin.table.type">Turi</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
             <select id="nnt-type" class="modal__select" required>
-              <option value="">Turini tanlang</option>
-              <option>Ijtimoiy</option>
-              <option>Xayriya</option>
-              <option>Ta&rsquo;lim</option>
-              <option>Ekologiya</option>
-              <option>Yoshlar</option>
-              <option>Madaniy</option>
-              <option>Oila</option>
-              <option>Sport</option>
+              <option value="" data-i18n="admin.registry.form.typeSelect">Turini tanlang</option>
+              <option data-i18n="admin.registry.type.social">Ijtimoiy</option>
+              <option data-i18n="admin.registry.type.charity">Xayriya</option>
+              <option data-i18n="admin.registry.type.education">Ta&rsquo;lim</option>
+              <option data-i18n="admin.registry.type.ecology">Ekologiya</option>
+              <option data-i18n="admin.registry.type.youth">Yoshlar</option>
+              <option data-i18n="admin.registry.type.cultural">Madaniy</option>
+              <option data-i18n="admin.registry.type.family">Oila</option>
+              <option data-i18n="admin.registry.type.sport">Sport</option>
             </select>
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="nnt-region">Viloyat <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <label class="modal__label" for="nnt-region"><span data-i18n="admin.registry.form.region">Viloyat</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
             <select id="nnt-region" class="modal__select" required>
-              <option value="">Viloyatni tanlang</option>
-              <option>Toshkent shahri</option>
-              <option>Toshkent viloyati</option>
-              <option>Samarqand viloyati</option>
-              <option>Farg&rsquo;ona viloyati</option>
-              <option>Buxoro viloyati</option>
-              <option>Namangan viloyati</option>
-              <option>Andijon viloyati</option>
-              <option>Qashqadaryo viloyati</option>
-              <option>Surxondaryo viloyati</option>
-              <option>Xorazm viloyati</option>
-              <option>Jizzax viloyati</option>
-              <option>Sirdaryo viloyati</option>
-              <option>Navoiy viloyati</option>
-              <option>Qoraqalpog&rsquo;iston Respublikasi</option>
+              <option value="" data-i18n="admin.registry.form.regionSelect">Viloyatni tanlang</option>
+              <option data-i18n="admin.registry.region.toshkentSh">Toshkent shahri</option>
+              <option data-i18n="admin.registry.region.toshkentV">Toshkent viloyati</option>
+              <option data-i18n="admin.registry.region.samarqand">Samarqand viloyati</option>
+              <option data-i18n="admin.registry.region.fargona">Farg&rsquo;ona viloyati</option>
+              <option data-i18n="admin.registry.region.buxoro">Buxoro viloyati</option>
+              <option data-i18n="admin.registry.region.namangan">Namangan viloyati</option>
+              <option data-i18n="admin.registry.region.andijon">Andijon viloyati</option>
+              <option data-i18n="admin.registry.region.qashqadaryo">Qashqadaryo viloyati</option>
+              <option data-i18n="admin.registry.region.surxondaryo">Surxondaryo viloyati</option>
+              <option data-i18n="admin.registry.region.xorazm">Xorazm viloyati</option>
+              <option data-i18n="admin.registry.region.jizzax">Jizzax viloyati</option>
+              <option data-i18n="admin.registry.region.sirdaryo">Sirdaryo viloyati</option>
+              <option data-i18n="admin.registry.region.navoiy">Navoiy viloyati</option>
+              <option data-i18n="admin.registry.region.karakalpakstan">Qoraqalpog&rsquo;iston Respublikasi</option>
             </select>
           </div>
         </div>
         <div class="modal__row">
           <div class="modal__field">
-            <label class="modal__label" for="nnt-year">A&rsquo;zolik yili <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <label class="modal__label" for="nnt-year"><span data-i18n="admin.registry.form.memberYear">A&rsquo;zolik yili</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
             <input type="number" inputmode="numeric" id="nnt-year" class="modal__input" placeholder="2024" min="2000" max="2030" required />
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="nnt-status">Holat</label>
+            <label class="modal__label" for="nnt-status" data-i18n="admin.table.status">Holat</label>
             <select id="nnt-status" class="modal__select">
-              <option value="active">Faol</option>
-              <option value="pending">Yangi</option>
-              <option value="inactive">Noaktiv</option>
+              <option value="active" data-i18n="admin.registry.status.active">Faol</option>
+              <option value="pending" data-i18n="admin.registry.status.pending">Yangi</option>
+              <option value="inactive" data-i18n="admin.registry.status.inactive">Noaktiv</option>
             </select>
           </div>
         </div>
         <div class="modal__field">
-          <label class="modal__label" for="nnt-contact">Aloqa ma&rsquo;lumotlari</label>
-          <input type="text" id="nnt-contact" class="modal__input" placeholder="Telefon yoki email" maxlength="200" />
+          <label class="modal__label" for="nnt-contact" data-i18n="admin.registry.form.contact">Aloqa ma&rsquo;lumotlari</label>
+          <input type="text" id="nnt-contact" class="modal__input" data-i18n-placeholder="admin.registry.form.contactPlaceholder" placeholder="Telefon yoki email" maxlength="200" />
         </div>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>
-        <button type="button" class="btn btn--primary"><i class="ph ph-plus" aria-hidden="true"></i> Qo&rsquo;shish</button>
+        <button type="button" class="btn btn--secondary" data-modal-close data-i18n="admin.ui.cancel">Bekor qilish</button>
+        <button type="button" class="btn btn--primary"><i class="ph ph-plus" aria-hidden="true"></i> <span data-i18n="admin.registry.modal.addSubmit">Qo&rsquo;shish</span></button>
       </div>
     </div>
   </div>
@@ -236,16 +243,16 @@
   <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle" aria-hidden="true">
     <div class="modal" style="max-width:480px;">
       <div class="modal__head">
-        <h2 class="modal__title" id="deleteModalTitle">NNTni o&rsquo;chirish</h2>
-        <button type="button" class="modal__close" id="deleteModalClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="deleteModalTitle" data-i18n="admin.registry.modal.deleteTitle">NNTni o&rsquo;chirish</h2>
+        <button type="button" class="modal__close" id="deleteModalClose" data-i18n-aria-label="admin.registry.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body">
-        <p>Quyidagi NNTni o&rsquo;chirmoqchimisiz? Bu amalni bekor qilib bo&rsquo;lmaydi.</p>
+        <p data-i18n="admin.registry.modal.deleteBody">Quyidagi NNTni o&rsquo;chirmoqchimisiz? Bu amalni bekor qilib bo&rsquo;lmaydi.</p>
         <p style="margin-top:8px;font-weight:600;" id="deleteName"></p>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" id="deleteCancelBtn">Bekor qilish</button>
-        <button type="button" class="btn btn--primary danger" id="deleteConfirmBtn"><i class="ph ph-trash" aria-hidden="true"></i> O&rsquo;chirish</button>
+        <button type="button" class="btn btn--secondary" id="deleteCancelBtn" data-i18n="admin.ui.cancel">Bekor qilish</button>
+        <button type="button" class="btn btn--primary danger" id="deleteConfirmBtn"><i class="ph ph-trash" aria-hidden="true"></i> <span data-i18n="admin.ui.delete">O&rsquo;chirish</span></button>
       </div>
     </div>
   </div>

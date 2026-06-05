@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Yangiliklar — O'zNNTMA Admin</title>
+  <title data-i18n="admin.news.docTitle">Yangiliklar — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -57,8 +57,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
-  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.news.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+  <a class="skip-link" href="#main-content" data-i18n="admin.news.skipLink">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -113,7 +120,7 @@
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -130,54 +137,54 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.news.title" class="main__title">Yangiliklar</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--primary" id="newItemBtn"><i class="ph ph-plus" aria-hidden="true"></i> Yangi maqola</button>
+          <button type="button" class="btn btn--primary" id="newItemBtn" data-i18n-html="admin.news.newArticleBtn"><i class="ph ph-plus" aria-hidden="true"></i> Yangi maqola</button>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-newspaper" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Jami maqolalar</p><p class="card__value" id="kpiTotal">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.news.kpi.total">Jami maqolalar</p><p class="card__value" id="kpiTotal">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-star" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Tavsiya etilgan</p><p class="card__value" id="kpiFeatured">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.news.kpi.featured">Tavsiya etilgan</p><p class="card__value" id="kpiFeatured">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-megaphone" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">E'lonlar</p><p class="card__value" id="kpiAnnounce">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.news.kpi.announce">E'lonlar</p><p class="card__value" id="kpiAnnounce">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-chart-line" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Tahlil / Press</p><p class="card__value" id="kpiAnalysis">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.news.kpi.analysis">Tahlil / Press</p><p class="card__value" id="kpiAnalysis">—</p></div></div>
         </div>
       </div>
 
       <section class="table-section" aria-labelledby="newsTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="newsTableTitle">Maqolalar ro'yxati</h2>
+          <h2 class="table-section__title" id="newsTableTitle" data-i18n="admin.news.tableTitle">Maqolalar ro'yxati</h2>
         </div>
-        <form class="u-filter-row" role="search" aria-label="Maqolalarni filtrlash">
-          <input id="cmsSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" placeholder="Sarlavha yoki matn bo'yicha..." aria-label="Qidirish" maxlength="200" />
-          <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="newsTableBody" data-cat-filter="all">Barchasi</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="newsTableBody" data-cat-filter="E'LON">E'lon</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="newsTableBody" data-cat-filter="TADBIR">Tadbir</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="newsTableBody" data-cat-filter="TAHLIL">Tahlil</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="newsTableBody" data-cat-filter="PRESS">Press</button>
+        <form class="u-filter-row" role="search" data-i18n-aria-label="admin.news.filterAria" aria-label="Maqolalarni filtrlash">
+          <input id="cmsSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" data-i18n-placeholder="admin.news.searchPlaceholder" placeholder="Sarlavha yoki matn bo'yicha..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" />
+          <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="newsTableBody" data-cat-filter="all" data-i18n="admin.news.filter.all">Barchasi</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="newsTableBody" data-cat-filter="E'LON" data-i18n="admin.news.filter.announce">E'lon</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="newsTableBody" data-cat-filter="TADBIR" data-i18n="admin.news.filter.event">Tadbir</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="newsTableBody" data-cat-filter="TAHLIL" data-i18n="admin.news.filter.analysis">Tahlil</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="newsTableBody" data-cat-filter="PRESS" data-i18n="admin.news.filter.press">Press</button>
         </form>
         <table class="table">
-          <caption class="u-visually-hidden">Yangiliklar jadvali</caption>
+          <caption class="u-visually-hidden" data-i18n="admin.news.tableCaption">Yangiliklar jadvali</caption>
           <thead>
             <tr>
-              <th scope="col">Sarlavha</th>
-              <th scope="col">Sana</th>
-              <th scope="col">Kategoriya</th>
-              <th scope="col">Tavsiya</th>
-              <th scope="col"><span class="u-visually-hidden">Amallar</span></th>
+              <th scope="col" data-i18n="admin.news.col.title">Sarlavha</th>
+              <th scope="col" data-i18n="admin.table.date">Sana</th>
+              <th scope="col" data-i18n="admin.news.col.category">Kategoriya</th>
+              <th scope="col" data-i18n="admin.news.col.featured">Tavsiya</th>
+              <th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.actions">Amallar</span></th>
             </tr>
           </thead>
           <tbody id="newsTableBody" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="5" role="status">Yuklanmoqda...</td></tr>
+            <tr class="u-empty-row"><td colspan="5" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -185,12 +192,12 @@
   </div>
 
   <!-- Notifications panel -->
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
-    <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2>
-      <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+    <div class="notifications-panel__header"><h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+      <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.news.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>
     <div class="notifications-panel__list"></div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read">Barchasini o'qildi deb belgilash</button>
+      <button type="button" class="notifications-panel__mark-read" data-i18n="admin.ui.markAllRead">Barchasini o'qildi deb belgilash</button>
     </div>
   </div>
 
@@ -198,24 +205,24 @@
   <div class="modal-overlay" id="formModal" role="dialog" aria-modal="true" aria-labelledby="formModalTitle" aria-hidden="true">
     <div class="modal modal--wide">
       <div class="modal__head">
-        <h2 class="modal__title" id="formModalTitle">Yangi maqola</h2>
-        <button type="button" class="modal__close" id="formModalClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="formModalTitle" data-i18n="admin.news.modal.createTitle">Yangi maqola</h2>
+        <button type="button" class="modal__close" id="formModalClose" data-i18n-aria-label="admin.news.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <form id="cmsForm" novalidate>
         <div class="modal__body">
           <div class="modal__field">
-            <label class="modal__label" for="fTitle">Sarlavha <span aria-hidden="true" style="color:#dc2626">*</span></label>
-            <input autocomplete="off" id="fTitle" class="modal__input" type="text" required maxlength="300" placeholder="Maqola sarlavhasini kiriting" />
+            <label class="modal__label" for="fTitle" data-i18n-html="admin.news.form.title">Sarlavha <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <input autocomplete="off" id="fTitle" class="modal__input" type="text" required maxlength="300" data-i18n-placeholder="admin.news.form.titlePh" placeholder="Maqola sarlavhasini kiriting" />
           </div>
           <div class="modal__grid2">
             <div class="modal__field">
-              <label class="modal__label" for="fDate">Sana <span aria-hidden="true" style="color:#dc2626">*</span></label>
+              <label class="modal__label" for="fDate" data-i18n-html="admin.news.form.date">Sana <span aria-hidden="true" style="color:#dc2626">*</span></label>
               <input id="fDate" class="modal__input" type="date" required />
             </div>
             <div class="modal__field">
-              <label class="modal__label" for="fCategory">Kategoriya <span aria-hidden="true" style="color:#dc2626">*</span></label>
+              <label class="modal__label" for="fCategory" data-i18n-html="admin.news.form.category">Kategoriya <span aria-hidden="true" style="color:#dc2626">*</span></label>
               <select id="fCategory" class="modal__select" required>
-                <option value="">— Tanlang —</option>
+                <option value="" data-i18n="admin.news.form.selectOption">— Tanlang —</option>
                 <optgroup label="Yangiliklar">
                   <option value="E'LON">E'LON</option>
                   <option value="TADBIR">TADBIR</option>
@@ -223,45 +230,45 @@
                   <option value="PRESS">PRESS</option>
                 </optgroup>
                 <optgroup label="Maxsus bo&rsquo;limlar">
-                  <option value="nashrlar">Nashrlar (publications)</option>
+                  <option value="nashrlar" data-i18n="admin.news.form.optPublications">Nashrlar (publications)</option>
                   <option value="video">Video</option>
-                  <option value="daydjest">Dayjest</option>
-                  <option value="biz-haqimizda">Biz haqimizda</option>
-                  <option value="xalqaro-faoliyat">Xalqaro faoliyat</option>
-                  <option value="kengash">Kengash a&rsquo;zolari</option>
-                  <option value="rahbariyat">Rahbariyat</option>
+                  <option value="daydjest" data-i18n="admin.news.form.optDigest">Dayjest</option>
+                  <option value="biz-haqimizda" data-i18n="admin.news.form.optAbout">Biz haqimizda</option>
+                  <option value="xalqaro-faoliyat" data-i18n="admin.news.form.optIntl">Xalqaro faoliyat</option>
+                  <option value="kengash" data-i18n="admin.news.form.optCouncil">Kengash a&rsquo;zolari</option>
+                  <option value="rahbariyat" data-i18n="admin.news.form.optLeadership">Rahbariyat</option>
                 </optgroup>
               </select>
             </div>
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="fExcerpt">Qisqa matn (excerpt) <span aria-hidden="true" style="color:#dc2626">*</span></label>
-            <textarea id="fExcerpt" class="modal__textarea" required maxlength="1000" placeholder="Maqolaning qisqacha tavsifi (kartochkada ko'rsatiladi)"></textarea>
+            <label class="modal__label" for="fExcerpt" data-i18n-html="admin.news.form.excerpt">Qisqa matn (excerpt) <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <textarea id="fExcerpt" class="modal__textarea" required maxlength="1000" data-i18n-placeholder="admin.news.form.excerptPh" placeholder="Maqolaning qisqacha tavsifi (kartochkada ko'rsatiladi)"></textarea>
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="fBody">To'liq matn <span aria-hidden="true" style="color:#dc2626">*</span></label>
-            <textarea id="fBody" class="modal__textarea modal__textarea--tall" required maxlength="100000" placeholder="Maqolaning to'liq matni"></textarea>
+            <label class="modal__label" for="fBody" data-i18n-html="admin.news.form.body">To'liq matn <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <textarea id="fBody" class="modal__textarea modal__textarea--tall" required maxlength="100000" data-i18n-placeholder="admin.news.form.bodyPh" placeholder="Maqolaning to'liq matni"></textarea>
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="fCoverFile">Muqova rasmi</label>
+            <label class="modal__label" for="fCoverFile" data-i18n="admin.news.form.cover">Muqova rasmi</label>
             <div style="display:flex;gap:8px;align-items:center">
               <input type="file" id="fCoverFile" accept="image/*" style="font-size:13px" />
               <span id="fCoverStatus" role="status" aria-live="polite" style="font-size:12px;color:#6b7280"></span>
             </div>
             <input type="hidden" id="fCoverImage" />
-            <img id="fCoverPreview" alt="Yuklangan muqova rasmi" style="max-width:200px;max-height:120px;margin-top:8px;border-radius:4px;display:none" decoding="async" onerror="this.style.display='none'"/>
+            <img id="fCoverPreview" data-i18n-alt="admin.news.form.coverAlt" alt="Yuklangan muqova rasmi" style="max-width:200px;max-height:120px;margin-top:8px;border-radius:4px;display:none" decoding="async" onerror="this.style.display='none'"/>
           </div>
           <div class="modal__field">
             <label class="modal__checkbox-row">
               <input type="checkbox" id="fFeatured" />
-              Bosh sahifada tavsiya etish (featured)
+              <span data-i18n="admin.news.form.featured">Bosh sahifada tavsiya etish (featured)</span>
             </label>
           </div>
           <p id="formError" role="alert" aria-live="assertive" style="color:#dc2626;font-size:13px;display:none;margin:0;"></p>
         </div>
         <div class="modal__foot">
-          <button type="button" class="btn btn--secondary" id="formCancelBtn">Bekor qilish</button>
-          <button type="submit" class="btn btn--primary" id="formSaveBtn"><i class="ph ph-floppy-disk" aria-hidden="true"></i> Saqlash</button>
+          <button type="button" class="btn btn--secondary" id="formCancelBtn" data-i18n="admin.ui.cancel">Bekor qilish</button>
+          <button type="submit" class="btn btn--primary" id="formSaveBtn" data-i18n-html="admin.news.saveBtn"><i class="ph ph-floppy-disk" aria-hidden="true"></i> Saqlash</button>
         </div>
       </form>
     </div>
@@ -271,18 +278,18 @@
   <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle" aria-hidden="true">
     <div class="modal u-modal-max-440">
       <div class="modal__head">
-        <h2 class="modal__title" id="deleteModalTitle">Maqolani o'chirish</h2>
-        <button type="button" class="modal__close" id="deleteModalClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="deleteModalTitle" data-i18n="admin.news.modal.deleteTitle">Maqolani o'chirish</h2>
+        <button type="button" class="modal__close" id="deleteModalClose" data-i18n-aria-label="admin.news.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body">
         <p style="margin:0;font-size:14px;color:var(--grey-700,#2b2d3a);">
-          <strong id="deleteName"></strong> maqolasini o'chirmoqchimisiz?<br>
-          <span style="color:var(--grey-400,#818898)">Bu amalni qaytarib bo'lmaydi.</span>
+          <strong id="deleteName"></strong> <span data-i18n="admin.news.modal.deletePrompt">maqolasini o'chirmoqchimisiz?</span><br>
+          <span style="color:var(--grey-400,#818898)" data-i18n="admin.ui.irreversible">Bu amalni qaytarib bo'lmaydi.</span>
         </p>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" id="deleteCancelBtn">Bekor qilish</button>
-        <button type="button" class="btn btn--danger" id="deleteConfirmBtn"><i class="ph ph-trash" aria-hidden="true"></i> Ha, o'chirish</button>
+        <button type="button" class="btn btn--secondary" id="deleteCancelBtn" data-i18n="admin.ui.cancel">Bekor qilish</button>
+        <button type="button" class="btn btn--danger" id="deleteConfirmBtn" data-i18n-html="admin.news.confirmDeleteBtn"><i class="ph ph-trash" aria-hidden="true"></i> Ha, o'chirish</button>
       </div>
     </div>
   </div>

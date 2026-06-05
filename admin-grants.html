@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Grantlar — O'zNNTMA Admin</title>
+  <title data-i18n="admin.grants.pageTitle">Grantlar — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -54,8 +54,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
-  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.grants.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+  <a class="skip-link" href="#main-content" data-i18n="admin.grants.skipLink">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -110,15 +117,15 @@
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
             <div class="main__profile-avatar u-avatar-badge-sm">A</div>
             <div>
-              <div class="main__profile-name" data-user-name>Administrator</div>
-              <div class="main__profile-role" data-user-role>Bosh admin</div>
+              <div class="main__profile-name" data-user-name data-i18n="admin.grants.profileName">Administrator</div>
+              <div class="main__profile-role" data-user-role data-i18n="admin.grants.profileRole">Bosh admin</div>
             </div>
           </div>
         </div>
@@ -127,66 +134,66 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.grants.title" class="main__title">Grantlar</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--primary" id="newItemBtn"><i class="ph ph-plus" aria-hidden="true"></i> Yangi grant</button>
+          <button type="button" class="btn btn--primary" id="newItemBtn"><i class="ph ph-plus" aria-hidden="true"></i> <span data-i18n="admin.grants.newGrant">Yangi grant</span></button>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Jami grantlar</p><p class="card__value" id="kpiTotal">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.grants.kpi.total">Jami grantlar</p><p class="card__value" id="kpiTotal">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Faol</p><p class="card__value" id="kpiActive">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.grants.kpi.active">Faol</p><p class="card__value" id="kpiActive">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-x-circle" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Yopilgan</p><p class="card__value" id="kpiClosed">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.grants.kpi.closed">Yopilgan</p><p class="card__value" id="kpiClosed">—</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Muddat yaqin (&le;30 kun)</p><p class="card__value" id="kpiSoon">—</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.grants.kpi.soon" data-i18n-html>Muddat yaqin (&le;30 kun)</p><p class="card__value" id="kpiSoon">—</p></div></div>
         </div>
       </div>
 
       <section class="table-section" aria-labelledby="grantsTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="grantsTableTitle">Grantlar ro'yxati</h2>
+          <h2 class="table-section__title" id="grantsTableTitle" data-i18n="admin.grants.tableTitle">Grantlar ro'yxati</h2>
         </div>
-        <form class="u-filter-row" role="search" aria-label="Grantlarni filtrlash">
-          <input id="cmsSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" placeholder="Nom yoki tashkilot bo'yicha..." aria-label="Qidirish" maxlength="200" />
-          <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="grantsTableBody" data-status-filter="all">Barchasi</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantsTableBody" data-status-filter="active">Faol</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantsTableBody" data-status-filter="closed">Yopilgan</button>
+        <form class="u-filter-row" role="search" data-i18n-aria-label="admin.grants.filterAria" aria-label="Grantlarni filtrlash">
+          <input id="cmsSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" data-i18n-placeholder="admin.grants.searchPlaceholder" placeholder="Nom yoki tashkilot bo'yicha..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" />
+          <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="grantsTableBody" data-status-filter="all" data-i18n="admin.grants.filter.all">Barchasi</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantsTableBody" data-status-filter="active" data-i18n="admin.grants.filter.active">Faol</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="grantsTableBody" data-status-filter="closed" data-i18n="admin.grants.filter.closed">Yopilgan</button>
         </form>
         <table class="table">
-          <caption class="u-visually-hidden">Grantlar jadvali</caption>
+          <caption class="u-visually-hidden" data-i18n="admin.grants.tableCaption">Grantlar jadvali</caption>
           <thead>
             <tr>
-              <th scope="col">Nomi</th>
-              <th scope="col">Tashkilot</th>
-              <th scope="col">Kategoriya</th>
-              <th scope="col">Miqdor</th>
-              <th scope="col">Muddat</th>
-              <th scope="col">Holat</th>
-              <th scope="col"><span class="u-visually-hidden">Amallar</span></th>
+              <th scope="col" data-i18n="admin.table.name">Nomi</th>
+              <th scope="col" data-i18n="admin.grants.col.organizer">Tashkilot</th>
+              <th scope="col" data-i18n="admin.grants.col.category">Kategoriya</th>
+              <th scope="col" data-i18n="admin.grants.col.amount">Miqdor</th>
+              <th scope="col" data-i18n="admin.grants.col.deadline">Muddat</th>
+              <th scope="col" data-i18n="admin.table.status">Holat</th>
+              <th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.actions">Amallar</span></th>
             </tr>
           </thead>
           <tbody id="grantsTableBody" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="7" role="status">Yuklanmoqda...</td></tr>
+            <tr class="u-empty-row"><td colspan="7" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
-    <div class="notifications-panel__header"><h2 class="notifications-panel__title">Bildirishnomalar</h2>
-      <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+    <div class="notifications-panel__header"><h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+      <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.grants.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>
     <div class="notifications-panel__list"></div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read">Barchasini o'qildi deb belgilash</button>
+      <button type="button" class="notifications-panel__mark-read" data-i18n="admin.ui.markAllRead">Barchasini o'qildi deb belgilash</button>
     </div>
   </div>
 
@@ -194,60 +201,60 @@
   <div class="modal-overlay" id="formModal" role="dialog" aria-modal="true" aria-labelledby="formModalTitle" aria-hidden="true">
     <div class="modal modal--wide">
       <div class="modal__head">
-        <h2 class="modal__title" id="formModalTitle">Yangi grant</h2>
-        <button type="button" class="modal__close" id="formModalClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="formModalTitle" data-i18n="admin.grants.newGrant">Yangi grant</h2>
+        <button type="button" class="modal__close" id="formModalClose" data-i18n-aria-label="admin.grants.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <form id="cmsForm" novalidate>
         <div class="modal__body">
           <div class="modal__field">
-            <label class="modal__label" for="fTitle">Nomi <span aria-hidden="true" style="color:#dc2626">*</span></label>
-            <input autocomplete="off" id="fTitle" class="modal__input" type="text" required maxlength="300" placeholder="Grant nomini kiriting" />
+            <label class="modal__label" for="fTitle"><span data-i18n="admin.table.name">Nomi</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <input autocomplete="off" id="fTitle" class="modal__input" type="text" required maxlength="300" data-i18n-placeholder="admin.grants.form.titlePh" placeholder="Grant nomini kiriting" />
           </div>
           <div class="modal__grid2">
             <div class="modal__field">
-              <label class="modal__label" for="fOrganizer">Tashkilot</label>
-              <input autocomplete="off" id="fOrganizer" class="modal__input" type="text" maxlength="200" placeholder="Grant beruvchi tashkilot" />
+              <label class="modal__label" for="fOrganizer" data-i18n="admin.grants.col.organizer">Tashkilot</label>
+              <input autocomplete="off" id="fOrganizer" class="modal__input" type="text" maxlength="200" data-i18n-placeholder="admin.grants.form.organizerPh" placeholder="Grant beruvchi tashkilot" />
             </div>
             <div class="modal__field">
-              <label class="modal__label" for="fCategory">Kategoriya</label>
-              <input autocomplete="off" id="fCategory" class="modal__input" type="text" maxlength="100" placeholder="Ekologiya, Ta'lim, Ijtimoiy..." />
+              <label class="modal__label" for="fCategory" data-i18n="admin.grants.col.category">Kategoriya</label>
+              <input autocomplete="off" id="fCategory" class="modal__input" type="text" maxlength="100" data-i18n-placeholder="admin.grants.form.categoryPh" placeholder="Ekologiya, Ta'lim, Ijtimoiy..." />
             </div>
           </div>
           <div class="modal__grid2">
             <div class="modal__field">
-              <label class="modal__label" for="fAmount">Miqdor</label>
-              <input autocomplete="off" id="fAmount" class="modal__input" type="text" maxlength="100" placeholder="Masalan: 5 000 – 15 000 USD" />
+              <label class="modal__label" for="fAmount" data-i18n="admin.grants.col.amount">Miqdor</label>
+              <input autocomplete="off" id="fAmount" class="modal__input" type="text" maxlength="100" data-i18n-placeholder="admin.grants.form.amountPh" placeholder="Masalan: 5 000 – 15 000 USD" />
             </div>
             <div class="modal__field">
-              <label class="modal__label" for="fDeadline">Ariza topshirish muddati</label>
+              <label class="modal__label" for="fDeadline" data-i18n="admin.grants.form.deadline">Ariza topshirish muddati</label>
               <input id="fDeadline" class="modal__input" type="date" />
             </div>
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="fStatus">Holat</label>
+            <label class="modal__label" for="fStatus" data-i18n="admin.table.status">Holat</label>
             <select id="fStatus" class="modal__select">
-              <option value="active">Faol</option>
-              <option value="closed">Yopilgan</option>
+              <option value="active" data-i18n="admin.grants.filter.active">Faol</option>
+              <option value="closed" data-i18n="admin.grants.filter.closed">Yopilgan</option>
             </select>
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="fDescription">Tavsif <span aria-hidden="true" style="color:#dc2626">*</span></label>
-            <textarea id="fDescription" class="modal__textarea" required maxlength="10000" placeholder="Grant haqida batafsil ma'lumot"></textarea>
+            <label class="modal__label" for="fDescription"><span data-i18n="admin.grants.form.description">Tavsif</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
+            <textarea id="fDescription" class="modal__textarea" required maxlength="10000" data-i18n-placeholder="admin.grants.form.descriptionPh" placeholder="Grant haqida batafsil ma'lumot"></textarea>
           </div>
           <div class="modal__field">
-            <label class="modal__label" for="fCoverFile">Muqova rasmi</label>
+            <label class="modal__label" for="fCoverFile" data-i18n="admin.grants.form.cover">Muqova rasmi</label>
             <div style="display:flex;gap:8px;align-items:center">
               <input type="file" id="fCoverFile" accept="image/*" style="font-size:13px" />
               <span id="fCoverStatus" role="status" aria-live="polite" style="font-size:12px;color:#6b7280"></span>
             </div>
             <input type="hidden" id="fCoverImage" />
-            <img id="fCoverPreview" alt="Yuklangan muqova rasmi" style="max-width:200px;max-height:120px;margin-top:8px;border-radius:4px;display:none" decoding="async" onerror="this.style.display='none'"/>
+            <img id="fCoverPreview" data-i18n-alt="admin.grants.form.coverAlt" alt="Yuklangan muqova rasmi" style="max-width:200px;max-height:120px;margin-top:8px;border-radius:4px;display:none" decoding="async" onerror="this.style.display='none'"/>
           </div>
           <p id="formError" role="alert" aria-live="assertive" style="color:#dc2626;font-size:13px;display:none;margin:0;"></p>
         </div>
         <div class="modal__foot">
-          <button type="button" class="btn btn--secondary" id="formCancelBtn">Bekor qilish</button>
-          <button type="submit" class="btn btn--primary"><i class="ph ph-floppy-disk" aria-hidden="true"></i> Saqlash</button>
+          <button type="button" class="btn btn--secondary" id="formCancelBtn" data-i18n="admin.ui.cancel">Bekor qilish</button>
+          <button type="submit" class="btn btn--primary"><i class="ph ph-floppy-disk" aria-hidden="true"></i> <span data-i18n="admin.ui.save">Saqlash</span></button>
         </div>
       </form>
     </div>
@@ -257,18 +264,18 @@
   <div class="modal-overlay" id="deleteModal" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle" aria-hidden="true">
     <div class="modal u-modal-max-440">
       <div class="modal__head">
-        <h2 class="modal__title" id="deleteModalTitle">Grantni o'chirish</h2>
-        <button type="button" class="modal__close" id="deleteModalClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+        <h2 class="modal__title" id="deleteModalTitle" data-i18n="admin.grants.modal.deleteTitle">Grantni o'chirish</h2>
+        <button type="button" class="modal__close" id="deleteModalClose" data-i18n-aria-label="admin.grants.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
       <div class="modal__body">
         <p style="margin:0;font-size:14px;color:var(--grey-700,#2b2d3a);">
-          <strong id="deleteName"></strong> grantini o'chirmoqchimisiz?<br>
-          <span style="color:var(--grey-400,#818898)">Bu amalni qaytarib bo'lmaydi.</span>
+          <strong id="deleteName"></strong> <span data-i18n="admin.grants.modal.deletePrompt">grantini o'chirmoqchimisiz?</span><br>
+          <span style="color:var(--grey-400,#818898)" data-i18n="admin.ui.irreversible">Bu amalni qaytarib bo'lmaydi.</span>
         </p>
       </div>
       <div class="modal__foot">
-        <button type="button" class="btn btn--secondary" id="deleteCancelBtn">Bekor qilish</button>
-        <button type="button" class="btn btn--danger" id="deleteConfirmBtn"><i class="ph ph-trash" aria-hidden="true"></i> Ha, o'chirish</button>
+        <button type="button" class="btn btn--secondary" id="deleteCancelBtn" data-i18n="admin.ui.cancel">Bekor qilish</button>
+        <button type="button" class="btn btn--danger" id="deleteConfirmBtn"><i class="ph ph-trash" aria-hidden="true"></i> <span data-i18n="admin.ui.confirmDelete">Ha, o'chirish</span></button>
       </div>
     </div>
   </div>

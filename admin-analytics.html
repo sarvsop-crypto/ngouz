@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tahliliy ma'lumotlar — O'zNNTMA Admin</title>
+  <title data-i18n="admin.analytics.docTitle">Tahliliy ma'lumotlar — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -32,8 +32,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
-  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.analytics.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+  <a class="skip-link" href="#main-content" data-i18n="admin.analytics.skipLink">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -87,15 +94,15 @@
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
           <div class="main__profile">
             <div class="main__profile-avatar u-avatar-badge-sm">A</div>
             <div>
-              <div class="main__profile-name" data-user-name>Administrator</div>
-              <div class="main__profile-role" data-user-role>Bosh admin</div>
+              <div class="main__profile-name" data-user-name data-i18n="admin.analytics.profileName">Administrator</div>
+              <div class="main__profile-role" data-user-role data-i18n="admin.analytics.profileRole">Bosh admin</div>
             </div>
           </div>
         </div>
@@ -104,48 +111,48 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.analytics.title" class="main__title">Tahliliy ma&rsquo;lumotlar</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" id="exportAnalyticsBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport</button>
+          <button type="button" class="btn btn--secondary" id="exportAnalyticsBtn" data-i18n="admin.analytics.export" data-i18n-html><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport</button>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-buildings" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Jami NNTlar</p><p class="card__value" id="kpiTotalNnt">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.analytics.kpi.totalNnt">Jami NNTlar</p><p class="card__value" id="kpiTotalNnt">&mdash;</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-newspaper" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Yangiliklar</p><p class="card__value" id="kpiTotalNews">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.analytics.kpi.news">Yangiliklar</p><p class="card__value" id="kpiTotalNews">&mdash;</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-chat-dots" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Xabarlar</p><p class="card__value" id="kpiTotalContacts">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.analytics.kpi.contacts">Xabarlar</p><p class="card__value" id="kpiTotalContacts">&mdash;</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-users" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Foydalanuvchilar</p><p class="card__value" id="kpiTotalUsers">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.analytics.kpi.users">Foydalanuvchilar</p><p class="card__value" id="kpiTotalUsers">&mdash;</p></div></div>
         </div>
       </div>
 
       <!-- Regional breakdown -->
       <section class="table-section" aria-labelledby="analyticsRegionTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="analyticsRegionTitle">Hududlar bo&rsquo;yicha tahlil</h2>
-          <div class="table-section__tools" role="search" aria-label="Tahliliy hududlarni qidirish">
-            <input id="analyticsRegionSearch" type="search" enterkeyhint="search" class="table-section__search" placeholder="Hudud qidirish..." aria-label="Qidirish" maxlength="200" aria-controls="analyticsRegionRows" />
+          <h2 class="table-section__title" id="analyticsRegionTitle" data-i18n="admin.analytics.region.title">Hududlar bo&rsquo;yicha tahlil</h2>
+          <div class="table-section__tools" role="search" data-i18n-aria-label="admin.analytics.region.searchTools" aria-label="Tahliliy hududlarni qidirish">
+            <input id="analyticsRegionSearch" type="search" enterkeyhint="search" class="table-section__search" data-i18n-placeholder="admin.analytics.region.searchPlaceholder" placeholder="Hudud qidirish..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" aria-controls="analyticsRegionRows" />
           </div>
         </div>
         <table class="table">
-          <caption class="u-visually-hidden">Hududlar bo'yicha NNT tahlili</caption>
+          <caption class="u-visually-hidden" data-i18n="admin.analytics.region.caption">Hududlar bo'yicha NNT tahlili</caption>
           <thead>
             <tr>
-              <th scope="col">Hudud</th>
-              <th scope="col">Jami NNT</th>
-              <th scope="col">Ulush</th>
+              <th scope="col" data-i18n="admin.table.region">Hudud</th>
+              <th scope="col" data-i18n="admin.analytics.region.colTotal">Jami NNT</th>
+              <th scope="col" data-i18n="admin.analytics.region.colShare">Ulush</th>
             </tr>
           </thead>
           <tbody id="analyticsRegionRows" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="3" role="status">Yuklanmoqda...</td></tr>
+            <tr class="u-empty-row"><td colspan="3" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -153,37 +160,37 @@
       <!-- Sector breakdown -->
       <section class="table-section" aria-labelledby="analyticsSectorTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="analyticsSectorTitle">Soha bo&rsquo;yicha taqsimot</h2>
+          <h2 class="table-section__title" id="analyticsSectorTitle" data-i18n="admin.analytics.sector.title">Soha bo&rsquo;yicha taqsimot</h2>
         </div>
         <table class="table">
-          <caption class="u-visually-hidden">Soha bo'yicha NNT taqsimoti</caption>
+          <caption class="u-visually-hidden" data-i18n="admin.analytics.sector.caption">Soha bo'yicha NNT taqsimoti</caption>
           <thead>
             <tr>
-              <th scope="col">Soha</th>
-              <th scope="col">NNT soni</th>
-              <th scope="col">Ulush</th>
-              <th scope="col">Trend</th>
+              <th scope="col" data-i18n="admin.analytics.sector.colSector">Soha</th>
+              <th scope="col" data-i18n="admin.analytics.sector.colCount">NNT soni</th>
+              <th scope="col" data-i18n="admin.analytics.sector.colShare">Ulush</th>
+              <th scope="col" data-i18n="admin.analytics.sector.colTrend">Trend</th>
             </tr>
           </thead>
           <tbody id="analyticsSectorRows" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="4" role="status">Yuklanmoqda...</td></tr>
+            <tr class="u-empty-row"><td colspan="4" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header">
-      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
-    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+    <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.analytics.notifClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
-      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+      <p class="text-dim" style="padding:20px;text-align:center" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
-      <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden data-i18n="admin.ui.markAllRead">Barchasini o&rsquo;qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
 

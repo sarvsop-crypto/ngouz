@@ -6,7 +6,7 @@
   <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
   <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hududlar — O'zNNTMA Admin</title>
+  <title data-i18n="admin.regions.docTitle">Hududlar — O'zNNTMA Admin</title>
 <meta name="theme-color" content="#0f6a57" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="mobile-web-app-capable" content="yes" />
@@ -33,8 +33,15 @@
 <script src="js/i18n.js" defer></script>
 </head>
 <body>
-<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
-  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.regions.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+  <a class="skip-link" href="#main-content" data-i18n="admin.regions.skipToContent">Asosiy kontentga o'tish</a>
   <div class="layout">
     <aside class="sidebar">
       <div class="sidebar__header">
@@ -88,7 +95,7 @@
         </div>
         <div class="topbar-right">
           <div class="topbar-notifications">
-            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
             <span class="topbar-notifications-badge" aria-hidden="true"></span>
           </div>
           <div class="topbar-divider" aria-hidden="true"></div>
@@ -105,67 +112,67 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.regions.title" class="main__title">Hududlar</h1>
         <div class="main__btns">
-          <button type="button" class="btn btn--secondary" id="exportRegionsBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport</button>
-          <a href="admin-analytics" class="btn btn--primary"><i class="ph ph-trend-up" aria-hidden="true"></i> Tahlil</a>
+          <button type="button" class="btn btn--secondary" id="exportRegionsBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> <span data-i18n="admin.regions.export">Eksport</span></button>
+          <a href="admin-analytics" class="btn btn--primary"><i class="ph ph-trend-up" aria-hidden="true"></i> <span data-i18n="admin.regions.analyze">Tahlil</span></a>
         </div>
       </div>
 
       <div class="cards">
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-map-trifold" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Jami hududlar</p><p class="card__value" id="kpiRegionsCount">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.regions.kpi.totalRegions">Jami hududlar</p><p class="card__value" id="kpiRegionsCount">&mdash;</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-buildings" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Jami NNTlar</p><p class="card__value" id="kpiOrgsTotal">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.regions.kpi.totalOrgs">Jami NNTlar</p><p class="card__value" id="kpiOrgsTotal">&mdash;</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-star" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">Eng faol hudud</p><p class="card__value" id="kpiTopRegion" style="font-size:18px;">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.regions.kpi.topRegion">Eng faol hudud</p><p class="card__value" id="kpiTopRegion" style="font-size:18px;">&mdash;</p></div></div>
         </div>
         <div class="card">
           <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-globe" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label">O&rsquo;rtacha hudud bo&rsquo;yicha</p><p class="card__value" id="kpiAvgPerRegion">&mdash;</p></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.regions.kpi.avgPerRegion">O&rsquo;rtacha hudud bo&rsquo;yicha</p><p class="card__value" id="kpiAvgPerRegion">&mdash;</p></div></div>
         </div>
       </div>
 
       <section class="table-section" aria-labelledby="regionsTableTitle">
         <div class="table-section__head">
-          <h2 class="table-section__title" id="regionsTableTitle">Viloyatlar va hududlar ro&rsquo;yxati</h2>
-          <div class="table-section__tools" role="search" aria-label="Hududlarni qidirish">
-            <input type="search" enterkeyhint="search" id="regionsSearch" class="table-section__search" placeholder="Hudud qidirish..." aria-label="Qidirish" maxlength="200" />
+          <h2 class="table-section__title" id="regionsTableTitle" data-i18n="admin.regions.tableTitle">Viloyatlar va hududlar ro&rsquo;yxati</h2>
+          <div class="table-section__tools" role="search" data-i18n-aria-label="admin.regions.searchRegions" aria-label="Hududlarni qidirish">
+            <input type="search" enterkeyhint="search" id="regionsSearch" class="table-section__search" data-i18n-placeholder="admin.regions.searchPlaceholder" placeholder="Hudud qidirish..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" />
           </div>
         </div>
         <table class="table">
-          <caption class="u-visually-hidden">Hududlar bo'yicha NNT taqsimoti</caption>
+          <caption class="u-visually-hidden" data-i18n="admin.regions.tableCaption">Hududlar bo'yicha NNT taqsimoti</caption>
           <thead>
             <tr>
-              <th scope="col">Kod</th>
-              <th scope="col">Hudud nomi</th>
-              <th scope="col">Jami NNT</th>
-              <th scope="col">Ulush</th>
-              <th scope="col"><span class="u-visually-hidden">Amallar</span></th>
+              <th scope="col" data-i18n="admin.regions.col.code">Kod</th>
+              <th scope="col" data-i18n="admin.regions.col.regionName">Hudud nomi</th>
+              <th scope="col" data-i18n="admin.regions.col.totalOrgs">Jami NNT</th>
+              <th scope="col" data-i18n="admin.regions.col.share">Ulush</th>
+              <th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.actions">Amallar</span></th>
             </tr>
           </thead>
           <tbody id="regionsTableRows" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="5" role="status">Yuklanmoqda...</td></tr>
+            <tr class="u-empty-row"><td colspan="5" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
     </main>
   </div>
 
-  <div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
     <div class="notifications-panel__header">
-      <h2 class="notifications-panel__title">Bildirishnomalar</h2>
-    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+    <button type="button" class="notifications-panel__close" data-i18n-aria-label="admin.regions.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
     <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
-      <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+      <p class="text-dim" style="padding:20px;text-align:center" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
     </div>
     <div class="notifications-panel__footer">
-      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
-      <a href="admin-notifications" class="btn btn--primary">Barcha bildirishnomalar</a>
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" data-i18n="admin.ui.markAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
 

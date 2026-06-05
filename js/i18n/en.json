@@ -12,27 +12,69 @@
     "breadcrumbAria": "Page location",
     "breadcrumbRoot": "Management",
     "pages": {
-      "analytics": { "title": "Analytics" },
-      "corruptionReports": { "title": "Corruption reports" },
-      "dashboard": { "title": "Dashboard" },
-      "documents": { "title": "Documents" },
-      "events": { "title": "Events" },
-      "feedback": { "title": "Feedback" },
-      "grantApplications": { "title": "Grant applications" },
-      "grants": { "title": "Grants" },
-      "membershipRequests": { "title": "Membership applications" },
-      "news": { "title": "News" },
-      "notifications": { "title": "Notifications" },
-      "passwordResetRequests": { "title": "Password reset requests" },
-      "regions": { "title": "Regions" },
-      "registry": { "title": "NGO registry" },
-      "serviceRequests": { "title": "Service requests" },
-      "settings": { "title": "Settings" },
-      "settingsNotifications": { "title": "Notification settings" },
-      "settingsSecurity": { "title": "Security settings" },
-      "settingsSystem": { "title": "System settings" },
-      "tasks": { "title": "Tasks" },
-      "users": { "title": "User management" }
+      "analytics": {
+        "title": "Analytics"
+      },
+      "corruptionReports": {
+        "title": "Corruption reports"
+      },
+      "dashboard": {
+        "title": "Dashboard"
+      },
+      "documents": {
+        "title": "Documents"
+      },
+      "events": {
+        "title": "Events"
+      },
+      "feedback": {
+        "title": "Feedback"
+      },
+      "grantApplications": {
+        "title": "Grant applications"
+      },
+      "grants": {
+        "title": "Grants"
+      },
+      "membershipRequests": {
+        "title": "Membership applications"
+      },
+      "news": {
+        "title": "News"
+      },
+      "notifications": {
+        "title": "Notifications"
+      },
+      "passwordResetRequests": {
+        "title": "Password reset requests"
+      },
+      "regions": {
+        "title": "Regions"
+      },
+      "registry": {
+        "title": "NGO registry"
+      },
+      "serviceRequests": {
+        "title": "Service requests"
+      },
+      "settings": {
+        "title": "Settings"
+      },
+      "settingsNotifications": {
+        "title": "Notification settings"
+      },
+      "settingsSecurity": {
+        "title": "Security settings"
+      },
+      "settingsSystem": {
+        "title": "System settings"
+      },
+      "tasks": {
+        "title": "Tasks"
+      },
+      "users": {
+        "title": "User management"
+      }
     },
     "nav": {
       "dashboard": "Dashboard",
@@ -55,6 +97,912 @@
       "grants": "Grants",
       "settings": "Settings",
       "logout": "Log out"
+    },
+    "ui": {
+      "notifications": "Notifications",
+      "markAllRead": "Mark all as read",
+      "allNotifications": "All notifications",
+      "loading": "Loading...",
+      "search": "Search",
+      "cancel": "Cancel",
+      "save": "Save",
+      "confirmDelete": "Yes, delete",
+      "delete": "Delete",
+      "edit": "Edit",
+      "irreversible": "This action cannot be undone."
+    },
+    "table": {
+      "name": "Name",
+      "status": "Status",
+      "date": "Date",
+      "region": "Region",
+      "actions": "Actions",
+      "select": "Select",
+      "type": "Type"
+    },
+    "analytics": {
+      "docTitle": "Analytics — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "skipLink": "Skip to main content",
+      "profileName": "Administrator",
+      "profileRole": "Chief admin",
+      "export": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Export",
+      "kpi": {
+        "totalNnt": "Total NGOs",
+        "news": "News",
+        "contacts": "Messages",
+        "users": "Users"
+      },
+      "region": {
+        "title": "Analysis by region",
+        "searchTools": "Search analytics regions",
+        "searchPlaceholder": "Search region...",
+        "caption": "NGO analysis by region",
+        "colTotal": "Total NGOs",
+        "colShare": "Share"
+      },
+      "sector": {
+        "title": "Distribution by sector",
+        "caption": "NGO distribution by sector",
+        "colSector": "Sector",
+        "colCount": "NGO count",
+        "colShare": "Share",
+        "colTrend": "Trend"
+      },
+      "notifClose": "Close"
+    },
+    "corruptionReports": {
+      "docTitle": "Corruption Reports — O'zNNTMA Admin",
+      "noscript": "This page requires JavaScript to be enabled to work fully. Please enable JavaScript in your browser.",
+      "skipToContent": "Skip to main content",
+      "profileName": "Administrator",
+      "profileRole": "Super admin",
+      "exportCsv": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Export (CSV)",
+      "securityNotice": "This section contains confidential data. Anonymous reports do not reveal the applicant's identity. Every action is recorded in the audit log.",
+      "kpi": {
+        "infoTitle": "Info",
+        "total": "Total reports",
+        "new": "New",
+        "review": "Under review",
+        "closed": "Closed"
+      },
+      "tableTitle": "Received reports",
+      "filter": {
+        "formAria": "Filter reports",
+        "searchLabel": "Search by report number or subject",
+        "searchPlaceholder": "Report #, subject...",
+        "all": "All <span class=\"filter-chip__count\" id=\"crpChipCountAll\">&mdash;</span>",
+        "new": "New <span class=\"filter-chip__count\" id=\"crpChipCountNew\">&mdash;</span>",
+        "review": "Under review <span class=\"filter-chip__count\" id=\"crpChipCountReview\">&mdash;</span>",
+        "closed": "Closed <span class=\"filter-chip__count\" id=\"crpChipCountClosed\">&mdash;</span>",
+        "spam": "Spam <span class=\"filter-chip__count\" id=\"crpChipCountSpam\">&mdash;</span>",
+        "severityLabel": "Filter by severity",
+        "severityAria": "Severity",
+        "allSeverities": "All severities",
+        "severityHigh": "High",
+        "severityMedium": "Medium",
+        "severityLow": "Low"
+      },
+      "tableCaption": "Corruption reports table",
+      "col": {
+        "reportNo": "Report #",
+        "applicant": "Applicant",
+        "subject": "Subject",
+        "severity": "Severity"
+      },
+      "modal": {
+        "close": "Close",
+        "title": "Report details",
+        "reportNumber": "Report number",
+        "submitted": "Submitted",
+        "fullText": "Full text",
+        "assignNote": "Assign responsible / Note",
+        "notePlaceholder": "Assign an inspector or leave a note...",
+        "markHandled": "<i class=\"ph ph-check-circle\" aria-hidden=\"true\"></i> Mark as reviewed"
+      }
+    },
+    "dashboard": {
+      "title": "Dashboard — O'zNNTMA Admin",
+      "export": "Export",
+      "newRequest": "New application",
+      "kpi": {
+        "news": "News",
+        "events": "Events",
+        "newMessages": "New messages",
+        "documents": "Documents",
+        "memberNgos": "Member NGOs",
+        "pendingRequests": "Pending applications",
+        "users": "Users",
+        "grants": "Grants"
+      },
+      "operationalBlocks": "Operational blocks",
+      "urgentRequests": "Urgent applications",
+      "viewAll": "View all",
+      "recentMessagesCaption": "Incoming new feedback messages",
+      "col": {
+        "messageNo": "Message #",
+        "name": "Name",
+        "contact": "Contact",
+        "subject": "Subject",
+        "province": "Province",
+        "totalNgo": "Total NGOs",
+        "share": "Share"
+      },
+      "regionTitle": "NGO distribution by region",
+      "regionCaption": "NGO distribution by region",
+      "close": "Close"
+    },
+    "documents": {
+      "docTitle": "Documents — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "skipLink": "Skip to main content",
+      "profileRole": "Chief admin",
+      "export": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Export",
+      "newDoc": "<i class=\"ph ph-plus\" aria-hidden=\"true\"></i> New document",
+      "kpi": {
+        "total": "Total documents",
+        "laws": "Laws",
+        "statePrograms": "State programs",
+        "disabilityRights": "Disability rights"
+      },
+      "tableTitle": "Documents table",
+      "searchDocsAria": "Search documents",
+      "searchPlaceholder": "Search by document name...",
+      "filterDocsAria": "Filter documents",
+      "filter": {
+        "all": "All",
+        "laws": "Laws",
+        "statePrograms": "State programs",
+        "disabilityRights": "Disability rights",
+        "official": "Official document"
+      },
+      "col": {
+        "title": "Document name",
+        "category": "Category"
+      },
+      "close": "Close",
+      "newDocTitle": "New document",
+      "form": {
+        "heading": "Title <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "headingPlaceholder": "Enter the document title",
+        "date": "Date <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "category": "Category <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "selectPlaceholder": "— Select —",
+        "catLawsDecrees": "Laws and decrees",
+        "excerpt": "Short text",
+        "excerptPlaceholder": "Brief description of the document",
+        "body": "Full text <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "bodyPlaceholder": "Full text of the document",
+        "cover": "Cover image",
+        "coverAlt": "Uploaded cover image"
+      },
+      "saveBtn": "<i class=\"ph ph-floppy-disk\" aria-hidden=\"true\"></i> Save",
+      "deleteTitle": "Delete document",
+      "deletePrompt": "— delete this document?"
+    },
+    "events": {
+      "docTitle": "Events — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "skipToMain": "Skip to main content",
+      "profileName": "Administrator",
+      "profileRole": "Chief admin",
+      "newEvent": "New event",
+      "kpiTotal": "Total events",
+      "kpiUpcoming": "Upcoming",
+      "kpiPast": "Past",
+      "kpiParticipants": "Total participants",
+      "tableTitle": "Events list",
+      "filterAria": "Filter events",
+      "searchPlaceholder": "By name or location...",
+      "filterAll": "All",
+      "filterUpcoming": "Upcoming",
+      "filterPast": "Past",
+      "tableCaption": "Events table",
+      "colLocation": "Location",
+      "colParticipants": "Participants",
+      "close": "Close",
+      "form": {
+        "titlePh": "Enter event name",
+        "locationPh": "Address",
+        "participants": "Number of participants",
+        "deadline": "Application deadline",
+        "description": "Description",
+        "descriptionPh": "Detailed information about the event",
+        "cover": "Cover image",
+        "coverAlt": "Uploaded cover image"
+      },
+      "modal": {
+        "deleteTitle": "Delete event",
+        "deletePrompt": "— delete this event?"
+      }
+    },
+    "feedback": {
+      "docTitle": "Feedback — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "skipLink": "Skip to main content",
+      "exportCsv": "Export (CSV)",
+      "kpi": {
+        "total": "Total messages",
+        "new": "New",
+        "handled": "Handled",
+        "spam": "Spam"
+      },
+      "tableTitle": "Incoming messages",
+      "filterAria": "Filter messages",
+      "searchPlaceholder": "Name, email, subject...",
+      "filter": {
+        "all": "All",
+        "new": "New",
+        "read": "Read",
+        "handled": "Handled",
+        "spam": "Spam"
+      },
+      "tableCaption": "Feedback messages table",
+      "col": {
+        "sender": "Sender",
+        "subject": "Subject"
+      },
+      "close": "Close",
+      "modal": {
+        "title": "Message details",
+        "number": "Number",
+        "name": "Name",
+        "contact": "Contact",
+        "subject": "Subject",
+        "message": "Message",
+        "changeStatus": "Change status"
+      }
+    },
+    "forgotPassword": {
+      "title": "Password Recovery — O'zNNTMA Admin",
+      "skipToContent": "Skip to main content",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "headerTitle": "O&rsquo;zNNTMA Admin",
+      "heading": "Forgot your password?",
+      "subtitle": "Automatic online recovery is not yet available. The administrator will reset your password manually — provide your email and admin account name.",
+      "contactPrompt": "Contact the chief administrator:",
+      "orPhone": "or <a href=\"tel:+998555030512\" style=\"color:var(--primary-600);font-weight:600\">+998 (55) 503-05-12</a>",
+      "rememberedPassword": "Remembered your password? <a href=\"admin-login\">Back to login</a>",
+      "copyright": "&copy; 2026 O&rsquo;zNNTMA. All rights reserved.",
+      "helpLinks": "Help links",
+      "footerPrivacy": "Privacy",
+      "footerTerms": "Terms",
+      "footerHelp": "Help"
+    },
+    "grantApplications": {
+      "docTitle": "Grant applications — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work properly. Please enable JavaScript in your browser.",
+      "skipToContent": "Skip to main content",
+      "profileName": "Administrator",
+      "profileRole": "Chief administrator",
+      "exportCsv": "Export (CSV)",
+      "kpiTotal": "Total applications",
+      "kpiPending": "Under review",
+      "kpiApproved": "Approved",
+      "kpiDeclined": "Declined",
+      "tableTitle": "Applications and status",
+      "filterAria": "Filter applications",
+      "searchPlaceholder": "Title, organization...",
+      "filter": {
+        "all": "All",
+        "submitted": "Submitted",
+        "review": "Under review",
+        "approved": "Approved",
+        "declined": "Declined"
+      },
+      "tableCaption": "Grant applications table",
+      "col": {
+        "title": "Title",
+        "organization": "Organization",
+        "budget": "Budget",
+        "submitted": "Submitted"
+      },
+      "notifClose": "Close"
+    },
+    "grants": {
+      "pageTitle": "Grants — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "skipLink": "Skip to main content",
+      "profileName": "Administrator",
+      "profileRole": "Chief admin",
+      "newGrant": "New grant",
+      "kpi": {
+        "total": "Total grants",
+        "active": "Active",
+        "closed": "Closed",
+        "soon": "Deadline soon (&le;30 days)"
+      },
+      "tableTitle": "Grants list",
+      "filterAria": "Filter grants",
+      "searchPlaceholder": "By name or organization...",
+      "filter": {
+        "all": "All",
+        "active": "Active",
+        "closed": "Closed"
+      },
+      "tableCaption": "Grants table",
+      "col": {
+        "organizer": "Organization",
+        "category": "Category",
+        "amount": "Amount",
+        "deadline": "Deadline"
+      },
+      "close": "Close",
+      "form": {
+        "titlePh": "Enter grant name",
+        "organizerPh": "Grant-giving organization",
+        "categoryPh": "Ecology, Education, Social...",
+        "amountPh": "For example: 5,000 – 15,000 USD",
+        "deadline": "Application deadline",
+        "description": "Description",
+        "descriptionPh": "Detailed information about the grant",
+        "cover": "Cover image",
+        "coverAlt": "Uploaded cover image"
+      },
+      "modal": {
+        "deleteTitle": "Delete grant",
+        "deletePrompt": "do you want to delete this grant?"
+      }
+    },
+    "login": {
+      "title": "Sign in — O'zNNTMA Admin",
+      "skipToContent": "Skip to main content",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "welcome": "Welcome",
+      "subtitle": "Enter your credentials to sign in to the admin panel.",
+      "form": {
+        "emailLabel": "Email address <span aria-hidden=\"true\">*</span>",
+        "emailPlaceholder": "Enter your email address",
+        "passwordLabel": "Password <span aria-hidden=\"true\">*</span>",
+        "passwordPlaceholder": "Enter your password",
+        "showPassword": "Show password",
+        "rememberMe": "Stay signed in",
+        "forgotPassword": "Forgot your password?",
+        "submit": "Sign in"
+      },
+      "footer": {
+        "copyright": "&copy; 2026 O&rsquo;zNNTMA. All rights reserved.",
+        "helpLinks": "Help links",
+        "privacy": "Privacy",
+        "terms": "Terms",
+        "help": "Help"
+      }
+    },
+    "membershipRequests": {
+      "docTitle": "Membership applications — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "skipLink": "Skip to main content",
+      "profileName": "Administrator",
+      "profileRole": "Chief admin",
+      "exportCsv": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Export (CSV)",
+      "kpi": {
+        "total": "Total applications",
+        "pending": "Pending",
+        "approved": "Approved",
+        "rejected": "Rejected"
+      },
+      "tableTitle": "Applications and status",
+      "filterAria": "Filter applications",
+      "searchPlaceholder": "Organization name...",
+      "filter": {
+        "all": "All",
+        "pending": "Pending",
+        "approved": "Approved",
+        "returned": "Returned",
+        "rejected": "Rejected"
+      },
+      "tableCaption": "Membership applications table",
+      "col": {
+        "org": "Organization",
+        "applicant": "Applicant"
+      },
+      "notifClose": "Close"
+    },
+    "news": {
+      "docTitle": "News — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work properly. Please enable JavaScript in your browser.",
+      "skipLink": "Skip to main content",
+      "newArticleBtn": "<i class=\"ph ph-plus\" aria-hidden=\"true\"></i> New article",
+      "kpi": {
+        "total": "Total articles",
+        "featured": "Featured",
+        "announce": "Announcements",
+        "analysis": "Analysis / Press"
+      },
+      "tableTitle": "Articles list",
+      "filterAria": "Filter articles",
+      "searchPlaceholder": "By title or text...",
+      "filter": {
+        "all": "All",
+        "announce": "Announcement",
+        "event": "Event",
+        "analysis": "Analysis",
+        "press": "Press"
+      },
+      "tableCaption": "News table",
+      "col": {
+        "title": "Title",
+        "category": "Category",
+        "featured": "Featured"
+      },
+      "close": "Close",
+      "modal": {
+        "createTitle": "New article",
+        "deleteTitle": "Delete article",
+        "deletePrompt": "— delete this article?"
+      },
+      "form": {
+        "title": "Title <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "titlePh": "Enter the article title",
+        "date": "Date <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "category": "Category <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "selectOption": "— Select —",
+        "optPublications": "Publications",
+        "optDigest": "Digest",
+        "optAbout": "About us",
+        "optIntl": "International activity",
+        "optCouncil": "Council members",
+        "optLeadership": "Leadership",
+        "excerpt": "Short text (excerpt) <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "excerptPh": "Short description of the article (shown on the card)",
+        "body": "Full text <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "bodyPh": "Full text of the article",
+        "cover": "Cover image",
+        "coverAlt": "Uploaded cover image",
+        "featured": "Feature on the home page (featured)"
+      },
+      "saveBtn": "<i class=\"ph ph-floppy-disk\" aria-hidden=\"true\"></i> Save",
+      "confirmDeleteBtn": "<i class=\"ph ph-trash\" aria-hidden=\"true\"></i> Yes, delete"
+    },
+    "notifications": {
+      "docTitle": "Notifications — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "skipLink": "Skip to main content",
+      "sendNew": "Send new message",
+      "sentMessages": "Sent messages",
+      "close": "Close",
+      "modal": {
+        "title": "New notification",
+        "send": "Send"
+      },
+      "form": {
+        "titleLabel": "Title <span aria-hidden=\"true\" style=\"color:#dc2626\">*</span>",
+        "titlePlaceholder": "Enter the message title",
+        "bodyLabel": "Text",
+        "bodyPlaceholder": "Enter the message text..."
+      },
+      "type": {
+        "info": "Information",
+        "warning": "Warning",
+        "success": "Success",
+        "action": "Action required"
+      }
+    },
+    "passwordResetRequests": {
+      "docTitle": "Password reset requests — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work fully.",
+      "skipToContent": "Skip to main content",
+      "exportCsv": "<i class=\"ph ph-download-simple\" aria-hidden=\"true\"></i> Export (CSV)",
+      "intro": "<strong>Process:</strong> When a user forgets their password, they leave a request in this queue. Contact them by phone or email, verify their identity, then go to the <a href=\"admin-users\" style=\"color:var(--primary-600);font-weight:600\">Users</a> page, find the relevant user and reset their password. Then return here and mark the request as <em>Resolved</em>.",
+      "kpi": {
+        "total": "Total requests",
+        "pending": "Pending",
+        "resolved": "Resolved",
+        "rejected": "Rejected"
+      },
+      "queueTitle": "Requests queue",
+      "filter": {
+        "aria": "Filter requests",
+        "pending": "Pending",
+        "all": "All",
+        "resolved": "Resolved",
+        "rejected": "Rejected"
+      },
+      "searchPlaceholder": "Phone, name...",
+      "tableCaption": "Password reset requests table",
+      "table": {
+        "phone": "Phone",
+        "user": "User",
+        "note": "Note"
+      },
+      "notifClose": "Close"
+    },
+    "regions": {
+      "docTitle": "Regions — O'zNNTMA Admin",
+      "noscript": "This page requires JavaScript to be enabled to work fully. Please enable JavaScript in your browser.",
+      "skipToContent": "Skip to main content",
+      "export": "Export",
+      "analyze": "Analytics",
+      "kpi": {
+        "totalRegions": "Total regions",
+        "totalOrgs": "Total NGOs",
+        "topRegion": "Most active region",
+        "avgPerRegion": "Average per region"
+      },
+      "tableTitle": "List of provinces and regions",
+      "searchRegions": "Search regions",
+      "searchPlaceholder": "Search region...",
+      "tableCaption": "Distribution of NGOs by region",
+      "col": {
+        "code": "Code",
+        "regionName": "Region name",
+        "totalOrgs": "Total NGOs",
+        "share": "Share"
+      },
+      "close": "Close"
+    },
+    "registry": {
+      "docTitle": "NGO Registry — O'zNNTMA Admin",
+      "skipToContent": "Skip to main content",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "export": "Export",
+      "addNnt": "Add NGO",
+      "kpiTotal": "Total NGOs",
+      "kpiActive": "Active",
+      "kpiRegions": "Regions",
+      "tableTitle": "NGOs table",
+      "searchAria": "Search the NGO registry",
+      "searchPlaceholder": "Search...",
+      "tableCaption": "Registered NGO organizations",
+      "colName": "NGO name",
+      "colLeader": "Leader",
+      "colMemberSince": "Member since",
+      "close": "Close",
+      "form": {
+        "orgName": "Organization name",
+        "orgNamePlaceholder": "Enter the full NGO name",
+        "typeSelect": "Select type",
+        "region": "Region",
+        "regionSelect": "Select region",
+        "memberYear": "Membership year",
+        "contact": "Contact details",
+        "contactPlaceholder": "Phone or email"
+      },
+      "type": {
+        "social": "Social",
+        "charity": "Charity",
+        "education": "Education",
+        "ecology": "Ecology",
+        "youth": "Youth",
+        "cultural": "Cultural",
+        "family": "Family",
+        "sport": "Sport"
+      },
+      "region": {
+        "toshkentSh": "Tashkent city",
+        "toshkentV": "Tashkent region",
+        "samarqand": "Samarkand region",
+        "fargona": "Fergana region",
+        "buxoro": "Bukhara region",
+        "namangan": "Namangan region",
+        "andijon": "Andijan region",
+        "qashqadaryo": "Kashkadarya region",
+        "surxondaryo": "Surkhandarya region",
+        "xorazm": "Khorezm region",
+        "jizzax": "Jizzakh region",
+        "sirdaryo": "Syrdarya region",
+        "navoiy": "Navoiy region",
+        "karakalpakstan": "Republic of Karakalpakstan"
+      },
+      "status": {
+        "active": "Active",
+        "pending": "New",
+        "inactive": "Inactive"
+      },
+      "modal": {
+        "addSubmit": "Add",
+        "deleteTitle": "Delete NGO",
+        "deleteBody": "Do you want to delete the following NGO? This action cannot be undone."
+      }
+    },
+    "reports": {
+      "docTitle": "Reports — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work properly. Please enable JavaScript in your browser.",
+      "skipToContent": "Skip to main content",
+      "breadcrumbAria": "Page location",
+      "breadcrumbHome": "Dashboard",
+      "title": "Reports",
+      "profileName": "Administrator",
+      "profileRole": "Chief admin",
+      "newReport": "New report",
+      "export": "Export",
+      "tableTitle": "Reports table",
+      "searchAria": "Search reports",
+      "searchLabel": "Search by report",
+      "searchPlaceholder": "Search...",
+      "tableCaption": "List of reports and their status",
+      "colName": "Report name",
+      "colOrg": "Organization",
+      "colPeriod": "Period",
+      "colCreated": "Created",
+      "closePanel": "Close"
+    },
+    "serviceRequests": {
+      "pageTitle": "Service requests — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "skipToContent": "Skip to main content",
+      "exportCsv": "Export (CSV)",
+      "kpi": {
+        "total": "Total requests",
+        "new": "New",
+        "inProgress": "In progress",
+        "handled": "Answered"
+      },
+      "tableTitle": "Incoming requests",
+      "filter": {
+        "formAria": "Filter requests",
+        "searchLabel": "Search by request number or applicant",
+        "searchPlaceholder": "Request #, applicant name...",
+        "all": "All",
+        "new": "New",
+        "inProgress": "In progress",
+        "done": "Answered",
+        "typeLabel": "Filter by request type",
+        "allTypes": "All types"
+      },
+      "type": {
+        "registration": "Registration",
+        "reference": "Reference",
+        "consultation": "Consultation",
+        "certificate": "Certificate",
+        "documentCopy": "Document copy",
+        "other": "Other"
+      },
+      "tableCaption": "Service requests table",
+      "col": {
+        "requestNo": "Request #",
+        "applicant": "Applicant",
+        "submitted": "Submitted",
+        "assignee": "Assignee"
+      },
+      "close": "Close",
+      "modal": {
+        "title": "Request details",
+        "requestNo": "Request number",
+        "contact": "Contact",
+        "requestText": "Request text",
+        "replyText": "Reply text",
+        "replyPlaceholder": "Enter a reply to the applicant...",
+        "close": "Close",
+        "markHandled": "Mark as answered"
+      },
+      "unassigned": "Unassigned"
+    },
+    "settingsNotifications": {
+      "docTitle": "Notifications — O'zNNTMA Admin",
+      "skipLink": "Skip to main content",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "breadcrumbSettings": "Settings",
+      "subnavAria": "Settings sections",
+      "subnav": {
+        "profile": "Profile",
+        "notifications": "Notifications",
+        "security": "Security",
+        "system": "System"
+      },
+      "channels": {
+        "heading": "Notification channels",
+        "helper": "Configure which channels you receive notifications through. For now these preferences are saved only in this browser.",
+        "emailTitle": "Email notifications",
+        "emailDesc": "New applications and system messages are sent to email",
+        "smsTitle": "SMS notifications",
+        "smsDesc": "Important messages are sent to your phone number",
+        "telegramTitle": "Telegram notifications",
+        "telegramDesc": "Connect to the Telegram bot to receive messages",
+        "inappTitle": "In-app notifications",
+        "inappDesc": "Via the in-app notifications panel"
+      },
+      "types": {
+        "heading": "Notification types",
+        "newApplication": "When a new application is received",
+        "newUser": "When a new user registers",
+        "reportSubmitted": "When a report is submitted",
+        "applicationApproved": "When an application is approved",
+        "systemError": "When a system error occurs"
+      },
+      "panel": {
+        "close": "Close"
+      }
+    },
+    "settingsSecurity": {
+      "docTitle": "Security — O'zNNTMA Admin",
+      "skipLink": "Skip to main content",
+      "noscript": "JavaScript must be enabled for this page to work properly. Please enable JavaScript in your browser.",
+      "sideNavAria": "Settings sections",
+      "sideNav": {
+        "profile": "Profile",
+        "system": "System"
+      },
+      "password": {
+        "title": "Change password",
+        "currentLabel": "Current password",
+        "currentPlaceholder": "Enter current password",
+        "newLabel": "New password (at least 12 characters)",
+        "newPlaceholder": "Enter new password",
+        "confirmLabel": "Confirm new password",
+        "confirmPlaceholder": "Re-enter password",
+        "submit": "Update password"
+      },
+      "twoFa": {
+        "title": "Two-factor authentication",
+        "sub": "Protect your account with an extra layer of security",
+        "appTitle": "Authenticator app",
+        "appDesc": "Via Google Authenticator or Authy",
+        "comingSoon": "Coming soon",
+        "comingSoonTitle": "Will be available soon"
+      },
+      "session": {
+        "title": "Active session",
+        "sub": "Current device information. If you have signed in from other devices, change your password.",
+        "meta": "Current session",
+        "pill": "Current"
+      },
+      "notif": {
+        "close": "Close"
+      }
+    },
+    "settingsSystem": {
+      "docTitle": "System — O'zNNTMA Admin",
+      "skipToContent": "Skip to main content",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "breadcrumbSettings": "Settings",
+      "subnavAria": "Settings sections",
+      "tabProfile": "Profile",
+      "tabNotifications": "Notifications",
+      "tabSecurity": "Security",
+      "tabSystem": "System",
+      "general": {
+        "title": "General settings",
+        "note": "For now these settings are saved only in this browser; the global backend settings endpoint has not been added yet.",
+        "lang": "Interface language",
+        "tz": "Time zone",
+        "dateFormat": "Date format",
+        "pageSize": "Records per page"
+      },
+      "params": {
+        "title": "System parameters",
+        "note": "Automated processes and integrations. For now these choices are saved only in this browser.",
+        "autoRefresh": "Auto-refresh",
+        "autoBackup": "Automatic backup",
+        "auditLog": "Audit log",
+        "trackActivity": "Track user activity"
+      },
+      "close": "Close"
+    },
+    "settings": {
+      "docTitle": "Settings — O'zNNTMA Admin",
+      "skipToContent": "Skip to main content",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "sectionsAria": "Settings sections",
+      "tab": {
+        "profile": "Profile",
+        "notifications": "Notifications",
+        "security": "Security",
+        "system": "System"
+      },
+      "profile": {
+        "heading": "Profile information",
+        "readOnlyNote": "This is a read-only view of your admin profile. To make changes, go to the <a href=\"admin-users\" style=\"color:var(--primary-500);text-decoration:underline\">Users</a> section or contact the main administrator.",
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "role": "Role"
+      },
+      "notifClose": "Close"
+    },
+    "tasks": {
+      "docTitle": "Tasks — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "skipLink": "Skip to main content",
+      "profileName": "Administrator",
+      "profileRole": "Head admin",
+      "kpiPending": "Pending applications",
+      "kpiApproved": "Approved",
+      "kpiMessages": "New messages",
+      "kpiRejected": "Rejected",
+      "tableTitle": "Tasks — incoming membership applications",
+      "searchTasksAria": "Search tasks",
+      "searchPlaceholder": "Organization name...",
+      "tableCaption": "Table of incoming membership applications (tasks)",
+      "colAppId": "Application ID",
+      "colOrg": "Organization",
+      "colApplicant": "Applicant",
+      "colSubmitted": "Submitted",
+      "notifClose": "Close"
+    },
+    "users": {
+      "docTitle": "Users — O'zNNTMA Admin",
+      "noscript": "JavaScript must be enabled for this page to work fully. Please enable JavaScript in your browser.",
+      "skipToContent": "Skip to main content",
+      "addRegionalAdmin": "Add regional admin",
+      "kpi": {
+        "superAdmin": "Super admin",
+        "regionalAdmins": "Regional admins",
+        "activeAccounts": "Active accounts",
+        "coveredRegions": "Covered regions"
+      },
+      "superAdminBadge": "SUPER ADMIN",
+      "changePassword": "Change password",
+      "regionalAdminsTitle": "Regional admins",
+      "regionalAdminsSubtitle": "Configure access rights for each regional staff member individually",
+      "searchPlaceholder": "Search...",
+      "regionFilterAria": "Region filter",
+      "allRegions": "All regions",
+      "region": {
+        "tashkentCity": "Tashkent city",
+        "tashkentRegion": "Tashkent region",
+        "samarkand": "Samarkand region",
+        "fergana": "Fergana region",
+        "bukhara": "Bukhara region",
+        "namangan": "Namangan region",
+        "andijan": "Andijan region",
+        "kashkadarya": "Kashkadarya region",
+        "surkhandarya": "Surkhandarya region",
+        "khorezm": "Khorezm region",
+        "jizzakh": "Jizzakh region",
+        "syrdarya": "Syrdarya region",
+        "navoi": "Navoi region",
+        "karakalpakstanShort": "Karakalpakstan",
+        "karakalpakstan": "Republic of Karakalpakstan"
+      },
+      "tableCaption": "Regional admins table",
+      "th": {
+        "staff": "Staff member",
+        "grantedRights": "Granted rights",
+        "lastLogin": "Last login"
+      },
+      "close": "Close",
+      "tablistAria": "User settings",
+      "tab": {
+        "info": "Details",
+        "perms": "Permissions"
+      },
+      "form": {
+        "firstName": "First name",
+        "lastName": "Last name",
+        "email": "Email",
+        "phone": "Phone",
+        "selectRegion": "— Select region —",
+        "tempPassword": "Temporary password",
+        "minChars": "At least 12 characters",
+        "currentPassword": "Current password",
+        "newPassword": "New password",
+        "confirmNewPassword": "Confirm new password"
+      },
+      "perms": {
+        "intro": "This regional admin only accesses data for <strong>their own region</strong>. Below, select which sections to grant access to.",
+        "contentGroup": "Content management",
+        "news": "News",
+        "events": "Events",
+        "grants": "Grants",
+        "publish": "Publish content",
+        "viewAddEdit": "View, add, edit",
+        "publishSub": "Right to publish to the site",
+        "dataGroup": "Data access (own region only)",
+        "registry": "NGO registry",
+        "registrySub": "View NGOs in own region",
+        "appsView": "View applications",
+        "appsViewSub": "Applications from own region",
+        "appsManage": "Manage applications",
+        "appsManageSub": "Approve, return, add comments",
+        "documents": "Documents",
+        "documentsSub": "View and upload",
+        "reports": "Reports and analytics",
+        "reportsSub": "View and download",
+        "tasksGroup": "Tasks",
+        "tasksView": "View tasks",
+        "tasksViewSub": "Tasks assigned to them",
+        "tasksCreate": "Create tasks",
+        "tasksCreateSub": "Add and manage new tasks",
+        "superAdminNotice": "User management and system settings are for the Super Admin only. A regional admin cannot access these sections."
+      },
+      "changeBtn": "Change",
+      "resetPwTitle": "Reset user password",
+      "resetPwUserLabel": "User:",
+      "resetPwBtn": "Reset password",
+      "deleteTitle": "Delete account",
+      "deleteConfirmQuestion": "account — delete it?",
+      "deleteConfirmNote": "This action cannot be undone. The staff member will not be able to log in."
     }
   },
   "cabinet": {
@@ -90,17 +1038,39 @@
     "notifNew": "new",
     "breadcrumbAria": "Page location",
     "pages": {
-      "dashboard": { "title": "Home" },
-      "documents": { "title": "Documents" },
-      "events": { "title": "Events" },
-      "news": { "title": "News" },
-      "notifications": { "title": "Notifications" },
-      "organization": { "title": "My organization" },
-      "reports": { "title": "Reports" },
-      "settings": { "title": "Settings" },
-      "settingsNotifications": { "title": "Notification settings" },
-      "settingsOrg": { "title": "Organization settings" },
-      "settingsSecurity": { "title": "Security settings" }
+      "dashboard": {
+        "title": "Home"
+      },
+      "documents": {
+        "title": "Documents"
+      },
+      "events": {
+        "title": "Events"
+      },
+      "news": {
+        "title": "News"
+      },
+      "notifications": {
+        "title": "Notifications"
+      },
+      "organization": {
+        "title": "My organization"
+      },
+      "reports": {
+        "title": "Reports"
+      },
+      "settings": {
+        "title": "Settings"
+      },
+      "settingsNotifications": {
+        "title": "Notification settings"
+      },
+      "settingsOrg": {
+        "title": "Organization settings"
+      },
+      "settingsSecurity": {
+        "title": "Security settings"
+      }
     }
   },
   "common": {
