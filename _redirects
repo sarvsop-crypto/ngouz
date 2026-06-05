@@ -10,22 +10,19 @@
 /ru/* /:splat 200
 /uz/* /:splat 200
 
-# Conventional /admin /cabinet shortcuts. Users frequently guess these
-# paths (mirroring how WordPress/Drupal expose /admin); without these
-# they hit a 404. Land them on the login pages — admin-boot/cabinet-
-# chrome handle the token-aware routing from there (already-authed users
-# bounce to dashboard).
+# /admin shortcut → admin login (admin-boot handles token-aware routing).
 /admin /admin-login 302
 /admin/ /admin-login 302
-/cabinet /cabinet/cabinet-login 302
 
-# Generic /login + /signup shortcuts. Members are the larger user base
-# so unqualified login/signup map to the cabinet flow; admins know the
-# /admin-login path (or use the /admin shortcut above).
-/login /cabinet/cabinet-login 302
-/signin /cabinet/cabinet-login 302
-/signup /cabinet/cabinet-register 302
-/register /cabinet/cabinet-register 302
+# /cabinet is now the React member-app SPA. All routing under /cabinet/
+# (asset serving, legacy static-path 301s, and SPA fallback) is handled by
+# functions/cabinet/[[path]].js — Pages Functions run before _redirects.
+
+# Generic /login + /signup shortcuts → React cabinet routes.
+/login /cabinet/login 302
+/signin /cabinet/login 302
+/signup /cabinet/signup 302
+/register /cabinet/signup 302
 
 # iOS auto-probes /apple-touch-icon.png at root before checking the
 # <link rel="apple-touch-icon"> tag. Without this fallback, only pages

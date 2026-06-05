@@ -116,3 +116,39 @@
   color: var(--grey-500);
   line-height: 1.3;
 }
+
+/* --- Responsive: keep the top bar within the viewport on phones ---
+   The right-side profile block (avatar + name + role) was flex-shrink:0
+   with no truncation, so on narrow screens it pushed ~20-33px past the
+   viewport on every admin page. Below 640px we compact the bar: tighter
+   padding, a truncatable breadcrumb, and an avatar-only profile. */
+@media (max-width: 640px) {
+  .topbar {
+    padding: 0 16px;
+    gap: 10px;
+  }
+  .topbar-left {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .breadcrumbs {
+    font-size: 15px;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .topbar-right {
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .topbar-divider {
+    display: none;
+  }
+  /* Avatar-only profile on phones — the name/role text is the part that
+     overflowed; the avatar alone is the standard compact pattern. */
+  .main__profile-name,
+  .main__profile-role {
+    display: none;
+  }
+}

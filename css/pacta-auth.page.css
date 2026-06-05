@@ -205,14 +205,17 @@ body {
 .footer {
   width: 100%; box-sizing: border-box;
   display: flex; align-items: center; justify-content: space-between;
-  padding: 25px 50px; height: 85px; flex-shrink: 0;
+  flex-wrap: wrap; gap: 12px 24px;
+  padding: 25px 50px; min-height: 85px; flex-shrink: 0;
   border-top: 1px solid var(--grey-100, #dfe1e7);
   background: var(--grey-0, #fff);
 }
 .footer__copyright {
   font-size: 16px; color: var(--grey-400, #818898); margin: 0;
 }
-.footer__links { display: flex; align-items: center; gap: 25px; }
+/* wrap at every width — below ~628px the single-line link row used to
+   overflow the viewport and add a horizontal scrollbar on phones. */
+.footer__links { display: flex; align-items: center; flex-wrap: wrap; gap: 25px; }
 .footer__link {
   display: flex; align-items: center; gap: 6px;
   font-size: 16px; color: var(--grey-500, #666d80); text-decoration: none;

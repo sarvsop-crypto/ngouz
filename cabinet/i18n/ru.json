@@ -1,0 +1,1968 @@
+{
+  "admin": {
+    "noscript": "Для полноценной работы этой страницы нужно включить JavaScript. Пожалуйста, включите JavaScript в вашем браузере.",
+    "brand": "УзНАННО Admin",
+    "sidebarCollapse": "Свернуть боковую панель",
+    "menuAria": "Меню администратора",
+    "sec": {
+      "main": "ОСНОВНОЕ МЕНЮ",
+      "requests": "ОБРАЩЕНИЯ",
+      "content": "КОНТЕНТ"
+    },
+    "breadcrumbAria": "Расположение страницы",
+    "breadcrumbRoot": "Управление",
+    "pages": {
+      "analytics": {
+        "title": "Аналитика"
+      },
+      "corruptionReports": {
+        "title": "Сообщения о коррупции"
+      },
+      "dashboard": {
+        "title": "Панель управления"
+      },
+      "documents": {
+        "title": "Документы"
+      },
+      "events": {
+        "title": "Мероприятия"
+      },
+      "feedback": {
+        "title": "Обратная связь"
+      },
+      "grantApplications": {
+        "title": "Грантовые заявки"
+      },
+      "grants": {
+        "title": "Гранты"
+      },
+      "membershipRequests": {
+        "title": "Заявки на членство"
+      },
+      "news": {
+        "title": "Новости"
+      },
+      "notifications": {
+        "title": "Уведомления"
+      },
+      "passwordResetRequests": {
+        "title": "Запросы на сброс пароля"
+      },
+      "regions": {
+        "title": "Регионы"
+      },
+      "registry": {
+        "title": "Реестр ННО"
+      },
+      "serviceRequests": {
+        "title": "Сервисные запросы"
+      },
+      "settings": {
+        "title": "Настройки"
+      },
+      "settingsNotifications": {
+        "title": "Настройки уведомлений"
+      },
+      "settingsSecurity": {
+        "title": "Настройки безопасности"
+      },
+      "settingsSystem": {
+        "title": "Системные настройки"
+      },
+      "tasks": {
+        "title": "Задачи"
+      },
+      "users": {
+        "title": "Управление пользователями"
+      }
+    },
+    "nav": {
+      "dashboard": "Панель управления",
+      "membershipRequests": "Заявки на членство",
+      "grantApplications": "Грантовые заявки",
+      "registry": "Реестр ННО",
+      "regions": "Регионы",
+      "documents": "Документы",
+      "tasks": "Задачи",
+      "users": "Пользователи",
+      "reports": "Отчёты",
+      "analytics": "Аналитика",
+      "serviceRequests": "Сервисные запросы",
+      "corruptionReports": "Сообщения о коррупции",
+      "feedback": "Обратная связь",
+      "passwordReset": "Сброс пароля",
+      "passwordResetReq": "Запросы на сброс пароля",
+      "news": "Новости",
+      "events": "Мероприятия",
+      "grants": "Гранты",
+      "settings": "Настройки",
+      "logout": "Выйти"
+    }
+  },
+  "cabinet": {
+    "brand": "Личный кабинет",
+    "sidebarCollapse": "Свернуть боковую панель",
+    "menuAria": "Меню кабинета",
+    "menuSearchAria": "Поиск по меню",
+    "sec": {
+      "main": "ОСНОВНОЕ",
+      "announcements": "УВЕДОМЛЕНИЯ",
+      "services": "СЕРВИСЫ"
+    },
+    "nav": {
+      "dashboard": "Главная",
+      "organization": "Моя организация",
+      "applications": "Статус заявки",
+      "reports": "Отчёты",
+      "documents": "Документы",
+      "events": "Мероприятия",
+      "news": "Новости",
+      "notifications": "Уведомления",
+      "grants": "Гранты",
+      "support": "Обращение",
+      "settings": "Настройки",
+      "logout": "Выйти"
+    },
+    "notifPanelAria": "Уведомления",
+    "notifPanelTitle": "Уведомления",
+    "notifEmpty": "Уведомлений нет",
+    "notifLoadError": "Не удалось загрузить уведомления. Проверьте подключение и обновите страницу.",
+    "notifMarkRead": "Отметить все как прочитанные",
+    "notifSeeAll": "Все уведомления",
+    "notifNew": "новых",
+    "breadcrumbAria": "Расположение страницы",
+    "pages": {
+      "dashboard": {
+        "title": "Главная"
+      },
+      "documents": {
+        "title": "Документы"
+      },
+      "events": {
+        "title": "Мероприятия"
+      },
+      "news": {
+        "title": "Новости"
+      },
+      "notifications": {
+        "title": "Уведомления"
+      },
+      "organization": {
+        "title": "Моя организация"
+      },
+      "reports": {
+        "title": "Отчёты"
+      },
+      "settings": {
+        "title": "Настройки"
+      },
+      "settingsNotifications": {
+        "title": "Настройки уведомлений"
+      },
+      "settingsOrg": {
+        "title": "Настройки организации"
+      },
+      "settingsSecurity": {
+        "title": "Настройки безопасности"
+      }
+    },
+    "about": {
+      "title": "О приложении",
+      "appName": "Кабинет ННОА",
+      "ownerLabel": "Владелец",
+      "websiteLabel": "Веб-сайт",
+      "updatedLabel": "Обновлено",
+      "updatedValue": "30 апреля 2026",
+      "licenseLabel": "Лицензия",
+      "licenseValue": "Государственная",
+      "legalSection": "Правовая информация",
+      "termsOfUse": "Условия использования",
+      "privacyPolicy": "Политика конфиденциальности",
+      "licenses": "Лицензии",
+      "creditsSection": "Разработчики",
+      "creditsOrg": "Национальная ассоциация негосударственных некоммерческих организаций Узбекистана.",
+      "creditsDescription": "Это мобильное приложение создано для упрощения управления грантами, отчётами и мероприятиями для организаций-членов.",
+      "allRightsReserved": "Все права защищены"
+    },
+    "changepassword": {
+      "title": "Изменить пароль",
+      "currentPassword": "Текущий пароль",
+      "newPassword": "Новый пароль",
+      "confirmNewPassword": "Подтвердите новый пароль",
+      "minHint": "минимум 12 символов",
+      "mismatch": "Пароли не совпадают",
+      "savePassword": "Сохранить пароль",
+      "saving": "Сохранение...",
+      "hide": "Скрыть",
+      "showLabel": "Показать",
+      "successToast": "Пароль успешно изменён",
+      "failToast": "Не удалось изменить пароль"
+    },
+    "documents": {
+      "title": "Документы организации",
+      "upload": "Загрузить",
+      "collectionStatus": "Состояние пакета документов",
+      "allRequiredPresent": "Все обязательные документы на месте — подтверждено ННОА",
+      "filterAll": "Все",
+      "filterRequired": "Основные",
+      "filterSupplementary": "Дополнительные",
+      "badgeRequired": "Обязательно",
+      "sectionRequired": "Основные документы",
+      "sectionSupplementary": "Дополнительные документы",
+      "templatesTitle": "Отчётные и типовые формы",
+      "templatesSubtitle": "Официальные формы, утверждённые ННОА",
+      "templatesCount": "{{count}} шт.",
+      "updatedAt": "{{meta}} · обновлено {{date}}",
+      "sheetAriaLabel": "Сведения о документе",
+      "viewLabel": "Просмотр документа",
+      "actionDownload": "Скачать",
+      "actionShare": "Поделиться",
+      "actionNewVersion": "Новая версия",
+      "detailsLabel": "Сведения",
+      "versionsLabel": "История версий",
+      "metaDocType": "Тип документа",
+      "metaFormat": "Формат",
+      "metaPages": "Страницы",
+      "metaUploadedBy": "Загрузил",
+      "metaStatus": "Статус",
+      "metaDocId": "ID документа",
+      "statusVerified": "Подтверждено ННОА",
+      "statusCurrent": "Текущая"
+    },
+    "common": {
+      "back": "Назад",
+      "search": "Поиск",
+      "close": "Закрыть",
+      "save": "Сохранить",
+      "cancel": "Отмена",
+      "loading": "Загрузка…",
+      "yes": "Да",
+      "no": "Нет",
+      "edit": "Редактировать",
+      "delete": "Удалить",
+      "submit": "Отправить",
+      "confirm": "Подтвердить",
+      "retry": "Повторить попытку"
+    },
+    "eventdetail": {
+      "regCancelled": "Регистрация отменена",
+      "regSuccess": "Вы зарегистрированы",
+      "errorOccurred": "Произошла ошибка",
+      "share": "Поделиться",
+      "duration": "Длительность — 7 часов",
+      "organizer": "Организатор",
+      "registeredTitle": "Регистрация выполнена",
+      "confirmationEmailed": "Письмо с подтверждением отправлено на email",
+      "qrCode": "QR-код",
+      "details": "Подробности",
+      "location": "Адрес",
+      "format": "Формат",
+      "formatOnline": "Онлайн",
+      "formatInPerson": "Очно",
+      "language": "Язык",
+      "languageUzbek": "Узбекский язык",
+      "certificate": "Сертификат",
+      "certificateProvided": "Выдаётся (участникам)",
+      "aboutEvent": "О мероприятии",
+      "participants": "Участники",
+      "seatsCount": "{{taken}} / {{total}} участников",
+      "idLabel": "ID {{id}}",
+      "publishedAt": " · Опубликовано {{date}}",
+      "payment": "Оплата",
+      "free": "Бесплатно",
+      "register": "Зарегистрироваться",
+      "kind": {
+        "seminar": "Семинар",
+        "meeting": "Собрание",
+        "webinar": "Вебинар",
+        "event": "Мероприятие"
+      }
+    },
+    "events": {
+      "title": "Мероприятия",
+      "summary": "Скоро — {{upcomingCount}} · Ваши — {{mineCount}}",
+      "calendar": "Календарь",
+      "tabUpcoming": "Скоро",
+      "tabMine": "Ваши ({{mineCount}})",
+      "tabPast": "Прошедшие",
+      "empty": "Мероприятия не найдены",
+      "today": "Сегодня · {{time}}",
+      "register": "Зарегистрироваться",
+      "monthCount": "· {{count}} мероприятий",
+      "sortByTime": "Порядок: по времени",
+      "registered": "Вы зарегистрированы",
+      "keynote": "Основное",
+      "seats": "{{taken}}/{{total}} зарегистрировано",
+      "nearlyFull": "· почти заполнено",
+      "free": "Бесплатно",
+      "kind": {
+        "seminar": "Семинар",
+        "meeting": "Собрание",
+        "webinar": "Вебинар",
+        "event": "Мероприятие"
+      }
+    },
+    "eventscalendar": {
+      "title": "Календарь",
+      "todayAria": "Сегодня",
+      "prevMonthAria": "Предыдущий месяц",
+      "nextMonthAria": "Следующий месяц",
+      "dayEventsTitle": "Мероприятия {{day}} {{month}}",
+      "eventsTitle": "Мероприятия",
+      "countSuffix": "{{count}} шт.",
+      "noEvents": "На этот день мероприятий нет."
+    },
+    "forgotpassword": {
+      "errorPhoneIncomplete": "Введите полный номер телефона",
+      "errorSendFailed": "Не удалось отправить",
+      "headerTitle": "Восстановление пароля",
+      "sentTitle": "Запрос принят",
+      "sentDescription": "Администратор рассмотрит ваш запрос и свяжется с вами по телефону или электронной почте. Пожалуйста, подождите.",
+      "backToLogin": "Вернуться ко входу",
+      "heading": "Забыли пароль?",
+      "subheading": "Оставьте свой номер телефона — администратор свяжется с вами и восстановит пароль.",
+      "phoneLabel": "Номер телефона",
+      "noteLabel": "Дополнительный комментарий",
+      "optional": "необязательно",
+      "notePlaceholder": "Когда и каким способом вам удобно связаться?",
+      "submitting": "Отправка...",
+      "submit": "Отправить запрос",
+      "directContact": "Или свяжитесь напрямую:"
+    },
+    "grantapplicationdetail": {
+      "toastSubmitted": "Заявка отправлена",
+      "toastSubmitFailed": "Не удалось отправить",
+      "toastDeleted": "Заявка удалена",
+      "toastDeleteFailed": "Не удалось удалить",
+      "toastLinkCopied": "Ссылка скопирована",
+      "deleteConfirmTitle": "Удалить черновик?",
+      "deleteConfirmMessage": "Это действие нельзя отменить.",
+      "headerTitle": "Заявка на грант",
+      "shareAria": "Поделиться",
+      "actionsAria": "Действия",
+      "reviewStatusBadge": "На рассмотрении · этап 3",
+      "reviewIntroBefore": "Ваша заявка совместно оценивается NNTMA и Делегацией ЕС. Ожидаемый ответ —",
+      "reviewIntroHighlight": "конец июля",
+      "approvedStatusBadge": "Одобрено · 5 июня 2026",
+      "approvedIntro": "Поздравляем! Ваш проект одобрен в полном объёме. Теперь необходимо подписать договор и подтвердить график платежей.",
+      "awardedAmountLabel": "Выделенная сумма",
+      "requestedAmountLabel": "запрошенная сумма",
+      "timelineLabel": "Этап",
+      "timelineSubmitted": "Подана",
+      "timelineTechReview": "Техническая проверка",
+      "timelineUnderReview": "Рассматривает ответственный",
+      "timelineNow": "Сейчас",
+      "timelineFinalDecision": "Окончательное решение",
+      "organizerLabel": "Организатор",
+      "openLinkAria": "Открыть ссылку",
+      "factRequestedBudget": "Запрошенный бюджет",
+      "factProjectDuration": "Срок проекта",
+      "factSubmitted": "Подана",
+      "factCategory": "Категория",
+      "projectSummaryLabel": "Краткое описание проекта",
+      "budgetBreakdownLabel": "Распределение бюджета",
+      "budgetEquipment": "Оборудование",
+      "budgetSoftware": "Специальное ПО",
+      "budgetTeacherTraining": "Обучение преподавателей",
+      "budgetManagement": "Управленческие расходы",
+      "attachmentsLabel": "Прикреплённые документы",
+      "attachmentsLabelApproved": "Документы",
+      "fileGrantContract": "Грантовый договор (проект)",
+      "fileGrantContractMeta": "2,4 МБ · ожидает подписи",
+      "fileProjectProposal": "Проектная заявка",
+      "fileProjectProposalMeta": "3,2 МБ · 28 страниц",
+      "fileBudgetTable": "Бюджетная таблица",
+      "fileBudgetTableMeta": "180 КБ · 4 листа",
+      "filePartnerSchools": "Список школ-партнёров",
+      "filePartnerSchoolsMeta": "240 КБ · 2 страницы",
+      "metaLabel": "Сведения о заявке",
+      "metaApplicationId": "ID заявки",
+      "metaSubmitted": "Подана",
+      "metaResponsible": "Ответственный",
+      "metaVersion": "Версия",
+      "metaVersionValue": "v1.2 (отредактировано {{count}} раз)",
+      "nextStepsLabel": "Дальнейшие шаги",
+      "step1Title": "Подписать договор",
+      "step1Desc": "С помощью электронной цифровой подписи",
+      "step1Cta": "Подписать",
+      "step2Title": "Подтвердить банковские реквизиты",
+      "step2Desc": "Действуют текущие реквизиты",
+      "step3Title": "Получить первый платёж",
+      "step3Desc": "{{amount}} — в течение 7 рабочих дней после подписания договора",
+      "paymentScheduleLabel": "График платежей",
+      "payStart": "Начало · ориентировочно июль 2026",
+      "payInterim": "Промежуточный отчёт · октябрь 2026",
+      "payFinal": "Итоговый отчёт · апрель 2027",
+      "payOfBudget": "{{pct}} от бюджета",
+      "contactLabel": "Контакт Делегации ЕС",
+      "contactRole": "Менеджер проекта · программа Civic Tech",
+      "contactWrite": "Написать",
+      "signContract": "Подписать договор",
+      "submitting": "Отправка...",
+      "submitDraft": "Подать"
+    },
+    "grantapplications": {
+      "grants": "Гранты",
+      "myApplications": "Мои заявки",
+      "newApplication": "Новая заявка",
+      "declinedIntro": "Заявки, отклонённые НАННОУ. Изучив комментарий, вы можете подать улучшенную заявку на следующий конкурс.",
+      "declinedHelpPrefix": "Чтобы запросить повторное рассмотрение отклонённой заявки, свяжитесь с НАННОУ",
+      "declinedHelpLink": "через поддержку",
+      "statusSubmitted": "Подана",
+      "statusReview": "На рассмотрении",
+      "statusApproved": "Одобрена",
+      "statusDeclined": "Отклонена",
+      "statusDraft": "Черновик",
+      "draftCompleted": "Черновик заполнен",
+      "reviewNoteLabel": "Комментарий НАННОУ",
+      "budget": "Бюджет",
+      "created": "Создана",
+      "resolved": "Решена",
+      "submittedOn": "Подана",
+      "continue": "Продолжить",
+      "statTotal": "Всего заявок",
+      "statTotalSub": "За 12 месяцев",
+      "statApproved": "Одобрено",
+      "statApprovedSub": "{{pct}}% успеха",
+      "statActive": "Активные",
+      "statActiveSub": "Ожидается",
+      "filterAll": "Все",
+      "filterSubmitted": "Поданные",
+      "filterReview": "На рассм.",
+      "filterApproved": "Одобренные",
+      "filterDeclined": "Отклонённые",
+      "filterDraft": "Черновики"
+    },
+    "grantdetail": {
+      "removedFromSaved": "Удалено из сохранённых",
+      "grantSaved": "Грант сохранён",
+      "saveFailed": "Не удалось сохранить",
+      "loginFirst": "Сначала войдите в систему",
+      "enterProjectName": "Введите название проекта",
+      "applicationSent": "Заявка отправлена",
+      "draftSaved": "Черновик сохранён",
+      "notSaved": "Не сохранено",
+      "linkCopied": "Ссылка скопирована",
+      "share": "Поделиться",
+      "competitionClosed": "Конкурс закрыт",
+      "daysLeft": "Осталось {{count}} дн.",
+      "international": "Международный",
+      "organizer": "Организатор",
+      "amount": "Сумма",
+      "deadline": "Срок",
+      "projectDuration": "Длительность проекта",
+      "region": "Регион",
+      "requirements": "Требования",
+      "description": "Описание",
+      "readFull": "Читать полностью ↓",
+      "publishedMeta": "Опубликовано: {{date}} · ID {{id}}",
+      "maxAmount": "Макс. сумма",
+      "submitApplication": "Подать заявку",
+      "newApplication": "Новая заявка",
+      "projectName": "Название проекта",
+      "autofilledHint": "Заполнено автоматически. Вы можете отредактировать.",
+      "projectSummary": "Краткое описание проекта",
+      "summaryPlaceholder": "Кратко опишите цель проекта, основные направления деятельности и ожидаемые результаты…",
+      "estimatedBudget": "Примерный бюджет",
+      "budgetPlaceholder": "Например: $15,000 или 150 млн сум",
+      "draftNote": "Если сохранить черновик сейчас, позже можно добавить подробную информацию и файлы документов. Поданные заявки рассматриваются ННОМА.",
+      "saveDraft": "Сохранить черновик",
+      "saving": "Сохранение...",
+      "submit": "Подать",
+      "optional": "· необязательно",
+      "req": {
+        "membership": {
+          "label": "Членство в АННОУ"
+        },
+        "duration": {
+          "label": "Срок деятельности ≥ 2 лет",
+          "sub": "Организация работает с 2005 года"
+        },
+        "lastYearReport": {
+          "label": "Отчёт за прошлый год сдан"
+        },
+        "team": {
+          "label": "Команда проекта: более 3 сотрудников",
+          "sub": "Не указано"
+        }
+      }
+    },
+    "grants": {
+      "title": "Гранты",
+      "filter": "Фильтр",
+      "searchPlaceholder": "Название гранта, сфера или организатор",
+      "saved": "Сохранённые",
+      "savedCount": "{{count}} грант(ов)",
+      "myApplications": "Мои заявки",
+      "reviewCount": "{{count}} на рассмотрении",
+      "applicationsCount": "{{count}} заявок",
+      "category": "Категория",
+      "resultsCount": "{{count}} результат(ов)",
+      "recommended": "Рекомендуется",
+      "sortLabel": "Сортировка:",
+      "sortNearestDeadline": "Ближайший срок ↓",
+      "statusOpen": "Открыт",
+      "statusEnding": "Осталось {{count}} дн.",
+      "statusClosed": "Конкурс закрыт",
+      "international": "Международный",
+      "amount": "Сумма",
+      "deadline": "Срок",
+      "categories": {
+        "all": "Все",
+        "yoshlar": "Молодёжь",
+        "gender": "Гендер",
+        "talim": "Образование",
+        "soglik": "Здравоохранение",
+        "ekologiya": "Экология",
+        "madaniyat": "Культура",
+        "huquq": "Юридическая помощь"
+      }
+    },
+    "grantsresults": {
+      "searchPlaceholder": "Название гранта, сфера или организатор",
+      "searchAria": "Поиск грантов",
+      "clear": "Очистить",
+      "filter": "Фильтр",
+      "resultsFound": "результатов найдено",
+      "noResultsForQuery": "По запросу \"{{query}}\" гранты не найдены",
+      "noResults": "Гранты не найдены",
+      "international": "Международный",
+      "amount": "Сумма",
+      "deadline": "Срок",
+      "statusOpen": "Открыт",
+      "statusEnding": "Осталось {{daysLeft}} дн.",
+      "statusClosed": "Конкурс закрыт"
+    },
+    "helparticle": {
+      "headerTitle": "Помощь",
+      "shareAria": "Поделиться",
+      "thanks": "Спасибо!",
+      "feedbackYes": "Ваш отзыв принят.",
+      "feedbackNo": "Мы постараемся помочь.",
+      "helpfulQuestion": "Эта статья была полезной?",
+      "related": "Похожее",
+      "backToHelpCenter": "Вернуться в центр помощи"
+    },
+    "home": {
+      "userFallback": "Пользователь",
+      "organization": "Организация",
+      "notifications": "Уведомления",
+      "welcome": "Добро пожаловать, {{name}}",
+      "daysLeft": "осталось {{count}} дн.",
+      "submitReport": "Сдать",
+      "totalReports": "Всего отчётов",
+      "unread": "Непрочитанные",
+      "newReport": "Новый отчёт",
+      "steps": "{{count}} шага",
+      "grants": "Гранты",
+      "grantsOpen": "{{count}} открыто",
+      "view": "Смотреть",
+      "upcomingEvents": "Ближайшие мероприятия",
+      "viewAll": "Все",
+      "noEvents": "В ближайшее время мероприятий нет"
+    },
+    "inbox": {
+      "home": "Главная",
+      "title": "Уведомления",
+      "markAllRead": "Отметить все как прочитанные",
+      "filter": "Фильтр",
+      "filterAll": "Все",
+      "filterUnread": "Непрочитанные",
+      "filterReports": "Отчёты",
+      "filterGrants": "Гранты",
+      "filterEvents": "Мероприятия",
+      "groupToday": "Сегодня",
+      "groupWeek": "На этой неделе",
+      "groupOlder": "Ранее",
+      "archiveNote": "Уведомления старше 30 дней архивируются автоматически",
+      "swipeRead": "Прочитано",
+      "filterDialogLabel": "Фильтрация уведомлений",
+      "filterSubtitle": "Показывать только выбранные типы и периоды",
+      "sectionType": "Тип",
+      "chipMemberNews": "Новости НАННОУ",
+      "chipSystemMessages": "Системные сообщения",
+      "sectionPeriod": "Период",
+      "periodToday": "Сегодня",
+      "periodWeek": "На этой неделе",
+      "periodAll": "Все",
+      "sectionStatus": "Статус",
+      "toggleUnreadOnly": "Только непрочитанные",
+      "toggleActionRequired": "Требует действия",
+      "toggleActionRequiredSub": "Ожидается ответ, действие или подтверждение",
+      "rememberHint": "Выбор можно сохранить кнопкой «Запомнить» — он применится и при следующем входе.",
+      "clear": "Сбросить",
+      "applyCount": "Применить ({{count}})",
+      "today": "Сегодня",
+      "view": "Открыть",
+      "kind": {
+        "report_returned": "Отчёт возвращён",
+        "report_accepted": "Отчёт принят",
+        "report_due": "Срок отчёта",
+        "grant_new": "Новый грантовый конкурс",
+        "app_approved": "Заявка одобрена",
+        "app_review": "Заявка на рассмотрении",
+        "event_reminder": "Напоминание о мероприятии",
+        "event_invite": "Новое приглашение",
+        "member_news": "Новости НАННОУз",
+        "system": "Системное сообщение"
+      }
+    },
+    "login": {
+      "enterPhoneOrEmail": "Введите номер телефона или email",
+      "enterPassword": "Введите пароль",
+      "welcome": "Добро пожаловать!",
+      "invalidCredentials": "Неверный телефон/email или пароль",
+      "uzbek": "Узбекский",
+      "help": "Помощь",
+      "memberCabinet": "Кабинет члена",
+      "titleLine1": "Вход в кабинет",
+      "titleLine2": "организации",
+      "subtitle": "Для организаций, зарегистрированных в реестре ННОУ.",
+      "phoneOrEmailLabel": "Номер телефона или email",
+      "phoneOrEmailPlaceholder": "90 123 45 67 или email",
+      "passwordLabel": "Пароль",
+      "forgotPassword": "Забыли пароль?",
+      "passwordPlaceholder": "Ваш пароль",
+      "hidePassword": "Скрыть пароль",
+      "showPassword": "Показать пароль",
+      "securityNote": "Организации-члены входят по номеру телефона (или email) и паролю.",
+      "signIn": "Войти",
+      "or": "или",
+      "oneIdComingSoon": "ONE ID скоро",
+      "signInVia": "вход через",
+      "noAccount": "Нет аккаунта?",
+      "registerOrg": "Зарегистрировать организацию"
+    },
+    "loginhistory": {
+      "title": "История входов",
+      "subtitle": "Последние попытки входа. При подозрительной активности немедленно смените пароль.",
+      "empty": "История отсутствует",
+      "actionLogin": "Вход в систему",
+      "actionLogout": "Выход из системы",
+      "actionRevoke": "Сеанс завершён"
+    },
+    "members": {
+      "title": "Участники команды",
+      "orgFallback": "Организация",
+      "inviteMember": "Пригласить участника",
+      "filterAll": "Все",
+      "filterInvited": "Приглашение",
+      "statMembers": "Участники",
+      "statMembersSub": "всего",
+      "statActive": "Активные",
+      "statActiveSub": "в сети",
+      "statInvited": "Приглашения",
+      "statInvitedSub": "ожидается",
+      "searchPlaceholder": "Имя, должность или email",
+      "searchAria": "Поиск участников",
+      "clear": "Очистить",
+      "noMembers": "Участники не найдены",
+      "rolesInfo": "Информация о ролях и правах доступа",
+      "helpCenter": "в Центре помощи",
+      "detailTitle": "Сведения об участнике",
+      "you": "Вы",
+      "email": "Email",
+      "phone": "Телефон",
+      "status": "Статус",
+      "statusInvited": "Приглашение отправлено",
+      "statusActive": "Активен",
+      "invitationSent": "Приглашение отправлено",
+      "inviteCreateFailed": "Не удалось создать приглашение",
+      "codeCopied": "Код скопирован",
+      "roleMember": "Участник",
+      "roleManager": "Менеджер",
+      "inviteSubtitle": "Создайте код приглашения и поделитесь им с коллегой",
+      "inviteCodeLabel": "Код приглашения",
+      "copyCode": "Скопировать код",
+      "codeShareHint": "Отправьте этот код коллеге (Telegram, SMS или лично). При регистрации он введёт код и присоединится к вашей организации. Действует до {{date}}.",
+      "roleLabel": "Роль",
+      "roleGroupAria": "Роль приглашения",
+      "inviteInfo": "Код приглашения действует 30 дней. Пользователь вводит код при регистрации и принимает приглашение.",
+      "again": "Ещё",
+      "createInvite": "Создать приглашение",
+      "role": {
+        "admin": {
+          "label": "Руководитель организации",
+          "short": "Руководитель"
+        },
+        "accountant": {
+          "label": "Главный бухгалтер",
+          "short": "Бухгалтер"
+        },
+        "manager": {
+          "label": "Менеджер проектов",
+          "short": "Менеджер"
+        },
+        "member": {
+          "label": "Представитель члена",
+          "short": "Член"
+        },
+        "guest": {
+          "label": "Наблюдатель",
+          "short": "Наблюдатель"
+        }
+      },
+      "perm": {
+        "admin": "Полный доступ · все действия",
+        "accountant": "Отчёты и финансовые данные",
+        "manager": "Грантовые заявки и проекты",
+        "member": "Только просмотр и подача своего отчёта",
+        "guest": "Только просмотр, без редактирования"
+      }
+    },
+    "news": {
+      "title": "Новости",
+      "tabAll": "Все",
+      "tabPinned": "Важные",
+      "tabUpdates": "Обновления",
+      "empty": "Новости не найдены",
+      "pinnedBadge": "Важное",
+      "tag": {
+        "news": "Новость",
+        "update": "Обновление",
+        "event": "Мероприятие",
+        "announcement": "Объявление"
+      }
+    },
+    "newsdetail": {
+      "headerTitle": "Новость",
+      "share": "Поделиться",
+      "related": "Связанные",
+      "defaultTag": "Новость",
+      "notFound": "Не найдено",
+      "defaultAuthor": "ННОМА",
+      "copyLink": "Копия",
+      "copyButton": "Копировать",
+      "readMin": "{{min}} мин"
+    },
+    "notfound": {
+      "title": "Страница не найдена",
+      "description": "Запрашиваемая страница была удалена, перемещена или никогда не существовала.",
+      "goHome": "Вернуться на главную",
+      "previousPage": "Предыдущая страница"
+    },
+    "onboarding": {
+      "skip": "Пропустить",
+      "start": "Начать",
+      "next": "Далее",
+      "slide1": {
+        "eyebrow": "ИИ-поиск грантов",
+        "title": "Найдите гранты, подходящие именно вам",
+        "body": "На основе профиля вашей организации искусственный интеллект подберёт наиболее подходящие гранты от ООН, USAID, ЕС и других доноров."
+      },
+      "slide2": {
+        "eyebrow": "Отчёты",
+        "title": "Отчёты в несколько шагов",
+        "body": "Заполняйте квартальные и годовые отчёты с мобильного устройства, прикрепляйте документы и отслеживайте статус в реальном времени."
+      },
+      "slide3": {
+        "eyebrow": "Мероприятия",
+        "title": "Форумы, тренинги и нетворкинг",
+        "body": "Будьте в курсе региональных и международных мероприятий, регистрируйтесь на них и знакомьтесь с другими ННО."
+      }
+    },
+    "organization": {
+      "title": "Организация",
+      "createFailed": "Не удалось создать",
+      "revokeFailed": "Не удалось отозвать",
+      "codeCopied": "Код скопирован",
+      "leader": "Руководитель",
+      "stir": "ИНН {{value}}",
+      "members": "Члены",
+      "staff": "Сотрудники",
+      "activeGrants": "Активные гранты",
+      "about": "Информация",
+      "region": "Регион",
+      "address": "Адрес",
+      "founded": "Дата основания",
+      "focusAreas": "Направления",
+      "team": "Команда",
+      "addMemberLink": "+ Добавить члена",
+      "contact": "Контакты",
+      "phone": "Телефон",
+      "email": "Email",
+      "website": "Веб-сайт",
+      "addMember": "Добавить члена",
+      "inviteHint": "Создайте код приглашения для нового члена и поделитесь им через Telegram, SMS или лично. Код действует 30 дней.",
+      "note": "Примечание",
+      "optional": "необязательно",
+      "notePlaceholder": "Например: для Алиева А.",
+      "creating": "Создание...",
+      "newCode": "Новый код",
+      "existingInvites": "Существующие приглашения",
+      "inviteActive": "Активен",
+      "inviteAccepted": "Принято",
+      "inviteRevoked": "Отозвано",
+      "inviteExpired": "Истёк",
+      "acceptedBy": "{{name}} принял",
+      "copy": "Копировать",
+      "revoke": "Отозвать",
+      "status": {
+        "active": "Активен",
+        "pending": "На рассмотрении",
+        "suspended": "Приостановлен"
+      }
+    },
+    "organizationedit": {
+      "title": "Редактировать организацию",
+      "saving": "Сохранение...",
+      "savedToast": "Данные организации обновлены",
+      "saveError": "Не удалось сохранить данные",
+      "uploadLogo": "Загрузить логотип",
+      "sectionBasic": "Основные сведения",
+      "fieldFullName": "Полное наименование",
+      "fieldShortName": "Сокращённое наименование",
+      "sectionAddress": "Адрес",
+      "fieldRegion": "Регион",
+      "fieldExactAddress": "Точный адрес",
+      "sectionContact": "Контакты",
+      "fieldPhone": "Телефон",
+      "fieldEmail": "Email",
+      "fieldWebsite": "Веб-сайт",
+      "sectionFocus": "Направления"
+    },
+    "profile": {
+      "title": "Профиль",
+      "settings": "Настройки",
+      "organization": "Организация",
+      "field": "Сфера",
+      "region": "Регион",
+      "established": "Год основания",
+      "members": "Члены",
+      "membersCount": "{{count}} чел.",
+      "inn": "ИНН",
+      "registryId": "ID реестра",
+      "duesBefore": "Годовой членский взнос —",
+      "duesUntil": "до",
+      "pay": "Оплатить",
+      "myActivity": "Моя активность",
+      "reports": "Отчёты",
+      "applications": "Заявки",
+      "savedGrants": "Сохранённые гранты",
+      "events": "Мероприятия",
+      "account": "Учётная запись",
+      "orgDocuments": "Документы организации",
+      "docsCount": "{{count}} шт.",
+      "teamMembers": "Члены команды",
+      "notifications": "Уведомления",
+      "active": "Активно",
+      "language": "Язык",
+      "languageValue": "Узбекский (латиница)",
+      "privacySecurity": "Конфиденциальность и безопасность",
+      "helpSupport": "Помощь и поддержка",
+      "logout": "Выйти из аккаунта",
+      "orgFullName": "НАННО — Национальная ассоциация негосударственных некоммерческих организаций",
+      "notificationsSubtitle": "О каких обновлениях вы хотите получать уведомления",
+      "notifNewGrants": "Новые гранты",
+      "notifNewGrantsSub": "Конкурсы, подходящие вашей сфере",
+      "notifAppStatus": "Изменение статуса заявки",
+      "notifAppStatusSub": "Ответы и комментарии НАННО",
+      "notifReportReminders": "Напоминания об отчётах",
+      "notifReportRemindersSub": "За 7 дней до истечения срока",
+      "notifNewEvents": "Новые мероприятия и вебинары",
+      "notifNews": "Новости НАННО",
+      "notifNewsSub": "1-2 раза в месяц",
+      "deliveryChannel": "Канал доставки",
+      "channelInApp": "В приложении",
+      "channelEmail": "Эл. почта",
+      "channelSms": "SMS",
+      "channelTelegram": "Telegram-бот",
+      "notConnected": "Не подключено",
+      "deadlineNotice": "При приближении срока важные напоминания в любом случае показываются в приложении.",
+      "role": {
+        "super_admin": "Суперадминистратор",
+        "regional_admin": "Региональный администратор",
+        "org_admin": "Администратор организации",
+        "member_user": "Представитель организации-члена"
+      }
+    },
+    "profileedit": {
+      "title": "Редактировать профиль",
+      "saving": "Сохранение...",
+      "nameMinLength": "Имя должно содержать не менее 2 символов",
+      "savedToast": "Данные профиля сохранены",
+      "saveFailed": "Не удалось сохранить",
+      "fullNameLabel": "Полное имя",
+      "fullNamePlaceholder": "Имя Фамилия",
+      "emailLabel": "Эл. почта",
+      "roleLabel": "Роль",
+      "regionLabel": "Регион",
+      "notEditable": "нельзя изменить"
+    },
+    "reportdetail": {
+      "reportTitle": "Отчёт",
+      "actions": "Действия",
+      "copyCreated": "Копия создана",
+      "copyFailed": "Не удалось создать копию",
+      "reportDeleted": "Отчёт удалён",
+      "deleteFailed": "Не удалось удалить",
+      "statusDraftLabel": "Черновик",
+      "statusDraftBlurb": "Отчёт ещё не завершён. Перед отправкой проверьте все поля.",
+      "statusAcceptedLabel": "Принято",
+      "statusReturnedLabel": "Возвращено",
+      "timelineCreated": "Создано",
+      "timelineSubmitted": "Отправлено",
+      "timelineReview": "На рассмотрении",
+      "timelineNow": "Сейчас",
+      "timelineFinalDecision": "Окончательное решение",
+      "timelineCurrent": "Текущий",
+      "reviewNoteLabel": "Комментарий рассмотрения ННОА",
+      "statusHistory": "История статусов",
+      "uploadedFile": "Загруженный файл",
+      "fileMeta": "1,4 МБ · Загружено {{date}}",
+      "download": "Скачать",
+      "openFile": "Открыть файл",
+      "downloadFile": "Скачать файл",
+      "metaLabel": "Сведения",
+      "metaPeriod": "Период",
+      "metaType": "Тип",
+      "metaOrganization": "Организация",
+      "metaId": "ID",
+      "yourNote": "Ваш комментарий",
+      "makeCopy": "Создать копию",
+      "makeCopyShort": "Копировать",
+      "reEdit": "Редактировать заново",
+      "editOnlyDraftReturned": "Редактирование доступно только для черновиков и возвращённых отчётов.",
+      "backToList": "Вернуться к списку",
+      "deleteDraftTitle": "Удалить черновик?",
+      "deleteDraftMessage": "Это действие нельзя отменить.",
+      "status": {
+        "submitted": {
+          "label": "На рассмотрении",
+          "short": "На рассмотрении",
+          "blurb": "Ваш отчёт рассматривается ответственным сотрудником ННОА. Обычно это занимает 3–5 рабочих дней."
+        },
+        "returned": {
+          "label": "Возвращён",
+          "short": "Возвращён",
+          "blurb": "В отчёте выявлены недочёты. Прочитайте примечание ниже, исправьте и подайте повторно."
+        },
+        "accepted": {
+          "label": "Принят",
+          "short": "Принят",
+          "blurb": "Ваш отчёт принят и сохранён в реестре ННОА. Никаких дополнительных действий не требуется."
+        }
+      }
+    },
+    "reportnew": {
+      "toastSubmitted": "Отчёт отправлен на рассмотрение",
+      "errorSubmitFailed": "Не удалось отправить отчёт",
+      "title": "Новый отчёт",
+      "stepCounter": "Шаг {{step}} · из 3",
+      "step1Heading": "Выберите тип отчёта",
+      "step1Subtitle": "Выберите категорию, соответствующую типу подаваемого отчёта. У каждого типа есть свой шаблон.",
+      "reportTypeLabel": "Тип отчёта",
+      "templatesHintPrefix": "Шаблоны отчётов можно скачать в",
+      "templatesHintLink": "разделе «Документы»",
+      "templatesHintSuffix": ".",
+      "step2Heading": "Выберите период",
+      "step2Subtitle": "За какой период подаётся {{type}}?",
+      "reportFallback": "отчёт",
+      "reportFallbackCap": "Отчёт",
+      "reportPeriodLabel": "Период отчёта",
+      "deadlinePrefix": "Срок подачи отчёта за 2026 Q2 —",
+      "deadlineDate": "15 июля 2026",
+      "deadlineSuffix": "— осталось {{days}} дн.",
+      "step3Heading": "Загрузите файл",
+      "step3Subtitle": "В формате PDF, DOCX или XLSX. Максимальный размер — 25 МБ.",
+      "summaryLabel": "Подаётся",
+      "fileReady": "Готово",
+      "replaceFileAria": "Выбрать другой файл отчёта",
+      "replaceFile": "Выбрать другой файл",
+      "pickFileAria": "Выбрать файл отчёта",
+      "uploadFile": "Загрузить файл",
+      "uploadHint": "PDF, DOCX, XLSX · до 25 МБ",
+      "noteLabel": "Примечание (необязательно)",
+      "notePlaceholder": "Напишите дополнительную информацию или пояснение к отчёту…",
+      "consent": "Подтверждаю достоверность содержания загруженного файла и согласен(на) на его рассмотрение ННОМА.",
+      "submitting": "Отправка...",
+      "submit": "Подать",
+      "continue": "Продолжить",
+      "type": {
+        "activity": {
+          "title": "Отчёт о деятельности",
+          "desc": "Результаты деятельности за квартал"
+        },
+        "financial": {
+          "title": "Финансовый отчёт",
+          "desc": "Доходы, расходы, балансы"
+        },
+        "annual": {
+          "title": "Годовой отчёт",
+          "desc": "Сводный отчёт по итогам года"
+        },
+        "special": {
+          "title": "Специальный отчёт",
+          "desc": "По проекту или мероприятию"
+        }
+      },
+      "period": {
+        "2026Q1": {
+          "sub": "Январь – март 2026",
+          "status": "сдан"
+        },
+        "2026Q2": {
+          "sub": "Апрель – июнь 2026",
+          "status": "срок: 15 июля"
+        },
+        "2026Q3": {
+          "sub": "Июль – сентябрь 2026",
+          "status": "не открыт"
+        },
+        "2026Q4": {
+          "sub": "Октябрь – декабрь 2026",
+          "status": "не открыт"
+        },
+        "2026Y": {
+          "sub": "Итоги года",
+          "status": "срок: 31 января 2027"
+        }
+      }
+    },
+    "reports": {
+      "title": "Отчёты",
+      "defaultType": "Отчёт",
+      "newReport": "Новый отчёт",
+      "searchSoon": "Поиск скоро появится",
+      "archiveSoon": "Архив скоро появится",
+      "filterAll": "Все",
+      "filterReturned": "Возвращено",
+      "filterReview": "На проверке",
+      "filterAccepted": "Принято",
+      "filterDraft": "Черновик",
+      "returnedCallout": "{{count}} отчёт(ов) возвращено на доработку",
+      "returnedInstruction": "Прочитайте замечание ННОА, исправьте и подайте повторно. Новый срок —",
+      "returnedDeadline": "25 июня 2026",
+      "nextDeadline": "Следующий срок",
+      "nextDeadlineReport": "Отчёт о деятельности за 3 кв. 2026",
+      "nextDeadlineDate": "15 октября 2026",
+      "empty": "Отчёты не найдены",
+      "acceptedSummaryPre": "За последние 12 месяцев принято",
+      "acceptedSummaryPost": "из поданных отчётов.",
+      "showArchive": "Показать 2024 и более ранние",
+      "currentYear": "Текущий год",
+      "yearCount": "{{count}} шт.",
+      "actionNeeded": "Требует действий",
+      "status": {
+        "draft": "Черновик",
+        "submitted": "Отправлен",
+        "review": "На рассмотрении",
+        "returned": "Возвращён",
+        "accepted": "Принят"
+      },
+      "annualSuffix": "годовой"
+    },
+    "savedgrants": {
+      "title": "Сохранённые гранты",
+      "removedFromSaved": "Удалено из сохранённых",
+      "removeFailed": "Не удалось удалить",
+      "emptyTitle": "Нет сохранённых грантов",
+      "emptyHint": "Сохраняйте понравившиеся гранты — позже их будет легко найти.",
+      "viewGrants": "Посмотреть гранты",
+      "grantFallback": "Грант",
+      "removeAriaLabel": "Удалить из сохранённых",
+      "untitledGrant": "Грант без названия",
+      "closed": "Закрыт"
+    },
+    "sessions": {
+      "title": "Активные сеансы",
+      "all": "Все",
+      "sessionEnded": "Сеанс завершён",
+      "endFailed": "Не удалось завершить",
+      "otherSessionsEnded": "Завершено других сеансов: {{count}}",
+      "noOtherActiveSessions": "Других активных сеансов нет",
+      "thisDeviceSuffix": " — это устройство",
+      "active": "Активен",
+      "mobileApp": "Мобильное приложение",
+      "web": "Веб",
+      "lastUsed": "Последний",
+      "endSession": "Завершить сеанс",
+      "noSessionsFound": "Активные сеансы не найдены",
+      "confirmRevokeTitle": "Завершить сеанс?",
+      "confirmRevokeMessage": "Сеанс на этом устройстве будет немедленно отозван, и для повторного входа потребуется пароль.",
+      "endLabel": "Завершить",
+      "confirmAllTitle": "Завершить все другие сеансы?",
+      "confirmAllMessage": "Все сеансы, кроме текущего устройства, будут отозваны.",
+      "endAllLabel": "Завершить все",
+      "now": "Сейчас",
+      "minutesAgo": "{{m}} мин. назад",
+      "hoursAgo": "{{h}} ч. назад",
+      "daysAgo": "{{d}} дн. назад",
+      "unknownDevice": "Неизвестное устройство"
+    },
+    "settings": {
+      "notSaved": "Не сохранено",
+      "notificationsTitle": "Уведомления",
+      "channels": "Каналы",
+      "pushNotifications": "Push-уведомления",
+      "email": "Email",
+      "topics": "Темы",
+      "reports": "Отчёты",
+      "reportsDetail": "Подтверждение, возврат",
+      "grants": "Гранты",
+      "grantsDetail": "Новые подходящие гранты",
+      "events": "Мероприятия",
+      "eventsDetail": "Напоминания",
+      "news": "Новости",
+      "comingSoon": "Скоро",
+      "securityTitle": "Безопасность",
+      "password": "Пароль",
+      "changePassword": "Изменить пароль",
+      "activity": "Активность",
+      "activeSessions": "Активные сеансы",
+      "threeDevices": "3 устройства",
+      "loginHistory": "История входов",
+      "deleteAccount": "Удалить аккаунт",
+      "helpTitle": "Помощь",
+      "faq": "Часто задаваемые вопросы",
+      "faqSubmitReport": "Как подать отчёт?",
+      "faqSubmitGrant": "Как отправить заявку на грант?",
+      "faqForgotPassword": "Я забыл пароль, что делать?",
+      "contact": "Контакты",
+      "supportService": "Служба поддержки",
+      "requestHelp": "Запросить помощь",
+      "requestReceived": "Ваше обращение принято",
+      "requestReceivedDesc": "Мы ответим в течение 24 часов. Ответ будет отправлен по email.",
+      "topic": "Тема",
+      "topicReports": "Отчёты",
+      "topicGrants": "Гранты",
+      "topicEvents": "Мероприятия",
+      "topicAccount": "Аккаунт и вход",
+      "topicOther": "Другое",
+      "yourMessage": "Ваше сообщение",
+      "messagePlaceholder": "Опишите проблему подробно...",
+      "sending": "Отправка...",
+      "cabinetUser": "Пользователь кабинета",
+      "sendFailed": "Не удалось отправить",
+      "privacyTitle": "Конфиденциальность",
+      "privacyPending": "Настройки конфиденциальности пока локальны. Запрос на удаление аккаунта оформляется через службу поддержки.",
+      "dataCollection": "Сбор данных",
+      "usageStats": "Статистика использования",
+      "anonymous": "Анонимно",
+      "marketingMessages": "Маркетинговые уведомления",
+      "documents": "Документы",
+      "privacyPolicy": "Политика конфиденциальности",
+      "termsOfUse": "Условия использования",
+      "deleteRequestSent": "Запрос на удаление аккаунта отправлен",
+      "deleteAccountConfirm": "Удалить аккаунт?",
+      "deleteAccountMessage": "Ваш аккаунт и все данные будут удалены безвозвратно. Это действие можно отменить в течение 30 дней — напишите в службу поддержки."
+    },
+    "signup": {
+      "inviteInvalid": "Приглашение недействительно",
+      "verifyFailed": "Не удалось проверить",
+      "applicationReceivedShort": "Заявка принята.",
+      "registerFailed": "Не удалось зарегистрировать",
+      "applicationReceived": "Заявка принята",
+      "applicationUnderReview": "Заявка рассматривается",
+      "reviewWaitMessage": "Данные вашей организации рассматриваются. Дождитесь подтверждения администратора.",
+      "afterApproval": "После подтверждения",
+      "afterApprovalDesc": "Войти в систему можно будет после активации статуса.",
+      "signIn": "Войти в систему",
+      "stepCounter": "Шаг {{current}} / 3",
+      "titleIdentity": "Ваши данные",
+      "titleJoinOrg": "Присоединиться к организации",
+      "titleVerifyOrg": "Проверка организации",
+      "titleReview": "Подтвердите заявку",
+      "subtitleIdentity": "Введите имя, телефон и пароль как представитель организации.",
+      "subtitleInvite": "Вас пригласили в организацию {{organization}}.",
+      "subtitleVerifyOrg": "Мы проверим ваш номер телефона по реестру ННО.",
+      "subtitleReview": "Если данные верны, отправьте заявку.",
+      "fullNameLabel": "Полное имя",
+      "fullNamePlaceholder": "Ваше имя и фамилия",
+      "phoneLabel": "Номер телефона",
+      "passwordLabel": "Пароль",
+      "passwordPlaceholder": "не менее 8 символов",
+      "inviteConfirmed": "Приглашение подтверждено",
+      "inviteAutoLink": "После регистрации вы будете автоматически привязаны к этой организации.",
+      "registryMatchDesc": "Мы сверим ваш номер телефона с официальным реестром ННО. При совпадении ваша организация будет привязана автоматически.",
+      "verifying": "Проверка...",
+      "checkRegistry": "Проверить по реестру",
+      "orgFound": "Организация найдена",
+      "leaderLabel": "Руководитель: {{name}}",
+      "notFoundInRegistry": "Не найдено в реестре",
+      "notFoundDesc": "Вы можете продолжить — вашу заявку администратор рассмотрит вручную.",
+      "reviewNameLabel": "Имя",
+      "reviewPhoneLabel": "Телефон",
+      "reviewOrgLabel": "Организация",
+      "reviewOrgManual": "Не найдено в реестре — будет рассмотрено вручную",
+      "reviewInviteLabel": "Приглашение",
+      "reviewInviteCode": "Код: {{code}}",
+      "termsLink": "Условиями использования",
+      "consentAnd": "и",
+      "privacyLink": "Политикой конфиденциальности",
+      "consentSuffix": "я выражаю своё согласие.",
+      "submitting": "Отправка...",
+      "submitApplication": "Отправить заявку",
+      "continue": "Продолжить"
+    },
+    "splash": {
+      "memberCabinet": "Кабинет члена"
+    },
+    "themesettings": {
+      "title": "Тема",
+      "savedToast": "Настройки темы сохранены",
+      "appearance": "Внешний вид",
+      "themeAuto": "Авто",
+      "themeLight": "Светлая",
+      "themeDark": "Тёмная",
+      "autoHint": "Подстраивается под настройки системы.",
+      "density": "Плотность",
+      "densityCompact": "Плотная",
+      "densityComfortable": "Средняя",
+      "densitySpacious": "Просторная",
+      "fontSize": "Размер шрифта",
+      "fontSmall": "Маленький",
+      "fontStandard": "Стандартный",
+      "fontLarge": "Большой",
+      "preview": "Образец",
+      "previewHeading": "Пример заголовка",
+      "previewBody": "Ваши настройки отображаются мгновенно. Нажмите «Сохранить» для подтверждения."
+    },
+    "tabbar": {
+      "mainNavigation": "Основная навигация",
+      "tab": {
+        "home": "Главная",
+        "reports": "Отчёты",
+        "grants": "Гранты",
+        "events": "События",
+        "profile": "Профиль"
+      }
+    },
+    "errorstate": {
+      "loadFailed": "Не удалось загрузить данные. Проверьте подключение к интернету."
+    },
+    "offlinebanner": {
+      "internetRestored": "Соединение восстановлено",
+      "offlineMode": "Нет интернета · Офлайн-режим"
+    },
+    "filtermodal": {
+      "title": "Фильтрация",
+      "multiSelect": " · множественный выбор",
+      "clear": "Очистить",
+      "apply": "Применить"
+    },
+    "searchmodal": {
+      "inputPlaceholder": "Грант, документ, мероприятие, новость...",
+      "recentSearches": "Недавние запросы",
+      "nothingFound": "Ничего не найдено",
+      "tryAnotherKeyword": "Попробуйте другое ключевое слово."
+    },
+    "sharemodal": {
+      "title": "Поделиться",
+      "sharedVia": "Отправлено через {{label}}",
+      "linkCopied": "Ссылка скопирована",
+      "copy": "Копировать"
+    },
+    "errorboundary": {
+      "title": "Непредвиденная ошибка",
+      "description": "В приложении произошёл технический сбой. Повторите попытку или вернитесь позже.",
+      "devDetails": "Подробности для разработчика",
+      "homePage": "Главная страница"
+    }
+  },
+  "common": {
+    "skipLink": "Перейти к основному содержимому",
+    "relTime": {
+      "now": "Только что",
+      "minutesAgo": "мин. назад",
+      "hoursAgo": "ч. назад",
+      "daysAgo": "дн. назад"
+    },
+    "searchAria": "Поиск",
+    "searchPlaceholder": "Поиск по сайту...",
+    "closeAria": "Закрыть",
+    "a11yAria": "Версия для слабовидящих",
+    "langTriggerAria": "Выбор языка",
+    "homeAria": "Главная",
+    "mobileMenuAria": "Меню",
+    "mainMenuAria": "Основное меню",
+    "noResults": "Ничего не найдено",
+    "loading": "Загрузка...",
+    "rssFeed": "RSS-лента",
+    "filterAll": "Все",
+    "searchNoResults": "По запросу ничего не найдено.",
+    "partnersDirections": "<h2 class=\"section-title\">Направления сотрудничества</h2><div class=\"cards\"><article class=\"card\"><h3>Проектное сотрудничество</h3><p>Проекты в области гражданского общества, социальных инициатив и институционального развития.</p></article><article class=\"card\"><h3>Аналитическое сотрудничество</h3><p>Исследования, отчёты мониторинга, инфографика и общественно-политические обзоры.</p></article><article class=\"card\"><h3>Образовательное сотрудничество</h3><p>Тренинги, семинары, наставнические программы и инициативы по наращиванию потенциала.</p></article></div>",
+    "proposalCta": "<div class=\"card\" style=\"display:flex; align-items:center; justify-content:space-between; gap:16px;\"><div><h3 style=\"margin:0 0 8px\">Подать предложение о сотрудничестве</h3><p>По новым инициативам сотрудничества свяжитесь с нами и отправьте предложение.</p></div><a class=\"btn\" href=\"contact\">Связаться</a></div>",
+    "loadError": "Ошибка загрузки",
+    "networkError": "Сетевая ошибка. Проверьте интернет-соединение.",
+    "genericError": "Ошибка. Пожалуйста, попробуйте снова."
+  },
+  "testBanner": {
+    "tag": "Тест",
+    "text": "Сайт работает в тестовом режиме"
+  },
+  "topbar": {
+    "fondPrimary": "УзНАННО",
+    "fondSub": "общественный фонд",
+    "fondAlt": "Общественный фонд УзНАННО",
+    "logoAlt": "УзНАННО"
+  },
+  "nav": {
+    "associationGroup": "Об Ассоциации",
+    "associationItems": {
+      "about": "Об Ассоциации",
+      "mission": "Цели и задачи",
+      "board": "Члены Совета",
+      "leadership": "Руководство",
+      "team": "Наша команда",
+      "regional": "Региональные подразделения",
+      "structure": "Структура Ассоциации"
+    },
+    "registryGroup": "Реестр ННО",
+    "registryItems": {
+      "members": "ННО — члены Ассоциации",
+      "sustainabilityIndex": "Индекс устойчивости ННО",
+      "sustainabilityCert": "ННО с сертификатом «Устойчивое ННО»"
+    },
+    "projects": "Проекты",
+    "partnersGroup": "Партнёры",
+    "partnersItems": {
+      "foreign": "Зарубежные партнёры",
+      "local": "Местные партнёры",
+      "public": "Члены Общественного совета"
+    },
+    "openGroup": "Открытые данные",
+    "openItems": {
+      "contact": "Контакты",
+      "grantAi": "Грантовые конкурсы — AI-поиск",
+      "normativ": "Нормативно-правовые документы",
+      "media": "Медиа",
+      "events": "Мероприятия",
+      "reports": "Отчёты",
+      "digests": "Дайджесты",
+      "vacancies": "Вакансии",
+      "academy": "Виртуальная академия",
+      "internship": "Стажировка и волонтёрство"
+    }
+  },
+  "footer": {
+    "addressTitle": "Адрес",
+    "addressLine": "100170, Республика Узбекистан, г. Ташкент, Шайхантахурский район, ул. Фурката, 1А",
+    "contactTitle": "Связь",
+    "telLabel": "Тел:",
+    "emailLabel": "Email:",
+    "socialTitle": "Социальные сети",
+    "contactAria": "Связаться",
+    "legalAria": "Правовая информация",
+    "privacy": "Политика конфиденциальности",
+    "terms": "Условия использования",
+    "contactLink": "Контакты",
+    "copyright": "© 2026 УзНАННО. Все права защищены."
+  },
+  "settings": {
+    "language": {
+      "title": "Язык",
+      "section": "Язык интерфейса"
+    }
+  },
+  "search": {
+    "modalAria": "Поиск",
+    "queryEmpty": "запрос не введён",
+    "noResultsTitle": "Ничего не найдено",
+    "noResultsHint": "Попробуйте другие ключевые слова.",
+    "emptyTitle": "Пустой поисковый запрос",
+    "emptyHint": "Введите ключевое слово в поле поиска выше.",
+    "pagesSection": "Страницы",
+    "foundCount": "Найдено вопросов: {n}"
+  },
+  "pages": {
+    "afzalliklar": {
+      "title": "Преимущества членства в Ассоциации",
+      "sub": "Получите для своей организации правовую защиту, возможности сотрудничества и ресурсы институционального развития, вступив в Национальную ассоциацию ННО Узбекистана.",
+      "heroBtn": "Подать заявку сейчас",
+      "heroBtnSub": "УзНАННО · Официальное членство",
+      "about": "<h2 class=\"section-title\">Об Ассоциации</h2><p class=\"section-sub\" style=\"margin-bottom:32px;\">Национальная ассоциация негосударственных некоммерческих организаций Узбекистана (УзНАННО)</p><div class=\"about-block\"><div><p style=\"font-size:16px; line-height:1.8; color:#4a5464; margin:0 0 16px;\">УзНАННО зарегистрирована Министерством юстиции Республики Узбекистан 10 июня 2005 года под порядковым номером <strong>612</strong>.</p><p style=\"font-size:16px; line-height:1.8; color:#4a5464; margin:0 0 16px;\">Ассоциация — добровольное объединение зарегистрированных в установленном порядке негосударственных некоммерческих организаций, действующее в соответствии с законодательством Республики Узбекистан, в организационно-правовой форме союза ННО.</p><p style=\"font-size:16px; line-height:1.8; color:#4a5464; margin:0;\"><strong>Основная цель:</strong> объединение местных ННО, координация, поддержка и развитие их деятельности, а также содействие повышению эффективности и качества работы ННО.</p></div><div class=\"about-meta\"><div class=\"about-meta-row\"><div class=\"about-meta-text\"><strong>Дата регистрации</strong><span>10 июня 2005 года</span></div></div><div class=\"about-meta-row\"><div class=\"about-meta-text\"><strong>Регистрационный номер</strong><span>№ 612</span></div></div><div class=\"about-meta-row\"><div class=\"about-meta-text\"><strong>Юридический адрес</strong><span>100170, Республика Узбекистан, г. Ташкент, Шайхантахурский район, ул. Фурката, 1А</span></div></div><div class=\"about-meta-row\"><div class=\"about-meta-text\"><strong>Организационная форма</strong><span>Союз негосударственных некоммерческих организаций</span></div></div></div></div>",
+      "benefits": "<h2 class=\"section-title\">Что даёт Ассоциация?</h2><p class=\"section-sub\">10 ключевых направлений, которыми ваша организация сможет пользоваться благодаря членству.</p><div class=\"benefits-grid\"><div class=\"benefit-card\"><h3>Правовая защита и представительство</h3><p>Представление и защита прав и законных интересов ННО в государственных органах, судах, международных и зарубежных организациях.</p></div><div class=\"benefit-card\"><h3>Развитие сотрудничества</h3><p>Участие в развитии взаимовыгодного сотрудничества между ННО, субъектами предпринимательства, международными и зарубежными организациями и государственными органами.</p></div><div class=\"benefit-card\"><h3>Создание благоприятной среды</h3><p>Содействие созданию благоприятных правовых, экономических и социальных условий для реализации инициатив ННО.</p></div><div class=\"benefit-card\"><h3>Поддержка демократических процессов</h3><p>Объединение усилий членов и партнёров для устойчивого развития и продвижения демократических процессов в стране.</p></div><div class=\"benefit-card\"><h3>Совершенствование законодательства</h3><p>Участие в разработке проектов нормативно-правовых актов, затрагивающих права и законные интересы ННО, и подготовка предложений по совершенствованию профильного законодательства.</p></div><div class=\"benefit-card\"><h3>Развитие потенциала</h3><p>Повышение знаний и навыков руководителей и сотрудников ННО в области эффективного управления организацией, финансовой устойчивости, разработки социально значимых проектов, волонтёрства и привлечения благотворительных ресурсов.</p></div><div class=\"benefit-card\"><h3>Образование и методическая поддержка</h3><p>Разработка для представителей ННО руководств, учебных программ и книг, а также теоретических и практических подходов, соответствующих условиям страны.</p></div><div class=\"benefit-card\"><h3>Социальное партнёрство</h3><p>Ведение единой базы государственных социальных заказов и проектов социального партнёрства; повышение экономического, социального и культурного потенциала при модернизации страны.</p></div><div class=\"benefit-card\"><h3>Поддержка нуждающихся групп населения</h3><p>Мобилизация интеллектуальных, материальных и финансовых ресурсов членов для поддержки женщин, молодёжи, пожилых, лиц с инвалидностью и граждан, оказавшихся в трудной жизненной ситуации.</p></div><div class=\"benefit-card\"><h3>Международное сотрудничество</h3><p>Укрепление связей с международными и зарубежными ННО, финансовыми институтами и иностранными донорами, изучение их положительного опыта.</p></div></div><div class=\"join-cta\"><div><h3>Присоединяйтесь к Ассоциации</h3><p>Получите подробную информацию о подаче заявки и процессе рассмотрения.</p></div><a class=\"join-cta-btn\" href=\"/#membership-modal\">Подать заявку</a></div>"
+    },
+    "awards": {
+      "title": "Зарубежные партнёры",
+      "sub": "Международные организации и зарубежные институты, сотрудничающие с УзНАННО.",
+      "partners": "<h2 class=\"section-title\">Зарубежные партнёры</h2><p class=\"section-sub\">С международными институтами установлено долгосрочное стратегическое сотрудничество.</p><div class=\"partner-grid\"><div class=\"partner\"><img alt=\"OSCE\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/3/34/OSCE_logo.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"UNDP\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/9/9f/UNDP_logo.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"GIZ\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/f/f4/Deutsche_Gesellschaft_f%C3%BCr_Internationale_Zusammenarbeit_Logo.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"USAID\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/1/17/USAID-Identity.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"UNICEF\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_UNICEF.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"Diakonie Katastrophenhilfe\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/b/b2/Logo_Diakonie_Katastrophenhilfe.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"UK Aid\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/e/e0/UKaid.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div></div>",
+      "metrics": "<h2 class=\"section-title\">Показатели сотрудничества</h2><div class=\"kpi-grid\"><div class=\"kpi\"><strong>24</strong><span>Зарубежных партнёра</span></div><div class=\"kpi\"><strong>63</strong><span>Местных партнёра</span></div><div class=\"kpi\"><strong>37+</strong><span>Совместных проектов</span></div><div class=\"kpi\"><strong>14</strong><span>Охват регионов</span></div></div>"
+    },
+    "boardOfExperts": {
+      "title": "Члены Совета",
+      "sub": "Список членов Совета Национальной ассоциации негосударственных некоммерческих организаций Узбекистана.",
+      "statTotal": "Всего позиций",
+      "statFounder": "Представителей учредителей",
+      "statRegion": "Региональных представителей",
+      "statVacant": "Вакансий",
+      "section1Label": "Раздел I",
+      "section1Title": "Представители учредителей",
+      "section1Sub": "Представители организаций — учредителей Совета Ассоциации.",
+      "section2Label": "Раздел II",
+      "section2Title": "Представители членов",
+      "section2Sub": "Региональные представители по областям и городам.",
+      "vacant": "Вакантно",
+      "vacantPos": "Свободная позиция"
+    },
+    "dayjestlar": {
+      "title": "Дайджесты",
+      "sub": "Информационные дайджесты и аналитические материалы о деятельности УзНАННО.",
+      "table": "<div class=\"doc-table\"><div class=\"doc-row head\"><span>Заголовок</span><span>Дата</span><span>Формат</span><span>Скачать</span></div><div class=\"doc-row\" style=\"grid-column:1/-1;text-align:center;padding:40px 0;color:var(--neutral-400,#9ca3af);font-size:15px;\">Дайджесты будут добавлены в ближайшее время.</div></div>"
+    },
+    "eventDetail": {
+      "title": "Сведения о мероприятии",
+      "noscriptHint": "Для просмотра мероприятия нужен JavaScript. <a href=\"events\">Список мероприятий</a>"
+    },
+    "foydalanishShartlari": {
+      "title": "Условия использования",
+      "sub": "Общие правила использования портала ngo.uz и его сервисов.",
+      "body": "<p style=\"color:#6b7280;font-size:13px;margin:0 0 8px\"><em>Последнее обновление: 30 апреля 2026 г.</em></p><p>Используя портал ngo.uz, вы выражаете согласие со следующими условиями. Если какая-либо их часть вам не подходит, просим не пользоваться порталом.</p><h2 style=\"margin-top:24px\">1. Основные понятия</h2><ul><li><strong>Ассоциация</strong> — Национальная ассоциация негосударственных некоммерческих организаций Узбекистана (УзНАННО);</li><li><strong>Портал</strong> — официальный веб-сайт в домене <a href=\"https://www.ngo.uz\">ngo.uz</a> и его кабинет;</li><li><strong>Пользователь</strong> — любое физическое или юридическое лицо, использующее портал;</li><li><strong>Контент</strong> — любые тексты, изображения, видео, документы и иная информация, размещённая на портале.</li></ul><h2 style=\"margin-top:24px\">2. Использование портала</h2><p>Информация и сервисы портала предоставляются в рамках законодательства Республики Узбекистан, устава Ассоциации и этического кодекса. Пользователь:</p><ul><li>Обеспечивает достоверность и полноту предоставляемых сведений;</li><li>Не нарушает прав других лиц;</li><li>Воздерживается от любых действий, наносящих вред порталу (атаки на сервер, автоматизированные массовые запросы, вирусы и т. п.).</li></ul><h2 style=\"margin-top:24px\">3. Учётная запись и пароль</h2><p>Для использования кабинета портала требуется регистрация. Пользователь:</p><ul><li>Хранит пароль в тайне и не раскрывает его третьим лицам;</li><li>Несёт ответственность за все действия, совершённые через его учётную запись;</li><li>Немедленно уведомляет Ассоциацию при обнаружении несанкционированного входа в учётную запись.</li></ul><h2 style=\"margin-top:24px\">4. Интеллектуальная собственность</h2><p>Весь контент портала (логотип, дизайн, тексты, изображения, код) принадлежит Ассоциации, если не указано иное. Для коммерческого использования требуется письменное разрешение. При цитировании обязательно указывать источник (ngo.uz).</p><h2 style=\"margin-top:24px\">5. Ограничение ответственности</h2><p>Ассоциация принимает все разумные меры для обеспечения достоверности размещённой информации, однако:</p><ul><li>Не несёт ответственности за ущерб, причинённый техническими сбоями, простоями или неполнотой данных;</li><li>Не отвечает за содержание сайтов по внешним ссылкам;</li><li>Не отвечает за ситуации, возникшие из-за неверно введённых пользователем данных.</li></ul><h2 style=\"margin-top:24px\">6. Конфиденциальность</h2><p>Персональные данные обрабатываются в соответствии с <a href=\"maxfiylik-siyosati\">Политикой конфиденциальности</a>.</p><h2 style=\"margin-top:24px\">7. Изменение условий</h2><p>Ассоциация оставляет за собой право в одностороннем порядке изменять условия использования. Обновлённые условия вступают в силу с момента публикации на портале.</p><h2 style=\"margin-top:24px\">8. Спорные ситуации</h2><p>Любые споры, связанные с использованием портала, разрешаются на основании законодательства Республики Узбекистан. До судебного рассмотрения стороны обязаны попытаться достичь соглашения путём переговоров.</p><h2 style=\"margin-top:24px\">9. Связь</h2><p>По вопросам, касающимся условий использования, свяжитесь с нами:</p><ul><li>Email: <a href=\"mailto:info@ngo.uz\">info@ngo.uz</a></li><li>Телефон: <a href=\"tel:+998555030512\">(+998 55) 503-05-12</a></li><li><a href=\"qayta-aloqa\">Форма обращения</a></li></ul>"
+    },
+    "grantTanlovlari": {
+      "title": "Объявления о грантах — AI-поиск",
+      "sub": "Открытые грантовые конкурсы, объявленные донорами и партнёрскими организациями.",
+      "eyebrow": "AI-помощник",
+      "h2": "Найдите грант под вашу сферу",
+      "intro": "Свободно опишите вашу ситуацию или проектную идею — мы подберём наиболее подходящие открытые гранты из надёжных донорских и государственных источников.",
+      "noscript": "<strong>AI-поиск грантов требует JavaScript.</strong> Пожалуйста, включите JavaScript в браузере или откройте <a href=\"grants\" style=\"color:#7a5800;font-weight:600\">список действующих грантовых конкурсов</a>.",
+      "panelLabel": "Введите ваш запрос",
+      "queryExample": "Например: Есть ли грант для ННО, помогающего детям с расстройствами аутистического спектра?",
+      "submitBtn": "Найти гранты"
+    },
+    "hududiyBolinmalar": {
+      "title": "Региональные подразделения",
+      "sub": "Список сотрудников региональных подразделений УзНАННО.",
+      "listAria": "Список региональных подразделений",
+      "chipTotal": "Всего: 28 позиций",
+      "chipBranches": "Региональных подразделений: 14",
+      "chipHeads": "Руководителей: 14",
+      "chipSpecialists": "Специалистов: 11",
+      "chipVacancies": "Вакансий: 3",
+      "searchAria": "Поиск и фильтрация региональных подразделений",
+      "searchPlaceholder": "Поиск по имени, региону или должности",
+      "filterHeads": "Руководители",
+      "filterSpecialists": "Специалисты",
+      "filterVacancies": "Вакансии"
+    },
+    "infographics": {
+      "title": "Инфографика",
+      "sub": "Визуальная статистика и аналитическая инфографика по сектору ННО Узбекистана.",
+      "gallery": "<h2 id=\"infographicsTitle\" class=\"visually-hidden\">Сборник инфографики</h2><p style=\"margin:0 0 20px;padding:14px 18px;background:#f8fbf9;border:1px solid #d4e8dd;border-radius:10px;font-size:14px;color:var(--neutral-500,#587585);\"><i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;color:var(--green-600,#255f40);\"></i> Указанные ниже инфографики готовятся. Ссылки для скачивания PDF активируются после завершения работы.</p><div><div class=\"infographic-grid\"><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>ННО Узбекистана: показатели 2026 года</h3><p>Количество активных ННО в стране, региональное распределение и отраслевой анализ.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Скоро</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>Индекс устойчивости сектора ННО — 2026</h3><p>Показатели индекса устойчивости по областям и динамика изменений.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Скоро</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>География организаций-членов</h3><p>Распределение и количество ННО — членов УзНАННО по регионам.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Скоро</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>Сферы деятельности ННО</h3><p>Распределение ННО по сферам: образование, здравоохранение, экология и другие.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Скоро</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>Динамика развития сектора ННО 2019–2026</h3><p>Сравнительный 7-летний анализ: число организаций, членство, проекты и финансирование.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Скоро</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>Карта международного сотрудничества</h3><p>География международных партнёров УзНАННО, проектов и источников финансирования.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Скоро</div></div></div></div>"
+    },
+    "jamoatchilikKengashi": {
+      "title": "Члены Общественного совета",
+      "sub": "Представители УзНАННО, включённые в общественные советы при государственных органах.",
+      "statAgencies": "Общественный совет государственного органа",
+      "statReps": "Назначенных представителей УзНАННО",
+      "tableCaption": "Общественные советы при министерствах и представители УзНАННО в них",
+      "thAgency": "Министерство / Ведомство",
+      "thRep": "Представитель УзНАННО"
+    },
+    "korrupsiyaMurojaat": {
+      "title": "Обращение по противодействию коррупции",
+      "sub": "Конфиденциальная форма для сообщений о случаях коррупции.",
+      "formAria": "Форма антикоррупционного обращения",
+      "noscript": "<strong>Форма требует JavaScript.</strong> Пожалуйста, включите JavaScript в браузере или отправьте обращение на <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a> (конфиденциальность гарантируется).",
+      "submitBtn": "<svg aria-hidden=\"true\" fill=\"currentColor\" height=\"16\" style=\"margin-right:6px;vertical-align:middle\" viewBox=\"0 0 24 24\" width=\"16\"><path d=\"M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.75a2.25 2.25 0 0 0 .126 4.238l3.918 1.176 1.77 5.522a.75.75 0 0 0 1.317.209l2.352-2.938 4.552 3.31a2.25 2.25 0 0 0 3.478-1.464l2.25-15.75a2.25 2.25 0 0 0-2.241-2.268z\"></path></svg> Отправить обращение",
+      "f": {
+        "name": "Имя (по желанию — можно оставить анонимно)",
+        "namePh": "Можно оставить анонимно",
+        "phone": "Телефон (по желанию)",
+        "org": "Название организации (по желанию)",
+        "orgPh": "К какой организации относится обращение",
+        "message": "Содержание обращения <span aria-hidden=\"true\">*</span>",
+        "messagePh": "Опишите ситуацию, дату, место и другие подробности…",
+        "messageHelp": "Введите минимум 20 символов (для точного описания даты, места и обстоятельств)."
+      }
+    },
+    "mahalliyHamkorlar": {
+      "title": "Местные партнёры",
+      "sub": "Местные организации, общественные объединения и институты, сотрудничающие с УзНАННО.",
+      "partners": "<h2 class=\"section-title\">Местные партнёры</h2><p class=\"section-sub\">Сотрудничество с региональными институтами, учебными заведениями и общественными объединениями.</p><div class=\"partner-grid\"><div class=\"partner\">Министерство юстиции</div><div class=\"partner\">Агентство по делам молодёжи</div><div class=\"partner\">Махалля и нуроний</div><div class=\"partner\">Высшие учебные заведения</div><div class=\"partner\">Общественные фонды</div><div class=\"partner\">Региональные центры ННО</div></div>",
+      "metrics": "<h2 class=\"section-title\">Показатели сотрудничества</h2><div class=\"kpi-grid\"><div class=\"kpi\"><strong>63</strong><span>Местных партнёра</span></div><div class=\"kpi\"><strong>14</strong><span>Областей и городов</span></div><div class=\"kpi\"><strong>37+</strong><span>Совместных мероприятий</span></div><div class=\"kpi\"><strong data-live-stat=\"member-orgs\">2382</strong><span>ННО — членов</span></div></div>"
+    },
+    "maxfiylikSiyosati": {
+      "title": "Политика конфиденциальности",
+      "sub": "Порядок обработки персональных данных и права пользователя на портале ngo.uz.",
+      "body": "<p style=\"color:#6b7280;font-size:13px;margin:0 0 8px\"><em>Последнее обновление: 30 апреля 2026 г.</em></p><p>Настоящий документ определяет порядок обработки персональных данных, собираемых через портал <a href=\"https://www.ngo.uz\">ngo.uz</a> Национальной ассоциацией негосударственных некоммерческих организаций Узбекистана (далее — «Ассоциация», «мы»). Документ разработан на основании Закона Республики Узбекистан «О персональных данных».</p><h2 style=\"margin-top:24px\">1. Собираемые данные</h2><p>В процессе использования портала и его сервисов могут собираться следующие данные:</p><ul><li>Данные, указанные пользователем, — имя и фамилия, номер телефона, электронная почта, название организации и номер свидетельства;</li><li>Дополнительные сведения из форм обращений и отчётности;</li><li>Технические данные — IP-адрес, тип браузера, время входа и статистика перемещений по страницам портала.</li></ul><h2 style=\"margin-top:24px\">2. Цели использования данных</h2><p>Собранные данные используются только в следующих целях:</p><ul><li>Членство в Ассоциации и предоставление услуг;</li><li>Ответы на обращения, вопросы и жалобы;</li><li>Статистический анализ и улучшение качества портала;</li><li>Иные случаи, предусмотренные законом.</li></ul><h2 style=\"margin-top:24px\">3. Передача третьим лицам</h2><p>Персональные данные не передаются третьим лицам без согласия пользователя. Исключения:</p><ul><li>По требованию закона и официальному запросу уполномоченных государственных органов;</li><li>Технические подрядчики (по шифрованному каналу, со строгими условиями конфиденциальности).</li></ul><h2 style=\"margin-top:24px\">4. Срок хранения данных</h2><p>Данные хранятся до достижения цели обработки. Пользователь может направить запрос на удаление своих данных (см. п. 4).</p><h2 style=\"margin-top:24px\">5. Права пользователя</h2><p>Вы имеете следующие права:</p><ul><li>Доступ к данным о себе и их исправление;</li><li>Отзыв согласия;</li><li>Запрос на удаление данных;</li><li>Возражение против обработки.</li></ul><h2 style=\"margin-top:24px\">6. Файлы cookie</h2><p>Портал использует файлы cookie для улучшения пользовательского опыта, сохранения сессии и статистического анализа. Их можно отключить в настройках браузера, но это может повлиять на работу отдельных функций портала.</p><h2 style=\"margin-top:24px\">7. Меры безопасности</h2><p>Данные передаются с использованием шифрования HTTPS и хранятся на защищённых серверах. Наши сотрудники имеют доступ к персональным данным только в рамках выполнения своих обязанностей.</p><h2 style=\"margin-top:24px\">8. Изменения</h2><p>Настоящая политика может время от времени обновляться. Обновлённая версия публикуется на этой странице, дата вступления в силу указывается выше.</p><h2 style=\"margin-top:24px\">9. Связь</h2><p>По любым вопросам, касающимся данных, свяжитесь с нами:</p><ul><li>Email: <a href=\"mailto:info@ngo.uz\">info@ngo.uz</a></li><li>Телефон: <a href=\"tel:+998555030512\">(+998 55) 503-05-12</a></li><li>Адрес: 100170, г. Ташкент, Шайхантахурский район, ул. Фурката, 1А</li><li>Или через <a href=\"qayta-aloqa\">форму обращения</a>.</li></ul>"
+    },
+    "membershipCertificate": {
+      "title": "Свидетельство о членстве",
+      "sub": "Порядок получения и просмотра свидетельства о членстве вашей организации.",
+      "howTo": "<h2 style=\"margin:0 0 12px;font-size:24px\">Как получить свидетельство</h2><p style=\"margin:0 0 12px;color:var(--neutral-500)\">Свидетельство о членстве выпускается администратором в личном кабинете после успешного прохождения этапа вступления.</p><ol style=\"margin:0 0 16px;padding-left:20px;color:var(--neutral-700)\"><li style=\"margin-bottom:6px\">Заполните <a href=\"membership\">форму заявки на членство</a> и отправьте её.</li><li style=\"margin-bottom:6px\">Администратор рассмотрит заявку в течение 15 рабочих дней.</li><li style=\"margin-bottom:6px\">После подтверждения скачайте свидетельство в формате PDF через <a href=\"cabinet/cabinet-login\">личный кабинет</a>.</li></ol><p style=\"margin:0 0 18px;font-size:14px;color:var(--neutral-500)\">Номер и срок действия свидетельства формируются индивидуально для каждой организации и отображаются в кабинете.</p><div style=\"display:flex;gap:10px;flex-wrap:wrap\"><a class=\"btn\" href=\"membership\">Заявка на членство</a><a class=\"btn\" href=\"cabinet/cabinet-login\" style=\"background:#1b5c67\">Войти в кабинет</a><a class=\"btn\" href=\"qayta-aloqa\" style=\"background:transparent;color:#1b5c67;border:1px solid #1b5c67\">Задать вопрос</a></div>"
+    },
+    "multimediaRoom": {
+      "title": "Медиа",
+      "sub": "Подборка видео-уроков, выступлений и инфографических материалов.",
+      "cards": "<h2 id=\"mediaContentTitle\" class=\"visually-hidden\">Медиа-разделы</h2><div class=\"cards\"><article class=\"card\"><div class=\"media\"></div><h3>Вебинары</h3><p>Записанные вебинары по управлению ННО и проектному менеджменту.</p><div class=\"card-action\"><a class=\"btn\" href=\"videos\">Смотреть видео <i class=\"ph ph-arrow-right\" aria-hidden=\"true\"></i></a></div></article><article class=\"card\"><div class=\"media\"></div><h3>Брифинги</h3><p>Официальные заявления, пресс-конференции и публичные выступления.</p><div class=\"card-action\"><a class=\"btn\" href=\"news\">Новости <i class=\"ph ph-arrow-right\" aria-hidden=\"true\"></i></a></div></article><article class=\"card\"><div class=\"media\"></div><h3>Инфографика</h3><p>Визуальное представление аналитических показателей и методических указаний.</p><div class=\"card-action\"><a class=\"btn\" href=\"infographics\">Инфографика <i class=\"ph ph-arrow-right\" aria-hidden=\"true\"></i></a></div></article></div>"
+    },
+    "newsDetail": {
+      "title": "Сведения о новости",
+      "noscriptHint": "Для просмотра новости нужен JavaScript. <a href=\"news\">Список новостей</a>"
+    },
+    "nntSchool": {
+      "title": "Школа ННО",
+      "sub": "Практическая образовательная платформа для руководителей и сотрудников ННО.",
+      "courses": "<h2 id=\"schoolCoursesTitle\" class=\"visually-hidden\">Учебные направления</h2><div class=\"cards\"><article class=\"card\"><h3>Основные курсы</h3><p>Модули по управлению организацией, грантовому менеджменту и отчётности.</p></article><article class=\"card\"><h3>Краткие тренинги</h3><p>Занятия по правовой грамотности, работе с общественностью и информационной политике.</p></article><article class=\"card\"><h3>Сертификация</h3><p>По завершении курса слушателям, успешно прошедшим оценивание, выдаётся сертификат.</p></article></div>",
+      "links": "<a class=\"page-link-card\" href=\"online-library\"><h3>Онлайн-библиотека</h3><p>Учебные материалы и методические пособия.</p></a><a class=\"page-link-card\" href=\"multimedia-room\"><h3>Мультимедиа-зал</h3><p>Видео-уроки и презентации.</p></a><a class=\"page-link-card\" href=\"about\"><h3>О нас</h3><p>Вернуться к общей деятельности организации.</p></a>"
+    },
+    "nntlar": {
+      "title": "ННО — члены Ассоциации",
+      "sub": "Полный список ННО — членов УзНАННО по регионам",
+      "statsTotal": "Всего ННО-членов",
+      "statsRegions": "Регионов",
+      "statsSohas": "Сфер деятельности",
+      "statsYear": "Список обновлён",
+      "regionsAria": "Фильтр по регионам",
+      "regionFilterLabel": "По региону",
+      "searchAria": "Поиск ННО",
+      "searchInputAria": "Поиск по ННО",
+      "searchPlaceholder": "Поиск по названию ННО, руководителю или сфере...",
+      "loadingList": "Список ННО загружается...",
+      "noscript": "Список ННО загружается с помощью JavaScript. Альтернативно вы можете <a href=\"contact\">связаться с нами</a> и запросить нужную информацию."
+    },
+    "officialDocs": {
+      "title": "Официальные документы по ННО",
+      "sub": "Единая база законов, постановлений, государственных программ и практических руководств.",
+      "listAria": "Список документов",
+      "noscript": "Для просмотра базы документов нужен JavaScript. Вы можете запросить разъяснение по документу: <a href=\"service-request\">Отправить обращение</a>.",
+      "inquiryCta": "<div class=\"card split-inline\"><div><h3 style=\"margin:0 0 8px\">Отправить официальное обращение</h3><p>Отправьте запрос за разъяснением или юридическим комментарием по документам.</p></div><a class=\"btn\" href=\"service-request\">Отправить обращение</a></div>"
+    },
+    "onlineLibrary": {
+      "title": "Онлайн-библиотека",
+      "sub": "Библиотека методических пособий, документов и учебных материалов для ННО.",
+      "topics": "<h2 id=\"libraryTopicsTitle\" class=\"visually-hidden\">Разделы</h2><div class=\"cards\"><article class=\"card\"><h3>Управление ННО</h3><p>Пособия по уставу, модели управления и внутренним политикам.</p></article><article class=\"card\"><h3>Финансовая отчётность</h3><p>Материалы по подготовке отчётности, бухгалтерской дисциплине и мониторингу.</p></article><article class=\"card\"><h3>Написание проектов</h3><p>Образцы грантовой заявки, проектной логики и индикаторов оценки.</p></article></div>"
+    },
+    "ourTeam": {
+      "title": "Наша команда",
+      "sub": "Сотрудники Исполнительного аппарата УзНАННО.",
+      "listAria": "Список членов команды",
+      "totalChip": "Всего: 16 сотрудников",
+      "searchAria": "Поиск и фильтрация команды",
+      "searchInputAria": "Поиск сотрудника",
+      "searchPlaceholder": "Поиск по имени или должности",
+      "filterStaff": "Сотрудники"
+    },
+    "projects": {
+      "title": "Проекты",
+      "sub": "Список реализуемых, завершённых и планируемых проектов Ассоциации.",
+      "filterAria": "Фильтрация проектов",
+      "filterAllPill": "Все <span class=\"pill-n\">17</span>",
+      "filterActivePill": "Действующие <span class=\"pill-n\">2</span>",
+      "filterDonePill": "Завершённые <span class=\"pill-n\">1</span>",
+      "filterPlannedPill": "Планируемые <span class=\"pill-n\">14</span>",
+      "statusActive": "Действующий",
+      "statusPlanned": "Планируемый",
+      "statusDone": "Завершённый"
+    },
+    "publicationDetail": {
+      "title": "Сведения о публикации",
+      "noscriptHint": "Для просмотра публикации нужен JavaScript. <a href=\"publications\">Список публикаций</a>"
+    },
+    "publications": {
+      "title": "Публикации",
+      "sub": "Библиотека аналитических статей, обзоров и методических изданий.",
+      "listAria": "Список публикаций",
+      "noscript": "Для просмотра списка публикаций нужен JavaScript. Получить новости и публикации можно через <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/news.rss\">RSS-ленту</a>."
+    },
+    "qaytaAloqa": {
+      "title": "Обратная связь",
+      "sub": "Чтобы отправить вопрос, предложение или обращение, заполните форму ниже.",
+      "formAria": "Форма обратной связи",
+      "noscript": "<strong>Форма требует JavaScript.</strong> Пожалуйста, включите JavaScript в браузере или отправьте обращение на <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a> или по телефону <a href=\"tel:+998555030512\" style=\"color:#7a5800;font-weight:600\">+998 (55) 503-05-12</a>.",
+      "submitBtn": "Отправить",
+      "f": {
+        "name": "Имя и фамилия <span aria-hidden=\"true\">*</span>",
+        "namePh": "Ваше полное имя",
+        "phone": "Телефон <span class=\"form-help\" style=\"font-weight:normal;color:var(--neutral-500,#587585);font-size:13px;\">(или email)</span>",
+        "email": "Email <span class=\"form-help\" style=\"font-weight:normal;color:var(--neutral-500,#587585);font-size:13px;\">(или телефон)</span>",
+        "topic": "Тема обращения <span aria-hidden=\"true\">*</span>",
+        "message": "Сообщение <span aria-hidden=\"true\">*</span>",
+        "messagePh": "Введите текст обращения…",
+        "messageHelp": "Минимум 10 символов, максимум 3000 символов."
+      },
+      "opt": {
+        "choose": "Выберите…",
+        "membership": "Вопрос о членстве",
+        "legal": "Правовая консультация",
+        "grants": "Проекты и гранты",
+        "training": "Семинары и тренинги",
+        "partnership": "Предложение о сотрудничестве",
+        "other": "Другое"
+      }
+    },
+    "reportingForms": {
+      "title": "Формы отчётности ННО",
+      "sub": "Виды отчётов, сроки и онлайн-форма подачи.",
+      "table": "<div class=\"doc-table\"><div class=\"doc-row head\"><span>Вид отчёта</span><span>Срок</span><span>Формат</span><span>Бланк</span></div><div class=\"doc-row\"><span>Годовой финансовый отчёт</span><span>1 февраля</span><span>XLSX/PDF</span><a href=\"reporting-forms\">Скачать</a></div><div class=\"doc-row\"><span>Полугодовой отчёт о деятельности</span><span>15 июля</span><span>DOCX/PDF</span><a href=\"reporting-forms\">Скачать</a></div><div class=\"doc-row\"><span>Итоговый отчёт по грантовому проекту</span><span>в течение 30 дней</span><span>DOCX</span><a href=\"reporting-forms\">Скачать</a></div></div>",
+      "formSectionTitle": "Отправить отчёт",
+      "noscript": "<strong>Форма требует JavaScript.</strong> Пожалуйста, включите JavaScript в браузере или отправьте отчёт на <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a>.",
+      "submitBtn": "Отправить отчёт",
+      "confirmLabel": "Подтверждаю достоверность сведений.",
+      "f": {
+        "org": "Название организации",
+        "stir": "ИНН",
+        "stirPh": "ИНН из 9 цифр",
+        "stirTitle": "ИНН — от 9 до 14 цифр",
+        "stirHelp": "Идентификационный номер налогоплательщика от 9 до 14 цифр.",
+        "fio": "ФИО ответственного лица",
+        "email": "Электронная почта",
+        "type": "Вид отчёта",
+        "period": "Отчётный период"
+      },
+      "opt": {
+        "choose": "Выберите вид отчёта",
+        "annual": "Годовой финансовый отчёт",
+        "halfYear": "Полугодовой отчёт о деятельности",
+        "grantFinal": "Итоговый отчёт по грантовому проекту"
+      }
+    },
+    "researchAreas": {
+      "title": "Направления исследований",
+      "sub": "Приоритетные блоки и темы аналитической деятельности УзНАННО.",
+      "tracks": "<h2 class=\"section-title\">Основные направления</h2><p class=\"section-sub\">По каждому направлению ведётся мониторинг, аналитика и подготовка практических рекомендаций.</p><div class=\"research-grid\"><article class=\"research-card\"><h3>Развитие гражданского общества</h3><p>Динамика сектора ННО, институциональный потенциал и показатели региональной активности.</p></article><article class=\"research-card\"><h3>Социальное партнёрство</h3><p>Эффективность механизмов сотрудничества между государственными органами и ННО.</p></article><article class=\"research-card\"><h3>Анализ законодательства</h3><p>Нормативно-правовые акты, регулирующие деятельность ННО, и пакет предложений.</p></article><article class=\"research-card\"><h3>Социальные услуги</h3><p>Участие ННО в услугах для населения и оценка результативности.</p></article><article class=\"research-card\"><h3>Инициативы молодёжи и женщин</h3><p>Инклюзивные проекты, общественная активность и модель работы с сообществами.</p></article><article class=\"research-card\"><h3>Цифровая трансформация</h3><p>Цифровые платформы реестра ННО, открытые данные и электронные услуги.</p></article></div>",
+      "panels": "<div><h2 class=\"section-title\">Форматы публикаций</h2><div class=\"list\"><div class=\"item\"><h3 class=\"research-format-title\">Квартальный обзор</h3><p>Ключевые индикаторы, тенденции и разрез по регионам.</p></div><div class=\"item\"><h3 class=\"research-format-title\">Аналитический доклад</h3><p>Подробный документ по проблемным вопросам и решениям.</p></div><div class=\"item\"><h3 class=\"research-format-title\">Policy brief</h3><p>Краткий набор рекомендаций для лиц, принимающих решения.</p></div></div></div><div><h2 class=\"section-title\">Связанные разделы</h2><div class=\"list\"><a class=\"item\" href=\"news\"><h3 class=\"research-format-title\">Аналитические материалы</h3><p>Последние анализы и официальные объявления.</p></a><a class=\"item\" href=\"publications\"><h3 class=\"research-format-title\">Публикации</h3><p>Статьи, сборники и методические материалы.</p></a><a class=\"item\" href=\"projects\"><h3 class=\"research-format-title\">Проекты</h3><p>Практические инициативы на основе результатов исследований.</p></a></div></div>"
+    },
+    "serviceRequest": {
+      "title": "Отправить официальное обращение",
+      "sub": "Отправьте вопрос или предложение по интерактивным услугам.",
+      "noscript": "<strong>Форма требует JavaScript.</strong> Пожалуйста, включите JavaScript в браузере или отправьте запрос на <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a>.",
+      "consent": "В соответствии с <a href=\"maxfiylik-siyosati\" target=\"_blank\" rel=\"noopener noreferrer\">Политикой конфиденциальности</a> согласен(-на) на обработку моих персональных данных.",
+      "submitBtn": "Отправить",
+      "f": {
+        "fio": "ФИО <span aria-hidden=\"true\">*</span>",
+        "phone": "Телефон <span aria-hidden=\"true\">*</span>",
+        "email": "Электронная почта <span aria-hidden=\"true\">*</span>",
+        "topic": "Тема обращения <span aria-hidden=\"true\">*</span>",
+        "message": "Текст обращения <span aria-hidden=\"true\">*</span>",
+        "messageHelp": "Минимум 10 символов, максимум 3000 символов."
+      },
+      "opt": {
+        "choose": "Выберите тему",
+        "legal": "Правовая консультация",
+        "report": "Вопрос по отчётности",
+        "membership": "Вопрос о членстве",
+        "other": "Другое"
+      }
+    },
+    "services": {
+      "title": "Международное сотрудничество",
+      "sub": "Совместные проекты, обмен опытом и институциональное развитие с международными организациями и партнёрскими институтами.",
+      "partnersTitle": "Партнёрские институты",
+      "forms": "<h2 class=\"section-title\">Формы сотрудничества</h2><p class=\"section-sub\">Стратегическое партнёрство, совместные мероприятия и программы наращивания потенциала.</p><div class=\"cards\"><article class=\"card\"><h3>Совместные проекты</h3><p>Социально ориентированные проекты с международными донорами и институтами.</p></article><article class=\"card\"><h3>Обмен опытом</h3><p>Обмен знаниями через семинары, форумы и встречи экспертов.</p></article><article class=\"card\"><h3>Институциональная поддержка</h3><p>Методическая поддержка по управлению, мониторингу и устойчивости ННО.</p></article></div>",
+      "initiatives": "<h2 class=\"section-title\">Текущие инициативы</h2><div class=\"list\"><div class=\"item\"><h3>Программа «Стандарты управления реестром ННО»</h3><p>Партнёр: группа международных экспертов · Период: 2025–2026 · Направление: институциональное развитие и внутреннее управление.</p></div><div class=\"item\"><h3>Региональный форум социального партнёрства</h3><p>Партнёр: региональные центры · Период: ежеквартально · Направление: диалог государство–ННО и механизмы сотрудничества.</p></div><div class=\"item\"><h3>Лаборатория мониторинга и оценки</h3><p>Партнёр: международная методологическая сеть · Период: 2025–2027 · Направление: индикаторы результативности и оценка.</p></div></div>",
+      "results": "<h2 class=\"section-title\">Результаты</h2><div class=\"kpi-grid\"><div class=\"kpi\"><strong>37+</strong><span>Совместных инициатив</span></div><div class=\"kpi\"><strong>12</strong><span>Международных партнёров</span></div><div class=\"kpi\"><strong>950+</strong><span>ННО-участников</span></div><div class=\"kpi\"><strong>14</strong><span>Охват регионов</span></div></div>"
+    },
+    "socialOrders": {
+      "title": "Государственные социальные заказы",
+      "sub": "База государственных социальных заказов, реализованных с участием ННО в 2021–2023 годах.",
+      "statTotal": "Всего заказов",
+      "statPeriod": "Период охвата",
+      "statAgencies": "Государственных ведомств",
+      "statOrgs": "ННО и общественных организаций"
+    },
+    "stajirovkaVolontyorlik": {
+      "title": "Программы стажировок и волонтёрства",
+      "sub": "Возможности практики для студентов и молодёжи, а также волонтёрство в Ассоциации.",
+      "programs": "<article class=\"card\"><h2 style=\"margin:0 0 12px;\">Программы стажировок</h2><p>Практические (стажировочные) программы для студентов высших учебных заведений. Возможность получить реальный профессиональный опыт по направлениям: сектор ННО, проектный менеджмент, право и коммуникации. Заявки принимаются в течение года.</p></article><article class=\"card\"><h2 style=\"margin:0 0 12px;\">Волонтёрская деятельность</h2><p>Полная информация о волонтёрских программах Ассоциации. Возможности участия в организации мероприятий, развитии сектора ННО и активного вовлечения в построение гражданского общества.</p></article>",
+      "formTitle": "Подать заявку онлайн",
+      "submitBtn": "<svg aria-hidden=\"true\" fill=\"currentColor\" height=\"16\" style=\"margin-right:6px;vertical-align:middle\" viewBox=\"0 0 24 24\" width=\"16\"><path d=\"M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.75a2.25 2.25 0 0 0 .126 4.238l3.918 1.176 1.77 5.522a.75.75 0 0 0 1.317.209l2.352-2.938 4.552 3.31a2.25 2.25 0 0 0 3.478-1.464l2.25-15.75a2.25 2.25 0 0 0-2.241-2.268z\"></path></svg> Отправить заявку",
+      "f": {
+        "name": "Имя и фамилия *",
+        "namePh": "Ваше полное имя",
+        "phone": "Телефон",
+        "email": "Email",
+        "track": "Направление *",
+        "school": "Название учебного заведения, где вы учились/учитесь *",
+        "schoolPh": "Например: Ташкентский государственный юридический университет",
+        "motivation": "Мотивационное письмо",
+        "motivationPh": "Почему вы хотите принять участие?",
+        "resume": "Приложить резюме",
+        "dropHint": "Перетащите файл сюда или",
+        "chooseFile": "Выбрать файл",
+        "fileTypes": "PDF, DOC, DOCX · до 5 МБ"
+      },
+      "opt": {
+        "choose": "Выберите…",
+        "internship": "Стажировка",
+        "volunteer": "Волонтёрство"
+      }
+    },
+    "structure": {
+      "title": "Структура Исполнительного аппарата",
+      "sub": "Организационная структура Исполнительного аппарата УзНАННО.",
+      "statTotal": "Всего сотрудников аппарата",
+      "statExec": "Сотрудников Исполнительного аппарата",
+      "statRegional": "Сотрудников региональных подразделений",
+      "statNormNum": "По нормативу",
+      "statNormLabel": "Количество вспомогательных и технических сотрудников определяется в соответствии с утверждёнными нормативами"
+    },
+    "sustainabilityCert": {
+      "title": "«Устойчивое ННО»",
+      "sub": "Открытый список ННО, получивших сертификат по индексу устойчивости",
+      "body": "<p style=\"max-width:780px;font-size:16px;line-height:1.8;color:var(--neutral-700,#374151);margin:0 auto 8px;\">Сертификат «Устойчивое ННО» — официальный знак признания, выдаваемый организациям, набравшим высокий балл по индексу устойчивости. Сертификат выдаётся трёх уровней: третий, второй и первый. Он подтверждает надёжность организации и даёт преимущество в грантах и партнёрстве с государством.</p><p style=\"margin:24px 0 28px;padding:14px 18px;background:#f8fbf9;border:1px solid #d4e8dd;border-radius:10px;font-size:14px;color:var(--neutral-500,#587585);\"><i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;color:var(--green-600,#255f40);\"></i> После подключения официального реестра сертифицированных организаций здесь появятся уровни и статистические показатели.</p><p class=\"section-label\">Уровни сертификата</p><div class=\"cert-levels\"><div class=\"cert-level-card cert-level-card--bronze\"><div><span class=\"cert-badge cert-badge--bronze\"><i aria-hidden=\"true\" class=\"ph ph-medal\"></i> Третий уровень</span></div><h2 class=\"cert-level-h\">Сертификат третьего уровня</h2><p>Для организаций, выполнивших базовые требования к устойчивости. Имеется система управления и финансовой прозрачности.</p><div class=\"cert-requirement\"><span class=\"cert-score-range cert-score-range--bronze\">60–79 баллов</span> по индексу устойчивости</div></div><div class=\"cert-level-card cert-level-card--silver\"><div><span class=\"cert-badge cert-badge--silver\"><i aria-hidden=\"true\" class=\"ph ph-medal\"></i> Второй уровень</span></div><h2 class=\"cert-level-h\">Сертификат второго уровня</h2><p>Организации, подтвердившие устойчивость через сильное управление, финансовую стабильность и эффективные программы.</p><div class=\"cert-requirement\"><span class=\"cert-score-range cert-score-range--silver\">80–89 баллов</span> по индексу устойчивости</div></div><div class=\"cert-level-card cert-level-card--gold\"><div><span class=\"cert-badge cert-badge--gold\"><i aria-hidden=\"true\" class=\"ph ph-medal\"></i> Первый уровень</span></div><h2 class=\"cert-level-h\">Сертификат первого уровня</h2><p>Высшее признание для ННО — лидеров отрасли, показавших высокие результаты по всем критериям.</p><div class=\"cert-requirement\"><span class=\"cert-score-range cert-score-range--gold\">90–100 баллов</span> по индексу устойчивости</div></div></div><p class=\"section-label\">Сертифицированные организации</p><h2 style=\"margin:0 0 16px;font-size:22px;\">Реестр — 2024 год</h2><p style=\"margin-top:8px;font-size:14px;color:var(--neutral-500,#587585);\">Фильтр по уровню добавится после подключения реестра.</p><div class=\"reg-table-wrap\"><table class=\"reg-table\"><caption class=\"u-visually-hidden\">Реестр организаций с сертификатом «Устойчивое ННО»</caption><thead><tr><th scope=\"col\" style=\"width:32px;\">#</th><th scope=\"col\">Название организации</th><th scope=\"col\">Регион / Город</th><th scope=\"col\">Балл</th><th scope=\"col\">Уровень</th><th scope=\"col\">Дата выдачи</th><th scope=\"col\">Срок действия</th></tr></thead><tbody id=\"certTableBody\" aria-live=\"polite\"><tr><td colspan=\"7\" role=\"status\" style=\"text-align:center;color:var(--neutral-400,#9ca3af);padding:24px;\">Загрузка...</td></tr></tbody></table></div><p style=\"font-size:15px;color:var(--neutral-400,#9ca3af);margin-top:12px;\">* Показана часть сертифицированных организаций. Полный реестр можно запросить через обращение.</p><div style=\"margin-top:56px;\"><p class=\"section-label\">Порядок получения сертификата</p><h2 style=\"margin:0 0 4px;font-size:22px;\">4 шага</h2><p style=\"font-size:16px;color:var(--neutral-500,#587585);margin:0 0 4px;\">Чтобы получить сертификат, выполните следующие шаги.</p><ol class=\"apply-steps\"><li class=\"apply-step\"><h3>Подача заявки</h3><p>Заполните заявку на оценку через кабинет члена и загрузите требуемые документы.</p></li><li class=\"apply-step\"><h3>Проверка документов</h3><p>Специалисты УзНАННО рассматривают все материалы и могут запросить дополнительную информацию.</p></li><li class=\"apply-step\"><h3>Полевая оценка</h3><p>При необходимости деятельность организации наблюдается на месте и выставляется балл.</p></li><li class=\"apply-step\"><h3>Выдача сертификата</h3><p>При результате 60 баллов и выше выдаётся сертификат соответствующего уровня.</p></li></ol></div>"
+    },
+    "sustainabilityIndex": {
+      "title": "Индекс устойчивости ННО <span style=\"font-size:0.45em; font-weight:500; opacity:0.72; white-space:nowrap;\">(планируемый проект)</span>",
+      "sub": "Система оценки институциональной устойчивости ННО Узбекистана",
+      "body": "<p style=\"max-width:780px;font-size:16px;line-height:1.8;color:var(--neutral-700,#374151);margin:0 auto 8px;\">Индекс устойчивости ННО — инструмент оценки долгосрочной жизнеспособности организаций по шести ключевым критериям. Индекс ежегодно рассчитывается УзНАННО, результаты публикуются открыто. Цель — помочь ННО определить свои сильные и слабые стороны и наметить направления развития.</p><p style=\"margin:24px 0 28px;padding:14px 18px;background:#f8fbf9;border:1px solid #d4e8dd;border-radius:10px;font-size:14px;color:var(--neutral-500,#587585);\"><i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;color:var(--green-600,#255f40);\"></i> Количество оценённых ННО и средние показатели появятся здесь после подключения реестра индекса.</p><p class=\"section-label\">Критерии оценки</p><h2 style=\"margin:0 0 4px;font-size:22px;\">Шесть критериев, всего 100 баллов</h2><p style=\"font-size:16px;color:var(--neutral-500,#587585);margin:0 0 4px;\">Максимальный балл указан по каждому критерию.</p><div class=\"criteria-grid\"><div class=\"criterion-card\"><h3>Управление и прозрачность</h3><p>Структура совета, годовые отчёты, финансовый аудит и системы внутреннего контроля.</p><span class=\"criterion-max\">макс. 20 баллов</span></div><div class=\"criterion-card\"><h3>Финансовая устойчивость</h3><p>Разнообразие источников средств, финансовые резервы и эффективность бюджетного управления.</p><span class=\"criterion-max\">макс. 20 баллов</span></div><div class=\"criterion-card\"><h3>Эффективность программ</h3><p>Результаты деятельности, число бенефициаров, социальный эффект проектов.</p><span class=\"criterion-max\">макс. 20 баллов</span></div><div class=\"criterion-card\"><h3>Человеческие ресурсы</h3><p>Удержание сотрудников, повышение квалификации, волонтёры и кадровый потенциал.</p><span class=\"criterion-max\">макс. 15 баллов</span></div><div class=\"criterion-card\"><h3>Сотрудничество и сеть</h3><p>Связи с государственными органами, бизнес-сообществом и международными организациями.</p><span class=\"criterion-max\">макс. 15 баллов</span></div><div class=\"criterion-card\"><h3>Инфраструктура и ИТ</h3><p>Сайт, социальные сети, базы данных и системы управления.</p><span class=\"criterion-max\">макс. 10 баллов</span></div></div><p class=\"section-label\" style=\"margin-top:32px;\">Уровни</p><div class=\"level-row\"><div class=\"level-badge level--dev\"><span class=\"level-badge-dot\"></span>Развивающийся — 0–39 баллов</div><div class=\"level-badge level--grow\"><span class=\"level-badge-dot\"></span>Растущий — 40–59 баллов</div><div class=\"level-badge level--cons\"><span class=\"level-badge-dot\"></span>Укрепляющийся — 60–79 баллов</div><div class=\"level-badge level--sus\"><span class=\"level-badge-dot\"></span>Устойчивый — 80–100 баллов</div></div><p class=\"section-label\">Результаты 2024 года (выборочно)</p><h2 style=\"margin:0 0 16px;font-size:22px;\">Результаты оценки</h2><div class=\"idx-table-wrap\"><table class=\"idx-table\"><caption class=\"u-visually-hidden\">Рейтинг индекса устойчивости ННО и распределение по регионам</caption><thead><tr><th scope=\"col\" style=\"width:32px;\">#</th><th scope=\"col\">Название организации</th><th scope=\"col\">Регион</th><th scope=\"col\" class=\"score-cell\">Балл (из 100)</th><th scope=\"col\">Уровень</th></tr></thead><tbody id=\"sustainabilityTableBody\" aria-live=\"polite\"><tr><td colspan=\"5\" role=\"status\" style=\"text-align:center;color:var(--neutral-400,#9ca3af);padding:24px;\">Загрузка...</td></tr></tbody></table></div><p style=\"font-size:15px;color:var(--neutral-400,#9ca3af);margin-top:12px;\">* В таблице показана часть оценённых организаций. Полный список можно запросить через обращение.</p>"
+    },
+    "talimRivojlanish": {
+      "title": "Образование и развитие",
+      "sub": "Программы повышения квалификации, тренинги и учебные возможности для сотрудников и представителей ННО.",
+      "cards": "<article class=\"card\"><h2 style=\"margin:0 0 12px;\">Программы повышения квалификации и тренинги</h2><p>Сведения о регулярно проводимых программах повышения квалификации и профессиональных тренингах для сотрудников. Учебные программы по развитию сектора ННО, проектному менеджменту и финансовой грамотности.</p><div class=\"card-action\"><a class=\"btn\" href=\"qayta-aloqa\">Зарегистрироваться</a></div></article><article class=\"card\"><h2 style=\"margin:0 0 12px;\">Вебинары и онлайн-курсы</h2><p>Возможности дистанционного обучения: вебинары по деятельности ННО, онлайн-курсы и программы сертификации. Виртуальные тренинги и семинары, проводимые совместно с международными организациями.</p><div class=\"card-action\"><a class=\"btn\" href=\"qayta-aloqa\">Подробнее</a></div></article><article class=\"card\"><h2 style=\"margin:0 0 12px;\">Календарь учебных программ</h2><p>График внутренних и внешних учебных программ. Полный календарь запланированных на год тренингов, семинаров, мастер-классов и конференций. Позволяет участникам быть в курсе событий вовремя.</p><div class=\"card-action\"><a class=\"btn\" href=\"qayta-aloqa\">Посмотреть календарь</a></div></article>"
+    },
+    "vacancies": {
+      "title": "Вакансии",
+      "sub": "Открытые вакансии и конкурсы УзНАННО.",
+      "list": "<h2 id=\"vacanciesListTitle\" class=\"visually-hidden\">Список открытых вакансий</h2><div class=\"cards\"><article class=\"card\"><h3>Руководитель подразделения</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">Полная ставка · Навоийская область</p><p>Руководство и координация деятельности регионального подразделения в Навоийской области.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Подать заявку</a></div></article><article class=\"card\"><h3>Специалист</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">Полная ставка · Самаркандская область</p><p>Работа с ННО-членами и их поддержка в региональном подразделении Самаркандской области.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Подать заявку</a></div></article><article class=\"card\"><h3>Специалист</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">Полная ставка · Ферганская область</p><p>Работа с ННО-членами и их поддержка в региональном подразделении Ферганской области.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Подать заявку</a></div></article></div>"
+    },
+    "videoDetail": {
+      "title": "Сведения о видео",
+      "noscriptHint": "Для просмотра видео нужен JavaScript. <a href=\"videos\">Список видео</a>"
+    },
+    "videos": {
+      "title": "Видеоматериалы",
+      "sub": "Архив брифингов, презентаций и интервью.",
+      "featured": "<h2 id=\"featuredVideosTitle\" class=\"visually-hidden\">Избранные видео</h2><div class=\"cards\"><article class=\"card\"><div class=\"media\"></div><h3>Пресс-брифинг</h3><p class=\"meta-line\">02.04.2026 · 18 минут</p><div style=\"margin-top:10px\"><a class=\"btn\" href=\"video-detail\">Смотреть</a></div></article><article class=\"card\"><div class=\"media\"></div><h3>Учебный вебинар: проектный менеджмент</h3><p class=\"meta-line\">30.03.2026 · 42 минуты</p><div style=\"margin-top:10px\"><a class=\"btn\" href=\"video-detail\">Смотреть</a></div></article><article class=\"card\"><div class=\"media\"></div><h3>Интервью с экспертом</h3><p class=\"meta-line\">27.03.2026 · 21 минута</p><div style=\"margin-top:10px\"><a class=\"btn\" href=\"video-detail\">Смотреть</a></div></article><h2 class=\"section-title\" style=\"margin-top:3rem\">Видеоархив</h2><div id=\"dynamic-video-page\" aria-live=\"polite\" aria-busy=\"true\"><p role=\"status\">Загрузка...</p></div><noscript><p style=\"margin-top:16px\">Для просмотра видеоархива нужен JavaScript. Видео также доступны на <a href=\"https://youtube.com/@uznntma\" rel=\"noopener noreferrer external\" target=\"_blank\">нашем канале YouTube</a>.</p></noscript>"
+    },
+    "notFound": {
+      "title": "Страница не найдена",
+      "body": "Запрошенная страница не существует или была перемещена.<br/>Воспользуйтесь одной из ссылок ниже.",
+      "btnHome": "Главная",
+      "btnNews": "Новости",
+      "btnGrants": "Гранты",
+      "btnRegistry": "Реестр ННО",
+      "btnContact": "Контакты"
+    },
+    "offline": {
+      "title": "Нет подключения к интернету",
+      "body": "Для загрузки страницы необходимо подключение к интернету. Проверьте соединение и повторите попытку.",
+      "retryBtn": "Повторить",
+      "backHome": "Вернуться на главную",
+      "reconnected": "Соединение с интернетом восстановлено. Нажмите ссылку ниже или обновите страницу, чтобы вернуться на главную.",
+      "goHomeBtn": "Перейти на главную"
+    },
+    "searchResults": {
+      "title": "Результаты поиска",
+      "subSuffix": "— найденные страницы.",
+      "noscript": "Поиск по сайту работает с помощью JavaScript. Воспользуйтесь основными разделами напрямую: <a href=\"news\">Новости</a>, <a href=\"events\">Мероприятия</a>, <a href=\"grants\">Гранты</a>, <a href=\"official-docs\">Документы</a>, <a href=\"nntlar\">ННО</a>."
+    },
+    "membershipStatus": {
+      "title": "Статус заявки",
+      "sub": "Проверка текущего этапа вашей заявки на членство.",
+      "cardTitle": "Статус вашей заявки на членство",
+      "body1": "ID заявки и дата приёма указаны в карточке подтверждения, отправленной при подаче. Онлайн-проверка статуса по номеру будет добавлена в следующей версии.",
+      "body2": "Чтобы уточнить текущий статус, отправьте номер заявки через <a href=\"qayta-aloqa\">форму обратной связи</a> или напишите на <a href=\"mailto:info@ngo.uz\">info@ngo.uz</a> — ответ направят в течение 15 рабочих дней.",
+      "btnNew": "Подать новую заявку",
+      "btnContact": "Обратная связь"
+    },
+    "serviceRequestStatus": {
+      "title": "Статус обращения",
+      "body1": "Номер обращения и дата приёма указаны в карточке подтверждения, отправленной при подаче. Онлайн-поиск статуса по номеру будет добавлен в следующей версии.",
+      "body2": "Чтобы уточнить текущий статус, отправьте номер обращения через <a href=\"qayta-aloqa\">форму обратной связи</a> или напишите на <a href=\"mailto:info@ngo.uz\">info@ngo.uz</a>.",
+      "btnNew": "Подать новое обращение",
+      "btnContact": "Обратная связь"
+    },
+    "reportStatus": {
+      "title": "Статус отчёта",
+      "body1": "Сдача отчётов и онлайн-отслеживание этапов их обработки доступны организациям-членам через личный кабинет.",
+      "body2": "Организации-члены — <a href=\"cabinet/cabinet-login\">войдите в кабинет</a> и посмотрите статус в разделе «Отчёты». Для организаций, не являющихся членами, сдача продолжается по каналам, указанным в договоре на странице <a href=\"reporting-forms\">форм отчётности</a>.",
+      "btnCabinet": "Войти в кабинет",
+      "btnForms": "Формы отчётности"
+    },
+    "mission": {
+      "title": "Цели и задачи",
+      "sub": "Миссия УзНАННО, приоритетные направления и стратегические цели.",
+      "contentAria": "Содержание целей и задач",
+      "body": "<h3>Миссия</h3><p>Национальная ассоциация негосударственных некоммерческих организаций Узбекистана (УзНАННО) — создана в 2005 году с целью укрепления гражданского общества, развития негосударственного сектора и повышения правового, организационного и профессионального потенциала ННО. Ассоциация ведёт деятельность в соответствии с законодательством Республики Узбекистан и стала координационным центром сектора ННО.</p><h3>Основные цели</h3><ol><li>Поддержка деятельности негосударственных некоммерческих организаций и укрепление их роли в жизни общества.</li><li>Обеспечение диалога и сотрудничества между институтами гражданского общества и государственными органами.</li><li>Развитие прозрачности, устойчивости и профессионального управления в секторе ННО.</li><li>Укрепление интеграции гражданского общества Узбекистана в мировое сообщество через международное сотрудничество.</li></ol><h3>Основные задачи</h3><ol><li>Укрепление правового статуса ННО, защита их интересов перед государственными органами и внесение предложений по совершенствованию законодательства.</li><li>Повышение профессиональной квалификации руководителей и сотрудников ННО, организация учебных курсов, семинаров и тренингов.</li><li>Анализ деятельности институтов гражданского общества, проведение мониторинга и подготовка практических рекомендаций.</li><li>Обеспечение обмена информацией между ННО и информирование широкой общественности об их деятельности.</li><li>Налаживание отношений с международными организациями и зарубежными партнёрами, реализация программ сотрудничества.</li><li>Расчёт индекса устойчивости в секторе ННО и ведение системы сертификации «Устойчивое ННО».</li><li>Развитие государственно-общественного партнёрства, разработка предложений и проектов по совершенствованию механизмов социального заказа.</li></ol><h3>Функции</h3><ol><li><strong>Координация:</strong> координация деятельности территориальных подразделений, организаций-членов и партнёрских институтов.</li><li><strong>База данных:</strong> ведение реестра ННО Узбекистана, сбор и анализ информации об их деятельности.</li><li><strong>Образование:</strong> системная подготовка кадров и повышение квалификации в рамках программы «Школа ННО».</li><li><strong>Правовая помощь:</strong> консультирование организаций-членов по регистрации, сдаче отчётности и соблюдению законодательства.</li><li><strong>Сотрудничество:</strong> реализация совместных проектов с UNDP, USAID, GIZ, UNICEF и другими международными организациями.</li><li><strong>Мониторинг:</strong> отслеживание динамики развития сектора ННО и подготовка отчётов.</li></ol><h3>Стратегические цели (2026–2028)</h3><ol><li>Укрепление территориальной сети — обеспечение работы активных подразделений во всех 14 областях и Каракалпакстане.</li><li>Цифровизация услуг — внедрение онлайн-членства, электронной отчётности и интерактивных сервисов.</li><li>Повышение аналитического потенциала — расширение качества и охвата ежегодного индекса устойчивости ННО.</li></ol>"
+    },
+    "whoWeAre": {
+      "title": "Национальная ассоциация ННО Узбекистана",
+      "tag1": "Сотрудничество",
+      "tag2": "Развитие",
+      "tag3": "Гражданское общество",
+      "body": "<p>Национальная ассоциация негосударственных некоммерческих организаций Узбекистана (УзНАННО) — национальная структура, созданная для укрепления гражданского общества в нашей стране, координации деятельности негосударственных некоммерческих организаций (ННО) и оказания им содействия. Организация зарегистрирована в Министерстве юстиции Республики Узбекистан и ведёт деятельность с 2019 года.</p><p>В число основных задач Ассоциации входят разработка рекомендаций по совершенствованию правовой среды ННО, укрепление взаимодействия негосударственного сектора с государственными органами, содействие повышению организационного потенциала ННО, а также развитие их международного сотрудничества.</p><p>Ассоциация работает в тесном взаимодействии с Олий Мажлисом Республики Узбекистан и органами исполнительной власти. Она активно участвует в обсуждении законодательных инициатив, касающихся гражданского общества, и регулярно представляет соответствующим органам аналитические материалы и предложения по сфере ННО.</p><div class=\"mission-block\"><blockquote>«Наша главная цель — защита законных прав каждой негосударственной некоммерческой организации в Узбекистане, укрепление их роли в обществе и достойный вклад в формирование устойчивого гражданского общества.»</blockquote><cite>— Руководитель Исполнительного аппарата УзНАННО</cite></div><p>Реестр ННО Ассоциации служит площадкой для обмена знаниями, накопления опыта и установления сотрудничества. Через Школу ННО, онлайн-библиотеку и региональные тренинги сотням организаций оказывается методическая и практическая помощь. Одновременно проводятся исследования, переговоры и открытые дискуссии с представителями бизнес-сообщества, академических кругов и международных организаций.</p><p>Ассоциация учреждена для объединения всех ННО Узбекистана, защиты их интересов и вклада в формирование здорового гражданского общества в нашей стране. Исполнительный аппарат располагается в Ташкенте — на улице Фурката Шайхантахурского района; во всех регионах республики работают 28 территориальных сотрудников.</p>"
+    },
+    "about": {
+      "title": "Об Ассоциации",
+      "sub": "Национальная ассоциация негосударственных некоммерческих организаций Узбекистана — организация, посвящённая развитию гражданского общества и повышению потенциала ННО.",
+      "intro": "<div class=\"about-intro-grid\"><div class=\"about-intro-text\"><h2 class=\"section-title\">Об организации</h2><p>Национальная ассоциация негосударственных некоммерческих организаций Узбекистана (УзНАННО) зарегистрирована Министерством юстиции Республики Узбекистан 10 июня 2005 года под порядковым номером 612.</p><p>Ассоциация — добровольное объединение зарегистрированных в установленном порядке негосударственных некоммерческих организаций, действующее в соответствии с законодательством Республики Узбекистан, в организационно-правовой форме союза ННО.</p></div><div class=\"about-reg-card\"><h3>Реквизиты</h3><div class=\"about-reg-row\"><span>Дата регистрации</span><span>10 июня 2005 года</span></div><div class=\"about-reg-row\"><span>Регистрационный номер</span><span>№ 612</span></div><div class=\"about-reg-row\"><span>Организационная форма</span><span>Союз ННО</span></div><div class=\"about-reg-row\"><span>Юридический адрес</span><span>100170, Республика Узбекистан, г. Ташкент, Шайхантахурский район, ул. Фурката, 1А</span></div></div></div>",
+      "goal": "<div class=\"about-goal-block\"><div class=\"about-goal-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"28\" stroke=\"currentColor\" stroke-width=\"1.8\" viewBox=\"0 0 24 24\" width=\"28\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><circle cx=\"12\" cy=\"12\" r=\"6\"/><circle cx=\"12\" cy=\"12\" r=\"2\"/></svg></div><div><h2>Основная цель</h2><p>Основная цель Ассоциации — объединение местных ННО, координация, поддержка и развитие их деятельности, а также содействие повышению эффективности и качества работы ННО.</p></div></div>",
+      "tasks": "<h2 class=\"section-title\">Основные задачи</h2><p class=\"section-sub\">Ассоциация действует в интересах своих членов и гражданского общества в следующих направлениях.</p><div class=\"vazifalar-grid\"><div class=\"vazifa-card\"><div class=\"vazifa-num\">1</div><div class=\"vazifa-body\"><h3>Правовая защита и представительство</h3><p>Представление и защита прав и законных интересов ННО в государственных органах, судах, международных и зарубежных организациях.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">2</div><div class=\"vazifa-body\"><h3>Развитие сотрудничества</h3><p>Участие в развитии взаимовыгодного сотрудничества между ННО, субъектами предпринимательства, международными и зарубежными организациями и государственными органами.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">3</div><div class=\"vazifa-body\"><h3>Создание благоприятной среды</h3><p>Содействие созданию благоприятных правовых, экономических и социальных условий для реализации инициатив ННО.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">4</div><div class=\"vazifa-body\"><h3>Поддержка демократических процессов</h3><p>Объединение усилий членов и партнёров для устойчивого развития и продвижения демократических процессов в стране.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">5</div><div class=\"vazifa-body\"><h3>Совершенствование законодательства</h3><p>Участие в разработке проектов нормативно-правовых актов, затрагивающих права и законные интересы ННО, и подготовка предложений по совершенствованию профильного законодательства.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">6</div><div class=\"vazifa-body\"><h3>Развитие потенциала</h3><p>Повышение знаний и навыков руководителей и сотрудников ННО в эффективном управлении организацией, достижении финансовой устойчивости, разработке социально значимых проектов, волонтёрстве и привлечении благотворительных ресурсов.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">7</div><div class=\"vazifa-body\"><h3>Образование и методическая поддержка</h3><p>Разработка для представителей ННО руководств, учебных программ и книг, а также теоретических и практических подходов, соответствующих условиям страны.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">8</div><div class=\"vazifa-body\"><h3>Социальное партнёрство</h3><p>Ведение единой базы государственных социальных заказов и проектов социального партнёрства; повышение экономического, социального и культурного потенциала при модернизации страны.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">9</div><div class=\"vazifa-body\"><h3>Поддержка уязвимых слоёв населения</h3><p>Мобилизация интеллектуальных, материальных и финансовых ресурсов членов для поддержки женщин, молодёжи, пожилых, лиц с инвалидностью и граждан, оказавшихся в трудной жизненной ситуации.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">10</div><div class=\"vazifa-body\"><h3>Международное сотрудничество</h3><p>Укрепление связей с международными и зарубежными ННО, финансовыми институтами и иностранными донорами, изучение их положительного опыта.</p></div></div></div>",
+      "articlesTitle": "Статьи об организации"
+    },
+    "contact": {
+      "title": "Контакты",
+      "sub": "Свяжитесь с нами — адрес, телефон и социальные сети.",
+      "body": "<h2 class=\"contact-section-title\" style=\"margin-top:0\">Отправить обращение</h2><div class=\"contact-action-cards\" style=\"margin-bottom:36px\"><a class=\"contact-action-card\" href=\"qayta-aloqa\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"></path></svg><div><strong>Обратная связь</strong><span>Отправить вопрос, предложение или жалобу</span></div></a><a class=\"contact-action-card\" href=\"korrupsiya-murojaat\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"></path></svg><div><strong>Антикоррупционное обращение</strong><span>Отправить обращение в конфиденциальной форме</span></div></a></div><div class=\"contact-grid\"><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\"></path><circle cx=\"12\" cy=\"10\" r=\"3\"></circle></svg></div><div><div class=\"contact-info-label\">Адрес</div><div class=\"contact-info-value\">100170, Республика Узбекистан, г. Ташкент, Шайхантахурский район, ул. Фурката, 1А</div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z\"></path></svg></div><div><div class=\"contact-info-label\">Телефон</div><div class=\"contact-info-value\"><a href=\"tel:+998555030512\">(+998 55) 503-05-12</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\"></path><polyline points=\"22,6 12,13 2,6\"></polyline></svg></div><div><div class=\"contact-info-label\">Электронная почта</div><div class=\"contact-info-value\"><a href=\"mailto:info@ngo.uz\">info@ngo.uz</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><polyline points=\"12 6 12 12 16 14\"></polyline></svg></div><div><div class=\"contact-info-label\">Часы работы</div><div class=\"contact-info-value\">Пн–Пт: 9:00–18:00<br/>Сб–Вс: выходной</div></div></div></div><h2 class=\"contact-section-title\">Социальные сети</h2><div class=\"contact-social-row\"><a class=\"contact-social-btn contact-social-fb\" href=\"https://facebook.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Facebook</a><a class=\"contact-social-btn contact-social-ig\" href=\"https://instagram.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Instagram</a><a class=\"contact-social-btn contact-social-tg\" href=\"https://t.me/UzNNTMA1\" rel=\"noopener noreferrer\" target=\"_blank\">Telegram</a><a class=\"contact-social-btn contact-social-yt\" href=\"https://youtube.com/@uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">YouTube</a><a href=\"https://www.linkedin.com/company/ngo-association-uzbekistan/\" rel=\"noopener noreferrer\" target=\"_blank\">LinkedIn</a></div><div class=\"contact-map\"><iframe allowfullscreen=\"\" style=\"border:0\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\" sandbox=\"allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox\" src=\"https://yandex.uz/map-widget/v1/?ll=69.240568%2C41.312565&amp;z=17&amp;pt=69.240568%2C41.312565%2Cpm2rdm\" title=\"Карта адреса\"></iframe></div>"
+    },
+    "membership": {
+      "title": "Вступить",
+      "sub": "Ознакомьтесь с документами о членстве, подтвердите регламент и отправьте данные организации.",
+      "docs": "<h2 class=\"section-title\">Документы о членстве</h2><div class=\"cards\"><article class=\"card\"><h3>Порядок приёма</h3><p>Список документов, необходимых для членства.</p><div class=\"card-action\"><a class=\"btn\" href=\"official-docs\">Скачать</a></div></article><article class=\"card\"><h3>Устав и внутренние правила</h3><p>Документ, определяющий права и обязанности членства.</p><div class=\"card-action\"><a class=\"btn\" href=\"official-docs\">Скачать</a></div></article><article class=\"card\"><h3>Регламент возможностей</h3><p>Возможности и порядок, предоставляемые после вступления.</p><div class=\"card-action\"><a class=\"btn\" href=\"official-docs\">Скачать</a></div></article></div>",
+      "reglamentTitle": "Ознакомление с регламентом",
+      "reglamentSubtle": "Подтвердите, что ознакомились с регламентом до отправки формы.",
+      "reglamentConsent": "Я полностью ознакомился(-ась) с <a href=\"foydalanish-shartlari\" target=\"_blank\" rel=\"noopener noreferrer\">регламентом</a> и согласен(-на) с его условиями.",
+      "formTitle": "Данные организации",
+      "noscript": "Эта форма работает в браузере с включённым JavaScript. Пожалуйста, включите JavaScript или обратитесь через <a href=\"qayta-aloqa\" style=\"color:#7a5800;text-decoration:underline\">форму обратной связи</a>.",
+      "submitBtn": "Отправить заявку",
+      "f": {
+        "orgName": "Название организации <span aria-hidden=\"true\">*</span>",
+        "activity": "Сфера деятельности <span aria-hidden=\"true\">*</span>",
+        "legalType": "Организационно-правовая форма <span aria-hidden=\"true\">*</span>",
+        "head": "ФИО руководителя <span aria-hidden=\"true\">*</span>",
+        "phone": "Телефон организации <span aria-hidden=\"true\">*</span>",
+        "email": "Электронный адрес <span aria-hidden=\"true\">*</span>",
+        "telegram": "Номер, привязанный к Telegram <span aria-hidden=\"true\">*</span>",
+        "region": "Регион деятельности <span aria-hidden=\"true\">*</span>"
+      }
+    },
+    "membershipGuide": {
+      "title": "Как вступить",
+      "sub": "Пройдите процесс членства шаг за шагом.",
+      "stepsAria": "Этапы вступления",
+      "stepsHtml": "<div class=\"item\"><h3>Этап 1: Подготовка документов</h3><p>Подготовьте свидетельство организации, ИНН, данные руководителя и контактные реквизиты.</p></div><div class=\"item\"><h3>Этап 2: Ознакомление с регламентом</h3><p>Изучите условия членства и сборник прав и обязанностей.</p></div><div class=\"item\"><h3>Этап 3: Отправка онлайн-формы</h3><p>Заполните и отправьте заявку в разделе «Вступление».</p></div><div class=\"item\"><h3>Этап 4: Проверка и решение</h3><p>Заявка рассматривается в сроки, установленные уставом; статус отражается на странице.</p></div><div class=\"item\"><h3>Этап 5: Свидетельство</h3><p>После положительного решения оформляется свидетельство о членстве.</p></div>"
+    },
+    "news": {
+      "title": "Новости",
+      "sub": "Официальные новости и пресс-релизы.",
+      "listAria": "Список новостей",
+      "noscript": "Для просмотра списка новостей нужен JavaScript. Также можно использовать RSS-ленту ниже: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/news.rss\">RSS feed</a>."
+    },
+    "events": {
+      "title": "Мероприятия",
+      "sub": "Календарь прошедших и запланированных мероприятий.",
+      "listAria": "Список мероприятий",
+      "noscript": "Для просмотра списка мероприятий нужен JavaScript. Также можно использовать RSS-ленту ниже: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/events.rss\">RSS feed</a>."
+    },
+    "grants": {
+      "title": "Объявленные гранты",
+      "sub": "Открытые гранты и возможности финансирования для ННО и институтов гражданского общества.",
+      "listAria": "Список грантов",
+      "noscript": "Для просмотра списка грантов нужен JavaScript. Также можно использовать RSS-ленту ниже: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/grants.rss\">RSS feed</a>."
+    },
+    "leadership": {
+      "title": "Руководство",
+      "sub": "Председатель и заместители Совета УзНАННО — руководители, направляющие деятельность организации.",
+      "role1": "Председатель Совета Ассоциации, руководитель Исполнительного аппарата",
+      "role2": "Первый заместитель Председателя Совета, первый заместитель руководителя Исполнительного аппарата",
+      "role3": "Заместитель Председателя Совета, заместитель руководителя Исполнительного аппарата",
+      "bioBtn": "Биография",
+      "hours1": "Вторник 14:00–17:00",
+      "hours2": "Среда 10:00–13:00",
+      "hours3": "Пятница 15:00–17:00",
+      "bioPending": "<strong>Биография:</strong> Информация будет добавлена в ближайшее время.",
+      "aboutTitle": "О руководстве"
+    },
+    "faq": {
+      "title": "Вопросы и ответы",
+      "sub": "Часто задаваемые вопросы и ответы по интерактивным услугам.",
+      "listAria": "Список вопросов и ответов",
+      "searchLabel": "Поиск вопроса",
+      "searchPlaceholder": "Например: отчёт, членство, правовая консультация",
+      "q1": "Какие документы нужны для вступления в Ассоциацию?",
+      "a1": "Требуется свидетельство организации, данные руководителя, заявление и подтверждение принятия устава.",
+      "q2": "Куда сдавать отчёты?",
+      "a2": "Скачайте формы из раздела «Формы отчётности ННО» и отправьте через онлайн-форму.",
+      "q3": "Как получить правовую консультацию?",
+      "a3": "Отправьте вопрос через форму официального обращения. Ответ направят специалисты.",
+      "q4": "Где посмотреть статус моей заявки на членство?",
+      "a4": "После отправки на странице вступления автоматически открывается страница статуса для отслеживания."
+    },
+    "index": {
+      "title": "УзНАННО — Национальная ассоциация ННО Узбекистана | ngo.uz",
+      "ogTitle": "Национальная ассоциация ННО Узбекистана — ngo.uz",
+      "metaDescription": "Национальная ассоциация негосударственных некоммерческих организаций Узбекистана (УзНАННО) — официальный источник информации об ННО, грантах, мероприятиях, законодательстве и услугах.",
+      "heroTitle": "Национальная ассоциация негосударственных некоммерческих организаций Узбекистана",
+      "heroMemberBtn": "Вступить в Ассоциацию",
+      "heroMemberBtnSub": "УзНАННО · Подать заявку",
+      "heroBenefitsBtn": "Преимущества членства в Ассоциации",
+      "statsAria": "Ключевые показатели",
+      "stats": {
+        "total": "Всего ННО",
+        "members": "Наши члены ННО",
+        "lawProposals": "Законодательных предложений",
+        "legalAid": "Правовая помощь",
+        "events": "Проведено мероприятий",
+        "media": "Выступлений в СМИ",
+        "training": "ННО прошли обучение"
+      },
+      "mapTitle": "Показатели ННО",
+      "mapSub": "В разрезе регионов",
+      "mapAria": "Карта ННО по регионам",
+      "mapNoscript": "Карта регионов работает с помощью JavaScript.",
+      "chartTitle": "Количество ННО — членов Ассоциации",
+      "chartCanvasFallback": "Этот элемент показывает диаграмму. Подробная таблица данных приведена ниже.",
+      "chartTableAria": "Динамика членства в УзНАННО",
+      "chartTableCaption": "Динамика количества ННО (2020–2025)",
+      "chartColYear": "Год",
+      "chartColCount": "Количество ННО",
+      "chartGrowthSince2020": "Рост с 2020 года",
+      "chartStatus2025": "Состояние на 2025 год",
+      "chartGrowthLabel": "Средний годовой прирост",
+      "chartLegendBar": "Количество ННО",
+      "chartLegendLine": "Тренд",
+      "chartDlTitle": "Скачать изображение",
+      "chartDlAria": "Скачать диаграмму как изображение",
+      "chartSource": "Источник: ngo.uz",
+      "newsTitle": "Последние новости и мероприятия",
+      "newsSub": "Деятельность УзНАННО, новости и последние мероприятия.",
+      "newsSeeAll": "Все новости",
+      "newsNoscript": "Последние новости и мероприятия загружаются с помощью JavaScript.",
+      "partnersTitle": "Наши международные партнёры",
+      "partnersSub": "Международные организации, с которыми УзНАННО ведёт стратегическое партнёрство.",
+      "usefulTitle": "Полезные ссылки",
+      "usefulLinks": {
+        "president": "Официальный сайт Президента Республики Узбекистан",
+        "gov": "Правительственный портал Республики Узбекистан",
+        "parliament": "Законодательная палата Олий Мажлиса Республики Узбекистан",
+        "senate": "Сенат Олий Мажлиса Республики Узбекистан",
+        "lex": "Национальная база данных законодательства Республики Узбекистан"
+      }
+    }
+  },
+  "membershipModal": {
+    "title": "Вступить в Ассоциацию",
+    "subtitle": "Заполните заявку на членство в Национальной ассоциации ННО Узбекистана",
+    "stepsAria": "Этапы вступления",
+    "step1Aria": "Этап 1: условия (текущий)",
+    "step1DoneAria": "Этап 1: условия (выполнен)",
+    "step2Aria": "Этап 2: заявка",
+    "step2CurrentAria": "Этап 2: заявка (текущий)",
+    "termsTitle": "Условия и правила членства",
+    "terms1": "Приём в члены Национальной ассоциации негосударственных некоммерческих организаций Узбекистана (УзНАННО) осуществляется на основании Устава УзНАННО.",
+    "terms2": "Цель членства — развитие гражданского общества, обеспечение правовой защиты ННО, повышение кадрового потенциала и расширение международного сотрудничества.",
+    "terms3": "Организации-члены имеют следующие права: участие в мероприятиях Ассоциации, доступ к тренингам и семинарам, обсуждение решений Совета и голосование.",
+    "terms4": "Организации-члены несут следующие обязанности: уплата ежегодного членского взноса, представление годового отчёта о деятельности и соблюдение решений Ассоциации.",
+    "terms5": "После рассмотрения заявки УзНАННО направляет письмо о членстве. Решение принимается в течение 15 рабочих дней.",
+    "agreeLabel": "Я ознакомился(-ась) с указанными условиями и согласен(-на)",
+    "continueBtn": "Продолжить →",
+    "orgLabel": "Название организации *",
+    "orgPlaceholder": "Полное официальное название ННО",
+    "leaderLabel": "ФИО руководителя *",
+    "leaderPlaceholder": "Полные фамилия, имя, отчество",
+    "phoneLabel": "Телефон *",
+    "phonePlaceholder": "+998 __ ___ __ __",
+    "emailLabel": "Email *",
+    "emailPlaceholder": "info@organization.uz",
+    "regionLabel": "Регион *",
+    "regionPlaceholder": "Выберите…",
+    "noteLabel": "Дополнительная информация",
+    "notePlaceholder": "Деятельность организации, сфера или другие комментарии (по желанию)",
+    "submitBtn": "Вступить",
+    "backBtn": "← Назад",
+    "submittingBtn": "Отправляется...",
+    "successTitle": "Ваша заявка принята!",
+    "successBody": "Мы свяжемся с вами по указанному телефону и email в течение 15 рабочих дней. Благодарим за вступление в УзНАННО.",
+    "closeBtn": "Закрыть",
+    "regions": {
+      "tashkentCity": "Город Ташкент",
+      "tashkentOblast": "Ташкентская область",
+      "andijan": "Андижанская область",
+      "bukhara": "Бухарская область",
+      "fergana": "Ферганская область",
+      "jizzakh": "Джизакская область",
+      "namangan": "Наманганская область",
+      "navoi": "Навоийская область",
+      "kashkadarya": "Кашкадарьинская область",
+      "samarkand": "Самаркандская область",
+      "syrdarya": "Сырдарьинская область",
+      "surkhandarya": "Сурхандарьинская область",
+      "khorezm": "Хорезмская область",
+      "karakalpakstan": "Республика Каракалпакстан"
+    }
+  }
+}

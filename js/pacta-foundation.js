@@ -230,6 +230,47 @@
     });
   }
 
+  // On phones the wide admin tables are rendered as stacked cards (see the
+  // <=640px block in pacta-foundation.css). For that to read correctly each
+  // cell needs to know its column heading, so we copy the matching <th> text
+  // onto every <td> as data-label (CSS shows it via ::before). Rows are often
+  // injected after an async fetch, so we also observe each tbody and label
+  // rows as they arrive.
+  function labelTableCells() {
+    document.querySelectorAll('table.table').forEach(function (table) {
+      var headRow = table.tHead && table.tHead.rows[0];
+      var body = table.tBodies[0];
+      if (!headRow || !body) return;
+
+      var labels = Array.prototype.map.call(headRow.cells, function (th) {
+        return (th.textContent || '').trim();
+      });
+
+      function labelRow(tr) {
+        // Skip full-width state rows (loading / empty) — a single td that
+        // spans the table with colspan, which shouldn't become a card field.
+        if (tr.cells.length <= 1) return;
+        Array.prototype.forEach.call(tr.cells, function (td, i) {
+          if (td.hasAttribute('data-label')) return;
+          td.setAttribute('data-label', labels[i] != null ? labels[i] : '');
+        });
+      }
+
+      Array.prototype.forEach.call(body.rows, labelRow);
+
+      if (!body.__cardsObserved) {
+        body.__cardsObserved = true;
+        new MutationObserver(function (mutations) {
+          mutations.forEach(function (m) {
+            Array.prototype.forEach.call(m.addedNodes, function (n) {
+              if (n.nodeType === 1 && n.tagName === 'TR') labelRow(n);
+            });
+          });
+        }).observe(body, { childList: true });
+      }
+    });
+  }
+
   function optimizeImages() {
     document.querySelectorAll('img').forEach(function (img) {
       if (!img.hasAttribute('decoding')) {
@@ -681,6 +722,7 @@
     normalizeButtons();
     normalizeSelects();
     wrapTables();
+    labelTableCells();
     optimizeImages();
     setupMobileSidebar();
     setupSidebarSearch();

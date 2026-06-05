@@ -1,0 +1,1968 @@
+{
+  "admin": {
+    "noscript": "Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.",
+    "brand": "O'zNNTMA Admin",
+    "sidebarCollapse": "Yon panelni yopish",
+    "menuAria": "Admin menyusi",
+    "sec": {
+      "main": "ASOSIY MENYU",
+      "requests": "MUROJAATLAR",
+      "content": "KONTENT"
+    },
+    "breadcrumbAria": "Sahifa joylashuvi",
+    "breadcrumbRoot": "Boshqaruv",
+    "pages": {
+      "analytics": {
+        "title": "Tahliliy ma’lumotlar"
+      },
+      "corruptionReports": {
+        "title": "Korrupsiya murojaatlari"
+      },
+      "dashboard": {
+        "title": "Boshqaruv paneli"
+      },
+      "documents": {
+        "title": "Hujjatlar"
+      },
+      "events": {
+        "title": "Tadbirlar"
+      },
+      "feedback": {
+        "title": "Qayta aloqa"
+      },
+      "grantApplications": {
+        "title": "Grant arizalari"
+      },
+      "grants": {
+        "title": "Grantlar"
+      },
+      "membershipRequests": {
+        "title": "A’zolik arizalari"
+      },
+      "news": {
+        "title": "Yangiliklar"
+      },
+      "notifications": {
+        "title": "Bildirishnomalar"
+      },
+      "passwordResetRequests": {
+        "title": "Parol tiklash so'rovlari"
+      },
+      "regions": {
+        "title": "Hududlar"
+      },
+      "registry": {
+        "title": "NNT Ro’yxati"
+      },
+      "serviceRequests": {
+        "title": "Xizmat so’rovlari"
+      },
+      "settings": {
+        "title": "Sozlamalar"
+      },
+      "settingsNotifications": {
+        "title": "Sozlamalar"
+      },
+      "settingsSecurity": {
+        "title": "Sozlamalar"
+      },
+      "settingsSystem": {
+        "title": "Sozlamalar"
+      },
+      "tasks": {
+        "title": "Topshiriqlar"
+      },
+      "users": {
+        "title": "Foydalanuvchilar boshqaruvi"
+      }
+    },
+    "nav": {
+      "dashboard": "Boshqaruv paneli",
+      "membershipRequests": "A'zolik arizalari",
+      "grantApplications": "Grant arizalari",
+      "registry": "NNT Ro'yxati",
+      "regions": "Hududlar",
+      "documents": "Hujjatlar",
+      "tasks": "Topshiriqlar",
+      "users": "Foydalanuvchilar",
+      "reports": "Hisobotlar",
+      "analytics": "Tahliliy ma'lumotlar",
+      "serviceRequests": "Xizmat so'rovlari",
+      "corruptionReports": "Korrupsiya murojaatlari",
+      "feedback": "Qayta aloqa",
+      "passwordReset": "Parol tiklash",
+      "passwordResetReq": "Parol tiklash so'rovlari",
+      "news": "Yangiliklar",
+      "events": "Tadbirlar",
+      "grants": "Grantlar",
+      "settings": "Sozlamalar",
+      "logout": "Chiqish"
+    }
+  },
+  "cabinet": {
+    "brand": "A'zo Kabinet",
+    "sidebarCollapse": "Yon panelni yopish",
+    "menuAria": "Kabinet menyusi",
+    "menuSearchAria": "Menyu bo‘yicha qidirish",
+    "sec": {
+      "main": "ASOSIY",
+      "announcements": "XABARNOMA",
+      "services": "XIZMATLAR"
+    },
+    "nav": {
+      "dashboard": "Bosh sahifa",
+      "organization": "Tashkilotim",
+      "applications": "Ariza holati",
+      "reports": "Hisobotlar",
+      "documents": "Hujjatlar",
+      "events": "Tadbirlar",
+      "news": "Yangiliklar",
+      "notifications": "Bildirishnomalar",
+      "grants": "Grantlar",
+      "support": "Murojaat",
+      "settings": "Sozlamalar",
+      "logout": "Chiqish"
+    },
+    "notifPanelAria": "Bildirishnomalar",
+    "notifPanelTitle": "Bildirishnomalar",
+    "notifEmpty": "Bildirishnomalar yo‘q",
+    "notifLoadError": "Bildirishnomalarni yuklab bo‘lmadi. Internet aloqangizni tekshirib, sahifani yangilang.",
+    "notifMarkRead": "Barchasini o‘qildi deb belgilash",
+    "notifSeeAll": "Barcha bildirishnomalar",
+    "notifNew": "yangi",
+    "breadcrumbAria": "Sahifa joylashuvi",
+    "pages": {
+      "dashboard": {
+        "title": "Bosh sahifa"
+      },
+      "documents": {
+        "title": "Hujjatlar"
+      },
+      "events": {
+        "title": "Tadbirlar"
+      },
+      "news": {
+        "title": "Yangiliklar"
+      },
+      "notifications": {
+        "title": "Bildirishnomalar"
+      },
+      "organization": {
+        "title": "Tashkilotim"
+      },
+      "reports": {
+        "title": "Hisobotlar"
+      },
+      "settings": {
+        "title": "Sozlamalar"
+      },
+      "settingsNotifications": {
+        "title": "Sozlamalar"
+      },
+      "settingsOrg": {
+        "title": "Sozlamalar"
+      },
+      "settingsSecurity": {
+        "title": "Sozlamalar"
+      }
+    },
+    "about": {
+      "title": "Ilova haqida",
+      "appName": "NNTMA Kabineti",
+      "ownerLabel": "Egasi",
+      "websiteLabel": "Veb-sayt",
+      "updatedLabel": "Yangilangan",
+      "updatedValue": "30 Aprel 2026",
+      "licenseLabel": "Litsenziya",
+      "licenseValue": "Davlat",
+      "legalSection": "Huquqiy",
+      "termsOfUse": "Foydalanish shartlari",
+      "privacyPolicy": "Maxfiylik siyosati",
+      "licenses": "Litsenziyalar",
+      "creditsSection": "Yaratuvchilar",
+      "creditsOrg": "O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi.",
+      "creditsDescription": "Ushbu mobil ilova a'zo tashkilotlar uchun grantlar, hisobotlar va tadbirlarni boshqarishni soddalashtirish maqsadida yaratilgan.",
+      "allRightsReserved": "Barcha huquqlar himoyalangan"
+    },
+    "changepassword": {
+      "title": "Parolni o'zgartirish",
+      "currentPassword": "Joriy parol",
+      "newPassword": "Yangi parol",
+      "confirmNewPassword": "Yangi parolni tasdiqlang",
+      "minHint": "kamida 12 ta belgi",
+      "mismatch": "Parollar mos kelmaydi",
+      "savePassword": "Parolni saqlash",
+      "saving": "Saqlanmoqda...",
+      "hide": "Yashirish",
+      "showLabel": "Ko'rsatish",
+      "successToast": "Parol muvaffaqiyatli o'zgartirildi",
+      "failToast": "Parolni o'zgartirib bo'lmadi"
+    },
+    "documents": {
+      "title": "Tashkilot hujjatlari",
+      "upload": "Yuklash",
+      "collectionStatus": "Hujjat to'plamining holati",
+      "allRequiredPresent": "Barcha majburiy hujjatlar joyida — NNTMA tomonidan tasdiqlangan",
+      "filterAll": "Hammasi",
+      "filterRequired": "Asosiy",
+      "filterSupplementary": "Qo'shimcha",
+      "badgeRequired": "Majburiy",
+      "sectionRequired": "Asosiy hujjatlar",
+      "sectionSupplementary": "Qo'shimcha hujjatlar",
+      "templatesTitle": "Hisobot va andoza shakllar",
+      "templatesSubtitle": "NNTMA tomonidan tasdiqlangan rasmiy shakllar",
+      "templatesCount": "{{count}} ta",
+      "updatedAt": "{{meta}} · yangilangan {{date}}",
+      "sheetAriaLabel": "Hujjat ma'lumotlari",
+      "viewLabel": "Hujjat ko'rish",
+      "actionDownload": "Yuklash",
+      "actionShare": "Ulashish",
+      "actionNewVersion": "Yangi versiya",
+      "detailsLabel": "Ma'lumotlar",
+      "versionsLabel": "Versiyalar tarixi",
+      "metaDocType": "Hujjat turi",
+      "metaFormat": "Format",
+      "metaPages": "Sahifalar",
+      "metaUploadedBy": "Yuklagan",
+      "metaStatus": "Holat",
+      "metaDocId": "Hujjat ID",
+      "statusVerified": "NNTMA tasdiqladi",
+      "statusCurrent": "Joriy"
+    },
+    "common": {
+      "back": "Orqaga",
+      "search": "Qidirish",
+      "close": "Yopish",
+      "save": "Saqlash",
+      "cancel": "Bekor",
+      "loading": "Yuklanmoqda…",
+      "yes": "Ha",
+      "no": "Yo'q",
+      "edit": "Tahrirlash",
+      "delete": "O'chirish",
+      "submit": "Yuborish",
+      "confirm": "Tasdiqlash",
+      "retry": "Qayta urinish"
+    },
+    "eventdetail": {
+      "regCancelled": "Ro'yxatdan bekor qilindi",
+      "regSuccess": "Ro'yxatdan o'tdingiz",
+      "errorOccurred": "Xatolik yuz berdi",
+      "share": "Ulashish",
+      "duration": "Davom etish — 7 soat",
+      "organizer": "Tashkilotchi",
+      "registeredTitle": "Ro'yxatdan o'tilgan",
+      "confirmationEmailed": "Tasdiqlash xati emailga yuborilgan",
+      "qrCode": "QR kod",
+      "details": "Tafsilotlar",
+      "location": "Manzil",
+      "format": "Format",
+      "formatOnline": "Online",
+      "formatInPerson": "Yuzma-yuz",
+      "language": "Til",
+      "languageUzbek": "O'zbek tili",
+      "certificate": "Sertifikat",
+      "certificateProvided": "Beriladi (qatnashganlarga)",
+      "aboutEvent": "Tadbir haqida",
+      "participants": "Ishtirokchilar",
+      "seatsCount": "{{taken}} / {{total}} ishtirokchi",
+      "idLabel": "ID {{id}}",
+      "publishedAt": " · E'lon qilingan {{date}}",
+      "payment": "To'lov",
+      "free": "Bepul",
+      "register": "Ro'yxatdan o'tish",
+      "kind": {
+        "seminar": "Seminar",
+        "meeting": "Yig'ilish",
+        "webinar": "Vebinar",
+        "event": "Tadbir"
+      }
+    },
+    "events": {
+      "title": "Tadbirlar",
+      "summary": "Yaqin orada — {{upcomingCount}} ta · Sizniki — {{mineCount}} ta",
+      "calendar": "Kalendar",
+      "tabUpcoming": "Yaqin orada",
+      "tabMine": "Sizniki ({{mineCount}})",
+      "tabPast": "O'tgan",
+      "empty": "Tadbirlar topilmadi",
+      "today": "Bugun · {{time}}",
+      "register": "Ro'yxatdan o'tish",
+      "monthCount": "· {{count}} tadbir",
+      "sortByTime": "Tartib: vaqt bo'yicha",
+      "registered": "Ro'yxatdan o'tilgan",
+      "keynote": "Asosiy",
+      "seats": "{{taken}}/{{total}} ro'yxatdan o'tdi",
+      "nearlyFull": "· deyarli to'la",
+      "free": "Bepul",
+      "kind": {
+        "seminar": "Seminar",
+        "meeting": "Yig'ilish",
+        "webinar": "Vebinar",
+        "event": "Tadbir"
+      }
+    },
+    "eventscalendar": {
+      "title": "Kalendar",
+      "todayAria": "Bugun",
+      "prevMonthAria": "Oldingi oy",
+      "nextMonthAria": "Keyingi oy",
+      "dayEventsTitle": "{{day}}-{{month}} tadbirlari",
+      "eventsTitle": "Tadbirlar",
+      "countSuffix": "{{count}} ta",
+      "noEvents": "Bu kuni tadbirlar yo'q."
+    },
+    "forgotpassword": {
+      "errorPhoneIncomplete": "Telefon raqamni toʻliq kiriting",
+      "errorSendFailed": "Yuborib boʻlmadi",
+      "headerTitle": "Parolni tiklash",
+      "sentTitle": "Soʻrov qabul qilindi",
+      "sentDescription": "Administrator soʻrovingizni koʻrib chiqadi va siz bilan telefon yoki email orqali bogʻlanadi. Iltimos, kuting.",
+      "backToLogin": "Kirishga qaytish",
+      "heading": "Parolni unutdingizmi?",
+      "subheading": "Telefon raqamingizni qoldiring — administrator siz bilan bogʻlanib parolni tiklab beradi.",
+      "phoneLabel": "Telefon raqam",
+      "noteLabel": "Qoʻshimcha izoh",
+      "optional": "ixtiyoriy",
+      "notePlaceholder": "Sizni qachon va qanday usulda chaqirishimiz qulay?",
+      "submitting": "Yuborilmoqda...",
+      "submit": "Soʻrov yuborish",
+      "directContact": "Yoki toʻgʻridan-toʻgʻri murojaat qiling:"
+    },
+    "grantapplicationdetail": {
+      "toastSubmitted": "Ariza yuborildi",
+      "toastSubmitFailed": "Yuborib bo‘lmadi",
+      "toastDeleted": "Ariza o'chirildi",
+      "toastDeleteFailed": "O'chirib bo‘lmadi",
+      "toastLinkCopied": "Havola nusxalandi",
+      "deleteConfirmTitle": "Qoralamani o'chirasizmi?",
+      "deleteConfirmMessage": "Bu amalni qaytarib bo'lmaydi.",
+      "headerTitle": "Grant arizasi",
+      "shareAria": "Ulashish",
+      "actionsAria": "Amallar",
+      "reviewStatusBadge": "Ko'rib chiqilmoqda · 3-bosqich",
+      "reviewIntroBefore": "Arizangiz NNTMA va EU Delegation tomonidan birgalikda baholanmoqda. Kutilayotgan javob —",
+      "reviewIntroHighlight": "iyul oxiri",
+      "approvedStatusBadge": "Tasdiqlandi · 5 iyun 2026",
+      "approvedIntro": "Tabriklaymiz! Loyihangiz to'liq summada qabul qilindi. Endi shartnoma imzolash va to'lov jadvalini tasdiqlash kerak.",
+      "awardedAmountLabel": "Berilgan summa",
+      "requestedAmountLabel": "so'ralgan summa",
+      "timelineLabel": "Bosqich",
+      "timelineSubmitted": "Topshirilgan",
+      "timelineTechReview": "Texnik tekshiruv",
+      "timelineUnderReview": "Mas'ul ko'rib chiqmoqda",
+      "timelineNow": "Hozir",
+      "timelineFinalDecision": "Yakuniy qaror",
+      "organizerLabel": "Tashkilotchi",
+      "openLinkAria": "Havolani ochish",
+      "factRequestedBudget": "So'ralgan byudjet",
+      "factProjectDuration": "Loyiha davomi",
+      "factSubmitted": "Topshirildi",
+      "factCategory": "Toifa",
+      "projectSummaryLabel": "Loyiha qisqacha tavsifi",
+      "budgetBreakdownLabel": "Byudjet taqsimoti",
+      "budgetEquipment": "Asbob-uskunalar",
+      "budgetSoftware": "Maxsus dasturlar",
+      "budgetTeacherTraining": "O'qituvchilar treningi",
+      "budgetManagement": "Boshqaruv xarajatlari",
+      "attachmentsLabel": "Biriktirilgan hujjatlar",
+      "attachmentsLabelApproved": "Hujjatlar",
+      "fileGrantContract": "Grant shartnomasi (loyiha)",
+      "fileGrantContractMeta": "2,4 MB · imzo kutilmoqda",
+      "fileProjectProposal": "Loyiha bayonnomasi",
+      "fileProjectProposalMeta": "3,2 MB · 28 sahifa",
+      "fileBudgetTable": "Byudjet jadvali",
+      "fileBudgetTableMeta": "180 KB · 4 varaq",
+      "filePartnerSchools": "Hamkor maktablar ro'yxati",
+      "filePartnerSchoolsMeta": "240 KB · 2 sahifa",
+      "metaLabel": "Ariza ma'lumotlari",
+      "metaApplicationId": "Ariza ID",
+      "metaSubmitted": "Topshirilgan",
+      "metaResponsible": "Mas'ul",
+      "metaVersion": "Versiya",
+      "metaVersionValue": "v1.2 ({{count}} marta tahrirlangan)",
+      "nextStepsLabel": "Keyingi qadamlar",
+      "step1Title": "Shartnomani imzolash",
+      "step1Desc": "Elektron raqamli imzo orqali",
+      "step1Cta": "Imzolash",
+      "step2Title": "Bank rekvizitlarini tasdiqlash",
+      "step2Desc": "Joriy rekvizitlar amal qiladi",
+      "step3Title": "Birinchi to'lovni qabul qilish",
+      "step3Desc": "{{amount}} — shartnoma imzolangach 7 ish kuni ichida",
+      "paymentScheduleLabel": "To'lov jadvali",
+      "payStart": "Boshlanish · taxminiy iyul 2026",
+      "payInterim": "Oraliq hisobot · oktyabr 2026",
+      "payFinal": "Yakuniy hisobot · aprel 2027",
+      "payOfBudget": "{{pct}} byudjetdan",
+      "contactLabel": "EU Delegation aloqasi",
+      "contactRole": "Loyiha menejeri · Civic Tech dasturi",
+      "contactWrite": "Yozish",
+      "signContract": "Shartnomani imzolash",
+      "submitting": "Yuborilmoqda...",
+      "submitDraft": "Topshirish"
+    },
+    "grantapplications": {
+      "grants": "Grantlar",
+      "myApplications": "Mening arizalarim",
+      "newApplication": "Yangi ariza",
+      "declinedIntro": "NNTMA tomonidan rad etilgan arizalar. Izohni o'qib, kelgusi tanlovda yaxshilangan ariza topshirishingiz mumkin.",
+      "declinedHelpPrefix": "Rad etilgan ariza qaytadan ko'rib chiqilishini so'rash uchun NNTMA bilan",
+      "declinedHelpLink": "yordam orqali bog'laning",
+      "statusSubmitted": "Topshirilgan",
+      "statusReview": "Ko'rib chiqilmoqda",
+      "statusApproved": "Tasdiqlandi",
+      "statusDeclined": "Rad etilgan",
+      "statusDraft": "Qoralama",
+      "draftCompleted": "Qoralama to'ldirildi",
+      "reviewNoteLabel": "NNTMA izohi",
+      "budget": "Byudjet",
+      "created": "Yaratilgan",
+      "resolved": "Hal qilindi",
+      "submittedOn": "Topshirildi",
+      "continue": "Davom etish",
+      "statTotal": "Jami arizalar",
+      "statTotalSub": "12 oy ichida",
+      "statApproved": "Tasdiqlangan",
+      "statApprovedSub": "{{pct}}% muvaffaqiyat",
+      "statActive": "Faol",
+      "statActiveSub": "Kutilmoqda",
+      "filterAll": "Hammasi",
+      "filterSubmitted": "Topshirilgan",
+      "filterReview": "Ko'rib chiq.",
+      "filterApproved": "Tasdiqlangan",
+      "filterDeclined": "Rad etilgan",
+      "filterDraft": "Qoralama"
+    },
+    "grantdetail": {
+      "removedFromSaved": "Saqlanganlardan olib tashlandi",
+      "grantSaved": "Grant saqlandi",
+      "saveFailed": "Saqlab bo‘lmadi",
+      "loginFirst": "Avval tizimga kiring",
+      "enterProjectName": "Loyiha nomini kiriting",
+      "applicationSent": "Ariza yuborildi",
+      "draftSaved": "Qoralama saqlandi",
+      "notSaved": "Saqlanmadi",
+      "linkCopied": "Havola nusxalandi",
+      "share": "Ulashish",
+      "competitionClosed": "Tanlov yopilgan",
+      "daysLeft": "{{count}} kun qoldi",
+      "international": "Xalqaro",
+      "organizer": "Tashkilotchi",
+      "amount": "Summa",
+      "deadline": "Muddat",
+      "projectDuration": "Loyiha davomi",
+      "region": "Hudud",
+      "requirements": "Talablar",
+      "description": "Tavsif",
+      "readFull": "To'liq o'qish ↓",
+      "publishedMeta": "E'lon qilingan: {{date}} · ID {{id}}",
+      "maxAmount": "Maks. summa",
+      "submitApplication": "Ariza topshirish",
+      "newApplication": "Yangi ariza",
+      "projectName": "Loyiha nomi",
+      "autofilledHint": "Avtomatik to'ldirildi. Tahrirlashingiz mumkin.",
+      "projectSummary": "Loyiha qisqacha tavsifi",
+      "summaryPlaceholder": "Loyihangizning maqsadi, asosiy faoliyat yo'nalishlari va kutilayotgan natijalarini qisqacha yozing…",
+      "estimatedBudget": "Taxminiy byudjet",
+      "budgetPlaceholder": "Masalan: $15,000 yoki 150 mln so'm",
+      "draftNote": "Hozir qoralama saqlasangiz, keyinroq batafsil ma'lumot va hujjat fayllarini qo'shishingiz mumkin. Topshirilgan arizalar NNTMA tomonidan ko'rib chiqiladi.",
+      "saveDraft": "Qoralama saqlash",
+      "saving": "Saqlanmoqda...",
+      "submit": "Topshirish",
+      "optional": "· ixtiyoriy",
+      "req": {
+        "membership": {
+          "label": "NNTMA a'zoligi"
+        },
+        "duration": {
+          "label": "Faoliyat muddati ≥ 2 yil",
+          "sub": "Tashkilot 2005-yildan beri faoliyat yuritadi"
+        },
+        "lastYearReport": {
+          "label": "O'tgan yil hisoboti topshirilgan"
+        },
+        "team": {
+          "label": "Loyiha jamoasi: 3 dan ortiq xodim",
+          "sub": "Ko'rsatilmagan"
+        }
+      }
+    },
+    "grants": {
+      "title": "Grantlar",
+      "filter": "Filtrlash",
+      "searchPlaceholder": "Grant nomi, soha yoki tashkilotchi",
+      "saved": "Saqlangan",
+      "savedCount": "{{count}} ta grant",
+      "myApplications": "Mening arizalarim",
+      "reviewCount": "{{count}} ta ko'rib chiqilmoqda",
+      "applicationsCount": "{{count}} ta ariza",
+      "category": "Toifa",
+      "resultsCount": "{{count}} ta natija",
+      "recommended": "Tavsiya etiladi",
+      "sortLabel": "Saralash:",
+      "sortNearestDeadline": "Yaqin muddat ↓",
+      "statusOpen": "Ochiq",
+      "statusEnding": "{{count}} kun qoldi",
+      "statusClosed": "Tanlov yopilgan",
+      "international": "Xalqaro",
+      "amount": "Summa",
+      "deadline": "Muddat",
+      "categories": {
+        "all": "Hammasi",
+        "yoshlar": "Yoshlar",
+        "gender": "Gender",
+        "talim": "Ta'lim",
+        "soglik": "Sog'liqni saqlash",
+        "ekologiya": "Ekologiya",
+        "madaniyat": "Madaniyat",
+        "huquq": "Huquqiy yordam"
+      }
+    },
+    "grantsresults": {
+      "searchPlaceholder": "Grant nomi, soha yoki tashkilotchi",
+      "searchAria": "Grantlarni qidirish",
+      "clear": "Tozalash",
+      "filter": "Filtr",
+      "resultsFound": "natija topildi",
+      "noResultsForQuery": "\"{{query}}\" bo'yicha grant topilmadi",
+      "noResults": "Grant topilmadi",
+      "international": "Xalqaro",
+      "amount": "Summa",
+      "deadline": "Muddat",
+      "statusOpen": "Ochiq",
+      "statusEnding": "{{daysLeft}} kun qoldi",
+      "statusClosed": "Tanlov yopilgan"
+    },
+    "helparticle": {
+      "headerTitle": "Yordam",
+      "shareAria": "Ulashish",
+      "thanks": "Rahmat!",
+      "feedbackYes": "Sharhingiz qabul qilindi.",
+      "feedbackNo": "Yordam berishga harakat qilamiz.",
+      "helpfulQuestion": "Bu maqola foydali bo'ldimi?",
+      "related": "Tegishli",
+      "backToHelpCenter": "Yordam markaziga qaytish"
+    },
+    "home": {
+      "userFallback": "Foydalanuvchi",
+      "organization": "Tashkilot",
+      "notifications": "Bildirishnomalar",
+      "welcome": "Xush kelibsiz, {{name}}",
+      "daysLeft": "{{count}} kun qoldi",
+      "submitReport": "Topshirish",
+      "totalReports": "Jami hisobotlar",
+      "unread": "O'qilmagan",
+      "newReport": "Yangi hisobot",
+      "steps": "{{count}} qadam",
+      "grants": "Grantlar",
+      "grantsOpen": "{{count}} ochiq",
+      "view": "Ko'rish",
+      "upcomingEvents": "Yaqin tadbirlar",
+      "viewAll": "Hammasi",
+      "noEvents": "Yaqin orada tadbir yo'q"
+    },
+    "inbox": {
+      "home": "Bosh sahifa",
+      "title": "Bildirishnomalar",
+      "markAllRead": "Hammasini o'qilgan qilish",
+      "filter": "Filtrlash",
+      "filterAll": "Hammasi",
+      "filterUnread": "O'qilmagan",
+      "filterReports": "Hisobotlar",
+      "filterGrants": "Grantlar",
+      "filterEvents": "Tadbirlar",
+      "groupToday": "Bugun",
+      "groupWeek": "Bu hafta",
+      "groupOlder": "Avvalroq",
+      "archiveNote": "30 kundan eski bildirishnomalar avtomatik arxivlanadi",
+      "swipeRead": "O'qilgan",
+      "filterDialogLabel": "Bildirishnomalarni filtrlash",
+      "filterSubtitle": "Faqat tanlangan turlar va davrlarni ko'rsatish",
+      "sectionType": "Turi",
+      "chipMemberNews": "NNTMA yangiliklari",
+      "chipSystemMessages": "Tizim xabarlari",
+      "sectionPeriod": "Davr",
+      "periodToday": "Bugun",
+      "periodWeek": "Bu hafta",
+      "periodAll": "Hammasi",
+      "sectionStatus": "Holat",
+      "toggleUnreadOnly": "Faqat o'qilmaganlar",
+      "toggleActionRequired": "Amal talab qiladi",
+      "toggleActionRequiredSub": "Javob, harakat yoki tasdiq kutilmoqda",
+      "rememberHint": "Tanlovni \"Eslab qol\" tugmasi orqali saqlash mumkin — keyingi kirishingizda ham qo'llaniladi.",
+      "clear": "Tozalash",
+      "applyCount": "Qo'llash ({{count}})",
+      "today": "Bugun",
+      "view": "Ko'rish",
+      "kind": {
+        "report_returned": "Hisobot qaytarildi",
+        "report_accepted": "Hisobot qabul qilindi",
+        "report_due": "Hisobot muddati",
+        "grant_new": "Yangi grant tanlovi",
+        "app_approved": "Ariza tasdiqlandi",
+        "app_review": "Ariza ko'rib chiqilmoqda",
+        "event_reminder": "Tadbir eslatmasi",
+        "event_invite": "Yangi taklif",
+        "member_news": "NNTMA yangiliklari",
+        "system": "Tizim xabari"
+      }
+    },
+    "login": {
+      "enterPhoneOrEmail": "Telefon raqami yoki email kiriting",
+      "enterPassword": "Parolni kiriting",
+      "welcome": "Xush kelibsiz!",
+      "invalidCredentials": "Telefon/email yoki parol noto'g'ri",
+      "uzbek": "O'zbek",
+      "help": "Yordam",
+      "memberCabinet": "A'zo kabineti",
+      "titleLine1": "Tashkilot kabinetiga",
+      "titleLine2": "kirish",
+      "subtitle": "NNTMA reestrida ro'yxatdan o'tgan tashkilotlar uchun.",
+      "phoneOrEmailLabel": "Telefon raqami yoki email",
+      "phoneOrEmailPlaceholder": "90 123 45 67 yoki email",
+      "passwordLabel": "Parol",
+      "forgotPassword": "Parolni unutdingizmi?",
+      "passwordPlaceholder": "Parolingiz",
+      "hidePassword": "Parolni yashirish",
+      "showPassword": "Parolni ko'rsatish",
+      "securityNote": "A'zo tashkilotlar telefon raqami (yoki email) va paroli bilan kiradi.",
+      "signIn": "Kirish",
+      "or": "yoki",
+      "oneIdComingSoon": "ONE ID tez orada",
+      "signInVia": "orqali kirish",
+      "noAccount": "Hisobingiz yo'qmi?",
+      "registerOrg": "Tashkilotni ro'yxatdan o'tkazish"
+    },
+    "loginhistory": {
+      "title": "Tizimga kirish tarixi",
+      "subtitle": "So'nggi kirish urinishlari. Shubhali harakat boʻlsa darhol parolingizni oʻzgartiring.",
+      "empty": "Tarix mavjud emas",
+      "actionLogin": "Tizimga kirish",
+      "actionLogout": "Tizimdan chiqish",
+      "actionRevoke": "Seans tugatildi"
+    },
+    "members": {
+      "title": "Jamoa a'zolari",
+      "orgFallback": "Tashkilot",
+      "inviteMember": "A'zo taklif qilish",
+      "filterAll": "Hammasi",
+      "filterInvited": "Taklif",
+      "statMembers": "A'zolar",
+      "statMembersSub": "jami",
+      "statActive": "Faol",
+      "statActiveSub": "ko'rinish",
+      "statInvited": "Taklif",
+      "statInvitedSub": "kutilmoqda",
+      "searchPlaceholder": "Ism, lavozim yoki email",
+      "searchAria": "A'zolarni qidirish",
+      "clear": "Tozalash",
+      "noMembers": "A'zolar topilmadi",
+      "rolesInfo": "Rollar va ruxsatlar haqida ma'lumot",
+      "helpCenter": "Yordam markazida",
+      "detailTitle": "A'zo ma'lumotlari",
+      "you": "Siz",
+      "email": "Email",
+      "phone": "Telefon",
+      "status": "Holat",
+      "statusInvited": "Taklif yuborilgan",
+      "statusActive": "Faol",
+      "invitationSent": "Taklif yuborildi",
+      "inviteCreateFailed": "Taklif yaratilmadi",
+      "codeCopied": "Kod nusxa olindi",
+      "roleMember": "A'zo",
+      "roleManager": "Menejer",
+      "inviteSubtitle": "Taklif kodi yarating va hamkasbingizga ulashing",
+      "inviteCodeLabel": "Taklif kodi",
+      "copyCode": "Kodni nusxa olish",
+      "codeShareHint": "Bu kodni hamkasbingizga yuboring (Telegram, SMS yoki shaxsan). U ro'yxatdan o'tishda kodni kiritib, tashkilotingizga qo'shiladi. {{date}} gacha amal qiladi.",
+      "roleLabel": "Rol",
+      "roleGroupAria": "Taklif roli",
+      "inviteInfo": "Taklif kodi 30 kun davomida amal qiladi. Foydalanuvchi ro'yxatdan o'tishda kodni kiritib, taklifni qabul qiladi.",
+      "again": "Yana",
+      "createInvite": "Taklif yaratish",
+      "role": {
+        "admin": {
+          "label": "Tashkilot rahbari",
+          "short": "Rahbar"
+        },
+        "accountant": {
+          "label": "Bosh hisobchi",
+          "short": "Hisobchi"
+        },
+        "manager": {
+          "label": "Loyiha menejeri",
+          "short": "Menejer"
+        },
+        "member": {
+          "label": "A'zo vakil",
+          "short": "A'zo"
+        },
+        "guest": {
+          "label": "Kuzatuvchi",
+          "short": "Kuzatuvchi"
+        }
+      },
+      "perm": {
+        "admin": "To'liq ruxsat · barcha amallar",
+        "accountant": "Hisobotlar va moliyaviy ma'lumotlar",
+        "manager": "Grant arizalari va loyihalar",
+        "member": "Faqat ko'rish va o'z hisobotini topshirish",
+        "guest": "Faqat ko'rish, tahrirlash yo'q"
+      }
+    },
+    "news": {
+      "title": "Yangiliklar",
+      "tabAll": "Hammasi",
+      "tabPinned": "Muhim",
+      "tabUpdates": "Yangilanish",
+      "empty": "Yangiliklar topilmadi",
+      "pinnedBadge": "Muhim",
+      "tag": {
+        "news": "Yangilik",
+        "update": "Yangilanish",
+        "event": "Tadbir",
+        "announcement": "E'lon"
+      }
+    },
+    "newsdetail": {
+      "headerTitle": "Yangilik",
+      "share": "Ulashish",
+      "related": "Tegishli",
+      "defaultTag": "Yangilik",
+      "notFound": "Topilmadi",
+      "defaultAuthor": "NNTMA",
+      "copyLink": "Nusxa",
+      "copyButton": "Nusxalash",
+      "readMin": "{{min}} daq."
+    },
+    "notfound": {
+      "title": "Sahifa topilmadi",
+      "description": "Siz qidirgan sahifa olib tashlangan, ko'chirilgan yoki hech qachon mavjud bo'lmagan.",
+      "goHome": "Bosh sahifaga qaytish",
+      "previousPage": "Oldingi sahifa"
+    },
+    "onboarding": {
+      "skip": "O'tkazib yuborish",
+      "start": "Boshlash",
+      "next": "Keyingi",
+      "slide1": {
+        "eyebrow": "AI Grant qidiruv",
+        "title": "Sizga moslashgan grantlarni toping",
+        "body": "Tashkilot profilingiz asosida AI sun'iy intellekti UN, USAID, EU va boshqa donor manbalardan eng mos grantlarni topadi."
+      },
+      "slide2": {
+        "eyebrow": "Hisobotlar",
+        "title": "Hisobotlar bir necha qadamda",
+        "body": "Choraklik va yillik hisobotlarni mobil qurilmadan to'ldiring, hujjatlarni biriktiring va vaziyatni real vaqtda kuzating."
+      },
+      "slide3": {
+        "eyebrow": "Tadbirlar",
+        "title": "Forumlar, treninglar va networking",
+        "body": "Mintaqaviy va xalqaro tadbirlardan xabardor bo'ling, ro'yxatdan o'ting va boshqa NNTlar bilan tanishing."
+      }
+    },
+    "organization": {
+      "title": "Tashkilot",
+      "createFailed": "Yaratib bo'lmadi",
+      "revokeFailed": "Bekor qilib bo'lmadi",
+      "codeCopied": "Kod nusxalandi",
+      "leader": "Rahbar",
+      "stir": "STIR {{value}}",
+      "members": "A'zolar",
+      "staff": "Xodimlar",
+      "activeGrants": "Faol grant",
+      "about": "Ma'lumot",
+      "region": "Hudud",
+      "address": "Manzil",
+      "founded": "Tashkil etilgan",
+      "focusAreas": "Yo'nalishlar",
+      "team": "Jamoa",
+      "addMemberLink": "+ A'zo qo'shish",
+      "contact": "Aloqa",
+      "phone": "Telefon",
+      "email": "Email",
+      "website": "Veb-sayt",
+      "addMember": "A'zo qo'shish",
+      "inviteHint": "Yangi a'zo uchun taklif kodi yarating va uni Telegram, SMS yoki shaxsan ulashing. Kod 30 kunga amal qiladi.",
+      "note": "Izoh",
+      "optional": "ixtiyoriy",
+      "notePlaceholder": "Masalan: Aliyev A. uchun",
+      "creating": "Yaratilmoqda...",
+      "newCode": "Yangi kod",
+      "existingInvites": "Mavjud takliflar",
+      "inviteActive": "Faol",
+      "inviteAccepted": "Qabul qilingan",
+      "inviteRevoked": "Bekor qilingan",
+      "inviteExpired": "Tugagan",
+      "acceptedBy": "{{name}} qabul qildi",
+      "copy": "Nusxalash",
+      "revoke": "Bekor qilish",
+      "status": {
+        "active": "Faol",
+        "pending": "Kutilmoqda",
+        "suspended": "To'xtatilgan"
+      }
+    },
+    "organizationedit": {
+      "title": "Tashkilotni tahrirlash",
+      "saving": "Saqlanmoqda...",
+      "savedToast": "Tashkilot ma'lumotlari yangilandi",
+      "saveError": "Ma'lumotlar saqlanmadi",
+      "uploadLogo": "Logoni yuklash",
+      "sectionBasic": "Asosiy ma'lumotlar",
+      "fieldFullName": "To'liq nomi",
+      "fieldShortName": "Qisqartirilgan nom",
+      "sectionAddress": "Manzil",
+      "fieldRegion": "Hudud",
+      "fieldExactAddress": "Aniq manzil",
+      "sectionContact": "Aloqa",
+      "fieldPhone": "Telefon",
+      "fieldEmail": "Email",
+      "fieldWebsite": "Veb-sayt",
+      "sectionFocus": "Yo'nalishlar"
+    },
+    "profile": {
+      "title": "Profil",
+      "settings": "Sozlamalar",
+      "organization": "Tashkilot",
+      "field": "Soha",
+      "region": "Hudud",
+      "established": "Tashkil etilgan",
+      "members": "A'zolar",
+      "membersCount": "{{count}} kishi",
+      "inn": "INN",
+      "registryId": "Reestr ID",
+      "duesBefore": "Yillik a'zolik to'lovi —",
+      "duesUntil": "gacha",
+      "pay": "To'lash",
+      "myActivity": "Mening faoliyatim",
+      "reports": "Hisobotlar",
+      "applications": "Arizalar",
+      "savedGrants": "Saqlangan grantlar",
+      "events": "Tadbirlar",
+      "account": "Hisob qaydnomasi",
+      "orgDocuments": "Tashkilot hujjatlari",
+      "docsCount": "{{count}} ta",
+      "teamMembers": "Jamoa a'zolari",
+      "notifications": "Bildirishnomalar",
+      "active": "Faol",
+      "language": "Til",
+      "languageValue": "O'zbekcha (lotin)",
+      "privacySecurity": "Maxfiylik va xavfsizlik",
+      "helpSupport": "Yordam va qo'llab-quvvatlash",
+      "logout": "Hisobdan chiqish",
+      "orgFullName": "NNTMA — Nodavlat notijorat tashkilotlar milliy assotsiatsiyasi",
+      "notificationsSubtitle": "Qaysi yangilanishlar haqida xabar olishni xohlaysiz",
+      "notifNewGrants": "Yangi grantlar",
+      "notifNewGrantsSub": "Sohangizga mos tanlovlar",
+      "notifAppStatus": "Ariza holati o'zgarishi",
+      "notifAppStatusSub": "NNTMA javoblari va sharhlari",
+      "notifReportReminders": "Hisobot eslatmalari",
+      "notifReportRemindersSub": "Muddat tugashidan 7 kun oldin",
+      "notifNewEvents": "Yangi tadbirlar va vebinarlar",
+      "notifNews": "NNTMA yangiliklari",
+      "notifNewsSub": "Oyiga 1-2 marta",
+      "deliveryChannel": "Yetkazib berish kanali",
+      "channelInApp": "Ilova ichida",
+      "channelEmail": "Email",
+      "channelSms": "SMS",
+      "channelTelegram": "Telegram bot",
+      "notConnected": "Bog'lanmagan",
+      "deadlineNotice": "Muddat tugashi yaqinlashganda muhim eslatmalar har holda ilova ichida ko'rsatiladi.",
+      "role": {
+        "super_admin": "Super admin",
+        "regional_admin": "Hududiy admin",
+        "org_admin": "Tashkilot admini",
+        "member_user": "A'zo tashkilot vakili"
+      }
+    },
+    "profileedit": {
+      "title": "Profilni tahrirlash",
+      "saving": "Saqlanmoqda...",
+      "nameMinLength": "Ism kamida 2 ta belgi boʻlsin",
+      "savedToast": "Profil maʼlumotlari saqlandi",
+      "saveFailed": "Saqlanmadi",
+      "fullNameLabel": "Toʻliq ism",
+      "fullNamePlaceholder": "Ism Familiya",
+      "emailLabel": "Email",
+      "roleLabel": "Rol",
+      "regionLabel": "Hudud",
+      "notEditable": "oʻzgartirib boʻlmaydi"
+    },
+    "reportdetail": {
+      "reportTitle": "Hisobot",
+      "actions": "Amallar",
+      "copyCreated": "Nusxa yaratildi",
+      "copyFailed": "Nusxa yaratib bo'lmadi",
+      "reportDeleted": "Hisobot o'chirildi",
+      "deleteFailed": "O'chirib bo'lmadi",
+      "statusDraftLabel": "Qoralama",
+      "statusDraftBlurb": "Hisobot hali to'liq emas. Topshirishdan oldin barcha maydonlarni tekshiring.",
+      "statusAcceptedLabel": "Tasdiqlandi",
+      "statusReturnedLabel": "Qaytarildi",
+      "timelineCreated": "Yaratilgan",
+      "timelineSubmitted": "Topshirilgan",
+      "timelineReview": "Ko'rib chiqilmoqda",
+      "timelineNow": "Hozir",
+      "timelineFinalDecision": "Yakuniy qaror",
+      "timelineCurrent": "Joriy",
+      "reviewNoteLabel": "NNTMA ko'rib chiqish izohi",
+      "statusHistory": "Holat tarixi",
+      "uploadedFile": "Yuklangan fayl",
+      "fileMeta": "1,4 MB · Yuklangan {{date}}",
+      "download": "Yuklab olish",
+      "openFile": "Faylni ochish",
+      "downloadFile": "Faylni yuklab olish",
+      "metaLabel": "Ma'lumotlar",
+      "metaPeriod": "Davr",
+      "metaType": "Turi",
+      "metaOrganization": "Tashkilot",
+      "metaId": "ID",
+      "yourNote": "Sizning izohingiz",
+      "makeCopy": "Nusxa yaratish",
+      "makeCopyShort": "Nusxa olish",
+      "reEdit": "Qayta tahrirlash",
+      "editOnlyDraftReturned": "Tahrirlash faqat qoralama va qaytarilgan hisobotlarda mavjud.",
+      "backToList": "Ro'yxatga qaytish",
+      "deleteDraftTitle": "Qoralamani o'chirasizmi?",
+      "deleteDraftMessage": "Bu amalni qaytarib bo'lmaydi.",
+      "status": {
+        "submitted": {
+          "label": "Ko'rib chiqilmoqda",
+          "short": "Ko'rib chiqilmoqda",
+          "blurb": "Hisobotingiz NNTMA mas'ul xodimi tomonidan ko'rib chiqilmoqda. Odatda 3–5 ish kuni davom etadi."
+        },
+        "returned": {
+          "label": "Qaytarildi",
+          "short": "Qaytarildi",
+          "blurb": "Hisobotda kamchiliklar aniqlandi. Quyidagi izohni o'qib, tuzating va qayta topshiring."
+        },
+        "accepted": {
+          "label": "Tasdiqlandi",
+          "short": "Tasdiqlandi",
+          "blurb": "Hisobotingiz qabul qilindi va NNTMA reestrida saqlandi. Hech qanday qo'shimcha amal talab qilinmaydi."
+        }
+      }
+    },
+    "reportnew": {
+      "toastSubmitted": "Hisobot ko'rib chiqishga yuborildi",
+      "errorSubmitFailed": "Hisobot yuborilmadi",
+      "title": "Yangi hisobot",
+      "stepCounter": "{{step}}-qadam · 3 tadan",
+      "step1Heading": "Hisobot turini tanlang",
+      "step1Subtitle": "Topshirayotgan hisobot turingizga mos toifani tanlang. Har bir turning o'z andoza shakli mavjud.",
+      "reportTypeLabel": "Hisobot turi",
+      "templatesHintPrefix": "Hisobot andozalarini",
+      "templatesHintLink": "Hujjatlar bo'limidan",
+      "templatesHintSuffix": "yuklab olishingiz mumkin.",
+      "step2Heading": "Davrni tanlang",
+      "step2Subtitle": "Qaysi davr uchun {{type}} topshirilmoqda?",
+      "reportFallback": "hisobot",
+      "reportFallbackCap": "Hisobot",
+      "reportPeriodLabel": "Hisobot davri",
+      "deadlinePrefix": "2026 Q2 hisobotini topshirish muddati",
+      "deadlineDate": "15 iyul 2026",
+      "deadlineSuffix": "— {{days}} kun qoldi.",
+      "step3Heading": "Faylni yuklang",
+      "step3Subtitle": "PDF, DOCX yoki XLSX formatda. Maksimal hajm — 25 MB.",
+      "summaryLabel": "Topshirilmoqda",
+      "fileReady": "Tayyor",
+      "replaceFileAria": "Boshqa hisobot fayli tanlash",
+      "replaceFile": "Boshqa fayl tanlash",
+      "pickFileAria": "Hisobot faylini tanlash",
+      "uploadFile": "Fayl yuklash",
+      "uploadHint": "PDF, DOCX, XLSX · 25MB gacha",
+      "noteLabel": "Izoh (ixtiyoriy)",
+      "notePlaceholder": "Hisobotga doir qo'shimcha ma'lumot yoki tushuntirish yozing…",
+      "consent": "Yuklangan fayl mazmunining haqiqiyligini tasdiqlayman va NNTMA tomonidan ko'rib chiqilishiga roziman.",
+      "submitting": "Yuborilmoqda...",
+      "submit": "Topshirish",
+      "continue": "Davom etish",
+      "type": {
+        "activity": {
+          "title": "Faoliyat hisoboti",
+          "desc": "Choraklik faoliyat natijalari"
+        },
+        "financial": {
+          "title": "Moliyaviy hisobot",
+          "desc": "Daromad, xarajat, balanslar"
+        },
+        "annual": {
+          "title": "Yillik hisobot",
+          "desc": "Yil yakuni bo'yicha umumiy hisobot"
+        },
+        "special": {
+          "title": "Maxsus hisobot",
+          "desc": "Loyiha yoki tadbir bo'yicha"
+        }
+      },
+      "period": {
+        "2026Q1": {
+          "sub": "Yanvar – Mart 2026",
+          "status": "topshirilgan"
+        },
+        "2026Q2": {
+          "sub": "Aprel – Iyun 2026",
+          "status": "muddat: 15 iyul"
+        },
+        "2026Q3": {
+          "sub": "Iyul – Sentyabr 2026",
+          "status": "ochilmagan"
+        },
+        "2026Q4": {
+          "sub": "Oktyabr – Dekabr 2026",
+          "status": "ochilmagan"
+        },
+        "2026Y": {
+          "sub": "Yil yakuni",
+          "status": "muddat: 31 yanvar 2027"
+        }
+      }
+    },
+    "reports": {
+      "title": "Hisobotlar",
+      "defaultType": "Hisobot",
+      "newReport": "Yangi hisobot",
+      "searchSoon": "Qidiruv tez orada",
+      "archiveSoon": "Arxiv tez orada",
+      "filterAll": "Hammasi",
+      "filterReturned": "Qaytarildi",
+      "filterReview": "Ko'rib chiq.",
+      "filterAccepted": "Tasdiqlandi",
+      "filterDraft": "Qoralama",
+      "returnedCallout": "{{count}} ta hisobot qayta tahrirlash uchun qaytarildi",
+      "returnedInstruction": "NNTMA izohini o'qib, tuzating va qayta topshiring. Yangi muddat —",
+      "returnedDeadline": "25 iyun 2026",
+      "nextDeadline": "Keyingi muddat",
+      "nextDeadlineReport": "2026 Q3 faoliyat hisoboti",
+      "nextDeadlineDate": "15 oktyabr 2026",
+      "empty": "Hisobotlar topilmadi",
+      "acceptedSummaryPre": "Oxirgi 12 oyda topshirgan",
+      "acceptedSummaryPost": "hisobot qabul qilindi.",
+      "showArchive": "2024 va undan oldingilarni ko'rsatish",
+      "currentYear": "Joriy yil",
+      "yearCount": "{{count}} ta",
+      "actionNeeded": "Amal kerak",
+      "status": {
+        "draft": "Qoralama",
+        "submitted": "Topshirilgan",
+        "review": "Ko'rib chiqilmoqda",
+        "returned": "Qaytarildi",
+        "accepted": "Tasdiqlandi"
+      },
+      "annualSuffix": "yillik"
+    },
+    "savedgrants": {
+      "title": "Saqlangan grantlar",
+      "removedFromSaved": "Saqlanganlardan olib tashlandi",
+      "removeFailed": "Oʻchirib boʻlmadi",
+      "emptyTitle": "Saqlangan grantlar yoʻq",
+      "emptyHint": "Sizga yoqqan grantlarni saqlab qoʻying — keyinroq oson topasiz.",
+      "viewGrants": "Grantlarni koʻrish",
+      "grantFallback": "Grant",
+      "removeAriaLabel": "Saqlanganlardan olib tashlash",
+      "untitledGrant": "Nomlanmagan grant",
+      "closed": "Yopilgan"
+    },
+    "sessions": {
+      "title": "Faol seanslar",
+      "all": "Hammasi",
+      "sessionEnded": "Seans tugatildi",
+      "endFailed": "Tugatib boʻlmadi",
+      "otherSessionsEnded": "{{count}} ta boshqa seans tugatildi",
+      "noOtherActiveSessions": "Boshqa faol seans yoʻq",
+      "thisDeviceSuffix": " — bu qurilma",
+      "active": "Faol",
+      "mobileApp": "Mobil ilova",
+      "web": "Web",
+      "lastUsed": "Oxirgi",
+      "endSession": "Seansni tugatish",
+      "noSessionsFound": "Faol seans topilmadi",
+      "confirmRevokeTitle": "Seansni tugatasizmi?",
+      "confirmRevokeMessage": "Bu qurilmadagi sessiya darhol bekor qilinadi va qaytadan kirish uchun parol kerak boʻladi.",
+      "endLabel": "Tugatish",
+      "confirmAllTitle": "Barcha boshqa seanslarni tugatish?",
+      "confirmAllMessage": "Joriy qurilmadan tashqari barcha seanslar bekor qilinadi.",
+      "endAllLabel": "Hammasini tugatish",
+      "now": "Hozir",
+      "minutesAgo": "{{m}} daqiqa oldin",
+      "hoursAgo": "{{h}} soat oldin",
+      "daysAgo": "{{d}} kun oldin",
+      "unknownDevice": "Nomaʼlum qurilma"
+    },
+    "settings": {
+      "notSaved": "Saqlanmadi",
+      "notificationsTitle": "Bildirishnomalar",
+      "channels": "Kanallar",
+      "pushNotifications": "Push xabarnomalar",
+      "email": "Email",
+      "topics": "Mavzular",
+      "reports": "Hisobotlar",
+      "reportsDetail": "Tasdiq, qaytarish",
+      "grants": "Grantlar",
+      "grantsDetail": "Yangi mos grantlar",
+      "events": "Tadbirlar",
+      "eventsDetail": "Eslatmalar",
+      "news": "Yangiliklar",
+      "comingSoon": "Tez orada",
+      "securityTitle": "Xavfsizlik",
+      "password": "Parol",
+      "changePassword": "Parolni o'zgartirish",
+      "activity": "Faollik",
+      "activeSessions": "Faol seanslar",
+      "threeDevices": "3 ta qurilma",
+      "loginHistory": "Tizimga kirish tarixi",
+      "deleteAccount": "Hisobni o'chirish",
+      "helpTitle": "Yordam",
+      "faq": "Ko'p so'raladigan savollar",
+      "faqSubmitReport": "Hisobot qanday topshiriladi?",
+      "faqSubmitGrant": "Grant arizasini qanday yuboraman?",
+      "faqForgotPassword": "Parolimni unutdim, nima qilay?",
+      "contact": "Aloqa",
+      "supportService": "Qo'llab-quvvatlash xizmati",
+      "requestHelp": "Yordam so'rash",
+      "requestReceived": "Murojaatingiz qabul qilindi",
+      "requestReceivedDesc": "24 soat ichida javob qaytaramiz. Email orqali yuboriladi.",
+      "topic": "Mavzu",
+      "topicReports": "Hisobotlar",
+      "topicGrants": "Grantlar",
+      "topicEvents": "Tadbirlar",
+      "topicAccount": "Hisob va kirish",
+      "topicOther": "Boshqa",
+      "yourMessage": "Xabaringiz",
+      "messagePlaceholder": "Muammoni batafsil tasvirlab bering...",
+      "sending": "Yuborilmoqda...",
+      "cabinetUser": "Kabinet foydalanuvchisi",
+      "sendFailed": "Yuborib bo'lmadi",
+      "privacyTitle": "Maxfiylik",
+      "privacyPending": "Maxfiylik sozlamalari hozircha mahalliy. Hisobni o'chirish so'rovi qo'llab-quvvatlash xizmati orqali rasmiylashtiriladi.",
+      "dataCollection": "Ma'lumotlar yig'ish",
+      "usageStats": "Foydalanish statistikasi",
+      "anonymous": "Anonim",
+      "marketingMessages": "Marketing xabarnomalari",
+      "documents": "Hujjatlar",
+      "privacyPolicy": "Maxfiylik siyosati",
+      "termsOfUse": "Foydalanish shartlari",
+      "deleteRequestSent": "Hisob o'chirish so'rovi yuborildi",
+      "deleteAccountConfirm": "Hisobni o'chirasizmi?",
+      "deleteAccountMessage": "Sizning hisobingiz va barcha ma'lumotlaringiz qaytarib bo'lmaydigan tarzda o'chiriladi. Bu amal 30 kun davomida bekor qilinishi mumkin — qo'llab-quvvatlash xizmatiga yozing."
+    },
+    "signup": {
+      "inviteInvalid": "Taklif yaroqsiz",
+      "verifyFailed": "Tekshirib boʻlmadi",
+      "applicationReceivedShort": "Ariza qabul qilindi.",
+      "registerFailed": "Roʻyxatdan oʻtkazib boʻlmadi",
+      "applicationReceived": "Ariza qabul qilindi",
+      "applicationUnderReview": "Ariza koʻrib chiqilmoqda",
+      "reviewWaitMessage": "Tashkilotingiz maʼlumotlari koʻrib chiqilmoqda. Administrator tasdiqlashini kuting.",
+      "afterApproval": "Tasdiqdan keyin",
+      "afterApprovalDesc": "Status faollashganidan keyin tizimga kirish mumkin boʻladi.",
+      "signIn": "Tizimga kirish",
+      "stepCounter": "{{current}} / 3 qadam",
+      "titleIdentity": "Sizning maʼlumotlaringiz",
+      "titleJoinOrg": "Tashkilotga qoʻshilish",
+      "titleVerifyOrg": "Tashkilotni tekshirish",
+      "titleReview": "Arizani tasdiqlang",
+      "subtitleIdentity": "Tashkilot vakili sifatida ism, telefon va parolni kiriting.",
+      "subtitleInvite": "Sizni {{organization}} tashkilotiga taklif qilishgan.",
+      "subtitleVerifyOrg": "Telefon raqamingizni NNT reyestri bilan tekshiramiz.",
+      "subtitleReview": "Maʼlumotlar toʻgʻri boʻlsa, arizani yuboring.",
+      "fullNameLabel": "Toʻliq ism",
+      "fullNamePlaceholder": "Ismingiz va familiyangiz",
+      "phoneLabel": "Telefon raqam",
+      "passwordLabel": "Parol",
+      "passwordPlaceholder": "kamida 8 ta belgi",
+      "inviteConfirmed": "Taklifnoma tasdiqlandi",
+      "inviteAutoLink": "Roʻyxatdan oʻtganingizdan keyin bu tashkilotga avtomatik bogʻlanasiz.",
+      "registryMatchDesc": "Telefon raqamingizni rasmiy NNT reyestri bilan solishtiramiz. Mos kelsa, tashkilotingiz avtomatik bogʻlanadi.",
+      "verifying": "Tekshirilmoqda...",
+      "checkRegistry": "Reyestrdan tekshirish",
+      "orgFound": "Tashkilot topildi",
+      "leaderLabel": "Rahbar: {{name}}",
+      "notFoundInRegistry": "Reyestrda topilmadi",
+      "notFoundDesc": "Davom etishingiz mumkin — arizangizni administrator qoʻlda koʻrib chiqadi.",
+      "reviewNameLabel": "Ism",
+      "reviewPhoneLabel": "Telefon",
+      "reviewOrgLabel": "Tashkilot",
+      "reviewOrgManual": "Reyestrda topilmadi — qoʻlda koʻrib chiqiladi",
+      "reviewInviteLabel": "Taklif",
+      "reviewInviteCode": "Kod: {{code}}",
+      "termsLink": "Foydalanish shartlari",
+      "consentAnd": "va",
+      "privacyLink": "Maxfiylik siyosatiga",
+      "consentSuffix": "roziligimni bildiraman.",
+      "submitting": "Yuborilmoqda...",
+      "submitApplication": "Arizani yuborish",
+      "continue": "Davom etish"
+    },
+    "splash": {
+      "memberCabinet": "A'zo Kabineti"
+    },
+    "themesettings": {
+      "title": "Mavzu",
+      "savedToast": "Mavzu sozlamalari saqlandi",
+      "appearance": "Ko'rinish",
+      "themeAuto": "Avto",
+      "themeLight": "Yorug'",
+      "themeDark": "Qorong'i",
+      "autoHint": "Tizim sozlamalariga moslashadi.",
+      "density": "Zichlik",
+      "densityCompact": "Zich",
+      "densityComfortable": "O'rtacha",
+      "densitySpacious": "Keng",
+      "fontSize": "Shrift hajmi",
+      "fontSmall": "Kichik",
+      "fontStandard": "Standart",
+      "fontLarge": "Katta",
+      "preview": "Namuna",
+      "previewHeading": "Namuna sarlavha",
+      "previewBody": "Sozlamalaringiz tezda ko'rinadi. Tasdiqlash uchun Saqlash tugmasini bosing."
+    },
+    "tabbar": {
+      "mainNavigation": "Asosiy navigatsiya",
+      "tab": {
+        "home": "Bosh",
+        "reports": "Hisobot",
+        "grants": "Grant",
+        "events": "Tadbir",
+        "profile": "Profil"
+      }
+    },
+    "errorstate": {
+      "loadFailed": "Ma'lumotlarni yuklab bo'lmadi. Internet aloqasini tekshiring."
+    },
+    "offlinebanner": {
+      "internetRestored": "Internet tiklandi",
+      "offlineMode": "Internet yo'q · Offline rejim"
+    },
+    "filtermodal": {
+      "title": "Filtrlash",
+      "multiSelect": " · ko'p tanlash",
+      "clear": "Tozalash",
+      "apply": "Qo'llash"
+    },
+    "searchmodal": {
+      "inputPlaceholder": "Grant, hujjat, tadbir, yangilik...",
+      "recentSearches": "So'nggi qidiruvlar",
+      "nothingFound": "Hech narsa topilmadi",
+      "tryAnotherKeyword": "Boshqa kalit so'z bilan urinib ko'ring."
+    },
+    "sharemodal": {
+      "title": "Ulashish",
+      "sharedVia": "{{label}} orqali ulashildi",
+      "linkCopied": "Havola nusxalandi",
+      "copy": "Nusxalash"
+    },
+    "errorboundary": {
+      "title": "Kutilmagan xatolik",
+      "description": "Ilovada texnik nosozlik yuz berdi. Qayta urinib ko'ring yoki keyinroq qaytib keling.",
+      "devDetails": "Dev tafsilotlari",
+      "homePage": "Bosh sahifa"
+    }
+  },
+  "common": {
+    "skipLink": "Asosiy kontentga o'tish",
+    "relTime": {
+      "now": "Hozir",
+      "minutesAgo": "daqiqa oldin",
+      "hoursAgo": "soat oldin",
+      "daysAgo": "kun oldin"
+    },
+    "searchAria": "Qidirish",
+    "searchPlaceholder": "Sayt bo'ylab qidirish...",
+    "closeAria": "Yopish",
+    "a11yAria": "Ko'rish imkoniyati",
+    "langTriggerAria": "Tilni tanlash",
+    "homeAria": "Bosh sahifa",
+    "mobileMenuAria": "Menyu",
+    "mainMenuAria": "Asosiy menyu",
+    "noResults": "Hech narsa topilmadi",
+    "loading": "Yuklanmoqda...",
+    "rssFeed": "RSS feed",
+    "filterAll": "Barchasi",
+    "searchNoResults": "Qidiruv bo'yicha natija topilmadi.",
+    "partnersDirections": "<h2 class=\"section-title\">Hamkorlik yo'nalishlari</h2><div class=\"cards\"><article class=\"card\"><h3>Loyihaviy hamkorlik</h3><p>Fuqarolik jamiyati, ijtimoiy tashabbuslar va institutsional rivojlanish loyihalari.</p></article><article class=\"card\"><h3>Tahliliy hamkorlik</h3><p>Tadqiqotlar, monitoring hisobotlari, infografika va siyosiy-ijtimoiy sharhlar.</p></article><article class=\"card\"><h3>Ta'limiy hamkorlik</h3><p>Trening, seminar, ustoz-shogird dasturlari va salohiyatni oshirish tashabbuslari.</p></article></div>",
+    "proposalCta": "<div class=\"card\" style=\"display:flex; align-items:center; justify-content:space-between; gap:16px;\"><div><h3 style=\"margin:0 0 8px\">Hamkorlik taklifi yuborish</h3><p>Yangi hamkorlik tashabbuslari bo'yicha biz bilan bog'laning va taklif yuboring.</p></div><a class=\"btn\" href=\"contact\">Bog'lanish</a></div>",
+    "loadError": "Yuklashda xatolik",
+    "networkError": "Tarmoq xatosi. Internet aloqangizni tekshiring.",
+    "genericError": "Xatolik. Iltimos qaytadan urinib ko'ring."
+  },
+  "testBanner": {
+    "tag": "Test",
+    "text": "Sayt test rejimida ishlayapti"
+  },
+  "topbar": {
+    "fondPrimary": "O'zNNTMA",
+    "fondSub": "jamoat fondi",
+    "fondAlt": "O'zNNTMA jamoat fondi",
+    "logoAlt": "O'ZNNTMA"
+  },
+  "nav": {
+    "associationGroup": "Assotsiatsiya haqida",
+    "associationItems": {
+      "about": "Assotsiatsiya haqida",
+      "mission": "Maqsad va vazifalar",
+      "board": "Kengash a'zolari",
+      "leadership": "Rahbariyat",
+      "team": "Bizning jamoa",
+      "regional": "Hududiy bo'linmalar",
+      "structure": "Assotsiatsiya tuzilmasi"
+    },
+    "registryGroup": "NNTlar reyestri",
+    "registryItems": {
+      "members": "Assotsiatsiyaga a'zo NNTlar",
+      "sustainabilityIndex": "NNTlar barqarorlik indeksi",
+      "sustainabilityCert": "\"Barqaror NNT\" sertifikatiga ega NNTlar"
+    },
+    "projects": "Loyihalar",
+    "partnersGroup": "Hamkorlar",
+    "partnersItems": {
+      "foreign": "Xorijiy hamkorlar",
+      "local": "Mahalliy hamkorlar",
+      "public": "Jamoatchilik kengashi a'zolari"
+    },
+    "openGroup": "Ochiq ma'lumotlar",
+    "openItems": {
+      "contact": "Bog'lanish",
+      "grantAi": "Grant tanlovlari - AI qidiruv",
+      "normativ": "Normativ-huquqiy hujjatlar",
+      "media": "Media",
+      "events": "Tadbirlar",
+      "reports": "Hisobotlar",
+      "digests": "Dayjestlar",
+      "vacancies": "Bo'sh ish o'rinlari",
+      "academy": "Virtual akademiya",
+      "internship": "Stajirovka va volontyorlik"
+    }
+  },
+  "footer": {
+    "addressTitle": "Manzil",
+    "addressLine": "100170, O'zbekiston Respublikasi, Toshkent shahri, Shayxontohur tumani, Furqat ko'chasi, 1A",
+    "contactTitle": "Aloqa",
+    "telLabel": "Tel:",
+    "emailLabel": "Email:",
+    "socialTitle": "Ijtimoiy tarmoqlar",
+    "contactAria": "Bog'lanish",
+    "legalAria": "Huquqiy ma'lumotlar",
+    "privacy": "Maxfiylik siyosati",
+    "terms": "Foydalanish shartlari",
+    "contactLink": "Bog'lanish",
+    "copyright": "© 2026 O'ZNNTMA. Barcha huquqlar himoyalangan."
+  },
+  "settings": {
+    "language": {
+      "title": "Til",
+      "section": "Interfeys tili"
+    }
+  },
+  "search": {
+    "modalAria": "Qidirish",
+    "queryEmpty": "so'rov kiritilmagan",
+    "noResultsTitle": "Natija topilmadi",
+    "noResultsHint": "Boshqa kalit so'z bilan qayta qidirib ko'ring.",
+    "emptyTitle": "Qidiruv so'rovi bo'sh",
+    "emptyHint": "Iltimos, yuqoridagi qidiruv maydoniga kalit so'z kiriting.",
+    "pagesSection": "Sahifalar",
+    "foundCount": "{n} ta savol topildi"
+  },
+  "pages": {
+    "afzalliklar": {
+      "title": "Assotsiatsiyaga a'zo bo'lishning afzalliklari",
+      "sub": "O'zbekiston NNT Milliy Assotsiatsiyasiga a'zo bo'lish orqali tashkilotingiz uchun huquqiy himoya, hamkorlik imkoniyatlari va institutsional rivojlanish resurslaridan bahramand bo'ling.",
+      "heroBtn": "Hoziroq ariza topshirish",
+      "heroBtnSub": "O'zNNTMA · Rasmiy a'zolik",
+      "about": "<h2 class=\"section-title\">Assotsiatsiya haqida</h2><p class=\"section-sub\" style=\"margin-bottom:32px;\">O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi (O'zNNTMA)</p><div class=\"about-block\"><div><p style=\"font-size:16px; line-height:1.8; color:#4a5464; margin:0 0 16px;\">O'zNNTMA 2005-yil 10-iyun kuni O'zbekiston Respublikasi Adliya vazirligi tomonidan <strong>612-son</strong> tartib raqami bilan davlat ro'yxatidan o'tkazilgan.</p><p style=\"font-size:16px; line-height:1.8; color:#4a5464; margin:0 0 16px;\">Assotsiatsiya O'zbekiston Respublikasining amaldagi qonunchiligiga muvofiq davlat ro'yxatidan o'tgan nodavlat notijorat tashkilotlarining ixtiyoriy birlashmasi bo'lib, nodavlat notijorat tashkilotlari uyushmasi tashkiliy-huquqiy shaklida tuzilgan.</p><p style=\"font-size:16px; line-height:1.8; color:#4a5464; margin:0;\"><strong>Asosiy maqsad:</strong> mahalliy nodavlat notijorat tashkilotlarini birlashtirish, ularning faoliyatini muvofiqlashtirish, qo'llab-quvvatlash va rivojlantirish, hamda NNTlar faoliyatining samaradorligi va sifatini oshirishga ko'maklashish.</p></div><div class=\"about-meta\"><div class=\"about-meta-row\"><div class=\"about-meta-text\"><strong>Ro'yxatdan o'tgan sana</strong><span>2005-yil 10-iyun</span></div></div><div class=\"about-meta-row\"><div class=\"about-meta-text\"><strong>Ro'yxat raqami</strong><span>612-son</span></div></div><div class=\"about-meta-row\"><div class=\"about-meta-text\"><strong>Yuridik manzil</strong><span>100170, O'zbekiston Respublikasi, Toshkent shahri, Shayxontohur tumani, Furqat ko'chasi, 1A</span></div></div><div class=\"about-meta-row\"><div class=\"about-meta-text\"><strong>Tashkiliy shakl</strong><span>Nodavlat notijorat tashkilotlari uyushmasi</span></div></div></div></div>",
+      "benefits": "<h2 class=\"section-title\">Assotsiatsiya nima beradi?</h2><p class=\"section-sub\">A'zolik orqali tashkilotingiz foydalana oladigan 10 ta asosiy yo'nalish.</p><div class=\"benefits-grid\"><div class=\"benefit-card\"><h3>Huquqiy himoya va ifodalash</h3><p>NNTlarning huquqlari va qonuniy manfaatlarini davlat organlarida, sudlarda, xalqaro va xorijiy tashkilotlarda ifoda etish hamda himoya qilish.</p></div><div class=\"benefit-card\"><h3>Hamkorlikni rivojlantirish</h3><p>NNTlar, tadbirkorlik sub'ektlari, xalqaro va xorijiy tashkilotlar hamda davlat organlari o'rtasida o'zaro manfaatli hamkorlikni rivojlantirishda ishtirok etish.</p></div><div class=\"benefit-card\"><h3>Qulay muhit yaratish</h3><p>NNT tashabbuslarini amalga oshirish uchun qulay huquqiy, iqtisodiy va ijtimoiy sharoitlar yaratishga ko'maklashish.</p></div><div class=\"benefit-card\"><h3>Demokratik jarayonlarni qo'llab-quvvatlash</h3><p>Mamlakatda demokratik jarayonlarni barqaror rivojlantirish va ilgari surishda a'zolar hamda hamkorlarning sa'y-harakatlarini birlashtirish.</p></div><div class=\"benefit-card\"><h3>Qonunchilikni takomillashtirish</h3><p>NNTlarning huquqlari va qonuniy manfaatlariga daxldor normativ-huquqiy hujjatlar loyihalarini ishlab chiqishda ishtirok etish va sohani tartibga soluvchi qonunchilikni takomillashtirish yuzasidan takliflar tayyorlash.</p></div><div class=\"benefit-card\"><h3>Salohiyatni oshirish</h3><p>NNT rahbarlari va xodimlarining tashkilotni samarali boshqarish, moliyaviy barqarorlikka erishish, ijtimoiy muhim loyihalarni ishlab chiqish, volontyorlik va xayriya resurslarini jalb qilish bo'yicha bilim va ko'nikmalarini oshirish.</p></div><div class=\"benefit-card\"><h3>Ta'lim va metodik ta'minot</h3><p>NNT vakillari uchun qo'llanmalar, o'quv dasturlari va kitoblar hamda mamlakat sharoitiga mos nazariy va amaliy yondashuvlarni ishlab chiqish.</p></div><div class=\"benefit-card\"><h3>Ijtimoiy sheriklik</h3><p>Davlat ijtimoiy buyurtmalari va ijtimoiy sheriklik loyihalarining yagona bazasini yuritish; mamlakatni modernizatsiya qilishda iqtisodiy, ijtimoiy va madaniy salohiyatni yuksaltirish.</p></div><div class=\"benefit-card\"><h3>Ehtiyojmand aholini qo'llab-quvvatlash</h3><p>Ayollar, yoshlar, keksalar, nogironligi bo'lgan va hayotda og'ir vaziyatga tushgan fuqarolarni qo'llab-quvvatlashda a'zolarning intellektual, moddiy va moliyaviy resurslarini safarbar qilish.</p></div><div class=\"benefit-card\"><h3>Xalqaro hamkorlik</h3><p>Xalqaro va chet el NNTlari, moliya institutlari va xorijiy donorlar bilan hamkorlik aloqalarini mustahkamlash, ularning ijobiy tajribalarini o'rganish.</p></div></div><div class=\"join-cta\"><div><h3>Assotsiatsiyaga qo'shiling</h3><p>Ariza topshirish va ko'rib chiqish jarayoni haqida batafsil ma'lumot oling.</p></div><a class=\"join-cta-btn\" href=\"/#membership-modal\">Ariza topshirish</a></div>"
+    },
+    "awards": {
+      "title": "Xorijiy hamkorlar",
+      "sub": "O'zNNTMA bilan hamkorlik qilayotgan xalqaro tashkilotlar va xorijiy institutlar.",
+      "partners": "<h2 class=\"section-title\">Xorijiy hamkorlar</h2><p class=\"section-sub\">Xalqaro institutlar bilan uzoq muddatli strategik hamkorlik yo'lga qo'yilgan.</p><div class=\"partner-grid\"><div class=\"partner\"><img alt=\"OBCE (OSCE)\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/3/34/OSCE_logo.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"BMTDP (UNDP)\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/9/9f/UNDP_logo.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"GIZ\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/f/f4/Deutsche_Gesellschaft_f%C3%BCr_Internationale_Zusammenarbeit_Logo.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"USAID\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/1/17/USAID-Identity.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"UNICEF\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/e/ed/Logo_of_UNICEF.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"DIK\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/b/b2/Logo_Diakonie_Katastrophenhilfe.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div><div class=\"partner\"><img alt=\"UKALD (UK Aid)\" loading=\"lazy\" src=\"https://upload.wikimedia.org/wikipedia/commons/e/e0/UKaid.svg\" decoding=\"async\" width=\"160\" height=\"56\"/></div></div>",
+      "metrics": "<h2 class=\"section-title\">Hamkorlik ko'rsatkichlari</h2><div class=\"kpi-grid\"><div class=\"kpi\"><strong>24</strong><span>Xalqaro hamkor</span></div><div class=\"kpi\"><strong>63</strong><span>Mahalliy hamkor</span></div><div class=\"kpi\"><strong>37+</strong><span>Qo'shma loyiha</span></div><div class=\"kpi\"><strong>14</strong><span>Hudud qamrovi</span></div></div>"
+    },
+    "boardOfExperts": {
+      "title": "Kengash a'zolari",
+      "sub": "O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi Kengashi a'zolari ro'yxati.",
+      "statTotal": "Jami pozitsiya",
+      "statFounder": "Taʼsischilar vakillari",
+      "statRegion": "Hudud vakillari",
+      "statVacant": "Bo'sh o'rin",
+      "section1Label": "I. Bo'lim",
+      "section1Title": "Taʼsischilar vakillari",
+      "section1Sub": "Assotsiatsiya Kengashining taʼsischi tashkilotlar vakillari.",
+      "section2Label": "II. Bo'lim",
+      "section2Title": "A'zolar vakillari",
+      "section2Sub": "Viloyat va shahar bo'yicha hududiy vakillari.",
+      "vacant": "Vakant",
+      "vacantPos": "Bo'sh o'rin"
+    },
+    "dayjestlar": {
+      "title": "Dayjestlar",
+      "sub": "O'zNNTMA faoliyati bo'yicha tayyorlangan axborot dayjestlari va tahliliy materiallar.",
+      "table": "<div class=\"doc-table\"><div class=\"doc-row head\"><span>Sarlavha</span><span>Sana</span><span>Format</span><span>Yuklab olish</span></div><div class=\"doc-row\" style=\"grid-column:1/-1;text-align:center;padding:40px 0;color:var(--neutral-400,#9ca3af);font-size:15px;\">Dayjestlar tez orada qo'shiladi.</div></div>"
+    },
+    "eventDetail": {
+      "title": "Tadbir tafsiloti",
+      "noscriptHint": "Tadbirni ko'rish uchun JavaScript zarur. <a href=\"events\">Tadbirlar ro'yxati</a>"
+    },
+    "foydalanishShartlari": {
+      "title": "Foydalanish shartlari",
+      "sub": "ngo.uz portali va xizmatlaridan foydalanish bo'yicha umumiy qoidalar.",
+      "body": "<p style=\"color:#6b7280;font-size:13px;margin:0 0 8px\"><em>Oxirgi yangilangan: 2026-yil 30-aprel</em></p><p>ngo.uz portalidan foydalanish orqali siz quyidagi shartlarga rozilik bildirgan hisoblanasiz. Agar shartlarning biron qismi sizga to'g'ri kelmasa, portaldan foydalanmasligingizni so'raymiz.</p><h2 style=\"margin-top:24px\">1. Asosiy tushunchalar</h2><ul><li><strong>Assotsiatsiya</strong> — O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi (O'ZNNTMA);</li><li><strong>Portal</strong> — <a href=\"https://www.ngo.uz\">ngo.uz</a> domenidagi rasmiy veb-sayt va uning kabineti;</li><li><strong>Foydalanuvchi</strong> — portaldan foydalanuvchi har qanday jismoniy yoki yuridik shaxs;</li><li><strong>Kontent</strong> — portalda joylashtirilgan har qanday matn, rasm, video, hujjat va boshqa ma'lumotlar.</li></ul><h2 style=\"margin-top:24px\">2. Portaldan foydalanish</h2><p>Portaldagi axborot va xizmatlar O'zbekiston Respublikasi qonunlari, Assotsiatsiya nizomi va etika kodeksi doirasida taqdim etiladi. Foydalanuvchi:</p><ul><li>Berilayotgan ma'lumotlarning haqiqiy va to'liq bo'lishini ta'minlaydi;</li><li>Boshqa shaxslarning huquqlarini buzmaydi;</li><li>Portalga zarar yetkazadigan har qanday harakatdan tiyiladi (server hujumi, avtomatlashtirilgan ko'p so'rovlar, viruslar va h.k.).</li></ul><h2 style=\"margin-top:24px\">3. Hisob va parol</h2><p>Portal kabinetidan foydalanish uchun ro'yxatdan o'tish talab etiladi. Foydalanuvchi:</p><ul><li>Parolni maxfiy saqlaydi va uchinchi shaxslarga oshkor qilmaydi;</li><li>O'z hisobi orqali amalga oshirilgan barcha harakatlar uchun javobgar bo'ladi;</li><li>Hisobiga ruxsatsiz kirish aniqlangan zahoti darhol Assotsiatsiyani xabardor qiladi.</li></ul><h2 style=\"margin-top:24px\">4. Intellektual mulk</h2><p>Portaldagi barcha kontent (logo, dizayn, matnlar, rasmlar, kod) Assotsiatsiyaning mulkidir, agar boshqacha ko'rsatilmagan bo'lsa. Tijorat maqsadlarida foydalanish uchun yozma ruxsat olish zarur. Ma'lumotlardan iqtibos olishda manba (ngo.uz) ko'rsatilishi shart.</p><h2 style=\"margin-top:24px\">5. Javobgarlik chegarasi</h2><p>Assotsiatsiya portalda joylashtirilgan ma'lumotlarning to'g'riligini ta'minlash uchun barcha asosli choralarni ko'radi, ammo:</p><ul><li>Texnik nosozlik, ishlamay turish yoki ma'lumotlarning to'liq bo'lmasligi natijasida yetkazilgan zarar uchun mas'uliyatni o'z zimmasiga olmaydi;</li><li>Tashqi havolalar orqali kiriladigan saytlar mazmuni uchun javob bermaydi;</li><li>Foydalanuvchi tomonidan noto'g'ri kiritilgan ma'lumotlar oqibatida yuzaga kelgan vaziyatlar uchun javobgar emas.</li></ul><h2 style=\"margin-top:24px\">6. Maxfiylik</h2><p>Shaxsiy ma'lumotlar <a href=\"maxfiylik-siyosati\">Maxfiylik siyosati</a> qoidalariga muvofiq qayta ishlanadi.</p><h2 style=\"margin-top:24px\">7. Shartlarni o'zgartirish</h2><p>Assotsiatsiya foydalanish shartlarini bir tomonlama o'zgartirish huquqini saqlab qoladi. Yangilangan shartlar portalda chop etilgan paytdan boshlab kuchga kiradi.</p><h2 style=\"margin-top:24px\">8. Bahsli holatlar</h2><p>Portal foydalanish bilan bog'liq har qanday bahslar O'zbekiston Respublikasi qonunchiligi asosida hal etiladi. Sud tartibida ko'rib chiqishdan oldin tomonlar muzokara orqali kelishuvga harakat qilishlari shart.</p><h2 style=\"margin-top:24px\">9. Aloqa</h2><p>Foydalanish shartlariga oid savollar bo'yicha biz bilan bog'laning:</p><ul><li>Email: <a href=\"mailto:info@ngo.uz\">info@ngo.uz</a></li><li>Telefon: <a href=\"tel:+998555030512\">(+998 55) 503-05-12</a></li><li><a href=\"qayta-aloqa\">Murojaat shakli</a></li></ul>"
+    },
+    "grantTanlovlari": {
+      "title": "Grant e'lonlari — AI qidiruv",
+      "sub": "Donorlar va hamkor tashkilotlar tomonidan e'lon qilingan ochiq grant tanlovlari.",
+      "eyebrow": "AI yordamchi",
+      "h2": "Sohangizga mos grantni toping",
+      "intro": "Vaziyatingizni yoki loyiha g'oyangizni erkin yozing — ishonchli donor va davlat manbalaridan eng mos ochiq grantlarni topamiz.",
+      "noscript": "<strong>AI grant qidiruvi JavaScript talab qiladi.</strong> Iltimos brauzeringizda JavaScriptni yoqing yoki <a href=\"grants\" style=\"color:#7a5800;font-weight:600\">amaldagi grant tanlovlari ro'yxati</a> sahifasini ko'ring.",
+      "panelLabel": "So'rovingizni yozing",
+      "queryExample": "Masalan: Autizm spektri kasalligi bo'lgan bolalarga yordam beruvchi NNT uchun grant bormi?",
+      "submitBtn": "Grantlarni topish"
+    },
+    "hududiyBolinmalar": {
+      "title": "Hududiy bo'linmalar",
+      "sub": "O'zNNTMA hududiy bo'linmalari xodimlari ro'yxati.",
+      "listAria": "Hududiy bo'linmalar ro'yxati",
+      "chipTotal": "Jami: 28 pozitsiya",
+      "chipBranches": "Hududiy bo'linmalar: 14",
+      "chipHeads": "Boshlig'lar: 14",
+      "chipSpecialists": "Mutaxassislar: 11",
+      "chipVacancies": "Bo'sh ish o'rinlari: 3",
+      "searchAria": "Hududiy bo'linmalarni qidirish va filtrlash",
+      "searchPlaceholder": "Ism, viloyat yoki lavozim bo'yicha qidiring",
+      "filterHeads": "Boshlig'lar",
+      "filterSpecialists": "Mutaxassislar",
+      "filterVacancies": "Bo'sh ish o'rinlari"
+    },
+    "infographics": {
+      "title": "Infografikalar",
+      "sub": "O'zbekistondagi nodavlat notijorat tashkilotlari sektori bo'yicha vizual statistik ma'lumotlar va tahliliy infografikalar.",
+      "gallery": "<h2 id=\"infographicsTitle\" class=\"visually-hidden\">Infografikalar to'plami</h2><p style=\"margin:0 0 20px;padding:14px 18px;background:#f8fbf9;border:1px solid #d4e8dd;border-radius:10px;font-size:14px;color:var(--neutral-500,#587585);\"><i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;color:var(--green-600,#255f40);\"></i> Quyidagi infografikalar tayyorlanmoqda. PDF yuklab olish havolalari ish yakunlangach faollashtiriladi.</p><div><div class=\"infographic-grid\"><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>O'zbekiston NNTlari: 2026 yil ko'rsatkichlari</h3><p>Mamlakatdagi faol NNTlar soni, hududiy taqsimot va soha bo'yicha tahlil.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Tez orada</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>NNT sektori barqarorlik indeksi — 2026</h3><p>Viloyatlar bo'yicha barqarorlik indeksi ko'rsatkichlari va o'zgarish dinamikasi.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Tez orada</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>A'zo tashkilotlar geografiyasi</h3><p>O'zNNTMA a'zo NNTlarining hududlar bo'yicha taqsimoti va soni.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Tez orada</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>NNTlar faoliyat sohalari</h3><p>NNTlarning soha kesimida taqsimoti: ta'lim, sog'liqni saqlash, ekologiya va boshqalar.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Tez orada</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>NNT sektori rivojlanish dinamikasi 2019–2026</h3><p>7 yillik qiyosiy tahlil: tashkilotlar soni, a'zolik, loyihalar va moliyalashtirish.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Tez orada</div></div><div class=\"infographic-card\"><div class=\"infographic-card-badge\">2026</div><h3>Xalqaro hamkorlik xaritasi</h3><p>O'zNNTMA xalqaro hamkorlari, loyihalar va moliyalashtirish manbalarining geografiyasi.</p><div class=\"infographic-card-meta\" style=\"color:var(--neutral-400);\">Tez orada</div></div></div></div>"
+    },
+    "jamoatchilikKengashi": {
+      "title": "Jamoatchilik kengashi a'zolari",
+      "sub": "Davlat organlari huzuridagi jamoatchilik kengashlariga kiritilgan O'zNNTMA vakillari.",
+      "statAgencies": "Davlat organi kengashi",
+      "statReps": "Tayinlangan O'zNNTMA vakili",
+      "tableCaption": "Vazirliklar qoshidagi jamoatchilik kengashlari va ulardagi O'zNNTMA vakillari",
+      "thAgency": "Vazirlik / Idora nomi",
+      "thRep": "O'zNNTMA vakili"
+    },
+    "korrupsiyaMurojaat": {
+      "title": "Korrupsiyani oldini olish bo'yicha murojaat",
+      "sub": "Korrupsiya holatlari to'g'risida xabar berish uchun maxfiy murojaat shakli.",
+      "formAria": "Korrupsiya murojaat formasi",
+      "noscript": "<strong>Forma JavaScript talab qiladi.</strong> Iltimos brauzeringizda JavaScriptni yoqing yoki murojaatingizni <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a> manziliga yuboring (maxfiylik kafolatlanadi).",
+      "submitBtn": "<svg aria-hidden=\"true\" fill=\"currentColor\" height=\"16\" style=\"margin-right:6px;vertical-align:middle\" viewBox=\"0 0 24 24\" width=\"16\"><path d=\"M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.75a2.25 2.25 0 0 0 .126 4.238l3.918 1.176 1.77 5.522a.75.75 0 0 0 1.317.209l2.352-2.938 4.552 3.31a2.25 2.25 0 0 0 3.478-1.464l2.25-15.75a2.25 2.25 0 0 0-2.241-2.268z\"></path></svg> Murojaat yuborish",
+      "f": {
+        "name": "Ism (ixtiyoriy — anonim qoldirish mumkin)",
+        "namePh": "Anonim qoldirishingiz mumkin",
+        "phone": "Telefon (ixtiyoriy)",
+        "org": "Tashkilot nomi (ixtiyoriy)",
+        "orgPh": "Murojaat qaysi tashkilotga oid",
+        "message": "Murojaat mazmuni <span aria-hidden=\"true\">*</span>",
+        "messagePh": "Holat, sana, joy va boshqa tafsilotlarni yozing…",
+        "messageHelp": "Kamida 20 ta belgi kiriting (sana, joy, holatni aniq tasvirlash uchun)."
+      }
+    },
+    "mahalliyHamkorlar": {
+      "title": "Mahalliy hamkorlar",
+      "sub": "O'zNNTMA bilan hamkorlik qilayotgan mahalliy tashkilotlar, jamoat birlashmalari va institutlar.",
+      "partners": "<h2 class=\"section-title\">Mahalliy hamkorlar</h2><p class=\"section-sub\">Hududiy darajadagi institutlar, ta'lim muassasalari va jamoat birlashmalari bilan hamkorlik.</p><div class=\"partner-grid\"><div class=\"partner\">Adliya vazirligi</div><div class=\"partner\">Yoshlar ishlari agentligi</div><div class=\"partner\">Mahalla va nuroniylar</div><div class=\"partner\">Oliy ta'lim muassasalari</div><div class=\"partner\">Jamoat fondlari</div><div class=\"partner\">Hududiy NNT markazlari</div></div>",
+      "metrics": "<h2 class=\"section-title\">Hamkorlik ko'rsatkichlari</h2><div class=\"kpi-grid\"><div class=\"kpi\"><strong>63</strong><span>Mahalliy hamkor</span></div><div class=\"kpi\"><strong>14</strong><span>Viloyat va shahar</span></div><div class=\"kpi\"><strong>37+</strong><span>Qo'shma tadbir</span></div><div class=\"kpi\"><strong data-live-stat=\"member-orgs\">2382</strong><span>A'zo NNT</span></div></div>"
+    },
+    "maxfiylikSiyosati": {
+      "title": "Maxfiylik siyosati",
+      "sub": "ngo.uz portalida shaxsiy ma'lumotlarni qayta ishlash tartibi va foydalanuvchi huquqlari.",
+      "body": "<p style=\"color:#6b7280;font-size:13px;margin:0 0 8px\"><em>Oxirgi yangilangan: 2026-yil 30-aprel</em></p><p>Ushbu hujjat O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi (keyingi o'rinlarda — \"Assotsiatsiya\", \"biz\") tomonidan <a href=\"https://www.ngo.uz\">ngo.uz</a> portali orqali yig'iladigan shaxsiy ma'lumotlarni qayta ishlash tartibini belgilaydi. Hujjat O'zbekiston Respublikasining \"Shaxsga doir ma'lumotlar to'g'risida\"gi Qonuni asosida ishlab chiqilgan.</p><h2 style=\"margin-top:24px\">1. Yig'iladigan ma'lumotlar</h2><p>Portaldan foydalanish va xizmatlardan foydalanish jarayonida quyidagi ma'lumotlar to'planishi mumkin:</p><ul><li>Foydalanuvchi tomonidan ko'rsatiladigan ma'lumotlar — ism-familiya, telefon raqami, elektron pochta, mansub bo'lgan tashkilot nomi va guvohnoma raqami;</li><li>Murojaat va hisobot shakllaridagi qo'shimcha ma'lumotlar;</li><li>Texnik ma'lumotlar — IP-manzil, brauzer turi, kirish vaqti va portaldagi sahifa harakati statistikasi.</li></ul><h2 style=\"margin-top:24px\">2. Ma'lumotlardan foydalanish maqsadi</h2><p>To'plangan ma'lumotlar faqat quyidagi maqsadlarda ishlatiladi:</p><ul><li>Assotsiatsiya a'zoligi va xizmatlarni ko'rsatish;</li><li>Murojaat, savol va shikoyatlarga javob berish;</li><li>Statistik tahlil va portal sifatini oshirish;</li><li>Qonun bilan belgilangan boshqa hollar.</li></ul><h2 style=\"margin-top:24px\">3. Uchinchi shaxslarga uzatish</h2><p>Shaxsiy ma'lumotlar uchinchi shaxslarga foydalanuvchining roziligisiz uzatilmaydi. Istisno hollar:</p><ul><li>Qonun talabi va vakolatli davlat organlarining rasmiy so'rovi asosida;</li><li>Texnik xizmat ko'rsatuvchilar (shifrlangan kanal orqali, qat'iy maxfiylik shartlari bilan).</li></ul><h2 style=\"margin-top:24px\">4. Ma'lumotlarni saqlash muddati</h2><p>Ma'lumotlar maqsadga erishilgunga qadar saqlanadi. Foydalanuvchi o'z ma'lumotlarini olib tashlash so'rovini yuborishi mumkin (4-bandga qarang).</p><h2 style=\"margin-top:24px\">5. Foydalanuvchi huquqlari</h2><p>Siz quyidagi huquqlarga egasiz:</p><ul><li>O'zingiz haqingizdagi ma'lumotlarga kirish va ularni tuzatish;</li><li>Roziligingizni qaytarib olish;</li><li>Ma'lumotlarni o'chirishni so'rash;</li><li>Qayta ishlashga e'tiroz bildirish.</li></ul><h2 style=\"margin-top:24px\">6. Cookie fayllari</h2><p>Portal foydalanuvchi tajribasini yaxshilash, sessiyani saqlash va statistik tahlil maqsadida cookie fayllaridan foydalanadi. Brauzer sozlamalaridan ularni o'chirib qo'yishingiz mumkin, ammo bu portalning ayrim funksiyalariga ta'sir ko'rsatishi mumkin.</p><h2 style=\"margin-top:24px\">7. Xavfsizlik choralari</h2><p>Ma'lumotlar HTTPS shifrlash bilan uzatiladi va himoyalangan serverlarda saqlanadi. Bizning xodimlarimiz faqat o'z vazifalarini bajarish doirasidagina shaxsiy ma'lumotlarga kirish huquqiga ega.</p><h2 style=\"margin-top:24px\">8. O'zgartirishlar</h2><p>Mazkur siyosat vaqti-vaqti bilan yangilanishi mumkin. Yangilangan versiya ushbu sahifada chop etiladi va kuchga kirish sanasi yuqorida ko'rsatiladi.</p><h2 style=\"margin-top:24px\">9. Aloqa</h2><p>Ma'lumotlarga oid har qanday savol bo'yicha biz bilan bog'laning:</p><ul><li>Email: <a href=\"mailto:info@ngo.uz\">info@ngo.uz</a></li><li>Telefon: <a href=\"tel:+998555030512\">(+998 55) 503-05-12</a></li><li>Manzil: 100170, Toshkent shahri, Shayxontohur tumani, Furqat ko'chasi, 1A</li><li>Yoki <a href=\"qayta-aloqa\">murojaat shakli</a> orqali yuboring.</li></ul>"
+    },
+    "membershipCertificate": {
+      "title": "A'zolik guvohnomasi",
+      "sub": "Tashkilotingizning a'zolik guvohnomasini olish va ko'rish tartibi.",
+      "howTo": "<h2 style=\"margin:0 0 12px;font-size:24px\">Guvohnomani qanday olish kerak</h2><p style=\"margin:0 0 12px;color:var(--neutral-500)\">A'zolik guvohnomasi tashkilotingiz a'zolik bosqichini muvaffaqiyatli o'tganidan so'ng administrator tomonidan shaxsiy kabinetda chiqariladi.</p><ol style=\"margin:0 0 16px;padding-left:20px;color:var(--neutral-700)\"><li style=\"margin-bottom:6px\"><a href=\"membership\">A'zolik formasini</a> to'ldirib, arizangizni yuboring.</li><li style=\"margin-bottom:6px\">Administrator arizani 15 ish kuni ichida ko'rib chiqadi.</li><li style=\"margin-bottom:6px\">Tasdiqlangach <a href=\"cabinet/cabinet-login\">shaxsiy kabinet</a> orqali guvohnomani PDF formatida yuklab oling.</li></ol><p style=\"margin:0 0 18px;font-size:14px;color:var(--neutral-500)\">Guvohnoma raqami va amal muddati har bir tashkilot uchun individual shakllantiriladi va kabinet sahifasida ko'rsatiladi.</p><div style=\"display:flex;gap:10px;flex-wrap:wrap\"><a class=\"btn\" href=\"membership\">A'zolik arizasi</a><a class=\"btn\" href=\"cabinet/cabinet-login\" style=\"background:#1b5c67\">Kabinetga kirish</a><a class=\"btn\" href=\"qayta-aloqa\" style=\"background:transparent;color:#1b5c67;border:1px solid #1b5c67\">Savol berish</a></div>"
+    },
+    "multimediaRoom": {
+      "title": "Media",
+      "sub": "Video darslar, chiqishlar va infografik materiallar toplami.",
+      "cards": "<h2 id=\"mediaContentTitle\" class=\"visually-hidden\">Media bo'limlari</h2><div class=\"cards\"><article class=\"card\"><div class=\"media\"></div><h3>Vebinarlar</h3><p>NNT menejmenti va loyiha boshqaruvi bo'yicha yozib olingan vebinarlar.</p><div class=\"card-action\"><a class=\"btn\" href=\"videos\">Videolarni ko'rish <i class=\"ph ph-arrow-right\" aria-hidden=\"true\"></i></a></div></article><article class=\"card\"><div class=\"media\"></div><h3>Brifinglar</h3><p>Rasmiy bayonotlar, matbuot anjumanlari va jamoatchilik chiqishlari.</p><div class=\"card-action\"><a class=\"btn\" href=\"news\">Yangiliklar <i class=\"ph ph-arrow-right\" aria-hidden=\"true\"></i></a></div></article><article class=\"card\"><div class=\"media\"></div><h3>Infografikalar</h3><p>Tahliliy ko'rsatkichlar va metodik ko'rsatmalarni tasviriy taqdim etish.</p><div class=\"card-action\"><a class=\"btn\" href=\"infographics\">Infografikalar <i class=\"ph ph-arrow-right\" aria-hidden=\"true\"></i></a></div></article></div>"
+    },
+    "newsDetail": {
+      "title": "Yangilik tafsiloti",
+      "noscriptHint": "Yangilikni ko'rish uchun JavaScript zarur. <a href=\"news\">Yangiliklar ro'yxati</a>"
+    },
+    "nntSchool": {
+      "title": "NNTlar maktabi",
+      "sub": "NNT rahbarlari va xodimlari uchun amaliy oqituv platformasi.",
+      "courses": "<h2 id=\"schoolCoursesTitle\" class=\"visually-hidden\">O'quv yo'nalishlari</h2><div class=\"cards\"><article class=\"card\"><h3>Asosiy kurslar</h3><p>Tashkilot boshqaruvi, grant menejmenti va hisobdorlik bo'yicha modullar.</p></article><article class=\"card\"><h3>Qisqa treninglar</h3><p>Huquqiy savodxonlik, jamoatchilik bilan ishlash, axborot siyosati bo'yicha darslar.</p></article><article class=\"card\"><h3>Sertifikatlash</h3><p>Kurs yakunida baholashdan o'tgan tinglovchilarga sertifikat beriladi.</p></article></div>",
+      "links": "<a class=\"page-link-card\" href=\"online-library\"><h3>Onlayn o'quvxona</h3><p>Dars materiallari va o'quv qo'llanmalar.</p></a><a class=\"page-link-card\" href=\"multimedia-room\"><h3>Multimedia xonasi</h3><p>Video darslar va taqdimotlar.</p></a><a class=\"page-link-card\" href=\"about\"><h3>Biz haqimizda</h3><p>Tashkilotning umumiy faoliyatiga qaytish.</p></a>"
+    },
+    "nntlar": {
+      "title": "Assotsiatsiyaga a'zo NNTlar",
+      "sub": "O'zNNTMAga a'zo nodavlat notijorat tashkilotlarining hududlar bo'yicha to'liq ro'yxati",
+      "statsTotal": "Jami a'zo NNTlar",
+      "statsRegions": "Hududlar",
+      "statsSohas": "Faoliyat sohalari",
+      "statsYear": "Ro'yxat yangilangan",
+      "regionsAria": "Hududlar filtri",
+      "regionFilterLabel": "Hudud bo'yicha",
+      "searchAria": "NNT qidirish",
+      "searchInputAria": "NNT bo'yicha qidirish",
+      "searchPlaceholder": "NNT nomi, rahbar yoki soha bo'yicha qidiring...",
+      "loadingList": "NNTlar ro'yxati yuklanmoqda...",
+      "noscript": "NNTlar ro'yxati JavaScript yordamida yuklanadi. Muqobil ravishda <a href=\"contact\">biz bilan bog'lanib</a>, kerakli ma'lumotni so'rashingiz mumkin."
+    },
+    "officialDocs": {
+      "title": "NNTga oid rasmiy hujjatlar",
+      "sub": "Qonunlar, qarorlar, davlat dasturlari va amaliy yo'riqnomalar yagona bazasi.",
+      "listAria": "Hujjatlar ro'yxati",
+      "noscript": "Hujjatlar bazasini ko'rish uchun JavaScript zarur. Hujjat bo'yicha tushuntirish so'rashingiz mumkin: <a href=\"service-request\">Murojaat yuborish</a>.",
+      "inquiryCta": "<div class=\"card split-inline\"><div><h3 style=\"margin:0 0 8px\">Rasmiy murojaat yuborish</h3><p>Hujjatlar bo'yicha tushuntirish yoki huquqiy izoh so'rash uchun so'rov yuboring.</p></div><a class=\"btn\" href=\"service-request\">Murojaat yuborish</a></div>"
+    },
+    "onlineLibrary": {
+      "title": "Onlayn o'quvxona",
+      "sub": "NNTlar uchun metodik qo'llanmalar, hujjatlar va o'quv materiallari kutubxonasi.",
+      "topics": "<h2 id=\"libraryTopicsTitle\" class=\"visually-hidden\">Bo'limlar</h2><div class=\"cards\"><article class=\"card\"><h3>NNT boshqaruvi</h3><p>Ustav, boshqaruv modeli va ichki siyosatlar bo'yicha qo'llanmalar.</p></article><article class=\"card\"><h3>Moliyaviy hisobot</h3><p>Hisobot tayyorlash, buxgalteriya intizomi va monitoring bo'yicha materiallar.</p></article><article class=\"card\"><h3>Loyiha yozish</h3><p>Grant arizasi, loyiha logikasi va baholash indikatorlari namunalari.</p></article></div>"
+    },
+    "ourTeam": {
+      "title": "Bizning jamoa",
+      "sub": "O'zNNTMA ijro etuvchi devoni xodimlari.",
+      "listAria": "Jamoa a'zolari ro'yxati",
+      "totalChip": "Jami: 16 xodim",
+      "searchAria": "Jamoani qidirish va filtrlash",
+      "searchInputAria": "Xodim qidiruvi",
+      "searchPlaceholder": "Ism yoki lavozim bo'yicha qidiring",
+      "filterStaff": "Xodimlar"
+    },
+    "projects": {
+      "title": "Loyihalar",
+      "sub": "Assotsiatsiya tomonidan amalga oshirilayotgan, yakunlangan va rejalashtirilgan loyihalar ro'yxati.",
+      "filterAria": "Loyihalarni filtrlash",
+      "filterAllPill": "Barchasi <span class=\"pill-n\">17</span>",
+      "filterActivePill": "Amaldagi <span class=\"pill-n\">2</span>",
+      "filterDonePill": "Yakunlangan <span class=\"pill-n\">1</span>",
+      "filterPlannedPill": "Rejadagi <span class=\"pill-n\">14</span>",
+      "statusActive": "Amaldagi",
+      "statusPlanned": "Rejadagi",
+      "statusDone": "Yakunlangan"
+    },
+    "publicationDetail": {
+      "title": "Nashr tafsiloti",
+      "noscriptHint": "Publikatsiyani ko'rish uchun JavaScript zarur. <a href=\"publications\">Publikatsiyalar ro'yxati</a>"
+    },
+    "publications": {
+      "title": "Publikatsiyalar",
+      "sub": "Tahliliy maqolalar, sharhlar va metodik nashrlar kutubxonasi.",
+      "listAria": "Publikatsiyalar ro'yxati",
+      "noscript": "Publikatsiyalar ro'yxatini ko'rish uchun JavaScript zarur. <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/news.rss\">RSS feed</a>dan yangiliklar va publikatsiyalarni olishingiz mumkin."
+    },
+    "qaytaAloqa": {
+      "title": "Qayta aloqa",
+      "sub": "Savol, taklif yoki murojaat yuborish uchun quyidagi formani to'ldiring.",
+      "formAria": "Qayta aloqa formasi",
+      "noscript": "<strong>Forma JavaScript talab qiladi.</strong> Iltimos brauzeringizda JavaScriptni yoqing yoki murojaatingizni <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a> manziliga yoki <a href=\"tel:+998555030512\" style=\"color:#7a5800;font-weight:600\">+998 (55) 503-05-12</a> raqamiga yuboring.",
+      "submitBtn": "Yuborish",
+      "f": {
+        "name": "Ism Familiya <span aria-hidden=\"true\">*</span>",
+        "namePh": "To'liq ismingiz",
+        "phone": "Telefon <span class=\"form-help\" style=\"font-weight:normal;color:var(--neutral-500,#587585);font-size:13px;\">(yoki email)</span>",
+        "email": "Email <span class=\"form-help\" style=\"font-weight:normal;color:var(--neutral-500,#587585);font-size:13px;\">(yoki telefon)</span>",
+        "topic": "Murojaat mavzusi <span aria-hidden=\"true\">*</span>",
+        "message": "Xabar <span aria-hidden=\"true\">*</span>",
+        "messagePh": "Murojaat matnini kiriting…",
+        "messageHelp": "Kamida 10 ta belgi, ko'pi bilan 3000 ta belgi."
+      },
+      "opt": {
+        "choose": "Tanlang…",
+        "membership": "A'zolik bo'yicha savol",
+        "legal": "Huquqiy maslahat",
+        "grants": "Loyiha va grantlar",
+        "training": "Seminar va treninglar",
+        "partnership": "Hamkorlik taklifi",
+        "other": "Boshqa"
+      }
+    },
+    "reportingForms": {
+      "title": "NNT hisobot shakllari",
+      "sub": "Hisobot turlari, muddatlar va onlayn yuborish shakli.",
+      "table": "<div class=\"doc-table\"><div class=\"doc-row head\"><span>Hisobot turi</span><span>Muddati</span><span>Format</span><span>Shakl</span></div><div class=\"doc-row\"><span>Yillik moliyaviy hisobot</span><span>1-fevral</span><span>XLSX/PDF</span><a href=\"reporting-forms\">Yuklab olish</a></div><div class=\"doc-row\"><span>Yarim yillik faoliyat hisobot</span><span>15-iyul</span><span>DOCX/PDF</span><a href=\"reporting-forms\">Yuklab olish</a></div><div class=\"doc-row\"><span>Grant loyihasi yakuniy hisobot</span><span>30 kun ichida</span><span>DOCX</span><a href=\"reporting-forms\">Yuklab olish</a></div></div>",
+      "formSectionTitle": "Hisobot yuborish",
+      "noscript": "<strong>Forma JavaScript talab qiladi.</strong> Iltimos brauzeringizda JavaScriptni yoqing yoki hisobotni <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a> manziliga yuboring.",
+      "submitBtn": "Hisobotni yuborish",
+      "confirmLabel": "Ma'lumotlarning to'g'riligini tasdiqlayman.",
+      "f": {
+        "org": "Tashkilot nomi",
+        "stir": "STIR",
+        "stirPh": "9 raqamli STIR",
+        "stirTitle": "STIR — 9 dan 14 raqamgacha",
+        "stirHelp": "9 dan 14 raqamgacha bo'lgan soliq to'lovchi raqami.",
+        "fio": "Mas'ul shaxs F.I.Sh.",
+        "email": "Elektron pochta",
+        "type": "Hisobot turi",
+        "period": "Hisobot davri"
+      },
+      "opt": {
+        "choose": "Hisobot turini tanlang",
+        "annual": "Yillik moliyaviy hisobot",
+        "halfYear": "Yarim yillik faoliyat hisobot",
+        "grantFinal": "Grant loyihasi yakuniy hisobot"
+      }
+    },
+    "researchAreas": {
+      "title": "Tadqiqot yo'nalishlari",
+      "sub": "NNTMA tahliliy faoliyatining ustuvor bloklari va mavzulari.",
+      "tracks": "<h2 class=\"section-title\">Asosiy yo'nalishlar</h2><p class=\"section-sub\">Har bir yo'nalish bo'yicha monitoring, tahlil va amaliy tavsiyalar tayyorlanadi.</p><div class=\"research-grid\"><article class=\"research-card\"><h3>Fuqarolik jamiyati rivoji</h3><p>NNT sektori dinamikasi, institutsional salohiyat va hududiy faollik ko'rsatkichlari.</p></article><article class=\"research-card\"><h3>Ijtimoiy sheriklik</h3><p>Davlat organlari va NNTlar o'rtasidagi hamkorlik mexanizmlarining samaradorligi.</p></article><article class=\"research-card\"><h3>Qonunchilik tahlili</h3><p>NNTlar faoliyatiga oid normativ-huquqiy hujjatlar va takliflar paketi.</p></article><article class=\"research-card\"><h3>Ijtimoiy xizmatlar</h3><p>Aholiga yo'naltirilgan xizmatlarda NNTlar ishtiroki va natijadorlik bahosi.</p></article><article class=\"research-card\"><h3>Yoshlar va xotin-qizlar tashabbuslari</h3><p>Inklyuziv loyihalar, ijtimoiy faollik va hamjamiyatlar bilan ishlash modeli.</p></article><article class=\"research-card\"><h3>Raqamli transformatsiya</h3><p>NNTlar reyestri raqamli platformalar, ochiq ma'lumotlar va elektron xizmatlar.</p></article></div>",
+      "panels": "<div><h2 class=\"section-title\">Nashr formatlari</h2><div class=\"list\"><div class=\"item\"><h3 class=\"research-format-title\">Choraklik sharh</h3><p>Asosiy indikatorlar, tendensiyalar va hududiy kesim.</p></div><div class=\"item\"><h3 class=\"research-format-title\">Analitik ma'ruza</h3><p>Muammoli masalalar va yechim bo'yicha batafsil hujjat.</p></div><div class=\"item\"><h3 class=\"research-format-title\">Policy brief</h3><p>Qaror qabul qiluvchilar uchun qisqa tavsiyalar to'plami.</p></div></div></div><div><h2 class=\"section-title\">Bog'liq bo'limlar</h2><div class=\"list\"><a class=\"item\" href=\"news\"><h3 class=\"research-format-title\">Tahliliy ma'lumotlar</h3><p>So'nggi tahlillar va rasmiy e'lonlar.</p></a><a class=\"item\" href=\"publications\"><h3 class=\"research-format-title\">Publikatsiyalar</h3><p>Maqolalar, to'plamlar va uslubiy materiallar.</p></a><a class=\"item\" href=\"projects\"><h3 class=\"research-format-title\">Loyihalar</h3><p>Tadqiqot natijalari asosidagi amaliy tashabbuslar.</p></a></div></div>"
+    },
+    "serviceRequest": {
+      "title": "Rasmiy murojaat yuborish",
+      "sub": "Interaktiv xizmatlar bo'yicha savol yoki taklifingizni yuboring.",
+      "noscript": "<strong>Forma JavaScript talab qiladi.</strong> Iltimos brauzeringizda JavaScriptni yoqing yoki so'rovingizni <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a> manziliga yuboring.",
+      "consent": "<a href=\"maxfiylik-siyosati\" target=\"_blank\" rel=\"noopener noreferrer\">Maxfiylik siyosati</a> shartlariga muvofiq shaxsiy ma'lumotlarimni qayta ishlashga roziman.",
+      "submitBtn": "Yuborish",
+      "f": {
+        "fio": "F.I.Sh. <span aria-hidden=\"true\">*</span>",
+        "phone": "Telefon <span aria-hidden=\"true\">*</span>",
+        "email": "Elektron pochta <span aria-hidden=\"true\">*</span>",
+        "topic": "Murojaat mavzusi <span aria-hidden=\"true\">*</span>",
+        "message": "Murojaat matni <span aria-hidden=\"true\">*</span>",
+        "messageHelp": "Kamida 10 ta belgi, ko'pi bilan 3000 ta belgi."
+      },
+      "opt": {
+        "choose": "Mavzuni tanlang",
+        "legal": "Huquqiy maslahat",
+        "report": "Hisobot bo'yicha savol",
+        "membership": "A'zolik bo'yicha savol",
+        "other": "Boshqa"
+      }
+    },
+    "services": {
+      "title": "Xalqaro hamkorlik",
+      "sub": "Xalqaro tashkilotlar va hamkor institutlar bilan qo'shma loyihalar, tajriba almashish va institutsional rivojlanish yo'nalishlari.",
+      "partnersTitle": "Hamkor institutlar",
+      "forms": "<h2 class=\"section-title\">Hamkorlik shakllari</h2><p class=\"section-sub\">Strategik hamkorlik, qo'shma tadbirlar va salohiyatni oshirish dasturlari.</p><div class=\"cards\"><article class=\"card\"><h3>Qo'shma loyihalar</h3><p>Xalqaro donorlar va institutlar bilan ijtimoiy yo'nalishdagi loyihalar.</p></article><article class=\"card\"><h3>Tajriba almashish</h3><p>Seminar, forum va ekspert uchrashuvlari orqali bilim almashuvi.</p></article><article class=\"card\"><h3>Institutsional ko'mak</h3><p>NNTlar boshqaruvi, monitoring va barqarorlik bo'yicha metodik ko'mak.</p></article></div>",
+      "initiatives": "<h2 class=\"section-title\">Amaldagi tashabbuslar</h2><div class=\"list\"><div class=\"item\"><h3>“NNTlar reyestri boshqaruv standartlari” dasturi</h3><p>Hamkor: xalqaro ekspertlar guruhi · Davr: 2025–2026 · Yo'nalish: institutsional rivojlanish va ichki boshqaruv.</p></div><div class=\"item\"><h3>Mintaqaviy ijtimoiy sheriklik forumi</h3><p>Hamkor: mintaqaviy markazlar · Davr: har chorak · Yo'nalish: davlat-NNT muloqoti va hamkorlik mexanizmlari.</p></div><div class=\"item\"><h3>Monitoring va baholash laboratoriyasi</h3><p>Hamkor: xalqaro metodologik tarmoq · Davr: 2025–2027 · Yo'nalish: natijadorlik indikatorlari va baholash.</p></div></div>",
+      "results": "<h2 class=\"section-title\">Natijalar</h2><div class=\"kpi-grid\"><div class=\"kpi\"><strong>37+</strong><span>Qo'shma tashabbus</span></div><div class=\"kpi\"><strong>12</strong><span>Xalqaro hamkor</span></div><div class=\"kpi\"><strong>950+</strong><span>Ishtirokchi NNT</span></div><div class=\"kpi\"><strong>14</strong><span>Hudud qamrovi</span></div></div>"
+    },
+    "socialOrders": {
+      "title": "Давлат ижтимоий буюртмалари",
+      "sub": "2021–2023 йилларда нодавлат нотижорат ташкилотлари иштирокида амалга оширилган давлат ижтимоий буюртмалари базаси.",
+      "statTotal": "Jami buyurtmalar",
+      "statPeriod": "Qamrov davri",
+      "statAgencies": "Davlat idoralari",
+      "statOrgs": "NNT va jamoat tashkilotlari"
+    },
+    "stajirovkaVolontyorlik": {
+      "title": "Stajirovka va volontyorlik dasturlari",
+      "sub": "Talabalar va yoshlar uchun amaliyot imkoniyatlari hamda assotsiatsiyada volontyorlik faoliyati.",
+      "programs": "<article class=\"card\"><h2 style=\"margin:0 0 12px;\">Stajirovka dasturlari</h2><p>Oliy ta'lim muassasalari talabalari uchun tashkil etiladigan amaliyot (stajirovka) dasturlari. NNT sektori, loyiha boshqaruvi, huquq va kommunikatsiya yo'nalishlarida haqiqiy ish tajribasi orttirish imkoniyati. Arizalar yil davomida qabul qilinadi.</p></article><article class=\"card\"><h2 style=\"margin:0 0 12px;\">Volontyorlik faoliyati</h2><p>Assotsiatsiyada amalga oshirilayotgan volontyorlik dasturlari haqida to'liq ma'lumot. Tadbirlarni tashkil etish, NNT sektori rivojiga hissa qo'shish va fuqarolik jamiyati qurishda faol ishtirok etish imkoniyatlari.</p></article>",
+      "formTitle": "Onlayn ariza topshirish",
+      "submitBtn": "<svg aria-hidden=\"true\" fill=\"currentColor\" height=\"16\" style=\"margin-right:6px;vertical-align:middle\" viewBox=\"0 0 24 24\" width=\"16\"><path d=\"M21.198 2.433a2.242 2.242 0 0 0-1.022.215l-16.5 6.75a2.25 2.25 0 0 0 .126 4.238l3.918 1.176 1.77 5.522a.75.75 0 0 0 1.317.209l2.352-2.938 4.552 3.31a2.25 2.25 0 0 0 3.478-1.464l2.25-15.75a2.25 2.25 0 0 0-2.241-2.268z\"></path></svg> Ariza yuborish",
+      "f": {
+        "name": "Ism Familiya *",
+        "namePh": "To'liq ismingiz",
+        "phone": "Telefon",
+        "email": "Email",
+        "track": "Yo'nalish *",
+        "school": "Tahsil olgan/olayotgan ta'lim muassasangiz nomi *",
+        "schoolPh": "Masalan: Toshkent davlat yuridik universiteti",
+        "motivation": "Motivatsiya xati",
+        "motivationPh": "Nima uchun ishtirok etmoqchisiz?",
+        "resume": "Resume biriktirish",
+        "dropHint": "Faylni shu yerga tashlang yoki",
+        "chooseFile": "Fayl tanlash",
+        "fileTypes": "PDF, DOC, DOCX · 5 MB gacha"
+      },
+      "opt": {
+        "choose": "Tanlang…",
+        "internship": "Stajirovka",
+        "volunteer": "Volontyorlik"
+      }
+    },
+    "structure": {
+      "title": "Ijro etuvchi devon tuzilmasi",
+      "sub": "O'zNNTMA Ijro etuvchi devonining tashkiliy tuzilmasi.",
+      "statTotal": "Jami boshqaruv xodimlari",
+      "statExec": "Ijro etuvchi devon xodimlari",
+      "statRegional": "Hududiy bo'linmalar xodimlari",
+      "statNormNum": "Me'yor bo'yicha",
+      "statNormLabel": "Yordamchi va texnik xodimlar soni tasdiqlangan me'yorlarga muvofiq belgilanadi"
+    },
+    "sustainabilityCert": {
+      "title": "\"Barqaror NNT\"",
+      "sub": "Barqarorlik indeksi bo'yicha sertifikat olgan nodavlat notijorat tashkilotlarning ochiq ro'yxati",
+      "body": "<p style=\"max-width:780px;font-size:16px;line-height:1.8;color:var(--neutral-700,#374151);margin:0 auto 8px;\">\"Barqaror NNT\" sertifikati — barqarorlik indeksida yuqori ball to'plagan tashkilotlarga beriladigan rasmiy tan olish belgisi. Sertifikat uch darajada beriladi: Uchinchi daraja, Ikkinchi daraja va Birinchi daraja. U tashkilotning ishonchliligini tasdiqlaydi hamda grantlar va davlat hamkorligida afzallik beradi.</p><p style=\"margin:24px 0 28px;padding:14px 18px;background:#f8fbf9;border:1px solid #d4e8dd;border-radius:10px;font-size:14px;color:var(--neutral-500,#587585);\"><i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;color:var(--green-600,#255f40);\"></i> Sertifikatlangan tashkilotlar bo'yicha rasmiy reyestr ulangach, daraja va statistika ko'rsatkichlari bu yerda paydo bo'ladi.</p><p class=\"section-label\">Sertifikat darajalari</p><div class=\"cert-levels\"><div class=\"cert-level-card cert-level-card--bronze\"><div><span class=\"cert-badge cert-badge--bronze\"><i aria-hidden=\"true\" class=\"ph ph-medal\"></i> Uchinchi daraja</span></div><h2 class=\"cert-level-h\">Uchinchi daraja sertifikat</h2><p>Asosiy barqarorlik talablarini bajargan tashkilotlar uchun. Boshqaruv va moliyaviy shaffoflik tizimi mavjud.</p><div class=\"cert-requirement\"><span class=\"cert-score-range cert-score-range--bronze\">60–79 ball</span> Barqarorlik indeksi bo'yicha</div></div><div class=\"cert-level-card cert-level-card--silver\"><div><span class=\"cert-badge cert-badge--silver\"><i aria-hidden=\"true\" class=\"ph ph-medal\"></i> Ikkinchi daraja</span></div><h2 class=\"cert-level-h\">Ikkinchi daraja sertifikat</h2><p>Kuchli boshqaruv, moliyaviy barqarorlik va samarali dasturlar orqali barqarorlikni isbotlagan tashkilotlar.</p><div class=\"cert-requirement\"><span class=\"cert-score-range cert-score-range--silver\">80–89 ball</span> Barqarorlik indeksi bo'yicha</div></div><div class=\"cert-level-card cert-level-card--gold\"><div><span class=\"cert-badge cert-badge--gold\"><i aria-hidden=\"true\" class=\"ph ph-medal\"></i> Birinchi daraja</span></div><h2 class=\"cert-level-h\">Birinchi daraja sertifikat</h2><p>Barcha mezonlar bo'yicha yuqori natija ko'rsatgan, soha lideri hisoblangan NNTlar uchun eng yuqori tan olish.</p><div class=\"cert-requirement\"><span class=\"cert-score-range cert-score-range--gold\">90–100 ball</span> Barqarorlik indeksi bo'yicha</div></div></div><p class=\"section-label\">Sertifikatlangan tashkilotlar</p><h2 style=\"margin:0 0 16px;font-size:22px;\">Reyestr — 2024 yil</h2><p style=\"margin-top:8px;font-size:14px;color:var(--neutral-500,#587585);\">Daraja bo'yicha filtr balov reyestri ulangach qo'shiladi.</p><div class=\"reg-table-wrap\"><table class=\"reg-table\"><caption class=\"u-visually-hidden\">\"Barqaror NNT\" sertifikatiga ega tashkilotlar reyestri</caption><thead><tr><th scope=\"col\" style=\"width:32px;\">#</th><th scope=\"col\">Tashkilot nomi</th><th scope=\"col\">Viloyat / Shahar</th><th scope=\"col\">Ball</th><th scope=\"col\">Daraja</th><th scope=\"col\">Berilgan sana</th><th scope=\"col\">Amal qilish muddati</th></tr></thead><tbody id=\"certTableBody\" aria-live=\"polite\"><tr><td colspan=\"7\" role=\"status\" style=\"text-align:center;color:var(--neutral-400,#9ca3af);padding:24px;\">Yuklanmoqda...</td></tr></tbody></table></div><p style=\"font-size:15px;color:var(--neutral-400,#9ca3af);margin-top:12px;\">* Sertifikatlangan tashkilotlardan bir qismi ko'rsatilmoqda. To'liq reyestr uchun murojaat yuborishingiz mumkin.</p><div style=\"margin-top:56px;\"><p class=\"section-label\">Sertifikat olish tartibi</p><h2 style=\"margin:0 0 4px;font-size:22px;\">4 qadam</h2><p style=\"font-size:16px;color:var(--neutral-500,#587585);margin:0 0 4px;\">Sertifikat olish uchun quyidagi tartibga amal qiling.</p><ol class=\"apply-steps\"><li class=\"apply-step\"><h3>Ariza topshirish</h3><p>A'zo kabineti orqali baholash arizasini to'ldiring va talab etilgan hujjatlarni yuklang.</p></li><li class=\"apply-step\"><h3>Hujjatlarni tekshirish</h3><p>O'zNNTMA mutaxassislari barcha materiallarni ko'rib chiqadi va qo'shimcha ma'lumot so'rashi mumkin.</p></li><li class=\"apply-step\"><h3>Sahadagi baholash</h3><p>Talab qilinsa, tashkilot faoliyati o'rinma-o'rin kuzatiladi va ball qo'yiladi.</p></li><li class=\"apply-step\"><h3>Sertifikat berish</h3><p>60 ball va undan yuqori natijada tegishli daraja sertifikati rasman topshiriladi.</p></li></ol></div>"
+    },
+    "sustainabilityIndex": {
+      "title": "NNTlar barqarorlik indeksi <span style=\"font-size:0.45em; font-weight:500; opacity:0.72; white-space:nowrap;\">(rejalashtirilgan loyiha)</span>",
+      "sub": "O'zbekistondagi nodavlat notijorat tashkilotlarning institutsional barqarorligini baholash tizimi",
+      "body": "<p style=\"max-width:780px;font-size:16px;line-height:1.8;color:var(--neutral-700,#374151);margin:0 auto 8px;\">NNTlar barqarorlik indeksi — tashkilotlarning uzoq muddatli faoliyat yuritish qobiliyatini oltita asosiy mezon bo'yicha baholaydigan asbob. Indeks har yili O'zNNTMA tomonidan hisoblanilib, natijalar ochiq ravishda e'lon qilinadi. Maqsad — NNTlarga o'z kuchli va zaif tomonlarini aniqlashda yordam berish hamda rivojlanish yo'nalishlarini belgilash.</p><p style=\"margin:24px 0 28px;padding:14px 18px;background:#f8fbf9;border:1px solid #d4e8dd;border-radius:10px;font-size:14px;color:var(--neutral-500,#587585);\"><i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;color:var(--green-600,#255f40);\"></i> Baholangan NNTlar soni va o'rtacha ball ko'rsatkichlari indeks reyestri ulangach bu yerda paydo bo'ladi.</p><p class=\"section-label\">Baholash mezonlari</p><h2 style=\"margin:0 0 4px;font-size:22px;\">Oltita mezon, jami 100 ball</h2><p style=\"font-size:16px;color:var(--neutral-500,#587585);margin:0 0 4px;\">Har bir mezon bo'yicha maksimal ball ko'rsatilgan.</p><div class=\"criteria-grid\"><div class=\"criterion-card\"><h3>Boshqaruv va shaffoflik</h3><p>Kengash tuzilmasi, yillik hisobotlar, moliyaviy audit va ichki nazorat tizimlari.</p><span class=\"criterion-max\">maks. 20 ball</span></div><div class=\"criterion-card\"><h3>Moliyaviy barqarorlik</h3><p>Mablag'lar xilma-xilligi, moliyaviy zaxiralar va byudjet boshqaruvi samaradorligi.</p><span class=\"criterion-max\">maks. 20 ball</span></div><div class=\"criterion-card\"><h3>Dastur samaradorligi</h3><p>Faoliyat natijalari, benefitsiarlar soni, loyihalarning ijtimoiy ta'siri.</p><span class=\"criterion-max\">maks. 20 ball</span></div><div class=\"criterion-card\"><h3>Inson resurslari</h3><p>Xodimlar saqlanishi, malaka oshirish, ko'ngillilar va kadrlar salohiyati.</p><span class=\"criterion-max\">maks. 15 ball</span></div><div class=\"criterion-card\"><h3>Hamkorlik va tarmoq</h3><p>Davlat organlari, biznes hamjamiyat va xalqaro tashkilotlar bilan aloqalar.</p><span class=\"criterion-max\">maks. 15 ball</span></div><div class=\"criterion-card\"><h3>Infratuzilma va IT</h3><p>Veb-sayt, ijtimoiy tarmoqlar, ma'lumotlar bazasi va boshqaruv tizimlari.</p><span class=\"criterion-max\">maks. 10 ball</span></div></div><p class=\"section-label\" style=\"margin-top:32px;\">Darajalar</p><div class=\"level-row\"><div class=\"level-badge level--dev\"><span class=\"level-badge-dot\"></span>Rivojlanmoqda — 0–39 ball</div><div class=\"level-badge level--grow\"><span class=\"level-badge-dot\"></span>O'smoqda — 40–59 ball</div><div class=\"level-badge level--cons\"><span class=\"level-badge-dot\"></span>Mustahkamlanmoqda — 60–79 ball</div><div class=\"level-badge level--sus\"><span class=\"level-badge-dot\"></span>Barqaror — 80–100 ball</div></div><p class=\"section-label\">2024 yil natijalari (tanlab ko'rsatilgan)</p><h2 style=\"margin:0 0 16px;font-size:22px;\">Baholash natijalari</h2><div class=\"idx-table-wrap\"><table class=\"idx-table\"><caption class=\"u-visually-hidden\">NNT barqarorlik indeksi reytingi va viloyat bo'yicha taqsimot</caption><thead><tr><th scope=\"col\" style=\"width:32px;\">#</th><th scope=\"col\">Tashkilot nomi</th><th scope=\"col\">Viloyat</th><th scope=\"col\" class=\"score-cell\">Ball (100 dan)</th><th scope=\"col\">Daraja</th></tr></thead><tbody id=\"sustainabilityTableBody\" aria-live=\"polite\"><tr><td colspan=\"5\" role=\"status\" style=\"text-align:center;color:var(--neutral-400,#9ca3af);padding:24px;\">Yuklanmoqda...</td></tr></tbody></table></div><p style=\"font-size:15px;color:var(--neutral-400,#9ca3af);margin-top:12px;\">* Jadvalda baholangan tashkilotlardan bir qismi ko'rsatilmoqda. To'liq ro'yxat uchun murojaat yuborishingiz mumkin.</p>"
+    },
+    "talimRivojlanish": {
+      "title": "Ta'lim va rivojlanish",
+      "sub": "Xodimlar va NNT vakillari uchun malaka oshirish dasturlari, treninglar va o'quv imkoniyatlari.",
+      "cards": "<article class=\"card\"><h2 style=\"margin:0 0 12px;\">Malaka oshirish dasturlari va treninglar</h2><p>Xodimlar uchun muntazam ravishda tashkil etiladigan malaka oshirish kurslari va professional treninglar haqida ma'lumotlar. NNT sektori rivojlanishi, loyiha boshqaruvi va moliyaviy savodxonlik yo'nalishlari bo'yicha o'quv dasturlari.</p><div class=\"card-action\"><a class=\"btn\" href=\"qayta-aloqa\">Ro'yxatdan o'tish</a></div></article><article class=\"card\"><h2 style=\"margin:0 0 12px;\">Vebinarlar va onlayn kurslar</h2><p>Masofaviy ta'lim imkoniyatlari: NNT faoliyatiga doir vebinarlar, onlayn kurslar va sertifikatlash dasturlari. Xalqaro tashkilotlar hamkorligida o'tkaziladigan virtual treninglar va seminarlar.</p><div class=\"card-action\"><a class=\"btn\" href=\"qayta-aloqa\">Batafsil ma'lumot</a></div></article><article class=\"card\"><h2 style=\"margin:0 0 12px;\">O'quv dasturlari taqvimi</h2><p>Ichki va tashqi o'quv dasturlari jadvali. Yil davomida rejalashtirilgan treninglar, seminarlar, masterklasslar va konferensiyalarning to'liq taqvimi. Ishtirokchilar uchun o'z vaqtida xabardor bo'lish imkoniyati.</p><div class=\"card-action\"><a class=\"btn\" href=\"qayta-aloqa\">Taqvimni ko'rish</a></div></article>"
+    },
+    "vacancies": {
+      "title": "Bo'sh ish o'rinlari",
+      "sub": "O'ZNNTMA ochiq ish o'rni eʼlon va tanlovlari.",
+      "list": "<h2 id=\"vacanciesListTitle\" class=\"visually-hidden\">Ochiq ish o'rinlari ro'yxati</h2><div class=\"cards\"><article class=\"card\"><h3>Bo'linma boshlig'i</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">To'liq stavka · Navoiy viloyati</p><p>Navoiy viloyati hududiy bo'linmasi faoliyatini boshqarish va muvofiqlashtirish.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Ariza topshirish</a></div></article><article class=\"card\"><h3>Mutaxassis</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">To'liq stavka · Samarqand viloyati</p><p>Samarqand viloyati hududiy bo'linmasida NNT a'zolari bilan ishlash va qo'llab-quvvatlash.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Ariza topshirish</a></div></article><article class=\"card\"><h3>Mutaxassis</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">To'liq stavka · Farg'ona viloyati</p><p>Farg'ona viloyati hududiy bo'linmasida NNT a'zolari bilan ishlash va qo'llab-quvvatlash.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Ariza topshirish</a></div></article></div>"
+    },
+    "videoDetail": {
+      "title": "Video tafsiloti",
+      "noscriptHint": "Videoni ko'rish uchun JavaScript zarur. <a href=\"videos\">Videolar ro'yxati</a>"
+    },
+    "videos": {
+      "title": "Video lavhalar",
+      "sub": "Brifinglar, taqdimotlar va intervyular arxivi.",
+      "featured": "<h2 id=\"featuredVideosTitle\" class=\"visually-hidden\">Tanlangan videolar</h2><div class=\"cards\"><article class=\"card\"><div class=\"media\"></div><h3>Matbuot brifingi</h3><p class=\"meta-line\">02.04.2026 · 18 daqiqa</p><div style=\"margin-top:10px\"><a class=\"btn\" href=\"video-detail\">Ko'rish</a></div></article><article class=\"card\"><div class=\"media\"></div><h3>O'quv vebinar: Loyiha boshqaruvi</h3><p class=\"meta-line\">30.03.2026 · 42 daqiqa</p><div style=\"margin-top:10px\"><a class=\"btn\" href=\"video-detail\">Ko'rish</a></div></article><article class=\"card\"><div class=\"media\"></div><h3>Ekspert intervyusi</h3><p class=\"meta-line\">27.03.2026 · 21 daqiqa</p><div style=\"margin-top:10px\"><a class=\"btn\" href=\"video-detail\">Ko'rish</a></div></article><h2 class=\"section-title\" style=\"margin-top:3rem\">Video arxiv</h2><div id=\"dynamic-video-page\" aria-live=\"polite\" aria-busy=\"true\"><p role=\"status\">Yuklanmoqda...</p></div><noscript><p style=\"margin-top:16px\">Video arxivni ko'rish uchun JavaScript zarur. <a href=\"https://youtube.com/@uznntma\" rel=\"noopener noreferrer external\" target=\"_blank\">YouTube kanalimizdagi videolarni</a> ham ko'rishingiz mumkin.</p></noscript>"
+    },
+    "notFound": {
+      "title": "Sahifa topilmadi",
+      "body": "Siz qidirgan sahifa mavjud emas yoki ko'chirilgan.<br/>Quyidagi havolalardan birini tanlashingiz mumkin.",
+      "btnHome": "Bosh sahifa",
+      "btnNews": "Yangiliklar",
+      "btnGrants": "Grantlar",
+      "btnRegistry": "NNTlar reyestri",
+      "btnContact": "Bog'lanish"
+    },
+    "offline": {
+      "title": "Internet aloqasi yo'q",
+      "body": "Sahifa yuklanishi uchun internetga ulanishingiz kerak. Ulanishni tekshirib qaytadan urinib ko'ring.",
+      "retryBtn": "Qayta urinish",
+      "backHome": "Bosh sahifaga qaytish",
+      "reconnected": "Internetga qayta ulandingiz. Bosh sahifaga qaytish uchun pastdagi havolani bosing yoki sahifani yangilang.",
+      "goHomeBtn": "Bosh sahifaga o'tish"
+    },
+    "searchResults": {
+      "title": "Qidiruv natijalari",
+      "subSuffix": "bo'yicha topilgan sahifalar.",
+      "noscript": "Saytdagi qidiruv JavaScript yordamida ishlaydi. Asosiy bo'limlardan to'g'ridan-to'g'ri foydalaning: <a href=\"news\">Yangiliklar</a>, <a href=\"events\">Tadbirlar</a>, <a href=\"grants\">Grantlar</a>, <a href=\"official-docs\">Hujjatlar</a>, <a href=\"nntlar\">NNTlar</a>."
+    },
+    "membershipStatus": {
+      "title": "Ariza holati",
+      "sub": "A'zolik arizangizning joriy bosqichini tekshirish.",
+      "cardTitle": "A'zolik arizangiz holati",
+      "body1": "Arizangizning ID raqami va qabul sanasi yuborilganda ko'rsatilgan tasdiqlash kartasida bo'ladi. Onlayn holatni raqam bo'yicha tekshirish keyingi versiyada qo'shiladi.",
+      "body2": "Hozir holatni aniqlashtirish uchun <a href=\"qayta-aloqa\">qayta aloqa formasi</a> orqali ariza raqamingizni yuboring yoki <a href=\"mailto:info@ngo.uz\">info@ngo.uz</a> manziliga xat yozing — javob 15 ish kuni ichida beriladi.",
+      "btnNew": "Yangi ariza yuborish",
+      "btnContact": "Qayta aloqa"
+    },
+    "serviceRequestStatus": {
+      "title": "Murojaat holati",
+      "body1": "Murojaatingiz raqami va qabul sanasi yuborilganda ko'rsatilgan tasdiqlash kartasida bo'ladi. Bu sahifada murojaat holatini onlayn tekshirish uchun keyingi versiyada raqam bo'yicha qidiruv qo'shiladi.",
+      "body2": "Hozir holat haqida ma'lumot olish uchun <a href=\"qayta-aloqa\">qayta aloqa formasi</a> orqali murojaat raqamingizni yuboring yoki <a href=\"mailto:info@ngo.uz\">info@ngo.uz</a> manziliga xat yozing.",
+      "btnNew": "Yangi murojaat yuborish",
+      "btnContact": "Qayta aloqa"
+    },
+    "reportStatus": {
+      "title": "Hisobot holati",
+      "body1": "Hisobotni topshirish va uning bajarilish bosqichlarini onlayn kuzatish a'zo NNTlar uchun shaxsiy kabinet orqali amalga oshiriladi.",
+      "body2": "A'zo bo'lgan tashkilotlar — <a href=\"cabinet/cabinet-login\">kabinetga kiring</a> va \"Hisobotlar\" bo'limidan joriy holatni ko'ring. A'zo bo'lmagan tashkilotlar uchun <a href=\"reporting-forms\">hisobot shakllari</a> sahifasidagi shartnomada ko'rsatilgan kanallar orqali topshirish davom etadi.",
+      "btnCabinet": "Kabinetga kirish",
+      "btnForms": "Hisobot shakllari"
+    },
+    "mission": {
+      "title": "Maqsad va vazifalar",
+      "sub": "O'zNNTMAning missiyasi, ustuvor yo'nalishlari va strategik maqsadlari.",
+      "contentAria": "Maqsad va vazifalar mazmuni",
+      "body": "<h3>Missiya</h3><p>O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi (O'zNNTMA) — fuqarolik jamiyatini mustahkamlash, nodavlat sektorni rivojlantirish va NNTlarning huquqiy, tashkiliy hamda malakaviy salohiyatini oshirish maqsadida 2005 yilda tashkil etilgan. Assotsiatsiya O'zbekiston Respublikasi qonunchiligiga muvofiq faoliyat yuritadi va NNT sektorining muvofiqlashtiruv markaziga aylangan.</p><h3>Asosiy maqsadlar</h3><ol><li>Nodavlat notijorat tashkilotlarning faoliyatini qo'llab-quvvatlash va ularning jamiyat hayotida tutgan o'rnini mustahkamlash.</li><li>Fuqarolik jamiyati institutlari bilan davlat organlari o'rtasidagi muloqot va hamkorlikni ta'minlash.</li><li>NNT sektorida shaffoflik, barqarorlik va professional boshqaruvni rivojlantirish.</li><li>Xalqaro hamkorlik orqali O'zbekiston fuqarolik jamiyatining jahon miqyosidagi integratsiyasini kuchaytirish.</li></ol><h3>Asosiy vazifalar</h3><ol><li>NNTlarning huquqiy maqomini mustahkamlash, ularning manfaatlarini davlat organlari oldida himoya qilish va qonunchilikni takomillashtirish bo'yicha takliflar kiritish.</li><li>Nodavlat notijorat tashkilotlari rahbarlari va xodimlarining kasbiy malakasini oshirish, o'quv kurslar, seminarlar va treninglar tashkil etish.</li><li>Fuqarolik jamiyati institutlari faoliyatini tahlil qilish, monitoring o'tkazish va amaliy tavsiyalar ishlab chiqish.</li><li>NNTlar o'rtasida axborot almashuvini ta'minlash, ularning faoliyatini keng jamoatchilikka yetkazish.</li><li>Xalqaro tashkilotlar va xorijiy hamkorlar bilan munosabatlarni yo'lga qo'yish, hamkorlik dasturlarini amalga oshirish.</li><li>NNT sektoridagi barqarorlik indeksini hisoblash va \"Barqaror NNT\" sertifikatlashtirish tizimini yuritish.</li><li>Davlat-fuqarolik jamiyati sherikligini rivojlantirish, ijtimoiy buyurtma mexanizmlarini takomillashtirish bo'yicha taklif va loyihalar ishlab chiqish.</li></ol><h3>Funksiyalar</h3><ol><li><strong>Muvofiqlashtirish:</strong> Hududiy bo'linmalar, a'zo tashkilotlar va hamkor institutlar faoliyatini muvofiqlashtirish.</li><li><strong>Ma'lumot bazasi:</strong> O'zbekistondagi NNTlar ro'yxatini yuritish, ularning faoliyati haqida ma'lumotlarni to'plash va tahlil qilish.</li><li><strong>Ta'lim:</strong> \"NNTlar maktabi\" dasturi orqali tizimli kadrlar tayyorlash va malaka oshirish.</li><li><strong>Huquqiy yordam:</strong> A'zo tashkilotlarga ro'yxatga olish, hisobot topshirish va qonunchilikka rioya qilish bo'yicha konsultatsiya berish.</li><li><strong>Hamkorlik:</strong> UNDP, USAID, GIZ, UNICEF va boshqa xalqaro tashkilotlar bilan birgalikdagi loyihalarni amalga oshirish.</li><li><strong>Monitoring:</strong> NNT sektorining rivojlanish dinamikasini kuzatib borish va hisobot tayyorlash.</li></ol><h3>Strategik maqsadlar (2026–2028)</h3><ol><li>Hududiy tarmoqni kuchaytirish — barcha 14 viloyat va Qoraqalpog'istonda faol bo'linmalar ishini ta'minlash.</li><li>Xizmatlarni raqamlashtirish — onlayn a'zolik, elektron hisobotlar va interaktiv xizmatlarni joriy etish.</li><li>Analitik salohiyatni oshirish — yillik NNT barqarorlik indeksining sifatini va qamrovini kengaytirish.</li></ol>"
+    },
+    "whoWeAre": {
+      "title": "O'zbekiston NNTlar milliy assotsiatsiyasi",
+      "tag1": "Hamkorlik",
+      "tag2": "Rivojlanish",
+      "tag3": "Fuqarolik jamiyati",
+      "body": "<p>O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi (O'zNNTMA) — mamlakatimizda fuqarolik jamiyatini mustahkamlash, nodavlat notijorat tashkilotlar (NNT) faoliyatini muvofiqlashtirish va ularga ko'maklashish maqsadida tashkil etilgan milliy tuzilma. Tashkilot O'zbekiston Respublikasi Adliya vazirligida ro'yxatga olingan bo'lib, 2019 yildan faoliyat yuritib kelmoqda.</p><p>Assotsiatsiyaning asosiy vazifalari qatoriga NNTlarning huquqiy muhitini takomillashtirish bo'yicha tavsiyalar ishlab chiqish, nodavlat sektor bilan davlat organlarining o'zaro hamkorligini mustahkamlash, NNTlar tashkiliy salohiyatini oshirishga ko'maklashish, shuningdek ularning xalqaro hamkorligini rivojlantirish kiradi.</p><p>Assotsiatsiya O'zbekiston Respublikasi Oliy Majlisi va ijroiya hokimiyat organlari bilan yaqin hamkorlikda ishlaydi. Fuqarolik jamiyatiga doir qonunchilik tashabbuslarini muhokama qilishda faol ishtirok etadi va NNT sohasiga oid tahliliy ma'lumotlar hamda takliflarni tegishli organlarga muntazam ravishda taqdim etib boradi.</p><div class=\"mission-block\"><blockquote>“Bizning asosiy maqsadimiz — O'zbekistondagi har bir nodavlat notijorat tashkilotning qonuniy huquqlarini himoya qilish, ularning jamiyatdagi rolini mustahkamlash va barqaror fuqarolik jamiyatini shakllantirishga munosib hissa qo'shish.”</blockquote><cite>— O'zNNTMA Ijro etuvchi devoni rahbari</cite></div><p>Assotsiatsiya NNTlar reyestri bilim almashish, tajriba orttirish va hamkorlik o'rnatish maydoni vazifasini bajaradi. NNTlar maktabi, onlayn kutubxona va hududiy treninglar orqali yuzlab tashkilotlarga metodik va amaliy ko'mak ko'rsatilmoqda. Shu bilan birga, biznes hamjamiyati, akademik doiralar va xalqaro tashkilotlar vakillari bilan tadqiqotlar, muzokaralar va ochiq munozaralar o'tkazib kelinmoqda.</p><p>Assotsiatsiya O'zbekistondagi barcha NNTlarni birlashtirish, ularning manfaatlarini himoya qilish va mamlakatimizda sog'lom fuqarolik jamiyatini shakllantirishga hissa qo'shish maqsadida ta'sis etilgan. Ijro etuvchi devon Toshkent shahrida — Shayxontohur tumanidagi Furqat ko'chasida joylashgan bo'lib, respublikaning barcha hududlarida 28 nafar hududiy xodim faoliyat yuritadi.</p>"
+    },
+    "about": {
+      "title": "Assotsiatsiya haqida",
+      "sub": "O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi — fuqarolik jamiyatini rivojlantirish va NNTlar salohiyatini oshirishga bag'ishlangan tashkilot.",
+      "intro": "<div class=\"about-intro-grid\"><div class=\"about-intro-text\"><h2 class=\"section-title\">Tashkilot haqida</h2><p>O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi (O'zNNTMA) 2005-yil 10-iyun kuni O'zbekiston Respublikasi Adliya vazirligi tomonidan 612-son tartib raqami bilan davlat ro'yxatidan o'tkazilgan.</p><p>Assotsiatsiya O'zbekiston Respublikasining amaldagi qonunchiligiga muvofiq davlat ro'yxatidan o'tgan nodavlat notijorat tashkilotlarining ixtiyoriy birlashmasi bo'lib, nodavlat notijorat tashkilotlari uyushmasi tashkiliy-huquqiy shaklida tuzilgan.</p></div><div class=\"about-reg-card\"><h3>Rekvizitlar</h3><div class=\"about-reg-row\"><span>Ro'yxatga olingan</span><span>2005-yil 10-iyun</span></div><div class=\"about-reg-row\"><span>Tartib raqami</span><span>612-son</span></div><div class=\"about-reg-row\"><span>Tashkiliy shakl</span><span>NNTlar uyushmasi</span></div><div class=\"about-reg-row\"><span>Yuridik manzil</span><span>100170, O'zbekiston Respublikasi, Toshkent shahri, Shayxontohur tumani, Furqat ko'chasi, 1A</span></div></div></div>",
+      "goal": "<div class=\"about-goal-block\"><div class=\"about-goal-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"28\" stroke=\"currentColor\" stroke-width=\"1.8\" viewBox=\"0 0 24 24\" width=\"28\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><circle cx=\"12\" cy=\"12\" r=\"6\"/><circle cx=\"12\" cy=\"12\" r=\"2\"/></svg></div><div><h2>Asosiy maqsad</h2><p>Assotsiatsiyaning asosiy maqsadi — mahalliy nodavlat notijorat tashkilotlarini birlashtirish, ularning faoliyatini muvofiqlashtirish, qo'llab-quvvatlash va rivojlantirish, hamda NNTlar faoliyatining samaradorligi va sifatini oshirishga ko'maklashishdan iborat.</p></div></div>",
+      "tasks": "<h2 class=\"section-title\">Asosiy vazifalar</h2><p class=\"section-sub\">Assotsiatsiya o'z a'zolari va fuqarolik jamiyati manfaatlarini ko'zlab quyidagi yo'nalishlarda faoliyat yuritadi.</p><div class=\"vazifalar-grid\"><div class=\"vazifa-card\"><div class=\"vazifa-num\">1</div><div class=\"vazifa-body\"><h3>Huquqiy himoya va manfaatlarni ifodalash</h3><p>NNTlarning huquqlari va qonuniy manfaatlarini davlat organlarida, sudlarda, xalqaro va xorijiy tashkilotlarda ifoda etish hamda himoya qilish.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">2</div><div class=\"vazifa-body\"><h3>Hamkorlikni rivojlantirish</h3><p>NNTlar, tadbirkorlik sub'ektlari, xalqaro va xorijiy tashkilotlar hamda davlat organlari o'rtasida o'zaro manfaatli hamkorlikni rivojlantirishda ishtirok etish.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">3</div><div class=\"vazifa-body\"><h3>Qulay muhit yaratish</h3><p>NNT tashabbuslarini amalga oshirish uchun qulay huquqiy, iqtisodiy va ijtimoiy sharoitlar yaratishga ko'maklashish.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">4</div><div class=\"vazifa-body\"><h3>Demokratik jarayonlarni qo'llab-quvvatlash</h3><p>Mamlakatda demokratik jarayonlarni barqaror rivojlantirish va ilgari surishda a'zolar hamda hamkorlarning sa'y-harakatlarini birlashtirish.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">5</div><div class=\"vazifa-body\"><h3>Qonunchilikni takomillashtirish</h3><p>NNTlarning huquqlari va qonuniy manfaatlariga daxldor bo'lgan normativ-huquqiy hujjatlar loyihalarini ishlab chiqishda ishtirok etish va sohani tartibga soluvchi qonunchilikni takomillashtirish yuzasidan takliflar tayyorlash.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">6</div><div class=\"vazifa-body\"><h3>Salohiyatni oshirish</h3><p>NNT rahbarlari va xodimlarining tashkilotni samarali boshqarish, moliyaviy barqarorlikka erishish, ijtimoiy muhim loyihalarni ishlab chiqish, volontyorlik va xayriya resurslarini jalb qilish yo'nalishlarida bilim va ko'nikmalarini oshirish.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">7</div><div class=\"vazifa-body\"><h3>Ta'lim va metodik ta'minot</h3><p>NNT vakillari uchun qo'llanmalar, o'quv dasturlari va kitoblar hamda mamlakat sharoitiga mos nazariy va amaliy yondashuvlarni ishlab chiqish.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">8</div><div class=\"vazifa-body\"><h3>Ijtimoiy sheriklik</h3><p>Davlat ijtimoiy buyurtmalari va ijtimoiy sheriklik loyihalarining yagona bazasini yuritish; mamlakatni modernizatsiya qilishda iqtisodiy, ijtimoiy va madaniy salohiyatni yuksaltirish.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">9</div><div class=\"vazifa-body\"><h3>Ehtiyojmand qatlamlarni qo'llab-quvvatlash</h3><p>Ayollar, yoshlar, keksalar, nogironligi bo'lgan va hayotda og'ir vaziyatga tushgan fuqarolarni qo'llab-quvvatlashda a'zolarning intellektual, moddiy va moliyaviy resurslarini safarbar qilish.</p></div></div><div class=\"vazifa-card\"><div class=\"vazifa-num\">10</div><div class=\"vazifa-body\"><h3>Xalqaro hamkorlik</h3><p>Xalqaro va chet el NNTlari, moliya institutlari va xorijiy donorlar bilan hamkorlik aloqalarini mustahkamlash, ularning ijobiy tajribalarini o'rganish.</p></div></div></div>",
+      "articlesTitle": "Tashkilot haqida maqolalar"
+    },
+    "contact": {
+      "title": "Kontaktlar",
+      "sub": "Biz bilan bog'laning — manzil, telefon va ijtimoiy tarmoqlar.",
+      "body": "<h2 class=\"contact-section-title\" style=\"margin-top:0\">Murojaat yuborish</h2><div class=\"contact-action-cards\" style=\"margin-bottom:36px\"><a class=\"contact-action-card\" href=\"qayta-aloqa\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"></path></svg><div><strong>Qayta aloqa</strong><span>Savol, taklif yoki shikoyat yuborish</span></div></a><a class=\"contact-action-card\" href=\"korrupsiya-murojaat\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"></path></svg><div><strong>Korrupsiyaga qarshi murojaat</strong><span>Maxfiy shaklda murojaat qilish</span></div></a></div><div class=\"contact-grid\"><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\"></path><circle cx=\"12\" cy=\"10\" r=\"3\"></circle></svg></div><div><div class=\"contact-info-label\">Manzil</div><div class=\"contact-info-value\">100170, O'zbekiston Respublikasi, Toshkent shahri, Shayxontohur tumani, Furqat ko'chasi, 1A</div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z\"></path></svg></div><div><div class=\"contact-info-label\">Telefon</div><div class=\"contact-info-value\"><a href=\"tel:+998555030512\">(+998 55) 503-05-12</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\"></path><polyline points=\"22,6 12,13 2,6\"></polyline></svg></div><div><div class=\"contact-info-label\">Elektron pochta</div><div class=\"contact-info-value\"><a href=\"mailto:info@ngo.uz\">info@ngo.uz</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><polyline points=\"12 6 12 12 16 14\"></polyline></svg></div><div><div class=\"contact-info-label\">Ish vaqti</div><div class=\"contact-info-value\">Dushanba–Juma: 9:00–18:00<br/>Shanba–Yakshanba: dam olish kuni</div></div></div></div><h2 class=\"contact-section-title\">Ijtimoiy tarmoqlar</h2><div class=\"contact-social-row\"><a class=\"contact-social-btn contact-social-fb\" href=\"https://facebook.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Facebook</a><a class=\"contact-social-btn contact-social-ig\" href=\"https://instagram.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Instagram</a><a class=\"contact-social-btn contact-social-tg\" href=\"https://t.me/UzNNTMA1\" rel=\"noopener noreferrer\" target=\"_blank\">Telegram</a><a class=\"contact-social-btn contact-social-yt\" href=\"https://youtube.com/@uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">YouTube</a><a href=\"https://www.linkedin.com/company/ngo-association-uzbekistan/\" rel=\"noopener noreferrer\" target=\"_blank\">LinkedIn</a></div><div class=\"contact-map\"><iframe allowfullscreen=\"\" style=\"border:0\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\" sandbox=\"allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox\" src=\"https://yandex.uz/map-widget/v1/?ll=69.240568%2C41.312565&amp;z=17&amp;pt=69.240568%2C41.312565%2Cpm2rdm\" title=\"Manzil xaritasi\"></iframe></div>"
+    },
+    "membership": {
+      "title": "A'zo bo'lish",
+      "sub": "A'zolik hujjatlari bilan tanishing, reglamentni tasdiqlang va tashkilot ma'lumotlarini yuboring.",
+      "docs": "<h2 class=\"section-title\">A'zolik hujjatlari</h2><div class=\"cards\"><article class=\"card\"><h3>Qabul qilish tartibi</h3><p>A'zolik uchun talab etiladigan hujjatlar ro'yxati.</p><div class=\"card-action\"><a class=\"btn\" href=\"official-docs\">Yuklab olish</a></div></article><article class=\"card\"><h3>Nizom va ichki qoidalar</h3><p>A'zolikning huquq va majburiyatlarini belgilovchi hujjat.</p><div class=\"card-action\"><a class=\"btn\" href=\"official-docs\">Yuklab olish</a></div></article><article class=\"card\"><h3>Imkoniyatlar reglamenti</h3><p>A'zo bo'lgach beriladigan imkoniyatlar va tartiblar.</p><div class=\"card-action\"><a class=\"btn\" href=\"official-docs\">Yuklab olish</a></div></article></div>",
+      "reglamentTitle": "Reglament bilan tanishish",
+      "reglamentSubtle": "Formani yuborishdan oldin reglament bilan tanishganingizni tasdiqlang.",
+      "reglamentConsent": "<a href=\"foydalanish-shartlari\" target=\"_blank\" rel=\"noopener noreferrer\">Reglament</a> bilan to'liq tanishdim va shartlariga roziman.",
+      "formTitle": "Tashkilot ma'lumotlari",
+      "noscript": "Bu forma JavaScript yoqilgan brauzerda ishlaydi. Iltimos, brauzerda JavaScript-ni yoqing yoki <a href=\"qayta-aloqa\" style=\"color:#7a5800;text-decoration:underline\">qayta aloqa formasi</a> orqali murojaat qiling.",
+      "submitBtn": "Ariza yuborish",
+      "f": {
+        "orgName": "Tashkilot nomi <span aria-hidden=\"true\">*</span>",
+        "activity": "Faoliyat sohasi <span aria-hidden=\"true\">*</span>",
+        "legalType": "Tashkiliy-huquqiy shakli <span aria-hidden=\"true\">*</span>",
+        "head": "Tashkilot rahbari F.I.Sh. <span aria-hidden=\"true\">*</span>",
+        "phone": "Tashkilot telefon raqami <span aria-hidden=\"true\">*</span>",
+        "email": "Elektron manzil <span aria-hidden=\"true\">*</span>",
+        "telegram": "Telegramga bog'langan raqam <span aria-hidden=\"true\">*</span>",
+        "region": "Faoliyat yuritish hududi <span aria-hidden=\"true\">*</span>"
+      }
+    },
+    "membershipGuide": {
+      "title": "Qanday a'zo bo'lish mumkin",
+      "sub": "A'zolik jarayonini bosqichma-bosqich bajaring.",
+      "stepsAria": "A'zolik bosqichlari",
+      "stepsHtml": "<div class=\"item\"><h3>1-bosqich: Hujjatlarni tayyorlash</h3><p>Tashkilot guvohnomasi, STIR, rahbar ma'lumotlari va aloqa rekvizitlarini tayyorlang.</p></div><div class=\"item\"><h3>2-bosqich: Reglament bilan tanishish</h3><p>A'zolik shartlari va huquq-majburiyatlar to'plamini ko'rib chiqing.</p></div><div class=\"item\"><h3>3-bosqich: Onlayn forma yuborish</h3><p>A'zo bo'lish bo'limidagi arizani to'ldirib yuboring.</p></div><div class=\"item\"><h3>4-bosqich: Tekshiruv va qaror</h3><p>Nizom muddatlariga muvofiq ariza organiladi va holat sahifada aks etadi.</p></div><div class=\"item\"><h3>5-bosqich: Guvohnoma</h3><p>Ijobiy qarordan so'ng a'zolik guvohnomasi shakllantiriladi.</p></div>"
+    },
+    "news": {
+      "title": "Yangiliklar",
+      "sub": "Rasmiy yangiliklar va press-relizlar ro'yxati.",
+      "listAria": "Yangiliklar ro'yxati",
+      "noscript": "Yangiliklar ro'yxatini ko'rish uchun JavaScript zarur. Quyidagi RSS havolasidan ham foydalanishingiz mumkin: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/news.rss\">RSS feed</a>."
+    },
+    "events": {
+      "title": "Tadbirlar",
+      "sub": "Bo'lib o'tgan va rejalashtirilgan tadbirlar taqvimi.",
+      "listAria": "Tadbirlar ro'yxati",
+      "noscript": "Tadbirlar ro'yxatini ko'rish uchun JavaScript zarur. Quyidagi RSS havolasidan ham foydalanishingiz mumkin: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/events.rss\">RSS feed</a>."
+    },
+    "grants": {
+      "title": "E'lon qilingan grantlar",
+      "sub": "NNTlar va fuqarolik jamiyati tashkilotlari uchun ochiq grant va moliyalashtirish imkoniyatlari.",
+      "listAria": "Grantlar ro'yxati",
+      "noscript": "Grantlar ro'yxatini ko'rish uchun JavaScript zarur. Quyidagi RSS havolasidan ham foydalanishingiz mumkin: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/grants.rss\">RSS feed</a>."
+    },
+    "leadership": {
+      "title": "Rahbariyat",
+      "sub": "O'zNNTMA Kengashi raisi va o'rinbosarlari — tashkilot faoliyatini boshqaruvchi rahbarlar.",
+      "role1": "Assotsiatsiya Kengashi raisi, Ijro etuvchi devon rahbari",
+      "role2": "Kengash raisining birinchi o'rinbosari, Ijro etuvchi devon rahbarining birinchi o'rinbosari",
+      "role3": "Kengash raisi o'rinbosari, Ijro etuvchi devon rahbarining o'rinbosari",
+      "bioBtn": "Biografiya",
+      "hours1": "Seshanba 14:00–17:00",
+      "hours2": "Chorshanba 10:00–13:00",
+      "hours3": "Juma 15:00–17:00",
+      "bioPending": "<strong>Biografiya:</strong> Ma'lumot yaqin kunda qo'shiladi.",
+      "aboutTitle": "Rahbariyat haqida"
+    },
+    "faq": {
+      "title": "Savol-javob",
+      "sub": "Interaktiv xizmatlar bo'yicha tez-tez beriladigan savollar va javoblar.",
+      "listAria": "Savol-javoblar ro'yxati",
+      "searchLabel": "Savol qidirish",
+      "searchPlaceholder": "Masalan: hisobot, a'zo bo'lish, huquqiy maslahat",
+      "q1": "NNTMAga a'zo bo'lish uchun qanday hujjatlar kerak?",
+      "a1": "Tashkilot guvohnomasi, rahbar ma'lumotlari, ariza va nizomni qabul qilish tasdigi talab etiladi.",
+      "q2": "Hisobotlarni qayerdan topshiraman?",
+      "a2": "Hisobot shakllarini \"NNT hisobot shakllari\" bo'limidan yuklab olib, onlayn shakl orqali yuborasiz.",
+      "q3": "Huquqiy maslahatni qanday olaman?",
+      "a3": "Rasmiy murojaat shakli orqali savol yuborasiz. Mutaxassislar tomonidan javob yuboriladi.",
+      "q4": "A'zo arizam holatini qayerda koraman?",
+      "a4": "A'zo bo'lish sahifasida yuborilgandan so'ng avtomatik ochiladigan holat sahifasida kuzatasiz."
+    },
+    "index": {
+      "title": "O'zNNTMA — Nodavlat notijorat tashkilotlar assotsiatsiyasi | ngo.uz",
+      "ogTitle": "O'zbekiston NNT milliy assotsiatsiyasi — ngo.uz",
+      "metaDescription": "O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi (O'ZNNTMA) — NNTlar, grantlar, tadbirlar, qonunchilik va xizmatlar bo'yicha rasmiy axborot manbai.",
+      "heroTitle": "O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi",
+      "heroMemberBtn": "Assotsiatsiyaga a'zo bo'lish",
+      "heroMemberBtnSub": "O'zNNTMA · Ariza topshirish",
+      "heroBenefitsBtn": "Assotsiatsiyaga a'zo bo'lishning afzalliklari",
+      "statsAria": "Asosiy ko'rsatkichlar",
+      "stats": {
+        "total": "Jami NNTlar soni",
+        "members": "Bizga a'zo NNTlar soni",
+        "lawProposals": "Qonunchilikka takliflar",
+        "legalAid": "Huquqiy yordam",
+        "events": "O'tkazilgan tadbirlar",
+        "media": "OAVdagi chiqishlari",
+        "training": "Malaka oshirgan NNTlar soni"
+      },
+      "mapTitle": "NNTlar ko'rsatkichlari",
+      "mapSub": "Xududlar kesimida",
+      "mapAria": "Xududlar bo'yicha NNTlar xaritasi",
+      "mapNoscript": "Xudud xaritasi JavaScript bilan ishlaydi.",
+      "chartTitle": "Assotsiatsiyaga a'zo nodavlat notijorat tashkilotlari soni",
+      "chartCanvasFallback": "Bu element diagrammani ko'rsatadi. Ma'lumotlarning batafsil jadvali quyida.",
+      "chartTableAria": "O'zNNTMA a'zo NNTlar dinamikasi",
+      "chartTableCaption": "NNT soni dinamikasi (2020–2025)",
+      "chartColYear": "Yil",
+      "chartColCount": "NNT soni",
+      "chartGrowthSince2020": "2020 yildan o'sish",
+      "chartStatus2025": "2025 yil holati",
+      "chartGrowthLabel": "O'rtacha yillik o'sish",
+      "chartLegendBar": "NNT soni",
+      "chartLegendLine": "Trend",
+      "chartDlTitle": "Rasmni yuklab olish",
+      "chartDlAria": "Diagrammani rasm sifatida yuklab olish",
+      "chartSource": "Manba: ngo.uz",
+      "newsTitle": "So'nggi yangiliklar va tadbirlar",
+      "newsSub": "O'zNNTMA faoliyati, yangiliklar va eng so'nggi tadbirlar.",
+      "newsSeeAll": "Barcha yangiliklar",
+      "newsNoscript": "So'nggi yangiliklar va tadbirlar JavaScript bilan yuklanadi.",
+      "partnersTitle": "Xalqaro hamkorlarimiz",
+      "partnersSub": "O'zNNTMA bilan strategik hamkorlik o'rnatgan xalqaro tashkilotlar.",
+      "usefulTitle": "Foydali havolalar",
+      "usefulLinks": {
+        "president": "O'zbekiston Respublikasi Prezidentining rasmiy vebsayti",
+        "gov": "O'zbekiston Respublikasi hukumat portali",
+        "parliament": "O'zbekiston Respublikasi Oliy majlisi qonunchilik palatasi",
+        "senate": "O'zbekiston Respublikasi Oliy majlis senati",
+        "lex": "O'zbekiston Respublikasi milliy qonunchilik ma'lumotlari bazasi"
+      }
+    }
+  },
+  "membershipModal": {
+    "title": "Assotsiatsiyaga a'zo bo'lish",
+    "subtitle": "O'zbekiston NNT Milliy Assotsiatsiyasiga a'zolik arizasini to'ldiring",
+    "stepsAria": "A'zolik bosqichlari",
+    "step1Aria": "1-bosqich: shartlar (joriy)",
+    "step1DoneAria": "1-bosqich: shartlar (bajarildi)",
+    "step2Aria": "2-bosqich: ariza",
+    "step2CurrentAria": "2-bosqich: ariza (joriy)",
+    "termsTitle": "A'zolik shartlari va qoidalar",
+    "terms1": "O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi (O'zNNTMA) a'zoligiga qabul qilish O'zNNTMA ustavi asosida amalga oshiriladi.",
+    "terms2": "A'zo bo'lishdan maqsad — fuqarolik jamiyatini rivojlantirish, NNTlarning huquqiy himoyasini ta'minlash, kadrlar salohiyatini oshirish va xalqaro hamkorlikni kengaytirishdir.",
+    "terms3": "A'zo tashkilotlar quyidagi huquqlarga ega: assotsiatsiya tadbirlarida ishtirok etish, treninglar va seminarlardan foydalanish, Kengash qarorlarini muhokama qilish hamda ovoz berish.",
+    "terms4": "A'zo tashkilotlar quyidagi majburiyatlarni bajaradi: yillik a'zolik badali to'lash, faoliyat to'g'risida yillik hisobot taqdim etish va assotsiatsiya qarorlariga rioya qilish.",
+    "terms5": "Ariza ko'rib chiqilgandan so'ng O'zNNTMA a'zolik to'g'risida xat jo'natadi. Qaror 15 ish kuni ichida qabul qilinadi.",
+    "agreeLabel": "Yuqoridagi shartlar bilan tanishdim va roziman",
+    "continueBtn": "Davom etish →",
+    "orgLabel": "Tashkilot nomi *",
+    "orgPlaceholder": "NNT to'liq rasmiy nomi",
+    "leaderLabel": "Rahbar FISh *",
+    "leaderPlaceholder": "To'liq ismi sharifi",
+    "phoneLabel": "Telefon *",
+    "phonePlaceholder": "+998 __ ___ __ __",
+    "emailLabel": "Email *",
+    "emailPlaceholder": "info@tashkilot.uz",
+    "regionLabel": "Viloyat *",
+    "regionPlaceholder": "Tanlang…",
+    "noteLabel": "Qo'shimcha ma'lumot",
+    "notePlaceholder": "Tashkilot faoliyati, soha yoki boshqa izoh (ixtiyoriy)",
+    "submitBtn": "A'zo bo'lish",
+    "backBtn": "← Orqaga",
+    "submittingBtn": "Yuborilmoqda...",
+    "successTitle": "Arizangiz qabul qilindi!",
+    "successBody": "Ko'rsatilgan telefon va email orqali siz bilan 15 ish kuni ichida bog'lanamiz. O'zNNTMAga qo'shilishingizdan mamnunmiz.",
+    "closeBtn": "Yopish",
+    "regions": {
+      "tashkentCity": "Toshkent shahri",
+      "tashkentOblast": "Toshkent viloyati",
+      "andijan": "Andijon viloyati",
+      "bukhara": "Buxoro viloyati",
+      "fergana": "Farg'ona viloyati",
+      "jizzakh": "Jizzax viloyati",
+      "namangan": "Namangan viloyati",
+      "navoi": "Navoiy viloyati",
+      "kashkadarya": "Qashqadaryo viloyati",
+      "samarkand": "Samarqand viloyati",
+      "syrdarya": "Sirdaryo viloyati",
+      "surkhandarya": "Surxondaryo viloyati",
+      "khorezm": "Xorazm viloyati",
+      "karakalpakstan": "Qoraqalpog'iston Respublikasi"
+    }
+  }
+}
