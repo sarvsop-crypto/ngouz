@@ -1,0 +1,5 @@
+.assetsignore
+*.md
+wrangler.toml
+worker
+nntma_subscriber_app
