@@ -124,6 +124,14 @@
   function applyI18n(scope) {
     if (window.ngoI18n && typeof window.ngoI18n.apply === 'function') window.ngoI18n.apply(scope || document);
   }
+  // Prefer the active-language DB field (e.g. title_ru / description_en) when the
+  // backend provides it, else fall back to the Uzbek original. Events already
+  // carry *_ru/*_en; news/documents light up here once their columns are added.
+  function tField(item, base) {
+    var l = curLang();
+    if (l !== 'uz') { var v = item[base + '_' + l]; if (v != null && v !== '') return v; }
+    return item[base];
+  }
 
   // Trim datetime suffix (T-separated time, or space-separated time
   // some backends return) before splitting — without this a datetime
@@ -202,9 +210,9 @@
       + '<div class="gov-news-content">'
       + '<div class="gov-news-header">'
       + '<time class="gov-news-date" datetime="' + esc(_datePart(n.date) || '') + '" aria-hidden="true"><b>' + dateDay(n.date) + '</b><span>' + dateMonthAbbr(n.date) + '</span></time>'
-      + '<h3 class="gov-news-title"><a href="' + url + '">' + esc(n.title) + '</a></h3>'
+      + '<h3 class="gov-news-title"><a href="' + url + '">' + esc(tField(n,'title')) + '</a></h3>'
       + '</div>'
-      + '<a href="' + url + '" class="gov-news-excerpt">' + esc(n.excerpt) + '</a>'
+      + '<a href="' + url + '" class="gov-news-excerpt">' + esc(tField(n,'excerpt')) + '</a>'
       + '<div class="gov-news-footer"><time datetime="' + esc(_datePart(n.date) || '') + '">' + fmtDate(n.date) + '</time><a href="' + url + '">' + esc(cat) + '</a></div>'
       + '</div></article>';
   }
@@ -475,7 +483,7 @@
     others.forEach(function (n) {
       sidebar += '<a href="' + newsDetailRouteFor(n.category) + '?id=' + encodeURIComponent(n.id) + '" class="detail-sidebar-item">'
         + '<p class="detail-sidebar-item-date"><time datetime="' + esc(_datePart(n.date) || '') + '">' + fmtDate(n.date) + '</time> · ' + esc(n.category || '') + '</p>'
-        + '<p class="detail-sidebar-item-title">' + esc(n.title) + '</p>'
+        + '<p class="detail-sidebar-item-title">' + esc(tField(n,'title')) + '</p>'
         + '</a>';
     });
     sidebar += '</aside>';
@@ -500,10 +508,10 @@
       + '<nav aria-label="Sahifa joylashuvi"><p class="detail-breadcrumbs"><a href="index">Bosh sahifa</a><span class="detail-bc-sep" aria-hidden="true">›</span><a href="' + listRoute + '">' + listLabel + '</a><span class="detail-bc-sep" aria-hidden="true">›</span><span aria-current="page">' + esc(cat) + '</span></p></nav>'
       + '<button class="detail-print-btn" onclick="window.print()" aria-label="Chop etish"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>'
       + '</div>'
-      + '<h1 class="detail-title">' + esc(item.title) + '</h1>'
+      + '<h1 class="detail-title">' + esc(tField(item,'title')) + '</h1>'
       + '<p class="detail-meta"><time datetime="' + esc(_datePart(item.date) || '') + '">' + fmtDate(item.date) + '</time><span class="detail-meta-sep">/</span><a href="' + listRoute + '">' + esc(cat) + '</a></p>'
       + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
-      + '<div class="detail-body">' + bodyToHTML(item.body || item.excerpt) + '</div>'
+      + '<div class="detail-body">' + bodyToHTML(tField(item, 'body') || tField(item, 'excerpt')) + '</div>'
       + '<div class="detail-tags"><a href="' + listRoute + '" class="detail-tag">' + esc(cat) + '</a></div>'
       + shareButtons(pageUrl, item.title)
       + '</div>'
@@ -540,9 +548,9 @@
       + '<div class="gov-news-content">'
       + '<div class="gov-news-header">'
       + '<time class="gov-news-date" datetime="' + esc(_datePart(e.date) || '') + '" aria-hidden="true"><b>' + dateDay(e.date) + '</b><span>' + dateMonthAbbr(e.date) + '</span></time>'
-      + '<h3 class="gov-news-title"><a href="' + url + '">' + esc(e.title) + '</a></h3>'
+      + '<h3 class="gov-news-title"><a href="' + url + '">' + esc(tField(e,'title')) + '</a></h3>'
       + '</div>'
-      + '<a href="' + url + '" class="gov-news-excerpt">' + esc(e.description || '') + '</a>'
+      + '<a href="' + url + '" class="gov-news-excerpt">' + esc(tField(e,'description') || '') + '</a>'
       + '<div class="gov-news-footer"><time datetime="' + esc(_datePart(e.date) || '') + '">' + esc(e.dateLabel || fmtDate(e.date)) + '</time><a href="' + url + '">' + label + '</a></div>'
       + '</div></article>';
   }
@@ -658,10 +666,11 @@
     // doesn't mislabel a future event as 'Bo'lib o'tdi'.
     var statusLabel = eventStatus(item) === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
 
-    var body = bodyToHTML(item.description)
-      + (item.location ? '<p><strong>Joyi:</strong> ' + esc(item.location) + '</p>' : '')
-      + (item.participants ? '<p><strong>Ishtirokchilar:</strong> ' + esc(item.participants) + ' kishi</p>' : '')
-      + (item.deadline ? '<p><strong>Ariza muddati:</strong> <time datetime="' + esc(_datePart(item.deadline) || '') + '">' + esc(item.deadlineLabel || fmtDate(item.deadline)) + '</time></p>' : '');
+    var tt = function (k, fb) { return (window.ngoI18n && window.ngoI18n.t) ? window.ngoI18n.t(k, fb) : fb; };
+    var body = bodyToHTML(tField(item, 'description'))
+      + (item.location ? '<p><strong>' + esc(tt('pages.eventDetail.location', 'Joyi:')) + '</strong> ' + esc(item.location) + '</p>' : '')
+      + (item.participants ? '<p><strong>' + esc(tt('pages.eventDetail.participants', 'Ishtirokchilar:')) + '</strong> ' + esc(item.participants) + ' ' + esc(tt('pages.eventDetail.people', 'kishi')) + '</p>' : '')
+      + (item.deadline ? '<p><strong>' + esc(tt('pages.eventDetail.deadline', 'Ariza muddati:')) + '</strong> <time datetime="' + esc(_datePart(item.deadline) || '') + '">' + esc(item.deadlineLabel || fmtDate(item.deadline)) + '</time></p>' : '');
 
     // Filter by id, not reference — see news-detail equivalent for
     // why: items comes from a different fetch than `item`, so two
@@ -672,7 +681,7 @@
     others.forEach(function (e) {
       sidebar += '<a href="event-detail?id=' + encodeURIComponent(e.id) + '" class="detail-sidebar-item">'
         + '<p class="detail-sidebar-item-date"><time datetime="' + esc(_datePart(e.date) || '') + '">' + esc(e.dateLabel || fmtDate(e.date)) + '</time></p>'
-        + '<p class="detail-sidebar-item-title">' + esc(e.title) + '</p>'
+        + '<p class="detail-sidebar-item-title">' + esc(tField(e,'title')) + '</p>'
         + '</a>';
     });
     sidebar += '</aside>';
@@ -683,7 +692,7 @@
       + '<nav aria-label="Sahifa joylashuvi"><p class="detail-breadcrumbs"><a href="index">Bosh sahifa</a><span class="detail-bc-sep" aria-hidden="true">›</span><a href="events">Tadbirlar</a><span class="detail-bc-sep" aria-hidden="true">›</span><span aria-current="page">' + statusLabel + '</span></p></nav>'
       + '<button class="detail-print-btn" onclick="window.print()" aria-label="Chop etish"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>'
       + '</div>'
-      + '<h1 class="detail-title">' + esc(item.title) + '</h1>'
+      + '<h1 class="detail-title">' + esc(tField(item,'title')) + '</h1>'
       + '<p class="detail-meta"><time datetime="' + esc(_datePart(item.date) || '') + '">' + esc(item.dateLabel || fmtDate(item.date)) + '</time><span class="detail-meta-sep">/</span><a href="events">' + statusLabel + '</a></p>'
       + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
       + '<div class="detail-body">' + body + '</div>'

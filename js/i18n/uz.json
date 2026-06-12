@@ -1259,7 +1259,11 @@
     },
     "eventDetail": {
       "title": "Tadbir tafsiloti",
-      "noscriptHint": "Tadbirni ko'rish uchun JavaScript zarur. <a href=\"events\">Tadbirlar ro'yxati</a>"
+      "noscriptHint": "Tadbirni ko'rish uchun JavaScript zarur. <a href=\"events\">Tadbirlar ro'yxati</a>",
+      "location": "Joyi:",
+      "participants": "Ishtirokchilar:",
+      "people": "kishi",
+      "deadline": "Ariza muddati:"
     },
     "foydalanishShartlari": {
       "title": "Foydalanish shartlari",

@@ -1259,7 +1259,11 @@
     },
     "eventDetail": {
       "title": "Сведения о мероприятии",
-      "noscriptHint": "Для просмотра мероприятия нужен JavaScript. <a href=\"events\">Список мероприятий</a>"
+      "noscriptHint": "Для просмотра мероприятия нужен JavaScript. <a href=\"events\">Список мероприятий</a>",
+      "location": "Место:",
+      "participants": "Участники:",
+      "people": "чел.",
+      "deadline": "Срок подачи заявок:"
     },
     "foydalanishShartlari": {
       "title": "Условия использования",

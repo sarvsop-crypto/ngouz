@@ -1259,7 +1259,11 @@
     },
     "eventDetail": {
       "title": "Event details",
-      "noscriptHint": "JavaScript is required to view this event. <a href=\"events\">Events list</a>"
+      "noscriptHint": "JavaScript is required to view this event. <a href=\"events\">Events list</a>",
+      "location": "Location:",
+      "participants": "Participants:",
+      "people": "people",
+      "deadline": "Application deadline:"
     },
     "foydalanishShartlari": {
       "title": "Terms of use",
