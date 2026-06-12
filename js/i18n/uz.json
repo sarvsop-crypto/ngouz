@@ -1227,8 +1227,30 @@
       "section2Label": "II. Bo'lim",
       "section2Title": "A'zolar vakillari",
       "section2Sub": "Viloyat va shahar bo'yicha hududiy vakillari.",
-      "vacant": "Vakant",
-      "vacantPos": "Bo'sh o'rin"
+      "vacant": "Boʻsh oʻrin",
+      "vacantPos": "Bo'sh o'rin",
+      "roles": {
+        "r1": "Kengash raisi",
+        "r2": "Kengash raisining birinchi oʻrinbosari",
+        "r3": "Kengash raisi oʻrinbosari",
+        "r4": "Advokatlar palatasi rahbari",
+        "r5": "Oʻzbekiston Tadbirkorlikni va fermerlikni qoʻllab-quvvatlash markazi rahbari",
+        "r6": "Oʻzbekiston Nogironlar jamiyati rahbari",
+        "r7": "«Sharq ayoli» xalqaro ayollar jamoat fondi rahbari",
+        "r8": "«Dawytbay Kaipov» jamoat fondi direktori",
+        "r9": "Andijon viloyati mintaqaviy tadqiqot markazi rahbari",
+        "r10": "«Karvon» madaniy merosni oʻrganish va turizmni rivojlantirish markazi rahbari",
+        "r11": "«Ayollar markazi» xotin-qizlarning ijtimoiy-iqtisodiy koʻmak markazi rahbari",
+        "r12": "«Zamon» ilmiy tadqiqot markazi rahbari",
+        "r13": "«Durdona» bolalar va ayollar psixologik markazi rahbari",
+        "r14": "«Kelajak nuri» nodavlat notijorat tashkiloti rahbari",
+        "r15": "Samarqand viloyati «Shahodat» isteʼmolchilar huquqlarini himoya qilish uyushmasi NNT direktori",
+        "r16": "«Taskin» Denov tumani xotin-qizlarni ijtimoiy-iqtisodiy va huquqiy manfaatlarini himoya qilish axborot markazi rahbari",
+        "r17": "Fuqarolik tashabbuslarni qoʻllab-quvvatlash markazi Toshkent viloyat boʻlimi rahbari",
+        "r18": "«Salomatlik plyus Ekologiya» NNT rahbari",
+        "r19": "Xorazm viloyati «Istiqbol» ayollar markazi direktori",
+        "r20": "Toshkent shahar xotin-qizlar tadbirkorlik markazi rahbari"
+      }
     },
     "dayjestlar": {
       "title": "Dayjestlar",
@@ -1282,7 +1304,32 @@
       "statReps": "Tayinlangan O'zNNTMA vakili",
       "tableCaption": "Vazirliklar qoshidagi jamoatchilik kengashlari va ulardagi O'zNNTMA vakillari",
       "thAgency": "Vazirlik / Idora nomi",
-      "thRep": "O'zNNTMA vakili"
+      "thRep": "O'zNNTMA vakili",
+      "agencies": {
+        "a1": "Oʻzbekiston Respublikasi Korrupsiyaga qarshi kurashish agentligi",
+        "a2": "Oʻzbekiston Respublikasi Prezidenti huzuridagi Ijtimoiy himoya milliy agentligi",
+        "a3": "Oʻzbekiston Respublikasi Prezidenti huzuridagi Davlat xizmatini rivojlantirish agentligi",
+        "a4": "Oʻzbekiston texnik jihatdan tartibga solish agentligi",
+        "a5": "Oʻzbekiston Respublikasi Davlat aktivlarini boshqarish agentligi",
+        "a6": "Oʻzbekiston Respublikasi Oliy Majlisi Qonunchilik palatasi — Demokratik institutlar va fuqarolik jamiyatini rivojlantirish masalalari qoʻmitasi",
+        "a7": "Oʻzbekiston Respublikasi Oliy taʼlim, fan va innovatsiyalar vazirligi",
+        "a8": "Oʻzbekiston Respublikasi Raqamli texnologiyalar vazirligi",
+        "a9": "Oʻzbekiston Respublikasi Oila va xotin-qizlar qoʻmitasi",
+        "a10": "Raqamli texnologiyalar vazirligi huzuridagi axborotlashtirish va telekommunikatsiyalar sohasida nazorat inspeksiyasi «Oʻzkomnazorat»",
+        "a11": "Oʻzbekiston Respublikasi Energetika vazirligi",
+        "a12": "Oʻzbekiston Respublikasi Oliy Majlisi Qonunchilik palatasi — Korrupsiyaga qarshi kurashish va sud-huquq masalalari qoʻmitasi",
+        "a13": "Oʻzbekiston Respublikasi Sogʻliqni saqlash vazirligi",
+        "a14": "Oʻzbekiston Respublikasi Oliy taʼlim, fan va innovatsiyalar vazirligi huzuridagi Innovatsion rivojlanish agentligi"
+      },
+      "roles": {
+        "r1": "Assotsiatsiya Kengashi raisi, Ijro etuvchi devon rahbari",
+        "r2": "Axborot-tahlil va ijro intizomi nazorati boʻlimi bosh mutaxassisi",
+        "r3": "Kadrlar va yuridik masalalar boʻyicha bosh mutaxassis",
+        "r4": "Rais maslahatchisi – jamoatchilik va OAV bilan ishlash boʻyicha bosh mutaxassis",
+        "r5": "Xalqaro hamkorlikni rivojlantirish boʻlimi bosh mutaxassisi",
+        "r6": "Nodavlat sektorini huquqiy taʼminlash va salohiyatini rivojlantirish boʻlimi boshligʻi",
+        "r7": "Nodavlat sektorini huquqiy taʼminlash va salohiyatini rivojlantirish boʻlimi bosh mutaxassisi"
+      }
     },
     "korrupsiyaMurojaat": {
       "title": "Korrupsiyani oldini olish bo'yicha murojaat",
@@ -1368,7 +1415,8 @@
       "searchAria": "Jamoani qidirish va filtrlash",
       "searchInputAria": "Xodim qidiruvi",
       "searchPlaceholder": "Ism yoki lavozim bo'yicha qidiring",
-      "filterStaff": "Xodimlar"
+      "filterStaff": "Xodimlar",
+      "vacancy": "Boʻsh ish oʻrni"
     },
     "projects": {
       "title": "Loyihalar",

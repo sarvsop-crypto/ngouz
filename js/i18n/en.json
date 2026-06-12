@@ -1228,7 +1228,29 @@
       "section2Title": "Member representatives",
       "section2Sub": "Regional representatives by region and city.",
       "vacant": "Vacant",
-      "vacantPos": "Open position"
+      "vacantPos": "Open position",
+      "roles": {
+        "r1": "Council Chair",
+        "r2": "First Deputy Chair of the Council",
+        "r3": "Deputy Chair of the Council",
+        "r4": "Head of the Chamber of Advocates",
+        "r5": "Head of the Uzbekistan Centre for Support of Entrepreneurship and Farming",
+        "r6": "Head of the Society of Disabled People of Uzbekistan",
+        "r7": "Head of the «Sharq ayoli» international women’s public foundation",
+        "r8": "Director of the «Dawytbay Kaipov» public foundation",
+        "r9": "Head of the Andijan regional research centre",
+        "r10": "Head of the «Karvon» centre for cultural-heritage study and tourism development",
+        "r11": "Head of the «Ayollar markazi» centre for women’s socio-economic support",
+        "r12": "Head of the «Zamon» research centre",
+        "r13": "Head of the «Durdona» psychological centre for children and women",
+        "r14": "Head of the «Kelajak nuri» non-governmental non-profit organisation",
+        "r15": "Director of the «Shahodat» consumer-rights protection association NGO, Samarkand region",
+        "r16": "Head of the «Taskin» information centre for protecting women’s socio-economic and legal interests, Denov district",
+        "r17": "Head of the Tashkent regional branch of the Centre for Support of Civic Initiatives",
+        "r18": "Head of the «Salomatlik plyus Ekologiya» NGO",
+        "r19": "Director of the «Istiqbol» women’s centre, Khorezm region",
+        "r20": "Head of the Tashkent city women’s entrepreneurship centre"
+      }
     },
     "dayjestlar": {
       "title": "Digests",
@@ -1282,7 +1304,32 @@
       "statReps": "UzNANNGO representatives appointed",
       "tableCaption": "Public councils under ministries and the UzNANNGO representatives on them",
       "thAgency": "Ministry / Agency",
-      "thRep": "UzNANNGO representative"
+      "thRep": "UzNANNGO representative",
+      "agencies": {
+        "a1": "Anti-Corruption Agency of the Republic of Uzbekistan",
+        "a2": "National Agency for Social Protection under the President of the Republic of Uzbekistan",
+        "a3": "Agency for the Development of Public Service under the President of the Republic of Uzbekistan",
+        "a4": "Technical Regulation Agency of Uzbekistan",
+        "a5": "Agency for State Assets Management of the Republic of Uzbekistan",
+        "a6": "Legislative Chamber of the Oliy Majlis — Committee on the Development of Democratic Institutions and Civil Society",
+        "a7": "Ministry of Higher Education, Science and Innovation of the Republic of Uzbekistan",
+        "a8": "Ministry of Digital Technologies of the Republic of Uzbekistan",
+        "a9": "Committee on Family and Women of the Republic of Uzbekistan",
+        "a10": "«Uzcomnazorat» Inspectorate for Control in Informatization and Telecommunications under the Ministry of Digital Technologies",
+        "a11": "Ministry of Energy of the Republic of Uzbekistan",
+        "a12": "Legislative Chamber of the Oliy Majlis — Committee on Anti-Corruption and Judicial-Legal Affairs",
+        "a13": "Ministry of Health of the Republic of Uzbekistan",
+        "a14": "Agency for Innovative Development under the Ministry of Higher Education, Science and Innovation"
+      },
+      "roles": {
+        "r1": "Chair of the Association Council, Head of the Executive Office",
+        "r2": "Chief Specialist of the Information-Analysis and Executive-Discipline Control Department",
+        "r3": "Chief Specialist for HR and Legal Affairs",
+        "r4": "Adviser to the Chair – Chief Specialist for Public and Media Relations",
+        "r5": "Chief Specialist of the International Cooperation Development Department",
+        "r6": "Head of the Department for Legal Support and Capacity Development of the Non-Governmental Sector",
+        "r7": "Chief Specialist of the Department for Legal Support and Capacity Development of the Non-Governmental Sector"
+      }
     },
     "korrupsiyaMurojaat": {
       "title": "Anti-corruption inquiry",
@@ -1368,7 +1415,8 @@
       "searchAria": "Search and filter the team",
       "searchInputAria": "Staff search",
       "searchPlaceholder": "Search by name or position",
-      "filterStaff": "Staff"
+      "filterStaff": "Staff",
+      "vacancy": "Vacancy"
     },
     "projects": {
       "title": "Projects",
