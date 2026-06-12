@@ -654,6 +654,38 @@ function esc(s) {
     .replace(/>/g,'&gt;');
 }
 
+function curLang() {
+  var l = (window.ngoI18n && window.ngoI18n.get && window.ngoI18n.get()) ||
+    (function () { try { return localStorage.getItem('ngo_lang_v1') || 'uz'; } catch (e) { return 'uz'; } })();
+  return (l === 'ru' || l === 'en') ? l : 'uz';
+}
+function tt(k, fb) { return (window.ngoI18n && window.ngoI18n.t) ? window.ngoI18n.t(k, fb) : fb; }
+// Localize the Uzbek region label produced at data-load time (proper region
+// names, shared with the regions data). Falls back to the Uzbek name.
+var REGION_I18N = {
+  'Toshkent shahri': ['город Ташкент', 'Tashkent city'],
+  'Toshkent viloyati': ['Ташкентская область', 'Tashkent region'],
+  'Andijon viloyati': ['Андижанская область', 'Andijan region'],
+  "Fargʻona viloyati": ['Ферганская область', 'Fergana region'],
+  'Namangan viloyati': ['Наманганская область', 'Namangan region'],
+  'Samarqand viloyati': ['Самаркандская область', 'Samarkand region'],
+  'Buxoro viloyati': ['Бухарская область', 'Bukhara region'],
+  'Navoiy viloyati': ['Навоийская область', 'Navoiy region'],
+  'Qashqadaryo viloyati': ['Кашкадарьинская область', 'Kashkadarya region'],
+  'Surxondaryo viloyati': ['Сурхандарьинская область', 'Surkhandarya region'],
+  'Jizzax viloyati': ['Джизакская область', 'Jizzakh region'],
+  'Sirdaryo viloyati': ['Сырдарьинская область', 'Syrdarya region'],
+  'Xorazm viloyati': ['Хорезмская область', 'Khorezm region'],
+  "Qoraqalpogʻiston Respublikasi": ['Республика Каракалпакстан', 'Republic of Karakalpakstan'],
+  'Respublika ahamiyatiga ega': ['Республиканского значения', 'National-level'],
+  'Boshqa': ['Другое', 'Other']
+};
+function regLabel(uzName) {
+  var l = curLang();
+  if (l !== 'uz' && REGION_I18N[uzName]) return REGION_I18N[uzName][l === 'ru' ? 0 : 1];
+  return uzName;
+}
+
 function initials(name) {
   var words = name.replace(/[«»""'']/g,'').split(/\s+/).filter(Boolean);
   if (words.length === 1) return words[0].slice(0,2).toUpperCase();
@@ -712,7 +744,8 @@ regionList.forEach(function(reg) {
   btn.className = 'nnt-sidebar-item' + (isActive ? ' active' : '');
   btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
   var cnt = reg === 'Barchasi' ? ALL.length : (NNT_DATA[reg] ? NNT_DATA[reg].length : 0);
-  btn.innerHTML = '<span>' + esc(reg) + '</span><span class="nnt-sidebar-badge">' + cnt + '</span>';
+  var regDisplay = reg === 'Barchasi' ? tt('pages.nntlar.allRegions', 'Barchasi') : regLabel(reg);
+  btn.innerHTML = '<span>' + esc(regDisplay) + '</span><span class="nnt-sidebar-badge">' + cnt + '</span>';
   if (reg === 'Barchasi') regionBarchasi = btn;
   btn.addEventListener('click', function() {
     if (activeRegion === reg && reg !== 'Barchasi') {
@@ -844,22 +877,22 @@ function render() {
             '<p class="nnt-card-name">' + esc(nnt.nom) + '</p>' +
             '<div class="nnt-tags">' +
               (nnt.soha ? '<span class="nnt-field-tag">' + esc(nnt.soha) + '</span>' : '') +
-              (showRegion ? '<span class="nnt-region-tag"><svg aria-hidden="true" focusable="false" fill="none" height="11" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" width="11"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' + esc(nnt.region) + '</span>' : '') +
+              (showRegion ? '<span class="nnt-region-tag"><svg aria-hidden="true" focusable="false" fill="none" height="11" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" width="11"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' + esc(regLabel(nnt.region)) + '</span>' : '') +
             '</div>' +
           '</div>' +
         '</div>' +
         '<div class="nnt-card-body">' +
-          '<div class="nnt-row"><span class="nnt-row-label">Rahbar</span><span>' + esc(nnt.rahbar) + '</span></div>' +
-          '<div class="nnt-row"><span class="nnt-row-label">Manzil</span><span>' + esc(nnt.manzil) + '</span></div>' +
-          (nnt.shakl ? '<div class="nnt-row"><span class="nnt-row-label">Shakl</span><span>' + esc(nnt.shakl) + '</span></div>' : '') +
+          '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblLeader', 'Rahbar') + '</span><span>' + esc(nnt.rahbar) + '</span></div>' +
+          '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblAddress', 'Manzil') + '</span><span>' + esc(nnt.manzil) + '</span></div>' +
+          (nnt.shakl ? '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblForm', 'Shakl') + '</span><span>' + esc(nnt.shakl) + '</span></div>' : '') +
         '</div>' +
         '<div class="nnt-card-footer">' +
           '<div class="nnt-footer-item">' +
-            '<span>Ro\'yxatga olingan</span>' +
+            '<span>' + tt('pages.nntlar.lblRegistered', "Ro'yxatga olingan") + '</span>' +
             '<strong>' + esc(royxatParts[0]) + (royxatParts[1] ? ' · ' + esc(royxatParts[1]) : '') + '</strong>' +
           '</div>' +
           '<div class="nnt-footer-item">' +
-            '<span>A\'zo bo\'lgan</span>' +
+            '<span>' + tt('pages.nntlar.lblMember', "A'zo bo'lgan") + '</span>' +
             '<strong>' + esc(azoParts[0]) + (azoParts[1] ? ' · ' + esc(azoParts[1]) : '') + '</strong>' +
           '</div>' +
         '</div>' +
@@ -869,6 +902,8 @@ function render() {
 }
 
 render();
+// Re-localize card labels + region tags on a language switch.
+if (window.ngoI18n && typeof window.ngoI18n.onChange === 'function') window.ngoI18n.onChange(render);
 } // end initNntPage
 </script>
 

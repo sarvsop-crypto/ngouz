@@ -1397,7 +1397,13 @@
       "searchInputAria": "Search NGOs",
       "searchPlaceholder": "Search by NGO name, director, or activity area...",
       "loadingList": "Loading NGO list...",
-      "noscript": "The NGO list loads via JavaScript. Alternatively you can <a href=\"contact\">contact us</a> to request the information."
+      "noscript": "The NGO list loads via JavaScript. Alternatively you can <a href=\"contact\">contact us</a> to request the information.",
+      "lblLeader": "Leader",
+      "lblAddress": "Address",
+      "lblForm": "Type",
+      "lblRegistered": "Registered",
+      "lblMember": "Member since",
+      "allRegions": "All"
     },
     "officialDocs": {
       "title": "Official NGO documents",

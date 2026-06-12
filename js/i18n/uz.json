@@ -1397,7 +1397,13 @@
       "searchInputAria": "NNT bo'yicha qidirish",
       "searchPlaceholder": "NNT nomi, rahbar yoki soha bo'yicha qidiring...",
       "loadingList": "NNTlar ro'yxati yuklanmoqda...",
-      "noscript": "NNTlar ro'yxati JavaScript yordamida yuklanadi. Muqobil ravishda <a href=\"contact\">biz bilan bog'lanib</a>, kerakli ma'lumotni so'rashingiz mumkin."
+      "noscript": "NNTlar ro'yxati JavaScript yordamida yuklanadi. Muqobil ravishda <a href=\"contact\">biz bilan bog'lanib</a>, kerakli ma'lumotni so'rashingiz mumkin.",
+      "lblLeader": "Rahbar",
+      "lblAddress": "Manzil",
+      "lblForm": "Shakl",
+      "lblRegistered": "Roʻyxatga olingan",
+      "lblMember": "Aʼzo boʻlgan",
+      "allRegions": "Barchasi"
     },
     "officialDocs": {
       "title": "NNTga oid rasmiy hujjatlar",
