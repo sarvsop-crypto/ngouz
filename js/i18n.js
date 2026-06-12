@@ -78,6 +78,18 @@
         else el.textContent = val;
       }
     }
+    // Value form: the key lives in data-i18n-html itself (no plain data-i18n),
+    // e.g. <div data-i18n-html="pages.mission.body">. innerHTML replacement.
+    // The empty flag form (data-i18n + bare data-i18n-html) is already handled
+    // above, so skip empty values here to avoid clobbering it with undefined.
+    var htmlNodes = scope.querySelectorAll("[data-i18n-html]");
+    for (var h = 0; h < htmlNodes.length; h++) {
+      var hel = htmlNodes[h];
+      var hkey = hel.getAttribute("data-i18n-html");
+      if (!hkey) continue; // flag form — key came from data-i18n
+      var hval = lookup(dict, hkey);
+      if (typeof hval === "string") hel.innerHTML = hval;
+    }
   }
 
   var ATTRS = ["placeholder", "title", "alt", "aria-label", "aria-placeholder", "content"];
