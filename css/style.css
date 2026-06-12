@@ -3540,17 +3540,17 @@ body:not(.home-page) .site-header { top: 36px; }
 }
 @media (prefers-reduced-motion: reduce) { .nav-ai-pill { transition: none; } }
 
-/* Homepage header: make room for the AI pill. The secondary "jamoat fondi"
-   logo is hidden below 1600px (it shows on very wide screens; the primary
-   O'zNNTMA logo carries the brand), and the nav is lightly tightened so the
-   full menu + pill fit on laptop widths without overlapping. */
-@media (max-width: 1600px) { body.home-page .topbar-fond-brand { display: none; } }
-@media (min-width: 1101px) and (max-width: 1520px) { body.home-page .menu { gap: 16px; font-size: 16px; } }
-/* Homepage only: the AI pill widens the right cluster, so the full nav no
-   longer fits below ~1366px — collapse to the hamburger there (the pill stays
-   visible beside it) instead of overlapping. >=1366px keeps the full nav. */
+/* Header: make room for the AI pill (site-wide — every page now has the pill).
+   The secondary "jamoat fondi" logo is hidden below 1600px (it shows on very
+   wide screens; the primary O'zNNTMA logo carries the brand), and the nav is
+   lightly tightened so the full menu + pill fit on laptop widths. */
+@media (max-width: 1600px) { .topbar-fond-brand { display: none; } }
+@media (min-width: 1101px) and (max-width: 1520px) { .menu { gap: 16px; font-size: 16px; } }
+/* The AI pill widens the right cluster, so the full nav no longer fits below
+   ~1366px — collapse to the hamburger there (the pill stays visible beside it)
+   instead of overlapping. >=1366px keeps the full dropdown nav. */
 @media (min-width: 1101px) and (max-width: 1365px) {
-  body.home-page .menu { display: none !important; }
-  body.home-page .topbar-controls { display: none; }
-  body.home-page .hamburger { display: flex; }
+  .menu { display: none !important; }
+  .topbar-controls { display: none; }
+  .hamburger { display: flex; }
 }

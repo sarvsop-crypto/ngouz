@@ -5,6 +5,7 @@ const ALLOWED_ORIGINS = [
   'https://ngouz.pages.dev',
   'https://ngo-demo.pages.dev',
   'https://ngo-demo-4bu.pages.dev',
+  'https://ngo-demo-night.pages.dev',
   'http://localhost:5173',
   'http://localhost:5174',
   'http://localhost:3000',
@@ -17,6 +18,7 @@ const ALLOWED_HOST_SUFFIXES = [
   '.ngouz.pages.dev',
   '.ngo-demo.pages.dev',
   '.ngo-demo-4bu.pages.dev',
+  '.ngo-demo-night.pages.dev',
 ];
 
 function isAllowedOrigin(origin) {
