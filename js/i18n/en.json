@@ -1894,7 +1894,11 @@
         "parliament": "Legislative Chamber of the Oliy Majlis of the Republic of Uzbekistan",
         "senate": "Senate of the Oliy Majlis of the Republic of Uzbekistan",
         "lex": "National Legislation Database of the Republic of Uzbekistan"
-      }
+      },
+      "mapMembers": "members",
+      "mapNnt": "NGOs",
+      "chartYearAbbr": "",
+      "chartTooltipMembers": "Number of NGOs"
     },
     "docs": {
       "empty": "No documents found.",

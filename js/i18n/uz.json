@@ -1894,7 +1894,11 @@
         "parliament": "O'zbekiston Respublikasi Oliy majlisi qonunchilik palatasi",
         "senate": "O'zbekiston Respublikasi Oliy majlis senati",
         "lex": "O'zbekiston Respublikasi milliy qonunchilik ma'lumotlari bazasi"
-      }
+      },
+      "mapMembers": "aʻzo",
+      "mapNnt": "NNT",
+      "chartYearAbbr": "y.",
+      "chartTooltipMembers": "NNT soni"
     },
     "docs": {
       "empty": "Hujjatlar topilmadi.",

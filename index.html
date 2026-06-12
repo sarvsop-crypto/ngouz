@@ -447,16 +447,19 @@ window.addEventListener('load', function(){
   var canvas = document.getElementById('nntChart');
   if(!canvas) return;
 
-  var labels = ['2020 й.','2021 й.','2022 й.','2023 й.','2024 й.','2025 й.'];
   var member = [532, 990, 1482, 1843, 2143, 2382];
   var chartInstance = null;
+  function tt(k,fb){ return (window.ngoI18n&&window.ngoI18n.t)?window.ngoI18n.t(k,fb):fb; }
+  // X-axis year labels with a locale-aware "year" abbreviation (uz "y." /
+  // ru "г." / en none).
+  function chartLabels(){ var s=tt('pages.index.chartYearAbbr','y.'); return [2020,2021,2022,2023,2024,2025].map(function(y){ return s ? y+' '+s : ''+y; }); }
 
   function buildChart() {
     if(chartInstance) { chartInstance.destroy(); }
     chartInstance = new Chart(canvas, {
       type: 'bar',
       data: {
-        labels: labels,
+        labels: chartLabels(),
         datasets: [
           {
             type: 'bar',
@@ -501,7 +504,7 @@ window.addEventListener('load', function(){
             padding: 10,
             callbacks: {
               label: function(ctx){
-                if(ctx.datasetIndex === 0) return '  NNT soni: ' + ctx.parsed.y.toLocaleString();
+                if(ctx.datasetIndex === 0) return '  ' + tt('pages.index.chartTooltipMembers', 'NNT soni') + ': ' + ctx.parsed.y.toLocaleString();
                 return null;
               }
             }
@@ -605,6 +608,11 @@ window.addEventListener('load', function(){
   } else {
     lazyBuild();
   }
+  // Rebuild the chart on a language switch so axis labels + the hover tooltip
+  // re-localize (only if it has already been built/scrolled into view).
+  if (window.ngoI18n && typeof window.ngoI18n.onChange === 'function') {
+    window.ngoI18n.onChange(function(){ if (window.Chart && window.Chart.getChart && window.Chart.getChart(canvas)) buildChart(); });
+  }
 });
 </script>
 <script src="js/main.js" defer></script>
@@ -632,6 +640,30 @@ window.addEventListener('load', function(){
   };
 
   function fmt(n){ return n.toLocaleString('ru-RU'); }
+
+  function curLang(){ var l=(window.ngoI18n&&window.ngoI18n.get&&window.ngoI18n.get())||(function(){try{return localStorage.getItem('ngo_lang_v1')||'uz';}catch(e){return 'uz';}})(); return (l==='ru'||l==='en')?l:'uz'; }
+  function tt(k,fb){ return (window.ngoI18n&&window.ngoI18n.t)?window.ngoI18n.t(k,fb):fb; }
+  // Localized region names (keep the \n line-break for the two-line map label).
+  var REGION_NAMES_I18N = {
+    'UZ-QR': ["Республика\nКаракалпакстан", "Republic of\nKarakalpakstan"],
+    'UZ-XO': ["Хорезмская\nобласть", "Khorezm\nregion"],
+    'UZ-NW': ["Навоийская\nобласть", "Navoiy\nregion"],
+    'UZ-BU': ["Бухарская\nобласть", "Bukhara\nregion"],
+    'UZ-JI': ["Джизакская\nобласть", "Jizzakh\nregion"],
+    'UZ-SA': ["Самаркандская\nобласть", "Samarkand\nregion"],
+    'UZ-QA': ["Кашкадарьинская\nобласть", "Kashkadarya\nregion"],
+    'UZ-SU': ["Сурхандарьинская\nобласть", "Surkhandarya\nregion"],
+    'UZ-SI': ["Сырдарьинская\nобласть", "Syrdarya\nregion"],
+    'UZ-TO': ["Ташкентская\nобласть", "Tashkent\nregion"],
+    'UZ-TK': ["город\nТашкент", "Tashkent\ncity"],
+    'UZ-NG': ["Наманганская\nобласть", "Namangan\nregion"],
+    'UZ-FA': ["Ферганская\nобласть", "Fergana\nregion"],
+    'UZ-AN': ["Андижанская\nобласть", "Andijan\nregion"]
+  };
+  function regName(id){ var l=curLang(); if(l!=='uz'&&REGION_NAMES_I18N[id]) return REGION_NAMES_I18N[id][l==='ru'?0:1]; return data[id].name; }
+  // Live member counts override the seed once /organizations loads.
+  var liveCounts = {};
+  function memText(id){ var c=(liveCounts[id]!=null?liveCounts[id]:data[id].members); return fmt(c)+' '+tt('pages.index.mapMembers', "a'zo"); }
 
   var regionCodeBySvgId = {
     'UZ-QR': 'karakalpakstan',
@@ -691,11 +723,11 @@ window.addEventListener('load', function(){
       lbl.setAttribute('data-region', id);
       lbl.style.left = cx + '%';
       lbl.style.top  = cy + '%';
-      var lines = d.name.split('\n');
+      var lines = regName(id).split('\n');
       lbl.innerHTML =
-        '<span class="ml-nnt">'     + fmt(d.nnt)                   + '</span>' +
-        '<span class="ml-members">' + fmt(d.members) + ' a\'zo'    + '</span>' +
-        '<span class="ml-name">'    + lines.join('<br>')            + '</span>';
+        '<span class="ml-nnt">'     + fmt(d.nnt)         + '</span>' +
+        '<span class="ml-members">' + memText(id)        + '</span>' +
+        '<span class="ml-name">'    + lines.join('<br>') + '</span>';
       box.appendChild(lbl);
 
       path.addEventListener('mouseenter', function(){
@@ -716,10 +748,10 @@ window.addEventListener('load', function(){
       // that drills into per-region NNT lists.
       path.setAttribute('tabindex', '0');
       path.setAttribute('role', 'link');
-      var regionName = (d.name || '').replace(/\n/g, ' ').trim();
+      var regionName = regName(id).replace(/\n/g, ' ').trim();
       if (regionName) {
         path.setAttribute('aria-label',
-          regionName + ' — ' + fmt(d.nnt) + ' NNT, ' + fmt(d.members) + ' a\'zo');
+          regionName + ' — ' + fmt(d.nnt) + ' ' + tt('pages.index.mapNnt', 'NNT') + ', ' + memText(id));
       }
       path.addEventListener('keydown', function (ev) {
         if (ev.key === 'Enter' || ev.key === ' ' || ev.key === 'Spacebar') {
@@ -756,23 +788,41 @@ window.addEventListener('load', function(){
             var apiCode = regionCodeBySvgId[uzId];
             var lbl = box.querySelector('.map-label[data-region="' + uzId + '"]');
             if (!lbl) return;
-            var liveCount = counts[apiCode] || 0;
+            liveCounts[uzId] = counts[apiCode] || 0;
             var memSpan = lbl.querySelector('.ml-members');
-            if (memSpan) memSpan.textContent = fmt(liveCount) + ' a\'zo';
+            if (memSpan) memSpan.textContent = memText(uzId);
             // Mirror the live count into the path's aria-label so screen
             // readers don't announce the stale hardcoded fallback.
             var path = box.querySelector('#' + uzId);
             if (path && data[uzId]) {
-              var regionName = (data[uzId].name || '').replace(/\n/g, ' ').trim();
+              var regionName = regName(uzId).replace(/\n/g, ' ').trim();
               if (regionName) {
                 path.setAttribute('aria-label',
-                  regionName + ' — ' + fmt(data[uzId].nnt) + ' NNT, ' + fmt(liveCount) + ' a\'zo');
+                  regionName + ' — ' + fmt(data[uzId].nnt) + ' ' + tt('pages.index.mapNnt', 'NNT') + ', ' + memText(uzId));
               }
             }
           });
         })
         .catch(function(){ /* keep hardcoded fallback on network error */ });
     })(0, []);
+
+    // Re-localize map labels (region name + member suffix + aria) on a
+    // language switch — the labels are built once, so update them in place.
+    function relabel(){
+      Object.keys(data).forEach(function(id){
+        var lbl = box.querySelector('.map-label[data-region="' + id + '"]');
+        if (lbl) {
+          var ml = lbl.querySelector('.ml-members'); if (ml) ml.textContent = memText(id);
+          var nm = lbl.querySelector('.ml-name');    if (nm) nm.innerHTML = regName(id).split('\n').join('<br>');
+        }
+        var path = box.querySelector('#' + id);
+        if (path) {
+          var rn = regName(id).replace(/\n/g, ' ').trim();
+          if (rn) path.setAttribute('aria-label', rn + ' — ' + fmt(data[id].nnt) + ' ' + tt('pages.index.mapNnt', 'NNT') + ', ' + memText(id));
+        }
+      });
+    }
+    if (window.ngoI18n && typeof window.ngoI18n.onChange === 'function') window.ngoI18n.onChange(relabel);
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initMap);
