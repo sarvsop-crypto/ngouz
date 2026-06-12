@@ -1167,7 +1167,9 @@
       "academy": "Виртуальная академия",
       "internship": "Стажировка и волонтёрство"
     },
-    "joinCta": "Вступить"
+    "joinCta": "Вступить",
+    "aiPill": "Grant AI",
+    "aiPillAria": "Конкурсы грантов — AI-поиск"
   },
   "footer": {
     "addressTitle": "Адрес",

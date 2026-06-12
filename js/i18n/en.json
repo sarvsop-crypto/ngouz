@@ -1167,7 +1167,9 @@
       "academy": "Virtual academy",
       "internship": "Internships and volunteering"
     },
-    "joinCta": "Join"
+    "joinCta": "Join",
+    "aiPill": "Grant AI",
+    "aiPillAria": "Grant competitions — AI search"
   },
   "footer": {
     "addressTitle": "Address",

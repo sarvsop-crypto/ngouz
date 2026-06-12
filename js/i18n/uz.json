@@ -1167,7 +1167,9 @@
       "academy": "Virtual akademiya",
       "internship": "Stajirovka va volontyorlik"
     },
-    "joinCta": "Aʻzo boʻlish"
+    "joinCta": "Aʻzo boʻlish",
+    "aiPill": "Grant AI",
+    "aiPillAria": "Grant tanlovlari — AI qidiruv"
   },
   "footer": {
     "addressTitle": "Manzil",
