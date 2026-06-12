@@ -1098,7 +1098,27 @@
     "proposalCta": "<div class=\"card\" style=\"display:flex; align-items:center; justify-content:space-between; gap:16px;\"><div><h3 style=\"margin:0 0 8px\">Hamkorlik taklifi yuborish</h3><p>Yangi hamkorlik tashabbuslari bo'yicha biz bilan bog'laning va taklif yuboring.</p></div><a class=\"btn\" href=\"contact\">Bog'lanish</a></div>",
     "loadError": "Yuklashda xatolik",
     "networkError": "Tarmoq xatosi. Internet aloqangizni tekshiring.",
-    "genericError": "Xatolik. Iltimos qaytadan urinib ko'ring."
+    "genericError": "Xatolik. Iltimos qaytadan urinib ko'ring.",
+    "a11y": {
+      "title": "Koʻrish rejimi",
+      "textSize": "Matn oʻlchami",
+      "contrast": "Yuqori kontrast",
+      "grayscale": "Qora-oq rejim",
+      "reset": "Standart holat",
+      "on": "Yoqish",
+      "off": "Oʻchirish"
+    },
+    "archive": "Arxiv",
+    "loadMore": "Koʻproq koʻrish",
+    "showing": "koʻrsatilmoqda",
+    "dataLoadError": "Maʼlumotlarni yuklab boʻlmadi. Sahifani qayta yuklang yoki keyinroq urinib koʻring.",
+    "logout": {
+      "title": "Tizimdan chiqish",
+      "confirm": "Haqiqatan ham chiqmoqchimisiz?",
+      "copy": "Tizimdan chiqsangiz, qayta kirishingiz kerak boʻladi.",
+      "cancel": "Bekor qilish",
+      "confirmBtn": "Ha, chiqish"
+    }
   },
   "testBanner": {
     "tag": "Test",
@@ -1146,7 +1166,8 @@
       "vacancies": "Bo'sh ish o'rinlari",
       "academy": "Virtual akademiya",
       "internship": "Stajirovka va volontyorlik"
-    }
+    },
+    "joinCta": "Aʻzo boʻlish"
   },
   "footer": {
     "addressTitle": "Manzil",
@@ -1501,7 +1522,8 @@
       "statExec": "Ijro etuvchi devon xodimlari",
       "statRegional": "Hududiy bo'linmalar xodimlari",
       "statNormNum": "Me'yor bo'yicha",
-      "statNormLabel": "Yordamchi va texnik xodimlar soni tasdiqlangan me'yorlarga muvofiq belgilanadi"
+      "statNormLabel": "Yordamchi va texnik xodimlar soni tasdiqlangan me'yorlarga muvofiq belgilanadi",
+      "sourceCaption": "Manba: OʻzNNTMA Ijro etuvchi devonining tuzilmasi, 27.10.2022 yil."
     },
     "sustainabilityCert": {
       "title": "\"Barqaror NNT\"",
@@ -1636,19 +1658,34 @@
       "title": "Yangiliklar",
       "sub": "Rasmiy yangiliklar va press-relizlar ro'yxati.",
       "listAria": "Yangiliklar ro'yxati",
-      "noscript": "Yangiliklar ro'yxatini ko'rish uchun JavaScript zarur. Quyidagi RSS havolasidan ham foydalanishingiz mumkin: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/news.rss\">RSS feed</a>."
+      "noscript": "Yangiliklar ro'yxatini ko'rish uchun JavaScript zarur. Quyidagi RSS havolasidan ham foydalanishingiz mumkin: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/news.rss\">RSS feed</a>.",
+      "emptyRecent": "Soʻnggi yangiliklar topilmadi.",
+      "emptyAll": "Yangiliklar topilmadi."
     },
     "events": {
       "title": "Tadbirlar",
       "sub": "Bo'lib o'tgan va rejalashtirilgan tadbirlar taqvimi.",
       "listAria": "Tadbirlar ro'yxati",
-      "noscript": "Tadbirlar ro'yxatini ko'rish uchun JavaScript zarur. Quyidagi RSS havolasidan ham foydalanishingiz mumkin: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/events.rss\">RSS feed</a>."
+      "noscript": "Tadbirlar ro'yxatini ko'rish uchun JavaScript zarur. Quyidagi RSS havolasidan ham foydalanishingiz mumkin: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/events.rss\">RSS feed</a>.",
+      "statusUpcoming": "Rejalashtirilgan",
+      "statusPast": "Boʻlib oʻtdi",
+      "sectionUpcoming": "Rejalashtirilgan tadbirlar",
+      "sectionPast": "Boʻlib oʻtgan tadbirlar",
+      "emptyUpcoming": "Yaqin tadbirlar topilmadi.",
+      "emptyAll": "Tadbirlar topilmadi."
     },
     "grants": {
       "title": "E'lon qilingan grantlar",
       "sub": "NNTlar va fuqarolik jamiyati tashkilotlari uchun ochiq grant va moliyalashtirish imkoniyatlari.",
       "listAria": "Grantlar ro'yxati",
-      "noscript": "Grantlar ro'yxatini ko'rish uchun JavaScript zarur. Quyidagi RSS havolasidan ham foydalanishingiz mumkin: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/grants.rss\">RSS feed</a>."
+      "noscript": "Grantlar ro'yxatini ko'rish uchun JavaScript zarur. Quyidagi RSS havolasidan ham foydalanishingiz mumkin: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/grants.rss\">RSS feed</a>.",
+      "emptyActive": "Faol grant yoki tanlov mavjud emas.",
+      "apply": "Ariza topshirish",
+      "closed": "Tanlov yopilgan",
+      "tagActive": "Faol",
+      "tagClosed": "Yopilgan",
+      "amount": "Miqdor:",
+      "deadline": "Muddat:"
     },
     "leadership": {
       "title": "Rahbariyat",
@@ -1728,6 +1765,12 @@
         "senate": "O'zbekiston Respublikasi Oliy majlis senati",
         "lex": "O'zbekiston Respublikasi milliy qonunchilik ma'lumotlari bazasi"
       }
+    },
+    "docs": {
+      "empty": "Hujjatlar topilmadi.",
+      "colName": "Hujjat nomi",
+      "colCategory": "Toifa",
+      "colDate": "Sana"
     }
   },
   "membershipModal": {

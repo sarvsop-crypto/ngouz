@@ -5,21 +5,21 @@
     '<div class="modal-overlay" id="logoutModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="logoutModalTitle">' +
       '<div class="modal u-modal-max-400">' +
         '<div class="modal__head">' +
-          '<h2 class="modal__title" id="logoutModalTitle">Tizimdan chiqish</h2>' +
-          '<button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>' +
+          '<h2 class="modal__title" id="logoutModalTitle" data-i18n="common.logout.title">Tizimdan chiqish</h2>' +
+          '<button type="button" class="modal__close" data-modal-close data-i18n-aria-label="common.closeAria" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>' +
         '</div>' +
         '<div class="modal__body">' +
           '<div class="u-logout-intro">' +
             '<div class="u-logout-icon-box"><i class="ph ph-sign-out" aria-hidden="true"></i></div>' +
             '<div>' +
-              '<p class="u-logout-title">Haqiqatan ham chiqmoqchimisiz?</p>' +
-              '<p class="u-logout-copy">Tizimdan chiqsangiz, qayta kirishingiz kerak bo\'ladi.</p>' +
+              '<p class="u-logout-title" data-i18n="common.logout.confirm">Haqiqatan ham chiqmoqchimisiz?</p>' +
+              '<p class="u-logout-copy" data-i18n="common.logout.copy">Tizimdan chiqsangiz, qayta kirishingiz kerak bo\'ladi.</p>' +
             '</div>' +
           '</div>' +
         '</div>' +
         '<div class="modal__foot">' +
-          '<button type="button" class="btn btn--secondary" data-modal-close>Bekor qilish</button>' +
-          '<button type="button" class="btn btn--danger" id="logoutConfirmBtn"><i class="ph ph-sign-out" aria-hidden="true"></i> Ha, chiqish</button>' +
+          '<button type="button" class="btn btn--secondary" data-modal-close data-i18n="common.logout.cancel">Bekor qilish</button>' +
+          '<button type="button" class="btn btn--danger" id="logoutConfirmBtn"><i class="ph ph-sign-out" aria-hidden="true"></i> <span data-i18n="common.logout.confirmBtn">Ha, chiqish</span></button>' +
         '</div>' +
       '</div>' +
     '</div>';
@@ -27,6 +27,10 @@
   function addModal() {
     if (!document.getElementById('logoutModal')) {
       document.body.insertAdjacentHTML('beforeend', html);
+      // Injected after the loader's initial pass; translate it now (later
+      // language switches are covered by the loader's apply(document)).
+      var m = document.getElementById('logoutModal');
+      if (m && window.ngoI18n && typeof window.ngoI18n.apply === 'function') window.ngoI18n.apply(m);
     }
   }
 

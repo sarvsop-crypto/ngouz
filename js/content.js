@@ -63,7 +63,8 @@
     fetchJSON(kind, function (items, data) {
       try { container.setAttribute('aria-busy', 'false'); } catch (e) {}
       if (data && data.__error) {
-        container.innerHTML = '<p role="alert" class="text-muted-light">Ma\'lumotlarni yuklab bo\'lmadi. Sahifani qayta yuklang yoki keyinroq urinib ko\'ring.</p>';
+        container.innerHTML = '<p role="alert" class="text-muted-light" data-i18n="common.dataLoadError">Ma\'lumotlarni yuklab bo\'lmadi. Sahifani qayta yuklang yoki keyinroq urinib ko\'ring.</p>';
+        applyI18n(container);
         return;
       }
       render(items, container);
@@ -106,7 +107,23 @@
     return 'background:' + coverGradient(item.category || item.status || '');
   }
 
-  var UZ_MONTHS = ['Yan','Feb','Mar','Apr','May','Iyn','Iyl','Avg','Sen','Okt','Noy','Dek'];
+  var MONTHS_ABBR = {
+    uz: ['Yan','Feb','Mar','Apr','May','Iyn','Iyl','Avg','Sen','Okt','Noy','Dek'],
+    ru: ['Янв','Фев','Мар','Апр','Май','Июн','Июл','Авг','Сен','Окт','Ноя','Дек'],
+    en: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+  };
+  // Active UI language, clamped to a supported locale (matches i18n.js).
+  function curLang() {
+    var l = (window.ngoI18n && window.ngoI18n.get && window.ngoI18n.get()) ||
+      (function () { try { return localStorage.getItem('ngo_lang_v1') || 'uz'; } catch (e) { return 'uz'; } })();
+    return (l === 'ru' || l === 'en') ? l : 'uz';
+  }
+  // The renderers below run AFTER the loader's initial DOM pass, so newly
+  // injected data-i18n nodes need an explicit apply(); subsequent language
+  // switches are covered by the loader's own apply(document) on set().
+  function applyI18n(scope) {
+    if (window.ngoI18n && typeof window.ngoI18n.apply === 'function') window.ngoI18n.apply(scope || document);
+  }
 
   // Trim datetime suffix (T-separated time, or space-separated time
   // some backends return) before splitting — without this a datetime
@@ -132,7 +149,7 @@
     var d = _datePart(iso);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(d)) return '';
     var m = parseInt(d.split('-')[1], 10);
-    return UZ_MONTHS[m - 1] || '';
+    return (MONTHS_ABBR[curLang()] || MONTHS_ABBR.uz)[m - 1] || '';
   }
 
   // Linkify http(s):// URLs that appear as plain text in admin-edited
@@ -207,22 +224,25 @@
       // Was an early return — left the section header above with an
       // empty area beneath it. Show a placeholder so the layout flow
       // doesn't break and the user sees what's intended.
-      container.innerHTML = '<p role="status" class="text-muted-light" style="padding:16px 0;">So‘nggi yangiliklar topilmadi.</p>';
+      container.innerHTML = '<p role="status" class="text-muted-light" style="padding:16px 0;" data-i18n="pages.news.emptyRecent">So‘nggi yangiliklar topilmadi.</p>';
+      applyI18n(container);
       return;
     }
     var html = '<div class="gov-news-grid">';
     latest.forEach(function (n) { html += newsCardHTML(n); });
     html += '</div>';
     container.innerHTML = html;
+    applyI18n(container);
   }
 
   function renderNewsPage(items, container) {
-    if (!items.length) { container.innerHTML = '<p role="status" class="text-muted-light">Yangiliklar topilmadi.</p>'; return; }
+    if (!items.length) { container.innerHTML = '<p role="status" class="text-muted-light" data-i18n="pages.news.emptyAll">Yangiliklar topilmadi.</p>'; applyI18n(container); return; }
     var sorted = sortNewsByDateDesc(items);
     var html = '<div class="gov-news-grid">';
     sorted.forEach(function (n) { html += newsCardHTML(n); });
     html += '</div>';
     container.innerHTML = html;
+    applyI18n(container);
   }
 
   function coverGradient(key) {
@@ -508,9 +528,11 @@
   function eventCardHTML(e) {
     var url = 'event-detail?id=' + encodeURIComponent(e.id);
     var cat = eventStatus(e);
-    var label = cat === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
+    var label = cat === 'upcoming'
+      ? '<span data-i18n="pages.events.statusUpcoming">Rejalashtirilgan</span>'
+      : '<span data-i18n="pages.events.statusPast">Bo\'lib o\'tdi</span>';
     var archiveBadge = (e.is_archive === '1' || e.is_archive === 1)
-      ? '<span class="gov-news-archive-badge">Arxiv</span>' : '';
+      ? '<span class="gov-news-archive-badge" data-i18n="common.archive">Arxiv</span>' : '';
     return '<article class="gov-news-card" data-cat="' + esc(cat) + '">'
       + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
       + '<div class="gov-news-img-inner" style="' + coverStyle(e) + '"></div>'
@@ -535,17 +557,19 @@
       .sort(function (a, b) { return (new Date(a.date).getTime() || 0) - (new Date(b.date).getTime() || 0); });
     var latest = upcoming.slice(0, 3);
     if (!latest.length) {
-      container.innerHTML = '<p role="status" class="text-muted-light" style="padding:16px 0;">Yaqin tadbirlar topilmadi.</p>';
+      container.innerHTML = '<p role="status" class="text-muted-light" style="padding:16px 0;" data-i18n="pages.events.emptyUpcoming">Yaqin tadbirlar topilmadi.</p>';
+      applyI18n(container);
       return;
     }
     var html = '<div class="gov-news-grid">';
     latest.forEach(function (e) { html += eventCardHTML(e); });
     html += '</div>';
     container.innerHTML = html;
+    applyI18n(container);
   }
 
   function renderEventsPage(items, container) {
-    if (!items.length) { container.innerHTML = '<p role="status">Tadbirlar topilmadi.</p>'; return; }
+    if (!items.length) { container.innerHTML = '<p role="status" data-i18n="pages.events.emptyAll">Tadbirlar topilmadi.</p>'; applyI18n(container); return; }
     // Within each section: soonest upcoming first, most recent past
     // first. Without sort the API order leaked through; admins
     // reorganized via the admin-events table couldn't reorder.
@@ -554,16 +578,17 @@
     var past = items.filter(function (e) { return eventStatus(e) === 'past'; })
       .sort(function (a, b) { return (new Date(b.date).getTime() || 0) - (new Date(a.date).getTime() || 0); });
 
-    function sectionHTML(arr, label) {
+    function sectionHTML(arr, key, fb) {
       if (!arr.length) return '';
-      return '<h2 class="gov-news-section-label">' + label + '</h2>'
+      return '<h2 class="gov-news-section-label" data-i18n="' + key + '">' + fb + '</h2>'
         + '<div class="gov-news-grid mb-section">'
         + arr.map(eventCardHTML).join('')
         + '</div>';
     }
 
-    container.innerHTML = sectionHTML(upcoming, 'Rejalashtirilgan tadbirlar')
-      + sectionHTML(past, "Bo'lib o'tgan tadbirlar");
+    container.innerHTML = sectionHTML(upcoming, 'pages.events.sectionUpcoming', 'Rejalashtirilgan tadbirlar')
+      + sectionHTML(past, 'pages.events.sectionPast', "Bo'lib o'tgan tadbirlar");
+    applyI18n(container);
   }
 
   function injectEventJsonLd(item) {
@@ -685,7 +710,7 @@
   }
 
   function renderGrantsPage(items, container) {
-    if (!items.length) { container.innerHTML = '<p class="text-muted-light">Faol grant yoki tanlov mavjud emas.</p>'; return; }
+    if (!items.length) { container.innerHTML = '<p class="text-muted-light" data-i18n="pages.grants.emptyActive">Faol grant yoki tanlov mavjud emas.</p>'; applyI18n(container); return; }
     // Active grants first (nearest deadline first — most actionable),
     // closed grants second (most-recent first). Was raw API order.
     var sorted = items.slice().sort(function (a, b) {
@@ -710,20 +735,24 @@
       // Hide the "Ariza topshirish" CTA on closed grants — applications
       // wouldn't be accepted, so the button just frustrates users.
       var cta = isActive
-        ? '<a class="btn btn-inline" href="service-request">Ariza topshirish</a>'
-        : '<span class="btn btn-inline" style="opacity:.55;cursor:not-allowed" aria-disabled="true">Tanlov yopilgan</span>';
+        ? '<a class="btn btn-inline" href="service-request" data-i18n="pages.grants.apply">Ariza topshirish</a>'
+        : '<span class="btn btn-inline" style="opacity:.55;cursor:not-allowed" aria-disabled="true" data-i18n="pages.grants.closed">Tanlov yopilgan</span>';
+      var statusTag = isActive
+        ? ' · <span data-i18n="pages.grants.tagActive">Faol</span>'
+        : ' · <span data-i18n="pages.grants.tagClosed">Yopilgan</span>';
       html += '<article class="card"' + id + '>'
         + cover
-        + '<span class="tag">' + esc(g.category) + (isActive ? ' · Faol' : ' · Yopilgan') + '</span>'
+        + '<span class="tag">' + esc(g.category) + statusTag + '</span>'
         + '<h3>' + esc(g.title) + '</h3>'
         + '<p>' + esc(g.description) + '</p>'
-        + (g.amount ? '<p class="grant-amount">Miqdor: ' + esc(g.amount) + '</p>' : '')
-        + (g.deadline || g.deadlineLabel ? '<p class="grant-deadline">Muddat: <time datetime="' + esc(_datePart(g.deadline) || '') + '">' + esc(g.deadlineLabel || fmtDate(g.deadline)) + '</time></p>' : '')
+        + (g.amount ? '<p class="grant-amount"><span data-i18n="pages.grants.amount">Miqdor:</span> ' + esc(g.amount) + '</p>' : '')
+        + (g.deadline || g.deadlineLabel ? '<p class="grant-deadline"><span data-i18n="pages.grants.deadline">Muddat:</span> <time datetime="' + esc(_datePart(g.deadline) || '') + '">' + esc(g.deadlineLabel || fmtDate(g.deadline)) + '</time></p>' : '')
         + cta
         + '</article>';
     });
     html += '</div>';
     container.innerHTML = html;
+    applyI18n(container);
     // RSS feed items link via /grants#<id>; if the page loaded with a
     // hash, scroll the matching article into view (browsers don't re-
     // resolve :target after innerHTML replacement).
@@ -742,7 +771,7 @@
   };
 
   function renderDocumentsPage(items, container) {
-    if (!items.length) { container.innerHTML = '<p role="status">Hujjatlar topilmadi.</p>'; return; }
+    if (!items.length) { container.innerHTML = '<p role="status" data-i18n="pages.docs.empty">Hujjatlar topilmadi.</p>'; applyI18n(container); return; }
     var byCat = {};
     items.forEach(function (d) {
       var cat = d.category || 'boshqa';
@@ -762,7 +791,7 @@
       var label = DOC_CATEGORY_LABELS[cat] || cat;
       html += '<h2 class="section-title mt-section">' + label + '</h2>';
       html += '<div class="doc-table">';
-      html += '<div class="doc-row head"><span>Hujjat nomi</span><span>Toifa</span><span>Sana</span></div>';
+      html += '<div class="doc-row head"><span data-i18n="pages.docs.colName">Hujjat nomi</span><span data-i18n="pages.docs.colCategory">Toifa</span><span data-i18n="pages.docs.colDate">Sana</span></div>';
       arr.forEach(function (d) {
         html += '<div class="doc-row">'
           + '<a href="news-detail?id=' + encodeURIComponent(d.id) + '&type=documents" style="color:#0e7490;text-decoration:underline;font-weight:600">' + esc(d.title) + '</a>'
@@ -773,6 +802,7 @@
       html += '</div>';
     });
     container.innerHTML = html;
+    applyI18n(container);
   }
 
   /* ── Paginated list with "Load more" ──────────────────────── */
@@ -799,7 +829,7 @@
       var btnLabel = btnEl ? btnEl.innerHTML : '';
       if (btnEl) {
         btnEl.disabled = true;
-        btnEl.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i> Yuklanmoqda...';
+        btnEl.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i> ' + (window.ngoI18n && window.ngoI18n.t ? window.ngoI18n.t('common.loading', 'Yuklanmoqda...') : 'Yuklanmoqda...');
       }
       // Match the homepage news/events strips and cabinet listings
       // by hiding archived items by default. Without this, the
@@ -843,14 +873,17 @@
           if (!loadMoreBtn) {
             loadMoreBtn = document.createElement('div');
             loadMoreBtn.className = 'load-more-wrap';
-            loadMoreBtn.innerHTML = '<button class="btn" id="loadMoreBtn">Ko\'proq ko\'rish</button>'
+            loadMoreBtn.innerHTML = '<button class="btn" id="loadMoreBtn" data-i18n="common.loadMore">Ko\'proq ko\'rish</button>'
               + '<p class="load-more-count" id="loadMoreCount"></p>';
             container.appendChild(loadMoreBtn);
             loadMoreBtn.querySelector('#loadMoreBtn').addEventListener('click', loadPage);
           }
 
           var countEl = container.querySelector('#loadMoreCount');
-          if (countEl) countEl.textContent = allItems.length + ' / ' + total + ' ko\'rsatilmoqda';
+          // Number stays literal; the trailing word carries data-i18n so a
+          // language switch re-localizes it via the loader's apply(document).
+          if (countEl) countEl.innerHTML = allItems.length + ' / ' + total + ' <span data-i18n="common.showing">ko\'rsatilmoqda</span>';
+          applyI18n(loadMoreBtn);
 
           if (offset >= total) {
             var btn = container.querySelector('#loadMoreBtn');
@@ -891,7 +924,8 @@
         });
     }
 
-    container.innerHTML = '<p class="loading-text" role="status">Yuklanmoqda...</p>';
+    container.innerHTML = '<p class="loading-text" role="status" data-i18n="common.loading">Yuklanmoqda...</p>';
+    applyI18n(container);
     loadPage();
   }
 

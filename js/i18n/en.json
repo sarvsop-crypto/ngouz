@@ -1098,7 +1098,27 @@
     "proposalCta": "<div class=\"card\" style=\"display:flex; align-items:center; justify-content:space-between; gap:16px;\"><div><h3 style=\"margin:0 0 8px\">Submit a partnership proposal</h3><p>Get in touch with us about new partnership initiatives and submit your proposal.</p></div><a class=\"btn\" href=\"contact\">Get in touch</a></div>",
     "loadError": "Loading error",
     "networkError": "Network error. Please check your connection.",
-    "genericError": "An error occurred. Please try again."
+    "genericError": "An error occurred. Please try again.",
+    "a11y": {
+      "title": "View mode",
+      "textSize": "Text size",
+      "contrast": "High contrast",
+      "grayscale": "Grayscale",
+      "reset": "Default",
+      "on": "Enable",
+      "off": "Disable"
+    },
+    "archive": "Archive",
+    "loadMore": "Show more",
+    "showing": "shown",
+    "dataLoadError": "Could not load data. Reload the page or try again later.",
+    "logout": {
+      "title": "Log out",
+      "confirm": "Are you sure you want to log out?",
+      "copy": "If you log out, you will need to sign in again.",
+      "cancel": "Cancel",
+      "confirmBtn": "Yes, log out"
+    }
   },
   "testBanner": {
     "tag": "Test",
@@ -1146,7 +1166,8 @@
       "vacancies": "Vacancies",
       "academy": "Virtual academy",
       "internship": "Internships and volunteering"
-    }
+    },
+    "joinCta": "Join"
   },
   "footer": {
     "addressTitle": "Address",
@@ -1501,7 +1522,8 @@
       "statExec": "Executive Office staff",
       "statRegional": "Regional branch staff",
       "statNormNum": "Per norm",
-      "statNormLabel": "The number of auxiliary and technical staff is set according to approved norms"
+      "statNormLabel": "The number of auxiliary and technical staff is set according to approved norms",
+      "sourceCaption": "Source: structure of the UzNANNGO Executive Office, 27 Oct 2022."
     },
     "sustainabilityCert": {
       "title": "\"Sustainable NGO\"",
@@ -1636,19 +1658,34 @@
       "title": "News",
       "sub": "Official news and press releases.",
       "listAria": "News list",
-      "noscript": "JavaScript is required to view the news list. You can also use the RSS feed below: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/news.rss\">RSS feed</a>."
+      "noscript": "JavaScript is required to view the news list. You can also use the RSS feed below: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/news.rss\">RSS feed</a>.",
+      "emptyRecent": "No recent news found.",
+      "emptyAll": "No news found."
     },
     "events": {
       "title": "Events",
       "sub": "Calendar of past and upcoming events.",
       "listAria": "Events list",
-      "noscript": "JavaScript is required to view the events list. You can also use the RSS feed below: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/events.rss\">RSS feed</a>."
+      "noscript": "JavaScript is required to view the events list. You can also use the RSS feed below: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/events.rss\">RSS feed</a>.",
+      "statusUpcoming": "Planned",
+      "statusPast": "Held",
+      "sectionUpcoming": "Planned events",
+      "sectionPast": "Past events",
+      "emptyUpcoming": "No upcoming events found.",
+      "emptyAll": "No events found."
     },
     "grants": {
       "title": "Announced grants",
       "sub": "Open grants and funding opportunities for NGOs and civil society organizations.",
       "listAria": "Grants list",
-      "noscript": "JavaScript is required to view the grants list. You can also use the RSS feed below: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/grants.rss\">RSS feed</a>."
+      "noscript": "JavaScript is required to view the grants list. You can also use the RSS feed below: <a href=\"https://ngo-api-proxy.sarvsop.workers.dev/v1/grants.rss\">RSS feed</a>.",
+      "emptyActive": "No active grants or competitions.",
+      "apply": "Apply",
+      "closed": "Competition closed",
+      "tagActive": "Active",
+      "tagClosed": "Closed",
+      "amount": "Amount:",
+      "deadline": "Deadline:"
     },
     "leadership": {
       "title": "Leadership",
@@ -1728,6 +1765,12 @@
         "senate": "Senate of the Oliy Majlis of the Republic of Uzbekistan",
         "lex": "National Legislation Database of the Republic of Uzbekistan"
       }
+    },
+    "docs": {
+      "empty": "No documents found.",
+      "colName": "Document name",
+      "colCategory": "Category",
+      "colDate": "Date"
     }
   },
   "membershipModal": {

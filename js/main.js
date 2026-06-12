@@ -405,12 +405,18 @@
     // pattern in cabinet-organization editOrgModal.
     panel.setAttribute("aria-labelledby", "a11yPanelTitle");
     panel.innerHTML =
-      "<h4 id=\"a11yPanelTitle\">Ko'rish rejimi</h4>" +
-      "<div class=\"a11y-row\"><label>Matn o'lchami</label><div><button type=\"button\" class=\"btn-mini\" data-a11y=\"dec\">A-</button> <button type=\"button\" class=\"btn-mini\" data-a11y=\"inc\">A+</button></div></div>" +
-      "<div class=\"a11y-row\"><label>Yuqori kontrast</label><button type=\"button\" class=\"btn-mini\" data-a11y=\"contrast\">Yoqish</button></div>" +
-      "<div class=\"a11y-row\"><label>Qora-oq rejim</label><button type=\"button\" class=\"btn-mini\" data-a11y=\"gray\">Yoqish</button></div>" +
-      "<div class=\"a11y-row\"><button type=\"button\" class=\"btn-mini\" data-a11y=\"reset\">Standart holat</button></div>";
+      "<h4 id=\"a11yPanelTitle\" data-i18n=\"common.a11y.title\">Ko'rish rejimi</h4>" +
+      "<div class=\"a11y-row\"><label data-i18n=\"common.a11y.textSize\">Matn o'lchami</label><div><button type=\"button\" class=\"btn-mini\" data-a11y=\"dec\">A-</button> <button type=\"button\" class=\"btn-mini\" data-a11y=\"inc\">A+</button></div></div>" +
+      "<div class=\"a11y-row\"><label data-i18n=\"common.a11y.contrast\">Yuqori kontrast</label><button type=\"button\" class=\"btn-mini\" data-a11y=\"contrast\">Yoqish</button></div>" +
+      "<div class=\"a11y-row\"><label data-i18n=\"common.a11y.grayscale\">Qora-oq rejim</label><button type=\"button\" class=\"btn-mini\" data-a11y=\"gray\">Yoqish</button></div>" +
+      "<div class=\"a11y-row\"><button type=\"button\" class=\"btn-mini\" data-a11y=\"reset\" data-i18n=\"common.a11y.reset\">Standart holat</button></div>";
     body.appendChild(panel);
+    // Drawer built after the loader's initial pass — translate it now; later
+    // language switches are covered by the loader's apply(document) + the
+    // onChange handler below re-runs applyState for the dynamic toggle labels.
+    if (window.ngoI18n && typeof window.ngoI18n.onReady === "function") {
+      window.ngoI18n.onReady(function () { window.ngoI18n.apply(panel); });
+    }
     a11yBtn.setAttribute("aria-haspopup", "dialog");
     a11yBtn.setAttribute("aria-controls", "a11yPanel");
     a11yBtn.setAttribute("aria-expanded", "false");
@@ -429,16 +435,27 @@
       if (state.contrast) filters.push("contrast(2)");
       if (state.grayscale) filters.push("grayscale(1)");
       body.style.filter = filters.join(" ");
+      // These two buttons toggle their own label, so they can't carry a static
+      // data-i18n; pull the localized on/off words through the loader instead.
+      var tt = function (k, fb) {
+        return (window.ngoI18n && window.ngoI18n.t) ? window.ngoI18n.t(k, fb) : fb;
+      };
       if (contrastBtn) {
         contrastBtn.classList.toggle("active", !!state.contrast);
-        contrastBtn.textContent = state.contrast ? "O'chirish" : "Yoqish";
+        contrastBtn.textContent = state.contrast ? tt("common.a11y.off", "O'chirish") : tt("common.a11y.on", "Yoqish");
       }
       if (grayBtn) {
         grayBtn.classList.toggle("active", !!state.grayscale);
-        grayBtn.textContent = state.grayscale ? "O'chirish" : "Yoqish";
+        grayBtn.textContent = state.grayscale ? tt("common.a11y.off", "O'chirish") : tt("common.a11y.on", "Yoqish");
       }
       save();
     };
+
+    // Re-localize the dynamic on/off labels when the language changes (the
+    // static labels are handled by the loader's apply(document)).
+    if (window.ngoI18n && typeof window.ngoI18n.onChange === "function") {
+      window.ngoI18n.onChange(function () { applyState(); });
+    }
 
     panel.addEventListener("click", function (e) {
       var action = e.target && e.target.getAttribute("data-a11y");
@@ -503,51 +520,60 @@
           '<button type="button" class="lang-pill" data-mobile-lang="ru">RU</button>' +
           '<button type="button" class="lang-pill" data-mobile-lang="en">EN</button>' +
         '</div>' +
-        '<button type="button" class="icon-btn" data-mobile-search aria-label="Qidirish">' +
+        '<button type="button" class="icon-btn" data-mobile-search data-i18n-aria-label="common.searchAria" aria-label="Qidirish">' +
           '<svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="16.5" x2="22" y1="16.5" y2="22"></line></svg>' +
         '</button>' +
-        '<button type="button" class="icon-btn" data-mobile-a11y aria-label="Ko\'rish rejimi">' +
+        '<button type="button" class="icon-btn" data-mobile-a11y data-i18n-aria-label="common.a11yAria" aria-label="Ko\'rish rejimi">' +
           '<svg aria-hidden="true" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3" fill="currentColor"/></svg>' +
         '</button>' +
       '</div>' +
-      '<span class="mobile-nav-label">Assotsiatsiya haqida</span>' +
-      '<a href="about">Assotsiatsiya haqida</a>' +
+      '<span class="mobile-nav-label" data-i18n="nav.associationGroup">Assotsiatsiya haqida</span>' +
+      '<a href="about" data-i18n="nav.associationItems.about">Assotsiatsiya haqida</a>' +
       '<div class="mobile-nav-sub">' +
-        '<a href="mission">Maqsad va vazifalar</a>' +
-        '<a href="board-of-experts">Kengash a\'zolari</a>' +
-        '<a href="leadership">Rahbariyat</a>' +
-        '<a href="our-team">Bizning jamoa</a>' +
-        '<a href="hududiy-bolinmalar">Hududiy bo\'linmalar</a>' +
-        '<a href="structure">Assotsiatsiya tuzilmasi</a>' +
+        '<a href="mission" data-i18n="nav.associationItems.mission">Maqsad va vazifalar</a>' +
+        '<a href="board-of-experts" data-i18n="nav.associationItems.board">Kengash a\'zolari</a>' +
+        '<a href="leadership" data-i18n="nav.associationItems.leadership">Rahbariyat</a>' +
+        '<a href="our-team" data-i18n="nav.associationItems.team">Bizning jamoa</a>' +
+        '<a href="hududiy-bolinmalar" data-i18n="nav.associationItems.regional">Hududiy bo\'linmalar</a>' +
+        '<a href="structure" data-i18n="nav.associationItems.structure">Assotsiatsiya tuzilmasi</a>' +
       '</div>' +
-      '<span class="mobile-nav-label">NNTlar reyestri</span>' +
-      '<a href="nntlar">Assotsiatsiyaga a\'zo NNTlar</a>' +
+      '<span class="mobile-nav-label" data-i18n="nav.registryGroup">NNTlar reyestri</span>' +
+      '<a href="nntlar" data-i18n="nav.registryItems.members">Assotsiatsiyaga a\'zo NNTlar</a>' +
       '<div class="mobile-nav-sub">' +
-        '<a href="sustainability-index">NNTlar barqarorlik indeksi</a>' +
-        '<a href="sustainability-cert">"Barqaror NNT" sertifikatiga ega NNTlar</a>' +
+        '<a href="sustainability-index" data-i18n="nav.registryItems.sustainabilityIndex">NNTlar barqarorlik indeksi</a>' +
+        '<a href="sustainability-cert" data-i18n="nav.registryItems.sustainabilityCert">"Barqaror NNT" sertifikatiga ega NNTlar</a>' +
       '</div>' +
-      '<a href="projects">Loyihalar</a>' +
-      '<span class="mobile-nav-label">Hamkorlar</span>' +
-      '<a href="awards">Xorijiy hamkorlar</a>' +
+      '<a href="projects" data-i18n="nav.projects">Loyihalar</a>' +
+      '<span class="mobile-nav-label" data-i18n="nav.partnersGroup">Hamkorlar</span>' +
+      '<a href="awards" data-i18n="nav.partnersItems.foreign">Xorijiy hamkorlar</a>' +
       '<div class="mobile-nav-sub">' +
-        '<a href="mahalliy-hamkorlar">Mahalliy hamkorlar</a>' +
-        '<a href="jamoatchilik-kengashi">Jamoatchilik kengashi a\'zolari</a>' +
+        '<a href="mahalliy-hamkorlar" data-i18n="nav.partnersItems.local">Mahalliy hamkorlar</a>' +
+        '<a href="jamoatchilik-kengashi" data-i18n="nav.partnersItems.public">Jamoatchilik kengashi a\'zolari</a>' +
       '</div>' +
-      '<span class="mobile-nav-label">Ochiq ma\'lumotlar</span>' +
-      '<a href="contact">Bog\'lanish</a>' +
+      '<span class="mobile-nav-label" data-i18n="nav.openGroup">Ochiq ma\'lumotlar</span>' +
+      '<a href="contact" data-i18n="nav.openItems.contact">Bog\'lanish</a>' +
       '<div class="mobile-nav-sub">' +
-        '<a href="grant-tanlovlari">Grant tanlovlari - AI qidiruv</a>' +
-        '<a href="official-docs">Normativ-huquqiy hujjatlar</a>' +
-        '<a href="multimedia-room">Media</a>' +
-        '<a href="events">Tadbirlar</a>' +
-        '<a href="reporting-forms">Hisobotlar</a>' +
-        '<a href="dayjestlar">Dayjestlar</a>' +
-        '<a href="vacancies">Bo\'sh ish o\'rinlari</a>' +
-        '<a href="talim-rivojlanish">Virtual akademiya</a>' +
-        '<a href="stajirovka-volontyorlik">Stajirovka va volontyorlik</a>' +
+        '<a href="grant-tanlovlari" data-i18n="nav.openItems.grantAi">Grant tanlovlari - AI qidiruv</a>' +
+        '<a href="official-docs" data-i18n="nav.openItems.normativ">Normativ-huquqiy hujjatlar</a>' +
+        '<a href="multimedia-room" data-i18n="nav.openItems.media">Media</a>' +
+        '<a href="events" data-i18n="nav.openItems.events">Tadbirlar</a>' +
+        '<a href="reporting-forms" data-i18n="nav.openItems.reports">Hisobotlar</a>' +
+        '<a href="dayjestlar" data-i18n="nav.openItems.digests">Dayjestlar</a>' +
+        '<a href="vacancies" data-i18n="nav.openItems.vacancies">Bo\'sh ish o\'rinlari</a>' +
+        '<a href="talim-rivojlanish" data-i18n="nav.openItems.academy">Virtual akademiya</a>' +
+        '<a href="stajirovka-volontyorlik" data-i18n="nav.openItems.internship">Stajirovka va volontyorlik</a>' +
       '</div>' +
-      '<a href="membership" class="mobile-nav-cta">A\'zo bo\'lish</a>';
+      '<a href="membership" class="mobile-nav-cta" data-i18n="nav.joinCta">A\'zo bo\'lish</a>';
     document.body.appendChild(mobileNav);
+    // The drawer is built after the loader's initial pass, so translate it now
+    // (and on every language switch apply(document) covers it since it's in DOM).
+    if (window.ngoI18n) {
+      if (typeof window.ngoI18n.onReady === 'function') {
+        window.ngoI18n.onReady(function () { window.ngoI18n.apply(mobileNav); });
+      } else if (typeof window.ngoI18n.apply === 'function') {
+        window.ngoI18n.apply(mobileNav);
+      }
+    }
 
     // Mobile drawer controls: delegate to the existing topbar widgets so
     // we don't fork the lang / search / a11y state machines.
