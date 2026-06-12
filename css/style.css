@@ -3510,10 +3510,15 @@ body:not(.home-page) .site-header { top: 36px; }
   .sk { animation: none; }
 }
 
-/* ── AI grant-search entry pill (header nav) ─────────────────────────── */
+/* ── AI grant-search entry pill (header) ─────────────────────────────── */
+/* Always-visible right-side cluster: pill + controls + hamburger. The nav and
+   .topbar-controls collapse at <=1100px; .nav-right does NOT, so the AI action
+   stays on screen at every width instead of hiding behind the hamburger. */
+.nav-right { display: flex; align-items: center; gap: 12px; justify-self: end; min-width: 0; }
+.nav-right .topbar-controls { justify-self: auto; }
 .nav-ai-pill {
   display: inline-flex; align-items: center; gap: 7px;
-  padding: 8px 15px; margin-left: 4px;
+  padding: 8px 15px;
   border-radius: 999px;
   background: linear-gradient(135deg, #0e7490 0%, #0aa2c0 55%, #22d3ee 100%);
   color: #fff; font-weight: 700; font-size: 13.5px; line-height: 1;
@@ -3522,7 +3527,7 @@ body:not(.home-page) .site-header { top: 36px; }
   box-shadow: 0 2px 10px rgba(8,145,178,.35);
   transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
 }
-.menu .nav-ai-pill { color: #fff; }
+.nav-ai-pill, .menu .nav-ai-pill { color: #fff; }
 .nav-ai-pill:hover, .nav-ai-pill:focus-visible {
   transform: translateY(-1px); filter: brightness(1.06);
   box-shadow: 0 4px 16px rgba(8,145,178,.55);
@@ -3533,3 +3538,18 @@ body:not(.home-page) .site-header { top: 36px; }
   background: rgba(255,255,255,.22); padding: 2px 5px; border-radius: 5px;
 }
 @media (prefers-reduced-motion: reduce) { .nav-ai-pill { transition: none; } }
+
+/* Homepage header: make room for the AI pill. The secondary "jamoat fondi"
+   logo is hidden below 1600px (it shows on very wide screens; the primary
+   O'zNNTMA logo carries the brand), and the nav is lightly tightened so the
+   full menu + pill fit on laptop widths without overlapping. */
+@media (max-width: 1600px) { body.home-page .topbar-fond-brand { display: none; } }
+@media (min-width: 1101px) and (max-width: 1520px) { body.home-page .menu { gap: 16px; font-size: 16px; } }
+/* Homepage only: the AI pill widens the right cluster, so the full nav no
+   longer fits below ~1366px — collapse to the hamburger there (the pill stays
+   visible beside it) instead of overlapping. >=1366px keeps the full nav. */
+@media (min-width: 1101px) and (max-width: 1365px) {
+  body.home-page .menu { display: none !important; }
+  body.home-page .topbar-controls { display: none; }
+  body.home-page .hamburger { display: flex; }
+}
