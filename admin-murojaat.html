@@ -268,7 +268,7 @@
   <script src="js/admin-boot.js" defer></script>
   <script>
   (function () {
-    var MEDIA_BASE = 'https://api.ngo.uz/media.php?path=';
+    var DOC_API = (window.NgoApi && NgoApi.base) || 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
     var items = [];
     var statusFilter = 'all';
     var searchQ = '';
@@ -345,21 +345,37 @@
       }).join('');
     }
 
-    function renderDocuments(docs) {
+    function renderDocuments(docs, id) {
       var box = document.getElementById('mvDocuments');
       docs = docs || {};
+      var idNum = parseInt(id, 10) || 0;
       var html = DOC_FIELDS.map(function (pair) {
         var key = pair[0], label = pair[1];
-        var path = docs[key];
-        if (!path) {
+        if (!docs[key]) {
           return '<span style="color:var(--grey-400);font-size:13px;">' + esc(label) + ': <em>yo’q</em></span>';
         }
-        var url = MEDIA_BASE + encodeURIComponent(path);
-        return '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" class="btn btn--sm btn--secondary" style="justify-content:flex-start;">' +
-               '<i class="ph ph-file-arrow-down" aria-hidden="true"></i> ' + esc(label) + '</a>';
+        // Authenticated, admin-only fetch (docs hold PII) — opened as a blob,
+        // so the token never appears in a URL.
+        return '<button type="button" class="btn btn--sm btn--secondary" style="justify-content:flex-start;" onclick="openMurojaatDoc(' + idNum + ',\'' + esc(key) + '\')">' +
+               '<i class="ph ph-file-arrow-down" aria-hidden="true"></i> ' + esc(label) + '</button>';
       }).join('');
       box.innerHTML = html || '—';
     }
+
+    // Fetch a submission's PDF with the admin bearer token and open it as a
+    // blob URL (token stays out of the address bar / logs).
+    window.openMurojaatDoc = function (id, key) {
+      var tok = '';
+      try { tok = localStorage.getItem('ngo_api_token') || sessionStorage.getItem('ngo_api_token') || ''; } catch (e) {}
+      fetch(DOC_API + '/admin/murojaat/' + id + '/doc/' + key, { headers: { 'Authorization': 'Bearer ' + tok } })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.blob(); })
+        .then(function (b) {
+          var u = URL.createObjectURL(b);
+          window.open(u, '_blank');
+          setTimeout(function () { URL.revokeObjectURL(u); }, 60000);
+        })
+        .catch(function (e) { toast('Hujjatni ochib bo‘lmadi (' + e.message + ')', 'error'); });
+    };
 
     var reviewingId = null;
     window.openMurojaatReview = function (id) {
@@ -390,7 +406,7 @@
       document.getElementById('mvRankingPlace').textContent  = item.ranking_place || '—';
       document.getElementById('mvReason').textContent        = REASON_LABEL[item.reason] || item.reason || '—';
 
-      renderDocuments(item.documents);
+      renderDocuments(item.documents, item.id);
 
       document.getElementById('mvId').textContent = '#' + item.id;
       var dateRaw = String(item.created_at || '');
