@@ -1355,6 +1355,69 @@
         "messageHelp": "Enter at least 20 characters (to clearly describe date, location, and situation)."
       }
     },
+    "ustamaMurojaat": {
+      "title": "Electronic application form for young specialists who graduated from prestigious foreign higher education institutions (TOP-500) to receive an additional supplement to their position salary",
+      "sub": "Before submitting the application, fill in the information below and upload the required documents in PDF format.",
+      "formAria": "Salary supplement application form",
+      "noscript": "This form works in a browser with JavaScript enabled. Please enable JavaScript in your browser or reach us through the <a href=\"qayta-aloqa\" style=\"color:#7a5800;text-decoration:underline\">feedback form</a>.",
+      "submitBtn": "Submit",
+      "docsNote": "All documents must be in PDF format, and each file must not exceed 15 MB.",
+      "sec": {
+        "personal": "I. Personal information",
+        "work": "II. Place of work",
+        "education": "III. Education",
+        "requestType": "IV. Application type",
+        "documents": "V. Documents to upload"
+      },
+      "f": {
+        "fullName": "Full name <span aria-hidden=\"true\">*</span>",
+        "birthDate": "Year of birth",
+        "passport": "Passport / ID series and number <span aria-hidden=\"true\">*</span>",
+        "pinfl": "PINFL <span aria-hidden=\"true\">*</span>",
+        "address": "Residential address <span aria-hidden=\"true\">*</span>",
+        "phone": "Phone <span aria-hidden=\"true\">*</span>",
+        "email": "Email <span aria-hidden=\"true\">*</span>",
+        "nntName": "NGO name <span aria-hidden=\"true\">*</span>",
+        "nntStir": "NGO TIN <span aria-hidden=\"true\">*</span>",
+        "membershipCertNo": "UzNANGO membership certificate number <span aria-hidden=\"true\">*</span>",
+        "membershipCertYear": "Year the certificate was issued <span aria-hidden=\"true\">*</span>",
+        "position": "Position <span aria-hidden=\"true\">*</span>",
+        "eduLevel": "Level of education <span aria-hidden=\"true\">*</span>",
+        "eduLevelBachelor": "Bachelor's degree",
+        "eduLevelMaster": "Master's degree",
+        "eduLevelPhd": "PhD or an equivalent academic degree",
+        "uniName": "Name of the foreign university <span aria-hidden=\"true\">*</span>",
+        "uniCountry": "Country where the university is located <span aria-hidden=\"true\">*</span>",
+        "specialty": "Field of study / specialty <span aria-hidden=\"true\">*</span>",
+        "rankingSystem": "Ranking system",
+        "rankingSystemQs": "QS",
+        "rankingSystemThe": "THE",
+        "rankingPlace": "Ranking position (in the year of graduation) — university position as a number",
+        "reason": "Application type <span aria-hidden=\"true\">*</span>",
+        "reasonNew": "Receive for the first time",
+        "reasonIncrease": "Increase the existing supplement based on another education level",
+        "docId": "Identity document (biometric passport or ID card) <span aria-hidden=\"true\">*</span>",
+        "docDiploma": "Diploma of graduation from a foreign university / academic degree <span aria-hidden=\"true\">*</span>",
+        "docRecognition": "Document confirming recognition of foreign education / academic degree <span aria-hidden=\"true\">*</span>",
+        "docOrder": "Copy of the employment order <span aria-hidden=\"true\">*</span>",
+        "docLabor": "Extract from the electronic labor book of the \"Unified National Labor System\" <span aria-hidden=\"true\">*</span>",
+        "docRecommendation": "Employer's recommendation letter <span aria-hidden=\"true\">*</span>",
+        "docCv": "Reference (resume) <span aria-hidden=\"true\">*</span>",
+        "docMembership": "Document confirming the NGO's membership in UzNANGO <span aria-hidden=\"true\">*</span>",
+        "consentAccuracy": "I confirm the accuracy of the information provided",
+        "consentRules": "I have read and agree to the requirements of the regulations."
+      },
+      "msg": {
+        "consentRequired": "To continue, check both consents.",
+        "sending": "Submitting...",
+        "successTitle": "Your application has been received!",
+        "successId": "Application ID:",
+        "successBody": "Your application has been received. We will contact you via the phone number or email provided.",
+        "backHome": "Return to home page",
+        "error": "An error occurred. Please try again.",
+        "network": "Network error. Check your internet connection and try again."
+      }
+    },
     "mahalliyHamkorlar": {
       "title": "Local partners",
       "sub": "Local organizations, civic associations and institutions cooperating with UzNANNGO.",
@@ -1755,7 +1818,7 @@
     "contact": {
       "title": "Contact",
       "sub": "Get in touch — address, phone, and social media.",
-      "body": "<h2 class=\"contact-section-title\" style=\"margin-top:0\">Submit an inquiry</h2><div class=\"contact-action-cards\" style=\"margin-bottom:36px\"><a class=\"contact-action-card\" href=\"qayta-aloqa\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"></path></svg><div><strong>Feedback</strong><span>Send a question, suggestion, or complaint</span></div></a><a class=\"contact-action-card\" href=\"korrupsiya-murojaat\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"></path></svg><div><strong>Anti-corruption inquiry</strong><span>Submit a confidential inquiry</span></div></a></div><div class=\"contact-grid\"><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\"></path><circle cx=\"12\" cy=\"10\" r=\"3\"></circle></svg></div><div><div class=\"contact-info-label\">Address</div><div class=\"contact-info-value\">100170, Republic of Uzbekistan, Tashkent, Shaykhantakhur district, 1A Furqat Street</div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z\"></path></svg></div><div><div class=\"contact-info-label\">Phone</div><div class=\"contact-info-value\"><a href=\"tel:+998555030512\">(+998 55) 503-05-12</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\"></path><polyline points=\"22,6 12,13 2,6\"></polyline></svg></div><div><div class=\"contact-info-label\">Email</div><div class=\"contact-info-value\"><a href=\"mailto:info@ngo.uz\">info@ngo.uz</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><polyline points=\"12 6 12 12 16 14\"></polyline></svg></div><div><div class=\"contact-info-label\">Office hours</div><div class=\"contact-info-value\">Mon–Fri: 9:00–18:00<br/>Sat–Sun: closed</div></div></div></div><h2 class=\"contact-section-title\">Social media</h2><div class=\"contact-social-row\"><a class=\"contact-social-btn contact-social-fb\" href=\"https://facebook.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Facebook</a><a class=\"contact-social-btn contact-social-ig\" href=\"https://instagram.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Instagram</a><a class=\"contact-social-btn contact-social-tg\" href=\"https://t.me/UzNNTMA1\" rel=\"noopener noreferrer\" target=\"_blank\">Telegram</a><a class=\"contact-social-btn contact-social-yt\" href=\"https://youtube.com/@uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">YouTube</a><a href=\"https://www.linkedin.com/company/ngo-association-uzbekistan/\" rel=\"noopener noreferrer\" target=\"_blank\">LinkedIn</a></div><div class=\"contact-map\"><iframe allowfullscreen=\"\" style=\"border:0\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\" sandbox=\"allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox\" src=\"https://yandex.uz/map-widget/v1/?ll=69.240568%2C41.312565&amp;z=17&amp;pt=69.240568%2C41.312565%2Cpm2rdm\" title=\"Address map\"></iframe></div>"
+      "body": "<h2 class=\"contact-section-title\" style=\"margin-top:0\">Submit an inquiry</h2><div class=\"contact-action-cards\" style=\"margin-bottom:36px\"><a class=\"contact-action-card\" href=\"qayta-aloqa\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"></path></svg><div><strong>Feedback</strong><span>Send a question, suggestion, or complaint</span></div></a><a class=\"contact-action-card\" href=\"korrupsiya-murojaat\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"></path></svg><div><strong>Anti-corruption inquiry</strong><span>Submit a confidential inquiry</span></div></a><a class=\"contact-action-card\" href=\"ustama-murojaat\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M22 10v6M2 10l10-5 10 5-10 5z\"></path><path d=\"M6 12v5c3 3 9 3 12 0v-5\"></path></svg><div><strong>Supplement for TOP-500 graduates</strong><span>Application for an additional supplement to the position salary</span></div></a></div><div class=\"contact-grid\"><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\"></path><circle cx=\"12\" cy=\"10\" r=\"3\"></circle></svg></div><div><div class=\"contact-info-label\">Address</div><div class=\"contact-info-value\">100170, Republic of Uzbekistan, Tashkent, Shaykhantakhur district, 1A Furqat Street</div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z\"></path></svg></div><div><div class=\"contact-info-label\">Phone</div><div class=\"contact-info-value\"><a href=\"tel:+998555030512\">(+998 55) 503-05-12</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\"></path><polyline points=\"22,6 12,13 2,6\"></polyline></svg></div><div><div class=\"contact-info-label\">Email</div><div class=\"contact-info-value\"><a href=\"mailto:info@ngo.uz\">info@ngo.uz</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><polyline points=\"12 6 12 12 16 14\"></polyline></svg></div><div><div class=\"contact-info-label\">Office hours</div><div class=\"contact-info-value\">Mon–Fri: 9:00–18:00<br/>Sat–Sun: closed</div></div></div></div><h2 class=\"contact-section-title\">Social media</h2><div class=\"contact-social-row\"><a class=\"contact-social-btn contact-social-fb\" href=\"https://facebook.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Facebook</a><a class=\"contact-social-btn contact-social-ig\" href=\"https://instagram.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Instagram</a><a class=\"contact-social-btn contact-social-tg\" href=\"https://t.me/UzNNTMA1\" rel=\"noopener noreferrer\" target=\"_blank\">Telegram</a><a class=\"contact-social-btn contact-social-yt\" href=\"https://youtube.com/@uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">YouTube</a><a href=\"https://www.linkedin.com/company/ngo-association-uzbekistan/\" rel=\"noopener noreferrer\" target=\"_blank\">LinkedIn</a></div><div class=\"contact-map\"><iframe allowfullscreen=\"\" style=\"border:0\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\" sandbox=\"allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox\" src=\"https://yandex.uz/map-widget/v1/?ll=69.240568%2C41.312565&amp;z=17&amp;pt=69.240568%2C41.312565%2Cpm2rdm\" title=\"Address map\"></iframe></div>"
     },
     "membership": {
       "title": "Join",

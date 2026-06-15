@@ -1355,6 +1355,69 @@
         "messageHelp": "Kamida 20 ta belgi kiriting (sana, joy, holatni aniq tasvirlash uchun)."
       }
     },
+    "ustamaMurojaat": {
+      "title": "Nufuzli xorijiy oliy ta'lim muassasalarini (TOP-500) tamomlagan yosh mutaxassislarning lavozim maoshiga qo'shimcha ustama olish uchun elektron murojaat shakli",
+      "sub": "Murojaat yuborishdan oldin quyidagi ma'lumotlarni to'ldiring va zarur hujjatlarni PDF formatida yuklang.",
+      "formAria": "Ustama uchun murojaat formasi",
+      "noscript": "Bu forma JavaScript yoqilgan brauzerda ishlaydi. Iltimos, brauzerda JavaScript-ni yoqing yoki <a href=\"qayta-aloqa\" style=\"color:#7a5800;text-decoration:underline\">qayta aloqa formasi</a> orqali murojaat qiling.",
+      "submitBtn": "Yuborish",
+      "docsNote": "Barcha hujjatlar PDF formatida bo'lishi shart, har bir fayl hajmi 15 MB dan oshmasligi kerak.",
+      "sec": {
+        "personal": "I. Shaxsiy ma'lumotlar",
+        "work": "II. Ish joyi",
+        "education": "III. Ta'lim",
+        "requestType": "IV. Murojaat turi",
+        "documents": "V. Yuklanadigan hujjatlar"
+      },
+      "f": {
+        "fullName": "F.I.Sh. <span aria-hidden=\"true\">*</span>",
+        "birthDate": "Tug'ilgan yili",
+        "passport": "Pasport / ID seriya va raqami <span aria-hidden=\"true\">*</span>",
+        "pinfl": "JShShIR / PINFL <span aria-hidden=\"true\">*</span>",
+        "address": "Yashash manzili <span aria-hidden=\"true\">*</span>",
+        "phone": "Telefon <span aria-hidden=\"true\">*</span>",
+        "email": "Email <span aria-hidden=\"true\">*</span>",
+        "nntName": "NNT nomi <span aria-hidden=\"true\">*</span>",
+        "nntStir": "NNT STIR <span aria-hidden=\"true\">*</span>",
+        "membershipCertNo": "O'zNNTMA a'zolik guvohnomasi raqami <span aria-hidden=\"true\">*</span>",
+        "membershipCertYear": "Guvohnoma berilgan yili <span aria-hidden=\"true\">*</span>",
+        "position": "Lavozimi <span aria-hidden=\"true\">*</span>",
+        "eduLevel": "Ta'lim darajasi <span aria-hidden=\"true\">*</span>",
+        "eduLevelBachelor": "Bakalavriat",
+        "eduLevelMaster": "Magistratura",
+        "eduLevelPhd": "PhD yoki unga tenglashtirilgan ilmiy daraja",
+        "uniName": "Xorijiy OTM nomi <span aria-hidden=\"true\">*</span>",
+        "uniCountry": "OTM joylashgan davlat <span aria-hidden=\"true\">*</span>",
+        "specialty": "Ta'lim yo'nalishi / mutaxassisligi <span aria-hidden=\"true\">*</span>",
+        "rankingSystem": "Reyting tizimi",
+        "rankingSystemQs": "QS",
+        "rankingSystemThe": "THE",
+        "rankingPlace": "Reytingdagi o'rin (diplom olgan yildagi) — OTM o'rni raqamda",
+        "reason": "Murojaat turi <span aria-hidden=\"true\">*</span>",
+        "reasonNew": "Yangidan olish",
+        "reasonIncrease": "Mavjud ustamani boshqa ta'lim darajasi bo'yicha oshirish",
+        "docId": "Shaxsni tasdiqlovchi hujjat (biometrik pasport yoki ID-karta) <span aria-hidden=\"true\">*</span>",
+        "docDiploma": "Xorijiy OTMni tamomlaganlik / ilmiy daraja diplomi <span aria-hidden=\"true\">*</span>",
+        "docRecognition": "Xorijiy ta'lim / ilmiy daraja tan olinganligini tasdiqlovchi hujjat <span aria-hidden=\"true\">*</span>",
+        "docOrder": "Ishga qabul qilinganlik buyrug'i nusxasi <span aria-hidden=\"true\">*</span>",
+        "docLabor": "\"Yagona milliy mehnat tizimi\" elektron mehnat daftarchasidan ko'chirma <span aria-hidden=\"true\">*</span>",
+        "docRecommendation": "Ish beruvchining tavsiyanomasi <span aria-hidden=\"true\">*</span>",
+        "docCv": "Ma'lumotnoma (obyektivka) <span aria-hidden=\"true\">*</span>",
+        "docMembership": "NNTning O'zNNTMAga a'zoligini tasdiqlovchi hujjat <span aria-hidden=\"true\">*</span>",
+        "consentAccuracy": "Taqdim etilgan ma'lumotlarning to'g'riligini tasdiqlayman",
+        "consentRules": "Nizom talablari bilan tanishdim va ularga roziman."
+      },
+      "msg": {
+        "consentRequired": "Davom etish uchun ikkala roziligni belgilang.",
+        "sending": "Yuborilmoqda...",
+        "successTitle": "Murojaatingiz qabul qilindi!",
+        "successId": "Murojaat ID:",
+        "successBody": "Murojaatingiz qabul qilindi. Ko‘rsatilgan telefon yoki email orqali bog‘lanamiz.",
+        "backHome": "Bosh sahifaga qaytish",
+        "error": "Xatolik yuz berdi. Iltimos qaytadan urinib ko'ring.",
+        "network": "Tarmoq xatosi. Internet aloqangizni tekshiring va qayta urinib ko'ring."
+      }
+    },
     "mahalliyHamkorlar": {
       "title": "Mahalliy hamkorlar",
       "sub": "O'zNNTMA bilan hamkorlik qilayotgan mahalliy tashkilotlar, jamoat birlashmalari va institutlar.",
@@ -1755,7 +1818,7 @@
     "contact": {
       "title": "Kontaktlar",
       "sub": "Biz bilan bog'laning — manzil, telefon va ijtimoiy tarmoqlar.",
-      "body": "<h2 class=\"contact-section-title\" style=\"margin-top:0\">Murojaat yuborish</h2><div class=\"contact-action-cards\" style=\"margin-bottom:36px\"><a class=\"contact-action-card\" href=\"qayta-aloqa\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"></path></svg><div><strong>Qayta aloqa</strong><span>Savol, taklif yoki shikoyat yuborish</span></div></a><a class=\"contact-action-card\" href=\"korrupsiya-murojaat\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"></path></svg><div><strong>Korrupsiyaga qarshi murojaat</strong><span>Maxfiy shaklda murojaat qilish</span></div></a></div><div class=\"contact-grid\"><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\"></path><circle cx=\"12\" cy=\"10\" r=\"3\"></circle></svg></div><div><div class=\"contact-info-label\">Manzil</div><div class=\"contact-info-value\">100170, O'zbekiston Respublikasi, Toshkent shahri, Shayxontohur tumani, Furqat ko'chasi, 1A</div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z\"></path></svg></div><div><div class=\"contact-info-label\">Telefon</div><div class=\"contact-info-value\"><a href=\"tel:+998555030512\">(+998 55) 503-05-12</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\"></path><polyline points=\"22,6 12,13 2,6\"></polyline></svg></div><div><div class=\"contact-info-label\">Elektron pochta</div><div class=\"contact-info-value\"><a href=\"mailto:info@ngo.uz\">info@ngo.uz</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><polyline points=\"12 6 12 12 16 14\"></polyline></svg></div><div><div class=\"contact-info-label\">Ish vaqti</div><div class=\"contact-info-value\">Dushanba–Juma: 9:00–18:00<br/>Shanba–Yakshanba: dam olish kuni</div></div></div></div><h2 class=\"contact-section-title\">Ijtimoiy tarmoqlar</h2><div class=\"contact-social-row\"><a class=\"contact-social-btn contact-social-fb\" href=\"https://facebook.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Facebook</a><a class=\"contact-social-btn contact-social-ig\" href=\"https://instagram.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Instagram</a><a class=\"contact-social-btn contact-social-tg\" href=\"https://t.me/UzNNTMA1\" rel=\"noopener noreferrer\" target=\"_blank\">Telegram</a><a class=\"contact-social-btn contact-social-yt\" href=\"https://youtube.com/@uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">YouTube</a><a href=\"https://www.linkedin.com/company/ngo-association-uzbekistan/\" rel=\"noopener noreferrer\" target=\"_blank\">LinkedIn</a></div><div class=\"contact-map\"><iframe allowfullscreen=\"\" style=\"border:0\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\" sandbox=\"allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox\" src=\"https://yandex.uz/map-widget/v1/?ll=69.240568%2C41.312565&amp;z=17&amp;pt=69.240568%2C41.312565%2Cpm2rdm\" title=\"Manzil xaritasi\"></iframe></div>"
+      "body": "<h2 class=\"contact-section-title\" style=\"margin-top:0\">Murojaat yuborish</h2><div class=\"contact-action-cards\" style=\"margin-bottom:36px\"><a class=\"contact-action-card\" href=\"qayta-aloqa\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z\"></path></svg><div><strong>Qayta aloqa</strong><span>Savol, taklif yoki shikoyat yuborish</span></div></a><a class=\"contact-action-card\" href=\"korrupsiya-murojaat\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z\"></path></svg><div><strong>Korrupsiyaga qarshi murojaat</strong><span>Maxfiy shaklda murojaat qilish</span></div></a><a class=\"contact-action-card\" href=\"ustama-murojaat\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"24\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"24\"><path d=\"M22 10v6M2 10l10-5 10 5-10 5z\"></path><path d=\"M6 12v5c3 3 9 3 12 0v-5\"></path></svg><div><strong>TOP-500 bitiruvchilar uchun ustama</strong><span>Lavozim maoshiga qo'shimcha ustama olish uchun murojaat</span></div></a></div><div class=\"contact-grid\"><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z\"></path><circle cx=\"12\" cy=\"10\" r=\"3\"></circle></svg></div><div><div class=\"contact-info-label\">Manzil</div><div class=\"contact-info-value\">100170, O'zbekiston Respublikasi, Toshkent shahri, Shayxontohur tumani, Furqat ko'chasi, 1A</div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.18 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z\"></path></svg></div><div><div class=\"contact-info-label\">Telefon</div><div class=\"contact-info-value\"><a href=\"tel:+998555030512\">(+998 55) 503-05-12</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><path d=\"M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z\"></path><polyline points=\"22,6 12,13 2,6\"></polyline></svg></div><div><div class=\"contact-info-label\">Elektron pochta</div><div class=\"contact-info-value\"><a href=\"mailto:info@ngo.uz\">info@ngo.uz</a></div></div></div><div class=\"contact-info-card\"><div class=\"contact-info-icon\"><svg aria-hidden=\"true\" focusable=\"false\" fill=\"none\" height=\"22\" stroke=\"currentColor\" stroke-width=\"2\" viewBox=\"0 0 24 24\" width=\"22\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><polyline points=\"12 6 12 12 16 14\"></polyline></svg></div><div><div class=\"contact-info-label\">Ish vaqti</div><div class=\"contact-info-value\">Dushanba–Juma: 9:00–18:00<br/>Shanba–Yakshanba: dam olish kuni</div></div></div></div><h2 class=\"contact-section-title\">Ijtimoiy tarmoqlar</h2><div class=\"contact-social-row\"><a class=\"contact-social-btn contact-social-fb\" href=\"https://facebook.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Facebook</a><a class=\"contact-social-btn contact-social-ig\" href=\"https://instagram.com/uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">Instagram</a><a class=\"contact-social-btn contact-social-tg\" href=\"https://t.me/UzNNTMA1\" rel=\"noopener noreferrer\" target=\"_blank\">Telegram</a><a class=\"contact-social-btn contact-social-yt\" href=\"https://youtube.com/@uznntma\" rel=\"noopener noreferrer\" target=\"_blank\">YouTube</a><a href=\"https://www.linkedin.com/company/ngo-association-uzbekistan/\" rel=\"noopener noreferrer\" target=\"_blank\">LinkedIn</a></div><div class=\"contact-map\"><iframe allowfullscreen=\"\" style=\"border:0\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\" sandbox=\"allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox\" src=\"https://yandex.uz/map-widget/v1/?ll=69.240568%2C41.312565&amp;z=17&amp;pt=69.240568%2C41.312565%2Cpm2rdm\" title=\"Manzil xaritasi\"></iframe></div>"
     },
     "membership": {
       "title": "A'zo bo'lish",

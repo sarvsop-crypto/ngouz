@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ilmiy daraja murojaatlari — O'zNNTMA Admin</title>
+<meta name="theme-color" content="#0f6a57" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="apple-mobile-web-app-title" content="ngo.uz" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://ngo-api-proxy.sarvsop.workers.dev" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" integrity="sha384-6p9AefaqUhEVheRlj1mpAkbngHXy9mbYMrIdcIt4Jlc9lOLIablJq3bBsLOjGwZ7" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/pacta-tokens.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-contracts.page.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-sidebar.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-topbar.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-notifications.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-app.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-foundation.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-modal.css?v=20260605">
+<script src="js/errlog.js" defer></script>
+<link rel="manifest" href="/manifest.webmanifest" />
+<script src="js/sw-register.js" defer></script>
+<script src="js/i18n.js" defer></script>
+</head>
+<body>
+<div class="test-mode-banner" role="status" aria-live="polite">
+<div class="container test-mode-inner">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
+<strong data-i18n="testBanner.tag">Test</strong>
+<span data-i18n="testBanner.text">Sayt test rejimida ishlayapti</span>
+</div>
+</div>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
+  <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar__header">
+        <div class="u-inline-stack">
+          <div class="sidebar__logo u-logo-badge">N</div>
+          <span class="sidebar__title" data-i18n="admin.brand">O'zNNTMA Admin</span>
+        </div>
+        <button type="button" class="sidebar__collapse" id="sidebarToggle" data-i18n-aria-label="admin.sidebarCollapse" aria-label="Yon panelni yopish" aria-expanded="true">&lsaquo;</button>
+      </div>
+      <div class="sidebar__search" id="sidebarSearchTrigger">
+        <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass" aria-hidden="true"></i></span>
+        <input type="search" enterkeyhint="search" data-i18n-placeholder="common.searchAria" placeholder="Qidirish" data-i18n-aria-label="common.searchAria" aria-label="Qidirish" maxlength="200" />
+      </div>
+      <nav class="sidebar__nav" data-i18n-aria-label="admin.menuAria" aria-label="Admin menyusi">
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label" data-i18n="admin.sec.main">ASOSIY MENYU</div>
+          <a href="admin-dashboard" class="sidebar__nav-link" data-i18n-title="admin.nav.dashboard" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.dashboard">Boshqaruv paneli</span></a>
+          <a href="admin-membership-requests" class="sidebar__nav-link" data-i18n-title="admin.nav.membershipRequests" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.membershipRequests">A'zolik arizalari</span></a>
+          <a href="admin-grant-applications" class="sidebar__nav-link" data-i18n-title="admin.nav.grantApplications" title="Grant arizalari"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.grantApplications">Grant arizalari</span></a>
+          <a href="admin-registry" class="sidebar__nav-link" data-i18n-title="admin.nav.registry" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.registry">NNT Ro'yxati</span></a>
+          <a href="admin-regions" class="sidebar__nav-link" data-i18n-title="admin.nav.regions" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.regions">Hududlar</span></a>
+          <a href="admin-documents" class="sidebar__nav-link" data-i18n-title="admin.nav.documents" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.documents">Hujjatlar</span></a>
+          <a href="admin-tasks" class="sidebar__nav-link" data-i18n-title="admin.nav.tasks" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.tasks">Topshiriqlar</span></a>
+          <a href="admin-users" class="sidebar__nav-link" data-i18n-title="admin.nav.users" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.users">Foydalanuvchilar</span></a>
+          <a href="admin-reports" class="sidebar__nav-link" data-i18n-title="admin.nav.reports" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.reports">Hisobotlar</span></a>
+          <a href="admin-analytics" class="sidebar__nav-link" data-i18n-title="admin.nav.analytics" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.analytics">Tahliliy ma'lumotlar</span></a>
+        </div>
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label" data-i18n="admin.sec.requests">MUROJAATLAR</div>
+          <a href="admin-service-requests" class="sidebar__nav-link" data-i18n-title="admin.nav.serviceRequests" title="Xizmat so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-wrench" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.serviceRequests">Xizmat so'rovlari</span></a>
+          <a href="admin-murojaat" class="sidebar__nav-link is-active" aria-current="page" title="Ilmiy daraja murojaatlari"><span class="sidebar__nav-icon"><i class="ph ph-graduation-cap" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Ilmiy daraja murojaatlari</span></a>
+          <a href="admin-corruption-reports" class="sidebar__nav-link" data-i18n-title="admin.nav.corruptionReports" title="Korrupsiya murojaatlari"><span class="sidebar__nav-icon"><i class="ph ph-shield-warning" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.corruptionReports">Korrupsiya murojaatlari</span></a>
+          <a href="admin-feedback" class="sidebar__nav-link" data-i18n-title="admin.nav.feedback" title="Qayta aloqa"><span class="sidebar__nav-icon"><i class="ph ph-chat-dots" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.feedback">Qayta aloqa</span></a>
+          <a href="admin-password-reset-requests" class="sidebar__nav-link" data-i18n-title="admin.nav.passwordResetReq" title="Parol tiklash so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-key" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.passwordReset">Parol tiklash</span></a>
+        </div>
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label" data-i18n="admin.sec.content">KONTENT</div>
+          <a href="admin-news" class="sidebar__nav-link" data-i18n-title="admin.nav.news" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.news">Yangiliklar</span></a>
+          <a href="admin-events" class="sidebar__nav-link" data-i18n-title="admin.nav.events" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.events">Tadbirlar</span></a>
+          <a href="admin-grants" class="sidebar__nav-link" data-i18n-title="admin.nav.grants" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.grants">Grantlar</span></a>
+          <a href="admin-settings" class="sidebar__nav-link" data-i18n-title="admin.nav.settings" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.settings">Sozlamalar</span></a>
+        </div>
+        <div class="sidebar__nav-section u-mt-auto">
+          <a data-action="logout" href="admin-login" class="sidebar__nav-link logout" id="logoutTrigger" data-i18n-title="admin.nav.logout" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.logout">Chiqish</span></a>
+        </div>
+      </nav>
+    </aside>
+    <main class="main" id="main-content" tabindex="-1">
+      <header class="topbar">
+        <div class="topbar-left">
+          <nav class="breadcrumbs" data-i18n-aria-label="admin.breadcrumbAria" aria-label="Sahifa joylashuvi"><a href="admin-dashboard" data-i18n="admin.breadcrumbRoot">Boshqaruv</a> / <span aria-current="page">Ilmiy daraja murojaatlari</span></nav>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-notifications">
+            <button type="button" class="topbar-notifications-btn" id="notificationsBtn" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+            <span class="topbar-notifications-badge" aria-hidden="true"></span>
+          </div>
+          <div class="topbar-divider" aria-hidden="true"></div>
+          <div class="main__profile">
+            <div class="main__profile-avatar u-avatar-badge-sm">A</div>
+            <div>
+              <div class="main__profile-name" data-user-name>Administrator</div>
+              <div class="main__profile-role" data-user-role>Bosh admin</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div class="main__header">
+        <h1 class="main__title">Ilmiy daraja murojaatlari</h1>
+        <div class="main__btns">
+          <button type="button" class="btn btn--secondary" id="exportMurojaatBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport (CSV)</button>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-graduation-cap" aria-hidden="true"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Jami murojaatlar</p><p class="card__value" id="kpiTotal">&mdash;</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock" aria-hidden="true"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Kutilmoqda</p><p class="card__value" id="kpiPending">&mdash;</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-magnifying-glass" aria-hidden="true"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Ko&rsquo;rib chiqilmoqda</p><p class="card__value" id="kpiReviewing">&mdash;</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-check-circle" aria-hidden="true"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Tasdiqlangan</p><p class="card__value" id="kpiApproved">&mdash;</p></div></div>
+        </div>
+      </div>
+
+      <section class="table-section" aria-labelledby="murojaatTableTitle">
+        <div class="table-section__head">
+          <h2 class="table-section__title" id="murojaatTableTitle">Kelib tushgan murojaatlar</h2>
+        </div>
+        <form class="u-filter-row" role="search" aria-label="Murojaatlarni filtrlash">
+          <label for="murojaatSearch" class="u-visually-hidden">F.I.Sh, NNT yoki telefon bo'yicha qidirish</label>
+          <input id="murojaatSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" placeholder="F.I.Sh, NNT, telefon..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" />
+          <button type="button" class="filter-chip is-active" data-status-filter="all" aria-pressed="true" aria-controls="murojaatTableBody">Barchasi</button>
+          <button type="button" class="filter-chip" data-status-filter="pending" aria-pressed="false" aria-controls="murojaatTableBody">Kutilmoqda</button>
+          <button type="button" class="filter-chip" data-status-filter="reviewing" aria-pressed="false" aria-controls="murojaatTableBody">Ko&rsquo;rib chiqilmoqda</button>
+          <button type="button" class="filter-chip" data-status-filter="approved" aria-pressed="false" aria-controls="murojaatTableBody">Tasdiqlangan</button>
+          <button type="button" class="filter-chip" data-status-filter="rejected" aria-pressed="false" aria-controls="murojaatTableBody">Rad etilgan</button>
+        </form>
+        <table class="table">
+          <caption class="u-visually-hidden">Ilmiy daraja murojaatlari jadvali</caption>
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">F.I.Sh</th>
+              <th scope="col">NNT</th>
+              <th scope="col">Telefon</th>
+              <th scope="col">Ma&rsquo;lumot darajasi</th>
+              <th scope="col">Sababi</th>
+              <th scope="col" data-i18n="admin.table.status">Holat</th>
+              <th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.actions">Amallar</span></th>
+            </tr>
+          </thead>
+          <tbody id="murojaatTableBody" aria-live="polite" aria-busy="true">
+            <tr><td colspan="8" role="status" style="text-align:center;color:var(--grey-400);" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <div class="notifications-panel" id="notificationsPanel" role="dialog" data-i18n-aria-label="admin.ui.notifications" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+    <div class="notifications-panel__header">
+      <h2 class="notifications-panel__title" data-i18n="admin.ui.notifications">Bildirishnomalar</h2>
+    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+    </div>
+    <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
+      <p class="text-dim" style="padding:20px;text-align:center" data-i18n="admin.ui.loading">Yuklanmoqda...</p>
+    </div>
+    <div class="notifications-panel__footer">
+      <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" data-i18n="admin.ui.markAllRead" hidden>Barchasini o&rsquo;qildi deb belgilash</button>
+      <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="murojaatReviewModal" role="dialog" aria-modal="true" aria-labelledby="murojaatReviewTitle" aria-hidden="true">
+    <div class="modal u-modal-max-600">
+      <div class="modal__head">
+        <h2 class="modal__title" id="murojaatReviewTitle">Murojaat tafsilotlari</h2>
+        <button type="button" class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+      </div>
+      <div class="modal__body">
+
+        <h3 class="modal__section-title" style="margin:0 0 10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--grey-500);">1. Shaxsiy ma&rsquo;lumotlar</h3>
+        <div class="u-modal-grid-2">
+          <div class="modal__field"><label class="modal__label">F.I.Sh</label><div class="u-modal-value u-modal-value-strong" id="mvFullName">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">Tug&rsquo;ilgan sana</label><div class="u-modal-value" id="mvBirthDate">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">Pasport</label><div class="u-modal-value" id="mvPassport">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">JSHSHIR (PINFL)</label><div class="u-modal-value" id="mvPinfl">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">Telefon</label><div class="u-modal-value" id="mvPhone">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">Email</label><div class="u-modal-value" id="mvEmail">&mdash;</div></div>
+        </div>
+        <div class="modal__field"><label class="modal__label">Manzil</label><div class="u-modal-value" id="mvAddress">&mdash;</div></div>
+
+        <h3 class="modal__section-title" style="margin:18px 0 10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--grey-500);">2. NNT a&rsquo;zoligi</h3>
+        <div class="u-modal-grid-2">
+          <div class="modal__field"><label class="modal__label">NNT nomi</label><div class="u-modal-value u-modal-value-medium" id="mvNntName">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">NNT STIR</label><div class="u-modal-value" id="mvNntStir">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">A&rsquo;zolik guvohnomasi raqami</label><div class="u-modal-value" id="mvCertNo">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">A&rsquo;zolik guvohnomasi yili</label><div class="u-modal-value" id="mvCertYear">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">Lavozim</label><div class="u-modal-value" id="mvPosition">&mdash;</div></div>
+        </div>
+
+        <h3 class="modal__section-title" style="margin:18px 0 10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--grey-500);">3. Ta&rsquo;lim va ilmiy daraja</h3>
+        <div class="u-modal-grid-2">
+          <div class="modal__field"><label class="modal__label">Ma&rsquo;lumot darajasi</label><div class="u-modal-value" id="mvEduLevel">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">Universitet</label><div class="u-modal-value" id="mvUniName">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">Davlat</label><div class="u-modal-value" id="mvUniCountry">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">Mutaxassislik</label><div class="u-modal-value" id="mvSpecialty">&mdash;</div></div>
+        </div>
+
+        <h3 class="modal__section-title" style="margin:18px 0 10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--grey-500);">4. Reyting va sabab</h3>
+        <div class="u-modal-grid-2">
+          <div class="modal__field"><label class="modal__label">Reyting tizimi</label><div class="u-modal-value" id="mvRankingSystem">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">Reyting o&rsquo;rni</label><div class="u-modal-value" id="mvRankingPlace">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">Murojaat sababi</label><div class="u-modal-value" id="mvReason">&mdash;</div></div>
+        </div>
+
+        <h3 class="modal__section-title" style="margin:18px 0 10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--grey-500);">5. Ilova qilingan hujjatlar</h3>
+        <div class="modal__field">
+          <div id="mvDocuments" class="u-modal-value" style="display:flex;flex-direction:column;gap:6px;">&mdash;</div>
+        </div>
+
+        <h3 class="modal__section-title" style="margin:18px 0 10px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--grey-500);">Holat va izoh</h3>
+        <div class="u-modal-grid-2">
+          <div class="modal__field"><label class="modal__label">Murojaat raqami</label><div class="u-modal-value u-modal-value-strong" id="mvId">&mdash;</div></div>
+          <div class="modal__field"><label class="modal__label">Topshirilgan</label><div class="u-modal-value" id="mvDate">&mdash;</div></div>
+        </div>
+        <div class="u-modal-grid-2">
+          <div class="modal__field">
+            <label class="modal__label" for="mvStatus">Holat</label>
+            <select id="mvStatus" class="modal__textarea" style="min-height:auto;height:auto;padding:8px 10px;">
+              <option value="pending">Kutilmoqda</option>
+              <option value="reviewing">Ko&rsquo;rib chiqilmoqda</option>
+              <option value="approved">Tasdiqlangan</option>
+              <option value="rejected">Rad etilgan</option>
+            </select>
+          </div>
+          <div class="modal__field"><label class="modal__label">Ariza beruvchi IP</label><div class="u-modal-value" id="mvIp">&mdash;</div></div>
+        </div>
+        <div class="modal__field">
+          <label class="modal__label" for="mvAdminNote">Admin izohi</label>
+          <textarea id="mvAdminNote" class="modal__textarea" maxlength="5000" placeholder="Izoh qoldiring..."></textarea>
+        </div>
+      </div>
+      <div class="modal__foot">
+        <button type="button" class="btn btn--secondary" data-modal-close>Yopish</button>
+        <button type="button" class="btn btn--primary" id="mvSaveBtn"><i class="ph ph-check-circle" aria-hidden="true"></i> Saqlash</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-modal.js" defer></script>
+  <script src="js/admin-boot.js" defer></script>
+  <script>
+  (function () {
+    var MEDIA_BASE = 'https://api.ngo.uz/media.php?path=';
+    var items = [];
+    var statusFilter = 'all';
+    var searchQ = '';
+
+    var toastTimer;
+    function toast(msg, type) {
+      var el = document.getElementById('cmsToast');
+      if (!el) return;
+      el.textContent = msg;
+      el.className = 'cms-toast cms-toast--' + (type || 'info') + ' show';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(function () { el.classList.remove('show'); }, 4000);
+    }
+
+    var STATUS_BADGE = { 'pending': 'warning', 'reviewing': 'warning', 'approved': 'success', 'rejected': 'error' };
+    var STATUS_LABEL = { 'pending': 'Kutilmoqda', 'reviewing': 'Ko’rib chiqilmoqda', 'approved': 'Tasdiqlangan', 'rejected': 'Rad etilgan' };
+    var EDU_LABEL = { 'bachelor': 'Bakalavr', 'master': 'Magistr', 'phd': 'PhD / Doktorantura' };
+    var REASON_LABEL = { 'new': 'Yangi tan olish', 'increase': 'Darajani oshirish' };
+    var RANKING_LABEL = { 'qs': 'QS', 'the': 'THE' };
+
+    // 8 documents in the documents OBJECT, in submission order, each
+    // labelled with its meaning.
+    var DOC_FIELDS = [
+      ['doc_id',            'ID hujjati'],
+      ['doc_diploma',       'Diplom'],
+      ['doc_recognition',   'Tan olinganlik'],
+      ['doc_order',         'Buyruq'],
+      ['doc_labor',         'Mehnat daftarchasi'],
+      ['doc_recommendation','Tavsiyanoma'],
+      ['doc_membership',    'A’zolik hujjati'],
+      ['doc_cv',            'Ma’lumotnoma']
+    ];
+
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+    function val(v) { return (v == null || v === '') ? '—' : esc(v); }
+
+    function renderKpi() {
+      var byStatus = function (s) { return items.filter(function (i) { return i.status === s; }).length; };
+      var elT = document.getElementById('kpiTotal');      if (elT) elT.textContent = items.length;
+      var elP = document.getElementById('kpiPending');    if (elP) elP.textContent = byStatus('pending');
+      var elR = document.getElementById('kpiReviewing');  if (elR) elR.textContent = byStatus('reviewing');
+      var elA = document.getElementById('kpiApproved');   if (elA) elA.textContent = byStatus('approved');
+    }
+
+    function renderTable() {
+      var q = searchQ.toLowerCase();
+      var filtered = items.filter(function (item) {
+        if (statusFilter !== 'all' && item.status !== statusFilter) return false;
+        if (q) {
+          var hay = ((item.full_name || '') + ' ' + (item.nnt_name || '') + ' ' + (item.phone || '') + ' #' + item.id).toLowerCase();
+          if (hay.indexOf(q) === -1) return false;
+        }
+        return true;
+      });
+      var tbody = document.getElementById('murojaatTableBody');
+      if (!filtered.length) {
+        tbody.innerHTML = '<tr><td colspan="8" role="status" style="text-align:center;color:var(--grey-400);">Murojaat topilmadi</td></tr>';
+        return;
+      }
+      tbody.innerHTML = filtered.map(function (item) {
+        var badge = STATUS_BADGE[item.status] || 'neutral';
+        var label = esc(STATUS_LABEL[item.status] || item.status || '');
+        var idNum = parseInt(item.id, 10) || 0;
+        return '<tr data-status="' + esc(item.status || '') + '">' +
+          '<td><strong>#' + esc(item.id) + '</strong></td>' +
+          '<td>' + val(item.full_name) + '</td>' +
+          '<td>' + val(item.nnt_name) + '</td>' +
+          '<td>' + val(item.phone) + '</td>' +
+          '<td>' + esc(EDU_LABEL[item.edu_level] || item.edu_level || '—') + '</td>' +
+          '<td>' + esc(REASON_LABEL[item.reason] || item.reason || '—') + '</td>' +
+          '<td><span class="badge badge--' + badge + '"><span class="badge__dot"></span>' + label + '</span></td>' +
+          '<td><button type="button" class="btn btn--sm btn--secondary" aria-label="#' + esc(item.id) + ' murojaatini ko\'rib chiqish" onclick="openMurojaatReview(' + idNum + ')"><i class="ph ph-eye" aria-hidden="true"></i> Ko\'rish</button></td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function renderDocuments(docs) {
+      var box = document.getElementById('mvDocuments');
+      docs = docs || {};
+      var html = DOC_FIELDS.map(function (pair) {
+        var key = pair[0], label = pair[1];
+        var path = docs[key];
+        if (!path) {
+          return '<span style="color:var(--grey-400);font-size:13px;">' + esc(label) + ': <em>yo’q</em></span>';
+        }
+        var url = MEDIA_BASE + encodeURIComponent(path);
+        return '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer" class="btn btn--sm btn--secondary" style="justify-content:flex-start;">' +
+               '<i class="ph ph-file-arrow-down" aria-hidden="true"></i> ' + esc(label) + '</a>';
+      }).join('');
+      box.innerHTML = html || '—';
+    }
+
+    var reviewingId = null;
+    window.openMurojaatReview = function (id) {
+      var item = items.find(function (i) { return parseInt(i.id, 10) === id; });
+      if (!item) return;
+      reviewingId = id;
+
+      document.getElementById('mvFullName').textContent  = item.full_name || '—';
+      document.getElementById('mvBirthDate').textContent = item.birth_date || '—';
+      document.getElementById('mvPassport').textContent  = item.passport || '—';
+      document.getElementById('mvPinfl').textContent     = item.pinfl || '—';
+      document.getElementById('mvPhone').textContent     = item.phone || '—';
+      document.getElementById('mvEmail').textContent     = item.email || '—';
+      document.getElementById('mvAddress').textContent   = item.address || '—';
+
+      document.getElementById('mvNntName').textContent   = item.nnt_name || '—';
+      document.getElementById('mvNntStir').textContent   = item.nnt_stir || '—';
+      document.getElementById('mvCertNo').textContent    = item.membership_cert_no || '—';
+      document.getElementById('mvCertYear').textContent  = item.membership_cert_year || '—';
+      document.getElementById('mvPosition').textContent  = item.position || '—';
+
+      document.getElementById('mvEduLevel').textContent  = EDU_LABEL[item.edu_level] || item.edu_level || '—';
+      document.getElementById('mvUniName').textContent   = item.uni_name || '—';
+      document.getElementById('mvUniCountry').textContent= item.uni_country || '—';
+      document.getElementById('mvSpecialty').textContent = item.specialty || '—';
+
+      document.getElementById('mvRankingSystem').textContent = RANKING_LABEL[item.ranking_system] || item.ranking_system || '—';
+      document.getElementById('mvRankingPlace').textContent  = item.ranking_place || '—';
+      document.getElementById('mvReason').textContent        = REASON_LABEL[item.reason] || item.reason || '—';
+
+      renderDocuments(item.documents);
+
+      document.getElementById('mvId').textContent = '#' + item.id;
+      var dateRaw = String(item.created_at || '');
+      var dateVis = dateRaw.slice(0, 16).replace('T', ' ');
+      var dateDt  = dateRaw.slice(0, 10);
+      document.getElementById('mvDate').innerHTML = dateVis ? '<time datetime="' + dateDt + '">' + dateVis + '</time>' : '—';
+      document.getElementById('mvIp').textContent = item.ip || '—';
+
+      var statusSel = document.getElementById('mvStatus');
+      if (statusSel) statusSel.value = item.status || 'pending';
+      var noteEl = document.getElementById('mvAdminNote');
+      if (noteEl) noteEl.value = item.admin_note || '';
+
+      if (window.AdminModal) window.AdminModal.open('murojaatReviewModal');
+    };
+
+    var saveBtn = document.getElementById('mvSaveBtn');
+    if (saveBtn) {
+      saveBtn.addEventListener('click', function (e) {
+        if (!reviewingId) return;
+        e.preventDefault();
+        e.stopPropagation();
+        var btn = e.currentTarget;
+        var defaultLabel = btn.innerHTML;
+        btn.disabled = true;
+        btn.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i> Saqlanmoqda...';
+        var modal = document.getElementById('murojaatReviewModal');
+        if (modal) modal.setAttribute('aria-busy', 'true');
+
+        var status = document.getElementById('mvStatus').value;
+        var note = (document.getElementById('mvAdminNote').value || '').trim();
+        var savedId = reviewingId;
+
+        NgoApi.patch('/admin/murojaat/' + savedId, { status: status, admin_note: note })
+          .then(function () {
+            var idx = items.findIndex(function (i) { return parseInt(i.id, 10) === savedId; });
+            if (idx !== -1) { items[idx].status = status; items[idx].admin_note = note; }
+            renderTable(); renderKpi();
+            if (window.AdminModal) window.AdminModal.close('murojaatReviewModal');
+            toast('Murojaat saqlandi.', 'success');
+          })
+          .catch(function (err) {
+            toast('Saqlashda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error');
+          })
+          .then(function () {
+            btn.disabled = false; btn.innerHTML = defaultLabel;
+            if (modal) modal.setAttribute('aria-busy', 'false');
+          });
+      });
+    }
+
+    var searchEl = document.getElementById('murojaatSearch');
+    if (searchEl) searchEl.addEventListener('input', function () { searchQ = this.value; renderTable(); });
+
+    document.querySelectorAll('[data-status-filter]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('[data-status-filter]').forEach(function (b) {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        this.classList.add('is-active');
+        this.setAttribute('aria-pressed', 'true');
+        statusFilter = this.dataset.statusFilter;
+        renderTable();
+      });
+    });
+
+    NgoApi.get('/admin/murojaat?limit=200')
+      .then(function (res) {
+        items = (res.items || []).sort(function (a, b) {
+          // Newest first.
+          return (new Date(b.created_at).getTime() || 0) - (new Date(a.created_at).getTime() || 0);
+        });
+        renderTable();
+        renderKpi();
+      })
+      .catch(function (err) {
+        console.error('Murojaat fetch error:', err);
+        document.getElementById('murojaatTableBody').innerHTML = '<tr><td colspan="8" role="alert" style="text-align:center;color:var(--error-600);">Yuklashda xatolik: ' + esc((err && err.message) || 'noma\'lum') + '</td></tr>';
+      })
+      .then(function () {
+        var t = document.getElementById('murojaatTableBody');
+        if (t) t.setAttribute('aria-busy', 'false');
+      });
+
+    var exportBtn = document.getElementById('exportMurojaatBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', function () {
+        if (!items.length) { toast('Eksport qilish uchun murojaat yo\'q', 'info'); return; }
+        window.exportCsv(
+          'ilmiy-daraja-murojaatlari-' + new Date().toISOString().slice(0, 10) + '.csv',
+          items,
+          ['id', 'created_at', 'status', 'full_name', 'phone', 'email', 'nnt_name', 'nnt_stir', 'edu_level', 'uni_name', 'uni_country', 'specialty', 'ranking_system', 'ranking_place', 'reason', 'admin_note']
+        );
+      });
+    }
+  })();
+  </script>
+  <script src="js/pacta-foundation.js" defer></script>
+  <script src="js/pacta-notifications.js"></script>
+  <script src="js/pacta-app.js"></script>
+</body>
+</html>
