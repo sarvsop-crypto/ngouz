@@ -8,7 +8,23 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png" />
   <link rel="manifest" href="/manifest.webmanifest" />
 <meta content="width=device-width, initial-scale=1" name="viewport"/>
-<title>Xalqaro hamkorlik - ngo.uz</title>
+<title>TOP-500 OTM bitiruvchilari reyestri — O'zNNTMA | ngo.uz</title>
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="ngo.uz" />
+<meta property="og:locale" content="uz_UZ" />
+<meta property="og:title" content="TOP-500 OTM bitiruvchilari reyestri — O'zNNTMA | ngo.uz" />
+<meta property="og:description" content="Nufuzli xorijiy oliy ta'lim muassasalarini (TOP-500) tamomlagan va lavozim maoshiga qo'shimcha ustama berish tavsiya etilgan yosh mutaxassislar ro'yxati." />
+<meta property="og:url" content="https://www.ngo.uz/top500-reyestri" />
+<meta property="og:image" content="https://www.ngo.uz/img/og-image.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="O'ZNNTMA — ngo.uz" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="TOP-500 OTM bitiruvchilari reyestri — O'zNNTMA | ngo.uz" />
+<meta name="twitter:description" content="Nufuzli xorijiy oliy ta'lim muassasalarini (TOP-500) tamomlagan va lavozim maoshiga qo'shimcha ustama berish tavsiya etilgan yosh mutaxassislar ro'yxati." />
+<meta name="twitter:image" content="https://www.ngo.uz/img/og-image.png" />
+<meta name="twitter:image:alt" content="O'ZNNTMA — ngo.uz" />
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -23,8 +39,14 @@
     {
       "@type": "ListItem",
       "position": 2,
-      "name": "Xalqaro hamkorlik",
-      "item": "https://www.ngo.uz/services"
+      "name": "NNTlar reyestri",
+      "item": "https://www.ngo.uz/nntlar"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "TOP-500 OTM bitiruvchilari reyestri",
+      "item": "https://www.ngo.uz/top500-reyestri"
     }
   ]
 }
@@ -35,30 +57,54 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 <meta name="apple-mobile-web-app-title" content="ngo.uz" />
 <meta name="format-detection" content="telephone=no" />
-<meta name="description" content="Assotsiatsiyaning xalqaro hamkorlari, qo'shma loyihalar va donor tashkilotlar bilan ishlash yo'nalishlari." />
+<meta name="description" content="Nufuzli xorijiy oliy ta'lim muassasalarini (TOP-500) tamomlagan va lavozim maoshiga qo'shimcha ustama berish tavsiya etilgan yosh mutaxassislar ro'yxati." />
 <meta name="robots" content="index, follow, max-image-preview:large" />
-<link rel="canonical" href="https://www.ngo.uz/services" />
-<meta property="og:type" content="website" />
-<meta property="og:site_name" content="ngo.uz" />
-<meta property="og:locale" content="uz_UZ" />
-<meta property="og:title" content="Xalqaro hamkorlik — ngo.uz" />
-<meta property="og:description" content="Assotsiatsiyaning xalqaro hamkorlari, qo'shma loyihalar va donor tashkilotlar bilan ishlash yo'nalishlari." />
-<meta property="og:url" content="https://www.ngo.uz/services" />
-<meta property="og:image" content="https://www.ngo.uz/img/og-image.png" />
-<meta property="og:image:width" content="1200" />
-<meta property="og:image:height" content="630" />
-<meta property="og:image:alt" content="O'ZNNTMA — ngo.uz" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Xalqaro hamkorlik — ngo.uz" />
-<meta name="twitter:description" content="Assotsiatsiyaning xalqaro hamkorlari, qo'shma loyihalar va donor tashkilotlar bilan ishlash yo'nalishlari." />
-<meta name="twitter:image" content="https://www.ngo.uz/img/og-image.png" />
-<meta name="twitter:image:alt" content="O'ZNNTMA — ngo.uz" />
+<link rel="canonical" href="https://www.ngo.uz/top500-reyestri" />
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link crossorigin="" href="https://unpkg.com" rel="preconnect"/>
-<link crossorigin="" href="https://ngo-api-proxy.sarvsop.workers.dev" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="css/style.css?v=32" rel="stylesheet">
+<link href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" rel="stylesheet" integrity="sha384-6p9AefaqUhEVheRlj1mpAkbngHXy9mbYMrIdcIt4Jlc9lOLIablJq3bBsLOjGwZ7" crossorigin="anonymous"/>
+<style>
+    /* ── Demo notice badge ── */
+    .demo-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 600;
+      padding: 4px 12px; border-radius: 20px;
+      background: #fff7ed; color: #9a3412;
+      border: 1px solid #fed7aa;
+      white-space: nowrap;
+    }
+
+    /* ── Table ── */
+    .idx-table-wrap { margin-top: 8px; overflow-x: auto; }
+    .idx-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 13px;
+    }
+    .idx-table thead th {
+      background: var(--green-500, #2e7d52); color: #fff;
+      padding: 11px 14px; text-align: left;
+      font-size: 14px; font-weight: 600;
+      white-space: nowrap;
+      border: 1px solid var(--green-600, #255f40);
+    }
+    .idx-table tbody tr:nth-child(odd)  { background: #f8fbf9; }
+    .idx-table tbody tr:nth-child(even) { background: #fff; }
+    .idx-table tbody tr:hover { background: #eef6f1; }
+    .idx-table td {
+      padding: 10px 14px;
+      border: 1px solid #dde8e2;
+      vertical-align: middle;
+    }
+
+    .section-label {
+      font-size: 13px; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--green-600, #255f40);
+      margin-bottom: 8px;
+    }
+  </style>
 <script src="js/errlog.js" defer></script>
 <script src="js/sw-register.js" defer></script>
 <script src="js/dropdown.js" defer></script>
@@ -150,88 +196,97 @@
 </header>
 <main id="main-content" tabindex="-1">
 <section class="grid-bg">
-<div class="container hero split">
-<div>
-<h1 data-i18n="pages.services.title">Xalqaro hamkorlik</h1>
-<p data-i18n="pages.services.sub" class="sub">Xalqaro tashkilotlar va hamkor institutlar bilan qo'shma loyihalar, tajriba almashish va institutsional rivojlanish yo'nalishlari.</p>
-<div style="margin-top:20px">
-<a class="btn" href="awards">Hamkorlar ro'yxati</a>
-</div>
-</div>
-<div class="card">
-<div class="media" style="height:430px"></div>
-<h2>Mintaqaviy hamkorlik platformasi</h2>
-<p>Fuqarolik jamiyati institutlari bilan ko'p tomonlama hamkorlik.</p>
-</div>
-</div>
-</section>
-<section class="section">
-<div class="container" data-i18n-html="pages.services.forms">
-<h2 class="section-title">Hamkorlik shakllari</h2>
-<p class="section-sub">Strategik hamkorlik, qo'shma tadbirlar va salohiyatni oshirish dasturlari.</p>
-<div class="cards">
-<article class="card">
-<h3>Qo'shma loyihalar</h3>
-<p>Xalqaro donorlar va institutlar bilan ijtimoiy yo'nalishdagi loyihalar.</p>
-</article>
-<article class="card">
-<h3>Tajriba almashish</h3>
-<p>Seminar, forum va ekspert uchrashuvlari orqali bilim almashuvi.</p>
-</article>
-<article class="card">
-<h3>Institutsional ko'mak</h3>
-<p>NNTlar boshqaruvi, monitoring va barqarorlik bo'yicha metodik ko'mak.</p>
-</article>
-</div>
-</div>
-</section>
-<section class="section" style="padding-top:0">
-<div class="container" data-i18n-html="pages.services.initiatives">
-<h2 class="section-title">Amaldagi tashabbuslar</h2>
-<div class="list">
-<div class="item">
-<h3>&#x201C;NNTlar reyestri boshqaruv standartlari&#x201D; dasturi</h3>
-<p>Hamkor: xalqaro ekspertlar guruhi · Davr: 2025–2026 · Yo'nalish: institutsional rivojlanish va ichki boshqaruv.</p>
-</div>
-<div class="item">
-<h3>Mintaqaviy ijtimoiy sheriklik forumi</h3>
-<p>Hamkor: mintaqaviy markazlar · Davr: har chorak · Yo'nalish: davlat-NNT muloqoti va hamkorlik mexanizmlari.</p>
-</div>
-<div class="item">
-<h3>Monitoring va baholash laboratoriyasi</h3>
-<p>Hamkor: xalqaro metodologik tarmoq · Davr: 2025–2027 · Yo'nalish: natijadorlik indikatorlari va baholash.</p>
-</div>
-</div>
-</div>
-</section>
-<section class="section" style="padding-top:0">
-<div class="container">
-<h2 class="section-title" data-i18n="pages.services.partnersTitle">Hamkor institutlar</h2>
-<div class="partner-grid">
-<div class="partner">INTL PARTNER 1</div>
-<div class="partner">INTL PARTNER 2</div>
-<div class="partner">INTL PARTNER 3</div>
-<div class="partner">INTL PARTNER 4</div>
-<div class="partner">INTL PARTNER 5</div>
-<div class="partner">INTL PARTNER 6</div>
-</div>
-</div>
-</section>
-<section class="section" style="padding-top:0">
-<div class="container" data-i18n-html="pages.services.results">
-<h2 class="section-title">Natijalar</h2>
-<div class="kpi-grid">
-<div class="kpi"><strong>37+</strong><span>Qo'shma tashabbus</span></div>
-<div class="kpi"><strong>12</strong><span>Xalqaro hamkor</span></div>
-<div class="kpi"><strong>950+</strong><span>Ishtirokchi NNT</span></div>
-<div class="kpi"><strong>14</strong><span>Hudud qamrovi</span></div>
-</div>
+<div class="container hero center">
+<p class="section-label" data-i18n="pages.top500Reyestri.kicker">TOP-500 OTM bitiruvchilari reyestri</p>
+<h1 data-i18n="pages.top500Reyestri.heading">Nufuzli xorijiy oliy ta'lim muassasalarini (TOP-500) tamomlagan va lavozim maoshiga qo'shimcha ustama berish tavsiya etilgan yosh mutaxassislar ro'yxati.</h1>
+<p style="margin-top:14px;">
+<span class="demo-badge" data-i18n="pages.top500Reyestri.demoBadge"><i aria-hidden="true" class="ph ph-flask"></i> namuna ma'lumotlar (demo)</span>
+</p>
 </div>
 </section>
 <section class="section">
 <div class="container">
-<h2 class="section-title">Xalqaro faoliyat</h2>
-<div id="dynamic-intl-page" aria-live="polite" aria-busy="true"><p role="status">Yuklanmoqda...</p></div>
+<p style="margin:0 0 28px;padding:14px 18px;background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;font-size:14px;color:#9a3412;" data-i18n="pages.top500Reyestri.notice"><i aria-hidden="true" class="ph ph-info" style="vertical-align:middle;"></i> Quyidagi jadval namuna (demo) ma'lumotlarni ko'rsatadi. Haqiqiy reyestr ulangach, bu yerda rasmiy ma'lumotlar paydo bo'ladi.</p>
+<div class="idx-table-wrap">
+<table class="idx-table">
+<caption class="u-visually-hidden" data-i18n="pages.top500Reyestri.caption">TOP-500 OTM bitiruvchilari reyestri (namuna ma'lumotlar)</caption>
+<thead>
+<tr>
+<th scope="col" style="width:32px;" data-i18n="pages.top500Reyestri.colNum">#</th>
+<th scope="col" data-i18n="pages.top500Reyestri.colName">F.I.Sh.</th>
+<th scope="col" data-i18n="pages.top500Reyestri.colNnt">Faoliyat yuritayotgan NNT nomi</th>
+<th scope="col" data-i18n="pages.top500Reyestri.colUni">Tamomlagan OTM nomi</th>
+<th scope="col" data-i18n="pages.top500Reyestri.colLevel">Ta'lim darajasi</th>
+<th scope="col" data-i18n="pages.top500Reyestri.colYear">Tamomlagan yili</th>
+<th scope="col" data-i18n="pages.top500Reyestri.colQs">"QS" reytingi</th>
+<th scope="col" data-i18n="pages.top500Reyestri.colThe">"THE" reytingi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td style="font-weight:500;">Akmalov Jasur Bahodirovich</td>
+<td>"Kelajak Ovozi" yoshlar tashkiloti</td>
+<td>University of Oxford</td>
+<td>Magistratura</td>
+<td>2022</td>
+<td>3</td>
+<td>1</td>
+</tr>
+<tr>
+<td>2</td>
+<td style="font-weight:500;">Karimova Dilnoza Shavkatovna</td>
+<td>"Barqaror Rivojlanish" jamoat fondi</td>
+<td>Massachusetts Institute of Technology (MIT)</td>
+<td>Bakalavriat</td>
+<td>2021</td>
+<td>1</td>
+<td>2</td>
+</tr>
+<tr>
+<td>3</td>
+<td style="font-weight:500;">Rahimov Sardor Ulug'bekovich</td>
+<td>"Yangi Avlod" ta'lim markazi</td>
+<td>University of Cambridge</td>
+<td>PhD</td>
+<td>2019</td>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+<td style="font-weight:500;">Yusupova Madina Akmalovna</td>
+<td>"Inson Huquqlari" notijorat tashkiloti</td>
+<td>ETH Zurich</td>
+<td>Magistratura</td>
+<td>2023</td>
+<td>7</td>
+<td>11</td>
+</tr>
+<tr>
+<td>5</td>
+<td style="font-weight:500;">To'xtayev Bekzod Farhodovich</td>
+<td>"Toza Tabiat" ekologik harakati</td>
+<td>National University of Singapore (NUS)</td>
+<td>Bakalavriat</td>
+<td>2024</td>
+<td>8</td>
+<td>19</td>
+</tr>
+<tr>
+<td>6</td>
+<td style="font-weight:500;">Nazarova Sevara Botirovna</td>
+<td>"Mehr Nuri" xayriya jamg'armasi</td>
+<td>University of Tokyo</td>
+<td>Magistratura</td>
+<td>2020</td>
+<td>28</td>
+<td>29</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p style="font-size:15px;color:var(--neutral-400,#9ca3af);margin-top:12px;" data-i18n="pages.top500Reyestri.footnote">* Yuqoridagi ma'lumotlar namuna sifatida keltirilgan va haqiqiy shaxslarga taalluqli emas.</p>
 </div>
 </section>
 </main>
@@ -260,6 +315,7 @@
 <a href="https://youtube.com/@uznntma" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="YouTube" style="--sc:#FF0000"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg><span>YouTube</span></a>
 <a href="https://www.linkedin.com/company/ngo-association-uzbekistan/" class="social-link" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn" style="--sc:#0A66C2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg><span>LinkedIn</span></a>
 <a href="contact" class="social-link" data-i18n-aria-label="footer.contactAria" aria-label="Bog'lanish" style="--sc:#0e7490"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20 2H4c-1.103 0-2 .897-2 2v18l4-4h14c1.103 0 2-.897 2-2V4c0-1.103-.897-2-2-2z"/></svg><span data-i18n="footer.contactLink">Bog'lanish</span></a>
+</div>
 </div>
 </div>
 </div>

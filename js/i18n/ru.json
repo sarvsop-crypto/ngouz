@@ -1145,7 +1145,8 @@
     "registryItems": {
       "members": "ННО — члены Ассоциации",
       "sustainabilityIndex": "Индекс устойчивости ННО",
-      "sustainabilityCert": "ННО с сертификатом «Устойчивое ННО»"
+      "sustainabilityCert": "ННО с сертификатом «Устойчивое ННО»",
+      "top500": "Реестр выпускников вузов ТОП-500"
     },
     "projects": "Проекты",
     "partnersGroup": "Партнёры",
@@ -1729,6 +1730,22 @@
       "title": "Индекс устойчивости ННО <span style=\"font-size:0.45em; font-weight:500; opacity:0.72; white-space:nowrap;\">(планируемый проект)</span>",
       "sub": "Система оценки институциональной устойчивости ННО Узбекистана",
       "body": "<p style=\"max-width:780px;font-size:16px;line-height:1.8;color:var(--neutral-700,#374151);margin:0 auto 8px;\">Индекс устойчивости ННО — инструмент оценки долгосрочной жизнеспособности организаций по шести ключевым критериям. Индекс ежегодно рассчитывается УзНАННО, результаты публикуются открыто. Цель — помочь ННО определить свои сильные и слабые стороны и наметить направления развития.</p><p style=\"margin:24px 0 28px;padding:14px 18px;background:#f8fbf9;border:1px solid #d4e8dd;border-radius:10px;font-size:14px;color:var(--neutral-500,#587585);\"><i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;color:var(--green-600,#255f40);\"></i> Количество оценённых ННО и средние показатели появятся здесь после подключения реестра индекса.</p><p class=\"section-label\">Критерии оценки</p><h2 style=\"margin:0 0 4px;font-size:22px;\">Шесть критериев, всего 100 баллов</h2><p style=\"font-size:16px;color:var(--neutral-500,#587585);margin:0 0 4px;\">Максимальный балл указан по каждому критерию.</p><div class=\"criteria-grid\"><div class=\"criterion-card\"><h3>Управление и прозрачность</h3><p>Структура совета, годовые отчёты, финансовый аудит и системы внутреннего контроля.</p><span class=\"criterion-max\">макс. 20 баллов</span></div><div class=\"criterion-card\"><h3>Финансовая устойчивость</h3><p>Разнообразие источников средств, финансовые резервы и эффективность бюджетного управления.</p><span class=\"criterion-max\">макс. 20 баллов</span></div><div class=\"criterion-card\"><h3>Эффективность программ</h3><p>Результаты деятельности, число бенефициаров, социальный эффект проектов.</p><span class=\"criterion-max\">макс. 20 баллов</span></div><div class=\"criterion-card\"><h3>Человеческие ресурсы</h3><p>Удержание сотрудников, повышение квалификации, волонтёры и кадровый потенциал.</p><span class=\"criterion-max\">макс. 15 баллов</span></div><div class=\"criterion-card\"><h3>Сотрудничество и сеть</h3><p>Связи с государственными органами, бизнес-сообществом и международными организациями.</p><span class=\"criterion-max\">макс. 15 баллов</span></div><div class=\"criterion-card\"><h3>Инфраструктура и ИТ</h3><p>Сайт, социальные сети, базы данных и системы управления.</p><span class=\"criterion-max\">макс. 10 баллов</span></div></div><p class=\"section-label\" style=\"margin-top:32px;\">Уровни</p><div class=\"level-row\"><div class=\"level-badge level--dev\"><span class=\"level-badge-dot\"></span>Развивающийся — 0–39 баллов</div><div class=\"level-badge level--grow\"><span class=\"level-badge-dot\"></span>Растущий — 40–59 баллов</div><div class=\"level-badge level--cons\"><span class=\"level-badge-dot\"></span>Укрепляющийся — 60–79 баллов</div><div class=\"level-badge level--sus\"><span class=\"level-badge-dot\"></span>Устойчивый — 80–100 баллов</div></div><p class=\"section-label\">Результаты 2024 года (выборочно)</p><h2 style=\"margin:0 0 16px;font-size:22px;\">Результаты оценки</h2><div class=\"idx-table-wrap\"><table class=\"idx-table\"><caption class=\"u-visually-hidden\">Рейтинг индекса устойчивости ННО и распределение по регионам</caption><thead><tr><th scope=\"col\" style=\"width:32px;\">#</th><th scope=\"col\">Название организации</th><th scope=\"col\">Регион</th><th scope=\"col\" class=\"score-cell\">Балл (из 100)</th><th scope=\"col\">Уровень</th></tr></thead><tbody id=\"sustainabilityTableBody\" aria-live=\"polite\"><tr><td colspan=\"5\" role=\"status\" style=\"text-align:center;color:var(--neutral-400,#9ca3af);padding:24px;\">Загрузка...</td></tr></tbody></table></div><p style=\"font-size:15px;color:var(--neutral-400,#9ca3af);margin-top:12px;\">* В таблице показана часть оценённых организаций. Полный список можно запросить через обращение.</p>"
+    },
+    "top500Reyestri": {
+      "kicker": "Реестр выпускников вузов ТОП-500",
+      "heading": "Список молодых специалистов, окончивших престижные зарубежные высшие учебные заведения (ТОП-500), которым рекомендована надбавка к должностному окладу.",
+      "demoBadge": "<i aria-hidden=\"true\" class=\"ph ph-flask\"></i> демонстрационные данные (demo)",
+      "notice": "<i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;\"></i> Таблица ниже содержит демонстрационные (demo) данные. После подключения реальной системы здесь появятся официальные данные.",
+      "caption": "Реестр выпускников вузов ТОП-500 (демонстрационные данные)",
+      "colNum": "#",
+      "colName": "Ф.И.О.",
+      "colNnt": "Название ННО, в котором работает",
+      "colUni": "Название оконченного вуза",
+      "colLevel": "Уровень образования",
+      "colYear": "Год окончания",
+      "colQs": "Рейтинг «QS»",
+      "colThe": "Рейтинг «THE»",
+      "footnote": "* Приведённые выше данные являются демонстрационными и не относятся к реальным лицам."
     },
     "talimRivojlanish": {
       "title": "Образование и развитие",

@@ -1145,7 +1145,8 @@
     "registryItems": {
       "members": "Member NGOs",
       "sustainabilityIndex": "NGO sustainability index",
-      "sustainabilityCert": "NGOs with the \"Sustainable NGO\" certificate"
+      "sustainabilityCert": "NGOs with the \"Sustainable NGO\" certificate",
+      "top500": "Registry of TOP-500 university graduates"
     },
     "projects": "Projects",
     "partnersGroup": "Partners",
@@ -1729,6 +1730,22 @@
       "title": "NGO sustainability index <span style=\"font-size:0.45em; font-weight:500; opacity:0.72; white-space:nowrap;\">(planned project)</span>",
       "sub": "System for assessing the institutional sustainability of NGOs in Uzbekistan",
       "body": "<p style=\"max-width:780px;font-size:16px;line-height:1.8;color:var(--neutral-700,#374151);margin:0 auto 8px;\">The NGO sustainability index is a tool that assesses an organization's long-term viability across six core criteria. The index is calculated annually by UzNANNGO and the results are published openly. The aim: help NGOs identify their strengths and weaknesses and set development directions.</p><p style=\"margin:24px 0 28px;padding:14px 18px;background:#f8fbf9;border:1px solid #d4e8dd;border-radius:10px;font-size:14px;color:var(--neutral-500,#587585);\"><i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;color:var(--green-600,#255f40);\"></i> The number of assessed NGOs and average score figures will appear here once the index registry is connected.</p><p class=\"section-label\">Assessment criteria</p><h2 style=\"margin:0 0 4px;font-size:22px;\">Six criteria, 100 points total</h2><p style=\"font-size:16px;color:var(--neutral-500,#587585);margin:0 0 4px;\">Maximum points are shown per criterion.</p><div class=\"criteria-grid\"><div class=\"criterion-card\"><h3>Governance and transparency</h3><p>Council structure, annual reports, financial audit, and internal-control systems.</p><span class=\"criterion-max\">max 20 points</span></div><div class=\"criterion-card\"><h3>Financial sustainability</h3><p>Diversity of funding, financial reserves, and effective budget management.</p><span class=\"criterion-max\">max 20 points</span></div><div class=\"criterion-card\"><h3>Programme effectiveness</h3><p>Activity outcomes, beneficiary count, and the social impact of projects.</p><span class=\"criterion-max\">max 20 points</span></div><div class=\"criterion-card\"><h3>Human resources</h3><p>Staff retention, professional development, volunteers, and personnel capacity.</p><span class=\"criterion-max\">max 15 points</span></div><div class=\"criterion-card\"><h3>Cooperation and network</h3><p>Ties with state bodies, the business community, and international organizations.</p><span class=\"criterion-max\">max 15 points</span></div><div class=\"criterion-card\"><h3>Infrastructure and IT</h3><p>Website, social networks, databases, and management systems.</p><span class=\"criterion-max\">max 10 points</span></div></div><p class=\"section-label\" style=\"margin-top:32px;\">Levels</p><div class=\"level-row\"><div class=\"level-badge level--dev\"><span class=\"level-badge-dot\"></span>Developing — 0–39 points</div><div class=\"level-badge level--grow\"><span class=\"level-badge-dot\"></span>Growing — 40–59 points</div><div class=\"level-badge level--cons\"><span class=\"level-badge-dot\"></span>Consolidating — 60–79 points</div><div class=\"level-badge level--sus\"><span class=\"level-badge-dot\"></span>Sustainable — 80–100 points</div></div><p class=\"section-label\">2024 results (selected)</p><h2 style=\"margin:0 0 16px;font-size:22px;\">Assessment results</h2><div class=\"idx-table-wrap\"><table class=\"idx-table\"><caption class=\"u-visually-hidden\">NGO sustainability index ranking and regional distribution</caption><thead><tr><th scope=\"col\" style=\"width:32px;\">#</th><th scope=\"col\">Organization name</th><th scope=\"col\">Region</th><th scope=\"col\" class=\"score-cell\">Score (of 100)</th><th scope=\"col\">Level</th></tr></thead><tbody id=\"sustainabilityTableBody\" aria-live=\"polite\"><tr><td colspan=\"5\" role=\"status\" style=\"text-align:center;color:var(--neutral-400,#9ca3af);padding:24px;\">Loading...</td></tr></tbody></table></div><p style=\"font-size:15px;color:var(--neutral-400,#9ca3af);margin-top:12px;\">* The table shows some of the assessed organizations. You can request the full list via an inquiry.</p>"
+    },
+    "top500Reyestri": {
+      "kicker": "Registry of TOP-500 university graduates",
+      "heading": "List of young specialists who graduated from prestigious foreign higher education institutions (TOP-500) and are recommended for a supplement to their position salary.",
+      "demoBadge": "<i aria-hidden=\"true\" class=\"ph ph-flask\"></i> sample data (demo)",
+      "notice": "<i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;\"></i> The table below shows sample (demo) data. Once the real registry is connected, official data will appear here.",
+      "caption": "Registry of TOP-500 university graduates (sample data)",
+      "colNum": "#",
+      "colName": "Full name",
+      "colNnt": "Name of the NGO where employed",
+      "colUni": "Name of the university attended",
+      "colLevel": "Education level",
+      "colYear": "Year of graduation",
+      "colQs": "\"QS\" ranking",
+      "colThe": "\"THE\" ranking",
+      "footnote": "* The data above is provided as a sample and does not relate to real persons."
     },
     "talimRivojlanish": {
       "title": "Education and development",

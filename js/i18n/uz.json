@@ -1145,7 +1145,8 @@
     "registryItems": {
       "members": "Assotsiatsiyaga a'zo NNTlar",
       "sustainabilityIndex": "NNTlar barqarorlik indeksi",
-      "sustainabilityCert": "\"Barqaror NNT\" sertifikatiga ega NNTlar"
+      "sustainabilityCert": "\"Barqaror NNT\" sertifikatiga ega NNTlar",
+      "top500": "TOP-500 OTM bitiruvchilari reyestri"
     },
     "projects": "Loyihalar",
     "partnersGroup": "Hamkorlar",
@@ -1729,6 +1730,22 @@
       "title": "NNTlar barqarorlik indeksi <span style=\"font-size:0.45em; font-weight:500; opacity:0.72; white-space:nowrap;\">(rejalashtirilgan loyiha)</span>",
       "sub": "O'zbekistondagi nodavlat notijorat tashkilotlarning institutsional barqarorligini baholash tizimi",
       "body": "<p style=\"max-width:780px;font-size:16px;line-height:1.8;color:var(--neutral-700,#374151);margin:0 auto 8px;\">NNTlar barqarorlik indeksi — tashkilotlarning uzoq muddatli faoliyat yuritish qobiliyatini oltita asosiy mezon bo'yicha baholaydigan asbob. Indeks har yili O'zNNTMA tomonidan hisoblanilib, natijalar ochiq ravishda e'lon qilinadi. Maqsad — NNTlarga o'z kuchli va zaif tomonlarini aniqlashda yordam berish hamda rivojlanish yo'nalishlarini belgilash.</p><p style=\"margin:24px 0 28px;padding:14px 18px;background:#f8fbf9;border:1px solid #d4e8dd;border-radius:10px;font-size:14px;color:var(--neutral-500,#587585);\"><i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;color:var(--green-600,#255f40);\"></i> Baholangan NNTlar soni va o'rtacha ball ko'rsatkichlari indeks reyestri ulangach bu yerda paydo bo'ladi.</p><p class=\"section-label\">Baholash mezonlari</p><h2 style=\"margin:0 0 4px;font-size:22px;\">Oltita mezon, jami 100 ball</h2><p style=\"font-size:16px;color:var(--neutral-500,#587585);margin:0 0 4px;\">Har bir mezon bo'yicha maksimal ball ko'rsatilgan.</p><div class=\"criteria-grid\"><div class=\"criterion-card\"><h3>Boshqaruv va shaffoflik</h3><p>Kengash tuzilmasi, yillik hisobotlar, moliyaviy audit va ichki nazorat tizimlari.</p><span class=\"criterion-max\">maks. 20 ball</span></div><div class=\"criterion-card\"><h3>Moliyaviy barqarorlik</h3><p>Mablag'lar xilma-xilligi, moliyaviy zaxiralar va byudjet boshqaruvi samaradorligi.</p><span class=\"criterion-max\">maks. 20 ball</span></div><div class=\"criterion-card\"><h3>Dastur samaradorligi</h3><p>Faoliyat natijalari, benefitsiarlar soni, loyihalarning ijtimoiy ta'siri.</p><span class=\"criterion-max\">maks. 20 ball</span></div><div class=\"criterion-card\"><h3>Inson resurslari</h3><p>Xodimlar saqlanishi, malaka oshirish, ko'ngillilar va kadrlar salohiyati.</p><span class=\"criterion-max\">maks. 15 ball</span></div><div class=\"criterion-card\"><h3>Hamkorlik va tarmoq</h3><p>Davlat organlari, biznes hamjamiyat va xalqaro tashkilotlar bilan aloqalar.</p><span class=\"criterion-max\">maks. 15 ball</span></div><div class=\"criterion-card\"><h3>Infratuzilma va IT</h3><p>Veb-sayt, ijtimoiy tarmoqlar, ma'lumotlar bazasi va boshqaruv tizimlari.</p><span class=\"criterion-max\">maks. 10 ball</span></div></div><p class=\"section-label\" style=\"margin-top:32px;\">Darajalar</p><div class=\"level-row\"><div class=\"level-badge level--dev\"><span class=\"level-badge-dot\"></span>Rivojlanmoqda — 0–39 ball</div><div class=\"level-badge level--grow\"><span class=\"level-badge-dot\"></span>O'smoqda — 40–59 ball</div><div class=\"level-badge level--cons\"><span class=\"level-badge-dot\"></span>Mustahkamlanmoqda — 60–79 ball</div><div class=\"level-badge level--sus\"><span class=\"level-badge-dot\"></span>Barqaror — 80–100 ball</div></div><p class=\"section-label\">2024 yil natijalari (tanlab ko'rsatilgan)</p><h2 style=\"margin:0 0 16px;font-size:22px;\">Baholash natijalari</h2><div class=\"idx-table-wrap\"><table class=\"idx-table\"><caption class=\"u-visually-hidden\">NNT barqarorlik indeksi reytingi va viloyat bo'yicha taqsimot</caption><thead><tr><th scope=\"col\" style=\"width:32px;\">#</th><th scope=\"col\">Tashkilot nomi</th><th scope=\"col\">Viloyat</th><th scope=\"col\" class=\"score-cell\">Ball (100 dan)</th><th scope=\"col\">Daraja</th></tr></thead><tbody id=\"sustainabilityTableBody\" aria-live=\"polite\"><tr><td colspan=\"5\" role=\"status\" style=\"text-align:center;color:var(--neutral-400,#9ca3af);padding:24px;\">Yuklanmoqda...</td></tr></tbody></table></div><p style=\"font-size:15px;color:var(--neutral-400,#9ca3af);margin-top:12px;\">* Jadvalda baholangan tashkilotlardan bir qismi ko'rsatilmoqda. To'liq ro'yxat uchun murojaat yuborishingiz mumkin.</p>"
+    },
+    "top500Reyestri": {
+      "kicker": "TOP-500 OTM bitiruvchilari reyestri",
+      "heading": "Nufuzli xorijiy oliy ta'lim muassasalarini (TOP-500) tamomlagan va lavozim maoshiga qo'shimcha ustama berish tavsiya etilgan yosh mutaxassislar ro'yxati.",
+      "demoBadge": "<i aria-hidden=\"true\" class=\"ph ph-flask\"></i> namuna ma'lumotlar (demo)",
+      "notice": "<i aria-hidden=\"true\" class=\"ph ph-info\" style=\"vertical-align:middle;\"></i> Quyidagi jadval namuna (demo) ma'lumotlarni ko'rsatadi. Haqiqiy reyestr ulangach, bu yerda rasmiy ma'lumotlar paydo bo'ladi.",
+      "caption": "TOP-500 OTM bitiruvchilari reyestri (namuna ma'lumotlar)",
+      "colNum": "#",
+      "colName": "F.I.Sh.",
+      "colNnt": "Faoliyat yuritayotgan NNT nomi",
+      "colUni": "Tamomlagan OTM nomi",
+      "colLevel": "Ta'lim darajasi",
+      "colYear": "Tamomlagan yili",
+      "colQs": "\"QS\" reytingi",
+      "colThe": "\"THE\" reytingi",
+      "footnote": "* Yuqoridagi ma'lumotlar namuna sifatida keltirilgan va haqiqiy shaxslarga taalluqli emas."
     },
     "talimRivojlanish": {
       "title": "Ta'lim va rivojlanish",
