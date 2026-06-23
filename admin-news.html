@@ -14,19 +14,17 @@
 <meta name="apple-mobile-web-app-title" content="ngo.uz" />
 <meta name="format-detection" content="telephone=no" />
 <meta name="robots" content="noindex, nofollow" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://ngo-api-proxy.sarvsop.workers.dev" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" integrity="sha384-6p9AefaqUhEVheRlj1mpAkbngHXy9mbYMrIdcIt4Jlc9lOLIablJq3bBsLOjGwZ7" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/pacta-tokens.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-contracts.page.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-sidebar.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-topbar.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-notifications.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-app.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-foundation.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-modal.css?v=20260605">
+  <link href="fonts/montserrat.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="fonts/phosphor/style.css"/>
+  <link rel="stylesheet" href="css/pacta-tokens.css?v=20260622">
+  <link rel="stylesheet" href="css/pacta-contracts.page.css?v=20260622">
+  <link rel="stylesheet" href="css/pacta-sidebar.css?v=20260622">
+  <link rel="stylesheet" href="css/pacta-topbar.css?v=20260622">
+  <link rel="stylesheet" href="css/pacta-notifications.css?v=20260622">
+  <link rel="stylesheet" href="css/pacta-app.css?v=20260622">
+  <link rel="stylesheet" href="css/pacta-foundation.css?v=20260622">
+  <link rel="stylesheet" href="css/pacta-modal.css?v=20260622">
   <style>
     .modal--wide { max-width: 720px; }
     .modal__grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
@@ -94,18 +92,18 @@
           <a href="admin-analytics" class="sidebar__nav-link" data-i18n-title="admin.nav.analytics" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.analytics">Tahliliy ma'lumotlar</span></a>
         </div>
         <div class="sidebar__nav-section">
-          <div class="sidebar__nav-label" data-i18n="admin.sec.requests">MUROJAATLAR</div>
-          <a href="admin-service-requests" class="sidebar__nav-link" data-i18n-title="admin.nav.serviceRequests" title="Xizmat so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-wrench" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.serviceRequests">Xizmat so'rovlari</span></a>
-          <a href="admin-corruption-reports" class="sidebar__nav-link" data-i18n-title="admin.nav.corruptionReports" title="Korrupsiya murojaatlari"><span class="sidebar__nav-icon"><i class="ph ph-shield-warning" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.corruptionReports">Korrupsiya murojaatlari</span></a>
-          <a href="admin-feedback" class="sidebar__nav-link" data-i18n-title="admin.nav.feedback" title="Qayta aloqa"><span class="sidebar__nav-icon"><i class="ph ph-chat-dots" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.feedback">Qayta aloqa</span></a>
-          <a href="admin-password-reset-requests" class="sidebar__nav-link" data-i18n-title="admin.nav.passwordResetReq" title="Parol tiklash so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-key" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.passwordReset">Parol tiklash</span></a>
-        </div>
-        <div class="sidebar__nav-section">
           <div class="sidebar__nav-label" data-i18n="admin.sec.content">KONTENT</div>
           <a href="admin-news" class="sidebar__nav-link is-active" aria-current="page" data-i18n-title="admin.nav.news" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.news">Yangiliklar</span></a>
           <a href="admin-events" class="sidebar__nav-link" data-i18n-title="admin.nav.events" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.events">Tadbirlar</span></a>
           <a href="admin-grants" class="sidebar__nav-link" data-i18n-title="admin.nav.grants" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.grants">Grantlar</span></a>
           <a href="admin-settings" class="sidebar__nav-link" data-i18n-title="admin.nav.settings" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.settings">Sozlamalar</span></a>
+        </div>
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label" data-i18n="admin.sec.requests">MUROJAATLAR</div>
+          <a href="admin-service-requests" class="sidebar__nav-link" data-i18n-title="admin.nav.serviceRequests" title="Xizmat so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-wrench" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.serviceRequests">Xizmat so'rovlari</span></a>
+          <a href="admin-corruption-reports" class="sidebar__nav-link" data-i18n-title="admin.nav.corruptionReports" title="Korrupsiya murojaatlari"><span class="sidebar__nav-icon"><i class="ph ph-shield-warning" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.corruptionReports">Korrupsiya murojaatlari</span></a>
+          <a href="admin-feedback" class="sidebar__nav-link" data-i18n-title="admin.nav.feedback" title="Qayta aloqa"><span class="sidebar__nav-icon"><i class="ph ph-chat-dots" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.feedback">Qayta aloqa</span></a>
+          <a href="admin-password-reset-requests" class="sidebar__nav-link" data-i18n-title="admin.nav.passwordResetReq" title="Parol tiklash so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-key" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.passwordReset">Parol tiklash</span></a>
         </div>
         <div class="sidebar__nav-section u-mt-auto">
           <a data-action="logout" href="admin-login" class="sidebar__nav-link logout" id="logoutTrigger" data-i18n-title="admin.nav.logout" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.logout">Chiqish</span></a>
@@ -202,17 +200,42 @@
   </div>
 
   <!-- Create / Edit Modal -->
+  <style>
+    .lang-tabs { display:flex; gap:4px; align-items:center; flex-wrap:wrap; margin-bottom:14px; border-bottom:1px solid var(--grey-100,#e5e7eb); }
+    .lang-tab { padding:8px 16px; font:inherit; font-size:14px; font-weight:600; color:var(--grey-500,#6b7280); cursor:pointer; background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-1px; }
+    .lang-tab:hover { color:var(--grey-900,#111827); }
+    .lang-tab.is-active { color:var(--primary-500,#0e7490); border-bottom-color:var(--primary-500,#0e7490); }
+    .lang-tabs__hint { margin-left:auto; font-size:12px; font-weight:400; color:var(--grey-500,#6b7280); }
+    .lang-panel { display:none; }
+    #cmsForm.lang-uz .lang-panel[data-lang-panel="uz"],
+    #cmsForm.lang-ru .lang-panel[data-lang-panel="ru"],
+    #cmsForm.lang-en .lang-panel[data-lang-panel="en"] { display:block; }
+  </style>
   <div class="modal-overlay" id="formModal" role="dialog" aria-modal="true" aria-labelledby="formModalTitle" aria-hidden="true">
     <div class="modal modal--wide">
       <div class="modal__head">
         <h2 class="modal__title" id="formModalTitle" data-i18n="admin.news.modal.createTitle">Yangi maqola</h2>
         <button type="button" class="modal__close" id="formModalClose" data-i18n-aria-label="admin.news.close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
       </div>
-      <form id="cmsForm" novalidate>
+      <form id="cmsForm" class="lang-uz" novalidate>
         <div class="modal__body">
+          <div class="lang-tabs" role="tablist" aria-label="Kontent tili / язык / language">
+            <button type="button" class="lang-tab is-active" data-lang="uz" aria-pressed="true">O'zbekcha</button>
+            <button type="button" class="lang-tab" data-lang="ru" aria-pressed="false">Русский</button>
+            <button type="button" class="lang-tab" data-lang="en" aria-pressed="false">English</button>
+            <span class="lang-tabs__hint">Majburiy: O'zbekcha. RU/EN — ixtiyoriy.</span>
+          </div>
           <div class="modal__field">
             <label class="modal__label" for="fTitle" data-i18n-html="admin.news.form.title">Sarlavha <span aria-hidden="true" style="color:#dc2626">*</span></label>
-            <input autocomplete="off" id="fTitle" class="modal__input" type="text" required maxlength="300" data-i18n-placeholder="admin.news.form.titlePh" placeholder="Maqola sarlavhasini kiriting" />
+            <div class="lang-panel" data-lang-panel="uz">
+              <input autocomplete="off" id="fTitle" class="modal__input" type="text" required maxlength="300" data-i18n-placeholder="admin.news.form.titlePh" placeholder="Maqola sarlavhasini kiriting" />
+            </div>
+            <div class="lang-panel" data-lang-panel="ru">
+              <input autocomplete="off" id="fTitleRu" class="modal__input" type="text" maxlength="300" placeholder="Заголовок (RU)" />
+            </div>
+            <div class="lang-panel" data-lang-panel="en">
+              <input autocomplete="off" id="fTitleEn" class="modal__input" type="text" maxlength="300" placeholder="Title (EN)" />
+            </div>
           </div>
           <div class="modal__grid2">
             <div class="modal__field">
@@ -243,11 +266,27 @@
           </div>
           <div class="modal__field">
             <label class="modal__label" for="fExcerpt" data-i18n-html="admin.news.form.excerpt">Qisqa matn (excerpt) <span aria-hidden="true" style="color:#dc2626">*</span></label>
-            <textarea id="fExcerpt" class="modal__textarea" required maxlength="1000" data-i18n-placeholder="admin.news.form.excerptPh" placeholder="Maqolaning qisqacha tavsifi (kartochkada ko'rsatiladi)"></textarea>
+            <div class="lang-panel" data-lang-panel="uz">
+              <textarea id="fExcerpt" class="modal__textarea" required maxlength="1000" data-i18n-placeholder="admin.news.form.excerptPh" placeholder="Maqolaning qisqacha tavsifi (kartochkada ko'rsatiladi)"></textarea>
+            </div>
+            <div class="lang-panel" data-lang-panel="ru">
+              <textarea id="fExcerptRu" class="modal__textarea" maxlength="1000" placeholder="Краткое описание (RU)"></textarea>
+            </div>
+            <div class="lang-panel" data-lang-panel="en">
+              <textarea id="fExcerptEn" class="modal__textarea" maxlength="1000" placeholder="Short description (EN)"></textarea>
+            </div>
           </div>
           <div class="modal__field">
             <label class="modal__label" for="fBody" data-i18n-html="admin.news.form.body">To'liq matn <span aria-hidden="true" style="color:#dc2626">*</span></label>
-            <textarea id="fBody" class="modal__textarea modal__textarea--tall" required maxlength="100000" data-i18n-placeholder="admin.news.form.bodyPh" placeholder="Maqolaning to'liq matni"></textarea>
+            <div class="lang-panel" data-lang-panel="uz">
+              <textarea id="fBody" class="modal__textarea modal__textarea--tall" required maxlength="100000" data-i18n-placeholder="admin.news.form.bodyPh" placeholder="Maqolaning to'liq matni"></textarea>
+            </div>
+            <div class="lang-panel" data-lang-panel="ru">
+              <textarea id="fBodyRu" class="modal__textarea modal__textarea--tall" maxlength="100000" placeholder="Полный текст (RU)"></textarea>
+            </div>
+            <div class="lang-panel" data-lang-panel="en">
+              <textarea id="fBodyEn" class="modal__textarea modal__textarea--tall" maxlength="100000" placeholder="Full text (EN)"></textarea>
+            </div>
           </div>
           <div class="modal__field">
             <label class="modal__label" for="fCoverFile" data-i18n="admin.news.form.cover">Muqova rasmi</label>
@@ -302,7 +341,7 @@
   <script src="js/api-client.js"></script>
   <script src="js/admin-modal.js" defer></script>
   <script src="js/admin-boot.js" defer></script>
-  <script src="js/admin-cms.js" defer></script>
+  <script src="js/admin-cms.js"></script>
   <script>
   (function () {
     var TYPE      = 'news';
@@ -385,13 +424,42 @@
     function reload() { items = AdminCMS.get(TYPE) || []; renderTable(); renderKpi(); }
 
     // ── form helpers ──────────────────────────────────────
+    // Language tabs: switch which uz/ru/en panel is visible (via a form class)
+    // and reflect the active tab. Required validation lives on the UZ fields,
+    // so clearForm() and validation errors snap back to UZ.
+    function setLang(lang) {
+      var form = document.getElementById('cmsForm');
+      if (!form) return;
+      form.classList.remove('lang-uz', 'lang-ru', 'lang-en');
+      form.classList.add('lang-' + lang);
+      var tabs = document.querySelectorAll('.lang-tab');
+      for (var i = 0; i < tabs.length; i++) {
+        var on = tabs[i].getAttribute('data-lang') === lang;
+        tabs[i].classList.toggle('is-active', on);
+        tabs[i].setAttribute('aria-pressed', on ? 'true' : 'false');
+      }
+    }
+    (function () {
+      var tabs = document.querySelectorAll('.lang-tab');
+      for (var i = 0; i < tabs.length; i++) {
+        tabs[i].addEventListener('click', function () { setLang(this.getAttribute('data-lang')); });
+      }
+    })();
+
     function clearForm() {
       document.getElementById('fTitle').value    = '';
+      document.getElementById('fTitleRu').value  = '';
+      document.getElementById('fTitleEn').value  = '';
       document.getElementById('fDate').value     = AdminCMS.today();
       document.getElementById('fCategory').value = '';
       document.getElementById('fExcerpt').value  = '';
+      document.getElementById('fExcerptRu').value = '';
+      document.getElementById('fExcerptEn').value = '';
       document.getElementById('fBody').value     = '';
+      document.getElementById('fBodyRu').value   = '';
+      document.getElementById('fBodyEn').value   = '';
       document.getElementById('fFeatured').checked = false;
+      setLang('uz');
       document.getElementById('fCoverFile').value = '';
       document.getElementById('fCoverImage').value = '';
       document.getElementById('fCoverPreview').style.display = 'none';
@@ -400,10 +468,16 @@
     }
     function fillForm(item) {
       document.getElementById('fTitle').value    = item.title    || '';
+      document.getElementById('fTitleRu').value  = item.title_ru || '';
+      document.getElementById('fTitleEn').value  = item.title_en || '';
       document.getElementById('fDate').value     = item.date     || '';
       document.getElementById('fCategory').value = item.category || '';
       document.getElementById('fExcerpt').value  = item.excerpt  || '';
+      document.getElementById('fExcerptRu').value = item.excerpt_ru || '';
+      document.getElementById('fExcerptEn').value = item.excerpt_en || '';
       document.getElementById('fBody').value     = item.body     || '';
+      document.getElementById('fBodyRu').value   = item.body_ru  || '';
+      document.getElementById('fBodyEn').value   = item.body_en  || '';
       document.getElementById('fFeatured').checked = !!item.featured;
       document.getElementById('fCoverFile').value = '';
       document.getElementById('fCoverImage').value = item.cover_image || '';
@@ -420,10 +494,16 @@
     function readForm() {
       return {
         title      : document.getElementById('fTitle').value.trim(),
+        title_ru   : document.getElementById('fTitleRu').value.trim(),
+        title_en   : document.getElementById('fTitleEn').value.trim(),
         date       : document.getElementById('fDate').value,
         category   : document.getElementById('fCategory').value,
         excerpt    : document.getElementById('fExcerpt').value.trim(),
+        excerpt_ru : document.getElementById('fExcerptRu').value.trim(),
+        excerpt_en : document.getElementById('fExcerptEn').value.trim(),
         body       : document.getElementById('fBody').value.trim(),
+        body_ru    : document.getElementById('fBodyRu').value.trim(),
+        body_en    : document.getElementById('fBodyEn').value.trim(),
         featured   : document.getElementById('fFeatured').checked,
         cover_image: document.getElementById('fCoverImage').value
       };
@@ -495,6 +575,7 @@
       if (missing) {
         errEl.textContent = 'Iltimos, barcha majburiy maydonlarni to\'ldiring.';
         errEl.style.display = 'block';
+        setLang('uz');
         var miss = document.getElementById(missing);
         if (miss) try { miss.focus(); } catch (_) {}
         return;

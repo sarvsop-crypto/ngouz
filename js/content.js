@@ -452,7 +452,7 @@
     if (!item) item = items[0];
     if (!item) { container.innerHTML = '<p role="status">Yangilik topilmadi.</p>'; return; }
 
-    document.title = item.title + ' - ngo.uz';
+    document.title = item.title + ' — O\'zNNTMA | ngo.uz';
     injectArticleJsonLd(item);
     var cat = item.category || '';
     var pageUrl = window.location.href;
@@ -659,7 +659,7 @@
     if (!item) item = items[0];
     if (!item) { container.innerHTML = '<p role="status">Tadbir topilmadi.</p>'; return; }
 
-    document.title = item.title + ' - ngo.uz';
+    document.title = item.title + ' — O\'zNNTMA | ngo.uz';
     injectEventJsonLd(item);
     var pageUrl = window.location.href;
     // Use the shared resolver (iter 238) so a missing status field
@@ -751,9 +751,9 @@
         : ' · <span data-i18n="pages.grants.tagClosed">Yopilgan</span>';
       html += '<article class="card"' + id + '>'
         + cover
-        + '<span class="tag">' + esc(g.category) + statusTag + '</span>'
-        + '<h3>' + esc(g.title) + '</h3>'
-        + '<p>' + esc(g.description) + '</p>'
+        + '<span class="tag">' + esc(tField(g,'category')) + statusTag + '</span>'
+        + '<h3>' + esc(tField(g,'title')) + '</h3>'
+        + '<p>' + esc(tField(g,'description')) + '</p>'
         + (g.amount ? '<p class="grant-amount"><span data-i18n="pages.grants.amount">Miqdor:</span> ' + esc(g.amount) + '</p>' : '')
         + (g.deadline || g.deadlineLabel ? '<p class="grant-deadline"><span data-i18n="pages.grants.deadline">Muddat:</span> <time datetime="' + esc(_datePart(g.deadline) || '') + '">' + esc(g.deadlineLabel || fmtDate(g.deadline)) + '</time></p>' : '')
         + cta
@@ -945,15 +945,22 @@
     function fmtNum(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
 
     // Hero stat: total registered member organizations.
-    var liveOrgEl = document.querySelector('[data-live-stat="member-orgs"]');
-    if (liveOrgEl) {
-      fetchWithTimeout(API_BASE + 'organizations?limit=1')
-        .then(function (r) { return r.json(); })
-        .then(function (d) {
-          if (typeof d.total === 'number') liveOrgEl.textContent = fmtNum(d.total);
-        })
-        .catch(function () { /* fall back to hardcoded value */ });
-    }
+    // Canonical member-org total — the single source for every member count
+    // on the page. Update all [data-live-stat="member-orgs"] elements and
+    // announce the number so the growth chart card derives its 2025 point +
+    // headline stats from it instead of its own hardcoded figures. The
+    // hardcoded fallbacks across the page are kept equal to this (2360).
+    var liveOrgEls = document.querySelectorAll('[data-live-stat="member-orgs"]');
+    fetchWithTimeout(API_BASE + 'organizations?limit=1')
+      .then(function (r) { return r.json(); })
+      .then(function (d) {
+        if (typeof d.total !== 'number') return;
+        var s = fmtNum(d.total);
+        for (var i = 0; i < liveOrgEls.length; i++) liveOrgEls[i].textContent = s;
+        window.__ngoMemberTotal = d.total;
+        try { window.dispatchEvent(new CustomEvent('ngo:member-total', { detail: d.total })); } catch (e) {}
+      })
+      .catch(function () { /* keep hardcoded fallback (kept in sync at 2360) */ });
 
     // Hero stat: total events held (past). Compute as totalEvents -
     // upcomingEvents via two cheap 1-row requests. Hardcoded fallback
@@ -1015,7 +1022,7 @@
           } else {
             newsDetailEl.innerHTML = '<p role="alert">Yangilik topilmadi. <a href="news">Yangiliklar ro\'yxatiga qaytish</a></p>';
             try { newsDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
-            markNotFound('Yangilik topilmadi - ngo.uz');
+            markNotFound('Yangilik topilmadi — O\'zNNTMA | ngo.uz');
           }
         });
       } else {
@@ -1038,7 +1045,7 @@
           } else {
             eventDetailEl.innerHTML = '<p role="alert">Tadbir topilmadi. <a href="events">Tadbirlar ro\'yxatiga qaytish</a></p>';
             try { eventDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
-            markNotFound('Tadbir topilmadi - ngo.uz');
+            markNotFound('Tadbir topilmadi — O\'zNNTMA | ngo.uz');
           }
         });
       } else {
@@ -1068,7 +1075,7 @@
           } else {
             newsDetailEl.innerHTML = '<p role="alert">Hujjat topilmadi. <a href="official-docs">Hujjatlar ro\'yxatiga qaytish</a></p>';
             try { newsDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
-            markNotFound('Hujjat topilmadi - ngo.uz');
+            markNotFound('Hujjat topilmadi — O\'zNNTMA | ngo.uz');
           }
         });
       } else {
@@ -1098,7 +1105,7 @@
           } else {
             videoDetailEl.innerHTML = '<p role="alert">Video topilmadi. <a href="videos">Videolar ro\'yxatiga qaytish</a></p>';
             try { videoDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
-            markNotFound('Video topilmadi - ngo.uz');
+            markNotFound('Video topilmadi — O\'zNNTMA | ngo.uz');
           }
         });
       } else {
@@ -1124,7 +1131,7 @@
           } else {
             pubDetailEl.innerHTML = '<p role="alert">Publikatsiya topilmadi. <a href="publications">Publikatsiyalar ro\'yxatiga qaytish</a></p>';
             try { pubDetailEl.setAttribute('aria-busy', 'false'); } catch (e) {}
-            markNotFound('Publikatsiya topilmadi - ngo.uz');
+            markNotFound('Publikatsiya topilmadi — O\'zNNTMA | ngo.uz');
           }
         });
       }
@@ -1145,7 +1152,7 @@
       // previously showed only the generic "Qidiruv natijalari" tab
       // title, indistinguishable from any other search.
       if (query) {
-        try { document.title = '"' + query.slice(0, 60) + '" — Qidiruv natijalari - ngo.uz'; } catch (e) {}
+        try { document.title = '"' + query.slice(0, 60) + '" — Qidiruv natijalari — O\'zNNTMA | ngo.uz'; } catch (e) {}
       }
       // Two-section page (#search-static-results above us) means
       // main.js handles static-page matches; we only own news. On the
