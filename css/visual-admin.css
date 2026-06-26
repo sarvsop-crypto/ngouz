@@ -273,6 +273,7 @@ input:focus, textarea:focus, select:focus { border-color: var(--va-teal); box-sh
 }
 .va-editor__body label { align-self: start; }
 .va-field--wide { grid-column: 1 / -1; }
+.va-file-field small { color: var(--va-muted); font-size: 12px; font-weight: 600; line-height: 1.45; }
 .va-delete-confirm {
   display: grid;
   gap: 10px;

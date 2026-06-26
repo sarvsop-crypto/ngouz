@@ -80,6 +80,7 @@
   function area(name, label, required, wide) { return { kind: 'textarea', name: name, label: label, required: !!required, wide: wide !== false }; }
   function checkbox(name, label) { return { kind: 'checkbox', name: name, label: label }; }
   function select(name, label, options) { return { kind: 'select', name: name, label: label, options: options || [] }; }
+  function file(name, label, accept, wide) { return { kind: 'file', name: name, label: label, accept: accept || '', wide: wide !== false }; }
 
   function init() {
     els.shell = document.querySelector('.va-shell');
@@ -229,6 +230,7 @@
       '.va-generic-editable{outline:1px dashed rgba(14,116,144,.32);outline-offset:3px}',
       '.va-generic-editable:hover{outline-color:#0e7490}',
       '.va-generic-controls{position:absolute;z-index:9997;left:0;top:-34px;display:flex;gap:6px;pointer-events:auto}',
+      '.va-generic-controls--image{left:auto;right:0}',
       '.va-generic-controls button{width:28px;height:28px;border:1px solid rgba(14,116,144,.25);background:#fff;color:#0e7490;border-radius:999px;padding:0;font:900 15px/1 Montserrat,system-ui,sans-serif;box-shadow:0 8px 22px rgba(0,0,0,.14);cursor:pointer}',
       '.va-generic-controls button:last-child{color:#b42318;border-color:rgba(180,35,24,.25)}',
       '.va-generic-add{display:inline-flex;margin:8px 0;vertical-align:middle}',
@@ -246,11 +248,15 @@
 
   function injectGenericBuilderControls(doc) {
     Array.prototype.forEach.call(doc.querySelectorAll('[data-va-block-id]'), function (node) {
-      if (!isGenericEditable(node) || node.querySelector(':scope > .va-generic-controls')) return;
+      if (!isGenericEditable(node) || node.dataset.vaGenericInjected) return;
+      node.dataset.vaGenericInjected = '1';
       node.classList.add('va-generic-editable');
       if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
+      if (node.tagName === 'IMG' && node.parentNode && getComputedStyle(node.parentNode).position === 'static') {
+        node.parentNode.style.position = 'relative';
+      }
       var controls = doc.createElement('div');
-      controls.className = 'va-generic-controls';
+      controls.className = 'va-generic-controls' + (node.tagName === 'IMG' ? ' va-generic-controls--image' : '');
       controls.innerHTML = '<button type="button" data-va-generic-edit title="Tahrirlash" aria-label="Tahrirlash">✎</button><button type="button" data-va-generic-delete title="O\'chirish" aria-label="O\'chirish">×</button>';
       controls.addEventListener('click', function (e) {
         e.preventDefault();
@@ -258,7 +264,8 @@
         if (e.target.hasAttribute('data-va-generic-delete')) openVisualEditor(node, 'delete');
         else openVisualEditor(node, 'edit');
       });
-      node.appendChild(controls);
+      if (node.tagName === 'IMG') node.parentNode.insertBefore(controls, node.nextSibling);
+      else node.appendChild(controls);
       var add = doc.createElement('span');
       add.className = 'va-generic-add';
       add.innerHTML = '<button type="button" title="Shu joyga qo\'shish" aria-label="Shu joyga qo\'shish">+</button>';
@@ -267,7 +274,7 @@
         e.stopPropagation();
         openVisualEditor(node, 'add');
       });
-      node.parentNode.insertBefore(add, node.nextSibling);
+      node.parentNode.insertBefore(add, controls.nextSibling || node.nextSibling);
     });
   }
 
@@ -450,7 +457,7 @@
     if (action === 'add') {
       return [select('block_kind', 'Blok turi', [['paragraph', 'Matn'], ['heading', 'Sarlavha'], ['card', 'Karta'], ['html', 'HTML']]), area('html', 'Kontent', true, true)];
     }
-    if (node.tagName === 'IMG') return [text('src', 'Rasm manzili', true, true), text('alt', 'Alt matn', false, true)];
+    if (node.tagName === 'IMG') return [file('file', 'Yangi rasm yuklash', 'image/*', true), text('src', 'Rasm manzili', true, true), text('alt', 'Alt matn', false, true)];
     if (node.tagName === 'A') return [text('text', 'Matn', false, true), text('href', 'Havola', false, true)];
     return [area('html', 'Kontent', true, true)];
   }
@@ -521,6 +528,10 @@
     if (field.kind === 'textarea') {
       return '<label class="' + cls + '" for="' + escAttr(id) + '"><span>' + esc(field.label) + '</span><textarea id="' + escAttr(id) + '" name="' + escAttr(field.name) + '"' + req + '>' + esc(value || '') + '</textarea></label>';
     }
+    if (field.kind === 'file') {
+      var accept = field.accept ? ' accept="' + escAttr(field.accept) + '"' : '';
+      return '<label class="' + cls + ' va-file-field" for="' + escAttr(id) + '"><span>' + esc(field.label) + '</span><input id="' + escAttr(id) + '" name="' + escAttr(field.name) + '" type="file"' + accept + '><small>JPG, PNG, WebP yoki SVG rasm tanlang. Saqlaganda yuklanadi.</small></label>';
+    }
     return '<label class="' + cls + '" for="' + escAttr(id) + '"><span>' + esc(field.label) + '</span><input id="' + escAttr(id) + '" name="' + escAttr(field.name) + '" type="' + field.kind + '" value="' + escAttr(value || '') + '"' + req + '></label>';
   }
 
@@ -528,7 +539,9 @@
     if (state.editingType === VISUAL_TYPE) {
       var out = {};
       Array.prototype.forEach.call(els.form.elements, function (el) {
-        if (el.name) out[el.name] = String(el.value || '').trim();
+        if (!el.name) return;
+        if (el.type === 'file') out[el.name] = el.files && el.files[0] ? el.files[0] : null;
+        else out[el.name] = String(el.value || '').trim();
       });
       return out;
     }
@@ -552,13 +565,13 @@
     }
     var data = readEditor();
     if (state.editingType === VISUAL_TYPE) {
-      if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href)) {
+      if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href || data.file)) {
         setError(els.editorError, 'Kontent bo\'sh bo\'lmasligi kerak.');
         return;
       }
       var visualBtn = e.submitter || els.form.querySelector('button[type="submit"]');
       lock(visualBtn, true, 'Saqlanmoqda...');
-      saveVisualPatch(data).then(function () {
+      prepareVisualData(data).then(saveVisualPatch).then(function () {
         toast('Saqlandi');
         closeEditor();
         reloadSite();
@@ -596,6 +609,36 @@
     }
     if (state.editing && state.editing.id) return AdminCMS.update(state.editingType, state.editing.id, data);
     return AdminCMS.create(state.editingType, data);
+  }
+
+  function prepareVisualData(data) {
+    if (state.editingType !== VISUAL_TYPE || !data || !data.file) return Promise.resolve(data);
+    if (!state.visualTarget || state.visualTarget.tagName !== 'IMG') return Promise.resolve(data);
+    return uploadVisualImage(data.file).then(function (res) {
+      data.src = uploadResultUrl(res);
+      data.file = null;
+      return data;
+    });
+  }
+
+  function uploadVisualImage(picked) {
+    if (!picked) return Promise.resolve(null);
+    if (picked.type && picked.type.indexOf('image/') !== 0) {
+      return Promise.reject(new Error("Faqat rasm (image) fayllar yuklanadi. Tanlangan fayl turi: " + picked.type));
+    }
+    if (picked.size > 10 * 1024 * 1024) {
+      return Promise.reject(new Error('Fayl hajmi 10 MB dan oshmasligi kerak (' + (picked.size / (1024 * 1024)).toFixed(1) + ' MB tanlangan).'));
+    }
+    var fd = new FormData();
+    fd.append('file', picked);
+    return NgoApi.post('/admin/upload', fd, { timeout: 90000 });
+  }
+
+  function uploadResultUrl(res) {
+    if (!res) return '';
+    if (res.url) return res.url;
+    if (res.path) return 'https://ngo-api-proxy.sarvsop.workers.dev/media.php?path=' + encodeURIComponent(res.path);
+    return '';
   }
 
   function saveVisualPatch(data) {
@@ -663,11 +706,24 @@
     preview.innerHTML = '<img alt="">';
     label.appendChild(preview);
     var img = preview.querySelector('img');
+    var fileInput = els.form.elements.file;
+    var objectUrl = '';
     function update() {
+      if (objectUrl) {
+        URL.revokeObjectURL(objectUrl);
+        objectUrl = '';
+      }
+      if (fileInput && fileInput.files && fileInput.files[0]) {
+        objectUrl = URL.createObjectURL(fileInput.files[0]);
+        img.src = objectUrl;
+        preview.hidden = false;
+        return;
+      }
       img.src = src.value || '';
       preview.hidden = !src.value;
     }
     src.addEventListener('input', update);
+    if (fileInput) fileInput.addEventListener('change', update);
     update();
   }
 
