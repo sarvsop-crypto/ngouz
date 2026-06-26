@@ -103,14 +103,6 @@ input:focus, textarea:focus, select:focus { border-color: var(--va-teal); box-sh
   font-weight: 800;
 }
 .va-tabs button[aria-selected="true"] { background: #e6f4f0; color: var(--va-green); border-color: #a7d7ca; }
-.va-admin-panel select {
-  width: auto;
-  min-height: 40px;
-  max-width: 150px;
-  font-size: 13px;
-  font-weight: 800;
-}
-
 .va-site {
   height: 100vh;
   min-height: 100vh;
@@ -139,50 +131,6 @@ input:focus, textarea:focus, select:focus { border-color: var(--va-teal); box-sh
   font-size: 12px;
   font-weight: 900;
 }
-
-.va-admin-dock {
-  position: fixed;
-  right: 18px;
-  bottom: 18px;
-  z-index: 35;
-  display: grid;
-  justify-items: end;
-  gap: 10px;
-  pointer-events: none;
-}
-.va-admin-toggle {
-  pointer-events: auto;
-  min-height: 40px;
-  padding: 0 14px;
-  border: 1px solid rgba(15,106,87,.2);
-  border-radius: 8px;
-  background: rgba(255,255,255,.94);
-  color: var(--va-green);
-  box-shadow: 0 10px 28px rgba(16,24,40,.16);
-  font-weight: 900;
-}
-.va-admin-panel {
-  pointer-events: auto;
-  width: min(360px, calc(100vw - 36px));
-  display: none;
-  gap: 10px;
-  padding: 12px;
-  border: 1px solid rgba(220,229,226,.92);
-  border-radius: 8px;
-  background: rgba(255,255,255,.97);
-  box-shadow: var(--va-shadow);
-}
-.va-admin-dock.is-open .va-admin-panel { display: grid; }
-.va-admin-panel > span {
-  color: var(--va-muted);
-  font-size: 12px;
-  font-weight: 800;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.va-admin-panel .va-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.va-admin-panel .va-tabs button { border-radius: 8px; padding: 8px 9px; font-size: 12px; }
 
 .va-workspace {
   display: grid;
@@ -351,5 +299,4 @@ input:focus, textarea:focus, select:focus { border-color: var(--va-teal); box-sh
   .va-editor__body { grid-template-columns: 1fr; }
   .va-editor__foot { grid-template-columns: 1fr; }
   .va-login__card { padding: 22px; }
-  .va-admin-dock { right: 12px; bottom: 12px; }
 }

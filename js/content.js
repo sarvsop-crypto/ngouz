@@ -860,7 +860,7 @@
       html += '<div class="doc-table">';
       html += '<div class="doc-row head"><span data-i18n="pages.docs.colName">Hujjat nomi</span><span data-i18n="pages.docs.colCategory">Toifa</span><span data-i18n="pages.docs.colDate">Sana</span></div>';
       arr.forEach(function (d) {
-        html += '<div class="doc-row">'
+        html += '<div class="doc-row" data-va-type="documents" data-va-id="' + esc(d.id || '') + '">'
           + '<a href="news-detail?id=' + encodeURIComponent(d.id) + '&type=documents" style="color:#0e7490;text-decoration:underline;font-weight:600">' + esc(d.title) + '</a>'
           + '<span>' + esc(label) + '</span>'
           + '<time datetime="' + esc(_datePart(d.date) || '') + '">' + fmtDate(d.date) + '</time>'

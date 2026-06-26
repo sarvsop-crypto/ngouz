@@ -81,10 +81,6 @@
     els.loginError = document.getElementById('loginError');
     els.frame = document.getElementById('siteFrame');
     els.status = document.getElementById('siteStatus');
-    els.adminDock = document.getElementById('adminDock');
-    els.adminToggle = document.getElementById('adminToggle');
-    els.userLabel = document.getElementById('userLabel');
-    els.newType = document.getElementById('newTypeSelect');
     els.modal = document.getElementById('editorModal');
     els.form = document.getElementById('editorForm');
     els.fields = document.getElementById('editorFields');
@@ -99,26 +95,6 @@
 
   function bind() {
     els.loginForm.addEventListener('submit', onLogin);
-    document.getElementById('newItemBtn').addEventListener('click', function () {
-      openEditor(els.newType.value, null);
-    });
-    document.getElementById('editCurrentBtn').addEventListener('click', editCurrentPage);
-    document.getElementById('refreshBtn').addEventListener('click', reloadSite);
-    document.getElementById('logoutBtn').addEventListener('click', function () {
-      NgoApi.logout().then(function () { showLogin(); });
-    });
-    els.adminToggle.addEventListener('click', function () {
-      var open = !els.adminDock.classList.contains('is-open');
-      els.adminDock.classList.toggle('is-open', open);
-      els.adminToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    document.getElementById('pageTabs').addEventListener('click', function (e) {
-      var btn = e.target.closest('[data-page]');
-      if (btn) {
-        navigateSite(btn.getAttribute('data-page'));
-        closeAdminDock();
-      }
-    });
     els.frame.addEventListener('load', onFrameLoad);
     els.form.addEventListener('submit', onSave);
     els.deleteBtn.addEventListener('click', onDelete);
@@ -149,12 +125,10 @@
 
   function showLogin() {
     els.shell.setAttribute('data-state', 'login');
-    closeAdminDock();
   }
 
   function showApp() {
     els.shell.setAttribute('data-state', 'app');
-    els.userLabel.textContent = state.user ? ((state.user.name || state.user.email || 'Admin') + ' · ' + (state.user.role || '')) : 'Admin';
     navigateSite(new URLSearchParams(location.search).get('page') || '/');
   }
 
@@ -187,12 +161,6 @@
     els.frame.src = path;
   }
 
-  function closeAdminDock() {
-    if (!els.adminDock) return;
-    els.adminDock.classList.remove('is-open');
-    if (els.adminToggle) els.adminToggle.setAttribute('aria-expanded', 'false');
-  }
-
   function reloadSite() {
     els.status.textContent = 'Yangilanmoqda...';
     try { els.frame.contentWindow.location.reload(); }
@@ -210,13 +178,15 @@
     if (!doc || !doc.body) return;
     ensureFrameStyles(doc);
     hookFrameNavigation(doc);
+    injectAddButtons(doc);
+    injectDetailPageButton(doc);
     Array.prototype.forEach.call(doc.querySelectorAll('[data-va-type][data-va-id]'), function (node) {
       if (!node.getAttribute('data-va-id') || node.querySelector(':scope > .va-live-controls')) return;
       node.classList.add('va-live-editable');
       if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
       var controls = doc.createElement('div');
       controls.className = 'va-live-controls';
-      controls.innerHTML = '<button type="button" data-va-edit>Tahrirlash</button><button type="button" data-va-delete>O\'chirish</button>';
+      controls.innerHTML = '<button type="button" data-va-edit title="Tahrirlash" aria-label="Tahrirlash">✎</button><button type="button" data-va-delete title="O\'chirish" aria-label="O\'chirish">×</button>';
       controls.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
@@ -240,10 +210,68 @@
       '.va-live-editable{outline:2px solid rgba(15,106,87,.38);outline-offset:4px}',
       '.va-live-editable:hover{outline-color:#0f6a57}',
       '.va-live-controls{position:absolute;z-index:9999;right:10px;top:10px;display:flex;gap:6px;pointer-events:auto}',
-      '.va-live-controls button{border:1px solid rgba(15,106,87,.28);background:#fff;color:#0f6a57;border-radius:8px;padding:7px 9px;font:700 12px/1.1 Montserrat,system-ui,sans-serif;box-shadow:0 8px 22px rgba(0,0,0,.16);cursor:pointer}',
-      '.va-live-controls button:last-child{color:#b42318;border-color:rgba(180,35,24,.28)}'
+      '.va-live-controls button,.va-live-add button{width:32px;height:32px;border:1px solid rgba(15,106,87,.28);background:#fff;color:#0f6a57;border-radius:999px;padding:0;font:900 18px/1 Montserrat,system-ui,sans-serif;box-shadow:0 8px 22px rgba(0,0,0,.16);cursor:pointer}',
+      '.va-live-controls button:last-child{color:#b42318;border-color:rgba(180,35,24,.28)}',
+      '.va-live-add{position:relative;z-index:9998;display:flex;justify-content:flex-end;margin:0 0 10px;pointer-events:auto}',
+      '.va-live-add button{width:38px;height:38px;background:#0f6a57;color:#fff;border-color:#0f6a57;font-size:24px}',
+      '.va-live-add--floating{position:fixed;right:18px;bottom:18px;z-index:10000;margin:0}',
+      '.va-live-add--floating button{width:44px;height:44px}'
     ].join('');
     doc.head.appendChild(style);
+  }
+
+  function injectAddButtons(doc) {
+    var targets = [
+      ['#dynamic-news-home', 'news'],
+      ['#dynamic-news-page', 'news'],
+      ['#dynamic-publications-page', 'news'],
+      ['#dynamic-events-home', 'events'],
+      ['#dynamic-events-page', 'events'],
+      ['#dynamic-grants-page', 'grants'],
+      ['#dynamic-projects-grants', 'grants'],
+      ['#dynamic-documents-page', 'documents'],
+      ['#nntCards', 'organizations']
+    ];
+    targets.forEach(function (pair) {
+      Array.prototype.forEach.call(doc.querySelectorAll(pair[0]), function (target) {
+        if (target.dataset.vaAddInjected) return;
+        target.dataset.vaAddInjected = '1';
+        var wrap = doc.createElement('div');
+        wrap.className = 'va-live-add';
+        wrap.innerHTML = '<button type="button" title="Qo\'shish" aria-label="Qo\'shish">+</button>';
+        wrap.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openEditor(pair[1], null);
+        });
+        target.parentNode.insertBefore(wrap, target);
+      });
+    });
+  }
+
+  function injectDetailPageButton(doc) {
+    if (doc.getElementById('vaDetailAdd')) return;
+    var type = currentDetailType(doc);
+    if (!type) return;
+    var wrap = doc.createElement('div');
+    wrap.id = 'vaDetailAdd';
+    wrap.className = 'va-live-add va-live-add--floating';
+    wrap.innerHTML = '<button type="button" title="Qo\'shish" aria-label="Qo\'shish">+</button>';
+    wrap.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openEditor(type, null);
+    });
+    doc.body.appendChild(wrap);
+  }
+
+  function currentDetailType(doc) {
+    var loc = doc.defaultView.location;
+    var params = new URLSearchParams(loc.search);
+    var path = loc.pathname.replace(/\/$/, '');
+    if (path.endsWith('/news-detail')) return params.get('type') === 'documents' ? 'documents' : 'news';
+    if (path.endsWith('/event-detail')) return 'events';
+    return '';
   }
 
   function hookFrameNavigation(doc) {
@@ -257,20 +285,6 @@
       e.preventDefault();
       navigateSite(new URL(href, els.frame.contentWindow.location.href).pathname + new URL(href, els.frame.contentWindow.location.href).search + new URL(href, els.frame.contentWindow.location.href).hash);
     }, true);
-  }
-
-  function editCurrentPage() {
-    var loc;
-    try { loc = els.frame.contentWindow.location; } catch (e) {}
-    if (!loc) { toast('Joriy sahifa aniqlanmadi'); return; }
-    var params = new URLSearchParams(loc.search);
-    var id = params.get('id');
-    var path = loc.pathname.replace(/\/$/, '');
-    var type = '';
-    if (path.endsWith('/news-detail')) type = params.get('type') === 'documents' ? 'documents' : 'news';
-    else if (path.endsWith('/event-detail')) type = 'events';
-    if (!type || !id) { toast('Bu sahifada tahrirlanadigan item topilmadi'); return; }
-    loadItem(type, id).then(function (item) { openEditor(type, item); }).catch(showLoadError);
   }
 
   function loadItem(type, id) {
