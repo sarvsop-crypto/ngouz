@@ -91,8 +91,15 @@
   // Legacy alias \u2014 a few inline handlers in older HTML still call
   // applyLang(). Route them through ngoI18n so existing pages keep
   // working without per-page edits.
-  var applyLang = function (langCode) {
+  var applyLang = function (langCode, opts) {
     var lang = (langCode === "ru" || langCode === "en" || langCode === "uz") ? langCode : "uz";
+    opts = opts || {};
+    if (opts.reload) {
+      try { localStorage.setItem(i18nKey, lang); } catch (e) {}
+      if (opts.href) location.assign(opts.href);
+      else location.reload();
+      return lang;
+    }
     if (window.ngoI18n) window.ngoI18n.set(lang);
     else updateLangChrome(lang);
     return lang;
@@ -128,7 +135,8 @@
     a.setAttribute("href", "/" + code + "/" + currentSlug + currentQuery);
     a.addEventListener("click", function (e) {
       e.preventDefault();
-      applyLang(code);
+      var active = window.ngoI18n ? window.ngoI18n.get() : initialLang;
+      if (active !== code) applyLang(code, { reload: true, href: a.href });
       langDrop.classList.remove("open");
       // Trigger may not be in scope at this point (it is built below)
       // — so look it up by id; this also covers any rebuild of the
