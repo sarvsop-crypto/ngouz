@@ -1,4 +1,12 @@
 (function () {
+  if (!window.NGO_VISUAL_OVERRIDES_LOADING) {
+    window.NGO_VISUAL_OVERRIDES_LOADING = true;
+    var _vo = document.createElement('script');
+    _vo.src = '/js/visual-overrides.js';
+    _vo.defer = true;
+    document.head.appendChild(_vo);
+  }
+
   /* ── Load Phosphor Icons 2.1 (SRI-pinned) ─────────────────── */
   var _ph = document.createElement('script');
   _ph.src = 'https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js';

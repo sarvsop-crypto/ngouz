@@ -65,7 +65,16 @@
     }
   };
 
-  var state = { user: null, editing: null, editingType: null, cache: {} };
+  var VISUAL_TYPE = '__visual_block';
+  var API_VISUAL = '/api/visual-content';
+  var GENERIC_SELECTOR = [
+    'main h1', 'main h2', 'main h3', 'main h4', 'main p', 'main li', 'main label', 'main button', 'main span:not([aria-hidden])',
+    'main .card', 'main article.card', 'main article:not([data-va-type])',
+    'main img', 'main a.btn', 'main a.social-link',
+    'footer h2', 'footer p', 'footer a', '.topbar a', '.topbar img'
+  ].join(',');
+
+  var state = { user: null, editing: null, editingType: null, cache: {}, visualTarget: null, visualAction: null };
   var els = {};
 
   function text(name, label, required, wide) { return { kind: 'text', name: name, label: label, required: !!required, wide: !!wide }; }
@@ -177,7 +186,9 @@
     try { doc = els.frame.contentDocument; } catch (e) { return; }
     if (!doc || !doc.body) return;
     ensureFrameStyles(doc);
+    assignVisualIds(doc);
     hookFrameNavigation(doc);
+    injectGenericBuilderControls(doc);
     injectAddButtons(doc);
     injectDetailPageButton(doc);
     Array.prototype.forEach.call(doc.querySelectorAll('[data-va-type][data-va-id]'), function (node) {
@@ -215,9 +226,76 @@
       '.va-live-add{position:relative;z-index:9998;display:flex;justify-content:flex-end;margin:0 0 10px;pointer-events:auto}',
       '.va-live-add button{width:38px;height:38px;background:#0f6a57;color:#fff;border-color:#0f6a57;font-size:24px}',
       '.va-live-add--floating{position:fixed;right:18px;bottom:18px;z-index:10000;margin:0}',
-      '.va-live-add--floating button{width:44px;height:44px}'
+      '.va-live-add--floating button{width:44px;height:44px}',
+      '.va-generic-editable{outline:1px dashed rgba(14,116,144,.32);outline-offset:3px}',
+      '.va-generic-editable:hover{outline-color:#0e7490}',
+      '.va-generic-controls{position:absolute;z-index:9997;left:10px;top:10px;display:flex;gap:6px;pointer-events:auto}',
+      '.va-generic-controls button{width:28px;height:28px;border:1px solid rgba(14,116,144,.25);background:#fff;color:#0e7490;border-radius:999px;padding:0;font:900 15px/1 Montserrat,system-ui,sans-serif;box-shadow:0 8px 22px rgba(0,0,0,.14);cursor:pointer}',
+      '.va-generic-controls button:last-child{color:#b42318;border-color:rgba(180,35,24,.25)}',
+      '.va-generic-add{display:inline-flex;margin:8px 0;vertical-align:middle}',
+      '.va-generic-add button{width:30px;height:30px;border:1px solid #0f6a57;background:#0f6a57;color:#fff;border-radius:999px;padding:0;font:900 20px/1 Montserrat,system-ui,sans-serif;box-shadow:0 8px 22px rgba(0,0,0,.14);cursor:pointer}'
     ].join('');
     doc.head.appendChild(style);
+  }
+
+  function assignVisualIds(doc) {
+    Array.prototype.forEach.call(doc.querySelectorAll(GENERIC_SELECTOR), function (node) {
+      if (!isGenericEditable(node)) return;
+      if (!node.getAttribute('data-va-block-id')) node.setAttribute('data-va-block-id', blockId(doc, node));
+    });
+  }
+
+  function injectGenericBuilderControls(doc) {
+    Array.prototype.forEach.call(doc.querySelectorAll('[data-va-block-id]'), function (node) {
+      if (!isGenericEditable(node) || node.querySelector(':scope > .va-generic-controls')) return;
+      node.classList.add('va-generic-editable');
+      if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
+      var controls = doc.createElement('div');
+      controls.className = 'va-generic-controls';
+      controls.innerHTML = '<button type="button" data-va-generic-edit title="Tahrirlash" aria-label="Tahrirlash">✎</button><button type="button" data-va-generic-delete title="O\'chirish" aria-label="O\'chirish">×</button>';
+      controls.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.target.hasAttribute('data-va-generic-delete')) openVisualEditor(node, 'delete');
+        else openVisualEditor(node, 'edit');
+      });
+      node.appendChild(controls);
+      var add = doc.createElement('span');
+      add.className = 'va-generic-add';
+      add.innerHTML = '<button type="button" title="Shu joyga qo\'shish" aria-label="Shu joyga qo\'shish">+</button>';
+      add.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        openVisualEditor(node, 'add');
+      });
+      node.parentNode.insertBefore(add, node.nextSibling);
+    });
+  }
+
+  function isGenericEditable(node) {
+    if (!node || !node.matches) return false;
+    if (node.closest('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add,.search-overlay,.membership-overlay,script,style,noscript')) return false;
+    if (node.hasAttribute('data-va-type') || node.closest('[data-va-type]')) return false;
+    if (node.id === 'siteFrame') return false;
+    var text = String(node.textContent || '').trim();
+    if (node.tagName === 'IMG') return !!node.getAttribute('src');
+    return text.length > 0 || node.tagName === 'A';
+  }
+
+  function blockId(doc, node) {
+    var parts = [];
+    var cur = node;
+    while (cur && cur.nodeType === 1 && cur !== doc.body) {
+      var tag = cur.tagName.toLowerCase();
+      var idx = 1;
+      var sib = cur;
+      while ((sib = sib.previousElementSibling)) {
+        if (sib.tagName && sib.tagName.toLowerCase() === tag) idx++;
+      }
+      parts.unshift(tag + ':' + idx);
+      cur = cur.parentElement;
+    }
+    return parts.join('/');
   }
 
   function injectAddButtons(doc) {
@@ -337,6 +415,39 @@
     if (confirmDelete) setTimeout(onDelete, 60);
   }
 
+  function openVisualEditor(node, action) {
+    state.editingType = VISUAL_TYPE;
+    state.editing = null;
+    state.visualTarget = node;
+    state.visualAction = action;
+    var item = visualItemFromNode(node, action);
+    els.editorTitle.textContent = action === 'add' ? "Kontent qo'shish" : action === 'delete' ? "Blokni o'chirish" : 'Blokni tahrirlash';
+    els.editorKicker.textContent = 'Sahifa kontenti';
+    els.deleteBtn.style.display = action === 'edit' ? '' : 'none';
+    setError(els.editorError, '');
+    els.fields.innerHTML = visualFieldsFor(node, action).map(function (field) { return fieldHtml(field, item); }).join('');
+    els.modal.classList.add('is-open');
+    els.modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    if (action === 'delete') setTimeout(onDelete, 60);
+  }
+
+  function visualFieldsFor(node, action) {
+    if (action === 'add') {
+      return [select('block_kind', 'Blok turi', [['paragraph', 'Matn'], ['heading', 'Sarlavha'], ['card', 'Karta'], ['html', 'HTML']]), area('html', 'Kontent', true, true)];
+    }
+    if (node.tagName === 'IMG') return [text('src', 'Rasm manzili', true, true), text('alt', 'Alt matn', false, true)];
+    if (node.tagName === 'A') return [text('text', 'Matn', false, true), text('href', 'Havola', false, true)];
+    return [area('html', 'Kontent', true, true)];
+  }
+
+  function visualItemFromNode(node, action) {
+    if (action === 'add') return { block_kind: 'paragraph', html: '<p>Yangi matn</p>' };
+    if (node.tagName === 'IMG') return { src: node.getAttribute('src') || '', alt: node.getAttribute('alt') || '' };
+    if (node.tagName === 'A') return { text: node.textContent || '', href: node.getAttribute('href') || '' };
+    return { html: cleanEditorHtml(node.innerHTML) };
+  }
+
   function closeEditor() {
     els.modal.classList.remove('is-open');
     els.modal.setAttribute('aria-hidden', 'true');
@@ -369,6 +480,13 @@
   }
 
   function readEditor() {
+    if (state.editingType === VISUAL_TYPE) {
+      var out = {};
+      Array.prototype.forEach.call(els.form.elements, function (el) {
+        if (el.name) out[el.name] = String(el.value || '').trim();
+      });
+      return out;
+    }
     var cfg = TYPES[state.editingType];
     var data = {};
     cfg.fields.forEach(function (field) {
@@ -383,8 +501,24 @@
 
   function onSave(e) {
     e.preventDefault();
-    var cfg = TYPES[state.editingType];
     var data = readEditor();
+    if (state.editingType === VISUAL_TYPE) {
+      if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href)) {
+        setError(els.editorError, 'Kontent bo\'sh bo\'lmasligi kerak.');
+        return;
+      }
+      var visualBtn = e.submitter || els.form.querySelector('button[type="submit"]');
+      lock(visualBtn, true, 'Saqlanmoqda...');
+      saveVisualPatch(data).then(function () {
+        toast('Saqlandi');
+        closeEditor();
+        reloadSite();
+      }).catch(function (err) {
+        setError(els.editorError, 'Saqlashda xatolik: ' + message(err));
+      }).then(function () { lock(visualBtn, false); });
+      return;
+    }
+    var cfg = TYPES[state.editingType];
     var missing = cfg.required.find(function (name) { return !data[name]; });
     if (missing) {
       setError(els.editorError, 'Iltimos, majburiy maydonlarni to\'ldiring.');
@@ -414,7 +548,82 @@
     return AdminCMS.create(state.editingType, data);
   }
 
+  function saveVisualPatch(data) {
+    var node = state.visualTarget;
+    var id = node && node.getAttribute('data-va-block-id');
+    var patch = { id: id, kind: (node && node.tagName || '').toLowerCase(), action: 'html' };
+    if (state.visualAction === 'delete') {
+      patch.action = 'delete';
+    } else if (state.visualAction === 'add') {
+      patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'after';
+      patch.html = buildAddedHtml(data.block_kind, data.html);
+    } else if (node.tagName === 'IMG') {
+      patch.action = 'attrs';
+      patch.src = data.src || '';
+      patch.alt = data.alt || '';
+    } else if (node.tagName === 'A') {
+      patch.action = 'attrs';
+      patch.text = data.text || '';
+      patch.href = data.href || '';
+    } else {
+      patch.action = 'html';
+      patch.html = cleanEditorHtml(data.html || '');
+    }
+    return fetch(API_VISUAL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + NgoApi.getToken(),
+      },
+      body: JSON.stringify({ page: visualPageKey(), patch: patch }),
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (body) {
+        if (!r.ok) throw new Error(body.error || ('HTTP ' + r.status));
+        return body;
+      });
+    });
+  }
+
+  function buildAddedHtml(kind, html) {
+    html = cleanEditorHtml(html || '');
+    if (kind === 'heading') return /^<h[1-6][\s>]/i.test(html) ? html : '<h2>' + esc(html.replace(/<[^>]*>/g, '')) + '</h2>';
+    if (kind === 'card') return /class=["'][^"']*\bcard\b/.test(html) ? html : '<article class="card">' + html + '</article>';
+    if (kind === 'html') return html;
+    return /^<p[\s>]/i.test(html) ? html : '<p>' + esc(html.replace(/<[^>]*>/g, '')) + '</p>';
+  }
+
+  function cleanEditorHtml(html) {
+    return String(html || '')
+      .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '')
+      .replace(/\sclass="[^"]*\b(va-live|va-generic)[^"]*"/gi, '')
+      .replace(/\sdata-va-[a-z-]+="[^"]*"/gi, '')
+      .replace(/<div class="va-[\s\S]*?<\/div>/gi, '');
+  }
+
+  function visualPageKey() {
+    var loc = els.frame.contentWindow.location;
+    var path = loc.pathname || '/';
+    path = path.replace(/\/index(?:\.html)?$/, '/').replace(/\.html$/, '');
+    return path || '/';
+  }
+
   function onDelete() {
+    if (state.editingType === VISUAL_TYPE) {
+      if (!state.visualTarget) return;
+      if (!confirm('Bu blokni o\'chirishni tasdiqlaysizmi?')) return;
+      lock(els.deleteBtn, true, 'O\'chirilmoqda...');
+      saveVisualPatch({}).then(function () {
+        toast('O\'chirildi');
+        closeEditor();
+        reloadSite();
+      }).catch(function (err) {
+        setError(els.editorError, 'O\'chirishda xatolik: ' + message(err));
+      }).then(function () { lock(els.deleteBtn, false); });
+      return;
+    }
     if (!state.editing || !state.editing.id) return;
     var cfg = TYPES[state.editingType];
     var title = state.editing.title || state.editing.name || state.editing.id;
