@@ -14,10 +14,6 @@
 /admin /admin-login 302
 /admin/ /admin-login 302
 
-# Visual CMS shortcut for content editors.
-/visual-admin /visual-admin.html 200
-/visual-admin/ /visual-admin.html 200
-
 # /cabinet is now the React member-app SPA. All routing under /cabinet/
 # (asset serving, legacy static-path 301s, and SPA fallback) is handled by
 # functions/cabinet/[[path]].js — Pages Functions run before _redirects.
