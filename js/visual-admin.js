@@ -81,6 +81,8 @@
     els.loginError = document.getElementById('loginError');
     els.frame = document.getElementById('siteFrame');
     els.status = document.getElementById('siteStatus');
+    els.adminDock = document.getElementById('adminDock');
+    els.adminToggle = document.getElementById('adminToggle');
     els.userLabel = document.getElementById('userLabel');
     els.newType = document.getElementById('newTypeSelect');
     els.modal = document.getElementById('editorModal');
@@ -105,9 +107,17 @@
     document.getElementById('logoutBtn').addEventListener('click', function () {
       NgoApi.logout().then(function () { showLogin(); });
     });
+    els.adminToggle.addEventListener('click', function () {
+      var open = !els.adminDock.classList.contains('is-open');
+      els.adminDock.classList.toggle('is-open', open);
+      els.adminToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
     document.getElementById('pageTabs').addEventListener('click', function (e) {
       var btn = e.target.closest('[data-page]');
-      if (btn) navigateSite(btn.getAttribute('data-page'));
+      if (btn) {
+        navigateSite(btn.getAttribute('data-page'));
+        closeAdminDock();
+      }
     });
     els.frame.addEventListener('load', onFrameLoad);
     els.form.addEventListener('submit', onSave);
@@ -139,6 +149,7 @@
 
   function showLogin() {
     els.shell.setAttribute('data-state', 'login');
+    closeAdminDock();
   }
 
   function showApp() {
@@ -174,6 +185,12 @@
     if (!path) path = '/';
     els.status.textContent = 'Sayt yuklanmoqda...';
     els.frame.src = path;
+  }
+
+  function closeAdminDock() {
+    if (!els.adminDock) return;
+    els.adminDock.classList.remove('is-open');
+    if (els.adminToggle) els.adminToggle.setAttribute('aria-expanded', 'false');
   }
 
   function reloadSite() {
