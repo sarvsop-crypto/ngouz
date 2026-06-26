@@ -68,10 +68,18 @@
   var VISUAL_TYPE = '__visual_block';
   var API_VISUAL = '/api/visual-content';
   var GENERIC_SELECTOR = [
-    'main h1', 'main h2', 'main h3', 'main h4', 'main p', 'main li', 'main label', 'main button', 'main span:not([aria-hidden])',
+    'main h1', 'main h2', 'main h3', 'main h4', 'main p', 'main li',
     'main .card', 'main article.card', 'main article:not([data-va-type])',
-    'main img', 'main a.btn', 'main a.social-link',
-    'footer h2', 'footer p', 'footer a', '.topbar a', '.topbar img'
+    'main img', 'main a.btn', 'main a.social-link'
+  ].join(',');
+  var PROTECTED_SELECTOR = [
+    'header', 'footer', 'nav', 'form', 'fieldset', 'select', 'option', 'input', 'textarea', 'button',
+    '[role="navigation"]', '[role="search"]', '[role="tablist"]', '[role="tab"]',
+    '.site-header', '.site-footer', '.topbar', '.menu', '.nav-item', '.dropdown',
+    '.language-switcher', '.search-overlay', '.search-btn', '.membership-overlay',
+    '.breadcrumbs', '.breadcrumb', '.pagination', '.pager', '.tabs', '.lang-tabs',
+    '.filter-chip', '.u-filter-row', '.form-field', '.form-actions', '.form-card',
+    '.va-live-controls', '.va-live-add', '.va-generic-controls', '.va-generic-add'
   ].join(',');
 
   var state = { user: null, editing: null, editingType: null, cache: {}, visualTarget: null, visualAction: null };
@@ -274,7 +282,7 @@
 
   function isGenericEditable(node) {
     if (!node || !node.matches) return false;
-    if (node.closest('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add,.search-overlay,.membership-overlay,script,style,noscript')) return false;
+    if (node.closest(PROTECTED_SELECTOR + ',script,style,noscript')) return false;
     if (node.hasAttribute('data-va-type') || node.closest('[data-va-type]')) return false;
     if (node.id === 'siteFrame') return false;
     var text = String(node.textContent || '').trim();

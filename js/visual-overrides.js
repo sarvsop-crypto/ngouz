@@ -3,10 +3,18 @@
 
   var API = '/api/visual-content';
   var CANDIDATE_SELECTOR = [
-    'main h1', 'main h2', 'main h3', 'main h4', 'main p', 'main li', 'main label', 'main button', 'main span:not([aria-hidden])',
+    'main h1', 'main h2', 'main h3', 'main h4', 'main p', 'main li',
     'main .card', 'main article.card', 'main article:not([data-va-type])',
-    'main img', 'main a.btn', 'main a.social-link',
-    'footer h2', 'footer p', 'footer a', '.topbar a', '.topbar img'
+    'main img', 'main a.btn', 'main a.social-link'
+  ].join(',');
+  var PROTECTED_SELECTOR = [
+    'header', 'footer', 'nav', 'form', 'fieldset', 'select', 'option', 'input', 'textarea', 'button',
+    '[role="navigation"]', '[role="search"]', '[role="tablist"]', '[role="tab"]',
+    '.site-header', '.site-footer', '.topbar', '.menu', '.nav-item', '.dropdown',
+    '.language-switcher', '.search-overlay', '.search-btn', '.membership-overlay',
+    '.breadcrumbs', '.breadcrumb', '.pagination', '.pager', '.tabs', '.lang-tabs',
+    '.filter-chip', '.u-filter-row', '.form-field', '.form-actions', '.form-card',
+    '.va-live-controls', '.va-live-add', '.va-generic-controls', '.va-generic-add'
   ].join(',');
 
   function pageKey() {
@@ -18,7 +26,7 @@
   function assignIds(root) {
     var nodes = Array.prototype.slice.call((root || document).querySelectorAll(CANDIDATE_SELECTOR));
     nodes.forEach(function (node) {
-      if (node.closest && node.closest('.va-live-controls,.va-live-add,.search-overlay,.membership-overlay')) return;
+      if (node.closest && node.closest(PROTECTED_SELECTOR)) return;
       if (!node.getAttribute('data-va-block-id')) node.setAttribute('data-va-block-id', blockId(node));
     });
   }
