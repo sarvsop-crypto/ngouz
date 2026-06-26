@@ -192,6 +192,7 @@
     assignVisualIds(doc);
     hookFrameNavigation(doc);
     injectGenericBuilderControls(doc);
+    injectProjectControls(doc);
     injectStructuredAddButtons(doc);
     injectAddButtons(doc);
     injectDetailPageButton(doc);
@@ -244,6 +245,7 @@
       '.va-generic-controls button:hover{background:#E8F5FB}',
       '.va-generic-controls button:last-child{color:#b42318}',
       '.va-generic-controls button:last-child:hover{background:#fff8f7}',
+      '.proj-item summary>.va-generic-controls{right:12px;left:auto;top:10px}',
       '.va-generic-add{display:none}'
     ].join('');
     doc.head.appendChild(style);
@@ -282,7 +284,8 @@
   function injectStructuredAddButtons(doc) {
     [
       ['.partner-grid', 'partner', "Hamkor qo'shish"],
-      ['.useful-links-grid', 'useful_link', "Havola qo'shish"]
+      ['.useful-links-grid', 'useful_link', "Havola qo'shish"],
+      ['.proj-accordion', 'project', "Loyiha qo'shish"]
     ].forEach(function (cfg) {
       Array.prototype.forEach.call(doc.querySelectorAll(cfg[0]), function (target) {
         if (target.dataset.vaContextAddInjected) return;
@@ -298,6 +301,30 @@
         });
         target.parentNode.insertBefore(wrap, target);
       });
+    });
+  }
+
+  function injectProjectControls(doc) {
+    Array.prototype.forEach.call(doc.querySelectorAll('.proj-accordion,.proj-item'), function (node) {
+      if (!node.getAttribute('data-va-block-id')) node.setAttribute('data-va-block-id', blockId(doc, node));
+    });
+    Array.prototype.forEach.call(doc.querySelectorAll('.proj-item'), function (node) {
+      if (node.dataset.vaProjectInjected) return;
+      node.dataset.vaProjectInjected = '1';
+      node.classList.add('va-generic-editable');
+      if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
+      var summary = node.querySelector('summary') || node;
+      if (getComputedStyle(summary).position === 'static') summary.style.position = 'relative';
+      var controls = doc.createElement('div');
+      controls.className = 'va-generic-controls';
+      controls.innerHTML = '<button type="button" data-va-project-edit title="Tahrirlash" aria-label="Tahrirlash">✎</button><button type="button" data-va-project-delete title="O\'chirish" aria-label="O\'chirish">×</button>';
+      controls.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (e.target.hasAttribute('data-va-project-delete')) openProjectEditor(node, 'delete');
+        else openProjectEditor(node, 'edit');
+      });
+      summary.appendChild(controls);
     });
   }
 
@@ -481,8 +508,8 @@
     state.editing = null;
     state.visualTarget = target;
     state.visualAction = 'add-' + kind;
-    els.editorTitle.textContent = kind === 'partner' ? "Hamkor qo'shish" : "Foydali havola qo'shish";
-    els.editorKicker.textContent = kind === 'partner' ? 'Hamkorlar' : 'Foydali havolalar';
+    els.editorTitle.textContent = kind === 'partner' ? "Hamkor qo'shish" : kind === 'project' ? "Loyiha qo'shish" : "Foydali havola qo'shish";
+    els.editorKicker.textContent = kind === 'partner' ? 'Hamkorlar' : kind === 'project' ? 'Loyihalar' : 'Foydali havolalar';
     els.form.dataset.mode = 'visual-add-' + kind;
     els.deleteBtn.style.display = 'none';
     els.saveBtn.style.display = '';
@@ -497,6 +524,7 @@
   function structuredDefaults(kind) {
     if (kind === 'partner') return { name: '', href: '', src: '', alt: '' };
     if (kind === 'useful_link') return { title: '', href: '', icon_src: 'img/emblem-uz.svg', icon_alt: "O'zbekiston gerbi" };
+    if (kind === 'project') return { status: 'rejadagi', title: '', body: '' };
     return {};
   }
 
@@ -518,7 +546,54 @@
         text('icon_alt', 'Ikonka alt matni', false, true)
       ];
     }
+    if (kind === 'project') {
+      return projectFields();
+    }
     return [];
+  }
+
+  function openProjectEditor(node, action) {
+    state.editingType = VISUAL_TYPE;
+    state.editing = null;
+    state.visualTarget = node;
+    state.visualAction = action === 'delete' ? 'delete-project' : 'edit-project';
+    els.editorTitle.textContent = action === 'delete' ? "Loyihani o'chirish" : 'Loyihani tahrirlash';
+    els.editorKicker.textContent = 'Loyihalar';
+    els.form.dataset.mode = 'visual-' + state.visualAction;
+    els.deleteBtn.style.display = action === 'delete' || action === 'edit' ? '' : 'none';
+    els.saveBtn.style.display = action === 'delete' ? 'none' : '';
+    setError(els.editorError, '');
+    els.fields.innerHTML = action === 'delete'
+      ? deleteConfirmHtml(node)
+      : projectFields().map(function (field) { return fieldHtml(field, projectItemFromNode(node)); }).join('');
+    els.modal.classList.add('is-open');
+    els.modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function projectFields() {
+    return [
+      select('status', 'Holat', [['amaldagi', 'Amaldagi'], ['yakunlangan', 'Yakunlangan'], ['rejadagi', 'Rejadagi']]),
+      text('title', 'Loyiha nomi', true, true),
+      area('body', 'Tavsif', true, true)
+    ];
+  }
+
+  function projectItemFromNode(node) {
+    var status = node.querySelector('.proj-status');
+    var title = node.querySelector('.proj-title');
+    var body = node.querySelector('.proj-body');
+    var statusKey = 'rejadagi';
+    if (status) {
+      if (status.classList.contains('s-amaldagi')) statusKey = 'amaldagi';
+      else if (status.classList.contains('s-yakunlangan')) statusKey = 'yakunlangan';
+      else if (status.classList.contains('s-rejadagi')) statusKey = 'rejadagi';
+    }
+    return {
+      status: statusKey,
+      title: title ? cleanNodeText(title) : '',
+      body: body ? cleanNodeText(body) : ''
+    };
   }
 
   function visualFieldsFor(node, action) {
@@ -642,7 +717,11 @@
         setError(els.editorError, 'Havola nomi va URL majburiy.');
         return;
       }
-      if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href || data.file)) {
+      if ((state.visualAction === 'add-project' || state.visualAction === 'edit-project') && (!data.title || !data.body)) {
+        setError(els.editorError, 'Loyiha nomi va tavsifi majburiy.');
+        return;
+      }
+      if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href || data.file || data.title || data.body)) {
         setError(els.editorError, 'Kontent bo\'sh bo\'lmasligi kerak.');
         return;
       }
@@ -737,7 +816,7 @@
     var node = state.visualTarget;
     var id = node && node.getAttribute('data-va-block-id');
     var patch = { id: id, kind: (node && node.tagName || '').toLowerCase(), action: 'html' };
-    if (state.visualAction === 'delete') {
+    if (state.visualAction === 'delete' || state.visualAction === 'delete-project') {
       patch.action = 'delete';
     } else if (state.visualAction === 'add-partner') {
       patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
@@ -753,6 +832,17 @@
       patch.targetId = id;
       patch.position = 'append';
       patch.html = buildUsefulLinkHtml(data);
+    } else if (state.visualAction === 'add-project') {
+      patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
+      patch.kind = 'project';
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'append';
+      patch.html = buildProjectHtml(data);
+    } else if (state.visualAction === 'edit-project') {
+      patch.kind = 'project';
+      patch.action = 'html';
+      patch.html = buildProjectInnerHtml(data);
     } else if (state.visualAction === 'add') {
       patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
       patch.action = 'add';
@@ -803,6 +893,23 @@
     return '<a class="useful-link-card" href="' + escAttr(href) + '" target="_blank" rel="noopener noreferrer">' +
       '<img class="ul-icon" src="' + escAttr(icon) + '" alt="' + escAttr(alt) + '" loading="lazy" decoding="async" width="18" height="18">' +
       '<h3>' + esc(title) + '</h3></a>';
+  }
+
+  function buildProjectHtml(data) {
+    return '<details class="proj-item">' + buildProjectInnerHtml(data) + '</details>';
+  }
+
+  function buildProjectInnerHtml(data) {
+    var status = String(data.status || 'rejadagi').trim();
+    var title = String(data.title || '').trim();
+    var body = String(data.body || '').trim();
+    var label = status === 'amaldagi' ? 'Amaldagi' : status === 'yakunlangan' ? 'Yakunlangan' : 'Rejadagi';
+    var cls = status === 'amaldagi' ? 's-amaldagi' : status === 'yakunlangan' ? 's-yakunlangan' : 's-rejadagi';
+    return '<summary>' +
+      '<span class="proj-status ' + cls + '">' + label + '</span>' +
+      '<span class="proj-title">' + esc(title) + '</span>' +
+      '<svg aria-hidden="true" focusable="false" class="proj-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>' +
+      '</summary><div class="proj-body">' + esc(body) + '</div>';
   }
 
   function buildAddedHtml(kind, html) {

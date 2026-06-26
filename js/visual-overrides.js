@@ -6,7 +6,8 @@
     'main h1', 'main h2', 'main h3', 'main h4', 'main p', 'main li',
     'main .card', 'main article.card', 'main article:not([data-va-type])',
     'main img', 'main a.btn', 'main a.social-link',
-    'main .partner-grid', 'main .useful-links-grid'
+    'main .partner-grid', 'main .useful-links-grid',
+    'main .proj-accordion', 'main .proj-item'
   ].join(',');
   var PROTECTED_SELECTOR = [
     'header', 'footer', 'nav', 'form', 'fieldset', 'select', 'option', 'input', 'textarea', 'button',
