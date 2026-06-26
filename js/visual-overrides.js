@@ -5,7 +5,8 @@
   var CANDIDATE_SELECTOR = [
     'main h1', 'main h2', 'main h3', 'main h4', 'main p', 'main li',
     'main .card', 'main article.card', 'main article:not([data-va-type])',
-    'main img', 'main a.btn', 'main a.social-link'
+    'main img', 'main a.btn', 'main a.social-link',
+    'main .partner-grid', 'main .useful-links-grid'
   ].join(',');
   var PROTECTED_SELECTOR = [
     'header', 'footer', 'nav', 'form', 'fieldset', 'select', 'option', 'input', 'textarea', 'button',
@@ -58,13 +59,14 @@
       var target = document.querySelector('[data-va-block-id="' + cssEscape(patch.targetId || '') + '"]') || document.querySelector('main .container, main, body');
       if (!target || !patch.html) return;
       var marker = document.querySelector('[data-va-added-id="' + cssEscape(patch.id) + '"]');
-      var wrap = marker || document.createElement('div');
-      wrap.setAttribute('data-va-added-id', patch.id);
-      wrap.innerHTML = patch.html;
-      if (!marker) {
-        if (patch.position === 'before') target.parentNode.insertBefore(wrap, target);
-        else if (patch.position === 'prepend') target.insertBefore(wrap, target.firstChild);
-        else target.parentNode.insertBefore(wrap, target.nextSibling);
+      var node = htmlToAddedNode(patch);
+      if (marker) {
+        marker.parentNode.replaceChild(node, marker);
+      } else {
+        if (patch.position === 'before') target.parentNode.insertBefore(node, target);
+        else if (patch.position === 'prepend') target.insertBefore(node, target.firstChild);
+        else if (patch.position === 'append') target.appendChild(node);
+        else target.parentNode.insertBefore(node, target.nextSibling);
       }
       return;
     }
@@ -77,6 +79,23 @@
       if (patch.href != null && el.tagName === 'A') el.setAttribute('href', patch.href);
       if (patch.text != null && el.tagName === 'A') el.textContent = patch.text;
     }
+  }
+
+  function htmlToAddedNode(patch) {
+    var template = document.createElement('template');
+    template.innerHTML = patch.html || '';
+    var nodes = Array.prototype.filter.call(template.content.childNodes, function (node) {
+      return node.nodeType === 1 || (node.nodeType === 3 && node.textContent.trim());
+    });
+    var node;
+    if (nodes.length === 1 && nodes[0].nodeType === 1) {
+      node = nodes[0];
+    } else {
+      node = document.createElement('div');
+      node.appendChild(template.content);
+    }
+    node.setAttribute('data-va-added-id', patch.id);
+    return node;
   }
 
   function load() {

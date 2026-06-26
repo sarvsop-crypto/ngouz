@@ -12,6 +12,7 @@
         date('date', 'Sana', true), text('category', 'Kategoriya', true), checkbox('featured', 'Muhim yangilik'),
         area('excerpt', 'Qisqa matn', true), area('excerpt_ru', 'Qisqa matn RU'), area('excerpt_en', 'Qisqa matn EN'),
         area('body', 'Asosiy matn', true, true), area('body_ru', 'Asosiy matn RU', false, true), area('body_en', 'Asosiy matn EN', false, true),
+        file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
         text('cover_image', 'Muqova rasmi path')
       ]
     },
@@ -25,6 +26,7 @@
         date('date', 'Sana', true), select('status', 'Holat', [['upcoming', 'Rejalashtirilgan'], ['past', "Bo'lib o'tdi"], ['cancelled', 'Bekor qilingan']]),
         text('location', 'Manzil'), number('participants', 'Ishtirokchilar'), date('deadline', 'Ro\'yxatdan o\'tish muddati'),
         area('description', 'Tavsif', true, true), area('description_ru', 'Tavsif RU', false, true), area('description_en', 'Tavsif EN', false, true),
+        file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
         text('cover_image', 'Muqova rasmi path')
       ]
     },
@@ -39,6 +41,7 @@
         text('amount', 'Mablag\''), date('deadline', 'Topshirish muddati'),
         select('status', 'Holat', [['open', 'Ochiq'], ['closed', 'Yopilgan'], ['active', 'Faol']]),
         area('description', 'Tavsif', true, true), area('description_ru', 'Tavsif RU', false, true), area('description_en', 'Tavsif EN', false, true),
+        file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
         text('cover_image', 'Muqova rasmi path')
       ]
     },
@@ -49,7 +52,8 @@
       required: ['title', 'date', 'category', 'body'],
       fields: [
         text('title', 'Sarlavha', true), date('date', 'Sana', true), text('category', 'Kategoriya', true),
-        area('excerpt', 'Qisqa matn'), area('body', 'Asosiy matn', true, true), text('cover_image', 'Muqova rasmi path')
+        area('excerpt', 'Qisqa matn'), area('body', 'Asosiy matn', true, true),
+        file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true), text('cover_image', 'Muqova rasmi path')
       ]
     }
   };
@@ -188,6 +192,7 @@
     assignVisualIds(doc);
     hookFrameNavigation(doc);
     injectGenericBuilderControls(doc);
+    injectStructuredAddButtons(doc);
     injectAddButtons(doc);
     injectDetailPageButton(doc);
     Array.prototype.forEach.call(doc.querySelectorAll('[data-va-type][data-va-id]'), function (node) {
@@ -227,6 +232,8 @@
       '.va-live-controls button:last-child:hover{background:#fff8f7}',
       '.va-live-add{position:relative;z-index:9998;display:flex;justify-content:flex-end;margin:0 0 10px;pointer-events:auto}',
       '.va-live-add button{width:36px;height:36px;background:#023347;color:#fff;border-color:#023347;border-radius:8px;font-size:22px;box-shadow:0 3px 6px rgba(100,100,100,.2)}',
+      '.va-context-add{position:relative;z-index:9998;display:flex;justify-content:flex-end;margin:0 0 12px;pointer-events:auto}',
+      '.va-context-add button{min-height:36px;border:1px solid #023347;background:#023347;color:#fff;border-radius:8px;padding:8px 12px;font:800 13px/1 Montserrat,system-ui,sans-serif;box-shadow:0 3px 6px rgba(100,100,100,.2);cursor:pointer}',
       '.va-live-add--floating{position:fixed;right:18px;bottom:18px;z-index:10000;margin:0}',
       '.va-live-add--floating button{width:44px;height:44px}',
       '.va-generic-editable{outline:1px dashed rgba(14,116,144,.34);outline-offset:5px}',
@@ -237,8 +244,7 @@
       '.va-generic-controls button:hover{background:#E8F5FB}',
       '.va-generic-controls button:last-child{color:#b42318}',
       '.va-generic-controls button:last-child:hover{background:#fff8f7}',
-      '.va-generic-add{display:inline-flex;margin:8px 0;vertical-align:middle}',
-      '.va-generic-add button{width:32px;height:32px;border:1px solid #023347;background:#023347;color:#fff;border-radius:8px;padding:0;font:800 20px/1 Montserrat,system-ui,sans-serif;box-shadow:0 3px 6px rgba(100,100,100,.2);cursor:pointer}'
+      '.va-generic-add{display:none}'
     ].join('');
     doc.head.appendChild(style);
   }
@@ -270,15 +276,28 @@
       });
       if (node.tagName === 'IMG') node.parentNode.insertBefore(controls, node.nextSibling);
       else node.appendChild(controls);
-      var add = doc.createElement('span');
-      add.className = 'va-generic-add';
-      add.innerHTML = '<button type="button" title="Shu joyga qo\'shish" aria-label="Shu joyga qo\'shish">+</button>';
-      add.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        openVisualEditor(node, 'add');
+    });
+  }
+
+  function injectStructuredAddButtons(doc) {
+    [
+      ['.partner-grid', 'partner', "Hamkor qo'shish"],
+      ['.useful-links-grid', 'useful_link', "Havola qo'shish"]
+    ].forEach(function (cfg) {
+      Array.prototype.forEach.call(doc.querySelectorAll(cfg[0]), function (target) {
+        if (target.dataset.vaContextAddInjected) return;
+        target.dataset.vaContextAddInjected = '1';
+        if (!target.getAttribute('data-va-block-id')) target.setAttribute('data-va-block-id', blockId(doc, target));
+        var wrap = doc.createElement('div');
+        wrap.className = 'va-context-add';
+        wrap.innerHTML = '<button type="button">' + esc(cfg[2]) + '</button>';
+        wrap.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openStructuredAdd(target, cfg[1]);
+        });
+        target.parentNode.insertBefore(wrap, target);
       });
-      node.parentNode.insertBefore(add, controls.nextSibling || node.nextSibling);
     });
   }
 
@@ -457,6 +476,51 @@
     document.body.style.overflow = 'hidden';
   }
 
+  function openStructuredAdd(target, kind) {
+    state.editingType = VISUAL_TYPE;
+    state.editing = null;
+    state.visualTarget = target;
+    state.visualAction = 'add-' + kind;
+    els.editorTitle.textContent = kind === 'partner' ? "Hamkor qo'shish" : "Foydali havola qo'shish";
+    els.editorKicker.textContent = kind === 'partner' ? 'Hamkorlar' : 'Foydali havolalar';
+    els.form.dataset.mode = 'visual-add-' + kind;
+    els.deleteBtn.style.display = 'none';
+    els.saveBtn.style.display = '';
+    setError(els.editorError, '');
+    els.fields.innerHTML = structuredFieldsFor(kind).map(function (field) { return fieldHtml(field, structuredDefaults(kind)); }).join('');
+    els.modal.classList.add('is-open');
+    els.modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    initImagePreview();
+  }
+
+  function structuredDefaults(kind) {
+    if (kind === 'partner') return { name: '', href: '', src: '', alt: '' };
+    if (kind === 'useful_link') return { title: '', href: '', icon_src: 'img/emblem-uz.svg', icon_alt: "O'zbekiston gerbi" };
+    return {};
+  }
+
+  function structuredFieldsFor(kind) {
+    if (kind === 'partner') {
+      return [
+        file('logo_file', 'Logotip yuklash', 'image/*', true),
+        text('src', 'Logotip manzili', false, true),
+        text('name', 'Hamkor nomi', true, true),
+        text('href', 'Vebsayt URL', false, true)
+      ];
+    }
+    if (kind === 'useful_link') {
+      return [
+        text('title', 'Havola nomi', true, true),
+        text('href', 'URL', true, true),
+        file('icon_file', 'Ikonka yuklash', 'image/*', true),
+        text('icon_src', 'Ikonka manzili', false, true),
+        text('icon_alt', 'Ikonka alt matni', false, true)
+      ];
+    }
+    return [];
+  }
+
   function visualFieldsFor(node, action) {
     if (action === 'add') {
       return [select('block_kind', 'Blok turi', [['paragraph', 'Matn'], ['heading', 'Sarlavha'], ['card', 'Karta'], ['html', 'HTML']]), area('html', 'Kontent', true, true)];
@@ -556,6 +620,7 @@
       if (!el) return;
       if (field.kind === 'checkbox') data[field.name] = !!el.checked;
       else if (field.kind === 'number') data[field.name] = el.value ? parseInt(el.value, 10) : null;
+      else if (field.kind === 'file') data[field.name] = el.files && el.files[0] ? el.files[0] : null;
       else data[field.name] = String(el.value || '').trim();
     });
     return data;
@@ -569,6 +634,14 @@
     }
     var data = readEditor();
     if (state.editingType === VISUAL_TYPE) {
+      if (state.visualAction === 'add-partner' && (!data.name || !(data.src || data.logo_file))) {
+        setError(els.editorError, 'Hamkor nomi va logotip majburiy.');
+        return;
+      }
+      if (state.visualAction === 'add-useful_link' && (!data.title || !data.href)) {
+        setError(els.editorError, 'Havola nomi va URL majburiy.');
+        return;
+      }
       if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href || data.file)) {
         setError(els.editorError, 'Kontent bo\'sh bo\'lmasligi kerak.');
         return;
@@ -594,7 +667,7 @@
     }
     var btn = e.submitter || els.form.querySelector('button[type="submit"]');
     lock(btn, true, 'Saqlanmoqda...');
-    saveItem(data).then(function () {
+    prepareItemData(data).then(saveItem).then(function () {
       state.cache[state.editingType] = null;
       toast('Saqlandi');
       closeEditor();
@@ -615,14 +688,29 @@
     return AdminCMS.create(state.editingType, data);
   }
 
-  function prepareVisualData(data) {
-    if (state.editingType !== VISUAL_TYPE || !data || !data.file) return Promise.resolve(data);
-    if (!state.visualTarget || state.visualTarget.tagName !== 'IMG') return Promise.resolve(data);
-    return uploadVisualImage(data.file).then(function (res) {
-      data.src = uploadResultUrl(res);
-      data.file = null;
+  function prepareItemData(data) {
+    if (!data || !data.cover_image_file) return Promise.resolve(data);
+    return uploadVisualImage(data.cover_image_file).then(function (res) {
+      data.cover_image = res && res.path ? res.path : data.cover_image;
+      delete data.cover_image_file;
       return data;
     });
+  }
+
+  function prepareVisualData(data) {
+    if (state.editingType !== VISUAL_TYPE || !data) return Promise.resolve(data);
+    var tasks = [];
+    if (data.file && state.visualTarget && state.visualTarget.tagName === 'IMG') {
+      tasks.push(uploadVisualImage(data.file).then(function (res) { data.src = uploadResultUrl(res); data.file = null; }));
+    }
+    if (data.logo_file) {
+      tasks.push(uploadVisualImage(data.logo_file).then(function (res) { data.src = uploadResultUrl(res); data.logo_file = null; }));
+    }
+    if (data.icon_file) {
+      tasks.push(uploadVisualImage(data.icon_file).then(function (res) { data.icon_src = uploadResultUrl(res); data.icon_file = null; }));
+    }
+    if (!tasks.length) return Promise.resolve(data);
+    return Promise.all(tasks).then(function () { return data; });
   }
 
   function uploadVisualImage(picked) {
@@ -651,6 +739,20 @@
     var patch = { id: id, kind: (node && node.tagName || '').toLowerCase(), action: 'html' };
     if (state.visualAction === 'delete') {
       patch.action = 'delete';
+    } else if (state.visualAction === 'add-partner') {
+      patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
+      patch.kind = 'partner';
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'append';
+      patch.html = buildPartnerHtml(data);
+    } else if (state.visualAction === 'add-useful_link') {
+      patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
+      patch.kind = 'useful_link';
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'append';
+      patch.html = buildUsefulLinkHtml(data);
     } else if (state.visualAction === 'add') {
       patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
       patch.action = 'add';
@@ -684,6 +786,25 @@
     });
   }
 
+  function buildPartnerHtml(data) {
+    var name = String(data.name || data.alt || '').trim();
+    var src = String(data.src || '').trim();
+    var href = String(data.href || '').trim();
+    var img = '<img alt="' + escAttr(name || 'Hamkor') + '" loading="lazy" src="' + escAttr(src) + '" decoding="async" width="160" height="56">';
+    var body = href ? '<a href="' + escAttr(href) + '" target="_blank" rel="noopener noreferrer">' + img + '</a>' : img;
+    return '<div class="partner">' + body + '</div>';
+  }
+
+  function buildUsefulLinkHtml(data) {
+    var title = String(data.title || '').trim();
+    var href = String(data.href || '').trim();
+    var icon = String(data.icon_src || 'img/emblem-uz.svg').trim();
+    var alt = String(data.icon_alt || title || 'Havola').trim();
+    return '<a class="useful-link-card" href="' + escAttr(href) + '" target="_blank" rel="noopener noreferrer">' +
+      '<img class="ul-icon" src="' + escAttr(icon) + '" alt="' + escAttr(alt) + '" loading="lazy" decoding="async" width="18" height="18">' +
+      '<h3>' + esc(title) + '</h3></a>';
+  }
+
   function buildAddedHtml(kind, html) {
     html = cleanEditorHtml(html || '');
     if (kind === 'heading') return /^<h[1-6][\s>]/i.test(html) ? html : '<h2>' + esc(html.replace(/<[^>]*>/g, '')) + '</h2>';
@@ -701,16 +822,16 @@
   }
 
   function initImagePreview() {
-    var src = els.form.elements.src;
-    if (!src) return;
-    var label = src.closest('label');
+    var src = els.form.elements.src || els.form.elements.icon_src;
+    var fileInput = els.form.elements.file || els.form.elements.logo_file || els.form.elements.icon_file;
+    if (!src && !fileInput) return;
+    var label = (src && src.closest('label')) || (fileInput && fileInput.closest('label'));
     if (!label || label.querySelector('.va-image-preview')) return;
     var preview = document.createElement('div');
     preview.className = 'va-image-preview';
     preview.innerHTML = '<img alt="">';
     label.appendChild(preview);
     var img = preview.querySelector('img');
-    var fileInput = els.form.elements.file;
     var objectUrl = '';
     function update() {
       if (objectUrl) {
@@ -723,10 +844,10 @@
         preview.hidden = false;
         return;
       }
-      img.src = src.value || '';
-      preview.hidden = !src.value;
+      img.src = src ? src.value || '' : '';
+      preview.hidden = !(src && src.value);
     }
-    src.addEventListener('input', update);
+    if (src) src.addEventListener('input', update);
     if (fileInput) fileInput.addEventListener('change', update);
     update();
   }
