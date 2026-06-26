@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Visual Admin | ngo.uz</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/visual-admin.css" />
+</head>
+<body>
+  <div class="va-shell" data-state="loading">
+    <section class="va-login" id="loginView" aria-labelledby="loginTitle">
+      <form class="va-login__card" id="loginForm">
+        <img src="/img/logo-oznntma.png" alt="O'zNNTMA" class="va-login__logo" />
+        <h1 id="loginTitle">Visual Admin</h1>
+        <p>Sayt materiallarini ko'rinishning o'zida boshqarish uchun tizimga kiring.</p>
+        <label>
+          <span>Email</span>
+          <input id="loginEmail" type="email" autocomplete="username" required />
+        </label>
+        <label>
+          <span>Parol</span>
+          <input id="loginPassword" type="password" autocomplete="current-password" required />
+        </label>
+        <label class="va-check">
+          <input id="loginRemember" type="checkbox" checked />
+          <span>Tizimda qolish</span>
+        </label>
+        <p class="va-error" id="loginError" role="alert"></p>
+        <button class="va-btn va-btn--primary" type="submit">Kirish</button>
+      </form>
+    </section>
+
+    <section class="va-app" id="appView" aria-label="Visual admin panel">
+      <header class="va-topbar">
+        <a class="va-brand" href="/" aria-label="ngo.uz bosh sahifa">
+          <img src="/img/logo-oznntma.png" alt="" />
+          <span>Visual Admin</span>
+        </a>
+        <nav class="va-tabs" id="typeTabs" aria-label="Kontent turlari"></nav>
+        <div class="va-user">
+          <span id="userLabel"></span>
+          <button class="va-icon-btn" id="refreshBtn" type="button" title="Yangilash" aria-label="Yangilash">↻</button>
+          <button class="va-btn va-btn--ghost" id="logoutBtn" type="button">Chiqish</button>
+        </div>
+      </header>
+
+      <main class="va-workspace">
+        <aside class="va-panel" aria-label="Boshqaruv">
+          <div class="va-panel__head">
+            <p id="sectionKicker">Kontent</p>
+            <h2 id="sectionTitle">Yangiliklar</h2>
+          </div>
+          <button class="va-btn va-btn--primary" id="newItemBtn" type="button">Yangi qo'shish</button>
+          <label class="va-search">
+            <span>Qidirish</span>
+            <input id="searchInput" type="search" placeholder="Sarlavha, hudud, kategoriya" />
+          </label>
+          <div class="va-stats">
+            <div><strong id="totalCount">0</strong><span>Jami</span></div>
+            <div><strong id="visibleCount">0</strong><span>Ko'rinmoqda</span></div>
+          </div>
+          <p class="va-hint">O'zgarishlar saqlanganda public sayt ma'lumotlari ham shu API orqali yangilanadi.</p>
+        </aside>
+
+        <section class="va-canvas" aria-live="polite">
+          <div class="va-canvas__bar">
+            <div>
+              <p id="canvasKicker">Saytdagi ko'rinish</p>
+              <h2 id="canvasTitle">Yangiliklar</h2>
+            </div>
+            <p id="loadState" class="va-load-state">Yuklanmoqda...</p>
+          </div>
+          <div class="va-grid" id="itemGrid"></div>
+        </section>
+      </main>
+    </section>
+  </div>
+
+  <div class="va-modal" id="editorModal" aria-hidden="true">
+    <div class="va-modal__backdrop" data-close-modal></div>
+    <form class="va-editor" id="editorForm" role="dialog" aria-modal="true" aria-labelledby="editorTitle">
+      <header class="va-editor__head">
+        <div>
+          <p id="editorKicker">Kontent</p>
+          <h2 id="editorTitle">Tahrirlash</h2>
+        </div>
+        <button class="va-icon-btn" type="button" data-close-modal aria-label="Yopish">×</button>
+      </header>
+      <div class="va-editor__body" id="editorFields"></div>
+      <p class="va-error" id="editorError" role="alert"></p>
+      <footer class="va-editor__foot">
+        <button class="va-btn va-btn--danger" id="deleteBtn" type="button">O'chirish</button>
+        <span></span>
+        <button class="va-btn va-btn--ghost" type="button" data-close-modal>Bekor qilish</button>
+        <button class="va-btn va-btn--primary" type="submit">Saqlash</button>
+      </footer>
+    </form>
+  </div>
+
+  <div class="va-toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/api-client.js"></script>
+  <script src="js/admin-cms.js"></script>
+  <script src="js/visual-admin.js"></script>
+</body>
+</html>
