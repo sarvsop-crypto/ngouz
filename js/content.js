@@ -261,7 +261,7 @@
     var cat = n.category || '';
     var archiveBadge = (n.is_archive === '1' || n.is_archive === 1)
       ? '<span class="gov-news-archive-badge">Arxiv</span>' : '';
-    return '<article class="gov-news-card" data-cat="' + esc(cat) + '">'
+    return '<article class="gov-news-card" data-cat="' + esc(cat) + '" data-va-type="news" data-va-id="' + esc(n.id || '') + '">'
       + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
       + '<div class="gov-news-img-inner" style="' + coverStyle(n) + '"></div>'
       + '<div class="gov-news-overlay"></div>' + archiveBadge + '</a>'
@@ -599,7 +599,7 @@
       : '<span data-i18n="pages.events.statusPast">Bo\'lib o\'tdi</span>';
     var archiveBadge = (e.is_archive === '1' || e.is_archive === 1)
       ? '<span class="gov-news-archive-badge" data-i18n="common.archive">Arxiv</span>' : '';
-    return '<article class="gov-news-card" data-cat="' + esc(cat) + '">'
+    return '<article class="gov-news-card" data-cat="' + esc(cat) + '" data-va-type="events" data-va-id="' + esc(e.id || '') + '">'
       + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
       + '<div class="gov-news-img-inner" style="' + coverStyle(e) + '"></div>'
       + '<div class="gov-news-overlay"></div>' + archiveBadge + '</a>'
@@ -807,7 +807,7 @@
       var statusTag = isActive
         ? ' · <span data-i18n="pages.grants.tagActive">Faol</span>'
         : ' · <span data-i18n="pages.grants.tagClosed">Yopilgan</span>';
-      html += '<article class="card"' + id + '>'
+      html += '<article class="card"' + id + ' data-va-type="grants" data-va-id="' + esc(g.id || '') + '">'
         + cover
         + '<span class="tag">' + esc(tField(g,'category')) + statusTag + '</span>'
         + '<h3>' + esc(tField(g,'title')) + '</h3>'

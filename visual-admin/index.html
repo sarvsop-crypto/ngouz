@@ -41,42 +41,32 @@
           <img src="/img/logo-oznntma.png" alt="" />
           <span>Visual Admin</span>
         </a>
-        <nav class="va-tabs" id="typeTabs" aria-label="Kontent turlari"></nav>
+        <nav class="va-tabs" id="pageTabs" aria-label="Sayt sahifalari">
+          <button type="button" data-page="/">Bosh sahifa</button>
+          <button type="button" data-page="/news">Yangiliklar</button>
+          <button type="button" data-page="/events">Tadbirlar</button>
+          <button type="button" data-page="/grants">Grantlar</button>
+          <button type="button" data-page="/nntlar">NNTlar</button>
+        </nav>
         <div class="va-user">
           <span id="userLabel"></span>
+          <select id="newTypeSelect" aria-label="Yangi kontent turi">
+            <option value="news">Yangilik</option>
+            <option value="events">Tadbir</option>
+            <option value="grants">Grant</option>
+            <option value="documents">Hujjat</option>
+            <option value="organizations">NNT</option>
+          </select>
+          <button class="va-btn va-btn--primary" id="newItemBtn" type="button">Qo'shish</button>
+          <button class="va-btn va-btn--ghost" id="editCurrentBtn" type="button">Joriy sahifani tahrirlash</button>
           <button class="va-icon-btn" id="refreshBtn" type="button" title="Yangilash" aria-label="Yangilash">↻</button>
           <button class="va-btn va-btn--ghost" id="logoutBtn" type="button">Chiqish</button>
         </div>
       </header>
 
-      <main class="va-workspace">
-        <aside class="va-panel" aria-label="Boshqaruv">
-          <div class="va-panel__head">
-            <p id="sectionKicker">Kontent</p>
-            <h2 id="sectionTitle">Yangiliklar</h2>
-          </div>
-          <button class="va-btn va-btn--primary" id="newItemBtn" type="button">Yangi qo'shish</button>
-          <label class="va-search">
-            <span>Qidirish</span>
-            <input id="searchInput" type="search" placeholder="Sarlavha, hudud, kategoriya" />
-          </label>
-          <div class="va-stats">
-            <div><strong id="totalCount">0</strong><span>Jami</span></div>
-            <div><strong id="visibleCount">0</strong><span>Ko'rinmoqda</span></div>
-          </div>
-          <p class="va-hint">O'zgarishlar saqlanganda public sayt ma'lumotlari ham shu API orqali yangilanadi.</p>
-        </aside>
-
-        <section class="va-canvas" aria-live="polite">
-          <div class="va-canvas__bar">
-            <div>
-              <p id="canvasKicker">Saytdagi ko'rinish</p>
-              <h2 id="canvasTitle">Yangiliklar</h2>
-            </div>
-            <p id="loadState" class="va-load-state">Yuklanmoqda...</p>
-          </div>
-          <div class="va-grid" id="itemGrid"></div>
-        </section>
+      <main class="va-site">
+        <iframe id="siteFrame" class="va-site__frame" title="ngo.uz visual editing canvas" src="/"></iframe>
+        <div class="va-site__status" id="siteStatus">Sayt yuklanmoqda...</div>
       </main>
     </section>
   </div>

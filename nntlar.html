@@ -657,6 +657,7 @@ loadAllOrgs(function(orgs, ok) {
     var regionName = REGION_NAMES[o.region_code] || o.region_code || 'Boshqa';
     if (!NNT_DATA[regionName]) NNT_DATA[regionName] = [];
     NNT_DATA[regionName].push({
+      id: o.id || '',
       nom: o.name, rahbar: o.leader_name || '', manzil: o.address || '',
       shakl: '', soha: o.soha || '', royxat: o.registered_at || '', azo: o.member_since || ''
     });
@@ -897,7 +898,7 @@ function render() {
     var showRegion  = activeRegion === 'Barchasi';
 
     return (
-      '<div class="nnt-card">' +
+      '<div class="nnt-card" data-va-type="organizations" data-va-id="' + esc(nnt.id || '') + '">' +
         '<div class="nnt-card-header">' +
           '<div class="nnt-avatar">' + esc(av) + '</div>' +
           '<div class="nnt-card-meta">' +

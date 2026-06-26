@@ -6,9 +6,6 @@
       label: 'Yangiliklar',
       singular: 'maqola',
       endpoint: '/admin/news',
-      cardMeta: function (x) { return [x.date, x.category].filter(Boolean).join(' · '); },
-      badge: function (x) { return x.category || 'Yangilik'; },
-      summary: function (x) { return x.excerpt || x.body || ''; },
       required: ['title', 'date', 'category', 'excerpt', 'body'],
       fields: [
         text('title', 'Sarlavha', true), text('title_ru', 'Sarlavha RU'), text('title_en', 'Sarlavha EN'),
@@ -22,9 +19,6 @@
       label: 'Tadbirlar',
       singular: 'tadbir',
       endpoint: '/admin/events',
-      cardMeta: function (x) { return [x.date, x.location].filter(Boolean).join(' · '); },
-      badge: function (x) { return x.status || 'event'; },
-      summary: function (x) { return x.description || ''; },
       required: ['title', 'date', 'description'],
       fields: [
         text('title', 'Sarlavha', true), text('title_ru', 'Sarlavha RU'), text('title_en', 'Sarlavha EN'),
@@ -38,9 +32,6 @@
       label: 'Grantlar',
       singular: 'grant',
       endpoint: '/admin/grants',
-      cardMeta: function (x) { return [x.deadline ? 'Muddat: ' + x.deadline : '', x.organizer].filter(Boolean).join(' · '); },
-      badge: function (x) { return x.status || 'open'; },
-      summary: function (x) { return x.description || ''; },
       required: ['title', 'description'],
       fields: [
         text('title', 'Sarlavha', true), text('title_ru', 'Sarlavha RU'), text('title_en', 'Sarlavha EN'),
@@ -55,9 +46,6 @@
       label: 'Hujjatlar',
       singular: 'hujjat',
       endpoint: '/admin/documents',
-      cardMeta: function (x) { return [x.date, x.category].filter(Boolean).join(' · '); },
-      badge: function (x) { return x.category || 'Hujjat'; },
-      summary: function (x) { return x.excerpt || x.body || ''; },
       required: ['title', 'date', 'category', 'body'],
       fields: [
         text('title', 'Sarlavha', true), date('date', 'Sana', true), text('category', 'Kategoriya', true),
@@ -69,9 +57,6 @@
       singular: 'NNT',
       endpoint: '/admin/organizations',
       direct: true,
-      cardMeta: function (x) { return [x.region_name || x.region_code, x.status].filter(Boolean).join(' · '); },
-      badge: function (x) { return x.region_name || x.region_code || 'NNT'; },
-      summary: function (x) { return [x.phone, x.email, x.address].filter(Boolean).join(' · '); },
       required: ['name'],
       fields: [
         text('name', 'Nomi', true), text('region_code', 'Hudud kodi'), text('status', 'Holat'),
@@ -80,7 +65,7 @@
     }
   };
 
-  var state = { type: 'news', user: null, items: [], editing: null, busy: false };
+  var state = { user: null, editing: null, editingType: null, cache: {} };
   var els = {};
 
   function text(name, label, required, wide) { return { kind: 'text', name: name, label: label, required: !!required, wide: !!wide }; }
@@ -94,37 +79,37 @@
     els.shell = document.querySelector('.va-shell');
     els.loginForm = document.getElementById('loginForm');
     els.loginError = document.getElementById('loginError');
-    els.appView = document.getElementById('appView');
-    els.typeTabs = document.getElementById('typeTabs');
-    els.itemGrid = document.getElementById('itemGrid');
-    els.search = document.getElementById('searchInput');
-    els.loadState = document.getElementById('loadState');
-    els.sectionTitle = document.getElementById('sectionTitle');
-    els.canvasTitle = document.getElementById('canvasTitle');
-    els.totalCount = document.getElementById('totalCount');
-    els.visibleCount = document.getElementById('visibleCount');
+    els.frame = document.getElementById('siteFrame');
+    els.status = document.getElementById('siteStatus');
     els.userLabel = document.getElementById('userLabel');
+    els.newType = document.getElementById('newTypeSelect');
     els.modal = document.getElementById('editorModal');
     els.form = document.getElementById('editorForm');
     els.fields = document.getElementById('editorFields');
     els.editorTitle = document.getElementById('editorTitle');
+    els.editorKicker = document.getElementById('editorKicker');
     els.editorError = document.getElementById('editorError');
     els.deleteBtn = document.getElementById('deleteBtn');
     els.toast = document.getElementById('toast');
-
-    buildTabs();
     bind();
     boot();
   }
 
   function bind() {
     els.loginForm.addEventListener('submit', onLogin);
-    document.getElementById('newItemBtn').addEventListener('click', function () { openEditor(null); });
-    document.getElementById('refreshBtn').addEventListener('click', loadCurrent);
+    document.getElementById('newItemBtn').addEventListener('click', function () {
+      openEditor(els.newType.value, null);
+    });
+    document.getElementById('editCurrentBtn').addEventListener('click', editCurrentPage);
+    document.getElementById('refreshBtn').addEventListener('click', reloadSite);
     document.getElementById('logoutBtn').addEventListener('click', function () {
       NgoApi.logout().then(function () { showLogin(); });
     });
-    els.search.addEventListener('input', render);
+    document.getElementById('pageTabs').addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-page]');
+      if (btn) navigateSite(btn.getAttribute('data-page'));
+    });
+    els.frame.addEventListener('load', onFrameLoad);
     els.form.addEventListener('submit', onSave);
     els.deleteBtn.addEventListener('click', onDelete);
     els.modal.addEventListener('click', function (e) {
@@ -146,7 +131,6 @@
         return;
       }
       showApp();
-      loadCurrent();
     }).catch(function () {
       NgoApi.clearToken();
       showLogin();
@@ -160,6 +144,7 @@
   function showApp() {
     els.shell.setAttribute('data-state', 'app');
     els.userLabel.textContent = state.user ? ((state.user.name || state.user.email || 'Admin') + ' · ' + (state.user.role || '')) : 'Admin';
+    navigateSite(new URLSearchParams(location.search).get('page') || '/');
   }
 
   function onLogin(e) {
@@ -180,64 +165,122 @@
         return;
       }
       showApp();
-      loadCurrent();
     }).catch(function (err) {
       setError(els.loginError, 'Kirishda xatolik: ' + message(err));
     }).then(function () { lock(btn, false); });
   }
 
-  function buildTabs() {
-    Object.keys(TYPES).forEach(function (key) {
-      var btn = document.createElement('button');
-      btn.type = 'button';
-      btn.textContent = TYPES[key].label;
-      btn.setAttribute('role', 'tab');
-      btn.addEventListener('click', function () {
-        state.type = key;
-        state.editing = null;
-        els.search.value = '';
-        updateHeadings();
-        updateTabs();
-        loadCurrent();
+  function navigateSite(path) {
+    if (!path) path = '/';
+    els.status.textContent = 'Sayt yuklanmoqda...';
+    els.frame.src = path;
+  }
+
+  function reloadSite() {
+    els.status.textContent = 'Yangilanmoqda...';
+    try { els.frame.contentWindow.location.reload(); }
+    catch (e) { els.frame.src = els.frame.src; }
+  }
+
+  function onFrameLoad() {
+    els.status.textContent = 'Edit rejimi yoqilgan';
+    injectEditorLayer();
+  }
+
+  function injectEditorLayer() {
+    var doc;
+    try { doc = els.frame.contentDocument; } catch (e) { return; }
+    if (!doc || !doc.body) return;
+    ensureFrameStyles(doc);
+    hookFrameNavigation(doc);
+    Array.prototype.forEach.call(doc.querySelectorAll('[data-va-type][data-va-id]'), function (node) {
+      if (!node.getAttribute('data-va-id') || node.querySelector(':scope > .va-live-controls')) return;
+      node.classList.add('va-live-editable');
+      if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
+      var controls = doc.createElement('div');
+      controls.className = 'va-live-controls';
+      controls.innerHTML = '<button type="button" data-va-edit>Tahrirlash</button><button type="button" data-va-delete>O\'chirish</button>';
+      controls.addEventListener('click', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var type = node.getAttribute('data-va-type');
+        var id = node.getAttribute('data-va-id');
+        if (e.target.hasAttribute('data-va-delete')) {
+          loadItem(type, id).then(function (item) { openEditor(type, item, true); }).catch(showLoadError);
+        } else {
+          loadItem(type, id).then(function (item) { openEditor(type, item); }).catch(showLoadError);
+        }
       });
-      els.typeTabs.appendChild(btn);
-    });
-    updateTabs();
-    updateHeadings();
-  }
-
-  function updateTabs() {
-    Array.prototype.forEach.call(els.typeTabs.children, function (btn, idx) {
-      var key = Object.keys(TYPES)[idx];
-      btn.setAttribute('aria-selected', key === state.type ? 'true' : 'false');
+      node.appendChild(controls);
     });
   }
 
-  function updateHeadings() {
-    var cfg = TYPES[state.type];
-    els.sectionTitle.textContent = cfg.label;
-    els.canvasTitle.textContent = cfg.label;
+  function ensureFrameStyles(doc) {
+    if (doc.getElementById('va-live-style')) return;
+    var style = doc.createElement('style');
+    style.id = 'va-live-style';
+    style.textContent = [
+      '.va-live-editable{outline:2px solid rgba(15,106,87,.38);outline-offset:4px}',
+      '.va-live-editable:hover{outline-color:#0f6a57}',
+      '.va-live-controls{position:absolute;z-index:9999;right:10px;top:10px;display:flex;gap:6px;pointer-events:auto}',
+      '.va-live-controls button{border:1px solid rgba(15,106,87,.28);background:#fff;color:#0f6a57;border-radius:8px;padding:7px 9px;font:700 12px/1.1 Montserrat,system-ui,sans-serif;box-shadow:0 8px 22px rgba(0,0,0,.16);cursor:pointer}',
+      '.va-live-controls button:last-child{color:#b42318;border-color:rgba(180,35,24,.28)}'
+    ].join('');
+    doc.head.appendChild(style);
   }
 
-  function loadCurrent() {
-    var cfg = TYPES[state.type];
-    els.loadState.textContent = 'Yuklanmoqda...';
-    state.items = [];
-    render();
-    var req = cfg.direct
-      ? NgoApi.get(cfg.endpoint + '?limit=200')
-      : new Promise(function (resolve, reject) {
-          AdminCMS.load(state.type, function (err, items) {
-            if (err) reject(err); else resolve({ items: items || [] });
-          });
-        });
-    req.then(function (res) {
-      state.items = normalizeItems(res);
-      els.loadState.textContent = 'Tayyor';
-      render();
-    }).catch(function (err) {
-      els.loadState.textContent = 'Xatolik';
-      els.itemGrid.innerHTML = '<div class="va-empty">Ma\'lumot yuklanmadi: ' + esc(message(err)) + '</div>';
+  function hookFrameNavigation(doc) {
+    if (doc.documentElement.dataset.vaNavHooked) return;
+    doc.documentElement.dataset.vaNavHooked = '1';
+    doc.addEventListener('click', function (e) {
+      var a = e.target.closest('a[href]');
+      if (!a) return;
+      var href = a.getAttribute('href') || '';
+      if (/^(https?:|mailto:|tel:|#)/i.test(href)) return;
+      e.preventDefault();
+      navigateSite(new URL(href, els.frame.contentWindow.location.href).pathname + new URL(href, els.frame.contentWindow.location.href).search + new URL(href, els.frame.contentWindow.location.href).hash);
+    }, true);
+  }
+
+  function editCurrentPage() {
+    var loc;
+    try { loc = els.frame.contentWindow.location; } catch (e) {}
+    if (!loc) { toast('Joriy sahifa aniqlanmadi'); return; }
+    var params = new URLSearchParams(loc.search);
+    var id = params.get('id');
+    var path = loc.pathname.replace(/\/$/, '');
+    var type = '';
+    if (path.endsWith('/news-detail')) type = params.get('type') === 'documents' ? 'documents' : 'news';
+    else if (path.endsWith('/event-detail')) type = 'events';
+    if (!type || !id) { toast('Bu sahifada tahrirlanadigan item topilmadi'); return; }
+    loadItem(type, id).then(function (item) { openEditor(type, item); }).catch(showLoadError);
+  }
+
+  function loadItem(type, id) {
+    return loadItems(type).then(function (items) {
+      var item = items.find(function (x) { return String(x.id) === String(id); });
+      if (!item) throw new Error('item_topilmadi');
+      return item;
+    });
+  }
+
+  function loadItems(type) {
+    if (state.cache[type]) return Promise.resolve(state.cache[type]);
+    var cfg = TYPES[type];
+    if (cfg.direct) {
+      return NgoApi.get(cfg.endpoint + '?limit=250').then(function (res) {
+        state.cache[type] = normalizeItems(res);
+        return state.cache[type];
+      });
+    }
+    return new Promise(function (resolve, reject) {
+      AdminCMS.load(type, function (err, items) {
+        if (err) reject(err);
+        else {
+          state.cache[type] = items || [];
+          resolve(state.cache[type]);
+        }
+      });
     });
   }
 
@@ -248,52 +291,12 @@
     return [];
   }
 
-  function render() {
-    var cfg = TYPES[state.type];
-    var q = (els.search.value || '').trim().toLowerCase();
-    var rows = state.items.filter(function (item) {
-      if (!q) return true;
-      return [item.title, item.name, item.category, item.region_name, item.region_code, item.description, item.excerpt]
-        .some(function (v) { return String(v || '').toLowerCase().indexOf(q) !== -1; });
-    });
-    els.totalCount.textContent = state.items.length;
-    els.visibleCount.textContent = rows.length;
-    if (!rows.length) {
-      els.itemGrid.innerHTML = '<div class="va-empty">Hozircha ko\'rsatiladigan yozuv yo\'q.</div>';
-      return;
-    }
-    els.itemGrid.innerHTML = rows.map(function (item) {
-      var title = item.title || item.name || 'Nomsiz';
-      var cover = mediaUrl(item.cover_image);
-      return '<article class="va-card">' +
-        '<div class="va-card__media">' +
-          (cover ? '<img src="' + escAttr(cover) + '" alt="">' : '') +
-          '<span class="va-card__badge">' + esc(cfg.badge(item)) + '</span>' +
-        '</div>' +
-        '<div class="va-card__body">' +
-          '<div class="va-card__meta">' + esc(cfg.cardMeta(item) || item.id || '') + '</div>' +
-          '<h3>' + esc(title) + '</h3>' +
-          '<p>' + esc(trimText(cfg.summary(item), 135)) + '</p>' +
-          '<div class="va-card__actions">' +
-            '<button class="va-btn va-btn--ghost" type="button" data-edit="' + escAttr(item.id || '') + '">Tahrirlash</button>' +
-            '<button class="va-btn va-btn--danger" type="button" data-delete="' + escAttr(item.id || '') + '">O\'chirish</button>' +
-          '</div>' +
-        '</div>' +
-      '</article>';
-    }).join('');
-    Array.prototype.forEach.call(els.itemGrid.querySelectorAll('[data-edit]'), function (btn) {
-      btn.addEventListener('click', function () { openEditor(findItem(btn.getAttribute('data-edit'))); });
-    });
-    Array.prototype.forEach.call(els.itemGrid.querySelectorAll('[data-delete]'), function (btn) {
-      btn.addEventListener('click', function () { openEditor(findItem(btn.getAttribute('data-delete')), true); });
-    });
-  }
-
-  function openEditor(item, confirmDelete) {
-    var cfg = TYPES[state.type];
+  function openEditor(type, item, confirmDelete) {
+    var cfg = TYPES[type];
+    state.editingType = type;
     state.editing = item || null;
     els.editorTitle.textContent = item ? cfg.singular + 'ni tahrirlash' : 'Yangi ' + cfg.singular;
-    document.getElementById('editorKicker').textContent = cfg.label;
+    els.editorKicker.textContent = cfg.label;
     els.deleteBtn.style.display = item ? '' : 'none';
     setError(els.editorError, '');
     els.fields.innerHTML = cfg.fields.map(function (field) { return fieldHtml(field, item || {}); }).join('');
@@ -308,6 +311,7 @@
     els.modal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     state.editing = null;
+    state.editingType = null;
   }
 
   function fieldHtml(field, item) {
@@ -334,7 +338,7 @@
   }
 
   function readEditor() {
-    var cfg = TYPES[state.type];
+    var cfg = TYPES[state.editingType];
     var data = {};
     cfg.fields.forEach(function (field) {
       var el = els.form.elements[field.name];
@@ -348,7 +352,7 @@
 
   function onSave(e) {
     e.preventDefault();
-    var cfg = TYPES[state.type];
+    var cfg = TYPES[state.editingType];
     var data = readEditor();
     var missing = cfg.required.find(function (name) { return !data[name]; });
     if (missing) {
@@ -357,59 +361,49 @@
       if (input) input.focus();
       return;
     }
-    setError(els.editorError, '');
     var btn = e.submitter || els.form.querySelector('button[type="submit"]');
     lock(btn, true, 'Saqlanmoqda...');
     saveItem(data).then(function () {
+      state.cache[state.editingType] = null;
       toast('Saqlandi');
       closeEditor();
-      loadCurrent();
+      reloadSite();
     }).catch(function (err) {
       setError(els.editorError, 'Saqlashda xatolik: ' + message(err));
     }).then(function () { lock(btn, false); });
   }
 
   function saveItem(data) {
-    var cfg = TYPES[state.type];
+    var cfg = TYPES[state.editingType];
     if (cfg.direct) {
       if (state.editing && state.editing.id) return NgoApi.patch(cfg.endpoint + '/' + encodeURIComponent(state.editing.id), data);
       return NgoApi.post(cfg.endpoint, data);
     }
-    if (state.editing && state.editing.id) return AdminCMS.update(state.type, state.editing.id, data);
-    return AdminCMS.create(state.type, data);
+    if (state.editing && state.editing.id) return AdminCMS.update(state.editingType, state.editing.id, data);
+    return AdminCMS.create(state.editingType, data);
   }
 
   function onDelete() {
     if (!state.editing || !state.editing.id) return;
-    var cfg = TYPES[state.type];
+    var cfg = TYPES[state.editingType];
     var title = state.editing.title || state.editing.name || state.editing.id;
     if (!confirm('O\'chirishni tasdiqlaysizmi: ' + title + '?')) return;
     lock(els.deleteBtn, true, 'O\'chirilmoqda...');
     var req = cfg.direct
       ? NgoApi.del(cfg.endpoint + '/' + encodeURIComponent(state.editing.id))
-      : AdminCMS.remove(state.type, state.editing.id);
+      : AdminCMS.remove(state.editingType, state.editing.id);
     req.then(function () {
+      state.cache[state.editingType] = null;
       toast('O\'chirildi');
       closeEditor();
-      loadCurrent();
+      reloadSite();
     }).catch(function (err) {
       setError(els.editorError, 'O\'chirishda xatolik: ' + message(err));
     }).then(function () { lock(els.deleteBtn, false); });
   }
 
-  function findItem(id) {
-    return state.items.find(function (x) { return String(x.id) === String(id); }) || null;
-  }
-
-  function mediaUrl(path) {
-    if (!path) return '';
-    if (/^https?:\/\//.test(path)) return path;
-    return 'https://ngo-api-proxy.sarvsop.workers.dev/media.php?path=' + encodeURIComponent(path);
-  }
-
-  function trimText(value, len) {
-    value = String(value || '').replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
-    return value.length > len ? value.slice(0, len - 1) + '…' : value;
+  function showLoadError(err) {
+    toast('Item yuklanmadi: ' + message(err));
   }
 
   function setError(el, textValue) {
@@ -433,7 +427,7 @@
     els.toast.textContent = textValue;
     els.toast.classList.add('is-open');
     clearTimeout(toast._t);
-    toast._t = setTimeout(function () { els.toast.classList.remove('is-open'); }, 2600);
+    toast._t = setTimeout(function () { els.toast.classList.remove('is-open'); }, 2800);
   }
 
   function message(err) {
