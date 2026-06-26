@@ -51,17 +51,6 @@
         text('title', 'Sarlavha', true), date('date', 'Sana', true), text('category', 'Kategoriya', true),
         area('excerpt', 'Qisqa matn'), area('body', 'Asosiy matn', true, true), text('cover_image', 'Muqova rasmi path')
       ]
-    },
-    organizations: {
-      label: 'NNTlar',
-      singular: 'NNT',
-      endpoint: '/admin/organizations',
-      direct: true,
-      required: ['name'],
-      fields: [
-        text('name', 'Nomi', true), text('region_code', 'Hudud kodi'), text('status', 'Holat'),
-        text('phone', 'Telefon'), text('email', 'Email'), text('address', 'Manzil', false, true)
-      ]
     }
   };
 
@@ -201,6 +190,7 @@
     injectDetailPageButton(doc);
     Array.prototype.forEach.call(doc.querySelectorAll('[data-va-type][data-va-id]'), function (node) {
       if (!node.getAttribute('data-va-id') || node.querySelector(':scope > .va-live-controls')) return;
+      if (!isEditableType(node.getAttribute('data-va-type'))) return;
       node.classList.add('va-live-editable');
       if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
       var controls = doc.createElement('div');
@@ -315,8 +305,7 @@
       ['#dynamic-events-page', 'events'],
       ['#dynamic-grants-page', 'grants'],
       ['#dynamic-projects-grants', 'grants'],
-      ['#dynamic-documents-page', 'documents'],
-      ['#nntCards', 'organizations']
+      ['#dynamic-documents-page', 'documents']
     ];
     targets.forEach(function (pair) {
       Array.prototype.forEach.call(doc.querySelectorAll(pair[0]), function (target) {
@@ -374,6 +363,7 @@
   }
 
   function loadItem(type, id) {
+    if (!isEditableType(type)) return Promise.reject(new Error('visual_admin_type_disabled'));
     return loadItems(type).then(function (items) {
       var item = items.find(function (x) { return String(x.id) === String(id); });
       if (!item) throw new Error('item_topilmadi');
@@ -382,6 +372,7 @@
   }
 
   function loadItems(type) {
+    if (!isEditableType(type)) return Promise.reject(new Error('visual_admin_type_disabled'));
     if (state.cache[type]) return Promise.resolve(state.cache[type]);
     var cfg = TYPES[type];
     if (cfg.direct) {
@@ -409,6 +400,10 @@
   }
 
   function openEditor(type, item, confirmDelete) {
+    if (!isEditableType(type)) {
+      toast('Bu bo\'lim visual admin orqali tahrirlanmaydi.');
+      return;
+    }
     var cfg = TYPES[type];
     state.editingType = type;
     state.editing = item || null;
@@ -548,6 +543,7 @@
 
   function saveItem(data) {
     var cfg = TYPES[state.editingType];
+    if (!cfg) return Promise.reject(new Error('visual_admin_type_disabled'));
     if (cfg.direct) {
       if (state.editing && state.editing.id) return NgoApi.patch(cfg.endpoint + '/' + encodeURIComponent(state.editing.id), data);
       return NgoApi.post(cfg.endpoint, data);
@@ -634,6 +630,10 @@
     }
     if (!state.editing || !state.editing.id) return;
     var cfg = TYPES[state.editingType];
+    if (!cfg) {
+      setError(els.editorError, 'Bu bo\'lim visual admin orqali tahrirlanmaydi.');
+      return;
+    }
     var title = state.editing.title || state.editing.name || state.editing.id;
     if (!confirm('O\'chirishni tasdiqlaysizmi: ' + title + '?')) return;
     lock(els.deleteBtn, true, 'O\'chirilmoqda...');
@@ -685,6 +685,10 @@
   function canUseVisualAdmin(user) {
     var levels = { super_admin: 100, regional_admin: 60, portal_moderator: 40, member_manager: 20, member_user: 10 };
     return !!user && (levels[user.role] || 0) >= levels.regional_admin;
+  }
+
+  function isEditableType(type) {
+    return !!type && !!TYPES[type];
   }
 
   function esc(value) {
