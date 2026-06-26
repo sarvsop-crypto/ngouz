@@ -94,6 +94,7 @@
     els.editorKicker = document.getElementById('editorKicker');
     els.editorError = document.getElementById('editorError');
     els.deleteBtn = document.getElementById('deleteBtn');
+    els.saveBtn = els.form.querySelector('button[type="submit"]');
     els.toast = document.getElementById('toast');
     bind();
     boot();
@@ -227,7 +228,7 @@
       '.va-live-add--floating button{width:44px;height:44px}',
       '.va-generic-editable{outline:1px dashed rgba(14,116,144,.32);outline-offset:3px}',
       '.va-generic-editable:hover{outline-color:#0e7490}',
-      '.va-generic-controls{position:absolute;z-index:9997;left:10px;top:10px;display:flex;gap:6px;pointer-events:auto}',
+      '.va-generic-controls{position:absolute;z-index:9997;left:0;top:-34px;display:flex;gap:6px;pointer-events:auto}',
       '.va-generic-controls button{width:28px;height:28px;border:1px solid rgba(14,116,144,.25);background:#fff;color:#0e7490;border-radius:999px;padding:0;font:900 15px/1 Montserrat,system-ui,sans-serif;box-shadow:0 8px 22px rgba(0,0,0,.14);cursor:pointer}',
       '.va-generic-controls button:last-child{color:#b42318;border-color:rgba(180,35,24,.25)}',
       '.va-generic-add{display:inline-flex;margin:8px 0;vertical-align:middle}',
@@ -407,9 +408,12 @@
     var cfg = TYPES[type];
     state.editingType = type;
     state.editing = item || null;
+    state.visualAction = null;
     els.editorTitle.textContent = item ? cfg.singular + 'ni tahrirlash' : 'Yangi ' + cfg.singular;
     els.editorKicker.textContent = cfg.label;
     els.deleteBtn.style.display = item ? '' : 'none';
+    els.saveBtn.style.display = '';
+    els.form.dataset.mode = item ? 'edit' : 'add';
     setError(els.editorError, '');
     els.fields.innerHTML = cfg.fields.map(function (field) { return fieldHtml(field, item || {}); }).join('');
     els.modal.classList.add('is-open');
@@ -426,13 +430,20 @@
     var item = visualItemFromNode(node, action);
     els.editorTitle.textContent = action === 'add' ? "Kontent qo'shish" : action === 'delete' ? "Blokni o'chirish" : 'Blokni tahrirlash';
     els.editorKicker.textContent = 'Sahifa kontenti';
-    els.deleteBtn.style.display = action === 'edit' ? '' : 'none';
+    els.form.dataset.mode = 'visual-' + action;
+    els.deleteBtn.style.display = action === 'delete' || action === 'edit' ? '' : 'none';
+    els.saveBtn.style.display = action === 'delete' ? 'none' : '';
+    els.deleteBtn.textContent = action === 'delete' ? "O'chirish" : "O'chirish";
     setError(els.editorError, '');
-    els.fields.innerHTML = visualFieldsFor(node, action).map(function (field) { return fieldHtml(field, item); }).join('');
+    if (action === 'delete') {
+      els.fields.innerHTML = deleteConfirmHtml(node);
+    } else {
+      els.fields.innerHTML = visualFieldsFor(node, action).map(function (field) { return fieldHtml(field, item); }).join('');
+      initImagePreview();
+    }
     els.modal.classList.add('is-open');
     els.modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    if (action === 'delete') setTimeout(onDelete, 60);
   }
 
   function visualFieldsFor(node, action) {
@@ -445,10 +456,36 @@
   }
 
   function visualItemFromNode(node, action) {
-    if (action === 'add') return { block_kind: 'paragraph', html: '<p>Yangi matn</p>' };
+    if (action === 'add') return { block_kind: 'paragraph', html: 'Yangi matn' };
     if (node.tagName === 'IMG') return { src: node.getAttribute('src') || '', alt: node.getAttribute('alt') || '' };
-    if (node.tagName === 'A') return { text: node.textContent || '', href: node.getAttribute('href') || '' };
-    return { html: cleanEditorHtml(node.innerHTML) };
+    if (node.tagName === 'A') return { text: cleanNodeText(node), href: node.getAttribute('href') || '' };
+    return { html: cleanNodeHtml(node) };
+  }
+
+  function cleanNodeHtml(node) {
+    var clone = node.cloneNode(true);
+    Array.prototype.forEach.call(clone.querySelectorAll('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add'), function (child) {
+      child.remove();
+    });
+    return cleanEditorHtml(clone.innerHTML).trim();
+  }
+
+  function cleanNodeText(node) {
+    var clone = node.cloneNode(true);
+    Array.prototype.forEach.call(clone.querySelectorAll('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add'), function (child) {
+      child.remove();
+    });
+    return String(clone.textContent || '').trim();
+  }
+
+  function deleteConfirmHtml(node) {
+    var label = node.tagName === 'IMG'
+      ? (node.getAttribute('alt') || node.getAttribute('src') || 'Rasm')
+      : cleanNodeText(node);
+    return '<div class="va-delete-confirm va-field--wide">' +
+      '<strong>Bu blokni o\'chirishni tasdiqlaysizmi?</strong>' +
+      '<p>' + esc(label.slice(0, 220) || 'Tanlangan blok') + '</p>' +
+      '</div>';
   }
 
   function closeEditor() {
@@ -457,6 +494,11 @@
     document.body.style.overflow = '';
     state.editing = null;
     state.editingType = null;
+    state.visualTarget = null;
+    state.visualAction = null;
+    els.form.dataset.mode = '';
+    els.saveBtn.style.display = '';
+    els.deleteBtn.style.display = '';
   }
 
   function fieldHtml(field, item) {
@@ -504,6 +546,10 @@
 
   function onSave(e) {
     e.preventDefault();
+    if (state.editingType === VISUAL_TYPE && state.visualAction === 'delete') {
+      onDelete();
+      return;
+    }
     var data = readEditor();
     if (state.editingType === VISUAL_TYPE) {
       if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href)) {
@@ -605,6 +651,24 @@
       .replace(/\sclass="[^"]*\b(va-live|va-generic)[^"]*"/gi, '')
       .replace(/\sdata-va-[a-z-]+="[^"]*"/gi, '')
       .replace(/<div class="va-[\s\S]*?<\/div>/gi, '');
+  }
+
+  function initImagePreview() {
+    var src = els.form.elements.src;
+    if (!src) return;
+    var label = src.closest('label');
+    if (!label || label.querySelector('.va-image-preview')) return;
+    var preview = document.createElement('div');
+    preview.className = 'va-image-preview';
+    preview.innerHTML = '<img alt="">';
+    label.appendChild(preview);
+    var img = preview.querySelector('img');
+    function update() {
+      img.src = src.value || '';
+      preview.hidden = !src.value;
+    }
+    src.addEventListener('input', update);
+    update();
   }
 
   function visualPageKey() {
