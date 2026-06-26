@@ -6,7 +6,8 @@
     'main h1', 'main h2', 'main h3', 'main h4', 'main p', 'main li',
     'main .card', 'main article.card', 'main article:not([data-va-type])',
     'main img', 'main a.btn', 'main a.social-link',
-    'main .partner-grid', 'main .useful-links-grid',
+    'main .partner-grid', 'main .partner', 'main .useful-links-grid', 'main .useful-link-card',
+    'main .team-grid', 'main .team-card', 'main .leader-card',
     'main .proj-accordion', 'main .proj-item'
   ].join(',');
   var PROTECTED_SELECTOR = [
@@ -79,6 +80,7 @@
       if (patch.alt != null && el.tagName === 'IMG') el.setAttribute('alt', patch.alt);
       if (patch.href != null && el.tagName === 'A') el.setAttribute('href', patch.href);
       if (patch.text != null && el.tagName === 'A') el.textContent = patch.text;
+      if (patch.html != null) el.innerHTML = patch.html;
     }
   }
 

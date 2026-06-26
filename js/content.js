@@ -259,9 +259,10 @@
   function newsCardHTML(n) {
     var url = newsDetailRouteFor(n.category) + '?id=' + encodeURIComponent(n.id);
     var cat = n.category || '';
+    var vaType = String(cat).toLowerCase() === 'nashrlar' ? 'publications' : String(cat).toLowerCase() === 'video' ? 'videos' : 'news';
     var archiveBadge = (n.is_archive === '1' || n.is_archive === 1)
       ? '<span class="gov-news-archive-badge">Arxiv</span>' : '';
-    return '<article class="gov-news-card" data-cat="' + esc(cat) + '" data-va-type="news" data-va-id="' + esc(n.id || '') + '">'
+    return '<article class="gov-news-card" data-cat="' + esc(cat) + '" data-va-type="' + esc(vaType) + '" data-va-id="' + esc(n.id || '') + '">'
       + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
       + '<div class="gov-news-img-inner" style="' + coverStyle(n) + '"></div>'
       + '<div class="gov-news-overlay"></div>' + archiveBadge + '</a>'

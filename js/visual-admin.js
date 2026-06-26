@@ -55,6 +55,36 @@
         area('excerpt', 'Qisqa matn'), area('body', 'Asosiy matn', true, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true), text('cover_image', 'Muqova rasmi path')
       ]
+    },
+    publications: {
+      label: 'Publikatsiyalar',
+      singular: 'publikatsiya',
+      storageType: 'news',
+      category: 'nashrlar',
+      required: ['title', 'date', 'excerpt', 'body'],
+      fields: [
+        text('title', 'Sarlavha', true), text('title_ru', 'Sarlavha RU'), text('title_en', 'Sarlavha EN'),
+        date('date', 'Sana', true), checkbox('featured', 'Muhim publikatsiya'),
+        area('excerpt', 'Qisqa matn', true), area('excerpt_ru', 'Qisqa matn RU'), area('excerpt_en', 'Qisqa matn EN'),
+        area('body', 'Asosiy matn', true, true), area('body_ru', 'Asosiy matn RU', false, true), area('body_en', 'Asosiy matn EN', false, true),
+        file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
+        text('cover_image', 'Muqova rasmi path')
+      ]
+    },
+    videos: {
+      label: 'Videolar',
+      singular: 'video',
+      storageType: 'news',
+      category: 'video',
+      required: ['title', 'date', 'excerpt', 'body'],
+      fields: [
+        text('title', 'Sarlavha', true), text('title_ru', 'Sarlavha RU'), text('title_en', 'Sarlavha EN'),
+        date('date', 'Sana', true), checkbox('featured', 'Muhim video'),
+        area('excerpt', 'Qisqa matn', true), area('excerpt_ru', 'Qisqa matn RU'), area('excerpt_en', 'Qisqa matn EN'),
+        area('body', 'Asosiy matn / video embed', true, true), area('body_ru', 'Asosiy matn RU', false, true), area('body_en', 'Asosiy matn EN', false, true),
+        file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
+        text('cover_image', 'Muqova rasmi path')
+      ]
     }
   };
 
@@ -192,6 +222,7 @@
     assignVisualIds(doc);
     hookFrameNavigation(doc);
     injectGenericBuilderControls(doc);
+    injectStructuredItemControls(doc);
     injectProjectControls(doc);
     injectStructuredAddButtons(doc);
     injectAddButtons(doc);
@@ -246,6 +277,7 @@
       '.va-generic-controls button:last-child{color:#b42318}',
       '.va-generic-controls button:last-child:hover{background:#fff8f7}',
       '.proj-item summary>.va-generic-controls{right:12px;left:auto;top:10px}',
+      '.partner>.va-generic-controls,.useful-link-card>.va-generic-controls,.team-card>.va-generic-controls,.leader-card>.va-generic-controls{right:8px;left:auto;top:8px}',
       '.va-generic-add{display:none}'
     ].join('');
     doc.head.appendChild(style);
@@ -285,6 +317,7 @@
     [
       ['.partner-grid', 'partner', "Hamkor qo'shish"],
       ['.useful-links-grid', 'useful_link', "Havola qo'shish"],
+      ['.team-grid', 'person_card', "Xodim qo'shish"],
       ['.proj-accordion', 'project', "Loyiha qo'shish"]
     ].forEach(function (cfg) {
       Array.prototype.forEach.call(doc.querySelectorAll(cfg[0]), function (target) {
@@ -300,6 +333,32 @@
           openStructuredAdd(target, cfg[1]);
         });
         target.parentNode.insertBefore(wrap, target);
+      });
+    });
+  }
+
+  function injectStructuredItemControls(doc) {
+    [
+      ['.partner', 'partner'],
+      ['.useful-link-card', 'useful_link'],
+      ['.team-card', 'person_card'],
+      ['.leader-card', 'leader_card']
+    ].forEach(function (cfg) {
+      Array.prototype.forEach.call(doc.querySelectorAll(cfg[0]), function (node) {
+        if (node.dataset.vaStructuredInjected) return;
+        node.dataset.vaStructuredInjected = '1';
+        if (!node.getAttribute('data-va-block-id')) node.setAttribute('data-va-block-id', blockId(doc, node));
+        node.classList.add('va-generic-editable');
+        if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
+        var controls = doc.createElement('div');
+        controls.className = 'va-generic-controls';
+        controls.innerHTML = '<button type="button" data-va-structured-edit title="Tahrirlash" aria-label="Tahrirlash">✎</button><button type="button" data-va-structured-delete title="O\'chirish" aria-label="O\'chirish">×</button>';
+        controls.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          openStructuredItemEditor(node, cfg[1], e.target.hasAttribute('data-va-structured-delete') ? 'delete' : 'edit');
+        });
+        node.appendChild(controls);
       });
     });
   }
@@ -332,6 +391,7 @@
     if (!node || !node.matches) return false;
     if (node.closest(PROTECTED_SELECTOR + ',script,style,noscript')) return false;
     if (node.hasAttribute('data-va-type') || node.closest('[data-va-type]')) return false;
+    if (node.closest('.partner,.useful-link-card,.team-card,.leader-card,.proj-item')) return false;
     if (node.id === 'siteFrame') return false;
     var text = String(node.textContent || '').trim();
     if (node.tagName === 'IMG') return !!node.getAttribute('src');
@@ -358,12 +418,13 @@
     var targets = [
       ['#dynamic-news-home', 'news'],
       ['#dynamic-news-page', 'news'],
-      ['#dynamic-publications-page', 'news'],
+      ['#dynamic-publications-page', 'publications'],
       ['#dynamic-events-home', 'events'],
       ['#dynamic-events-page', 'events'],
       ['#dynamic-grants-page', 'grants'],
       ['#dynamic-projects-grants', 'grants'],
-      ['#dynamic-documents-page', 'documents']
+      ['#dynamic-documents-page', 'documents'],
+      ['#dynamic-video-page', 'videos']
     ];
     targets.forEach(function (pair) {
       Array.prototype.forEach.call(doc.querySelectorAll(pair[0]), function (target) {
@@ -433,6 +494,7 @@
     if (!isEditableType(type)) return Promise.reject(new Error('visual_admin_type_disabled'));
     if (state.cache[type]) return Promise.resolve(state.cache[type]);
     var cfg = TYPES[type];
+    var storageType = cfg.storageType || type;
     if (cfg.direct) {
       return NgoApi.get(cfg.endpoint + '?limit=250').then(function (res) {
         state.cache[type] = normalizeItems(res);
@@ -440,10 +502,12 @@
       });
     }
     return new Promise(function (resolve, reject) {
-      AdminCMS.load(type, function (err, items) {
+      AdminCMS.load(storageType, function (err, items) {
         if (err) reject(err);
         else {
-          state.cache[type] = items || [];
+          state.cache[type] = cfg.category
+            ? (items || []).filter(function (item) { return String(item.category || '').toLowerCase() === String(cfg.category).toLowerCase(); })
+            : (items || []);
           resolve(state.cache[type]);
         }
       });
@@ -508,8 +572,8 @@
     state.editing = null;
     state.visualTarget = target;
     state.visualAction = 'add-' + kind;
-    els.editorTitle.textContent = kind === 'partner' ? "Hamkor qo'shish" : kind === 'project' ? "Loyiha qo'shish" : "Foydali havola qo'shish";
-    els.editorKicker.textContent = kind === 'partner' ? 'Hamkorlar' : kind === 'project' ? 'Loyihalar' : 'Foydali havolalar';
+    els.editorTitle.textContent = kind === 'partner' ? "Hamkor qo'shish" : kind === 'project' ? "Loyiha qo'shish" : kind === 'person_card' ? "Xodim qo'shish" : "Foydali havola qo'shish";
+    els.editorKicker.textContent = kind === 'partner' ? 'Hamkorlar' : kind === 'project' ? 'Loyihalar' : kind === 'person_card' ? 'Jamoa / kartalar' : 'Foydali havolalar';
     els.form.dataset.mode = 'visual-add-' + kind;
     els.deleteBtn.style.display = 'none';
     els.saveBtn.style.display = '';
@@ -524,6 +588,7 @@
   function structuredDefaults(kind) {
     if (kind === 'partner') return { name: '', href: '', src: '', alt: '' };
     if (kind === 'useful_link') return { title: '', href: '', icon_src: 'img/emblem-uz.svg', icon_alt: "O'zbekiston gerbi" };
+    if (kind === 'person_card') return { name: '', role: '', region: '', email: '', photo: '' };
     if (kind === 'project') return { status: 'rejadagi', title: '', body: '' };
     return {};
   }
@@ -549,7 +614,101 @@
     if (kind === 'project') {
       return projectFields();
     }
+    if (kind === 'person_card' || kind === 'leader_card') {
+      return personFields(kind === 'leader_card');
+    }
     return [];
+  }
+
+  function openStructuredItemEditor(node, kind, action) {
+    state.editingType = VISUAL_TYPE;
+    state.editing = null;
+    state.visualTarget = node;
+    state.visualAction = action + '-' + kind;
+    els.editorTitle.textContent = action === 'delete' ? itemDeleteTitle(kind) : itemEditTitle(kind);
+    els.editorKicker.textContent = itemKicker(kind);
+    els.form.dataset.mode = 'visual-' + state.visualAction;
+    els.deleteBtn.style.display = action === 'delete' || action === 'edit' ? '' : 'none';
+    els.saveBtn.style.display = action === 'delete' ? 'none' : '';
+    setError(els.editorError, '');
+    els.fields.innerHTML = action === 'delete'
+      ? deleteConfirmHtml(node)
+      : fieldsForStructuredItem(kind).map(function (field) { return fieldHtml(field, structuredItemFromNode(node, kind)); }).join('');
+    els.modal.classList.add('is-open');
+    els.modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    initImagePreview();
+  }
+
+  function itemEditTitle(kind) {
+    if (kind === 'partner') return 'Hamkorni tahrirlash';
+    if (kind === 'useful_link') return 'Foydali havolani tahrirlash';
+    if (kind === 'leader_card') return 'Rahbar kartasini tahrirlash';
+    return 'Xodim kartasini tahrirlash';
+  }
+
+  function itemDeleteTitle(kind) {
+    if (kind === 'partner') return "Hamkorni o'chirish";
+    if (kind === 'useful_link') return "Foydali havolani o'chirish";
+    if (kind === 'leader_card') return "Rahbar kartasini o'chirish";
+    return "Xodim kartasini o'chirish";
+  }
+
+  function itemKicker(kind) {
+    if (kind === 'partner') return 'Hamkorlar';
+    if (kind === 'useful_link') return 'Foydali havolalar';
+    if (kind === 'leader_card') return 'Rahbariyat';
+    return 'Jamoa / kartalar';
+  }
+
+  function fieldsForStructuredItem(kind) {
+    if (kind === 'partner') return structuredFieldsFor('partner');
+    if (kind === 'useful_link') return structuredFieldsFor('useful_link');
+    return personFields(kind === 'leader_card');
+  }
+
+  function personFields(isLeader) {
+    return [
+      file('photo_file', 'Rasm yuklash', 'image/*', true),
+      text('photo', 'Rasm manzili', false, true),
+      text('name', 'Ism-familiya', true, true),
+      text('role', 'Lavozim', true, true),
+      text('region', 'Hudud', false, true),
+      text('email', 'Email', false, true),
+      isLeader ? area('bio', 'Biografiya', false, true) : text('meta', "Qo'shimcha ma'lumot", false, true)
+    ];
+  }
+
+  function structuredItemFromNode(node, kind) {
+    if (kind === 'partner') {
+      var pImg = node.querySelector('img');
+      var pLink = node.matches('a[href]') ? node : node.querySelector('a[href]');
+      return {
+        src: pImg ? pImg.getAttribute('src') || '' : '',
+        name: pImg ? pImg.getAttribute('alt') || '' : cleanNodeText(node),
+        href: pLink ? pLink.getAttribute('href') || '' : ''
+      };
+    }
+    if (kind === 'useful_link') {
+      var icon = node.querySelector('img');
+      return {
+        title: cleanNodeText(node.querySelector('h3') || node),
+        href: node.getAttribute('href') || '',
+        icon_src: icon ? icon.getAttribute('src') || '' : 'img/emblem-uz.svg',
+        icon_alt: icon ? icon.getAttribute('alt') || '' : ''
+      };
+    }
+    var img = node.querySelector('img');
+    var email = node.querySelector('a[href^="mailto:"]');
+    return {
+      photo: img ? img.getAttribute('src') || '' : '',
+      name: cleanNodeText(node.querySelector('h2,h3,.leader-name') || node),
+      role: cleanNodeText(node.querySelector('.team-role,.leader-role') || ''),
+      region: cleanNodeText(node.querySelector('.team-region') || ''),
+      email: email ? (email.getAttribute('href') || '').replace(/^mailto:/i, '') : '',
+      meta: cleanNodeText(node.querySelector('.team-meta') || ''),
+      bio: cleanNodeText(node.querySelector('.leader-expand-body') || '')
+    };
   }
 
   function openProjectEditor(node, action) {
@@ -717,11 +876,15 @@
         setError(els.editorError, 'Havola nomi va URL majburiy.');
         return;
       }
+      if ((state.visualAction === 'add-person_card' || state.visualAction === 'edit-person_card' || state.visualAction === 'edit-leader_card') && (!data.name || !data.role)) {
+        setError(els.editorError, 'Ism-familiya va lavozim majburiy.');
+        return;
+      }
       if ((state.visualAction === 'add-project' || state.visualAction === 'edit-project') && (!data.title || !data.body)) {
         setError(els.editorError, 'Loyiha nomi va tavsifi majburiy.');
         return;
       }
-      if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href || data.file || data.title || data.body)) {
+      if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href || data.file || data.title || data.body || data.name || data.role)) {
         setError(els.editorError, 'Kontent bo\'sh bo\'lmasligi kerak.');
         return;
       }
@@ -759,12 +922,14 @@
   function saveItem(data) {
     var cfg = TYPES[state.editingType];
     if (!cfg) return Promise.reject(new Error('visual_admin_type_disabled'));
+    var storageType = cfg.storageType || state.editingType;
+    if (cfg.category) data.category = cfg.category;
     if (cfg.direct) {
       if (state.editing && state.editing.id) return NgoApi.patch(cfg.endpoint + '/' + encodeURIComponent(state.editing.id), data);
       return NgoApi.post(cfg.endpoint, data);
     }
-    if (state.editing && state.editing.id) return AdminCMS.update(state.editingType, state.editing.id, data);
-    return AdminCMS.create(state.editingType, data);
+    if (state.editing && state.editing.id) return AdminCMS.update(storageType, state.editing.id, data);
+    return AdminCMS.create(storageType, data);
   }
 
   function prepareItemData(data) {
@@ -787,6 +952,9 @@
     }
     if (data.icon_file) {
       tasks.push(uploadVisualImage(data.icon_file).then(function (res) { data.icon_src = uploadResultUrl(res); data.icon_file = null; }));
+    }
+    if (data.photo_file) {
+      tasks.push(uploadVisualImage(data.photo_file).then(function (res) { data.photo = uploadResultUrl(res); data.photo_file = null; }));
     }
     if (!tasks.length) return Promise.resolve(data);
     return Promise.all(tasks).then(function () { return data; });
@@ -816,7 +984,7 @@
     var node = state.visualTarget;
     var id = node && node.getAttribute('data-va-block-id');
     var patch = { id: id, kind: (node && node.tagName || '').toLowerCase(), action: 'html' };
-    if (state.visualAction === 'delete' || state.visualAction === 'delete-project') {
+    if (state.visualAction === 'delete' || state.visualAction === 'delete-project' || /^delete-/.test(state.visualAction || '')) {
       patch.action = 'delete';
     } else if (state.visualAction === 'add-partner') {
       patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
@@ -832,6 +1000,30 @@
       patch.targetId = id;
       patch.position = 'append';
       patch.html = buildUsefulLinkHtml(data);
+    } else if (state.visualAction === 'edit-partner') {
+      patch.kind = 'partner';
+      patch.action = 'html';
+      patch.html = buildPartnerInnerHtml(data);
+    } else if (state.visualAction === 'edit-useful_link') {
+      patch.kind = 'useful_link';
+      patch.action = 'attrs';
+      patch.href = data.href || '';
+      patch.html = buildUsefulLinkInnerHtml(data);
+    } else if (state.visualAction === 'add-person_card') {
+      patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
+      patch.kind = 'person_card';
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'append';
+      patch.html = buildPersonCardHtml(data);
+    } else if (state.visualAction === 'edit-person_card') {
+      patch.kind = 'person_card';
+      patch.action = 'html';
+      patch.html = buildPersonCardInnerHtml(data);
+    } else if (state.visualAction === 'edit-leader_card') {
+      patch.kind = 'leader_card';
+      patch.action = 'html';
+      patch.html = buildLeaderCardInnerHtml(data);
     } else if (state.visualAction === 'add-project') {
       patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
       patch.kind = 'project';
@@ -877,22 +1069,64 @@
   }
 
   function buildPartnerHtml(data) {
+    return '<div class="partner">' + buildPartnerInnerHtml(data) + '</div>';
+  }
+
+  function buildPartnerInnerHtml(data) {
     var name = String(data.name || data.alt || '').trim();
     var src = String(data.src || '').trim();
     var href = String(data.href || '').trim();
     var img = '<img alt="' + escAttr(name || 'Hamkor') + '" loading="lazy" src="' + escAttr(src) + '" decoding="async" width="160" height="56">';
-    var body = href ? '<a href="' + escAttr(href) + '" target="_blank" rel="noopener noreferrer">' + img + '</a>' : img;
-    return '<div class="partner">' + body + '</div>';
+    return href ? '<a href="' + escAttr(href) + '" target="_blank" rel="noopener noreferrer">' + img + '</a>' : img;
   }
 
   function buildUsefulLinkHtml(data) {
-    var title = String(data.title || '').trim();
     var href = String(data.href || '').trim();
+    return '<a class="useful-link-card" href="' + escAttr(href) + '" target="_blank" rel="noopener noreferrer">' + buildUsefulLinkInnerHtml(data) + '</a>';
+  }
+
+  function buildUsefulLinkInnerHtml(data) {
+    var title = String(data.title || '').trim();
     var icon = String(data.icon_src || 'img/emblem-uz.svg').trim();
     var alt = String(data.icon_alt || title || 'Havola').trim();
-    return '<a class="useful-link-card" href="' + escAttr(href) + '" target="_blank" rel="noopener noreferrer">' +
-      '<img class="ul-icon" src="' + escAttr(icon) + '" alt="' + escAttr(alt) + '" loading="lazy" decoding="async" width="18" height="18">' +
-      '<h3>' + esc(title) + '</h3></a>';
+    return '<img class="ul-icon" src="' + escAttr(icon) + '" alt="' + escAttr(alt) + '" loading="lazy" decoding="async" width="18" height="18">' +
+      '<h3>' + esc(title) + '</h3>';
+  }
+
+  function buildPersonCardHtml(data) {
+    return '<article class="team-card">' + buildPersonCardInnerHtml(data) + '</article>';
+  }
+
+  function buildPersonCardInnerHtml(data) {
+    var photo = String(data.photo || '').trim();
+    var name = String(data.name || '').trim();
+    var role = String(data.role || '').trim();
+    var region = String(data.region || '').trim();
+    var email = String(data.email || '').trim();
+    var meta = String(data.meta || '').trim();
+    return '<div class="team-photo">' + (photo ? '<img src="' + escAttr(photo) + '" alt="' + escAttr(name) + '" loading="lazy" decoding="async" width="130" height="130">' : '') + '</div>' +
+      '<h3>' + esc(name) + '</h3>' +
+      '<p class="team-role">' + esc(role) + '</p>' +
+      (region ? '<p class="team-region">' + esc(region) + '</p>' : '') +
+      '<div class="team-meta">' +
+      (email ? '<span>Email: <a href="mailto:' + escAttr(email) + '">' + esc(email) + '</a></span>' : '') +
+      (meta ? '<span>' + esc(meta) + '</span>' : '') +
+      '</div>';
+  }
+
+  function buildLeaderCardInnerHtml(data) {
+    var photo = String(data.photo || '').trim();
+    var name = String(data.name || '').trim();
+    var role = String(data.role || '').trim();
+    var email = String(data.email || '').trim();
+    var bio = String(data.bio || '').trim();
+    var safeId = 'leader-bio-' + Math.random().toString(36).slice(2, 8);
+    return '<div class="leader-card-body"><div class="leader-photo">' +
+      (photo ? '<img src="' + escAttr(photo) + '" alt="' + escAttr(name) + '" loading="lazy" decoding="async" width="768" height="768">' : '') +
+      '</div><div class="leader-center"><h2 class="leader-name">' + esc(name) + '</h2><p class="leader-role">' + esc(role) + '</p>' +
+      '<div class="leader-btns"><button type="button" class="leader-btn" data-target="' + safeId + '" aria-expanded="false" aria-controls="' + safeId + '">Biografiya</button></div></div>' +
+      '<div class="leader-contacts-col">' + (email ? '<a class="leader-contact-item" href="mailto:' + escAttr(email) + '">' + esc(email) + '</a>' : '') + '</div></div>' +
+      '<div class="leader-expand-body" id="' + safeId + '"><p>' + esc(bio || "Biografiya: Ma'lumot yaqin kunda qo'shiladi.") + '</p></div>';
   }
 
   function buildProjectHtml(data) {
@@ -929,8 +1163,8 @@
   }
 
   function initImagePreview() {
-    var src = els.form.elements.src || els.form.elements.icon_src;
-    var fileInput = els.form.elements.file || els.form.elements.logo_file || els.form.elements.icon_file;
+    var src = els.form.elements.src || els.form.elements.icon_src || els.form.elements.photo;
+    var fileInput = els.form.elements.file || els.form.elements.logo_file || els.form.elements.icon_file || els.form.elements.photo_file;
     if (!src && !fileInput) return;
     var label = (src && src.closest('label')) || (fileInput && fileInput.closest('label'));
     if (!label || label.querySelector('.va-image-preview')) return;
@@ -971,6 +1205,7 @@
       if (!state.visualTarget) return;
       if (!confirm('Bu blokni o\'chirishni tasdiqlaysizmi?')) return;
       lock(els.deleteBtn, true, 'O\'chirilmoqda...');
+      if (state.visualAction !== 'delete' && !/^delete-/.test(state.visualAction || '')) state.visualAction = 'delete';
       saveVisualPatch({}).then(function () {
         toast('O\'chirildi');
         closeEditor();
