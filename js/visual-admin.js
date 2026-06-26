@@ -218,23 +218,27 @@
     var style = doc.createElement('style');
     style.id = 'va-live-style';
     style.textContent = [
-      '.va-live-editable{outline:2px solid rgba(15,106,87,.38);outline-offset:4px}',
-      '.va-live-editable:hover{outline-color:#0f6a57}',
-      '.va-live-controls{position:absolute;z-index:9999;right:10px;top:10px;display:flex;gap:6px;pointer-events:auto}',
-      '.va-live-controls button,.va-live-add button{width:32px;height:32px;border:1px solid rgba(15,106,87,.28);background:#fff;color:#0f6a57;border-radius:999px;padding:0;font:900 18px/1 Montserrat,system-ui,sans-serif;box-shadow:0 8px 22px rgba(0,0,0,.16);cursor:pointer}',
-      '.va-live-controls button:last-child{color:#b42318;border-color:rgba(180,35,24,.28)}',
+      '.va-live-editable{outline:1px solid rgba(14,116,144,.42);outline-offset:5px}',
+      '.va-live-editable:hover{outline-color:#0e7490}',
+      '.va-live-controls{position:absolute;z-index:9999;right:10px;top:-38px;display:flex;gap:4px;padding:4px;border:1px solid #e4e7e7;background:rgba(255,255,255,.96);box-shadow:0 3px 6px rgba(100,100,100,.2);border-radius:8px;pointer-events:auto}',
+      '.va-live-controls button,.va-live-add button{width:30px;height:30px;border:1px solid transparent;background:#fff;color:#023347;border-radius:6px;padding:0;font:800 15px/1 Montserrat,system-ui,sans-serif;cursor:pointer}',
+      '.va-live-controls button:hover{background:#E8F5FB;color:#023347}',
+      '.va-live-controls button:last-child{color:#b42318}',
+      '.va-live-controls button:last-child:hover{background:#fff8f7}',
       '.va-live-add{position:relative;z-index:9998;display:flex;justify-content:flex-end;margin:0 0 10px;pointer-events:auto}',
-      '.va-live-add button{width:38px;height:38px;background:#0f6a57;color:#fff;border-color:#0f6a57;font-size:24px}',
+      '.va-live-add button{width:36px;height:36px;background:#023347;color:#fff;border-color:#023347;border-radius:8px;font-size:22px;box-shadow:0 3px 6px rgba(100,100,100,.2)}',
       '.va-live-add--floating{position:fixed;right:18px;bottom:18px;z-index:10000;margin:0}',
       '.va-live-add--floating button{width:44px;height:44px}',
-      '.va-generic-editable{outline:1px dashed rgba(14,116,144,.32);outline-offset:3px}',
+      '.va-generic-editable{outline:1px dashed rgba(14,116,144,.34);outline-offset:5px}',
       '.va-generic-editable:hover{outline-color:#0e7490}',
-      '.va-generic-controls{position:absolute;z-index:9997;left:0;top:-34px;display:flex;gap:6px;pointer-events:auto}',
+      '.va-generic-controls{position:absolute;z-index:9997;left:0;top:-38px;display:flex;gap:4px;padding:4px;border:1px solid #e4e7e7;background:rgba(255,255,255,.96);box-shadow:0 3px 6px rgba(100,100,100,.2);border-radius:8px;pointer-events:auto}',
       '.va-generic-controls--image{left:auto;right:0}',
-      '.va-generic-controls button{width:28px;height:28px;border:1px solid rgba(14,116,144,.25);background:#fff;color:#0e7490;border-radius:999px;padding:0;font:900 15px/1 Montserrat,system-ui,sans-serif;box-shadow:0 8px 22px rgba(0,0,0,.14);cursor:pointer}',
-      '.va-generic-controls button:last-child{color:#b42318;border-color:rgba(180,35,24,.25)}',
+      '.va-generic-controls button{width:28px;height:28px;border:1px solid transparent;background:#fff;color:#023347;border-radius:6px;padding:0;font:800 14px/1 Montserrat,system-ui,sans-serif;cursor:pointer}',
+      '.va-generic-controls button:hover{background:#E8F5FB}',
+      '.va-generic-controls button:last-child{color:#b42318}',
+      '.va-generic-controls button:last-child:hover{background:#fff8f7}',
       '.va-generic-add{display:inline-flex;margin:8px 0;vertical-align:middle}',
-      '.va-generic-add button{width:30px;height:30px;border:1px solid #0f6a57;background:#0f6a57;color:#fff;border-radius:999px;padding:0;font:900 20px/1 Montserrat,system-ui,sans-serif;box-shadow:0 8px 22px rgba(0,0,0,.14);cursor:pointer}'
+      '.va-generic-add button{width:32px;height:32px;border:1px solid #023347;background:#023347;color:#fff;border-radius:8px;padding:0;font:800 20px/1 Montserrat,system-ui,sans-serif;box-shadow:0 3px 6px rgba(100,100,100,.2);cursor:pointer}'
     ].join('');
     doc.head.appendChild(style);
   }
