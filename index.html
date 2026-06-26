@@ -92,7 +92,7 @@
 <link crossorigin="" href="https://unpkg.com" rel="preconnect"/>
 <link crossorigin="" href="https://ngo-api-proxy.sarvsop.workers.dev" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="css/style.css?v=32" rel="stylesheet">
+<link href="css/style.css?v=33" rel="stylesheet">
 <script src="js/errlog.js" defer></script>
 <script src="js/sw-register.js" defer></script>
 <script src="js/dropdown.js" defer></script>
@@ -1063,17 +1063,6 @@ function memSubmit(e) {
     fail('Tarmoq xatosi. Internet aloqangizni tekshiring.');
   });
 }
-// Close modal on overlay click. Use replaceState to avoid leaving a
-// stray "#" in the URL — matches close() in js/membership-modal.js.
-document.querySelector('.membership-overlay').addEventListener('click', function(e) {
-  if (e.target !== this) return;
-  if (history.replaceState) {
-    history.replaceState(null, '', location.pathname + location.search);
-    window.dispatchEvent(new HashChangeEvent('hashchange'));
-  } else {
-    location.hash = '';
-  }
-});
 </script>
 
 <div class="search-overlay" id="searchOverlay" role="dialog" data-i18n-aria-label="search.modalAria" aria-label="Qidirish" aria-modal="true" aria-hidden="true">

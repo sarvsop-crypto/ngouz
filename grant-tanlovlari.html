@@ -66,7 +66,7 @@
 <link crossorigin="" href="https://unpkg.com" rel="preconnect"/>
 <link crossorigin="" href="https://ngo-api-proxy.sarvsop.workers.dev" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="css/style.css?v=32" rel="stylesheet">
+<link href="css/style.css?v=33" rel="stylesheet">
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 <style>
   :root {
@@ -345,7 +345,7 @@
   var resultsEl = document.getElementById('grantsResults');
 
   var LABELS = {
-    uz: { thinking: 'O\'ylayapman', retry: 'Server band, qayta urinilmoqda...', netErr: 'Tarmoq xatoligi: ', srv: 'Server xatoligi', deadline: 'Muddat: ', open: 'Rasmiy sahifa', noTs: 'Turnstile hali tayyor emas, bir necha soniyadan so\'ng qayta urinib ko\'ring.', empty: 'Iltimos savolingizni kiriting.', btnLoading: 'Qidirilmoqda...' },
+    uz: { thinking: 'O\'ylayapman', retry: 'Server band, qayta urinilmoqda...', netErr: 'Tarmoq xatoligi. Internet aloqangizni tekshirib, qayta urinib ko\'ring.', srv: 'Grant qidiruv hozircha javob bermayapti. Birozdan keyin qayta urinib ko\'ring.', deadline: 'Muddat: ', open: 'Rasmiy sahifa', noTs: 'Turnstile hali tayyor emas, bir necha soniyadan so\'ng qayta urinib ko\'ring.', empty: 'Iltimos savolingizni kiriting.', btnLoading: 'Qidirilmoqda...' },
     ru: { deadline: 'Срок: ', open: 'Источник' },
     en: { deadline: 'Deadline: ', open: 'Source' },
   };
@@ -378,6 +378,14 @@
   function setStatus(msg, isErr) {
     statusEl.textContent = msg || '';
     statusEl.className = 'grants-ai__status' + (isErr ? ' error' : '');
+  }
+
+  function userErrorMessage(data, status) {
+    if (data && data.message_uz) return data.message_uz;
+    if (status === 429) return 'So\'rovlar soni vaqtincha cheklangan. Birozdan keyin qayta urinib ko\'ring.';
+    if (status === 403 || status === 401) return 'Xavfsizlik tekshiruvi yakunlanmadi. Sahifani yangilab, qayta urinib ko\'ring.';
+    if (status >= 500 || (data && (data.error === 'server_error' || data.stage))) return LABELS.uz.srv;
+    return LABELS.uz.srv;
   }
 
   function getTsToken() {
@@ -461,7 +469,7 @@
           // error, etc). Showing 300 chars of raw HTML to a Uzbek user
           // looking for grants was confusing — just give a clean
           // status code + retry hint.
-          setStatus('Server xatoligi (kod ' + resp.status + '). Birozdan keyin qayta urinib ko\'ring.', true);
+          setStatus(LABELS.uz.srv, true);
           resetTurnstile();
           submitBtn.disabled = false;
           setSubmitLoading(false);
@@ -475,8 +483,7 @@
         }
 
         if (!resp.ok || data.error) {
-          var msg = data.message_uz || data.message_en || [data.error, data.stage, data.message].filter(Boolean).join(' · ') || LABELS.uz.srv;
-          setStatus(msg, true);
+          setStatus(userErrorMessage(data, resp.status), true);
           resetTurnstile();
           submitBtn.disabled = false;
           setSubmitLoading(false);
@@ -489,7 +496,7 @@
         submitBtn.disabled = false;
         setSubmitLoading(false);
       } catch (err) {
-        setStatus(LABELS.uz.netErr + (err && err.message || err), true);
+        setStatus(LABELS.uz.netErr, true);
         resetTurnstile();
         submitBtn.disabled = false;
         setSubmitLoading(false);

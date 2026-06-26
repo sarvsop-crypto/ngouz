@@ -58,7 +58,7 @@
 <link crossorigin="" href="https://unpkg.com" rel="preconnect"/>
 <link crossorigin="" href="https://ngo-api-proxy.sarvsop.workers.dev" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<link href="css/style.css?v=32" rel="stylesheet"/>
+<link href="css/style.css?v=33" rel="stylesheet"/>
 <link href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" rel="stylesheet" integrity="sha384-6p9AefaqUhEVheRlj1mpAkbngHXy9mbYMrIdcIt4Jlc9lOLIablJq3bBsLOjGwZ7" crossorigin="anonymous"/>
 <style>
   /* ── Stats ── */
@@ -609,8 +609,8 @@ var REGION_NAMES = {
   'respublika': 'Respublika ahamiyatiga ega', 'other': 'Boshqa'
 };
 
-function loadAllOrgs(offset, all, cb) {
-  fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?limit=200&offset=' + offset)
+function fetchOrgPage(offset) {
+  return fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?limit=200&offset=' + offset)
     .then(function(r) {
       // Without this, a 502 with HTML body rejected in r.json() and
       // we landed in .catch() with whatever was loaded — first-page
@@ -619,16 +619,36 @@ function loadAllOrgs(offset, all, cb) {
       // truncated the registry to a partial list with no signal.
       if (!r.ok) { var e = new Error('http_' + r.status); e.status = r.status; throw e; }
       return r.json();
-    })
-    .then(function(d) {
-      all = all.concat(d.items || []);
-      if (all.length < d.total) { loadAllOrgs(offset + 200, all, cb); }
-      else { cb(all, true); }
-    })
-    .catch(function() { cb(all, false); });
+    });
 }
 
-loadAllOrgs(0, [], function(orgs, ok) {
+function loadAllOrgs(cb) {
+  fetchOrgPage(0)
+    .then(function(first) {
+      var firstItems = first.items || [];
+      var total = Number(first.total || firstItems.length || 0);
+      if (firstItems.length >= total) {
+        cb(firstItems, true);
+        return;
+      }
+      var requests = [];
+      for (var offset = 200; offset < total; offset += 200) {
+        requests.push(fetchOrgPage(offset));
+      }
+      Promise.all(requests).then(function(pages) {
+        var all = firstItems.slice();
+        pages.forEach(function(page) {
+          all = all.concat(page.items || []);
+        });
+        cb(all, all.length >= total);
+      }).catch(function() {
+        cb(firstItems, false);
+      });
+    })
+    .catch(function() { cb([], false); });
+}
+
+loadAllOrgs(function(orgs, ok) {
   // Stash failure state for initNntPage to surface — empty registry
   // with ok===false is "API down", not "no NNTs in DB".
   window._nntLoadFailed = !ok;

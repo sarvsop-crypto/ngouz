@@ -93,7 +93,7 @@
   }
 
   function coverStyle(item) {
-    var img = mediaUrl(item.cover_image);
+    var img = mediaUrl(item.cover_image || item.cover_image_url || item.cover_url);
     if (img) {
       // url() argument lives in a CSS string literal that lands in
       // a style attribute. encodeURIComponent already covers the
@@ -185,6 +185,64 @@
     return text.split(/\n\n+/).map(function (p) {
       return '<p>' + linkifyEscaped(esc(p).replace(/\n/g, '<br>')) + '</p>';
     }).join('');
+  }
+
+  function sanitizeArticleHTML(html) {
+    if (!html) return '';
+    var allowed = {
+      A: ['href', 'title', 'target', 'rel'],
+      B: [], STRONG: [], I: [], EM: [], U: [], BR: [],
+      P: [], DIV: [], SPAN: [],
+      UL: [], OL: [], LI: [],
+      H2: [], H3: [], H4: [],
+      BLOCKQUOTE: []
+    };
+    var template = document.createElement('template');
+    template.innerHTML = String(html);
+    function clean(node) {
+      Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+        if (child.nodeType === 1) {
+          var tag = child.tagName;
+          if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'TEMPLATE') {
+            child.parentNode.removeChild(child);
+            return;
+          }
+          if (!allowed[tag]) {
+            var frag = document.createDocumentFragment();
+            while (child.firstChild) frag.appendChild(child.firstChild);
+            child.parentNode.replaceChild(frag, child);
+            clean(node);
+            return;
+          }
+          Array.prototype.slice.call(child.attributes).forEach(function (attr) {
+            var name = attr.name.toLowerCase();
+            var value = attr.value || '';
+            if (name.indexOf('on') === 0 || name === 'style' || allowed[tag].indexOf(attr.name) === -1) {
+              child.removeAttribute(attr.name);
+              return;
+            }
+            if (tag === 'A' && name === 'href' && !/^(https?:|mailto:|tel:|\/|#)/i.test(value.trim())) {
+              child.removeAttribute(attr.name);
+            }
+          });
+          if (tag === 'A') {
+            child.setAttribute('rel', 'noopener noreferrer');
+            if (!child.getAttribute('target')) child.setAttribute('target', '_blank');
+          }
+          clean(child);
+        } else if (child.nodeType !== 3) {
+          child.parentNode.removeChild(child);
+        }
+      });
+    }
+    clean(template.content);
+    return template.innerHTML;
+  }
+
+  function renderArticleBody(item, bodyBase, fallbackBase) {
+    var html = tField(item, bodyBase + '_html') || item[bodyBase + '_html'];
+    if (html) return sanitizeArticleHTML(html);
+    return bodyToHTML(tField(item, bodyBase) || tField(item, fallbackBase));
   }
 
   /* ── News ─────────────────────────────────────────────────── */
@@ -511,7 +569,7 @@
       + '<h1 class="detail-title">' + esc(tField(item,'title')) + '</h1>'
       + '<p class="detail-meta"><time datetime="' + esc(_datePart(item.date) || '') + '">' + fmtDate(item.date) + '</time><span class="detail-meta-sep">/</span><a href="' + listRoute + '">' + esc(cat) + '</a></p>'
       + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
-      + '<div class="detail-body">' + bodyToHTML(tField(item, 'body') || tField(item, 'excerpt')) + '</div>'
+      + '<div class="detail-body">' + renderArticleBody(item, 'body', 'excerpt') + '</div>'
       + '<div class="detail-tags"><a href="' + listRoute + '" class="detail-tag">' + esc(cat) + '</a></div>'
       + shareButtons(pageUrl, item.title)
       + '</div>'

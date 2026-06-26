@@ -3,8 +3,10 @@
  * CSS-`:target` membership modal on index.html.
  *
  * The modal is opened by anchor links with href="#membership-modal"
- * and closed by anchors that clear the hash. CSS handles the show/hide
- * via `.membership-overlay:target`. This script adds:
+ * and closed by anchors that clear the hash. Visibility is driven by a
+ * JS-toggled `.is-open` class on the overlay, not CSS `:target`, because
+ * close() clears the hash via replaceState and replaceState does not
+ * re-evaluate `:target`. This script adds:
  *
  * - Focus moves into the modal when it opens (first focusable element).
  * - Tab/Shift+Tab cycle within the modal (focus trap, since
@@ -59,6 +61,7 @@
     // readers acknowledge the now-visible dialog. Without this AT
     // saw the form fields whether the modal was open or closed.
     modal.setAttribute('aria-hidden', 'false');
+    modal.classList.add('is-open');
     document.documentElement.classList.add('is-modal-open');
     setTriggersExpanded(true);
     var f = focusables();
@@ -71,6 +74,7 @@
 
   function onClose() {
     modal.setAttribute('aria-hidden', 'true');
+    modal.classList.remove('is-open');
     document.documentElement.classList.remove('is-modal-open');
     setTriggersExpanded(false);
     try {
@@ -130,6 +134,11 @@
   // entry into history. Without this, pressing back after close
   // re-opened the modal and the URL kept a stray "#".
   modal.addEventListener('click', function (ev) {
+    if (ev.target === modal) {
+      ev.preventDefault();
+      close();
+      return;
+    }
     var closeEl = ev.target && ev.target.closest && ev.target.closest('.membership-close, [data-modal-dismiss]');
     if (!closeEl) return;
     ev.preventDefault();
