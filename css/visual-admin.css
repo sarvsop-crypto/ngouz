@@ -110,6 +110,8 @@ input:focus, textarea:focus, select:focus { border-color: var(--va-teal); box-sh
   background: #fff;
 }
 .va-site__frame {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   display: block;
