@@ -1008,7 +1008,7 @@
     // on the page. Update all [data-live-stat="member-orgs"] elements and
     // announce the number so the growth chart card derives its 2025 point +
     // headline stats from it instead of its own hardcoded figures. The
-    // hardcoded fallbacks across the page are kept equal to this (2360).
+    // hardcoded fallbacks across the page are kept equal to this (2381).
     var liveOrgEls = document.querySelectorAll('[data-live-stat="member-orgs"]');
     fetchWithTimeout(API_BASE + 'organizations?limit=1')
       .then(function (r) { return r.json(); })
@@ -1019,7 +1019,7 @@
         window.__ngoMemberTotal = d.total;
         try { window.dispatchEvent(new CustomEvent('ngo:member-total', { detail: d.total })); } catch (e) {}
       })
-      .catch(function () { /* keep hardcoded fallback (kept in sync at 2360) */ });
+      .catch(function () { /* keep hardcoded fallback (kept in sync at 2381) */ });
 
     // Hero stat: total events held (past). Compute as totalEvents -
     // upcomingEvents via two cheap 1-row requests. Hardcoded fallback

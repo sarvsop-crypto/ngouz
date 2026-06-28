@@ -497,7 +497,7 @@
 
   <!-- Stats -->
   <div class="nnt-stats" aria-live="polite">
-    <div class="nnt-stat"><strong id="nntStatTotal">2361</strong><span data-i18n="pages.nntlar.statsTotal">Jami a'zo NNTlar</span></div>
+    <div class="nnt-stat"><strong id="nntStatTotal">2381</strong><span data-i18n="pages.nntlar.statsTotal">Jami a'zo NNTlar</span></div>
     <div class="nnt-stat"><strong id="nntStatRegions">14</strong><span data-i18n="pages.nntlar.statsRegions">Hududlar</span></div>
     <div class="nnt-stat"><strong id="nntStatSohas">18</strong><span data-i18n="pages.nntlar.statsSohas">Faoliyat sohalari</span></div>
     <div class="nnt-stat"><strong id="nntStatYear">2026</strong><span data-i18n="pages.nntlar.statsYear">Ro'yxat yangilangan</span></div>
@@ -628,7 +628,7 @@ function loadAllOrgs(cb) {
       var firstItems = first.items || [];
       var total = Number(first.total || firstItems.length || 0);
       if (firstItems.length >= total) {
-        cb(firstItems, true);
+        cb(firstItems, true, total);
         return;
       }
       var requests = [];
@@ -640,19 +640,20 @@ function loadAllOrgs(cb) {
         pages.forEach(function(page) {
           all = all.concat(page.items || []);
         });
-        cb(all, all.length >= total);
+        cb(all, all.length >= total, total);
       }).catch(function() {
-        cb(firstItems, false);
+        cb(firstItems, false, total);
       });
     })
-    .catch(function() { cb([], false); });
+    .catch(function() { cb([], false, null); });
 }
 
-loadAllOrgs(function(orgs, ok) {
+loadAllOrgs(function(orgs, ok, total) {
   // Stash failure state for initNntPage to surface — empty registry
   // with ok===false is "API down", not "no NNTs in DB".
   window._nntLoadFailed = !ok;
   window._nntPartial = !ok && orgs.length > 0;
+  window._nntApiTotal = typeof total === 'number' ? total : null;
   orgs.forEach(function(o) {
     var regionName = REGION_NAMES[o.region_code] || o.region_code || 'Boshqa';
     if (!NNT_DATA[regionName]) NNT_DATA[regionName] = [];
@@ -728,7 +729,7 @@ Object.keys(NNT_DATA).forEach(function(reg) {
   });
 });
 
-/* ── populate stat chips with real counts (was hardcoded 2361/14/18/2025
+/* ── populate stat chips with real counts (was hardcoded fallbacks
    even when the API returned different numbers, so the page lied
    whenever new orgs were added). ── */
 (function () {
@@ -736,7 +737,7 @@ Object.keys(NNT_DATA).forEach(function(reg) {
   var regEl = document.getElementById('nntStatRegions');
   var sohaEl = document.getElementById('nntStatSohas');
   var yrEl = document.getElementById('nntStatYear');
-  if (totEl) totEl.textContent = ALL.length;
+  if (totEl) totEl.textContent = window._nntApiTotal || ALL.length;
   if (regEl) regEl.textContent = Object.keys(NNT_DATA).length;
   if (sohaEl) {
     var sohaSet = {};
