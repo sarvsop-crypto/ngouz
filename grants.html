@@ -59,7 +59,7 @@
 <link crossorigin="" href="https://unpkg.com" rel="preconnect"/>
 <link crossorigin="" href="https://ngo-api-proxy.sarvsop.workers.dev" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="css/style.css?v=32" rel="stylesheet">
+<link href="css/style.css?v=20260628grantcards" rel="stylesheet">
 <link href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" rel="stylesheet" integrity="sha384-6p9AefaqUhEVheRlj1mpAkbngHXy9mbYMrIdcIt4Jlc9lOLIablJq3bBsLOjGwZ7" crossorigin="anonymous"/>
 <style>
     .grant-status {
@@ -82,10 +82,88 @@
     .grant-deadline       { color: #b45309; font-weight: 600; }
     .grant-deadline--closed { color: #9ca3af; font-weight: 600; }
 
-    .cards { align-items: stretch; }
-    .card { display: flex; flex-direction: column; }
-    .card p { flex: 1; }
-    .card .btn { margin-top: auto; align-self: flex-start; }
+    #dynamic-grants-page .cards { align-items: stretch; }
+    #dynamic-grants-page .grant-card {
+      min-height: 390px;
+      display: flex;
+      flex-direction: column;
+      padding: 18px;
+    }
+    #dynamic-grants-page .grant-card .card-cover {
+      flex: 0 0 auto;
+      aspect-ratio: 16 / 8.5;
+      margin: -2px -2px 14px;
+    }
+    #dynamic-grants-page .grant-card__content {
+      min-height: 0;
+      flex: 1;
+      display: grid;
+      grid-template-rows: auto auto minmax(58px, 1fr) auto auto;
+      gap: 10px;
+    }
+    #dynamic-grants-page .grant-card__tag {
+      width: max-content;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    #dynamic-grants-page .grant-card__title {
+      min-height: 58px;
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      font-size: 21px;
+      line-height: 1.35;
+    }
+    #dynamic-grants-page .grant-card__desc {
+      min-height: 58px;
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      color: var(--neutral-500, #587585);
+      line-height: 1.55;
+    }
+    #dynamic-grants-page .grant-card__meta {
+      display: grid;
+      gap: 7px;
+      padding-top: 2px;
+      border-top: 1px solid var(--neutral-100, #edf1f1);
+    }
+    #dynamic-grants-page .grant-card__meta p {
+      min-height: 22px;
+      margin: 0;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 14px;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+    #dynamic-grants-page .grant-card__meta span:first-child {
+      flex-shrink: 0;
+      color: var(--neutral-500, #587585);
+      font-weight: 700;
+    }
+    #dynamic-grants-page .grant-card__meta time,
+    #dynamic-grants-page .grant-card__meta .grant-meta-empty {
+      text-align: right;
+    }
+    #dynamic-grants-page .grant-meta-empty {
+      color: var(--neutral-400, #9ca3af);
+      font-weight: 600;
+    }
+    #dynamic-grants-page .grant-card__action {
+      padding-top: 2px;
+    }
+    #dynamic-grants-page .grant-card__action .btn {
+      margin-top: 0;
+      align-self: flex-start;
+    }
 
     .filter-row { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 32px; }
     .filter-pill {
@@ -243,7 +321,7 @@
 </div>
 </footer>
 <script src="js/main.js?v=20260628grantdropdown" defer></script>
-<script src="js/content.js" defer></script>
+<script src="js/content.js?v=20260628grantcards" defer></script>
 
 <div class="search-overlay" id="searchOverlay" role="dialog" aria-label="Qidirish" aria-modal="true" aria-hidden="true">
   <div class="search-overlay__box">

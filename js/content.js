@@ -808,14 +808,22 @@
       var statusTag = isActive
         ? ' · <span data-i18n="pages.grants.tagActive">Faol</span>'
         : ' · <span data-i18n="pages.grants.tagClosed">Yopilgan</span>';
-      html += '<article class="card"' + id + ' data-va-type="grants" data-va-id="' + esc(g.id || '') + '">'
+      var amount = g.amount ? esc(g.amount) : '<span class="grant-meta-empty">—</span>';
+      var deadline = (g.deadline || g.deadlineLabel)
+        ? '<time datetime="' + esc(_datePart(g.deadline) || '') + '">' + esc(g.deadlineLabel || fmtDate(g.deadline)) + '</time>'
+        : '<span class="grant-meta-empty">—</span>';
+      html += '<article class="card grant-card"' + id + ' data-va-type="grants" data-va-id="' + esc(g.id || '') + '">'
         + cover
-        + '<span class="tag">' + esc(tField(g,'category')) + statusTag + '</span>'
-        + '<h3>' + esc(tField(g,'title')) + '</h3>'
-        + '<p>' + esc(tField(g,'description')) + '</p>'
-        + (g.amount ? '<p class="grant-amount"><span data-i18n="pages.grants.amount">Miqdor:</span> ' + esc(g.amount) + '</p>' : '')
-        + (g.deadline || g.deadlineLabel ? '<p class="grant-deadline"><span data-i18n="pages.grants.deadline">Muddat:</span> <time datetime="' + esc(_datePart(g.deadline) || '') + '">' + esc(g.deadlineLabel || fmtDate(g.deadline)) + '</time></p>' : '')
-        + cta
+        + '<div class="grant-card__content">'
+        + '<span class="tag grant-card__tag">' + esc(tField(g,'category')) + statusTag + '</span>'
+        + '<h3 class="grant-card__title">' + esc(tField(g,'title')) + '</h3>'
+        + '<p class="grant-card__desc">' + esc(tField(g,'description')) + '</p>'
+        + '<div class="grant-card__meta">'
+        + '<p class="grant-amount"><span data-i18n="pages.grants.amount">Miqdor:</span> ' + amount + '</p>'
+        + '<p class="grant-deadline"><span data-i18n="pages.grants.deadline">Muddat:</span> ' + deadline + '</p>'
+        + '</div>'
+        + '<div class="grant-card__action">' + cta + '</div>'
+        + '</div>'
         + '</article>';
     });
     html += '</div>';

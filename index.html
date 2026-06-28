@@ -92,7 +92,7 @@
 <link crossorigin="" href="https://unpkg.com" rel="preconnect"/>
 <link crossorigin="" href="https://ngo-api-proxy.sarvsop.workers.dev" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="css/style.css?v=33" rel="stylesheet">
+<link href="css/style.css?v=20260628grantcards" rel="stylesheet">
 <script src="js/errlog.js" defer></script>
 <script src="js/sw-register.js" defer></script>
 <script src="js/dropdown.js" defer></script>
@@ -624,7 +624,7 @@ window.addEventListener('load', function(){
 });
 </script>
 <script src="js/main.js?v=20260628grantdropdown" defer></script>
-<script src="js/content.js" defer></script>
+<script src="js/content.js?v=20260628grantcards" defer></script>
 <script>
     var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
 
