@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Komissiya — O'zNNTMA Admin</title>
+  <meta name="theme-color" content="#0f6a57" />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" integrity="sha384-6p9AefaqUhEVheRlj1mpAkbngHXy9mbYMrIdcIt4Jlc9lOLIablJq3bBsLOjGwZ7" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/pacta-tokens.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-dashboard.page.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-sidebar.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-topbar.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-notifications.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-app.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-foundation.css?v=20260605">
+  <script src="js/errlog.js" defer></script>
+  <script src="js/i18n.js" defer></script>
+  <style>
+    .commission-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(340px, .8fr); gap: 16px; margin-top: 18px; }
+    .protocol-layout { display: grid; grid-template-columns: 280px minmax(0, 1fr) 300px; gap: 16px; margin-top: 18px; }
+    .protocol-panel { background: var(--grey-0); border: 1px solid var(--grey-100); border-radius: 10px; overflow: hidden; }
+    .protocol-panel__head { padding: 16px 18px; border-bottom: 1px solid var(--grey-100); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .protocol-panel__head h2, .protocol-panel__head h3 { margin: 0; font-size: 18px; color: var(--grey-900); }
+    .protocol-panel__body { padding: 18px; }
+    .meta-list { display: grid; gap: 12px; }
+    .meta-list div { display: grid; gap: 3px; }
+    .meta-list span { font-size: 12px; color: var(--grey-500); font-weight: 700; text-transform: uppercase; }
+    .meta-list strong { font-size: 15px; color: var(--grey-900); }
+    .editor-frame { min-height: 440px; display: grid; place-items: center; background: linear-gradient(180deg, #f8fafc, #eef3f7); border: 1px dashed var(--grey-200); border-radius: 10px; text-align: center; padding: 24px; color: var(--grey-500); }
+    .vote-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--grey-100); }
+    .vote-row:last-child { border-bottom: 0; }
+    .vote-counts { display: flex; gap: 6px; flex-wrap: wrap; }
+    .vote-counts span { padding: 3px 7px; border-radius: 6px; background: var(--grey-25); color: var(--grey-500); font-size: 12px; font-weight: 700; }
+    .sign-list { display: grid; gap: 10px; margin-top: 12px; }
+    .sign-item { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; }
+    .verify-card { margin-top: 18px; background: #f7fbff; border: 1px solid #d7e7f7; border-radius: 10px; padding: 16px; }
+    @media (max-width: 1180px) { .commission-grid, .protocol-layout { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui;text-align:center">Bu sahifa ishlashi uchun JavaScript yoqilgan bo‘lishi kerak.</div></noscript>
+<a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar__header">
+      <div class="u-inline-stack"><div class="sidebar__logo u-logo-badge">N</div><span class="sidebar__title">O'zNNTMA Admin</span></div>
+      <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Yon panelni yopish" aria-expanded="true">&lsaquo;</button>
+    </div>
+    <nav class="sidebar__nav" aria-label="Admin menyusi">
+      <div class="sidebar__nav-section">
+        <div class="sidebar__nav-label">ASOSIY MENYU</div>
+        <a href="admin-dashboard" class="sidebar__nav-link"><span class="sidebar__nav-icon"><i class="ph ph-squares-four" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Boshqaruv paneli</span></a>
+        <a href="admin-membership-requests" class="sidebar__nav-link"><span class="sidebar__nav-icon"><i class="ph ph-file-text" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">A'zolik arizalari</span></a>
+        <a href="admin-registry" class="sidebar__nav-link"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">NNT Ro'yxati</span></a>
+        <a href="admin-commission" class="sidebar__nav-link is-active" aria-current="page"><span class="sidebar__nav-icon"><i class="ph ph-gavel" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Komissiya</span></a>
+        <a href="admin-documents" class="sidebar__nav-link"><span class="sidebar__nav-icon"><i class="ph ph-folder-open" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Hujjatlar</span></a>
+      </div>
+      <div class="sidebar__nav-section u-mt-auto">
+        <a data-action="logout" href="admin-login" class="sidebar__nav-link logout"><span class="sidebar__nav-icon"><i class="ph ph-sign-out" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
+      </div>
+    </nav>
+  </aside>
+  <main class="main" id="main-content" tabindex="-1">
+    <header class="topbar">
+      <div class="topbar-left"><nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="admin-dashboard">Boshqaruv</a> / <span aria-current="page">Komissiya</span></nav></div>
+      <div class="topbar-right">
+        <div class="main__profile"><div class="main__profile-avatar u-avatar-badge-sm">K</div><div><div class="main__profile-name" data-user-name>Komissiya</div><div class="main__profile-role" data-user-role>Protokollar</div></div></div>
+      </div>
+    </header>
+
+    <div class="main__header">
+      <h1 class="main__title">Komissiya protokollari</h1>
+      <div class="main__btns">
+        <button type="button" class="btn btn--secondary" id="refreshCommission"><i class="ph ph-arrow-clockwise" aria-hidden="true"></i> Yangilash</button>
+        <button type="button" class="btn btn--primary" id="newProtocolBtn"><i class="ph ph-plus" aria-hidden="true"></i> Yangi protokol</button>
+      </div>
+    </div>
+
+    <div class="cards cards--priority">
+      <div class="card"><div class="card__head"><div class="card__icon"><i class="ph ph-pencil-simple" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Draft protocols</p><p class="card__value" id="kpiDraft">—</p></div></div></div>
+      <div class="card"><div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-check-square-offset" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Voting</p><p class="card__value" id="kpiVoting">—</p></div></div></div>
+      <div class="card"><div class="card__head"><div class="card__icon card__icon--info"><i class="ph ph-pen-nib" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Ready to sign</p><p class="card__value" id="kpiReady">—</p></div></div></div>
+      <div class="card"><div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-seal-check" aria-hidden="true"></i></div></div><div class="card__body"><div><p class="card__label">Signed</p><p class="card__value" id="kpiSigned">—</p></div></div></div>
+    </div>
+
+    <div class="commission-grid">
+      <section class="table-section" aria-labelledby="protocolsTitle">
+        <div class="table-section__head"><h2 class="table-section__title" id="protocolsTitle">Protokollar</h2></div>
+        <table class="table">
+          <thead><tr><th>Raqam</th><th>Sana</th><th>Holat</th><th>Kvorum</th><th>Nomzodlar</th><th>Oxirgi harakat</th></tr></thead>
+          <tbody id="protocolRows" aria-live="polite" aria-busy="true"><tr class="u-empty-row"><td colspan="6" role="status">Yuklanmoqda...</td></tr></tbody>
+        </table>
+      </section>
+      <section class="protocol-panel" aria-labelledby="signTitle">
+        <div class="protocol-panel__head"><h2 id="signTitle">Imzolash holati</h2><span class="badge badge--warning">Imzolashga tayyor</span></div>
+        <div class="protocol-panel__body">
+          <div class="meta-list">
+            <div><span>Kvorum</span><strong id="quorumText">—</strong></div>
+            <div><span>QR tekshiruv</span><strong id="qrText">Protokol imzolangach yaratiladi</strong></div>
+          </div>
+          <div class="sign-list" id="signList">
+            <div class="sign-item"><span>Rais</span><strong>Kutilmoqda</strong></div>
+            <div class="sign-item"><span>Kotib</span><strong>Kutilmoqda</strong></div>
+            <div class="sign-item"><span>A’zolar</span><strong>Kutilmoqda</strong></div>
+          </div>
+          <div class="verify-card"><strong>Public verification</strong><br><span>QR sahifada Valid / Invalid, protokol raqami, komissiya, sana, imzolaganlar va vaqt ko‘rsatiladi.</span></div>
+        </div>
+      </section>
+    </div>
+
+    <section class="protocol-layout" aria-label="Protokol ish oynasi">
+      <aside class="protocol-panel">
+        <div class="protocol-panel__head"><h3>Metadata va nomzodlar</h3></div>
+        <div class="protocol-panel__body">
+          <div class="meta-list">
+            <div><span>Komissiya</span><strong id="commissionName">—</strong></div>
+            <div><span>Rol</span><strong id="commissionRole">—</strong></div>
+            <div><span>Tanlangan protokol</span><strong id="selectedProtocol">Tanlanmagan</strong></div>
+          </div>
+        </div>
+      </aside>
+      <section class="protocol-panel">
+        <div class="protocol-panel__head"><h3>OnlyOffice hujjat oynasi</h3><button type="button" class="btn btn--secondary btn--sm" id="openEditorBtn">Editor config</button></div>
+        <div class="protocol-panel__body"><div class="editor-frame" id="editorFrame"><div><i class="ph ph-file-doc" style="font-size:38px" aria-hidden="true"></i><br>Protokol tanlang. Draft holatda OnlyOffice editor, imzolangan holatda read-only ko‘rinadi.</div></div></div>
+      </section>
+      <aside class="protocol-panel">
+        <div class="protocol-panel__head"><h3>Ovozlar</h3></div>
+        <div class="protocol-panel__body" id="votePanel">
+          <div class="vote-row"><div><strong>Nomzod tanlanmagan</strong><br><span class="text-dim">Yoqladi / Qarshi / Betaraf</span></div><div class="vote-counts"><span>0</span><span>0</span><span>0</span></div></div>
+        </div>
+      </aside>
+    </section>
+  </main>
+</div>
+<div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
+<script src="js/pacta-foundation.js"></script>
+<script src="js/api-client.js"></script>
+<script src="js/admin-boot.js" defer></script>
+<script src="js/pacta-app.js"></script>
+<script>
+(function () {
+  var protocols = [];
+  var selectedId = null;
+  function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+  function setText(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
+  function badge(status) {
+    if (status === 'signed') return 'success';
+    if (status === 'voting') return 'warning';
+    if (status === 'ready_to_sign' || status === 'finalized') return 'info';
+    return 'neutral';
+  }
+  function renderRows() {
+    var tbody = document.getElementById('protocolRows');
+    if (!tbody) return;
+    if (!protocols.length) {
+      tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6" role="status">Protokol topilmadi</td></tr>';
+      tbody.setAttribute('aria-busy', 'false');
+      return;
+    }
+    tbody.innerHTML = protocols.map(function (p) {
+      var id = parseInt(p.id, 10) || 0;
+      return '<tr role="button" tabindex="0" onclick="selectProtocol(' + id + ')">' +
+        '<td><strong>' + esc(p.number || ('#' + id)) + '</strong></td>' +
+        '<td>' + esc(p.meeting_date || '—') + '</td>' +
+        '<td><span class="badge badge--' + badge(p.status) + '">' + esc(p.status || 'draft') + '</span></td>' +
+        '<td>' + esc(p.quorum_text || p.quorum || '—') + '</td>' +
+        '<td>' + esc(p.candidates_count || p.candidate_count || 0) + '</td>' +
+        '<td>' + esc((p.updated_at || p.created_at || '').slice(0, 16) || '—') + '</td>' +
+      '</tr>';
+    }).join('');
+    tbody.setAttribute('aria-busy', 'false');
+  }
+  function renderKpis(stats) {
+    var byStatus = {};
+    (protocols || []).forEach(function (p) { byStatus[p.status || 'draft'] = (byStatus[p.status || 'draft'] || 0) + 1; });
+    if (stats && stats.by_status) byStatus = stats.by_status;
+    setText('kpiDraft', byStatus.draft || 0);
+    setText('kpiVoting', byStatus.voting || 0);
+    setText('kpiReady', (byStatus.ready_to_sign || 0) + (byStatus.finalized || 0));
+    setText('kpiSigned', byStatus.signed || 0);
+  }
+  window.selectProtocol = function (id) {
+    selectedId = id;
+    var p = protocols.find(function (x) { return parseInt(x.id, 10) === id; }) || {};
+    setText('selectedProtocol', p.number || ('#' + id));
+    NgoApi.get('/commission/protocols/' + id).then(function (res) {
+      var protocol = res.protocol || p;
+      var candidates = res.candidates || [];
+      setText('selectedProtocol', protocol.number || ('#' + id));
+      var votePanel = document.getElementById('votePanel');
+      if (votePanel) {
+        votePanel.innerHTML = candidates.length ? candidates.map(function (c) {
+          return '<div class="vote-row"><div><strong>' + esc(c.full_name || c.name || 'Nomzod') + '</strong><br><span class="text-dim">' + esc(c.organization_name || c.org_name || '') + '</span></div><div class="vote-counts"><span>Yoqladi ' + esc(c.yes_count || 0) + '</span><span>Qarshi ' + esc(c.no_count || 0) + '</span><span>Betaraf ' + esc(c.abstain_count || 0) + '</span></div></div>';
+        }).join('') : '<div class="vote-row"><div><strong>Nomzod yo‘q</strong><br><span class="text-dim">Protokolga nomzod qo‘shing</span></div><div class="vote-counts"><span>0</span><span>0</span><span>0</span></div></div>';
+      }
+    }).catch(function () {});
+  };
+  function load() {
+    Promise.all([
+      NgoApi.get('/commission/dashboard').catch(function () { return {}; }),
+      NgoApi.get('/commission/protocols').catch(function () { return { items: [] }; }),
+      NgoApi.get('/commission/stats').catch(function () { return {}; })
+    ]).then(function (all) {
+      var dash = all[0] || {};
+      var list = all[1] || {};
+      var stats = all[2] || {};
+      setText('commissionName', dash.commission && dash.commission.name ? dash.commission.name : '—');
+      setText('commissionRole', dash.commission && dash.commission.role ? dash.commission.role : '—');
+      setText('quorumText', dash.commission && dash.commission.quorum_pct ? dash.commission.quorum_pct + '%' : '—');
+      protocols = list.items || list.protocols || dash.active_protocols || [];
+      renderRows();
+      renderKpis(stats);
+    }).catch(function () {
+      var tbody = document.getElementById('protocolRows');
+      if (tbody) tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6" role="alert" style="color:var(--error-600)">Komissiya ma’lumotlarini yuklab bo‘lmadi.</td></tr>';
+    });
+  }
+  document.getElementById('refreshCommission').addEventListener('click', load);
+  document.getElementById('openEditorBtn').addEventListener('click', function () {
+    if (!selectedId) return;
+    NgoApi.get('/commission/protocols/' + selectedId + '/editor-config').then(function () {
+      document.getElementById('editorFrame').textContent = 'OnlyOffice config tayyor. Keyingi bosqichda editor shu oynaga ulanadi.';
+    }).catch(function (err) {
+      document.getElementById('editorFrame').textContent = 'OnlyOffice sozlanmagan yoki protokol tanlanmagan.';
+    });
+  });
+  document.getElementById('newProtocolBtn').addEventListener('click', function () {
+    alert('Yangi protokol formasi keyingi bosqichda ulanadi. API: POST /v1/commission/protocols');
+  });
+  load();
+})();
+</script>
+</body>
+</html>

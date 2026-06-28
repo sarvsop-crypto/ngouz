@@ -61,6 +61,7 @@
           <a href="admin-membership-requests" class="sidebar__nav-link" data-i18n-title="admin.nav.membershipRequests" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.membershipRequests">A'zolik arizalari</span></a>
           <a href="admin-grant-applications" class="sidebar__nav-link" data-i18n-title="admin.nav.grantApplications" title="Grant arizalari"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.grantApplications">Grant arizalari</span></a>
           <a href="admin-registry" class="sidebar__nav-link" data-i18n-title="admin.nav.registry" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.registry">NNT Ro'yxati</span></a>
+          <a href="admin-commission" class="sidebar__nav-link" title="Komissiya"><span class="sidebar__nav-icon"><i class="ph ph-gavel" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Komissiya</span></a>
           <a href="admin-regions" class="sidebar__nav-link" data-i18n-title="admin.nav.regions" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.regions">Hududlar</span></a>
           <a href="admin-documents" class="sidebar__nav-link" data-i18n-title="admin.nav.documents" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.documents">Hujjatlar</span></a>
           <a href="admin-tasks" class="sidebar__nav-link" data-i18n-title="admin.nav.tasks" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.tasks">Topshiriqlar</span></a>
@@ -111,54 +112,56 @@
       <div class="main__header">
         <h1 data-i18n="admin.pages.dashboard.title" class="main__title">Boshqaruv paneli</h1>
         <div class="main__btns">
+          <div class="quick-filters" aria-label="Tezkor filtrlar">
+            <button type="button" class="quick-filter" data-range="today">Bugun</button>
+            <button type="button" class="quick-filter" data-range="7">7 kun</button>
+            <button type="button" class="quick-filter is-active" data-range="30">30 kun</button>
+            <button type="button" class="quick-filter" data-range="mine">Mening hududim</button>
+          </div>
           <button type="button" class="btn btn--secondary" id="exportDashboardBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> <span data-i18n="admin.dashboard.export">Eksport</span></button>
           <a href="admin-membership-requests" class="btn btn--primary"><i class="ph ph-plus" aria-hidden="true"></i> <span data-i18n="admin.dashboard.newRequest">Yangi ariza</span></a>
         </div>
       </div>
 
-      <div class="cards">
-        <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-newspaper" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.news">Yangiliklar</p><p class="card__value" id="kpiNews">—</p></div></div>
-        </div>
-        <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-calendar-blank" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.events">Tadbirlar</p><p class="card__value" id="kpiEvents">—</p></div></div>
-        </div>
-        <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-chat-dots" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.newMessages">Yangi xabarlar</p><p class="card__value" id="kpiContacts">—</p></div></div>
-        </div>
-        <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--info"><i class="ph ph-files" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.documents">Hujjatlar</p><p class="card__value" id="kpiDocs">—</p></div></div>
-        </div>
+      <div class="cards cards--priority">
+        <a class="card op-card" href="admin-membership-requests" aria-label="Kutilayotgan arizalar">
+          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock" aria-hidden="true"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Kutilayotgan arizalar</p><p class="card__value" id="kpiActiveRequests">—</p><p class="card__hint">Ko‘rib chiqish kerak</p></div></div>
+        </a>
+        <a class="card op-card" href="admin-membership-requests" aria-label="To‘lov kutilmoqda">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-credit-card" aria-hidden="true"></i></div></div>
+          <div class="card__body"><div><p class="card__label">To‘lov kutilmoqda</p><p class="card__value" id="kpiPaymentPending">—</p><p class="card__hint">Payme bosqichi</p></div></div>
+        </a>
+        <a class="card op-card" href="admin-membership-requests" aria-label="Rahbar tasdig‘ida">
+          <div class="card__head"><div class="card__icon card__icon--info"><i class="ph ph-seal-check" aria-hidden="true"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Rahbar tasdig‘ida</p><p class="card__value" id="kpiLeaderReview">—</p><p class="card__hint">Imzo navbati</p></div></div>
+        </a>
+        <a class="card op-card" href="admin-membership-requests" aria-label="Rad yoki qaytarilgan">
+          <div class="card__head"><div class="card__icon card__icon--error"><i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i></div></div>
+          <div class="card__body"><div><p class="card__label">Rad / qaytarilgan</p><p class="card__value" id="kpiReturnedRejected">—</p><p class="card__hint">Sabab talab qiladi</p></div></div>
+        </a>
       </div>
 
-      <div class="cards" id="dashExtraKpis">
-        <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-buildings" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.memberNgos">A'zo NNTlar</p><p class="card__value" id="kpiOrgs">&mdash;</p></div></div>
+      <section class="workflow-section" aria-labelledby="workflowTitle">
+        <div class="workflow-section__head">
+          <h2 id="workflowTitle">A’zolik jarayoni</h2>
+          <a href="admin-membership-requests" class="btn--ghost">Barcha arizalar</a>
         </div>
-        <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.pendingRequests">Kutilayotgan arizalar</p><p class="card__value" id="kpiPending">&mdash;</p></div></div>
+        <div class="workflow-funnel" id="workflowFunnel">
+          <a href="admin-membership-requests?status=submitted" class="workflow-step" data-funnel-status="submitted"><span>Yuborildi</span><strong id="funnelSubmitted">—</strong></a>
+          <a href="admin-membership-requests?status=payment_pending" class="workflow-step" data-funnel-status="payment_pending"><span>To‘lov</span><strong id="funnelPayment">—</strong></a>
+          <a href="admin-membership-requests?status=regional_review" class="workflow-step" data-funnel-status="regional_review"><span>Hududiy</span><strong id="funnelRegional">—</strong></a>
+          <a href="admin-membership-requests?status=superadmin_review" class="workflow-step" data-funnel-status="superadmin_review"><span>Superadmin</span><strong id="funnelSuperadmin">—</strong></a>
+          <a href="admin-membership-requests?status=leader_review" class="workflow-step" data-funnel-status="leader_review"><span>Rahbar</span><strong id="funnelLeader">—</strong></a>
+          <a href="admin-membership-requests?status=accepted" class="workflow-step workflow-step--done" data-funnel-status="accepted"><span>Qabul</span><strong id="funnelAccepted">—</strong></a>
         </div>
-        <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-users" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.users">Foydalanuvchilar</p><p class="card__value" id="kpiUsers">&mdash;</p></div></div>
-        </div>
-        <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.grants">Grantlar</p><p class="card__value" id="kpiGrants">&mdash;</p></div></div>
-        </div>
-      </div>
+      </section>
 
       <div class="dash-grid" aria-labelledby="dashGridTitle">
         <h2 id="dashGridTitle" class="u-visually-hidden" data-i18n="admin.dashboard.operationalBlocks">Operatsion bloklar</h2>
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title" data-i18n="admin.dashboard.urgentRequests">Muddatli arizalar</h3>
+            <h3 class="card-title">Harakatlar navbati</h3>
             <a href="admin-membership-requests" class="btn--ghost" data-i18n="admin.dashboard.viewAll">Barchasi</a>
           </div>
           <ul class="alert-list" id="dashboardDeadlines" aria-live="polite" aria-busy="true"></ul>
@@ -179,6 +182,25 @@
           </tbody>
             </table>
           </div>
+        </div>
+      </div>
+
+      <div class="cards cards--system" id="dashExtraKpis">
+        <div class="card">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-buildings" aria-hidden="true"></i></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.memberNgos">A'zo NNTlar</p><p class="card__value" id="kpiOrgs">&mdash;</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon"><i class="ph ph-newspaper" aria-hidden="true"></i></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.news">Yangiliklar</p><p class="card__value" id="kpiNews">—</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-calendar-blank" aria-hidden="true"></i></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.events">Tadbirlar</p><p class="card__value" id="kpiEvents">—</p></div></div>
+        </div>
+        <div class="card">
+          <div class="card__head"><div class="card__icon card__icon--info"><i class="ph ph-files" aria-hidden="true"></i></div></div>
+          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.documents">Hujjatlar</p><p class="card__value" id="kpiDocs">—</p></div></div>
         </div>
       </div>
 
@@ -235,6 +257,90 @@
         .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
         .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
     }
+    var membershipItems = [];
+    var dashboardRange = '30';
+    var statusLabels = {
+      pending: 'Yuborildi',
+      submitted: 'Yuborildi',
+      payment_pending: 'To‘lov kutilmoqda',
+      paid: 'To‘landi',
+      regional_review: 'Hududiy bo‘linmada',
+      superadmin_review: 'Superadmin ko‘rib chiqmoqda',
+      leader_review: 'Rahbar tasdig‘ida',
+      accepted: 'A’zolikka qabul qilindi',
+      returned: 'Qaytarilgan',
+      rejected: 'Rad etilgan'
+    };
+    var nextRole = {
+      pending: 'Hududiy bo‘linma',
+      submitted: 'Hududiy bo‘linma',
+      payment_pending: 'NNT',
+      paid: 'Hududiy bo‘linma',
+      regional_review: 'Hududiy bo‘linma',
+      superadmin_review: 'Superadmin',
+      leader_review: 'Rahbar',
+      returned: 'NNT',
+      rejected: 'Yopilgan'
+    };
+    var activeStatuses = ['pending', 'submitted', 'payment_pending', 'paid', 'regional_review', 'superadmin_review', 'leader_review', 'returned'];
+    function setText(id, value) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+    function daysWaiting(item) {
+      var raw = item.updated_at || item.reviewed_at || item.created_at;
+      var ts = raw ? new Date(raw).getTime() : 0;
+      if (!ts) return 0;
+      return Math.max(0, Math.floor((Date.now() - ts) / 86400000));
+    }
+    function inRange(item) {
+      if (dashboardRange === 'mine') return true;
+      var raw = item.created_at || item.updated_at;
+      var ts = raw ? new Date(raw).getTime() : 0;
+      if (!ts) return true;
+      var age = (Date.now() - ts) / 86400000;
+      if (dashboardRange === 'today') return age < 1;
+      return age <= parseInt(dashboardRange, 10);
+    }
+    function renderMembershipOps() {
+      var scoped = membershipItems.filter(inRange);
+      var count = function (status) { return scoped.filter(function (a) { return a.status === status; }).length; };
+      var submitted = scoped.filter(function (a) { return a.status === 'pending' || a.status === 'submitted'; }).length;
+      var returnedRejected = scoped.filter(function (a) { return a.status === 'returned' || a.status === 'rejected'; }).length;
+      setText('kpiActiveRequests', scoped.filter(function (a) { return activeStatuses.indexOf(a.status) !== -1; }).length);
+      setText('kpiPaymentPending', count('payment_pending'));
+      setText('kpiLeaderReview', count('leader_review'));
+      setText('kpiReturnedRejected', returnedRejected);
+      setText('funnelSubmitted', submitted);
+      setText('funnelPayment', count('payment_pending') + count('paid'));
+      setText('funnelRegional', count('regional_review'));
+      setText('funnelSuperadmin', count('superadmin_review'));
+      setText('funnelLeader', count('leader_review'));
+      setText('funnelAccepted', count('accepted') + count('approved'));
+
+      var queue = scoped.filter(function (a) { return activeStatuses.indexOf(a.status) !== -1; })
+        .sort(function (a, b) {
+          var rank = { leader_review: 0, returned: 1, payment_pending: 2, paid: 3, superadmin_review: 4, regional_review: 5, submitted: 6, pending: 6 };
+          return (rank[a.status] || 9) - (rank[b.status] || 9) || daysWaiting(b) - daysWaiting(a);
+        }).slice(0, 6);
+      var ul = document.getElementById('dashboardDeadlines');
+      if (!ul) return;
+      if (!queue.length) {
+        ul.innerHTML = '<li class="alert-item" role="status"><span class="text-dim">Harakat talab qiladigan ariza yo‘q</span></li>';
+        ul.setAttribute('aria-busy', 'false');
+        return;
+      }
+      ul.innerHTML = queue.map(function (a) {
+        var waiting = daysWaiting(a);
+        var badge = a.status === 'paid' ? 'success' : (a.status === 'returned' ? 'info' : 'warning');
+        return '<li class="action-item">' +
+          '<div class="action-item__main"><strong>' + esc(a.org_name || '—') + '</strong>' +
+          '<span><span class="badge badge--' + badge + '">' + esc(statusLabels[a.status] || a.status || 'Jarayonda') + '</span> · ' + waiting + ' kun · ' + esc(nextRole[a.status] || 'Mas’ul') + '</span></div>' +
+          '<a class="btn--ghost action-item__link" href="admin-membership-requests">Ko‘rish</a>' +
+        '</li>';
+      }).join('');
+      ul.setAttribute('aria-busy', 'false');
+    }
     NgoApi.get('/admin/stats').then(function (s) {
       document.getElementById('kpiNews').textContent    = s.news || 0;
       document.getElementById('kpiEvents').textContent  = s.events || 0;
@@ -254,11 +360,12 @@
     }).catch(function () {});
 
     NgoApi.get('/admin/membership-requests?limit=200').then(function (res) {
-      var el = document.getElementById('kpiPending');
-      if (!el) return;
-      var active = ['pending', 'submitted', 'payment_pending', 'paid', 'regional_review', 'superadmin_review', 'leader_review', 'returned'];
-      el.textContent = (res.items || []).filter(function (a) { return active.indexOf(a.status) !== -1; }).length;
-    }).catch(function () {});
+      membershipItems = res.items || [];
+      renderMembershipOps();
+    }).catch(function () {
+      var ul = document.getElementById('dashboardDeadlines');
+      if (ul) ul.innerHTML = '<li class="alert-item" role="alert" style="color:var(--error-600,#dc2626)">Arizalarni yuklab bo‘lmadi.</li>';
+    });
 
     NgoApi.get('/admin/users').then(function (res) {
       var el = document.getElementById('kpiUsers');
@@ -303,34 +410,13 @@
       if (t) t.setAttribute('aria-busy', 'false');
     });
 
-    // Active membership requests as deadlines
-    NgoApi.get('/admin/membership-requests?limit=20').then(function (res) {
-      var ul = document.getElementById('dashboardDeadlines');
-      if (!ul) return;
-      var labels = {
-        pending: 'Yuborildi',
-        submitted: 'Yuborildi',
-        payment_pending: 'To‘lov kutilmoqda',
-        paid: 'To‘landi',
-        regional_review: 'Hududiy bo‘linmada',
-        superadmin_review: 'Superadmin ko‘rib chiqmoqda',
-        leader_review: 'Rahbar tasdig‘ida',
-        returned: 'Qaytarilgan'
-      };
-      var active = Object.keys(labels);
-      var items = (res.items || []).filter(function (a) { return active.indexOf(a.status) !== -1; }).slice(0, 5);
-      if (!items.length) { ul.innerHTML = '<li class="alert-item" role="status"><span class="text-dim">Kutilayotgan ariza yo\'q</span></li>'; return; }
-      ul.innerHTML = items.map(function (a) {
-        var badge = a.status === 'paid' ? 'success' : (a.status === 'returned' ? 'info' : 'warning');
-        return '<li class="alert-item"><span class="badge badge--' + badge + '">' + esc(labels[a.status] || a.status || 'Jarayonda') + '</span><span>' + esc(a.org_name || '—') + '</span><span class="text-dim">' + (a.created_at ? '<time datetime="' + esc(String(a.created_at).slice(0,10)) + '">' + esc(String(a.created_at).slice(0,10)) + '</time>' : '') + '</span></li>';
-      }).join('');
-    }).catch(function (err) {
-      if (err && err.status === 401) return;
-      var ul = document.getElementById('dashboardDeadlines');
-      if (ul) ul.innerHTML = '<li class="alert-item" role="alert" style="color:var(--error-600,#dc2626)">Arizalarni yuklab bo\'lmadi.</li>';
-    }).then(function () {
-      var u = document.getElementById('dashboardDeadlines');
-      if (u) u.setAttribute('aria-busy', 'false');
+    document.querySelectorAll('.quick-filter').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        document.querySelectorAll('.quick-filter').forEach(function (b) { b.classList.remove('is-active'); });
+        this.classList.add('is-active');
+        dashboardRange = this.dataset.range || '30';
+        renderMembershipOps();
+      });
     });
 
     // Region distribution table — map region DB codes to org region_codes

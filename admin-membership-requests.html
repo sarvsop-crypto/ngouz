@@ -186,7 +186,7 @@
   <script>
   (function () {
     var items = [];
-    var statusFilter = 'all';
+    var statusFilter = (new URLSearchParams(location.search).get('status') || 'all').trim() || 'all';
     var searchQ = '';
 
     var toastTimer;
@@ -367,6 +367,14 @@
     document.getElementById('membershipSearch').addEventListener('input', function () { searchQ = this.value; renderTable(); });
 
     document.querySelectorAll('[data-status-filter]').forEach(function (btn) {
+      if (btn.dataset.statusFilter === statusFilter) {
+        document.querySelectorAll('[data-status-filter]').forEach(function (b) {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-pressed', 'true');
+      }
       btn.addEventListener('click', function () {
         document.querySelectorAll('[data-status-filter]').forEach(function (b) {
           b.classList.remove('is-active');

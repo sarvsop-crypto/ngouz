@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../core/app_tokens.dart';
 import '../../../widgets/content_container.dart';
-import '../../../widgets/footer_sections.dart';
 
 class CabinetPageScaffold extends StatelessWidget {
   final String eyebrow;
@@ -23,53 +22,42 @@ class CabinetPageScaffold extends StatelessWidget {
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(
-          child: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF040C1A), Color(0xFF0A1B33)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-            child: ContentContainer(
-              padding: const EdgeInsets.fromLTRB(AppSpace.xl, AppSpace.xl, AppSpace.xl, AppSpace.xl),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _EyebrowPill(eyebrow),
-                  const SizedBox(height: AppSpace.md),
-                  Text(
-                    title,
-                    style: const TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.w700, height: 1.15),
+          child: ContentContainer(
+            padding: const EdgeInsets.fromLTRB(AppSpace.xl, AppSpace.lg, AppSpace.xl, AppSpace.md),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _EyebrowPill(eyebrow),
+                      const SizedBox(height: AppSpace.sm),
+                      Text(
+                        title,
+                        style: const TextStyle(color: AppTokens.text, fontSize: 26, fontWeight: FontWeight.w800, height: 1.15),
+                      ),
+                      if (subtitle != null) ...[
+                        const SizedBox(height: AppSpace.xs),
+                        Text(
+                          subtitle!,
+                          style: const TextStyle(color: AppTokens.textMuted, fontSize: 14, height: 1.45),
+                        ),
+                      ],
+                    ],
                   ),
-                  if (subtitle != null) ...[
-                    const SizedBox(height: AppSpace.sm),
-                    Text(
-                      subtitle!,
-                      style: const TextStyle(color: Color(0xFFB4DCFF), fontSize: 15, height: 1.5),
-                    ),
-                  ],
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
         SliverToBoxAdapter(
           child: ContentContainer(
-            padding: const EdgeInsets.all(AppSpace.xl),
+            padding: const EdgeInsets.fromLTRB(AppSpace.xl, AppSpace.sm, AppSpace.xl, AppSpace.xl),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: children,
             ),
-          ),
-        ),
-        const SliverToBoxAdapter(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              DarkCta(),
-              AppFooter(),
-            ],
           ),
         ),
       ],
@@ -90,8 +78,7 @@ class CabinetCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppTokens.surface,
         border: Border.all(color: AppTokens.border),
-        borderRadius: BorderRadius.circular(AppTokens.radiusMd),
-        boxShadow: AppTokens.cardShadows,
+        borderRadius: BorderRadius.circular(8),
       ),
       child: child,
     );
@@ -133,9 +120,9 @@ class _EyebrowPill extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(
-        color: AppTokens.primary.withValues(alpha: 0.15),
+        color: AppTokens.accentSoft,
         borderRadius: BorderRadius.circular(999),
-        border: Border.all(color: AppTokens.primary.withValues(alpha: 0.4)),
+        border: Border.all(color: AppTokens.border),
       ),
       child: Text(
         text,
@@ -143,7 +130,7 @@ class _EyebrowPill extends StatelessWidget {
           color: AppTokens.primary,
           fontSize: 12,
           fontWeight: FontWeight.w700,
-          letterSpacing: 0.3,
+          letterSpacing: 0,
         ),
       ),
     );
