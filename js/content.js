@@ -102,7 +102,7 @@
       // backend cover_image contains characters that would otherwise
       // break out of url('...') or the style="..." attribute.
       var safe = String(img).replace(/\\/g, '\\\\').replace(/'/g, '%27').replace(/\n|\r/g, '');
-      return 'background:url(\'' + safe + '\') center/cover no-repeat';
+      return 'background:#f6f8fa url(\'' + safe + '\') center/contain no-repeat';
     }
     return 'background:' + coverGradient(item.category || item.status || '');
   }
@@ -115,7 +115,7 @@
   // Active UI language, clamped to a supported locale (matches i18n.js).
   function curLang() {
     var l = (window.ngoI18n && window.ngoI18n.get && window.ngoI18n.get()) ||
-      (function () { try { return localStorage.getItem('ngo_lang_v1') || 'uz'; } catch (e) { return 'uz'; } })();
+      (function () { try { return localStorage.getItem('ngo_public_lang_v1') || 'uz'; } catch (e) { return 'uz'; } })();
     return (l === 'ru' || l === 'en') ? l : 'uz';
   }
   // The renderers below run AFTER the loader's initial DOM pass, so newly

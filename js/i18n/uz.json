@@ -1158,6 +1158,7 @@
     "openGroup": "Ochiq ma'lumotlar",
     "openItems": {
       "contact": "Bog'lanish",
+      "grantAnnouncements": "Grant e'lonlari",
       "grantAi": "Grant tanlovlari - AI qidiruv",
       "normativ": "Normativ-huquqiy hujjatlar",
       "media": "Media",
@@ -1650,7 +1651,7 @@
       "title": "Rasmiy murojaat yuborish",
       "sub": "Interaktiv xizmatlar bo'yicha savol yoki taklifingizni yuboring.",
       "noscript": "<strong>Forma JavaScript talab qiladi.</strong> Iltimos brauzeringizda JavaScriptni yoqing yoki so'rovingizni <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a> manziliga yuboring.",
-      "consent": "<a href=\"maxfiylik-siyosati\" target=\"_blank\" rel=\"noopener noreferrer\">Maxfiylik siyosati</a> shartlariga muvofiq shaxsiy ma'lumotlarimni qayta ishlashga roziman.",
+      "consent": "<a href=\"maxfiylik-siyosati\" target=\"_blank\" rel=\"noopener noreferrer\">Maxfiylik siyosati</a> shartlariga muvofiq shaxsiy ma'lumotlarimni qayta ishlashga roziman. Noto'g'ri yoki xato yuborilgan arizalar bo'yicha to'langan a'zolik badali qaytarilmasligini tushunaman.",
       "submitBtn": "Yuborish",
       "f": {
         "fio": "F.I.Sh. <span aria-hidden=\"true\">*</span>",
@@ -2002,7 +2003,7 @@
     "terms2": "A'zo bo'lishdan maqsad — fuqarolik jamiyatini rivojlantirish, NNTlarning huquqiy himoyasini ta'minlash, kadrlar salohiyatini oshirish va xalqaro hamkorlikni kengaytirishdir.",
     "terms3": "A'zo tashkilotlar quyidagi huquqlarga ega: assotsiatsiya tadbirlarida ishtirok etish, treninglar va seminarlardan foydalanish, Kengash qarorlarini muhokama qilish hamda ovoz berish.",
     "terms4": "A'zo tashkilotlar quyidagi majburiyatlarni bajaradi: yillik a'zolik badali to'lash, faoliyat to'g'risida yillik hisobot taqdim etish va assotsiatsiya qarorlariga rioya qilish.",
-    "terms5": "Ariza ko'rib chiqilgandan so'ng O'zNNTMA a'zolik to'g'risida xat jo'natadi. Qaror 15 ish kuni ichida qabul qilinadi.",
+    "terms5": "Ariza ko'rib chiqilgandan so'ng O'zNNTMA a'zolik to'g'risida xat jo'natadi. Qaror 15 ish kuni ichida qabul qilinadi. Noto'g'ri yoki xato yuborilgan ariza bo'yicha to'langan a'zolik badali qaytarilmaydi.",
     "agreeLabel": "Yuqoridagi shartlar bilan tanishdim va roziman",
     "continueBtn": "Davom etish →",
     "orgLabel": "Tashkilot nomi *",

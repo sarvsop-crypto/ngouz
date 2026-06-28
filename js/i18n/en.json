@@ -1158,6 +1158,7 @@
     "openGroup": "Open data",
     "openItems": {
       "contact": "Contact",
+      "grantAnnouncements": "Grant announcements",
       "grantAi": "Grant competitions — AI search",
       "normativ": "Legal and regulatory documents",
       "media": "Media",
@@ -1650,7 +1651,7 @@
       "title": "Submit an official inquiry",
       "sub": "Submit a question or suggestion about interactive services.",
       "noscript": "<strong>This form requires JavaScript.</strong> Please enable JavaScript in your browser or send your request to <a href=\"mailto:info@ngo.uz\" style=\"color:#7a5800;font-weight:600\">info@ngo.uz</a>.",
-      "consent": "I consent to the processing of my personal data in accordance with the <a href=\"maxfiylik-siyosati\" target=\"_blank\" rel=\"noopener noreferrer\">Privacy policy</a>.",
+      "consent": "I consent to the processing of my personal data in accordance with the <a href=\"maxfiylik-siyosati\" target=\"_blank\" rel=\"noopener noreferrer\">Privacy policy</a>. I understand that membership fees paid for incorrectly or mistakenly submitted applications are non-refundable.",
       "submitBtn": "Submit",
       "f": {
         "fio": "Full name <span aria-hidden=\"true\">*</span>",
@@ -2002,7 +2003,7 @@
     "terms2": "The purpose of membership is the development of civil society, ensuring the legal protection of NGOs, raising staff capacity and expanding international cooperation.",
     "terms3": "Member organizations have the following rights: participation in Association events, access to trainings and seminars, discussion of Council decisions, and voting.",
     "terms4": "Member organizations fulfil the following obligations: payment of the annual membership fee, submission of an annual activity report, and compliance with Association decisions.",
-    "terms5": "After the application is reviewed, UzNANNGO sends a letter on membership. The decision is made within 15 business days.",
+    "terms5": "After the application is reviewed, UzNANNGO sends a letter on membership. The decision is made within 15 business days. The membership fee paid for an incorrect or mistakenly submitted application is non-refundable.",
     "agreeLabel": "I have read and agree to the terms above",
     "continueBtn": "Continue →",
     "orgLabel": "Organization name *",

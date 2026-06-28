@@ -684,7 +684,7 @@ function esc(s) {
 
 function curLang() {
   var l = (window.ngoI18n && window.ngoI18n.get && window.ngoI18n.get()) ||
-    (function () { try { return localStorage.getItem('ngo_lang_v1') || 'uz'; } catch (e) { return 'uz'; } })();
+    (function () { try { return localStorage.getItem('ngo_public_lang_v1') || 'uz'; } catch (e) { return 'uz'; } })();
   return (l === 'ru' || l === 'en') ? l : 'uz';
 }
 function tt(k, fb) { return (window.ngoI18n && window.ngoI18n.t) ? window.ngoI18n.t(k, fb) : fb; }

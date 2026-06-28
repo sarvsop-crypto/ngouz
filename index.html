@@ -648,7 +648,7 @@ window.addEventListener('load', function(){
 
   function fmt(n){ return n.toLocaleString('ru-RU'); }
 
-  function curLang(){ var l=(window.ngoI18n&&window.ngoI18n.get&&window.ngoI18n.get())||(function(){try{return localStorage.getItem('ngo_lang_v1')||'uz';}catch(e){return 'uz';}})(); return (l==='ru'||l==='en')?l:'uz'; }
+  function curLang(){ var l=(window.ngoI18n&&window.ngoI18n.get&&window.ngoI18n.get())||(function(){try{return localStorage.getItem('ngo_public_lang_v1')||'uz';}catch(e){return 'uz';}})(); return (l==='ru'||l==='en')?l:'uz'; }
   function tt(k,fb){ return (window.ngoI18n&&window.ngoI18n.t)?window.ngoI18n.t(k,fb):fb; }
   // Localized region names (keep the \n line-break for the two-line map label).
   var REGION_NAMES_I18N = {

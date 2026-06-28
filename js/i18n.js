@@ -1,7 +1,7 @@
 (function (global) {
   "use strict";
 
-  var I18N_KEY = "ngo_lang_v1";
+  var I18N_KEY = "ngo_public_lang_v1";
   var LANGS = ["uz", "ru", "en"];
   var LABELS = {
     uz: "Oʻzbekcha",

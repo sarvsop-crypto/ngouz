@@ -19,7 +19,7 @@
   // to ngoI18n.set(code) and reflecting the active language in the
   // dropdown's label and selected option. This keeps page-string
   // translations out of every per-page bundle.
-  var i18nKey = "ngo_lang_v1";
+  var i18nKey = "ngo_public_lang_v1";
 
   var siteIndex = [
     { title: "Bosh sahifa", url: "index.html", summary: "O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi rasmiy sayti.", keywords: "nntma uznntma ngo.uz bosh sahifa" },
@@ -119,6 +119,25 @@
 
   var initialLang = window.ngoI18n ? window.ngoI18n.get() : "uz";
   updateLangChrome(initialLang);
+
+  function ensureGrantAnnouncementLink() {
+    var aiPill = document.querySelector(".nav-ai-pill");
+    if (!aiPill || document.querySelector(".nav-grant-announcements")) return;
+    var link = document.createElement("a");
+    link.className = "nav-grant-announcements";
+    link.href = "grants";
+    link.setAttribute("data-i18n", "nav.openItems.grantAnnouncements");
+    link.textContent = "Grant e'lonlari";
+    aiPill.parentNode.insertBefore(link, aiPill);
+    if (window.ngoI18n && typeof window.ngoI18n.apply === "function") {
+      window.ngoI18n.apply(link.parentNode);
+    }
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", ensureGrantAnnouncementLink);
+  } else {
+    ensureGrantAnnouncementLink();
+  }
 
   var languageLinks = Array.prototype.slice.call(document.querySelectorAll(".topbar-lang"));
   languageLinks.forEach(function (a, idx) {
@@ -569,6 +588,7 @@
       '<span class="mobile-nav-label" data-i18n="nav.openGroup">Ochiq ma\'lumotlar</span>' +
       '<a href="contact" data-i18n="nav.openItems.contact">Bog\'lanish</a>' +
       '<div class="mobile-nav-sub">' +
+        '<a href="grants" data-i18n="nav.openItems.grantAnnouncements">Grant e\'lonlari</a>' +
         '<a href="grant-tanlovlari" data-i18n="nav.openItems.grantAi">Grant tanlovlari - AI qidiruv</a>' +
         '<a href="official-docs" data-i18n="nav.openItems.normativ">Normativ-huquqiy hujjatlar</a>' +
         '<a href="multimedia-room" data-i18n="nav.openItems.media">Media</a>' +
@@ -595,7 +615,7 @@
     // we don't fork the lang / search / a11y state machines.
     var paintMobileLang = function () {
       var current = (window.ngoI18n && window.ngoI18n.get && window.ngoI18n.get()) ||
-        (function () { try { return localStorage.getItem('ngo_lang_v1') || 'uz'; } catch (e) { return 'uz'; } })();
+        (function () { try { return localStorage.getItem('ngo_public_lang_v1') || 'uz'; } catch (e) { return 'uz'; } })();
       mobileNav.querySelectorAll('[data-mobile-lang]').forEach(function (btn) {
         btn.classList.toggle('is-active', btn.getAttribute('data-mobile-lang') === current);
       });

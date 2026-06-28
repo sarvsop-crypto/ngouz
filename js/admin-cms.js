@@ -154,7 +154,12 @@ var AdminCMS = (function () {
       cb(new Error('Fayl tanlanmagan'));
       return;
     }
-    var picked = fileInput.files[0];
+    var pickedFiles = Array.prototype.slice.call(fileInput.files);
+    if (pickedFiles.length > 10) {
+      cb(new Error('Ko\'pi bilan 10 ta fayl yuklash mumkin.'));
+      return;
+    }
+    var picked = pickedFiles[0];
     // MIME-type guard. The <input accept="image/*"> attribute is only
     // a file-picker hint — users can override via the "All files"
     // dropdown and pick a .pdf or .exe. Backend validates the file
@@ -164,26 +169,42 @@ var AdminCMS = (function () {
     // Only enforce this for inputs that declared accept="image/*"
     // to leave non-image upload paths (cabinet-reports PDFs) alone.
     var accept = (fileInput.getAttribute('accept') || '').trim();
-    if (accept === 'image/*' && picked.type && picked.type.indexOf('image/') !== 0) {
-      cb(new Error("Faqat rasm (image) fayllar yuklanadi. Tanlangan fayl turi: " + (picked.type || 'noma\'lum')));
-      return;
+    var allowVideo = accept.indexOf('video/') !== -1;
+    if (accept === 'image/*' || (accept.indexOf('image/') !== -1 && !allowVideo)) {
+      for (var i = 0; i < pickedFiles.length; i++) {
+        if (pickedFiles[i].type && pickedFiles[i].type.indexOf('image/') !== 0) {
+          cb(new Error("Faqat rasm (image) fayllar yuklanadi. Tanlangan fayl turi: " + (pickedFiles[i].type || 'noma\'lum')));
+          return;
+        }
+      }
     }
     // Client-side cap on cover images. Backend has its own limit but
     // surfacing it here saves the admin a minute of upload-and-reject
     // for images > 10 MB. Most photo cover images are 200 KB–2 MB.
-    if (picked.size > 10 * 1024 * 1024) {
-      cb(new Error('Fayl hajmi 10 MB dan oshmasligi kerak (' + (picked.size / (1024 * 1024)).toFixed(1) + ' MB tanlangan).'));
-      return;
+    for (var j = 0; j < pickedFiles.length; j++) {
+      if (pickedFiles[j].size > 20 * 1024 * 1024) {
+        cb(new Error('Har bir fayl hajmi 20 MB dan oshmasligi kerak (' + (pickedFiles[j].size / (1024 * 1024)).toFixed(1) + ' MB tanlangan).'));
+        return;
+      }
     }
     var fd = new FormData();
-    fd.append('file', picked);
+    pickedFiles.forEach(function (file) { fd.append('file[]', file); });
     // Uploads need more headroom than the 15s api-client default —
     // a 10 MB cover image on a slow connection routinely exceeds it
     // and the user just sees 'Xatolik!'. 90s matches the 60s used by
     // the iter-108 cabinet upload buttons, with extra slack since
     // these run on admin desktop sessions where 4G/3G is rarer.
     NgoApi.post('/admin/upload', fd, { timeout: 90000 })
-      .then(function (res) { cb(null, res); })
+      .then(function (res) {
+        if (res && res.files && res.files.length && !res.path) {
+          res.allFiles = res.files;
+          res.path = res.files[0].path;
+          res.url = res.files[0].url;
+          res.mime = res.files[0].mime;
+          res.size = res.files[0].size;
+        }
+        cb(null, res);
+      })
       .catch(function (err) { cb(err); });
   }
 
