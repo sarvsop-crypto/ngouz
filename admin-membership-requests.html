@@ -143,8 +143,8 @@
         <form class="u-filter-row" role="search" data-i18n-aria-label="admin.membershipRequests.filterAria" aria-label="Arizalarni filtrlash">
           <input id="membershipSearch" type="search" enterkeyhint="search" class="table-section__search u-search-260" data-i18n-placeholder="admin.membershipRequests.searchPlaceholder" placeholder="Tashkilot nomi..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" />
           <button type="button" class="filter-chip is-active" aria-pressed="true" aria-controls="membershipRequestRows" data-status-filter="all" data-i18n="admin.membershipRequests.filter.all">Barchasi</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="membershipRequestRows" data-status-filter="pending" data-i18n="admin.membershipRequests.filter.pending">Kutilmoqda</button>
-          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="membershipRequestRows" data-status-filter="approved" data-i18n="admin.membershipRequests.filter.approved">Tasdiqlangan</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="membershipRequestRows" data-status-filter="active" data-i18n="admin.membershipRequests.filter.pending">Jarayonda</button>
+          <button type="button" class="filter-chip" aria-pressed="false" aria-controls="membershipRequestRows" data-status-filter="accepted" data-i18n="admin.membershipRequests.filter.approved">Qabul qilingan</button>
           <button type="button" class="filter-chip" aria-pressed="false" aria-controls="membershipRequestRows" data-status-filter="returned" data-i18n="admin.membershipRequests.filter.returned">Qaytarilgan</button>
           <button type="button" class="filter-chip" aria-pressed="false" aria-controls="membershipRequestRows" data-status-filter="rejected" data-i18n="admin.membershipRequests.filter.rejected">Rad etilgan</button>
         </form>
@@ -199,8 +199,33 @@
       toastTimer = setTimeout(function () { el.classList.remove('show'); }, 4000);
     }
 
-    var STATUS_BADGE = { 'pending': 'warning', 'approved': 'success', 'returned': 'info', 'rejected': 'error' };
-    var STATUS_LABEL = { 'pending': 'Kutilmoqda', 'approved': 'Tasdiqlangan', 'returned': 'Qaytarilgan', 'rejected': 'Rad etilgan' };
+    var STATUS_BADGE = {
+      pending: 'warning',
+      submitted: 'warning',
+      payment_pending: 'warning',
+      paid: 'success',
+      regional_review: 'info',
+      superadmin_review: 'info',
+      leader_review: 'info',
+      accepted: 'success',
+      approved: 'success',
+      returned: 'info',
+      rejected: 'error'
+    };
+    var STATUS_LABEL = {
+      pending: 'Yuborildi',
+      submitted: 'Yuborildi',
+      payment_pending: 'To‘lov kutilmoqda',
+      paid: 'To‘landi',
+      regional_review: 'Hududiy bo‘linmada',
+      superadmin_review: 'Superadmin ko‘rib chiqmoqda',
+      leader_review: 'Rahbar tasdig‘ida',
+      accepted: 'A’zolikka qabul qilindi',
+      approved: 'Qabul qilingan',
+      returned: 'Qaytarilgan',
+      rejected: 'Rad etilgan'
+    };
+    var ACTIVE_STATUSES = ['pending', 'submitted', 'payment_pending', 'paid', 'regional_review', 'superadmin_review', 'leader_review', 'returned'];
 
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
@@ -213,15 +238,16 @@
 
     function renderKpi() {
       document.getElementById('kpiTotal').textContent    = items.length;
-      document.getElementById('kpiPending').textContent  = items.filter(function(i){return i.status==='pending';}).length;
-      document.getElementById('kpiApproved').textContent = items.filter(function(i){return i.status==='approved';}).length;
+      document.getElementById('kpiPending').textContent  = items.filter(function(i){return ACTIVE_STATUSES.indexOf(i.status) !== -1;}).length;
+      document.getElementById('kpiApproved').textContent = items.filter(function(i){return i.status==='accepted'||i.status==='approved';}).length;
       document.getElementById('kpiRejected').textContent = items.filter(function(i){return i.status==='rejected'||i.status==='returned';}).length;
     }
 
     function renderTable() {
       var q = searchQ.toLowerCase();
       var filtered = items.filter(function (item) {
-        if (statusFilter !== 'all' && item.status !== statusFilter) return false;
+        if (statusFilter === 'active' && ACTIVE_STATUSES.indexOf(item.status) === -1) return false;
+        if (statusFilter !== 'all' && statusFilter !== 'active' && item.status !== statusFilter) return false;
         if (q) {
           // String coercion of null/undefined produces 'null'/'undefined'
           // which polluted the haystack — typing 'null' matched every
@@ -244,6 +270,7 @@
         // a stray non-digit can't escape the JS arg list.
         var idNum = parseInt(a.id, 10) || 0;
         var orgIdNum = a.organization_id == null ? 'null' : (parseInt(a.organization_id, 10) || 'null');
+        var canAct = ['submitted', 'pending', 'payment_pending', 'paid', 'regional_review', 'superadmin_review', 'leader_review', 'returned'].indexOf(a.status) !== -1;
         return '<tr>' +
           '<td><input type="checkbox" aria-label="#' + esc(a.id) + ' arizasini tanlash" /></td>' +
           '<td><strong>#' + esc(a.id) + '</strong></td>' +
@@ -252,8 +279,10 @@
           '<td>' + (a.created_at ? '<time datetime="' + esc(String(a.created_at).slice(0,10)) + '">' + esc(String(a.created_at).slice(0,10)) + '</time>' : '') + '</td>' +
           '<td><span class="badge badge--' + badge + '">' + label + '</span></td>' +
           '<td style="white-space:nowrap">' +
-            (a.status === 'pending' ?
-              '<button type="button" class="btn btn--sm btn--primary" aria-label="#' + esc(a.id) + ' arizasini tasdiqlash" onclick="approveApp(' + idNum + ',' + orgIdNum + ')"><i class="ph ph-check" aria-hidden="true"></i> Tasdiqlash</button> ' +
+            (canAct ?
+              '<button type="button" class="btn btn--sm btn--primary" aria-label="#' + esc(a.id) + ' arizasini qabul qilish" onclick="approveApp(' + idNum + ',' + orgIdNum + ')"><i class="ph ph-check" aria-hidden="true"></i> Qabul</button> ' +
+              '<button type="button" class="btn btn--sm btn--secondary" aria-label="#' + esc(a.id) + ' arizasini keyingi bosqichga o‘tkazish" onclick="advanceApp(' + idNum + ')"><i class="ph ph-arrow-right" aria-hidden="true"></i></button> ' +
+              '<button type="button" class="btn btn--sm btn--secondary" aria-label="#' + esc(a.id) + ' arizasini qaytarish" onclick="returnApp(' + idNum + ')"><i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i></button> ' +
               '<button type="button" class="btn btn--sm btn--secondary" aria-label="#' + esc(a.id) + ' arizasini rad etish" onclick="rejectApp(' + idNum + ')"><i class="ph ph-x" aria-hidden="true"></i></button>'
             : '—') +
           '</td></tr>';
@@ -268,7 +297,7 @@
         // can't queue duplicate requests from rapid double-clicks.
         // reload() re-renders the rows so we don't need to undo this
         // explicitly on success — only on the catch path.
-        t.querySelectorAll('button[onclick^="approveApp"], button[onclick^="rejectApp"]').forEach(function (b) {
+        t.querySelectorAll('button[onclick^="approveApp"], button[onclick^="advanceApp"], button[onclick^="returnApp"], button[onclick^="rejectApp"]').forEach(function (b) {
           b.disabled = !!busy;
         });
       }
@@ -279,9 +308,31 @@
       var orgId = parseInt(orgIdStr, 10) || null;
       if (!orgId) { toast('Tashkilot ID raqami kerak. NNT ro\'yxatidan toping.', 'error'); return; }
       setRowsBusy(true);
-      NgoApi.patch('/admin/membership-requests/' + id, { status: 'approved', organization_id: orgId })
-        .then(function () { toast('Tasdiqlandi! Foydalanuvchi kabineti faollashtirildi.', 'success'); reload(); })
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'accepted', organization_id: orgId })
+        .then(function () { toast('A’zolikka qabul qilindi. Raqamlar avtomatik shakllantirildi.', 'success'); reload(); })
         .catch(function (err) { setRowsBusy(false); toast('Tasdiqlashda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); });
+    };
+    window.advanceApp = function (id) {
+      var item = items.find(function (a) { return parseInt(a.id, 10) === id; }) || {};
+      var order = ['submitted', 'regional_review', 'superadmin_review', 'leader_review'];
+      var current = item.status === 'pending' ? 'submitted' : item.status;
+      var next = order[Math.min(order.indexOf(current) + 1, order.length - 1)] || 'regional_review';
+      if (current === 'payment_pending') next = 'paid';
+      if (current === 'paid') next = 'regional_review';
+      setRowsBusy(true);
+      NgoApi.patch('/admin/membership-requests/' + id, { status: next })
+        .then(function () { toast('Ariza holati yangilandi.', 'success'); reload(); })
+        .catch(function (err) { setRowsBusy(false); toast('Holatni yangilashda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); });
+    };
+    window.returnApp = function (id) {
+      var note = prompt('Qaytarish sababi:');
+      if (note === null) return;
+      note = (note || '').trim();
+      if (!note) { toast('Qaytarish sababi bo\'sh bo\'lishi mumkin emas.', 'error'); return; }
+      setRowsBusy(true);
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', return_reason: note, review_note: note })
+        .then(function () { toast('Ariza qaytarildi.', 'success'); reload(); })
+        .catch(function (err) { setRowsBusy(false); toast('Qaytarishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); });
     };
     window.rejectApp = function (id) {
       var note = prompt('Rad etish sababi:');
@@ -289,8 +340,8 @@
       note = (note || '').trim();
       if (!note) { toast('Rad etish sababi bo\'sh bo\'lishi mumkin emas.', 'error'); return; }
       setRowsBusy(true);
-      NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', review_note: note })
-        .then(function () { toast('Ariza qaytarildi.', 'success'); reload(); })
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'rejected', reject_reason: note, review_note: note })
+        .then(function () { toast('Ariza rad etildi.', 'success'); reload(); })
         .catch(function (err) { setRowsBusy(false); toast('Rad etishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); });
     };
 

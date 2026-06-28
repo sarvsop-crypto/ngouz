@@ -199,8 +199,9 @@
       var el = document.getElementById(id); if (el) el.textContent = '0';
     });
     /* Replace table body */
-    var STATUS_BADGE = { 'pending': 'warning', 'approved': 'success', 'returned': 'info', 'rejected': 'error' };
-    var STATUS_LABEL = { 'pending': 'Kutilmoqda', 'approved': 'Tasdiqlangan', 'returned': 'Qaytarilgan', 'rejected': 'Rad etilgan' };
+    var STATUS_BADGE = { pending: 'warning', submitted: 'warning', payment_pending: 'warning', paid: 'success', regional_review: 'info', superadmin_review: 'info', leader_review: 'info', accepted: 'success', approved: 'success', returned: 'info', rejected: 'error' };
+    var STATUS_LABEL = { pending: 'Yuborildi', submitted: 'Yuborildi', payment_pending: 'To‘lov kutilmoqda', paid: 'To‘landi', regional_review: 'Hududiy bo‘linmada', superadmin_review: 'Superadmin ko‘rib chiqmoqda', leader_review: 'Rahbar tasdig‘ida', accepted: 'A’zolikka qabul qilindi', approved: 'Qabul qilingan', returned: 'Qaytarilgan', rejected: 'Rad etilgan' };
+    var ACTIVE_STATUSES = ['pending', 'submitted', 'payment_pending', 'paid', 'regional_review', 'superadmin_review', 'leader_review', 'returned'];
     function esc(s) { return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
     var allItems = [];
@@ -208,7 +209,8 @@
       var badge = STATUS_BADGE[a.status] || 'neutral';
       var label = esc(STATUS_LABEL[a.status] || a.status || '');
       var idNum = parseInt(a.id, 10) || 0;
-      var actions = a.status === 'pending'
+      var canAct = ACTIVE_STATUSES.indexOf(a.status) !== -1;
+      var actions = canAct
         ? '<button type="button" class="btn btn--sm btn--primary" aria-label="#' + esc(a.id) + ' arizasini tasdiqlash" onclick="approveTask(' + idNum + ')"><i class="ph ph-check" aria-hidden="true"></i></button> '
           + '<button type="button" class="btn btn--sm btn--secondary" aria-label="#' + esc(a.id) + ' arizasini rad etish" onclick="rejectTask(' + idNum + ')"><i class="ph ph-x" aria-hidden="true"></i></button>'
         : '—';
@@ -240,8 +242,8 @@
         allItems = (res.items || []).sort(function (a, b) {
           return (new Date(b.created_at).getTime() || 0) - (new Date(a.created_at).getTime() || 0);
         });
-        var pending = allItems.filter(function(a){return a.status==='pending';});
-        var approved = allItems.filter(function(a){return a.status==='approved';});
+        var pending = allItems.filter(function(a){return ACTIVE_STATUSES.indexOf(a.status) !== -1;});
+        var approved = allItems.filter(function(a){return a.status==='accepted'||a.status==='approved';});
         var rejected = allItems.filter(function(a){return a.status==='rejected'||a.status==='returned';});
         document.getElementById('kpiPending').textContent = pending.length;
         document.getElementById('kpiApproved').textContent = approved.length;
@@ -305,7 +307,7 @@
       var orgId = parseInt(orgIdStr, 10) || null;
       if (!orgId) { toast('Tashkilot ID raqami kerak.', 'error'); return; }
       setRowsBusy(true);
-      NgoApi.patch('/admin/membership-requests/' + id, { status: 'approved', organization_id: orgId })
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'accepted', organization_id: orgId })
         .then(function() { toast('Ariza tasdiqlandi.', 'success'); loadTasks(); })
         .catch(function (err) {
           setRowsBusy(false);
@@ -318,8 +320,8 @@
       note = (note || '').trim();
       if (!note) { toast('Rad etish sababi bo\'sh bo\'lishi mumkin emas.', 'error'); return; }
       setRowsBusy(true);
-      NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', review_note: note })
-        .then(function() { toast('Ariza qaytarildi.', 'success'); loadTasks(); })
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'rejected', reject_reason: note, review_note: note })
+        .then(function() { toast('Ariza rad etildi.', 'success'); loadTasks(); })
         .catch(function (err) {
           setRowsBusy(false);
           toast('Rad etishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error');

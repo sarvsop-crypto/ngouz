@@ -253,9 +253,11 @@
       if (el) el.textContent = res.total || 0;
     }).catch(function () {});
 
-    NgoApi.get('/admin/membership-requests?limit=1&status=pending').then(function (res) {
+    NgoApi.get('/admin/membership-requests?limit=200').then(function (res) {
       var el = document.getElementById('kpiPending');
-      if (el) el.textContent = res.total || 0;
+      if (!el) return;
+      var active = ['pending', 'submitted', 'payment_pending', 'paid', 'regional_review', 'superadmin_review', 'leader_review', 'returned'];
+      el.textContent = (res.items || []).filter(function (a) { return active.indexOf(a.status) !== -1; }).length;
     }).catch(function () {});
 
     NgoApi.get('/admin/users').then(function (res) {
@@ -301,14 +303,26 @@
       if (t) t.setAttribute('aria-busy', 'false');
     });
 
-    // Pending membership requests as deadlines
-    NgoApi.get('/admin/membership-requests?limit=5&status=pending').then(function (res) {
+    // Active membership requests as deadlines
+    NgoApi.get('/admin/membership-requests?limit=20').then(function (res) {
       var ul = document.getElementById('dashboardDeadlines');
       if (!ul) return;
-      var items = res.items || [];
+      var labels = {
+        pending: 'Yuborildi',
+        submitted: 'Yuborildi',
+        payment_pending: 'To‘lov kutilmoqda',
+        paid: 'To‘landi',
+        regional_review: 'Hududiy bo‘linmada',
+        superadmin_review: 'Superadmin ko‘rib chiqmoqda',
+        leader_review: 'Rahbar tasdig‘ida',
+        returned: 'Qaytarilgan'
+      };
+      var active = Object.keys(labels);
+      var items = (res.items || []).filter(function (a) { return active.indexOf(a.status) !== -1; }).slice(0, 5);
       if (!items.length) { ul.innerHTML = '<li class="alert-item" role="status"><span class="text-dim">Kutilayotgan ariza yo\'q</span></li>'; return; }
       ul.innerHTML = items.map(function (a) {
-        return '<li class="alert-item"><span class="badge badge--warning">Kutilmoqda</span><span>' + esc(a.org_name || '—') + '</span><span class="text-dim">' + (a.created_at ? '<time datetime="' + esc(String(a.created_at).slice(0,10)) + '">' + esc(String(a.created_at).slice(0,10)) + '</time>' : '') + '</span></li>';
+        var badge = a.status === 'paid' ? 'success' : (a.status === 'returned' ? 'info' : 'warning');
+        return '<li class="alert-item"><span class="badge badge--' + badge + '">' + esc(labels[a.status] || a.status || 'Jarayonda') + '</span><span>' + esc(a.org_name || '—') + '</span><span class="text-dim">' + (a.created_at ? '<time datetime="' + esc(String(a.created_at).slice(0,10)) + '">' + esc(String(a.created_at).slice(0,10)) + '</time>' : '') + '</span></li>';
       }).join('');
     }).catch(function (err) {
       if (err && err.status === 401) return;

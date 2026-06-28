@@ -142,11 +142,11 @@
           <caption class="u-visually-hidden" data-i18n="admin.registry.tableCaption">Ro'yxatdan o'tgan NNT tashkilotlari</caption>
           <thead>
             <tr>
-              <th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.select">Tanlash</span></th><th scope="col" data-i18n="admin.registry.colName">NNT nomi</th><th scope="col" data-i18n="admin.table.region">Hudud</th><th scope="col" data-i18n="admin.registry.colLeader">Rahbar</th><th scope="col" data-i18n="admin.registry.colMemberSince">A'zo bo'lgan</th><th scope="col" data-i18n="admin.table.status">Holat</th><th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.actions">Amallar</span></th>
+              <th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.select">Tanlash</span></th><th scope="col" data-i18n="admin.registry.colName">NNT nomi</th><th scope="col">STIR / hujjatlar</th><th scope="col" data-i18n="admin.table.region">Hudud</th><th scope="col" data-i18n="admin.registry.colLeader">Rahbar</th><th scope="col" data-i18n="admin.registry.colMemberSince">A'zo bo'lgan</th><th scope="col" data-i18n="admin.table.status">Holat</th><th scope="col"><span class="u-visually-hidden" data-i18n="admin.table.actions">Amallar</span></th>
             </tr>
           </thead>
           <tbody id="registryTableBody" aria-live="polite" aria-busy="true">
-            <tr class="u-empty-row"><td colspan="7" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
+            <tr class="u-empty-row"><td colspan="8" role="status" data-i18n="admin.ui.loading">Yuklanmoqda...</td></tr>
           </tbody>
         </table>
       </section>
@@ -297,10 +297,10 @@
     function renderTable() {
       var q = searchQ.toLowerCase();
       var filtered = items;
-      if (q) filtered = items.filter(function(o) { return ((o.name||'')+' '+(o.leader_name||'')+' '+(o.region_code||'')).toLowerCase().indexOf(q) !== -1; });
+      if (q) filtered = items.filter(function(o) { return ((o.name||'')+' '+(o.inn||'')+' '+(o.leader_name||'')+' '+(o.region_code||'')+' '+(o.contract_number||'')+' '+(o.cert_number||'')+' '+(o.recommendation_number||'')).toLowerCase().indexOf(q) !== -1; });
       var tbody = document.getElementById('registryTableBody');
       if (!filtered.length) {
-        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="7" role="status">' +
+        tbody.innerHTML = '<tr class="u-empty-row"><td colspan="8" role="status">' +
           (!items.length
             ? 'Reyestrda NNT yo\'q. Yuqoridagi <strong>“NNT qo\'shish”</strong> tugmasi orqali birinchi tashkilotni qo\'shing.'
             : 'Qidiruv bo\'yicha NNT topilmadi.') +
@@ -315,17 +315,28 @@
         return '<tr>' +
           '<td><input type="checkbox" aria-label="' + esc((o.name || '').length > 50 ? o.name.slice(0,50)+'…' : (o.name || '#'+o.id)) + ' tashkilotini tanlash" /></td>' +
           '<td><div class="table__counterparty"><span class="table__avatar">' + esc(ini) + '</span><span class="table__company">' + esc((o.name || '').length > 50 ? o.name.slice(0,50)+'…' : (o.name || '')) + '</span></div></td>' +
+          '<td><strong>' + esc(o.inn || '—') + '</strong><br><span style="font-size:12px;color:#798384">' + esc(o.contract_number || o.cert_number || o.recommendation_number || 'Hujjat raqami yo‘q') + '</span></td>' +
           '<td>' + esc(o.region_code || '—') + '</td>' +
           '<td>' + esc(o.leader_name || '—') + '</td>' +
           '<td>' + (o.member_since ? '<time datetime="' + esc(String(o.member_since).slice(0,10)) + '">' + esc(o.member_since) + '</time>' : '—') + '</td>' +
           '<td><span class="badge badge--' + badge + '">' + label + '</span></td>' +
-          '<td><button type="button" class="btn--ghost-sm danger" aria-label="' + esc((o.name || '').length > 50 ? o.name.slice(0,50)+'…' : (o.name || '#'+o.id)) + ' tashkilotini o\'chirish" onclick="deleteOrg(' + idNum + ')" title="O\'chirish"><i class="ph ph-trash" aria-hidden="true"></i></button></td>' +
+          '<td><button type="button" class="btn--ghost-sm" aria-label="' + esc((o.name || '').length > 50 ? o.name.slice(0,50)+'…' : (o.name || '#'+o.id)) + ' kartasini ochish" onclick="openOrgCard(' + idNum + ')" title="Karta"><i class="ph ph-identification-card" aria-hidden="true"></i></button> <button type="button" class="btn--ghost-sm danger" aria-label="' + esc((o.name || '').length > 50 ? o.name.slice(0,50)+'…' : (o.name || '#'+o.id)) + ' tashkilotini o\'chirish" onclick="deleteOrg(' + idNum + ')" title="O\'chirish"><i class="ph ph-trash" aria-hidden="true"></i></button></td>' +
         '</tr>';
       }).join('');
       if (filtered.length > 100) {
-        tbody.innerHTML += '<tr><td colspan="7" role="status" style="text-align:center;padding:16px;color:#798384">Birinchi 100 ta ko\'rsatilmoqda. Qidiruvdan foydalaning.</td></tr>';
+        tbody.innerHTML += '<tr><td colspan="8" role="status" style="text-align:center;padding:16px;color:#798384">Birinchi 100 ta ko\'rsatilmoqda. Qidiruvdan foydalaning.</td></tr>';
       }
     }
+
+    window.openOrgCard = function(id) {
+      NgoApi.get('/admin/organizations/' + id).then(function(res) {
+        var org = res.organization || {};
+        var apps = res.membership_applications || [];
+        toast((org.name || ('#' + id)) + ': ' + apps.length + ' ta ariza, karta API tayyor.', 'success');
+      }).catch(function (err) {
+        toast('Kartani ochishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error');
+      });
+    };
 
     function loadPage(seq) {
       if (seq === undefined) seq = ++loadSeq;
@@ -349,7 +360,7 @@
           if (seq !== loadSeq) return; // stale failure
           if (err && err.status === 401) return; // api-client redirects
           var tbody = document.getElementById('registryTableBody');
-          if (tbody) tbody.innerHTML = '<tr class="u-empty-row"><td colspan="7" role="alert" style="color:var(--error-600,#dc2626)">NNT ro\'yxatini yuklab bo\'lmadi. Sahifani yangilang yoki internet aloqangizni tekshiring.</td></tr>';
+          if (tbody) tbody.innerHTML = '<tr class="u-empty-row"><td colspan="8" role="alert" style="color:var(--error-600,#dc2626)">NNT ro\'yxatini yuklab bo\'lmadi. Sahifani yangilang yoki internet aloqangizni tekshiring.</td></tr>';
         })
         .then(function () {
           if (seq !== loadSeq) return;
@@ -517,7 +528,7 @@
         window.exportCsv(
           'nnt-royxati-' + new Date().toISOString().slice(0, 10) + '.csv',
           items,
-          ['id', 'name', 'slug', 'region_code', 'leader_name', 'address', 'member_since', 'registered_at', 'soha', 'status']
+          ['id', 'name', 'inn', 'slug', 'region_code', 'leader_name', 'address', 'member_since', 'registered_at', 'soha', 'status', 'contract_number', 'cert_number', 'recommendation_number', 'membership_expires_at']
         );
       });
     }
