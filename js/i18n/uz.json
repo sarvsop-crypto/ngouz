@@ -1156,9 +1156,10 @@
       "public": "Jamoatchilik kengashi a'zolari"
     },
     "openGroup": "Ochiq ma'lumotlar",
-    "openItems": {
-      "contact": "Bog'lanish",
-      "grantAi": "Grant tanlovlari - AI qidiruv",
+      "openItems": {
+        "contact": "Bog'lanish",
+        "grantAnnouncements": "Grant e'lonlari",
+        "grantAi": "Grant tanlovlari - AI qidiruv",
       "normativ": "Normativ-huquqiy hujjatlar",
       "media": "Media",
       "events": "Tadbirlar",

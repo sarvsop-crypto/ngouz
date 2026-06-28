@@ -146,6 +146,7 @@
 <a href="official-docs" aria-haspopup="true" aria-expanded="false"><span data-i18n="nav.openGroup">Ochiq maʼlumotlar</span> <i class="ph ph-caret-down" aria-hidden="true" weight="bold"></i></a>
 <div class="dropdown">
 <a href="contact" data-i18n="nav.openItems.contact">Bog'lanish</a>
+<a class="nav-grant-announcements" href="grants" data-i18n="nav.openItems.grantAnnouncements">Grant e'lonlari</a>
 <a href="grant-tanlovlari" data-i18n="nav.openItems.grantAi">Grant tanlovlari - AI qidiruv</a>
 <a href="official-docs" data-i18n="nav.openItems.normativ">Normativ-huquqiy hujjatlar</a>
 <a href="multimedia-room" data-i18n="nav.openItems.media">Media</a>
@@ -622,7 +623,7 @@ window.addEventListener('load', function(){
   }
 });
 </script>
-<script src="js/main.js?v=20260628nogrant" defer></script>
+<script src="js/main.js?v=20260628grantdropdown" defer></script>
 <script src="js/content.js" defer></script>
 <script>
     var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
