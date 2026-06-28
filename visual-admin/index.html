@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/visual-admin.css?v=5" />
+  <link rel="stylesheet" href="/css/visual-admin.css?v=20260628studio" />
 </head>
 <body>
   <div class="va-shell" data-state="loading">
@@ -36,6 +36,19 @@
     </section>
 
     <section class="va-app" id="appView" aria-label="Visual admin panel">
+      <header class="va-topbar">
+        <div class="va-brand">
+          <img src="/img/logo-oznntma.png" alt="" class="va-brand__logo" />
+          <div>
+            <strong>Visual Admin</strong>
+            <span>ngo.uz sahifa tahriri</span>
+          </div>
+        </div>
+        <div class="va-topbar__actions">
+          <span class="va-chip">Live canvas</span>
+          <a class="va-btn va-btn--ghost" href="/" target="_blank" rel="noopener">Saytni ochish</a>
+        </div>
+      </header>
       <main class="va-site">
         <iframe id="siteFrame" class="va-site__frame" title="ngo.uz visual editing canvas" src="/"></iframe>
         <div class="va-site__status" id="siteStatus">Sayt yuklanmoqda...</div>
