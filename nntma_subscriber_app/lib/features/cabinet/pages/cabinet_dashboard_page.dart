@@ -11,134 +11,212 @@ class CabinetDashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CabinetPageScaffold(
-      eyebrow: 'A’zo kabineti',
-      title: 'A’zolik jarayoni',
-      subtitle: 'Ariza, to‘lov, hujjatlar va imzo holati.',
-      children: const [
-        _MembershipStatusPanel(),
-        SizedBox(height: AppSpace.lg),
-        _WorkflowTracker(),
-        SizedBox(height: AppSpace.lg),
+      eyebrow: 'Azo kabineti',
+      title: 'Bosh sahifa',
+      subtitle: 'Azolik ariza jarayoni va hujjatlar holati.',
+      children: [
+        const _HeaderActions(),
+        const SizedBox(height: AppSpace.lg),
+        const _WarningBanner(),
+        const SizedBox(height: AppSpace.xl),
         AdaptiveGrid(
-          minCardWidth: 360,
-          maxColumns: 2,
-          children: [
-            _NextActionsCard(),
-            _DocumentTableCard(),
+          minCardWidth: 220,
+          maxColumns: 4,
+          children: const [
+            _StatusCard('Ariza holati', 'Korib chiqilmoqda', 'ARZ-2026-0418', Color(0xFFB45309)),
+            _StatusCard('Bosqich', '2 / 4', 'Hujjatlar tekshiruvi', AppTokens.primaryDark),
+            _StatusCard('Topshirilgan', '02.04.2026', 'Sana', Color(0xFF0F7B4B)),
+            _StatusCard('Azolik', 'Kutilmoqda', 'Hali tasdiqlanmagan', AppTokens.textMuted),
           ],
         ),
-        SizedBox(height: AppSpace.lg),
-        _ActivityCard(),
+        const SizedBox(height: AppSpace.xl),
+        AdaptiveGrid(
+          minCardWidth: 320,
+          maxColumns: 2,
+          children: const [
+            _StagesCard(),
+            _DocumentStatusCard(),
+          ],
+        ),
+        const SizedBox(height: AppSpace.xl),
+        AdaptiveGrid(
+          minCardWidth: 320,
+          maxColumns: 2,
+          children: const [
+            _RecentActionsCard(),
+            _NewsCard(),
+          ],
+        ),
       ],
     );
   }
 }
-
-class _MembershipStatusPanel extends StatelessWidget {
-  const _MembershipStatusPanel();
+class _HeaderActions extends StatelessWidget {
+  const _HeaderActions();
 
   @override
   Widget build(BuildContext context) {
-    return CabinetCard(
-      padding: const EdgeInsets.all(AppSpace.xl),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 44,
-                height: 44,
-                decoration: BoxDecoration(color: const Color(0xFFEAF4FF), borderRadius: BorderRadius.circular(8)),
-                child: const PhosphorIcon(PhosphorIconsRegular.sealCheck, color: AppTokens.primaryDark),
-              ),
-              const SizedBox(width: AppSpace.md),
-              const Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Ariza holati', style: TextStyle(fontSize: 13, color: AppTokens.textMuted, fontWeight: FontWeight.w700)),
-                    SizedBox(height: AppSpace.xs),
-                    Text('Rahbar tasdig‘ida', style: TextStyle(fontSize: 26, fontWeight: FontWeight.w800, color: AppTokens.text)),
-                    SizedBox(height: AppSpace.xs),
-                    Text('Keyingi qadam: shartnoma va sertifikat ERI orqali imzolanadi.', style: TextStyle(color: AppTokens.textMuted, height: 1.45)),
-                  ],
-                ),
-              ),
-              SizedBox(width: AppSpace.md),
-              _StatusPill('Jarayonda', Color(0xFFB45309)),
-            ],
-          ),
-          const SizedBox(height: AppSpace.lg),
-          const Divider(height: 1),
-          const SizedBox(height: AppSpace.lg),
-          const AdaptiveGrid(
-            minCardWidth: 180,
-            maxColumns: 4,
-            children: [
-              _MetaTile('Keyingi qadam', 'Rahbar imzosi'),
-              _MetaTile('Kim ko‘rib chiqmoqda', 'Assotsiatsiya rahbari'),
-              _MetaTile('Oxirgi yangilanish', '28.06.2026 17:05'),
-              _MetaTile('Ariza raqami', 'ARZ-2026-0418'),
-            ],
-          ),
-        ],
-      ),
+    return Row(
+      children: [
+        const Expanded(
+          child: Text('Azo arizasi jarayoni va hujjatlar holati', style: TextStyle(fontSize: 15, color: AppTokens.textMuted)),
+        ),
+        const SizedBox(width: AppSpace.md),
+        OutlinedButton.icon(onPressed: () {}, icon: const PhosphorIcon(PhosphorIconsRegular.folder), label: const Text('Hujjatlar')),
+        const SizedBox(width: AppSpace.sm),
+        FilledButton.icon(onPressed: () {}, icon: const PhosphorIcon(PhosphorIconsRegular.clipboardText), label: const Text('Ariza holatim')),
+      ],
     );
   }
 }
-
-class _MetaTile extends StatelessWidget {
-  final String label;
-  final String value;
-  const _MetaTile(this.label, this.value);
+class _WarningBanner extends StatelessWidget {
+  const _WarningBanner();
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppSpace.md),
-      decoration: BoxDecoration(color: const Color(0xFFF8FAFC), border: Border.all(color: AppTokens.border), borderRadius: BorderRadius.circular(8)),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.symmetric(horizontal: AppSpace.lg, vertical: AppSpace.md),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFEF3C7),
+        border: Border.all(color: const Color(0xFFFDE68A)),
+        borderRadius: BorderRadius.circular(AppTokens.radiusMd),
+      ),
+      child: const Row(
         children: [
-          Text(label, style: const TextStyle(fontSize: 12, color: AppTokens.textMuted, fontWeight: FontWeight.w700)),
-          const SizedBox(height: AppSpace.xs),
-          Text(value, style: const TextStyle(fontWeight: FontWeight.w700, color: AppTokens.text)),
+          PhosphorIcon(PhosphorIconsRegular.warning, color: Color(0xFF92400E)),
+          SizedBox(width: AppSpace.sm),
+          Expanded(
+            child: Text(
+              'Muddatli hujjat: Ustav yangi tahrir 10.04.2026 gacha taqdim etilishi kerak.',
+              style: TextStyle(color: Color(0xFF92400E), fontWeight: FontWeight.w600),
+            ),
+          ),
         ],
       ),
     );
   }
 }
 
-class _WorkflowTracker extends StatelessWidget {
-  const _WorkflowTracker();
+class _StatusCard extends StatelessWidget {
+  final String label;
+  final String value;
+  final String note;
+  final Color valueColor;
+
+  const _StatusCard(this.label, this.value, this.note, this.valueColor);
+
+  @override
+  Widget build(BuildContext context) {
+    return CabinetCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(label, style: const TextStyle(fontSize: 13, color: AppTokens.textMuted)),
+          const SizedBox(height: AppSpace.sm),
+          Text(value, style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700, color: valueColor, height: 1.1)),
+          const SizedBox(height: AppSpace.xs),
+          Text(note, style: const TextStyle(fontSize: 12, color: AppTokens.textMuted)),
+        ],
+      ),
+    );
+  }
+}
+
+class _StagesCard extends StatelessWidget {
+  const _StagesCard();
 
   @override
   Widget build(BuildContext context) {
     const steps = [
-      ('Yuborildi', true),
-      ('To‘lov kutilmoqda', true),
-      ('To‘landi', true),
-      ('Hududiy bo‘linmada', true),
-      ('Superadmin', true),
-      ('Rahbar tasdig‘ida', false),
-      ('A’zolikka qabul qilindi', false),
-      ('Rad/Qaytarildi', false),
+      ('Ariza topshirildi', true, false),
+      ('Hujjatlar tekshiruvi', false, true),
+      ('Shartnoma imzosi', false, false),
+      ('Azolik tasdiqlandi', false, false),
     ];
+
     return CabinetCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CabinetCardTitle('Jarayon bosqichlari'),
+          const CabinetCardTitle('Ariza bosqichlari'),
           const SizedBox(height: AppSpace.md),
-          Wrap(
-            spacing: AppSpace.sm,
-            runSpacing: AppSpace.sm,
-            children: [
-              for (var i = 0; i < steps.length; i++)
-                _WorkflowChip(index: i + 1, label: steps[i].$1, done: steps[i].$2, active: i == 5),
-            ],
+          for (var i = 0; i < steps.length; i++) ...[
+            Row(
+              children: [
+                Container(
+                  width: 28,
+                  height: 28,
+                  decoration: BoxDecoration(
+                    color: steps[i].$2 || steps[i].$3 ? AppTokens.primary : const Color(0xFFE2E8F0),
+                    shape: BoxShape.circle,
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    steps[i].$2 ? '1' : '${i + 1}',
+                    style: TextStyle(color: steps[i].$2 || steps[i].$3 ? Colors.white : AppTokens.textMuted, fontWeight: FontWeight.w700),
+                  ),
+                ),
+                const SizedBox(width: AppSpace.md),
+                Expanded(
+                  child: Text(
+                    steps[i].$1,
+                    style: TextStyle(
+                      fontWeight: steps[i].$3 ? FontWeight.w700 : FontWeight.w500,
+                      color: steps[i].$3 ? AppTokens.primaryDark : AppTokens.text,
+                    ),
+                  ),
+                ),
+                if (steps[i].$3)
+                  const Text('Jarayonda', style: TextStyle(fontSize: 12, color: AppTokens.primaryDark, fontWeight: FontWeight.w700)),
+              ],
+            ),
+            if (i != steps.length - 1) const Padding(padding: EdgeInsets.only(left: 14), child: SizedBox(height: 18, child: VerticalDivider(thickness: 2))),
+          ],
+        ],
+      ),
+    );
+  }
+}
+
+class _DocumentStatusCard extends StatelessWidget {
+  const _DocumentStatusCard();
+
+  @override
+  Widget build(BuildContext context) {
+    return CabinetCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          CabinetCardTitle('Hujjatlar holati'),
+          SizedBox(height: AppSpace.md),
+          _DocLine('NGO Ustavi', 'Tasdiqlangan', Color(0xFF0F7B4B)),
+          _DocLine('Guvohnoma', 'Tasdiqlangan', Color(0xFF0F7B4B)),
+          _DocLine('Ustav yangi tahrir', 'Muddatli', Color(0xFFB45309)),
+          _DocLine('Soliq malumotnoma', 'Kutilmoqda', AppTokens.textMuted),
+        ],
+      ),
+    );
+  }
+}
+
+class _DocLine extends StatelessWidget {
+  final String name;
+  final String status;
+  final Color color;
+
+  const _DocLine(this.name, this.status, this.color);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: AppSpace.sm),
+      child: Row(
+        children: [
+          Expanded(child: Text(name)),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: AppSpace.sm, vertical: 4),
+            decoration: BoxDecoration(color: color.withValues(alpha: 0.14), borderRadius: BorderRadius.circular(999)),
+            child: Text(status, style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w700)),
           ),
         ],
       ),
@@ -146,145 +224,38 @@ class _WorkflowTracker extends StatelessWidget {
   }
 }
 
-class _WorkflowChip extends StatelessWidget {
-  final int index;
-  final String label;
-  final bool done;
-  final bool active;
-  const _WorkflowChip({required this.index, required this.label, required this.done, required this.active});
+class _RecentActionsCard extends StatelessWidget {
+  const _RecentActionsCard();
 
   @override
   Widget build(BuildContext context) {
-    final color = done ? const Color(0xFF0F7B4B) : (active ? const Color(0xFFB45309) : AppTokens.textMuted);
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpace.md, vertical: AppSpace.sm),
-      decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        border: Border.all(color: color.withValues(alpha: 0.25)),
-        borderRadius: BorderRadius.circular(999),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text('$index', style: TextStyle(fontSize: 12, color: color, fontWeight: FontWeight.w800)),
-          const SizedBox(width: AppSpace.xs),
-          Text(label, style: TextStyle(color: color, fontWeight: active ? FontWeight.w800 : FontWeight.w700)),
-        ],
-      ),
-    );
-  }
-}
-
-class _NextActionsCard extends StatelessWidget {
-  const _NextActionsCard();
-
-  @override
-  Widget build(BuildContext context) {
-    return CabinetCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const CabinetCardTitle('Keyingi amallar'),
-          const SizedBox(height: AppSpace.md),
-          FilledButton.icon(onPressed: null, icon: const PhosphorIcon(PhosphorIconsRegular.creditCard), label: const Text('A’zolik badalini to‘lash')),
-          const SizedBox(height: AppSpace.sm),
-          OutlinedButton.icon(onPressed: () {}, icon: const PhosphorIcon(PhosphorIconsRegular.warningCircle), label: const Text('Kamchiliklarni ko‘rish')),
-          const SizedBox(height: AppSpace.sm),
-          OutlinedButton.icon(onPressed: () {}, icon: const PhosphorIcon(PhosphorIconsRegular.uploadSimple), label: const Text('Qayta yuborish')),
-          const SizedBox(height: AppSpace.sm),
-          OutlinedButton.icon(onPressed: () {}, icon: const PhosphorIcon(PhosphorIconsRegular.downloadSimple), label: const Text('Shartnomani yuklab olish')),
-          const SizedBox(height: AppSpace.sm),
-          OutlinedButton.icon(onPressed: () {}, icon: const PhosphorIcon(PhosphorIconsRegular.medal), label: const Text('Sertifikatni yuklab olish')),
-        ],
-      ),
-    );
-  }
-}
-
-class _DocumentTableCard extends StatelessWidget {
-  const _DocumentTableCard();
-
-  @override
-  Widget build(BuildContext context) {
-    const rows = [
-      ('Ariza', 'Tasdiqlangan', '28.06.2026', '240 KB', false),
-      ('NNT ustavi', 'Tasdiqlangan', '28.06.2026', '1.2 MB', false),
-      ('Shartnoma', 'Imzolangan, tahrirlab bo‘lmaydi', '28.06.2026', '620 KB', true),
-      ('Sertifikat', 'Rahbar imzosida', '—', '—', false),
+    const actions = [
+      ('Ariza muvaffaqiyatli yuborildi', '02.04.2026 · ARZ-2026-0418', AppTokens.primary),
+      ('Hujjatlar tekshiruv bosqichiga otdi', '03.04.2026 · Admin', AppTokens.primaryDark),
+      ('Qoshimcha hujjat soraldi', '04.04.2026 · Muddat: 10.04.2026', Color(0xFFF59E0B)),
+      ('Shartnoma loyihasi tayyorlandi', '05.04.2026', Color(0xFF16A34A)),
     ];
+
     return CabinetCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CabinetCardTitle('Hujjatlar'),
+          const CabinetCardTitle('Songgi harakatlar'),
           const SizedBox(height: AppSpace.md),
-          for (final row in rows) _DocumentRow(row.$1, row.$2, row.$3, row.$4, row.$5),
-        ],
-      ),
-    );
-  }
-}
-
-class _DocumentRow extends StatelessWidget {
-  final String name;
-  final String status;
-  final String date;
-  final String size;
-  final bool locked;
-  const _DocumentRow(this.name, this.status, this.date, this.size, this.locked);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: AppSpace.sm),
-      decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: AppTokens.border))),
-      child: Row(
-        children: [
-          PhosphorIcon(locked ? PhosphorIconsRegular.lockKey : PhosphorIconsRegular.fileText, size: 18, color: AppTokens.primaryDark),
-          const SizedBox(width: AppSpace.sm),
-          Expanded(child: Text(name, style: const TextStyle(fontWeight: FontWeight.w700))),
-          Expanded(child: Text(status, style: const TextStyle(fontSize: 12, color: AppTokens.textMuted))),
-          SizedBox(width: 92, child: Text(date, style: const TextStyle(fontSize: 12, color: AppTokens.textMuted))),
-          SizedBox(width: 68, child: Text(size, style: const TextStyle(fontSize: 12, color: AppTokens.textMuted))),
-          IconButton(onPressed: () {}, icon: const PhosphorIcon(PhosphorIconsRegular.eye, size: 18), tooltip: 'Ko‘rish'),
-          IconButton(onPressed: () {}, icon: const PhosphorIcon(PhosphorIconsRegular.downloadSimple, size: 18), tooltip: 'Yuklab olish'),
-        ],
-      ),
-    );
-  }
-}
-
-class _ActivityCard extends StatelessWidget {
-  const _ActivityCard();
-
-  @override
-  Widget build(BuildContext context) {
-    const rows = [
-      ('Ariza rahbar tasdig‘iga yuborildi', '28.06.2026 17:05 · Superadmin'),
-      ('To‘lov Payme orqali tasdiqlandi', '28.06.2026 16:40 · Payme'),
-      ('Hududiy bo‘linma hujjatlarni tasdiqladi', '28.06.2026 15:10 · Hududiy admin'),
-      ('Ariza yuborildi', '27.06.2026 11:24 · Foydalanuvchi'),
-    ];
-    return CabinetCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const CabinetCardTitle('Harakatlar tarixi'),
-          const SizedBox(height: AppSpace.md),
-          for (final row in rows)
+          for (final action in actions)
             Padding(
               padding: const EdgeInsets.only(bottom: AppSpace.md),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(width: 8, height: 8, margin: const EdgeInsets.only(top: 6), decoration: const BoxDecoration(color: AppTokens.primary, shape: BoxShape.circle)),
+                  Container(width: 8, height: 8, margin: const EdgeInsets.only(top: 6), decoration: BoxDecoration(color: action.$3, shape: BoxShape.circle)),
                   const SizedBox(width: AppSpace.sm),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(row.$1, style: const TextStyle(fontWeight: FontWeight.w700)),
-                        Text(row.$2, style: const TextStyle(color: AppTokens.textMuted, fontSize: 12)),
+                        Text(action.$1, style: const TextStyle(fontWeight: FontWeight.w600)),
+                        Text(action.$2, style: const TextStyle(color: AppTokens.textMuted, fontSize: 12)),
                       ],
                     ),
                   ),
@@ -297,17 +268,48 @@ class _ActivityCard extends StatelessWidget {
   }
 }
 
-class _StatusPill extends StatelessWidget {
-  final String label;
-  final Color color;
-  const _StatusPill(this.label, this.color);
+class _NewsCard extends StatelessWidget {
+  const _NewsCard();
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpace.md, vertical: AppSpace.sm),
-      decoration: BoxDecoration(color: color.withValues(alpha: 0.12), borderRadius: BorderRadius.circular(999)),
-      child: Text(label, style: TextStyle(color: color, fontWeight: FontWeight.w800)),
+    const news = [
+      ('YANGILIK', 'OzNNTMA 2026-yil azolik shartlari elon qilindi', '05.04.2026', Color(0xFFE0F2FE), AppTokens.primaryDark),
+      ('TADBIR', 'NNT vakillari uchun seminar: 15.04.2026', '03.04.2026', Color(0xFFFFF7ED), Color(0xFFB45309)),
+      ('MUHIM', 'Yangi azolik tartibi va hujjatlar royxati', '01.04.2026', Color(0xFFFEF3C7), Color(0xFF92400E)),
+    ];
+
+    return CabinetCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const CabinetCardTitle('Yangiliklar'),
+          const SizedBox(height: AppSpace.md),
+          for (var i = 0; i < news.length; i++) ...[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: AppSpace.sm, vertical: 2),
+                  decoration: BoxDecoration(color: news[i].$4, borderRadius: BorderRadius.circular(6)),
+                  child: Text(news[i].$1, style: TextStyle(fontSize: 10, fontWeight: FontWeight.w700, color: news[i].$5)),
+                ),
+                const SizedBox(width: AppSpace.sm),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(news[i].$2, style: const TextStyle(fontWeight: FontWeight.w600)),
+                      Text(news[i].$3, style: const TextStyle(fontSize: 12, color: AppTokens.textMuted)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            if (i != news.length - 1) const Padding(padding: EdgeInsets.symmetric(vertical: AppSpace.sm), child: Divider(height: 1)),
+          ],
+        ],
+      ),
     );
   }
 }
