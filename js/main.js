@@ -120,6 +120,17 @@
   var initialLang = window.ngoI18n ? window.ngoI18n.get() : "uz";
   updateLangChrome(initialLang);
 
+  function removeGrantAnnouncementLinks() {
+    document.querySelectorAll('.nav-grant-announcements, [data-i18n="nav.openItems.grantAnnouncements"]').forEach(function (link) {
+      if (link && link.parentNode) link.parentNode.removeChild(link);
+    });
+  }
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", removeGrantAnnouncementLinks);
+  } else {
+    removeGrantAnnouncementLinks();
+  }
+
   var languageLinks = Array.prototype.slice.call(document.querySelectorAll(".topbar-lang"));
   languageLinks.forEach(function (a, idx) {
     var code = idx === 0 ? "uz" : idx === 1 ? "ru" : "en";
