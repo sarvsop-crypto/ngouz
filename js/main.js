@@ -121,14 +121,14 @@
   updateLangChrome(initialLang);
 
   function ensureGrantAnnouncementLink() {
-    var aiPill = document.querySelector(".nav-ai-pill");
-    if (!aiPill || document.querySelector(".nav-grant-announcements")) return;
+    var grantAiLink = document.querySelector('.dropdown a[data-i18n="nav.openItems.grantAi"]');
+    if (!grantAiLink || document.querySelector('.dropdown a[data-i18n="nav.openItems.grantAnnouncements"]')) return;
     var link = document.createElement("a");
     link.className = "nav-grant-announcements";
     link.href = "grants";
     link.setAttribute("data-i18n", "nav.openItems.grantAnnouncements");
     link.textContent = "Grant e'lonlari";
-    aiPill.parentNode.insertBefore(link, aiPill);
+    grantAiLink.parentNode.insertBefore(link, grantAiLink);
     if (window.ngoI18n && typeof window.ngoI18n.apply === "function") {
       window.ngoI18n.apply(link.parentNode);
     }
