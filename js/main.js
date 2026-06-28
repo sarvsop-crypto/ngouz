@@ -120,25 +120,6 @@
   var initialLang = window.ngoI18n ? window.ngoI18n.get() : "uz";
   updateLangChrome(initialLang);
 
-  function ensureGrantAnnouncementLink() {
-    var grantAiLink = document.querySelector('.dropdown a[data-i18n="nav.openItems.grantAi"]');
-    if (!grantAiLink || document.querySelector('.dropdown a[data-i18n="nav.openItems.grantAnnouncements"]')) return;
-    var link = document.createElement("a");
-    link.className = "nav-grant-announcements";
-    link.href = "grants";
-    link.setAttribute("data-i18n", "nav.openItems.grantAnnouncements");
-    link.textContent = "Grant e'lonlari";
-    grantAiLink.parentNode.insertBefore(link, grantAiLink);
-    if (window.ngoI18n && typeof window.ngoI18n.apply === "function") {
-      window.ngoI18n.apply(link.parentNode);
-    }
-  }
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", ensureGrantAnnouncementLink);
-  } else {
-    ensureGrantAnnouncementLink();
-  }
-
   var languageLinks = Array.prototype.slice.call(document.querySelectorAll(".topbar-lang"));
   languageLinks.forEach(function (a, idx) {
     var code = idx === 0 ? "uz" : idx === 1 ? "ru" : "en";
@@ -588,7 +569,6 @@
       '<span class="mobile-nav-label" data-i18n="nav.openGroup">Ochiq ma\'lumotlar</span>' +
       '<a href="contact" data-i18n="nav.openItems.contact">Bog\'lanish</a>' +
       '<div class="mobile-nav-sub">' +
-        '<a href="grants" data-i18n="nav.openItems.grantAnnouncements">Grant e\'lonlari</a>' +
         '<a href="grant-tanlovlari" data-i18n="nav.openItems.grantAi">Grant tanlovlari - AI qidiruv</a>' +
         '<a href="official-docs" data-i18n="nav.openItems.normativ">Normativ-huquqiy hujjatlar</a>' +
         '<a href="multimedia-room" data-i18n="nav.openItems.media">Media</a>' +
