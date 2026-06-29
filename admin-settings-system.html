@@ -145,6 +145,35 @@
               <button type="button" class="btn btn--primary" id="paramSaveBtn"><i class="ph ph-floppy-disk" aria-hidden="true"></i> <span data-i18n="admin.ui.save">Saqlash</span></button>
             </div>
           </div>
+          <div id="backupCard" style="background:var(--grey-0);border:1px solid var(--grey-100);border-radius:12px;padding:24px;margin-top:16px;">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap;">
+              <div>
+                <h2 style="font-size:16px;font-weight:600;margin:0 0 4px;">Ma'lumotlar bazasi zaxira nusxalari</h2>
+                <p style="font-size:14px;color:var(--grey-400);margin:0;">Avtomatik va qo'lda yaratilgan SQL backup fayllarini boshqarish.</p>
+              </div>
+              <button type="button" class="btn btn--primary" id="backupCreateBtn"><i class="ph ph-database" aria-hidden="true"></i> Backup yaratish</button>
+            </div>
+            <p id="backupStatus" role="status" style="font-size:13px;color:var(--grey-500);margin:12px 0 0;">Yuklanmoqda...</p>
+            <div style="margin-top:16px;overflow:auto;">
+              <table class="table" style="min-width:760px;">
+                <caption class="u-visually-hidden">Database backup jobs</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Holat</th>
+                    <th scope="col">Fayl</th>
+                    <th scope="col">Hajm</th>
+                    <th scope="col">Yaratilgan vaqt</th>
+                    <th scope="col">Tugagan vaqt</th>
+                    <th scope="col"><span class="u-visually-hidden">Amallar</span></th>
+                  </tr>
+                </thead>
+                <tbody id="backupRows">
+                  <tr class="u-empty-row"><td colspan="7">Yuklanmoqda...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -170,6 +199,9 @@
   (function () {
     var GENERAL_KEY = 'admin_system_general';
     var PARAMS_KEY = 'admin_system_params';
+    var backupRows = document.getElementById('backupRows');
+    var backupStatus = document.getElementById('backupStatus');
+    var backupCreateBtn = document.getElementById('backupCreateBtn');
 
     // Stable id-based card lookups — the previous `.settings-layout > div > div`
     // chain broke any time the card layout changed and silently no-op'd
@@ -253,6 +285,110 @@
         });
       }
     }
+
+    function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+    function fmtBytes(v) {
+      v = Number(v);
+      if (!Number.isFinite(v) || v <= 0) return '—';
+      if (v < 1024) return v + ' B';
+      if (v < 1024 * 1024) return (v / 1024).toFixed(1) + ' KB';
+      return (v / 1024 / 1024).toFixed(1) + ' MB';
+    }
+    function setBackupStatus(msg, tone) {
+      if (!backupStatus) return;
+      backupStatus.textContent = msg;
+      backupStatus.style.color = tone === 'error' ? 'var(--error-600,#dc2626)' : 'var(--grey-500)';
+    }
+    function renderBackups(items) {
+      if (!backupRows) return;
+      if (!items || !items.length) {
+        backupRows.innerHTML = '<tr class="u-empty-row"><td colspan="7">Backup hali yaratilmagan</td></tr>';
+        return;
+      }
+      backupRows.innerHTML = items.map(function (b) {
+        var statusTone = b.status === 'complete' ? 'success' : (b.status === 'failed' ? 'error' : 'warning');
+        var id = parseInt(b.id, 10) || 0;
+        return '<tr>' +
+          '<td><strong>#' + id + '</strong></td>' +
+          '<td><span class="badge badge--' + statusTone + '">' + esc(b.status) + '</span></td>' +
+          '<td>' + esc(b.file_name || '—') + (b.note ? '<br><span class="text-dim">' + esc(b.note).slice(0, 160) + '</span>' : '') + '</td>' +
+          '<td>' + esc(fmtBytes(b.size)) + '</td>' +
+          '<td>' + esc(b.created_at || '—') + '</td>' +
+          '<td>' + esc(b.finished_at || '—') + '</td>' +
+          '<td style="white-space:nowrap">' +
+            (b.downloadable ? '<button type="button" class="btn btn--sm btn--secondary" onclick="downloadBackup(' + id + ')"><i class="ph ph-download-simple" aria-hidden="true"></i> SQL</button> ' : '') +
+            (b.downloadable ? '<button type="button" class="btn btn--sm btn--secondary" onclick="restoreBackup(' + id + ')"><i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i> Restore</button>' : '—') +
+          '</td>' +
+        '</tr>';
+      }).join('');
+    }
+    function loadBackups() {
+      if (!backupRows) return;
+      setBackupStatus('Backup ro‘yxati yuklanmoqda...');
+      NgoApi.get('/admin/backups?limit=50', { noRedirect: true })
+        .then(function (res) {
+          renderBackups(res.items || []);
+          setBackupStatus('Backup ro‘yxati yangilandi.');
+        })
+        .catch(function (err) {
+          renderBackups([]);
+          if (err && err.status === 403) setBackupStatus('Backup boshqaruvi faqat super admin uchun ochiq.', 'error');
+          else setBackupStatus('Backup ro‘yxatini yuklashda xatolik: ' + ((err && err.message) || 'nomaʼlum'), 'error');
+        });
+    }
+    if (backupCreateBtn) {
+      backupCreateBtn.addEventListener('click', function () {
+        backupCreateBtn.disabled = true;
+        backupCreateBtn.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i> Yaratilmoqda...';
+        setBackupStatus('Database dump yaratilmoqda. Bu bir necha soniya olishi mumkin...');
+        NgoApi.post('/admin/backups', {})
+          .then(function () {
+            setBackupStatus('Backup yaratildi.');
+            loadBackups();
+          })
+          .catch(function (err) { setBackupStatus('Backup yaratishda xatolik: ' + ((err && err.message) || 'nomaʼlum'), 'error'); })
+          .then(function () {
+            backupCreateBtn.disabled = false;
+            backupCreateBtn.innerHTML = '<i class="ph ph-database" aria-hidden="true"></i> Backup yaratish';
+          });
+      });
+    }
+    window.downloadBackup = function (id) {
+      var token = NgoApi.getToken ? NgoApi.getToken() : '';
+      if (!token) { setBackupStatus('Yuklab olish uchun tizimga kiring.', 'error'); return; }
+      fetch(NgoApi.base + '/admin/backups/' + encodeURIComponent(id) + '/download', {
+        headers: { Authorization: 'Bearer ' + token }
+      }).then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.blob();
+      }).then(function (blob) {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'ngo-backup-' + id + '.sql';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      }).catch(function (err) {
+        setBackupStatus('Backup yuklab olishda xatolik: ' + ((err && err.message) || 'nomaʼlum'), 'error');
+      });
+    };
+    window.restoreBackup = function (id) {
+      var confirmation = prompt('Bu amal hozirgi bazani tanlangan backup bilan almashtiradi. Davom etish uchun RESTORE ' + id + ' deb yozing:');
+      if (confirmation === null) return;
+      if (confirmation !== 'RESTORE ' + id) { setBackupStatus('Restore bekor qilindi: tasdiqlash matni noto‘g‘ri.', 'error'); return; }
+      setBackupStatus('Restore boshlanmoqda. Avval avtomatik pre-restore backup olinadi...');
+      NgoApi.post('/admin/backups/' + encodeURIComponent(id) + '/restore', { confirmation: confirmation })
+        .then(function () {
+          setBackupStatus('Restore yakunlandi.');
+          loadBackups();
+        })
+        .catch(function (err) {
+          setBackupStatus('Restore xatoligi: ' + ((err && err.message) || 'nomaʼlum'), 'error');
+        });
+    };
+    loadBackups();
   })();
   </script>
   <script>
