@@ -332,11 +332,38 @@
       NgoApi.get('/admin/organizations/' + id).then(function(res) {
         var org = res.organization || {};
         var apps = res.membership_applications || [];
-        toast((org.name || ('#' + id)) + ': ' + apps.length + ' ta ariza, karta API tayyor.', 'success');
+        var docs = res.documents || [];
+        var payments = res.payments || [];
+        var history = res.history || [];
+        var html = '<div class="modal-overlay is-open" id="orgCardModal" role="dialog" aria-modal="true" aria-labelledby="orgCardTitle" style="display:flex;">'
+          + '<div class="modal" style="max-width:920px;max-height:88vh;overflow:auto;">'
+          + '<div class="modal__head"><h2 class="modal__title" id="orgCardTitle">' + esc(org.name || ('#' + id)) + '</h2><button type="button" class="modal__close" id="orgCardClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>'
+          + '<div class="modal__body">'
+          + '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:16px;">'
+          + '<p><strong>STIR:</strong> ' + esc(org.inn || '—') + '</p><p><strong>Hudud:</strong> ' + esc(org.region_code || '—') + '</p>'
+          + '<p><strong>Rahbar:</strong> ' + esc(org.leader_name || '—') + '</p><p><strong>Aʼzolik:</strong> ' + esc(org.status || '—') + '</p>'
+          + '<p><strong>Shartnoma:</strong> ' + esc(org.contract_number || '—') + '</p><p><strong>Sertifikat:</strong> ' + esc(org.cert_number || '—') + '</p>'
+          + '<p><strong>Tavsiyanoma:</strong> ' + esc(org.recommendation_number || '—') + '</p><p><strong>Toʻlov:</strong> ' + esc(org.payment_status || '—') + '</p>'
+          + '</div>'
+          + '<h3 style="font-size:16px;margin:14px 0 8px;">Arizalar</h3>' + table(apps, ['id','status','review_note','return_reason','reject_reason','created_at'])
+          + '<h3 style="font-size:16px;margin:14px 0 8px;">Hujjatlar</h3>' + table(docs, ['id','name','category','signed_at','locked_at','created_at'])
+          + '<h3 style="font-size:16px;margin:14px 0 8px;">Toʻlovlar</h3>' + table(payments, ['id','purpose','amount','state','created_at','updated_at'])
+          + '<h3 style="font-size:16px;margin:14px 0 8px;">Tarix</h3>' + table(history, ['created_at','actor_name','action','from_status','to_status','note'])
+          + '</div></div></div>';
+        var old = document.getElementById('orgCardModal');
+        if (old) old.remove();
+        document.body.insertAdjacentHTML('beforeend', html);
+        document.getElementById('orgCardClose').addEventListener('click', function () { document.getElementById('orgCardModal').remove(); });
       }).catch(function (err) {
         toast('Kartani ochishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error');
       });
     };
+    function table(rows, cols) {
+      if (!rows || !rows.length) return '<p style="color:#798384;margin:0 0 10px;">Maʼlumot yoʻq.</p>';
+      return '<div style="overflow:auto;"><table class="table"><thead><tr>' + cols.map(function (c) { return '<th>' + esc(c) + '</th>'; }).join('') + '</tr></thead><tbody>'
+        + rows.slice(0, 50).map(function (r) { return '<tr>' + cols.map(function (c) { return '<td>' + esc(r[c] || '—') + '</td>'; }).join('') + '</tr>'; }).join('')
+        + '</tbody></table></div>';
+    }
 
     function loadPage(seq) {
       if (seq === undefined) seq = ++loadSeq;
@@ -524,12 +551,24 @@
     var exportBtn = document.getElementById('exportRegistryBtn');
     if (exportBtn) {
       exportBtn.addEventListener('click', function () {
-        if (!items.length) { toast('Eksport qilish uchun NNT yo\'q', 'info'); return; }
-        window.exportCsv(
-          'nnt-royxati-' + new Date().toISOString().slice(0, 10) + '.csv',
-          items,
-          ['id', 'name', 'inn', 'slug', 'region_code', 'leader_name', 'address', 'member_since', 'registered_at', 'soha', 'status', 'contract_number', 'cert_number', 'recommendation_number', 'membership_expires_at']
-        );
+        var token = '';
+        try { token = localStorage.getItem('ngo_api_token') || sessionStorage.getItem('ngo_api_token') || ''; } catch (_) {}
+        if (!token) { toast('Eksport uchun tizimga kiring.', 'error'); return; }
+        fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/admin/organizations/export?format=csv', {
+          headers: { Authorization: 'Bearer ' + token }
+        }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.blob(); })
+          .then(function (blob) {
+            var url = URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = 'nnt-royxati-' + new Date().toISOString().slice(0, 10) + '.csv';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+          }).catch(function (err) {
+            toast('Eksportda xatolik: ' + ((err && err.message) || 'nomaʼlum'), 'error');
+          });
       });
     }
   })();

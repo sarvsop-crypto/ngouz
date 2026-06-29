@@ -98,6 +98,12 @@
 <script src="js/dropdown.js" defer></script>
 <script src="js/i18n.js" defer></script>
 <script src="js/uzmap.js" defer></script>
+<style>
+.dues-panel{background:#fff;border:1px solid #dfe7e4;border-radius:8px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:end;box-shadow:0 8px 24px rgba(15,106,87,.08)}
+.dues-fields{display:grid;grid-template-columns:minmax(180px,1fr) minmax(160px,.45fr);gap:10px;margin-top:16px}
+.dues-input{height:44px;border:1px solid #cfdad6;border-radius:6px;padding:0 12px;font:inherit}
+@media (max-width:720px){.dues-panel{grid-template-columns:1fr}.dues-fields{grid-template-columns:1fr}.dues-panel .btn{width:100%}}
+</style>
 </head>
 <body class="home-page">
 <div class="test-mode-banner" role="status" aria-live="polite">
@@ -285,6 +291,22 @@
 <span class="hero-stat-label" data-i18n="pages.index.stats.training">Malaka oshirgan NNTlar soni</span>
 </div>
 </div>
+</div>
+</div>
+</section>
+<section class="section section-tight" aria-labelledby="membershipDuesTitle">
+<div class="container">
+<div class="dues-panel">
+<div>
+<h2 class="section-title" id="membershipDuesTitle" style="text-align:left;margin-bottom:8px;">A'zolik badalini to'lash</h2>
+<p class="section-sub" style="text-align:left;margin:0;">NNT nomi bo'yicha qidiring, tashkilotni tanlang va Payme orqali to'lovni amalga oshiring.</p>
+<div class="dues-fields">
+<input id="duesSearchInput" class="dues-input" type="search" placeholder="NNT nomini kiriting" aria-label="NNT nomini qidirish" maxlength="200">
+<input id="duesPhoneInput" class="dues-input" type="tel" inputmode="tel" placeholder="+998 __ ___ __ __" aria-label="Telefon raqam" maxlength="40">
+</div>
+<div id="duesResults" aria-live="polite" style="margin-top:10px;"></div>
+</div>
+<button type="button" id="duesPayBtn" class="btn" disabled style="min-width:180px;">Payme orqali to'lash</button>
 </div>
 </div>
 </section>
@@ -1032,16 +1054,6 @@ function memSubmit(e) {
   var region  = form.querySelector('#mem-region').value;
   var note    = form.querySelector('#mem-note').value.trim();
 
-  // /v1/public/membership returns 404 — endpoint not yet implemented.
-  // Route through /v1/public/contact (which works) so admin still sees
-  // applications. iter 117 wired this to /membership; iter 125 redirects
-  // to /contact for parity with the dedicated /membership page.
-  var bodyText =
-    "Tashkilot: " + orgName +
-    "\nHudud: " + region +
-    "\nTelefon: " + phone +
-    (note ? "\nIzoh: " + note : "");
-
   var done = function () { form.setAttribute('aria-busy', 'false'); memStep(3); };
   // Inline error region — alert() popups break SR focus flow and
   // dismiss themselves on Enter. role="alert" announces in-context.
@@ -1063,15 +1075,17 @@ function memSubmit(e) {
     box.textContent = msg || 'Xatolik. Iltimos qaytadan urinib ko’ring.';
   };
 
-  fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
+  fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/membership', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify({
+      org_name: orgName,
       full_name: leader,
       phone: phone,
       email: email,
-      subject: "A'zolik arizasi: " + orgName,
-      body: bodyText
+      region_code: region,
+      leader_name: leader,
+      note: note
     })
   }).then(function (r) {
     return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; });
@@ -1082,6 +1096,68 @@ function memSubmit(e) {
     fail('Tarmoq xatosi. Internet aloqangizni tekshiring.');
   });
 }
+</script>
+<script>
+(function () {
+  var API = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
+  var q = document.getElementById('duesSearchInput');
+  var phone = document.getElementById('duesPhoneInput');
+  var list = document.getElementById('duesResults');
+  var pay = document.getElementById('duesPayBtn');
+  if (!q || !phone || !list || !pay) return;
+  var selected = null;
+  var timer = null;
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function setSelected(org) {
+    selected = org;
+    pay.disabled = !selected;
+    Array.prototype.forEach.call(list.querySelectorAll('[data-dues-org]'), function (btn) {
+      btn.setAttribute('aria-pressed', String(Number(btn.getAttribute('data-dues-org')) === org.id));
+    });
+  }
+  function render(items) {
+    selected = null;
+    pay.disabled = true;
+    if (!items.length) { list.innerHTML = '<p style="margin:0;color:#798384;">Tashkilot topilmadi.</p>'; return; }
+    list.innerHTML = items.map(function (o) {
+      return '<button type="button" data-dues-org="' + Number(o.id) + '" style="display:block;width:100%;text-align:left;margin:6px 0;padding:10px 12px;border:1px solid #dfe7e4;border-radius:6px;background:#f8fbfa;cursor:pointer;">'
+        + '<strong>' + esc(o.name) + '</strong><br><span style="font-size:12px;color:#64736f;">' + esc(o.region_code || '') + (o.payment_status === 'paid' ? ' · Toʻlangan' : '') + '</span></button>';
+    }).join('');
+    Array.prototype.forEach.call(list.querySelectorAll('[data-dues-org]'), function (btn, idx) {
+      btn.addEventListener('click', function () { setSelected(items[idx]); });
+    });
+  }
+  q.addEventListener('input', function () {
+    clearTimeout(timer);
+    var val = q.value.trim();
+    if (val.length < 2) { list.innerHTML = ''; selected = null; pay.disabled = true; return; }
+    timer = setTimeout(function () {
+      list.innerHTML = '<p style="margin:0;color:#798384;">Qidirilmoqda...</p>';
+      fetch(API + '/public/membership-dues/search?q=' + encodeURIComponent(val), { headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.json(); })
+        .then(function (data) { render(data.items || []); })
+        .catch(function () { list.innerHTML = '<p style="margin:0;color:#b42318;">Qidiruvda xatolik yuz berdi.</p>'; });
+    }, 250);
+  });
+  pay.addEventListener('click', function () {
+    if (!selected) return;
+    var ph = phone.value.trim();
+    if (!ph) { phone.focus(); return; }
+    pay.disabled = true;
+    pay.textContent = 'Yoʻnaltirilmoqda...';
+    fetch(API + '/public/membership-dues/pay', {
+      method: 'POST',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      body: JSON.stringify({ organization_id: selected.id, phone: ph })
+    }).then(function (r) { return r.json().then(function (data) { if (!r.ok) throw data; return data; }); })
+      .then(function (data) { location.href = data.checkout_url; })
+      .catch(function (err) {
+        pay.disabled = false;
+        pay.textContent = "Payme orqali to'lash";
+        list.innerHTML = '<p style="margin:0;color:#b42318;">' + esc((err && err.message) || 'Toʻlovni boshlashda xatolik.') + '</p>';
+      });
+  });
+})();
 </script>
 
 <div class="search-overlay" id="searchOverlay" role="dialog" data-i18n-aria-label="search.modalAria" aria-label="Qidirish" aria-modal="true" aria-hidden="true">
