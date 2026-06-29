@@ -267,7 +267,7 @@
 <span class="hero-stat-label" data-i18n="pages.index.stats.total">Jami NNTlar soni</span>
 </div>
 <div class="hero-stat" role="listitem">
-<span class="hero-stat-num" data-live-stat="member-orgs">2 381</span>
+<span class="hero-stat-num" data-live-stat="member-orgs">...</span>
 <span class="hero-stat-label" data-i18n="pages.index.stats.members">Bizga a'zo NNTlar soni</span>
 </div>
 <div class="hero-stat" role="listitem">
@@ -325,15 +325,15 @@
 <div class="nnt-chart-stats">
 <div class="nnt-stat-box">
 <span class="nnt-stat-label" data-i18n="pages.index.chartGrowthSince2020">2020 yildan o'sish</span>
-<span class="nnt-stat-value">+348%</span>
+<span class="nnt-stat-value" data-nnt-chart-growth>...</span>
 </div>
 <div class="nnt-stat-box">
 <span class="nnt-stat-label" data-i18n="pages.index.chartStatus2025">2025 yil holati</span>
-<span class="nnt-stat-value" data-nnt-chart-total>2 381 ta</span>
+<span class="nnt-stat-value" data-nnt-chart-total>...</span>
 </div>
 <div class="nnt-stat-box nnt-stat--purple">
 <span class="nnt-stat-label" data-i18n="pages.index.chartGrowthLabel">O'rtacha yillik o'sish</span>
-<span class="nnt-stat-value">+370 ta</span>
+<span class="nnt-stat-value" data-nnt-chart-average>...</span>
 </div>
 </div>
 <div class="nnt-chart-legend">
@@ -352,7 +352,7 @@
 <tr><th scope="row">2022</th><td>1 482</td></tr>
 <tr><th scope="row">2023</th><td>1 843</td></tr>
 <tr><th scope="row">2024</th><td>2 143</td></tr>
-<tr><th scope="row">2025</th><td data-nnt-chart-total-cell>2 381</td></tr>
+<tr><th scope="row">2025</th><td data-nnt-chart-total-cell>...</td></tr>
 </tbody>
 </table>
 <div class="nnt-chart-footer">
@@ -477,7 +477,7 @@ window.addEventListener('load', function(){
   var canvas = document.getElementById('nntChart');
   if(!canvas) return;
 
-  var member = [532, 990, 1482, 1843, 2143, 2381];
+  var member = [532, 990, 1482, 1843, 2143, null];
   var chartInstance = null;
   function tt(k,fb){ return (window.ngoI18n&&window.ngoI18n.t)?window.ngoI18n.t(k,fb):fb; }
   function fmtNum(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
@@ -490,6 +490,12 @@ window.addEventListener('load', function(){
     });
     document.querySelectorAll('[data-nnt-chart-total-cell]').forEach(function(el) {
       el.textContent = fmtNum(total);
+    });
+    document.querySelectorAll('[data-nnt-chart-growth]').forEach(function(el) {
+      el.textContent = '+' + Math.round(((total - member[0]) / member[0]) * 100) + '%';
+    });
+    document.querySelectorAll('[data-nnt-chart-average]').forEach(function(el) {
+      el.textContent = '+' + fmtNum(Math.round((total - member[0]) / (member.length - 1))) + ' ta';
     });
     if (chartInstance) {
       chartInstance.data.datasets.forEach(function(ds) { ds.data = member; });

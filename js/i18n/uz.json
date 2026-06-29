@@ -1424,7 +1424,7 @@
       "title": "Mahalliy hamkorlar",
       "sub": "O'zNNTMA bilan hamkorlik qilayotgan mahalliy tashkilotlar, jamoat birlashmalari va institutlar.",
       "partners": "<h2 class=\"section-title\">Mahalliy hamkorlar</h2><p class=\"section-sub\">Hududiy darajadagi institutlar, ta'lim muassasalari va jamoat birlashmalari bilan hamkorlik.</p><div class=\"partner-grid\"><div class=\"partner\">Adliya vazirligi</div><div class=\"partner\">Yoshlar ishlari agentligi</div><div class=\"partner\">Mahalla va nuroniylar</div><div class=\"partner\">Oliy ta'lim muassasalari</div><div class=\"partner\">Jamoat fondlari</div><div class=\"partner\">Hududiy NNT markazlari</div></div>",
-      "metrics": "<h2 class=\"section-title\">Hamkorlik ko'rsatkichlari</h2><div class=\"kpi-grid\"><div class=\"kpi\"><strong>63</strong><span>Mahalliy hamkor</span></div><div class=\"kpi\"><strong>14</strong><span>Viloyat va shahar</span></div><div class=\"kpi\"><strong>37+</strong><span>Qo'shma tadbir</span></div><div class=\"kpi\"><strong data-live-stat=\"member-orgs\">2381</strong><span>A'zo NNT</span></div></div>"
+      "metrics": "<h2 class=\"section-title\">Hamkorlik ko'rsatkichlari</h2><div class=\"kpi-grid\"><div class=\"kpi\"><strong>63</strong><span>Mahalliy hamkor</span></div><div class=\"kpi\"><strong>14</strong><span>Viloyat va shahar</span></div><div class=\"kpi\"><strong>37+</strong><span>Qo'shma tadbir</span></div><div class=\"kpi\"><strong data-live-stat=\"member-orgs\">...</strong><span>A'zo NNT</span></div></div>"
     },
     "maxfiylikSiyosati": {
       "title": "Maxfiylik siyosati",
