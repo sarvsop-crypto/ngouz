@@ -177,6 +177,20 @@
       <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
+  <div class="modal-overlay" id="membershipDetailModal" role="dialog" aria-modal="true" aria-labelledby="membershipDetailTitle" aria-hidden="true">
+    <div class="modal modal--wide">
+      <div class="modal__head">
+        <h2 class="modal__title" id="membershipDetailTitle">Ariza tafsilotlari</h2>
+        <button type="button" class="modal__close" onclick="closeModal('membershipDetailModal')" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+      </div>
+      <div class="modal__body" id="membershipDetailBody" aria-live="polite">
+        <p class="text-dim">Yuklanmoqda...</p>
+      </div>
+      <div class="modal__footer">
+        <button type="button" class="btn btn--secondary" onclick="closeModal('membershipDetailModal')">Yopish</button>
+      </div>
+    </div>
+  </div>
   <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
   <script src="js/pacta-app.js"></script>
   <script src="js/pacta-foundation.js"></script>
@@ -279,6 +293,7 @@
           '<td>' + (a.created_at ? '<time datetime="' + esc(String(a.created_at).slice(0,10)) + '">' + esc(String(a.created_at).slice(0,10)) + '</time>' : '') + '</td>' +
           '<td><span class="badge badge--' + badge + '">' + label + '</span></td>' +
           '<td style="white-space:nowrap">' +
+            '<button type="button" class="btn btn--sm btn--secondary" aria-label="#' + esc(a.id) + ' arizasini ko‘rish" onclick="viewApp(' + idNum + ')"><i class="ph ph-eye" aria-hidden="true"></i></button> ' +
             (canAct ?
               '<button type="button" class="btn btn--sm btn--primary" aria-label="#' + esc(a.id) + ' arizasini qabul qilish" onclick="approveApp(' + idNum + ',' + orgIdNum + ')"><i class="ph ph-check" aria-hidden="true"></i> Qabul</button> ' +
               '<button type="button" class="btn btn--sm btn--secondary" aria-label="#' + esc(a.id) + ' arizasini keyingi bosqichga o‘tkazish" onclick="advanceApp(' + idNum + ')"><i class="ph ph-arrow-right" aria-hidden="true"></i></button> ' +
@@ -343,6 +358,89 @@
       NgoApi.patch('/admin/membership-requests/' + id, { status: 'rejected', reject_reason: note, review_note: note })
         .then(function () { toast('Ariza rad etildi.', 'success'); reload(); })
         .catch(function (err) { setRowsBusy(false); toast('Rad etishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); });
+    };
+    window.viewApp = function (id) {
+      var body = document.getElementById('membershipDetailBody');
+      body.innerHTML = '<p class="text-dim">Yuklanmoqda...</p>';
+      openModal('membershipDetailModal');
+      NgoApi.get('/admin/membership-requests/' + id)
+        .then(function (res) { renderDetail(res); })
+        .catch(function (err) { body.innerHTML = '<p role="alert" style="color:var(--error-600)">Yuklashda xatolik: ' + esc((err && err.message) || "noma'lum") + '</p>'; });
+    };
+
+    function money(v) {
+      var n = parseInt(v, 10);
+      if (!n) return '—';
+      return (n / 100).toLocaleString('uz-UZ') + ' UZS';
+    }
+    function renderDetail(res) {
+      var a = res.application || {};
+      var org = res.organization || {};
+      var docs = res.membership_documents || [];
+      var cabDocs = res.cabinet_documents || [];
+      var payments = res.payments || [];
+      var history = res.history || [];
+      document.getElementById('membershipDetailTitle').textContent = '#' + (a.id || '') + ' — ' + (a.org_name || org.name || 'Ariza');
+      var docHtml = docs.length ? docs.map(function (d) {
+        return '<li><strong>' + esc(d.kind) + '</strong> · ' + esc(d.number || '') + ' · <span class="badge badge--' + (d.status === 'signed' ? 'success' : 'info') + '">' + esc(d.status || '') + '</span> ' +
+          (d.file_path ? '<button type="button" class="btn btn--sm btn--secondary" onclick="downloadMembershipDoc(' + (parseInt(d.id, 10) || 0) + ',\'' + esc(d.kind || 'hujjat') + '\')"><i class="ph ph-download-simple" aria-hidden="true"></i> DOCX</button>' : '') + '</li>';
+      }).join('') : '<li>Hujjatlar hali shakllanmagan</li>';
+      var cabHtml = cabDocs.length ? cabDocs.map(function (d) {
+        return '<li>' + esc(d.name || d.category || 'Hujjat') + ' · ' + esc(String(d.created_at || '').slice(0, 10)) + '</li>';
+      }).join('') : '<li>Yuklangan hujjatlar yo‘q</li>';
+      var payHtml = payments.length ? payments.map(function (p) {
+        return '<li>' + esc(p.provider || '') + ' · ' + money(p.amount) + ' · ' + esc(p.state || '') + ' · ' + esc(String(p.perform_time || p.created_at || '').slice(0, 16)) + '</li>';
+      }).join('') : '<li>To‘lovlar yo‘q</li>';
+      var histHtml = history.length ? history.map(function (h) {
+        return '<li><strong>' + esc(h.action) + '</strong> · ' + esc(h.actor_name || h.actor_role || 'Tizim') + ' · ' + esc(h.from_status || '—') + ' → ' + esc(h.to_status || '—') + '<br><span class="text-dim">' + esc(h.note || '') + ' · ' + esc(h.created_at || '') + '</span></li>';
+      }).join('') : '<li>Tarix yo‘q</li>';
+      var actionHtml = '<div class="u-inline-stack" style="gap:8px;flex-wrap:wrap;margin-top:10px">' +
+        '<button type="button" class="btn btn--secondary" onclick="advanceApp(' + (parseInt(a.id,10)||0) + ')"><i class="ph ph-arrow-right" aria-hidden="true"></i> Keyingi bosqich</button>' +
+        '<button type="button" class="btn btn--secondary" onclick="returnApp(' + (parseInt(a.id,10)||0) + ')"><i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i> Qaytarish</button>' +
+        '<button type="button" class="btn btn--secondary" onclick="rejectApp(' + (parseInt(a.id,10)||0) + ')"><i class="ph ph-x" aria-hidden="true"></i> Rad etish</button>' +
+        '<button type="button" class="btn btn--primary" onclick="signApp(' + (parseInt(a.id,10)||0) + ')"><i class="ph ph-pen-nib" aria-hidden="true"></i> Rahbar imzosi</button>' +
+        '</div>';
+      document.getElementById('membershipDetailBody').innerHTML =
+        '<div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:16px">' +
+          '<div class="card"><div class="card__body"><div><p class="card__label">Holat</p><p class="card__value" style="font-size:18px">' + esc(STATUS_LABEL[a.status] || a.status || '—') + '</p></div></div></div>' +
+          '<div class="card"><div class="card__body"><div><p class="card__label">Shartnoma</p><p class="card__value" style="font-size:18px">' + esc(a.contract_number || org.contract_number || '—') + '</p></div></div></div>' +
+          '<div class="card"><div class="card__body"><div><p class="card__label">Guvohnoma</p><p class="card__value" style="font-size:18px">' + esc(a.cert_number || org.cert_number || '—') + '</p></div></div></div>' +
+        '</div>' +
+        '<section style="margin-bottom:16px"><h3>NNT</h3><p><strong>' + esc(a.org_name || org.name || '') + '</strong><br>STIR: ' + esc(a.inn || org.inn || '—') + '<br>Rahbar: ' + esc(a.leader_name || org.leader_name || '—') + '<br>Telefon: ' + esc(a.phone || org.phone || '—') + '</p>' + actionHtml + '</section>' +
+        '<section style="margin-bottom:16px"><h3>Shakllangan hujjatlar</h3><ul>' + docHtml + '</ul></section>' +
+        '<section style="margin-bottom:16px"><h3>Yuklangan hujjatlar</h3><ul>' + cabHtml + '</ul></section>' +
+        '<section style="margin-bottom:16px"><h3>To‘lovlar</h3><ul>' + payHtml + '</ul></section>' +
+        '<section><h3>Tarix</h3><ul>' + histHtml + '</ul></section>';
+    }
+    window.signApp = function (id) {
+      var payload = prompt('ERI imzo maʼlumoti yoki imzo identifikatori:');
+      if (payload === null) return;
+      payload = (payload || '').trim();
+      if (!payload) { toast('Imzo maʼlumoti majburiy.', 'error'); return; }
+      NgoApi.post('/admin/membership-requests/' + id + '/sign', { signature_payload: payload })
+        .then(function () { toast('Rahbar imzosi saqlandi.', 'success'); viewApp(id); reload(); })
+        .catch(function (err) { toast('Imzolashda xatolik: ' + ((err && err.message) || "noma'lum"), 'error'); });
+    };
+    window.downloadMembershipDoc = function (id, kind) {
+      var token = NgoApi.getToken ? NgoApi.getToken() : '';
+      if (!token) { toast('Hujjatni yuklab olish uchun tizimga kiring.', 'error'); return; }
+      fetch(NgoApi.base + '/admin/membership-documents/' + encodeURIComponent(id) + '/download', {
+        headers: { Authorization: 'Bearer ' + token }
+      }).then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.blob();
+      }).then(function (blob) {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'membership-' + (kind || 'hujjat') + '-' + id + '.docx';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      }).catch(function (err) {
+        toast('Hujjatni yuklab olishda xatolik: ' + ((err && err.message) || "noma'lum"), 'error');
+      });
     };
 
     function reload() {
