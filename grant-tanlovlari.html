@@ -67,7 +67,7 @@
 <link crossorigin="" href="https://ngo-api-proxy.sarvsop.workers.dev" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="css/style.css?v=20260628grantcards" rel="stylesheet">
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
 <style>
   :root {
     --g-brand: #0e7490;
@@ -318,7 +318,7 @@
 <span data-i18n="pages.grantTanlovlari.panelLabel">So'rovingizni yozing</span>
 </span>
 <textarea data-i18n-aria-label="pages.grantTanlovlari.queryExample" aria-label="Masalan: Autizm spektri kasalligi bo'lgan bolalarga yordam beruvchi NNT uchun grant bormi?" id="grantsQuery" data-i18n-placeholder="pages.grantTanlovlari.queryExample" placeholder="Masalan: Autizm spektri kasalligi bo'lgan bolalarga yordam beruvchi NNT uchun grant bormi?" rows="3" maxlength="500" required></textarea>
-<div class="grants-ai__turnstile cf-turnstile" data-sitekey="0x4AAAAAADB9Mx0-zTy-6jb_" data-size="invisible" data-theme="light"></div>
+<div id="grantsTurnstile" class="grants-ai__turnstile" data-sitekey="0x4AAAAAADB9Mx0-zTy-6jb_"></div>
 <button type="submit" id="grantsSubmit" class="grants-ai__submit">
 <svg id="grantsSubmitIcon" width="14" height="14" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0l1.5 4.5L14 6l-4.5 1.5L8 12l-1.5-4.5L2 6l4.5-1.5L8 0z"/></svg>
 <span id="grantsSubmitLabel" data-i18n="pages.grantTanlovlari.submitBtn">Grantlarni topish</span>
@@ -331,10 +331,10 @@
 </div>
 </section>
 <script>
-    // Grants-search pipeline runs end-to-end ~15-25s (router LLM + DDG via
+    // Grants-search pipeline runs end-to-end ~15-90s (router LLM + DDG via
     // BrightData + 8 parallel page fetches + synthesizer LLM + cache merge).
-    // 45s covers the slow tail; PHP backend caps itself at 90s anyway.
-    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 45000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
+    // Match the PHP backend cap so the browser does not abort valid slow runs.
+    var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 90000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
 
 (function () {
   var form = document.getElementById('grantsForm');
@@ -388,13 +388,78 @@
     return LABELS.uz.srv;
   }
 
-  function getTsToken() {
-    var el = document.querySelector('input[name="cf-turnstile-response"]');
-    return el ? el.value : '';
+  var tsWidgetId = null;
+  var tsToken = '';
+  var tsWaiters = [];
+
+  function flushTsWaiters(err, token) {
+    var waiters = tsWaiters.splice(0);
+    waiters.forEach(function (w) {
+      clearTimeout(w.timer);
+      err ? w.reject(err) : w.resolve(token);
+    });
+  }
+
+  function renderTurnstile() {
+    if (tsWidgetId) return true;
+    if (!window.turnstile || !window.turnstile.render) return false;
+    var el = document.getElementById('grantsTurnstile');
+    if (!el) return false;
+    try {
+      tsWidgetId = window.turnstile.render(el, {
+        sitekey: el.getAttribute('data-sitekey'),
+        size: 'invisible',
+        theme: 'light',
+        callback: function (token) {
+          tsToken = token || '';
+          if (tsToken) flushTsWaiters(null, tsToken);
+        },
+        'error-callback': function () {
+          tsToken = '';
+          flushTsWaiters(new Error('turnstile_error'));
+        },
+        'expired-callback': function () {
+          tsToken = '';
+        },
+      });
+      return !!tsWidgetId;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  function waitForTurnstile() {
+    return new Promise(function (resolve, reject) {
+      var started = Date.now();
+      (function tick() {
+        if (renderTurnstile()) return resolve();
+        if (Date.now() - started > 7000) return reject(new Error('turnstile_not_ready'));
+        setTimeout(tick, 120);
+      })();
+    });
+  }
+
+  async function getTsToken() {
+    if (tsToken) return tsToken;
+    await waitForTurnstile();
+    return new Promise(function (resolve, reject) {
+      var timer = setTimeout(function () {
+        tsWaiters = tsWaiters.filter(function (w) { return w.reject !== reject; });
+        reject(new Error('turnstile_timeout'));
+      }, 12000);
+      tsWaiters.push({ resolve: resolve, reject: reject, timer: timer });
+      try { window.turnstile.execute(tsWidgetId); }
+      catch (err) {
+        clearTimeout(timer);
+        tsWaiters = tsWaiters.filter(function (w) { return w.reject !== reject; });
+        reject(err);
+      }
+    });
   }
 
   function resetTurnstile() {
-    if (window.turnstile) try { window.turnstile.reset(); } catch (_) {}
+    tsToken = '';
+    if (window.turnstile && tsWidgetId) try { window.turnstile.reset(tsWidgetId); } catch (_) {}
   }
 
   var DIVIDER_LABEL = { uz: 'Topilgan grantlar', ru: 'Найденные гранты', en: 'Found grants' };
@@ -442,7 +507,13 @@
     e.preventDefault();
     var query = input.value.trim();
     if (!query) { setStatus(LABELS.uz.empty, true); return; }
-    var token = getTsToken();
+    var token;
+    try {
+      token = await getTsToken();
+    } catch (_) {
+      setStatus(LABELS.uz.noTs, true);
+      return;
+    }
     if (!token) { setStatus(LABELS.uz.noTs, true); return; }
 
     submitBtn.disabled = true;
