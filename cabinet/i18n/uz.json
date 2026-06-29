@@ -190,6 +190,11 @@
       "newPassword": "Yangi parol",
       "confirmNewPassword": "Yangi parolni tasdiqlang",
       "minHint": "kamida 12 ta belgi",
+      "strength": {
+        "weak": "Zaif",
+        "medium": "O'rta",
+        "strong": "Kuchli"
+      },
       "mismatch": "Parollar mos kelmaydi",
       "savePassword": "Parolni saqlash",
       "saving": "Saqlanmoqda...",
@@ -201,18 +206,22 @@
     "documents": {
       "title": "Tashkilot hujjatlari",
       "upload": "Yuklash",
+      "uploadComingSoon": "Hujjat yuklash tez orada qo'shiladi.",
       "collectionStatus": "Hujjat to'plamining holati",
       "allRequiredPresent": "Barcha majburiy hujjatlar joyida — NNTMA tomonidan tasdiqlangan",
+      "sampleDataNotice": "Hujjatlar tashkilot kabinetidagi jonli ma'lumotlardan olinadi",
       "filterAll": "Hammasi",
       "filterRequired": "Asosiy",
       "filterSupplementary": "Qo'shimcha",
       "badgeRequired": "Majburiy",
       "sectionRequired": "Asosiy hujjatlar",
       "sectionSupplementary": "Qo'shimcha hujjatlar",
+      "sectionResources": "Qo'shimcha resurslar",
       "templatesTitle": "Hisobot va andoza shakllar",
       "templatesSubtitle": "NNTMA tomonidan tasdiqlangan rasmiy shakllar",
       "templatesCount": "{{count}} ta",
       "updatedAt": "{{meta}} · yangilangan {{date}}",
+      "externalSource": "Tashqi havola · {{source}} · yangilangan {{date}}",
       "sheetAriaLabel": "Hujjat ma'lumotlari",
       "viewLabel": "Hujjat ko'rish",
       "actionDownload": "Yuklash",
@@ -227,7 +236,10 @@
       "metaStatus": "Holat",
       "metaDocId": "Hujjat ID",
       "statusVerified": "NNTMA tasdiqladi",
-      "statusCurrent": "Joriy"
+      "statusCurrent": "Joriy",
+      "noPreview": "Ushbu hujjat uchun matnli ko'rinish mavjud emas. Faylni yuklab olib ko'rishingiz mumkin.",
+      "emptyTitle": "Hujjatlar hali yo'q",
+      "emptySubtitle": "Tashkilotingiz hujjatlari shu yerda ko'rinadi. Birinchi hujjatni yuklash uchun yuqoridagi + tugmasini bosing."
     },
     "common": {
       "back": "Orqaga",
@@ -236,13 +248,16 @@
       "save": "Saqlash",
       "cancel": "Bekor",
       "loading": "Yuklanmoqda…",
+      "networkError": "Tarmoq xatosi. Iltimos, qayta urinib ko'ring.",
+      "errorGeneric": "Xatolik yuz berdi. Qayta urinib ko'ring.",
       "yes": "Ha",
       "no": "Yo'q",
       "edit": "Tahrirlash",
       "delete": "O'chirish",
       "submit": "Yuborish",
       "confirm": "Tasdiqlash",
-      "retry": "Qayta urinish"
+      "retry": "Qayta urinish",
+      "updateReady": "Yangi versiya tayyor. Yangilash uchun sahifani qayta yuklang."
     },
     "eventdetail": {
       "regCancelled": "Ro'yxatdan bekor qilindi",
@@ -250,6 +265,11 @@
       "errorOccurred": "Xatolik yuz berdi",
       "share": "Ulashish",
       "duration": "Davom etish — 7 soat",
+      "durationLabel": "Davomiyligi",
+      "durationValue": "7 soat",
+      "when": "Vaqt",
+      "linkCopied": "Havola nusxalandi",
+      "addToCalendar": "Taqvimga qo'shish",
       "organizer": "Tashkilotchi",
       "registeredTitle": "Ro'yxatdan o'tilgan",
       "confirmationEmailed": "Tasdiqlash xati emailga yuborilgan",
@@ -283,24 +303,29 @@
       "summary": "Yaqin orada — {{upcomingCount}} ta · Sizniki — {{mineCount}} ta",
       "calendar": "Kalendar",
       "tabUpcoming": "Yaqin orada",
-      "tabMine": "Sizniki ({{mineCount}})",
+      "tabMine": "Sizniki",
       "tabPast": "O'tgan",
       "empty": "Tadbirlar topilmadi",
+      "emptySub": "Bu bo'limda hozircha tadbirlar yo'q. Keyinroq qayta tekshiring.",
       "today": "Bugun · {{time}}",
       "register": "Ro'yxatdan o'tish",
-      "monthCount": "· {{count}} tadbir",
+      "monthCount_one": "· {{count}} tadbir",
+      "monthCount_other": "· {{count}} tadbir",
       "sortByTime": "Tartib: vaqt bo'yicha",
       "registered": "Ro'yxatdan o'tilgan",
       "keynote": "Asosiy",
       "seats": "{{taken}}/{{total}} ro'yxatdan o'tdi",
       "nearlyFull": "· deyarli to'la",
       "free": "Bepul",
+      "formatOnline": "Online",
+      "formatOffline": "Oflayn",
       "kind": {
         "seminar": "Seminar",
         "meeting": "Yig'ilish",
         "webinar": "Vebinar",
         "event": "Tadbir"
-      }
+      },
+      "todayWord": "Bugun"
     },
     "eventscalendar": {
       "title": "Kalendar",
@@ -348,6 +373,7 @@
       "awardedAmountLabel": "Berilgan summa",
       "requestedAmountLabel": "so'ralgan summa",
       "timelineLabel": "Bosqich",
+      "timelineCreated": "Yaratilgan",
       "timelineSubmitted": "Topshirilgan",
       "timelineTechReview": "Texnik tekshiruv",
       "timelineUnderReview": "Mas'ul ko'rib chiqmoqda",
@@ -420,6 +446,10 @@
       "resolved": "Hal qilindi",
       "submittedOn": "Topshirildi",
       "continue": "Davom etish",
+      "emptyTitle": "Ariza yo'q",
+      "emptyAllHint": "Siz hali grantga ariza topshirmagansiz. Mavjud grantlarni ko'rib chiqing va ariza boshlang.",
+      "emptyFilteredHint": "Bu holatdagi arizalar yo'q.",
+      "emptyBrowse": "Grantlarni ko'rish",
       "statTotal": "Jami arizalar",
       "statTotalSub": "12 oy ichida",
       "statApproved": "Tasdiqlangan",
@@ -455,6 +485,8 @@
       "requirements": "Talablar",
       "description": "Tavsif",
       "readFull": "To'liq o'qish ↓",
+      "readLess": "Yig'ish ↑",
+      "notSpecified": "Ko'rsatilmagan",
       "publishedMeta": "E'lon qilingan: {{date}} · ID {{id}}",
       "maxAmount": "Maks. summa",
       "submitApplication": "Ariza topshirish",
@@ -492,12 +524,16 @@
       "filter": "Filtrlash",
       "searchPlaceholder": "Grant nomi, soha yoki tashkilotchi",
       "saved": "Saqlangan",
-      "savedCount": "{{count}} ta grant",
+      "savedCount_one": "{{count}} ta grant",
+      "savedCount_other": "{{count}} ta grant",
       "myApplications": "Mening arizalarim",
       "reviewCount": "{{count}} ta ko'rib chiqilmoqda",
-      "applicationsCount": "{{count}} ta ariza",
+      "applicationsCount_one": "{{count}} ta ariza",
+      "applicationsCount_other": "{{count}} ta ariza",
       "category": "Toifa",
-      "resultsCount": "{{count}} ta natija",
+      "resultsCount_one": "{{count}} ta natija",
+      "resultsCount_other": "{{count}} ta natija",
+      "viewAllResults": "Barcha {{count}} ta grantni ko'rish",
       "recommended": "Tavsiya etiladi",
       "sortLabel": "Saralash:",
       "sortNearestDeadline": "Yaqin muddat ↓",
@@ -524,8 +560,15 @@
       "clear": "Tozalash",
       "filter": "Filtr",
       "resultsFound": "natija topildi",
+      "resultsFound_one": "natija topildi",
+      "resultsFound_other": "natija topildi",
+      "cappedNote": "Dastlabki {{count}} ta grant ko'rsatilmoqda. Aniqroq natija uchun qidiruvdan foydalaning.",
       "noResultsForQuery": "\"{{query}}\" bo'yicha grant topilmadi",
       "noResults": "Grant topilmadi",
+      "emptyTitle": "Grantlar topilmadi",
+      "emptySub": "Hozircha ko'rsatiladigan grant yo'q. Keyinroq qayta tekshiring.",
+      "emptyQueryTitle": "Natija topilmadi",
+      "emptyQuerySub": "\"{{query}}\" bo'yicha mos grant topilmadi. Boshqa so'z bilan urinib ko'ring.",
       "international": "Xalqaro",
       "amount": "Summa",
       "deadline": "Muddat",
@@ -558,6 +601,8 @@
       "grantsOpen": "{{count}} ochiq",
       "view": "Ko'rish",
       "upcomingEvents": "Yaqin tadbirlar",
+      "openGrants": "Ochiq grantlar",
+      "until": "{{date}} gacha",
       "viewAll": "Hammasi",
       "noEvents": "Yaqin orada tadbir yo'q"
     },
@@ -575,6 +620,9 @@
       "groupWeek": "Bu hafta",
       "groupOlder": "Avvalroq",
       "archiveNote": "30 kundan eski bildirishnomalar avtomatik arxivlanadi",
+      "emptyTitle": "Bildirishnomalar yo'q",
+      "emptyHint": "Yangi bildirishnomalar shu yerda paydo bo'ladi — hisobotlar, grantlar va tadbirlar bo'yicha yangiliklar.",
+      "filterEmpty": "Bu filtrda bildirishnomalar yo'q.",
       "swipeRead": "O'qilgan",
       "filterDialogLabel": "Bildirishnomalarni filtrlash",
       "filterSubtitle": "Faqat tanlangan turlar va davrlarni ko'rsatish",
@@ -639,7 +687,11 @@
       "empty": "Tarix mavjud emas",
       "actionLogin": "Tizimga kirish",
       "actionLogout": "Tizimdan chiqish",
-      "actionRevoke": "Seans tugatildi"
+      "actionRevoke": "Seans tugatildi",
+      "today": "Bugun",
+      "yesterday": "Kecha",
+      "web": "Veb",
+      "mobile": "Mobil"
     },
     "members": {
       "title": "Jamoa a'zolari",
@@ -730,6 +782,7 @@
       "related": "Tegishli",
       "defaultTag": "Yangilik",
       "notFound": "Topilmadi",
+      "notFoundSubtitle": "Ushbu yangilik mavjud emas yoki olib tashlangan.",
       "defaultAuthor": "NNTMA",
       "copyLink": "Nusxa",
       "copyButton": "Nusxalash",
@@ -843,14 +896,21 @@
       "account": "Hisob qaydnomasi",
       "orgDocuments": "Tashkilot hujjatlari",
       "docsCount": "{{count}} ta",
+      "itemsCount": "{{count}} ta",
+      "daysLeftShort": "kun qoldi",
       "teamMembers": "Jamoa a'zolari",
       "notifications": "Bildirishnomalar",
       "active": "Faol",
       "language": "Til",
       "languageValue": "O'zbekcha (lotin)",
       "privacySecurity": "Maxfiylik va xavfsizlik",
+      "security": "Xavfsizlik",
+      "privacy": "Maxfiylik",
       "helpSupport": "Yordam va qo'llab-quvvatlash",
       "logout": "Hisobdan chiqish",
+      "logoutConfirmTitle": "Hisobdan chiqasizmi?",
+      "logoutConfirmMessage": "Joriy seans yakunlanadi va siz kirish sahifasiga qaytasiz.",
+      "logoutConfirmLabel": "Chiqish",
       "orgFullName": "NNTMA — Nodavlat notijorat tashkilotlar milliy assotsiatsiyasi",
       "notificationsSubtitle": "Qaysi yangilanishlar haqida xabar olishni xohlaysiz",
       "notifNewGrants": "Yangi grantlar",
@@ -862,7 +922,9 @@
       "notifNewEvents": "Yangi tadbirlar va vebinarlar",
       "notifNews": "NNTMA yangiliklari",
       "notifNewsSub": "Oyiga 1-2 marta",
+      "notificationTypes": "Bildirishnoma turlari",
       "deliveryChannel": "Yetkazib berish kanali",
+      "connect": "Ulash",
       "channelInApp": "Ilova ichida",
       "channelEmail": "Email",
       "channelSms": "SMS",
@@ -874,7 +936,8 @@
         "regional_admin": "Hududiy admin",
         "org_admin": "Tashkilot admini",
         "member_user": "A'zo tashkilot vakili"
-      }
+      },
+      "payComingSoon": "To`lov tez orada qo`shiladi"
     },
     "profileedit": {
       "title": "Profilni tahrirlash",
@@ -887,7 +950,8 @@
       "emailLabel": "Email",
       "roleLabel": "Rol",
       "regionLabel": "Hudud",
-      "notEditable": "oʻzgartirib boʻlmaydi"
+      "notEditable": "oʻzgartirib boʻlmaydi",
+      "avatarSoon": "Rasm yuklash tez orada qo'shiladi"
     },
     "reportdetail": {
       "reportTitle": "Hisobot",
@@ -960,7 +1024,7 @@
       "reportFallback": "hisobot",
       "reportFallbackCap": "Hisobot",
       "reportPeriodLabel": "Hisobot davri",
-      "deadlinePrefix": "2026 Q2 hisobotini topshirish muddati",
+      "deadlinePrefix": "{{period}} hisobotini topshirish muddati",
       "deadlineDate": "15 iyul 2026",
       "deadlineSuffix": "— {{days}} kun qoldi.",
       "step3Heading": "Faylni yuklang",
@@ -997,26 +1061,16 @@
         }
       },
       "period": {
-        "2026Q1": {
-          "sub": "Yanvar – Mart 2026",
-          "status": "topshirilgan"
+        "quarterMonths": {
+          "1": "Yanvar – Mart",
+          "2": "Aprel – Iyun",
+          "3": "Iyul – Sentyabr",
+          "4": "Oktyabr – Dekabr"
         },
-        "2026Q2": {
-          "sub": "Aprel – Iyun 2026",
-          "status": "muddat: 15 iyul"
-        },
-        "2026Q3": {
-          "sub": "Iyul – Sentyabr 2026",
-          "status": "ochilmagan"
-        },
-        "2026Q4": {
-          "sub": "Oktyabr – Dekabr 2026",
-          "status": "ochilmagan"
-        },
-        "2026Y": {
-          "sub": "Yil yakuni",
-          "status": "muddat: 31 yanvar 2027"
-        }
+        "annualSub": "Yil yakuni",
+        "statusDone": "topshirilgan",
+        "statusOpen": "ochiq",
+        "statusLocked": "ochilmagan"
       }
     },
     "reports": {
@@ -1027,16 +1081,18 @@
       "archiveSoon": "Arxiv tez orada",
       "filterAll": "Hammasi",
       "filterReturned": "Qaytarildi",
-      "filterReview": "Ko'rib chiq.",
+      "filterReview": "Ko'rilmoqda",
       "filterAccepted": "Tasdiqlandi",
       "filterDraft": "Qoralama",
-      "returnedCallout": "{{count}} ta hisobot qayta tahrirlash uchun qaytarildi",
+      "returnedCallout_one": "{{count}} ta hisobot qayta tahrirlash uchun qaytarildi",
+      "returnedCallout_other": "{{count}} ta hisobot qayta tahrirlash uchun qaytarildi",
       "returnedInstruction": "NNTMA izohini o'qib, tuzating va qayta topshiring. Yangi muddat —",
       "returnedDeadline": "25 iyun 2026",
       "nextDeadline": "Keyingi muddat",
       "nextDeadlineReport": "2026 Q3 faoliyat hisoboti",
       "nextDeadlineDate": "15 oktyabr 2026",
       "empty": "Hisobotlar topilmadi",
+      "emptySub": "Bu holatda hisobotlar yo'q. Filtrlarni o'zgartiring yoki yangi hisobot qo'shing.",
       "acceptedSummaryPre": "Oxirgi 12 oyda topshirgan",
       "acceptedSummaryPost": "hisobot qabul qilindi.",
       "showArchive": "2024 va undan oldingilarni ko'rsatish",
@@ -1066,6 +1122,7 @@
     },
     "sessions": {
       "title": "Faol seanslar",
+      "subtitle": "Hisobingizga kirgan qurilmalar. Notanish qurilmani darhol tugating.",
       "all": "Hammasi",
       "sessionEnded": "Seans tugatildi",
       "endFailed": "Tugatib boʻlmadi",
@@ -1105,7 +1162,12 @@
       "eventsDetail": "Eslatmalar",
       "news": "Yangiliklar",
       "comingSoon": "Tez orada",
+      "comingSoonTag": "tez orada",
+      "languageChanged": "Til o'zgartirildi",
       "securityTitle": "Xavfsizlik",
+      "securityHeroTitle": "Hisobingiz himoyalangan",
+      "securityHeroSub": "Parolingizni muntazam yangilab turing va faol seanslarni tekshiring.",
+      "account": "Hisob",
       "password": "Parol",
       "changePassword": "Parolni o'zgartirish",
       "activity": "Faollik",
@@ -1205,6 +1267,7 @@
       "themeAuto": "Avto",
       "themeLight": "Yorug'",
       "themeDark": "Qorong'i",
+      "soon": "Tez orada",
       "autoHint": "Tizim sozlamalariga moslashadi.",
       "density": "Zichlik",
       "densityCompact": "Zich",
@@ -1229,7 +1292,10 @@
       }
     },
     "errorstate": {
-      "loadFailed": "Ma'lumotlarni yuklab bo'lmadi. Internet aloqasini tekshiring."
+      "loadFailed": "Ma'lumotlarni yuklab bo'lmadi. Internet aloqasini tekshiring.",
+      "serverFailed": "Ma'lumotlarni yuklab bo'lmadi. Bu vaqtinchalik nosozlik — birozdan so'ng qayta urinib ko'ring.",
+      "offline": "Internetga ulanish yo'q. Aloqani tekshirib, qayta urinib ko'ring.",
+      "retrying": "Qayta urinilmoqda…"
     },
     "offlinebanner": {
       "internetRestored": "Internet tiklandi",
@@ -1646,8 +1712,8 @@
       "results": "<h2 class=\"section-title\">Natijalar</h2><div class=\"kpi-grid\"><div class=\"kpi\"><strong>37+</strong><span>Qo'shma tashabbus</span></div><div class=\"kpi\"><strong>12</strong><span>Xalqaro hamkor</span></div><div class=\"kpi\"><strong>950+</strong><span>Ishtirokchi NNT</span></div><div class=\"kpi\"><strong>14</strong><span>Hudud qamrovi</span></div></div>"
     },
     "socialOrders": {
-      "title": "Давлат ижтимоий буюртмалари",
-      "sub": "2021–2023 йилларда нодавлат нотижорат ташкилотлари иштирокида амалга оширилган давлат ижтимоий буюртмалари базаси.",
+      "title": "Davlat ijtimoiy buyurtmalari",
+      "sub": "2021–2023 yillarda nodavlat notijorat tashkilotlari ishtirokida amalga oshirilgan davlat ijtimoiy buyurtmalari bazasi.",
       "statTotal": "Jami buyurtmalar",
       "statPeriod": "Qamrov davri",
       "statAgencies": "Davlat idoralari",

@@ -190,6 +190,11 @@
       "newPassword": "New password",
       "confirmNewPassword": "Confirm new password",
       "minHint": "at least 12 characters",
+      "strength": {
+        "weak": "Weak",
+        "medium": "Medium",
+        "strong": "Strong"
+      },
       "mismatch": "Passwords do not match",
       "savePassword": "Save password",
       "saving": "Saving...",
@@ -201,18 +206,22 @@
     "documents": {
       "title": "Organization documents",
       "upload": "Upload",
+      "uploadComingSoon": "Document upload is coming soon.",
       "collectionStatus": "Document package status",
       "allRequiredPresent": "All required documents are in place — verified by NNTMA",
+      "sampleDataNotice": "Documents are loaded from the live organization cabinet data",
       "filterAll": "All",
       "filterRequired": "Required",
       "filterSupplementary": "Supplementary",
       "badgeRequired": "Required",
       "sectionRequired": "Core documents",
       "sectionSupplementary": "Supplementary documents",
+      "sectionResources": "Additional resources",
       "templatesTitle": "Reports and template forms",
       "templatesSubtitle": "Official forms approved by NNTMA",
       "templatesCount": "{{count}} forms",
       "updatedAt": "{{meta}} · updated {{date}}",
+      "externalSource": "External link · {{source}} · updated {{date}}",
       "sheetAriaLabel": "Document details",
       "viewLabel": "View document",
       "actionDownload": "Download",
@@ -227,7 +236,10 @@
       "metaStatus": "Status",
       "metaDocId": "Document ID",
       "statusVerified": "Verified by NNTMA",
-      "statusCurrent": "Current"
+      "statusCurrent": "Current",
+      "noPreview": "No text preview is available for this document. You can download the file to view it.",
+      "emptyTitle": "No documents yet",
+      "emptySubtitle": "Your organization's documents will appear here. Tap + above to upload the first one."
     },
     "common": {
       "back": "Back",
@@ -236,13 +248,16 @@
       "save": "Save",
       "cancel": "Cancel",
       "loading": "Loading…",
+      "networkError": "Network error. Please try again.",
+      "errorGeneric": "Something went wrong. Please try again.",
       "yes": "Yes",
       "no": "No",
       "edit": "Edit",
       "delete": "Delete",
       "submit": "Submit",
       "confirm": "Confirm",
-      "retry": "Try again"
+      "retry": "Try again",
+      "updateReady": "A new version is ready. Reload the page to update."
     },
     "eventdetail": {
       "regCancelled": "Registration cancelled",
@@ -250,6 +265,11 @@
       "errorOccurred": "An error occurred",
       "share": "Share",
       "duration": "Duration — 7 hours",
+      "durationLabel": "Duration",
+      "durationValue": "7 hours",
+      "when": "When",
+      "linkCopied": "Link copied",
+      "addToCalendar": "Add to calendar",
       "organizer": "Organizer",
       "registeredTitle": "Registered",
       "confirmationEmailed": "Confirmation letter sent to email",
@@ -283,24 +303,29 @@
       "summary": "Upcoming — {{upcomingCount}} · Yours — {{mineCount}}",
       "calendar": "Calendar",
       "tabUpcoming": "Upcoming",
-      "tabMine": "Yours ({{mineCount}})",
+      "tabMine": "Yours",
       "tabPast": "Past",
       "empty": "No events found",
+      "emptySub": "There are no events in this section yet. Check back later.",
       "today": "Today · {{time}}",
       "register": "Register",
-      "monthCount": "· {{count}} events",
+      "monthCount_one": "· {{count}} event",
+      "monthCount_other": "· {{count}} events",
       "sortByTime": "Sort: by time",
       "registered": "Registered",
       "keynote": "Keynote",
       "seats": "{{taken}}/{{total}} registered",
       "nearlyFull": "· nearly full",
       "free": "Free",
+      "formatOnline": "Online",
+      "formatOffline": "Offline",
       "kind": {
         "seminar": "Seminar",
         "meeting": "Meeting",
         "webinar": "Webinar",
         "event": "Event"
-      }
+      },
+      "todayWord": "Today"
     },
     "eventscalendar": {
       "title": "Calendar",
@@ -348,6 +373,7 @@
       "awardedAmountLabel": "Awarded amount",
       "requestedAmountLabel": "requested amount",
       "timelineLabel": "Stage",
+      "timelineCreated": "Created",
       "timelineSubmitted": "Submitted",
       "timelineTechReview": "Technical review",
       "timelineUnderReview": "Officer reviewing",
@@ -420,6 +446,10 @@
       "resolved": "Resolved",
       "submittedOn": "Submitted",
       "continue": "Continue",
+      "emptyTitle": "No applications",
+      "emptyAllHint": "You haven't applied to any grants yet. Browse the available grants and start an application.",
+      "emptyFilteredHint": "No applications with this status.",
+      "emptyBrowse": "Browse grants",
       "statTotal": "Total applications",
       "statTotalSub": "In 12 months",
       "statApproved": "Approved",
@@ -455,6 +485,8 @@
       "requirements": "Requirements",
       "description": "Description",
       "readFull": "Read full ↓",
+      "readLess": "Show less ↑",
+      "notSpecified": "Not specified",
       "publishedMeta": "Published: {{date}} · ID {{id}}",
       "maxAmount": "Max. amount",
       "submitApplication": "Submit application",
@@ -492,12 +524,16 @@
       "filter": "Filter",
       "searchPlaceholder": "Grant name, field or organizer",
       "saved": "Saved",
-      "savedCount": "{{count}} grants",
+      "savedCount_one": "{{count}} grant",
+      "savedCount_other": "{{count}} grants",
       "myApplications": "My applications",
       "reviewCount": "{{count}} under review",
-      "applicationsCount": "{{count}} applications",
+      "applicationsCount_one": "{{count}} application",
+      "applicationsCount_other": "{{count}} applications",
       "category": "Category",
-      "resultsCount": "{{count}} results",
+      "resultsCount_one": "{{count}} result",
+      "resultsCount_other": "{{count}} results",
+      "viewAllResults": "View all {{count}} grants",
       "recommended": "Recommended",
       "sortLabel": "Sort:",
       "sortNearestDeadline": "Nearest deadline ↓",
@@ -524,8 +560,15 @@
       "clear": "Clear",
       "filter": "Filter",
       "resultsFound": "results found",
+      "resultsFound_one": "result found",
+      "resultsFound_other": "results found",
+      "cappedNote": "Showing the first {{count}} grants. Refine your search for a closer match.",
       "noResultsForQuery": "No grants found for \"{{query}}\"",
       "noResults": "No grants found",
+      "emptyTitle": "No grants found",
+      "emptySub": "There are no grants to show yet. Check back later.",
+      "emptyQueryTitle": "Nothing found",
+      "emptyQuerySub": "No grants match \"{{query}}\". Try a different word.",
       "international": "International",
       "amount": "Amount",
       "deadline": "Deadline",
@@ -558,6 +601,8 @@
       "grantsOpen": "{{count}} open",
       "view": "View",
       "upcomingEvents": "Upcoming events",
+      "openGrants": "Open grants",
+      "until": "until {{date}}",
       "viewAll": "All",
       "noEvents": "No upcoming events"
     },
@@ -575,6 +620,9 @@
       "groupWeek": "This week",
       "groupOlder": "Earlier",
       "archiveNote": "Notifications older than 30 days are archived automatically",
+      "emptyTitle": "No notifications",
+      "emptyHint": "New notifications will appear here — updates on reports, grants and events.",
+      "filterEmpty": "No notifications in this filter.",
       "swipeRead": "Read",
       "filterDialogLabel": "Filter notifications",
       "filterSubtitle": "Show only the selected types and periods",
@@ -639,7 +687,11 @@
       "empty": "No history available",
       "actionLogin": "Signed in",
       "actionLogout": "Signed out",
-      "actionRevoke": "Session ended"
+      "actionRevoke": "Session ended",
+      "today": "Today",
+      "yesterday": "Yesterday",
+      "web": "Web",
+      "mobile": "Mobile"
     },
     "members": {
       "title": "Team members",
@@ -730,6 +782,7 @@
       "related": "Related",
       "defaultTag": "News",
       "notFound": "Not found",
+      "notFoundSubtitle": "This article does not exist or has been removed.",
       "defaultAuthor": "NGONIMA",
       "copyLink": "Copy",
       "copyButton": "Copy",
@@ -843,14 +896,21 @@
       "account": "Account",
       "orgDocuments": "Organization documents",
       "docsCount": "{{count}}",
+      "itemsCount": "{{count}}",
+      "daysLeftShort": "days left",
       "teamMembers": "Team members",
       "notifications": "Notifications",
       "active": "Active",
       "language": "Language",
       "languageValue": "Uzbek (Latin)",
       "privacySecurity": "Privacy and security",
+      "security": "Security",
+      "privacy": "Privacy",
       "helpSupport": "Help and support",
       "logout": "Log out",
+      "logoutConfirmTitle": "Log out?",
+      "logoutConfirmMessage": "Your current session will end and you'll return to the login screen.",
+      "logoutConfirmLabel": "Log out",
       "orgFullName": "NANNO — National Association of Non-Governmental Non-Commercial Organizations",
       "notificationsSubtitle": "Which updates you want to be notified about",
       "notifNewGrants": "New grants",
@@ -862,7 +922,9 @@
       "notifNewEvents": "New events and webinars",
       "notifNews": "NANNO news",
       "notifNewsSub": "1-2 times a month",
+      "notificationTypes": "Notification types",
       "deliveryChannel": "Delivery channel",
+      "connect": "Connect",
       "channelInApp": "In-app",
       "channelEmail": "Email",
       "channelSms": "SMS",
@@ -874,7 +936,8 @@
         "regional_admin": "Regional admin",
         "org_admin": "Organization admin",
         "member_user": "Member organization representative"
-      }
+      },
+      "payComingSoon": "Payment coming soon"
     },
     "profileedit": {
       "title": "Edit profile",
@@ -887,7 +950,8 @@
       "emailLabel": "Email",
       "roleLabel": "Role",
       "regionLabel": "Region",
-      "notEditable": "cannot be changed"
+      "notEditable": "cannot be changed",
+      "avatarSoon": "Photo upload is coming soon"
     },
     "reportdetail": {
       "reportTitle": "Report",
@@ -960,7 +1024,7 @@
       "reportFallback": "report",
       "reportFallbackCap": "Report",
       "reportPeriodLabel": "Report period",
-      "deadlinePrefix": "The deadline to submit the 2026 Q2 report is",
+      "deadlinePrefix": "The deadline to submit the {{period}} report is",
       "deadlineDate": "15 July 2026",
       "deadlineSuffix": "— {{days}} days left.",
       "step3Heading": "Upload file",
@@ -997,26 +1061,16 @@
         }
       },
       "period": {
-        "2026Q1": {
-          "sub": "January – March 2026",
-          "status": "submitted"
+        "quarterMonths": {
+          "1": "January – March",
+          "2": "April – June",
+          "3": "July – September",
+          "4": "October – December"
         },
-        "2026Q2": {
-          "sub": "April – June 2026",
-          "status": "due: 15 July"
-        },
-        "2026Q3": {
-          "sub": "July – September 2026",
-          "status": "not open"
-        },
-        "2026Q4": {
-          "sub": "October – December 2026",
-          "status": "not open"
-        },
-        "2026Y": {
-          "sub": "Year-end",
-          "status": "due: 31 January 2027"
-        }
+        "annualSub": "Year-end",
+        "statusDone": "submitted",
+        "statusOpen": "open",
+        "statusLocked": "not open"
       }
     },
     "reports": {
@@ -1030,13 +1084,15 @@
       "filterReview": "In review",
       "filterAccepted": "Accepted",
       "filterDraft": "Draft",
-      "returnedCallout": "{{count}} report(s) returned for revision",
+      "returnedCallout_one": "{{count}} report returned for revision",
+      "returnedCallout_other": "{{count}} reports returned for revision",
       "returnedInstruction": "Read the NGO authority's note, make corrections and resubmit. New deadline —",
       "returnedDeadline": "25 June 2026",
       "nextDeadline": "Next deadline",
       "nextDeadlineReport": "2026 Q3 activity report",
       "nextDeadlineDate": "15 October 2026",
       "empty": "No reports found",
+      "emptySub": "No reports in this status. Change the filters or add a new report.",
       "acceptedSummaryPre": "In the last 12 months,",
       "acceptedSummaryPost": "of your submitted reports were accepted.",
       "showArchive": "Show 2024 and earlier",
@@ -1066,6 +1122,7 @@
     },
     "sessions": {
       "title": "Active sessions",
+      "subtitle": "Devices signed in to your account. End any you don't recognise immediately.",
       "all": "All",
       "sessionEnded": "Session ended",
       "endFailed": "Could not end session",
@@ -1105,7 +1162,12 @@
       "eventsDetail": "Reminders",
       "news": "News",
       "comingSoon": "Coming soon",
+      "comingSoonTag": "soon",
+      "languageChanged": "Language changed",
       "securityTitle": "Security",
+      "securityHeroTitle": "Your account is protected",
+      "securityHeroSub": "Update your password regularly and review active sessions.",
+      "account": "Account",
       "password": "Password",
       "changePassword": "Change password",
       "activity": "Activity",
@@ -1205,6 +1267,7 @@
       "themeAuto": "Auto",
       "themeLight": "Light",
       "themeDark": "Dark",
+      "soon": "Soon",
       "autoHint": "Adapts to system settings.",
       "density": "Density",
       "densityCompact": "Compact",
@@ -1229,7 +1292,10 @@
       }
     },
     "errorstate": {
-      "loadFailed": "Failed to load data. Please check your internet connection."
+      "loadFailed": "Failed to load data. Please check your internet connection.",
+      "serverFailed": "Couldn't load data. This is a temporary problem — please try again shortly.",
+      "offline": "No internet connection. Check your connection and try again.",
+      "retrying": "Retrying…"
     },
     "offlinebanner": {
       "internetRestored": "Connection restored",

@@ -190,6 +190,11 @@
       "newPassword": "Новый пароль",
       "confirmNewPassword": "Подтвердите новый пароль",
       "minHint": "минимум 12 символов",
+      "strength": {
+        "weak": "Слабый",
+        "medium": "Средний",
+        "strong": "Надёжный"
+      },
       "mismatch": "Пароли не совпадают",
       "savePassword": "Сохранить пароль",
       "saving": "Сохранение...",
@@ -201,18 +206,22 @@
     "documents": {
       "title": "Документы организации",
       "upload": "Загрузить",
+      "uploadComingSoon": "Загрузка документов появится в ближайшее время.",
       "collectionStatus": "Состояние пакета документов",
       "allRequiredPresent": "Все обязательные документы на месте — подтверждено ННОА",
+      "sampleDataNotice": "Документы загружаются из живых данных кабинета организации",
       "filterAll": "Все",
       "filterRequired": "Основные",
       "filterSupplementary": "Дополнительные",
       "badgeRequired": "Обязательно",
       "sectionRequired": "Основные документы",
       "sectionSupplementary": "Дополнительные документы",
+      "sectionResources": "Дополнительные ресурсы",
       "templatesTitle": "Отчётные и типовые формы",
       "templatesSubtitle": "Официальные формы, утверждённые ННОА",
       "templatesCount": "{{count}} шт.",
       "updatedAt": "{{meta}} · обновлено {{date}}",
+      "externalSource": "Внешняя ссылка · {{source}} · обновлено {{date}}",
       "sheetAriaLabel": "Сведения о документе",
       "viewLabel": "Просмотр документа",
       "actionDownload": "Скачать",
@@ -227,7 +236,10 @@
       "metaStatus": "Статус",
       "metaDocId": "ID документа",
       "statusVerified": "Подтверждено ННОА",
-      "statusCurrent": "Текущая"
+      "statusCurrent": "Текущая",
+      "noPreview": "Текстовый просмотр для этого документа недоступен. Файл можно скачать и открыть отдельно.",
+      "emptyTitle": "Документов пока нет",
+      "emptySubtitle": "Здесь появятся документы вашей организации. Нажмите + вверху, чтобы загрузить первый документ."
     },
     "common": {
       "back": "Назад",
@@ -236,13 +248,16 @@
       "save": "Сохранить",
       "cancel": "Отмена",
       "loading": "Загрузка…",
+      "networkError": "Ошибка сети. Пожалуйста, повторите попытку.",
+      "errorGeneric": "Произошла ошибка. Повторите попытку.",
       "yes": "Да",
       "no": "Нет",
       "edit": "Редактировать",
       "delete": "Удалить",
       "submit": "Отправить",
       "confirm": "Подтвердить",
-      "retry": "Повторить попытку"
+      "retry": "Повторить попытку",
+      "updateReady": "Доступна новая версия. Обновите страницу."
     },
     "eventdetail": {
       "regCancelled": "Регистрация отменена",
@@ -250,6 +265,11 @@
       "errorOccurred": "Произошла ошибка",
       "share": "Поделиться",
       "duration": "Длительность — 7 часов",
+      "durationLabel": "Длительность",
+      "durationValue": "7 часов",
+      "when": "Время",
+      "linkCopied": "Ссылка скопирована",
+      "addToCalendar": "Добавить в календарь",
       "organizer": "Организатор",
       "registeredTitle": "Регистрация выполнена",
       "confirmationEmailed": "Письмо с подтверждением отправлено на email",
@@ -283,24 +303,30 @@
       "summary": "Скоро — {{upcomingCount}} · Ваши — {{mineCount}}",
       "calendar": "Календарь",
       "tabUpcoming": "Скоро",
-      "tabMine": "Ваши ({{mineCount}})",
+      "tabMine": "Ваши",
       "tabPast": "Прошедшие",
       "empty": "Мероприятия не найдены",
+      "emptySub": "В этом разделе пока нет мероприятий. Загляните позже.",
       "today": "Сегодня · {{time}}",
       "register": "Зарегистрироваться",
-      "monthCount": "· {{count}} мероприятий",
+      "monthCount_one": "· {{count}} мероприятие",
+      "monthCount_few": "· {{count}} мероприятия",
+      "monthCount_many": "· {{count}} мероприятий",
       "sortByTime": "Порядок: по времени",
       "registered": "Вы зарегистрированы",
       "keynote": "Основное",
       "seats": "{{taken}}/{{total}} зарегистрировано",
       "nearlyFull": "· почти заполнено",
       "free": "Бесплатно",
+      "formatOnline": "Онлайн",
+      "formatOffline": "Офлайн",
       "kind": {
         "seminar": "Семинар",
         "meeting": "Собрание",
         "webinar": "Вебинар",
         "event": "Мероприятие"
-      }
+      },
+      "todayWord": "Сегодня"
     },
     "eventscalendar": {
       "title": "Календарь",
@@ -348,6 +374,7 @@
       "awardedAmountLabel": "Выделенная сумма",
       "requestedAmountLabel": "запрошенная сумма",
       "timelineLabel": "Этап",
+      "timelineCreated": "Создана",
       "timelineSubmitted": "Подана",
       "timelineTechReview": "Техническая проверка",
       "timelineUnderReview": "Рассматривает ответственный",
@@ -420,6 +447,10 @@
       "resolved": "Решена",
       "submittedOn": "Подана",
       "continue": "Продолжить",
+      "emptyTitle": "Заявок нет",
+      "emptyAllHint": "Вы ещё не подавали заявок на гранты. Просмотрите доступные гранты и начните заявку.",
+      "emptyFilteredHint": "Нет заявок с этим статусом.",
+      "emptyBrowse": "Посмотреть гранты",
       "statTotal": "Всего заявок",
       "statTotalSub": "За 12 месяцев",
       "statApproved": "Одобрено",
@@ -455,6 +486,8 @@
       "requirements": "Требования",
       "description": "Описание",
       "readFull": "Читать полностью ↓",
+      "readLess": "Свернуть ↑",
+      "notSpecified": "Не указано",
       "publishedMeta": "Опубликовано: {{date}} · ID {{id}}",
       "maxAmount": "Макс. сумма",
       "submitApplication": "Подать заявку",
@@ -492,12 +525,19 @@
       "filter": "Фильтр",
       "searchPlaceholder": "Название гранта, сфера или организатор",
       "saved": "Сохранённые",
-      "savedCount": "{{count}} грант(ов)",
+      "savedCount_one": "{{count}} грант",
+      "savedCount_few": "{{count}} гранта",
+      "savedCount_many": "{{count}} грантов",
       "myApplications": "Мои заявки",
       "reviewCount": "{{count}} на рассмотрении",
-      "applicationsCount": "{{count}} заявок",
+      "applicationsCount_one": "{{count}} заявка",
+      "applicationsCount_few": "{{count}} заявки",
+      "applicationsCount_many": "{{count}} заявок",
       "category": "Категория",
-      "resultsCount": "{{count}} результат(ов)",
+      "resultsCount_one": "{{count}} результат",
+      "resultsCount_few": "{{count}} результата",
+      "resultsCount_many": "{{count}} результатов",
+      "viewAllResults": "Показать все {{count}} грантов",
       "recommended": "Рекомендуется",
       "sortLabel": "Сортировка:",
       "sortNearestDeadline": "Ближайший срок ↓",
@@ -524,8 +564,16 @@
       "clear": "Очистить",
       "filter": "Фильтр",
       "resultsFound": "результатов найдено",
+      "resultsFound_one": "результат найден",
+      "resultsFound_few": "результата найдено",
+      "resultsFound_many": "результатов найдено",
+      "cappedNote": "Показаны первые {{count}} грантов. Уточните поиск для более точного результата.",
       "noResultsForQuery": "По запросу \"{{query}}\" гранты не найдены",
       "noResults": "Гранты не найдены",
+      "emptyTitle": "Гранты не найдены",
+      "emptySub": "Пока нет грантов для показа. Загляните позже.",
+      "emptyQueryTitle": "Ничего не найдено",
+      "emptyQuerySub": "По запросу \"{{query}}\" подходящих грантов нет. Попробуйте другое слово.",
       "international": "Международный",
       "amount": "Сумма",
       "deadline": "Срок",
@@ -558,6 +606,8 @@
       "grantsOpen": "{{count}} открыто",
       "view": "Смотреть",
       "upcomingEvents": "Ближайшие мероприятия",
+      "openGrants": "Открытые гранты",
+      "until": "до {{date}}",
       "viewAll": "Все",
       "noEvents": "В ближайшее время мероприятий нет"
     },
@@ -575,6 +625,9 @@
       "groupWeek": "На этой неделе",
       "groupOlder": "Ранее",
       "archiveNote": "Уведомления старше 30 дней архивируются автоматически",
+      "emptyTitle": "Уведомлений нет",
+      "emptyHint": "Новые уведомления появятся здесь — по отчётам, грантам и мероприятиям.",
+      "filterEmpty": "В этом фильтре нет уведомлений.",
       "swipeRead": "Прочитано",
       "filterDialogLabel": "Фильтрация уведомлений",
       "filterSubtitle": "Показывать только выбранные типы и периоды",
@@ -639,7 +692,11 @@
       "empty": "История отсутствует",
       "actionLogin": "Вход в систему",
       "actionLogout": "Выход из системы",
-      "actionRevoke": "Сеанс завершён"
+      "actionRevoke": "Сеанс завершён",
+      "today": "Сегодня",
+      "yesterday": "Вчера",
+      "web": "Веб",
+      "mobile": "Моб."
     },
     "members": {
       "title": "Участники команды",
@@ -730,6 +787,7 @@
       "related": "Связанные",
       "defaultTag": "Новость",
       "notFound": "Не найдено",
+      "notFoundSubtitle": "Эта новость не существует или была удалена.",
       "defaultAuthor": "ННОМА",
       "copyLink": "Копия",
       "copyButton": "Копировать",
@@ -843,14 +901,21 @@
       "account": "Учётная запись",
       "orgDocuments": "Документы организации",
       "docsCount": "{{count}} шт.",
+      "itemsCount": "{{count}} шт.",
+      "daysLeftShort": "дн. осталось",
       "teamMembers": "Члены команды",
       "notifications": "Уведомления",
       "active": "Активно",
       "language": "Язык",
       "languageValue": "Узбекский (латиница)",
       "privacySecurity": "Конфиденциальность и безопасность",
+      "security": "Безопасность",
+      "privacy": "Конфиденциальность",
       "helpSupport": "Помощь и поддержка",
       "logout": "Выйти из аккаунта",
+      "logoutConfirmTitle": "Выйти из аккаунта?",
+      "logoutConfirmMessage": "Текущая сессия завершится, и вы вернётесь на страницу входа.",
+      "logoutConfirmLabel": "Выйти",
       "orgFullName": "НАННО — Национальная ассоциация негосударственных некоммерческих организаций",
       "notificationsSubtitle": "О каких обновлениях вы хотите получать уведомления",
       "notifNewGrants": "Новые гранты",
@@ -862,7 +927,9 @@
       "notifNewEvents": "Новые мероприятия и вебинары",
       "notifNews": "Новости НАННО",
       "notifNewsSub": "1-2 раза в месяц",
+      "notificationTypes": "Типы уведомлений",
       "deliveryChannel": "Канал доставки",
+      "connect": "Подключить",
       "channelInApp": "В приложении",
       "channelEmail": "Эл. почта",
       "channelSms": "SMS",
@@ -874,7 +941,8 @@
         "regional_admin": "Региональный администратор",
         "org_admin": "Администратор организации",
         "member_user": "Представитель организации-члена"
-      }
+      },
+      "payComingSoon": "Оплата скоро будет доступна"
     },
     "profileedit": {
       "title": "Редактировать профиль",
@@ -887,7 +955,8 @@
       "emailLabel": "Эл. почта",
       "roleLabel": "Роль",
       "regionLabel": "Регион",
-      "notEditable": "нельзя изменить"
+      "notEditable": "нельзя изменить",
+      "avatarSoon": "Загрузка фото появится скоро"
     },
     "reportdetail": {
       "reportTitle": "Отчёт",
@@ -960,7 +1029,7 @@
       "reportFallback": "отчёт",
       "reportFallbackCap": "Отчёт",
       "reportPeriodLabel": "Период отчёта",
-      "deadlinePrefix": "Срок подачи отчёта за 2026 Q2 —",
+      "deadlinePrefix": "Срок подачи отчёта за {{period}} —",
       "deadlineDate": "15 июля 2026",
       "deadlineSuffix": "— осталось {{days}} дн.",
       "step3Heading": "Загрузите файл",
@@ -997,26 +1066,16 @@
         }
       },
       "period": {
-        "2026Q1": {
-          "sub": "Январь – март 2026",
-          "status": "сдан"
+        "quarterMonths": {
+          "1": "Январь – март",
+          "2": "Апрель – июнь",
+          "3": "Июль – сентябрь",
+          "4": "Октябрь – декабрь"
         },
-        "2026Q2": {
-          "sub": "Апрель – июнь 2026",
-          "status": "срок: 15 июля"
-        },
-        "2026Q3": {
-          "sub": "Июль – сентябрь 2026",
-          "status": "не открыт"
-        },
-        "2026Q4": {
-          "sub": "Октябрь – декабрь 2026",
-          "status": "не открыт"
-        },
-        "2026Y": {
-          "sub": "Итоги года",
-          "status": "срок: 31 января 2027"
-        }
+        "annualSub": "Итоги года",
+        "statusDone": "сдан",
+        "statusOpen": "открыт",
+        "statusLocked": "не открыт"
       }
     },
     "reports": {
@@ -1030,13 +1089,16 @@
       "filterReview": "На проверке",
       "filterAccepted": "Принято",
       "filterDraft": "Черновик",
-      "returnedCallout": "{{count}} отчёт(ов) возвращено на доработку",
+      "returnedCallout_one": "{{count}} отчёт возвращён на доработку",
+      "returnedCallout_few": "{{count}} отчёта возвращено на доработку",
+      "returnedCallout_many": "{{count}} отчётов возвращено на доработку",
       "returnedInstruction": "Прочитайте замечание ННОА, исправьте и подайте повторно. Новый срок —",
       "returnedDeadline": "25 июня 2026",
       "nextDeadline": "Следующий срок",
       "nextDeadlineReport": "Отчёт о деятельности за 3 кв. 2026",
       "nextDeadlineDate": "15 октября 2026",
       "empty": "Отчёты не найдены",
+      "emptySub": "В этом статусе отчётов нет. Измените фильтры или добавьте новый отчёт.",
       "acceptedSummaryPre": "За последние 12 месяцев принято",
       "acceptedSummaryPost": "из поданных отчётов.",
       "showArchive": "Показать 2024 и более ранние",
@@ -1066,6 +1128,7 @@
     },
     "sessions": {
       "title": "Активные сеансы",
+      "subtitle": "Устройства с доступом к вашему аккаунту. Незнакомое устройство сразу завершите.",
       "all": "Все",
       "sessionEnded": "Сеанс завершён",
       "endFailed": "Не удалось завершить",
@@ -1105,7 +1168,12 @@
       "eventsDetail": "Напоминания",
       "news": "Новости",
       "comingSoon": "Скоро",
+      "comingSoonTag": "скоро",
+      "languageChanged": "Язык изменён",
       "securityTitle": "Безопасность",
+      "securityHeroTitle": "Ваш аккаунт защищён",
+      "securityHeroSub": "Регулярно обновляйте пароль и проверяйте активные сеансы.",
+      "account": "Аккаунт",
       "password": "Пароль",
       "changePassword": "Изменить пароль",
       "activity": "Активность",
@@ -1205,6 +1273,7 @@
       "themeAuto": "Авто",
       "themeLight": "Светлая",
       "themeDark": "Тёмная",
+      "soon": "Скоро",
       "autoHint": "Подстраивается под настройки системы.",
       "density": "Плотность",
       "densityCompact": "Плотная",
@@ -1229,7 +1298,10 @@
       }
     },
     "errorstate": {
-      "loadFailed": "Не удалось загрузить данные. Проверьте подключение к интернету."
+      "loadFailed": "Не удалось загрузить данные. Проверьте подключение к интернету.",
+      "serverFailed": "Не удалось загрузить данные. Это временный сбой — попробуйте ещё раз чуть позже.",
+      "offline": "Нет подключения к интернету. Проверьте связь и повторите попытку.",
+      "retrying": "Повтор…"
     },
     "offlinebanner": {
       "internetRestored": "Соединение восстановлено",

@@ -2,14 +2,15 @@
 <html lang="uz">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#ffffff" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0F1014" media="(prefers-color-scheme: dark)" />
+    <!-- No-flash theme: a blocking, same-origin (CSP-clean) script sets the theme
+         before first paint, so dark users don't see a light flash. -->
+    <script src="/cabinet/theme-init.js"></script>
+    <link rel="manifest" href="/cabinet/manifest.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
     <title>NNTMA — Tashkilot kabineti</title>
     <meta name="description" content="O'zNNTMA tashkilot kabineti — a'zo NNT tashkilotlari uchun yopiq portal." />
     <meta name="robots" content="noindex, nofollow" />
@@ -21,9 +22,10 @@
     <link rel="icon" type="image/png" href="/cabinet/brand/logo-oznntma.png" />
     <link rel="apple-touch-icon" href="/cabinet/brand/logo-oznntma.png" />
     <link rel="preconnect" href="https://ngo-api-proxy.sarvsop.workers.dev" crossorigin />
-    <script type="module" crossorigin src="/cabinet/assets/index-CUsGOo-y.js"></script>
-    <script defer src="/cabinet/membership-workflow.js"></script>
-    <link rel="stylesheet" crossorigin href="/cabinet/assets/index-JBCyagjj.css">
+    <script type="module" crossorigin src="/cabinet/assets/index-DmoNVhas.js"></script>
+    <link rel="modulepreload" crossorigin href="/cabinet/assets/Shell-k45e4gYM.js">
+    <link rel="modulepreload" crossorigin href="/cabinet/assets/api-POfaRM_r.js">
+    <link rel="stylesheet" crossorigin href="/cabinet/assets/index-Ceu_1nlT.css">
   </head>
   <body>
     <noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>

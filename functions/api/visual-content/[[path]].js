@@ -9,7 +9,7 @@ export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const page = normalizePage(url.searchParams.get('page') || '/');
   const items = await readItems(env, page);
-  return json({ page, items }, 200, { 'cache-control': 'no-store' });
+  return json({ page, items: items.filter(isPublicItem).map(publicItem) }, 200, { 'cache-control': 'no-store' });
 }
 
 export async function onRequestPost({ request, env }) {
@@ -99,6 +99,27 @@ function sanitizePatch(input) {
   if (input.targetId != null) out.targetId = String(input.targetId).slice(0, 240);
   if (input.position != null) out.position = String(input.position).slice(0, 24);
   return out;
+}
+
+function publicItem(input) {
+  const out = {
+    id: String(input.id || ''),
+    action: String(input.action || ''),
+    kind: String(input.kind || ''),
+  };
+  if (input.text != null) out.text = String(input.text);
+  if (input.html != null) out.html = String(input.html);
+  if (input.src != null) out.src = String(input.src);
+  if (input.href != null) out.href = String(input.href);
+  if (input.alt != null) out.alt = String(input.alt);
+  if (input.targetId != null) out.targetId = String(input.targetId);
+  if (input.position != null) out.position = String(input.position);
+  return out;
+}
+
+function isPublicItem(input) {
+  const html = String(input.html || '');
+  return !html.includes('VA-TEST-MARKER');
 }
 
 function sanitizeHtml(html) {

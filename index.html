@@ -307,7 +307,7 @@
 </div>
 <div class="nnt-stat-box">
 <span class="nnt-stat-label" data-i18n="pages.index.chartStatus2025">2025 yil holati</span>
-<span class="nnt-stat-value">2 382 ta</span>
+<span class="nnt-stat-value" data-nnt-chart-total>2 381 ta</span>
 </div>
 <div class="nnt-stat-box nnt-stat--purple">
 <span class="nnt-stat-label" data-i18n="pages.index.chartGrowthLabel">O'rtacha yillik o'sish</span>
@@ -330,7 +330,7 @@
 <tr><th scope="row">2022</th><td>1 482</td></tr>
 <tr><th scope="row">2023</th><td>1 843</td></tr>
 <tr><th scope="row">2024</th><td>2 143</td></tr>
-<tr><th scope="row">2025</th><td>2 382</td></tr>
+<tr><th scope="row">2025</th><td data-nnt-chart-total-cell>2 381</td></tr>
 </tbody>
 </table>
 <div class="nnt-chart-footer">
@@ -458,11 +458,28 @@ window.addEventListener('load', function(){
   var member = [532, 990, 1482, 1843, 2143, 2381];
   var chartInstance = null;
   function tt(k,fb){ return (window.ngoI18n&&window.ngoI18n.t)?window.ngoI18n.t(k,fb):fb; }
+  function fmtNum(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+  function setMemberTotal(total) {
+    total = Number(total);
+    if (!Number.isFinite(total) || total <= 0) return;
+    member[member.length - 1] = total;
+    document.querySelectorAll('[data-nnt-chart-total]').forEach(function(el) {
+      el.textContent = fmtNum(total) + ' ta';
+    });
+    document.querySelectorAll('[data-nnt-chart-total-cell]').forEach(function(el) {
+      el.textContent = fmtNum(total);
+    });
+    if (chartInstance) {
+      chartInstance.data.datasets.forEach(function(ds) { ds.data = member; });
+      chartInstance.update();
+    }
+  }
   // X-axis year labels with a locale-aware "year" abbreviation (uz "y." /
   // ru "г." / en none).
   function chartLabels(){ var s=tt('pages.index.chartYearAbbr','y.'); return [2020,2021,2022,2023,2024,2025].map(function(y){ return s ? y+' '+s : ''+y; }); }
 
   function buildChart() {
+    if (typeof window.__ngoMemberTotal === 'number') setMemberTotal(window.__ngoMemberTotal);
     if(chartInstance) { chartInstance.destroy(); }
     chartInstance = new Chart(canvas, {
       type: 'bar',
@@ -616,6 +633,7 @@ window.addEventListener('load', function(){
   } else {
     lazyBuild();
   }
+  window.addEventListener('ngo:member-total', function(e){ setMemberTotal(e && e.detail); });
   // Rebuild the chart on a language switch so axis labels + the hover tooltip
   // re-localize (only if it has already been built/scrolled into view).
   if (window.ngoI18n && typeof window.ngoI18n.onChange === 'function') {

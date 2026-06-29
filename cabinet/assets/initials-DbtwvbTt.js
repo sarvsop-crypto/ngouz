@@ -1,0 +1,1 @@
+function e(e){return(e||``).replace(/[^\p{L}\p{N}\s-]/gu,``).replace(/\s+/g,` `).trim()}function t(e){return(e||``).replace(/[“”„‟«»"'‘’`]/g,``).replace(/\s+/g,` `).trim()}function n(t,n=2){return(e(t).split(/\s+/)[0]||``).slice(0,n).toUpperCase()}export{n,t};
