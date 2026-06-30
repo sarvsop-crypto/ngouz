@@ -120,7 +120,12 @@
 
   /* data-size="invisible" handles its own visibility; if Turnstile needs to
      show a managed challenge it will overlay one — don't push it off-screen. */
-  .grants-ai__turnstile { display: contents; }
+  .grants-ai__turnstile {
+    display: flex;
+    justify-content: center;
+    margin: 12px 0 4px;
+    min-height: 65px;
+  }
 
   .grants-ai__submit {
     display: flex; align-items: center; justify-content: center; gap: 8px;
@@ -408,7 +413,7 @@
     try {
       tsWidgetId = window.turnstile.render(el, {
         sitekey: el.getAttribute('data-sitekey'),
-        size: 'invisible',
+        size: 'normal',
         theme: 'light',
         callback: function (token) {
           tsToken = token || '';
@@ -446,14 +451,8 @@
       var timer = setTimeout(function () {
         tsWaiters = tsWaiters.filter(function (w) { return w.reject !== reject; });
         reject(new Error('turnstile_timeout'));
-      }, 12000);
+      }, 60000);
       tsWaiters.push({ resolve: resolve, reject: reject, timer: timer });
-      try { window.turnstile.execute(tsWidgetId); }
-      catch (err) {
-        clearTimeout(timer);
-        tsWaiters = tsWaiters.filter(function (w) { return w.reject !== reject; });
-        reject(err);
-      }
     });
   }
 
@@ -461,6 +460,8 @@
     tsToken = '';
     if (window.turnstile && tsWidgetId) try { window.turnstile.reset(tsWidgetId); } catch (_) {}
   }
+
+  waitForTurnstile().catch(function () {});
 
   var DIVIDER_LABEL = { uz: 'Topilgan grantlar', ru: 'Найденные гранты', en: 'Found grants' };
   var ARROW = '<svg width="11" height="11" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true" style="margin-left:2px;vertical-align:-1px"><path d="M3 8h10M9 4l4 4-4 4"/></svg>';
