@@ -63,7 +63,6 @@
           <a href="admin-registry" class="sidebar__nav-link" data-i18n-title="admin.nav.registry" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.registry">NNT Ro'yxati</span></a>
           <a href="admin-commission" class="sidebar__nav-link" title="Komissiya"><span class="sidebar__nav-icon"><i class="ph ph-gavel" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Komissiya</span></a>
           <a href="admin-regions" class="sidebar__nav-link" data-i18n-title="admin.nav.regions" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.regions">Hududlar</span></a>
-          <a href="admin-documents" class="sidebar__nav-link" data-i18n-title="admin.nav.documents" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.documents">Hujjatlar</span></a>
           <a href="admin-tasks" class="sidebar__nav-link" data-i18n-title="admin.nav.tasks" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.tasks">Topshiriqlar</span></a>
           <a href="admin-users" class="sidebar__nav-link" data-i18n-title="admin.nav.users" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.users">Foydalanuvchilar</span></a>
           <a href="admin-reports" class="sidebar__nav-link" data-i18n-title="admin.nav.reports" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.reports">Hisobotlar</span></a>
@@ -77,10 +76,11 @@
           <a href="admin-password-reset-requests" class="sidebar__nav-link" data-i18n-title="admin.nav.passwordResetReq" title="Parol tiklash so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-key" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.passwordReset">Parol tiklash</span></a>
         </div>
         <div class="sidebar__nav-section">
-          <div class="sidebar__nav-label" data-i18n="admin.sec.content">KONTENT</div>
-          <a href="admin-news" class="sidebar__nav-link" data-i18n-title="admin.nav.news" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.news">Yangiliklar</span></a>
-          <a href="admin-events" class="sidebar__nav-link" data-i18n-title="admin.nav.events" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.events">Tadbirlar</span></a>
-          <a href="admin-grants" class="sidebar__nav-link" data-i18n-title="admin.nav.grants" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.grants">Grantlar</span></a>
+          <div class="sidebar__nav-label">SAYT KONTENTI</div>
+          <a href="visual-admin/" class="sidebar__nav-link" title="Visual Admin"><span class="sidebar__nav-icon"><i class="ph ph-paint-brush" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Visual Admin</span></a>
+        </div>
+        <div class="sidebar__nav-section">
+          <div class="sidebar__nav-label">TIZIM</div>
           <a href="admin-settings" class="sidebar__nav-link" data-i18n-title="admin.nav.settings" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.settings">Sozlamalar</span></a>
         </div>
         <div class="sidebar__nav-section u-mt-auto">
@@ -189,18 +189,6 @@
         <div class="card">
           <div class="card__head"><div class="card__icon"><i class="ph ph-buildings" aria-hidden="true"></i></div></div>
           <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.memberNgos">A'zo NNTlar</p><p class="card__value" id="kpiOrgs">&mdash;</p></div></div>
-        </div>
-        <div class="card">
-          <div class="card__head"><div class="card__icon"><i class="ph ph-newspaper" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.news">Yangiliklar</p><p class="card__value" id="kpiNews">—</p></div></div>
-        </div>
-        <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-calendar-blank" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.events">Tadbirlar</p><p class="card__value" id="kpiEvents">—</p></div></div>
-        </div>
-        <div class="card">
-          <div class="card__head"><div class="card__icon card__icon--info"><i class="ph ph-files" aria-hidden="true"></i></div></div>
-          <div class="card__body"><div><p class="card__label" data-i18n="admin.dashboard.kpi.documents">Hujjatlar</p><p class="card__value" id="kpiDocs">—</p></div></div>
         </div>
       </div>
 
@@ -341,18 +329,6 @@
       }).join('');
       ul.setAttribute('aria-busy', 'false');
     }
-    NgoApi.get('/admin/stats').then(function (s) {
-      document.getElementById('kpiNews').textContent    = s.news || 0;
-      document.getElementById('kpiEvents').textContent  = s.events || 0;
-      // s.contacts_new counts ALL contact-messages including corruption
-      // + service requests, but those are surfaced on dedicated admin
-      // pages and excluded from the "qayta-aloqa" widget below. Backfill
-      // the kpi with a more accurate count after the contact-messages
-      // fetch finishes.
-      document.getElementById('kpiContacts').textContent = s.contacts_new || 0;
-      document.getElementById('kpiDocs').textContent    = s.documents || 0;
-    }).catch(function () {});
-
     // Extra KPIs
     NgoApi.get('/public/organizations?limit=1').then(function (res) {
       var el = document.getElementById('kpiOrgs');
@@ -370,11 +346,6 @@
     NgoApi.get('/admin/users').then(function (res) {
       var el = document.getElementById('kpiUsers');
       if (el) el.textContent = (res.items || []).length;
-    }).catch(function () {});
-
-    NgoApi.get('/public/grants?limit=1').then(function (res) {
-      var el = document.getElementById('kpiGrants');
-      if (el) el.textContent = res.total || 0;
     }).catch(function () {});
 
     // Recent contact messages — section header says "qayta-aloqa
