@@ -2,21 +2,32 @@
   'use strict';
 
   var API = '/api/visual-content';
+  var GLOBAL_FOOTER_PAGE = '__global_footer';
+  var loadedPatches = [];
+  var refreshTimer = 0;
+  var isRefreshing = false;
   var CANDIDATE_SELECTOR = [
     'main h1', 'main h2', 'main h3', 'main h4', 'main p', 'main li',
+    'main th', 'main td', 'main svg text', 'main tspan',
     'main .card', 'main article.card', 'main article:not([data-va-type])',
+    'main .hero-stat', 'main .hero-stat-num', 'main .hero-stat-label', 'main .nnt-stat-box', 'main .struct-stat',
+    'main .council-stat', 'main .kpi', 'main .criterion-card', 'main .apply-step',
+    'main .partner', 'main .vazifa-card', 'main .about-reg-card', 'main .cert-level-card',
+    'main .doc-row:not(.head)', 'main tbody tr', 'main .vacancy', 'main .media-card',
     'main img', 'main a.btn', 'main a.social-link',
     'main .partner-grid', 'main .partner', 'main .useful-links-grid', 'main .useful-link-card',
     'main .team-grid', 'main .team-card', 'main .leader-card',
-    'main .proj-accordion', 'main .proj-item'
+    'main .proj-accordion', 'main .proj-item',
+    'footer h2', 'footer p', 'footer span', 'footer a', 'footer img'
   ].join(',');
   var PROTECTED_SELECTOR = [
-    'header', 'footer', 'nav', 'form', 'fieldset', 'select', 'option', 'input', 'textarea', 'button',
+    'header', 'nav', 'form', 'fieldset', 'select', 'option', 'input', 'textarea', 'button',
     '[role="navigation"]', '[role="search"]', '[role="tablist"]', '[role="tab"]',
-    '.site-header', '.site-footer', '.topbar', '.menu', '.nav-item', '.dropdown',
+    '.site-header', '.topbar', '.menu', '.nav-item', '.dropdown',
     '.language-switcher', '.search-overlay', '.search-btn', '.membership-overlay',
     '.breadcrumbs', '.breadcrumb', '.pagination', '.pager', '.tabs', '.lang-tabs',
     '.filter-chip', '.u-filter-row', '.form-field', '.form-actions', '.form-card',
+    '.nnt-cards', '.nnt-card', '.nnt-stat',
     '.va-live-controls', '.va-live-add', '.va-generic-controls', '.va-generic-add'
   ].join(',');
 
@@ -29,7 +40,7 @@
   function assignIds(root) {
     var nodes = Array.prototype.slice.call((root || document).querySelectorAll(CANDIDATE_SELECTOR));
     nodes.forEach(function (node) {
-      if (node.closest && node.closest(PROTECTED_SELECTOR)) return;
+      if (node.closest && !node.closest('footer.site-footer,.site-footer') && node.closest(PROTECTED_SELECTOR)) return;
       if (!node.getAttribute('data-va-block-id')) node.setAttribute('data-va-block-id', blockId(node));
     });
   }
@@ -84,6 +95,47 @@
     }
   }
 
+  function refresh() {
+    if (isRefreshing) return;
+    isRefreshing = true;
+    assignIds(document);
+    loadedPatches.forEach(applyPatch);
+    renumberTables();
+    isRefreshing = false;
+  }
+
+  function renumberTables() {
+    [
+      '.idx-table tbody',
+      '.council-table tbody',
+      '.reg-table tbody'
+    ].forEach(function (selector) {
+      Array.prototype.forEach.call(document.querySelectorAll(selector), function (tbody) {
+        Array.prototype.forEach.call(tbody.querySelectorAll('tr'), function (row, index) {
+          var first = row.querySelector('td:first-child');
+          if (first && first.getAttribute('colspan') == null) setCellNumber(first, String(index + 1));
+        });
+      });
+    });
+  }
+
+  function setCellNumber(cell, value) {
+    var textNode = null;
+    Array.prototype.some.call(cell.childNodes, function (node) {
+      if (node.nodeType === 3 && String(node.nodeValue || '').trim()) {
+        textNode = node;
+        return true;
+      }
+      return false;
+    });
+    if (textNode) {
+      textNode.nodeValue = value;
+      return;
+    }
+    var anchor = cell.querySelector('.va-generic-controls');
+    cell.insertBefore(document.createTextNode(value), anchor ? anchor.nextSibling : cell.firstChild);
+  }
+
   function htmlToAddedNode(patch) {
     var template = document.createElement('template');
     template.innerHTML = patch.html || '';
@@ -102,11 +154,37 @@
   }
 
   function load() {
-    assignIds(document);
-    fetch(API + '?page=' + encodeURIComponent(pageKey()), { headers: { accept: 'application/json' } })
-      .then(function (r) { return r.ok ? r.json() : { items: [] }; })
-      .then(function (res) { (res.items || []).forEach(applyPatch); })
+    Promise.all([GLOBAL_FOOTER_PAGE, pageKey()].map(function (key) {
+      return fetch(API + '?page=' + encodeURIComponent(key), { headers: { accept: 'application/json' } })
+        .then(function (r) { return r.ok ? r.json() : { items: [] }; })
+        .catch(function () { return { items: [] }; });
+    }))
+      .then(function (results) {
+        loadedPatches = [];
+        results.forEach(function (res) {
+          loadedPatches = loadedPatches.concat(res.items || []);
+        });
+        refresh();
+      })
       .catch(function () {});
+    refresh();
+    observeMutations();
+  }
+
+  function observeMutations() {
+    if (window.NGO_VISUAL_OVERRIDES_OBSERVING || !window.MutationObserver) return;
+    window.NGO_VISUAL_OVERRIDES_OBSERVING = true;
+    var observer = new MutationObserver(function (records) {
+      if (isRefreshing) return;
+      var relevant = records.some(function (record) {
+        var node = record.target;
+        return node && node.nodeType === 1 && !node.closest('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add');
+      });
+      if (!relevant) return;
+      clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(refresh, 120);
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
   }
 
   function cssEscape(value) {

@@ -2,7 +2,7 @@
   if (!window.NGO_VISUAL_OVERRIDES_LOADING) {
     window.NGO_VISUAL_OVERRIDES_LOADING = true;
     var _vo = document.createElement('script');
-    _vo.src = '/js/visual-overrides.js';
+    _vo.src = '/js/visual-overrides.js?v=20260630crud';
     _vo.defer = true;
     document.head.appendChild(_vo);
   }

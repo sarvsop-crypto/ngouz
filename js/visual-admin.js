@@ -85,23 +85,46 @@
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
         text('cover_image', 'Muqova rasmi path')
       ]
+    },
+    digests: {
+      label: 'Dayjestlar',
+      singular: 'dayjest',
+      storageType: 'news',
+      category: 'daydjest',
+      required: ['title', 'date', 'excerpt', 'body'],
+      fields: [
+        text('title', 'Sarlavha', true), text('title_ru', 'Sarlavha RU'), text('title_en', 'Sarlavha EN'),
+        date('date', 'Sana', true), checkbox('featured', 'Muhim dayjest'),
+        area('excerpt', 'Qisqa matn', true), area('excerpt_ru', 'Qisqa matn RU'), area('excerpt_en', 'Qisqa matn EN'),
+        area('body', 'Asosiy matn', true, true), area('body_ru', 'Asosiy matn RU', false, true), area('body_en', 'Asosiy matn EN', false, true),
+        file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
+        text('cover_image', 'Muqova rasmi path')
+      ]
     }
   };
 
   var VISUAL_TYPE = '__visual_block';
   var API_VISUAL = '/api/visual-content';
+  var GLOBAL_FOOTER_PAGE = '__global_footer';
   var GENERIC_SELECTOR = [
     'main h1', 'main h2', 'main h3', 'main h4', 'main p', 'main li',
+    'main th', 'main td', 'main svg text', 'main tspan',
     'main .card', 'main article.card', 'main article:not([data-va-type])',
-    'main img', 'main a.btn', 'main a.social-link'
+    'main .hero-stat', 'main .hero-stat-num', 'main .hero-stat-label', 'main .nnt-stat-box', 'main .struct-stat',
+    'main .council-stat', 'main .kpi', 'main .criterion-card', 'main .apply-step',
+    'main .partner', 'main .vazifa-card', 'main .about-reg-card', 'main .cert-level-card',
+    'main .doc-row:not(.head)', 'main tbody tr', 'main .vacancy', 'main .media-card',
+    'main img', 'main a.btn', 'main a.social-link',
+    'footer h2', 'footer p', 'footer span', 'footer a', 'footer img'
   ].join(',');
   var PROTECTED_SELECTOR = [
-    'header', 'footer', 'nav', 'form', 'fieldset', 'select', 'option', 'input', 'textarea', 'button',
+    'header', 'nav', 'form', 'fieldset', 'select', 'option', 'input', 'textarea', 'button',
     '[role="navigation"]', '[role="search"]', '[role="tablist"]', '[role="tab"]',
-    '.site-header', '.site-footer', '.topbar', '.menu', '.nav-item', '.dropdown',
+    '.site-header', '.topbar', '.menu', '.nav-item', '.dropdown',
     '.language-switcher', '.search-overlay', '.search-btn', '.membership-overlay',
     '.breadcrumbs', '.breadcrumb', '.pagination', '.pager', '.tabs', '.lang-tabs',
     '.filter-chip', '.u-filter-row', '.form-field', '.form-actions', '.form-card',
+    '.nnt-cards', '.nnt-card', '.nnt-stat',
     '.va-live-controls', '.va-live-add', '.va-generic-controls', '.va-generic-add'
   ].join(',');
 
@@ -219,11 +242,12 @@
     try { doc = els.frame.contentDocument; } catch (e) { return; }
     if (!doc || !doc.body) return;
     ensureFrameStyles(doc);
+    observeFrameMutations(doc);
     assignVisualIds(doc);
     hookFrameNavigation(doc);
-    injectGenericBuilderControls(doc);
     injectStructuredItemControls(doc);
     injectProjectControls(doc);
+    injectGenericBuilderControls(doc);
     injectStructuredAddButtons(doc);
     injectAddButtons(doc);
     injectDetailPageButton(doc);
@@ -277,10 +301,28 @@
       '.va-generic-controls button:last-child{color:#b42318}',
       '.va-generic-controls button:last-child:hover{background:#fff8f7}',
       '.proj-item summary>.va-generic-controls{right:12px;left:auto;top:10px}',
-      '.partner>.va-generic-controls,.useful-link-card>.va-generic-controls,.team-card>.va-generic-controls,.leader-card>.va-generic-controls{right:8px;left:auto;top:8px}',
+      '.partner>.va-generic-controls,.useful-link-card>.va-generic-controls,.team-card>.va-generic-controls,.leader-card>.va-generic-controls,.card>.va-generic-controls,.criterion-card>.va-generic-controls,.apply-step>.va-generic-controls,.kpi>.va-generic-controls,.struct-stat>.va-generic-controls,.nnt-stat>.va-generic-controls,.council-stat>.va-generic-controls,.cert-level-card>.va-generic-controls,.vazifa-card>.va-generic-controls{right:8px;left:auto;top:8px}',
+      'tr.va-generic-editable{outline-offset:-2px}',
+      'tr>.va-generic-controls{right:8px;left:auto;top:4px}',
       '.va-generic-add{display:none}'
     ].join('');
     doc.head.appendChild(style);
+  }
+
+  function observeFrameMutations(doc) {
+    if (!doc.defaultView || !doc.defaultView.MutationObserver || doc.documentElement.dataset.vaMutationHooked) return;
+    doc.documentElement.dataset.vaMutationHooked = '1';
+    var timer = 0;
+    var observer = new doc.defaultView.MutationObserver(function (records) {
+      var relevant = records.some(function (record) {
+        var node = record.target;
+        return node && node.nodeType === 1 && !node.closest('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add,.va-context-add');
+      });
+      if (!relevant) return;
+      doc.defaultView.clearTimeout(timer);
+      timer = doc.defaultView.setTimeout(injectEditorLayer, 180);
+    });
+    observer.observe(doc.body, { childList: true, subtree: true });
   }
 
   function assignVisualIds(doc) {
@@ -309,7 +351,7 @@
         else openVisualEditor(node, 'edit');
       });
       if (node.tagName === 'IMG') node.parentNode.insertBefore(controls, node.nextSibling);
-      else node.appendChild(controls);
+      else attachControls(node, controls);
     });
   }
 
@@ -318,9 +360,23 @@
       ['.partner-grid', 'partner', "Hamkor qo'shish"],
       ['.useful-links-grid', 'useful_link', "Havola qo'shish"],
       ['.team-grid', 'person_card', "Xodim qo'shish"],
+      ['.leader-grid,.leadership-grid,.container:has(> .leader-card)', 'leader_card', "Rahbar qo'shish"],
+      ['.about-intro-grid', 'simple_card', "Blok qo'shish"],
+      ['.vazifalar-grid', 'simple_card', "Vazifa qo'shish"],
+      ['.cards', 'simple_card', "Karta qo'shish"],
+      ['.criteria-grid', 'simple_card', "Mezon qo'shish"],
+      ['.apply-steps', 'simple_li', "Bosqich qo'shish"],
+      ['.kpi-grid', 'simple_stat', "Ko'rsatkich qo'shish"],
+      ['.idx-table tbody:not(#sustainabilityTableBody)', 'top500_row', "Bitiruvchi qo'shish"],
+      ['.council-table tbody', 'council_row', "Vakil qo'shish"],
+      ['#sustainabilityTableBody', 'sustainability_row', "Natija qo'shish"],
+      ['#certTableBody', 'certificate_row', "Sertifikat qo'shish"],
+      ['.doc-table', 'simple_row', "Qator qo'shish"],
+      ['table tbody', 'simple_row', "Qator qo'shish"],
+      ['ol', 'simple_li', "Band qo'shish"],
       ['.proj-accordion', 'project', "Loyiha qo'shish"]
     ].forEach(function (cfg) {
-      Array.prototype.forEach.call(doc.querySelectorAll(cfg[0]), function (target) {
+      Array.prototype.forEach.call(queryAll(doc, cfg[0]), function (target) {
         if (target.dataset.vaContextAddInjected) return;
         target.dataset.vaContextAddInjected = '1';
         if (!target.getAttribute('data-va-block-id')) target.setAttribute('data-va-block-id', blockId(doc, target));
@@ -342,11 +398,16 @@
       ['.partner', 'partner'],
       ['.useful-link-card', 'useful_link'],
       ['.team-card', 'person_card'],
-      ['.leader-card', 'leader_card']
+      ['.leader-card', 'leader_card'],
+      ['.idx-table tbody:not(#sustainabilityTableBody) tr', 'top500_row'],
+      ['.council-table tbody tr', 'council_row'],
+      ['#sustainabilityTableBody tr', 'sustainability_row'],
+      ['#certTableBody tr', 'certificate_row'],
+      ['.doc-row:not(.head),tbody tr', 'simple_row'],
+      ['.criterion-card,.apply-step,.kpi,.struct-stat,.council-stat,article.card,.vazifa-card,.about-reg-card', 'simple_block']
     ].forEach(function (cfg) {
-      Array.prototype.forEach.call(doc.querySelectorAll(cfg[0]), function (node) {
-        if (node.dataset.vaStructuredInjected) return;
-        node.dataset.vaStructuredInjected = '1';
+      Array.prototype.forEach.call(queryAll(doc, cfg[0]), function (node) {
+        if (node.dataset.vaStructuredInjected && node.querySelector('[data-va-structured-edit]')) return;
         if (!node.getAttribute('data-va-block-id')) node.setAttribute('data-va-block-id', blockId(doc, node));
         node.classList.add('va-generic-editable');
         if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
@@ -358,9 +419,22 @@
           e.stopPropagation();
           openStructuredItemEditor(node, cfg[1], e.target.hasAttribute('data-va-structured-delete') ? 'delete' : 'edit');
         });
-        node.appendChild(controls);
+        attachControls(node, controls);
+        node.dataset.vaStructuredInjected = '1';
       });
     });
+  }
+
+  function attachControls(node, controls) {
+    if (node && node.tagName === 'TR') {
+      var cell = node.querySelector('td,th');
+      if (cell) {
+        if (getComputedStyle(cell).position === 'static') cell.style.position = 'relative';
+        cell.insertBefore(controls, cell.firstChild);
+        return;
+      }
+    }
+    node.appendChild(controls);
   }
 
   function injectProjectControls(doc) {
@@ -389,13 +463,23 @@
 
   function isGenericEditable(node) {
     if (!node || !node.matches) return false;
-    if (node.closest(PROTECTED_SELECTOR + ',script,style,noscript')) return false;
+    if (node.closest('script,style,noscript')) return false;
+    if (!node.closest('footer.site-footer,.site-footer') && node.closest(PROTECTED_SELECTOR)) return false;
     if (node.hasAttribute('data-va-type') || node.closest('[data-va-type]')) return false;
     if (node.closest('.partner,.useful-link-card,.team-card,.leader-card,.proj-item')) return false;
+    if (node.matches('tbody tr') || node.closest('.idx-table,.council-table,.reg-table')) return false;
     if (node.id === 'siteFrame') return false;
     var text = String(node.textContent || '').trim();
     if (node.tagName === 'IMG') return !!node.getAttribute('src');
     return text.length > 0 || node.tagName === 'A';
+  }
+
+  function queryAll(doc, selector) {
+    try {
+      return doc.querySelectorAll(selector);
+    } catch (e) {
+      return [];
+    }
   }
 
   function blockId(doc, node) {
@@ -424,7 +508,8 @@
       ['#dynamic-grants-page', 'grants'],
       ['#dynamic-projects-grants', 'grants'],
       ['#dynamic-documents-page', 'documents'],
-      ['#dynamic-video-page', 'videos']
+      ['#dynamic-video-page', 'videos'],
+      ['#dynamic-digest-page', 'digests']
     ];
     targets.forEach(function (pair) {
       Array.prototype.forEach.call(doc.querySelectorAll(pair[0]), function (target) {
@@ -572,8 +657,8 @@
     state.editing = null;
     state.visualTarget = target;
     state.visualAction = 'add-' + kind;
-    els.editorTitle.textContent = kind === 'partner' ? "Hamkor qo'shish" : kind === 'project' ? "Loyiha qo'shish" : kind === 'person_card' ? "Xodim qo'shish" : "Foydali havola qo'shish";
-    els.editorKicker.textContent = kind === 'partner' ? 'Hamkorlar' : kind === 'project' ? 'Loyihalar' : kind === 'person_card' ? 'Jamoa / kartalar' : 'Foydali havolalar';
+    els.editorTitle.textContent = addTitle(kind);
+    els.editorKicker.textContent = addKicker(kind);
     els.form.dataset.mode = 'visual-add-' + kind;
     els.deleteBtn.style.display = 'none';
     els.saveBtn.style.display = '';
@@ -590,6 +675,15 @@
     if (kind === 'useful_link') return { title: '', href: '', icon_src: 'img/emblem-uz.svg', icon_alt: "O'zbekiston gerbi" };
     if (kind === 'person_card') return { name: '', role: '', region: '', email: '', photo: '' };
     if (kind === 'project') return { status: 'rejadagi', title: '', body: '' };
+    if (kind === 'leader_card') return { name: '', role: '', email: '', photo: '', bio: '' };
+    if (kind === 'simple_stat') return { value: '', label: '' };
+    if (kind === 'simple_li') return { title: '', body: '' };
+    if (kind === 'simple_row') return { html: "<span>Yangi qator</span><span>Ma'lumot</span>" };
+    if (kind === 'simple_card') return { title: '', body: '' };
+    if (kind === 'top500_row') return { name: '', nnt: '', university: '', level: '', year: '', qs: '', the: '' };
+    if (kind === 'council_row') return { agency: '', member_name: '', member_role: '', photo: '' };
+    if (kind === 'sustainability_row') return { organization: '', region: '', score: '', level: '' };
+    if (kind === 'certificate_row') return { organization: '', region: '', score: '', level: '', issued: '', expires: '' };
     return {};
   }
 
@@ -617,7 +711,79 @@
     if (kind === 'person_card' || kind === 'leader_card') {
       return personFields(kind === 'leader_card');
     }
+    if (kind === 'simple_stat') return [text('value', 'Raqam', true), text('label', 'Izoh', true, true)];
+    if (kind === 'simple_li') return [text('title', 'Sarlavha', false, true), area('body', 'Matn', true, true)];
+    if (kind === 'simple_row') return [area('html', 'Qator HTML', true, true)];
+    if (kind === 'simple_card' || kind === 'simple_block') return [text('title', 'Sarlavha', false, true), area('body', 'Matn', true, true)];
+    if (kind === 'top500_row') {
+      return [
+        text('name', 'F.I.Sh.', true, true),
+        text('nnt', 'NNT nomi', true, true),
+        text('university', 'OTM nomi', true, true),
+        text('level', 'Ta\'lim darajasi', true),
+        text('year', 'Tamomlagan yili', true),
+        text('qs', 'QS reytingi'),
+        text('the', 'THE reytingi')
+      ];
+    }
+    if (kind === 'council_row') {
+      return [
+        text('agency', 'Vazirlik / idora', true, true),
+        file('photo_file', 'Vakil rasmi yuklash', 'image/*', true),
+        text('photo', 'Vakil rasmi manzili', false, true),
+        text('member_name', 'Vakil F.I.Sh.', true, true),
+        text('member_role', 'Lavozim', true, true)
+      ];
+    }
+    if (kind === 'sustainability_row') {
+      return [
+        text('organization', 'Tashkilot nomi', true, true),
+        text('region', 'Viloyat', true),
+        number('score', 'Ball'),
+        text('level', 'Daraja', true)
+      ];
+    }
+    if (kind === 'certificate_row') {
+      return [
+        text('organization', 'Tashkilot nomi', true, true),
+        text('region', 'Viloyat / shahar', true),
+        number('score', 'Ball'),
+        text('level', 'Sertifikat darajasi', true),
+        date('issued', 'Berilgan sana'),
+        date('expires', 'Amal qilish muddati')
+      ];
+    }
     return [];
+  }
+
+  function addTitle(kind) {
+    if (kind === 'partner') return "Hamkor qo'shish";
+    if (kind === 'project') return "Loyiha qo'shish";
+    if (kind === 'person_card') return "Xodim qo'shish";
+    if (kind === 'leader_card') return "Rahbar qo'shish";
+    if (kind === 'simple_stat') return "Ko'rsatkich qo'shish";
+    if (kind === 'simple_li') return "Band qo'shish";
+    if (kind === 'simple_row') return "Qator qo'shish";
+    if (kind === 'simple_card') return "Karta qo'shish";
+    if (kind === 'top500_row') return "Bitiruvchi qo'shish";
+    if (kind === 'council_row') return "Vakil qo'shish";
+    if (kind === 'sustainability_row') return "Natija qo'shish";
+    if (kind === 'certificate_row') return "Sertifikat qo'shish";
+    return "Foydali havola qo'shish";
+  }
+
+  function addKicker(kind) {
+    if (kind === 'partner') return 'Hamkorlar';
+    if (kind === 'project') return 'Loyihalar';
+    if (kind === 'person_card') return 'Jamoa / kartalar';
+    if (kind === 'leader_card') return 'Rahbariyat';
+    if (kind === 'simple_stat') return "Ko'rsatkichlar";
+    if (kind === 'simple_li' || kind === 'simple_row' || kind === 'simple_card') return 'Sahifa kontenti';
+    if (kind === 'top500_row') return 'TOP-500 reyestri';
+    if (kind === 'council_row') return 'Jamoatchilik kengashi';
+    if (kind === 'sustainability_row') return 'Barqarorlik indeksi';
+    if (kind === 'certificate_row') return 'Barqaror NNT sertifikati';
+    return 'Foydali havolalar';
   }
 
   function openStructuredItemEditor(node, kind, action) {
@@ -644,6 +810,12 @@
     if (kind === 'partner') return 'Hamkorni tahrirlash';
     if (kind === 'useful_link') return 'Foydali havolani tahrirlash';
     if (kind === 'leader_card') return 'Rahbar kartasini tahrirlash';
+    if (kind === 'simple_row') return 'Qatorni tahrirlash';
+    if (kind === 'simple_block') return 'Blokni tahrirlash';
+    if (kind === 'top500_row') return 'TOP-500 qatorini tahrirlash';
+    if (kind === 'council_row') return 'Kengash qatorini tahrirlash';
+    if (kind === 'sustainability_row') return 'Indeks qatorini tahrirlash';
+    if (kind === 'certificate_row') return 'Sertifikat qatorini tahrirlash';
     return 'Xodim kartasini tahrirlash';
   }
 
@@ -651,6 +823,12 @@
     if (kind === 'partner') return "Hamkorni o'chirish";
     if (kind === 'useful_link') return "Foydali havolani o'chirish";
     if (kind === 'leader_card') return "Rahbar kartasini o'chirish";
+    if (kind === 'simple_row') return "Qatorni o'chirish";
+    if (kind === 'simple_block') return "Blokni o'chirish";
+    if (kind === 'top500_row') return "TOP-500 qatorini o'chirish";
+    if (kind === 'council_row') return "Kengash qatorini o'chirish";
+    if (kind === 'sustainability_row') return "Indeks qatorini o'chirish";
+    if (kind === 'certificate_row') return "Sertifikat qatorini o'chirish";
     return "Xodim kartasini o'chirish";
   }
 
@@ -658,12 +836,21 @@
     if (kind === 'partner') return 'Hamkorlar';
     if (kind === 'useful_link') return 'Foydali havolalar';
     if (kind === 'leader_card') return 'Rahbariyat';
+    if (kind === 'simple_row') return 'Jadval qatori';
+    if (kind === 'simple_block') return 'Sahifa kontenti';
+    if (kind === 'top500_row') return 'TOP-500 reyestri';
+    if (kind === 'council_row') return 'Jamoatchilik kengashi';
+    if (kind === 'sustainability_row') return 'Barqarorlik indeksi';
+    if (kind === 'certificate_row') return 'Barqaror NNT sertifikati';
     return 'Jamoa / kartalar';
   }
 
   function fieldsForStructuredItem(kind) {
     if (kind === 'partner') return structuredFieldsFor('partner');
     if (kind === 'useful_link') return structuredFieldsFor('useful_link');
+    if (kind === 'simple_row') return structuredFieldsFor('simple_row');
+    if (kind === 'simple_block') return structuredFieldsFor('simple_block');
+    if (kind === 'top500_row' || kind === 'council_row' || kind === 'sustainability_row' || kind === 'certificate_row') return structuredFieldsFor(kind);
     return personFields(kind === 'leader_card');
   }
 
@@ -698,6 +885,16 @@
         icon_alt: icon ? icon.getAttribute('alt') || '' : ''
       };
     }
+    if (kind === 'simple_block') {
+      return blockFieldsFromNode(node);
+    }
+    if (kind === 'simple_row') {
+      return { html: cleanNodeHtml(node) };
+    }
+    if (kind === 'top500_row') return top500RowFromNode(node);
+    if (kind === 'council_row') return councilRowFromNode(node);
+    if (kind === 'sustainability_row') return sustainabilityRowFromNode(node);
+    if (kind === 'certificate_row') return certificateRowFromNode(node);
     var img = node.querySelector('img');
     var email = node.querySelector('a[href^="mailto:"]');
     return {
@@ -876,7 +1073,7 @@
         setError(els.editorError, 'Havola nomi va URL majburiy.');
         return;
       }
-      if ((state.visualAction === 'add-person_card' || state.visualAction === 'edit-person_card' || state.visualAction === 'edit-leader_card') && (!data.name || !data.role)) {
+      if ((state.visualAction === 'add-person_card' || state.visualAction === 'edit-person_card' || state.visualAction === 'add-leader_card' || state.visualAction === 'edit-leader_card') && (!data.name || !data.role)) {
         setError(els.editorError, 'Ism-familiya va lavozim majburiy.');
         return;
       }
@@ -884,7 +1081,31 @@
         setError(els.editorError, 'Loyiha nomi va tavsifi majburiy.');
         return;
       }
-      if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href || data.file || data.title || data.body || data.name || data.role)) {
+      if ((state.visualAction === 'add-simple_card' || state.visualAction === 'add-simple_li' || state.visualAction === 'edit-simple_block') && !data.body) {
+        setError(els.editorError, 'Matn majburiy.');
+        return;
+      }
+      if (state.visualAction === 'add-simple_stat' && (!data.value || !data.label)) {
+        setError(els.editorError, 'Raqam va izoh majburiy.');
+        return;
+      }
+      if ((state.visualAction === 'add-top500_row' || state.visualAction === 'edit-top500_row') && (!data.name || !data.nnt || !data.university || !data.level || !data.year)) {
+        setError(els.editorError, 'F.I.Sh., NNT, OTM, ta\'lim darajasi va yil majburiy.');
+        return;
+      }
+      if ((state.visualAction === 'add-council_row' || state.visualAction === 'edit-council_row') && (!data.agency || !data.member_name || !data.member_role)) {
+        setError(els.editorError, 'Idora nomi, vakil F.I.Sh. va lavozim majburiy.');
+        return;
+      }
+      if ((state.visualAction === 'add-sustainability_row' || state.visualAction === 'edit-sustainability_row') && (!data.organization || !data.region || !data.level)) {
+        setError(els.editorError, 'Tashkilot, hudud va daraja majburiy.');
+        return;
+      }
+      if ((state.visualAction === 'add-certificate_row' || state.visualAction === 'edit-certificate_row') && (!data.organization || !data.region || !data.level)) {
+        setError(els.editorError, 'Tashkilot, hudud va sertifikat darajasi majburiy.');
+        return;
+      }
+      if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href || data.file || data.title || data.body || data.name || data.role || data.value || data.label)) {
         setError(els.editorError, 'Kontent bo\'sh bo\'lmasligi kerak.');
         return;
       }
@@ -1024,6 +1245,93 @@
       patch.kind = 'leader_card';
       patch.action = 'html';
       patch.html = buildLeaderCardInnerHtml(data);
+    } else if (state.visualAction === 'add-leader_card') {
+      patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
+      patch.kind = 'leader_card';
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'append';
+      patch.html = '<div class="leader-card">' + buildLeaderCardInnerHtml(data) + '</div>';
+    } else if (state.visualAction === 'add-simple_stat') {
+      patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
+      patch.kind = 'simple_stat';
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'append';
+      patch.html = buildSimpleStatHtml(data);
+    } else if (state.visualAction === 'add-simple_li') {
+      patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
+      patch.kind = 'simple_li';
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'append';
+      patch.html = buildSimpleLiHtml(data);
+    } else if (state.visualAction === 'add-simple_row') {
+      patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
+      patch.kind = 'simple_row';
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'append';
+      patch.html = buildSimpleRowHtml(data, node);
+    } else if (state.visualAction === 'edit-simple_row') {
+      patch.kind = 'simple_row';
+      patch.action = 'html';
+      patch.html = cleanEditorHtml(data.html || '');
+    } else if (state.visualAction === 'add-simple_card') {
+      patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
+      patch.kind = 'simple_card';
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'append';
+      patch.html = buildSimpleCardHtml(data);
+    } else if (state.visualAction === 'edit-simple_block') {
+      patch.kind = 'simple_block';
+      patch.action = 'html';
+      patch.html = buildSimpleBlockInnerHtml(data);
+    } else if (state.visualAction === 'add-top500_row') {
+      patch.id = newVisualId('top500');
+      patch.kind = 'top500_row';
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'append';
+      patch.html = buildTop500RowHtml(data);
+    } else if (state.visualAction === 'edit-top500_row') {
+      patch.kind = 'top500_row';
+      patch.action = 'html';
+      patch.html = buildTop500RowInnerHtml(data);
+    } else if (state.visualAction === 'add-council_row') {
+      patch.id = newVisualId('council');
+      patch.kind = 'council_row';
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'append';
+      patch.html = buildCouncilRowHtml(data);
+    } else if (state.visualAction === 'edit-council_row') {
+      patch.kind = 'council_row';
+      patch.action = 'html';
+      patch.html = buildCouncilRowInnerHtml(data);
+    } else if (state.visualAction === 'add-sustainability_row') {
+      patch.id = newVisualId('sustainability');
+      patch.kind = 'sustainability_row';
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'append';
+      patch.html = buildSustainabilityRowHtml(data);
+    } else if (state.visualAction === 'edit-sustainability_row') {
+      patch.kind = 'sustainability_row';
+      patch.action = 'html';
+      patch.html = buildSustainabilityRowInnerHtml(data);
+    } else if (state.visualAction === 'add-certificate_row') {
+      patch.id = newVisualId('certificate');
+      patch.kind = 'certificate_row';
+      patch.action = 'add';
+      patch.targetId = id;
+      patch.position = 'append';
+      patch.html = buildCertificateRowHtml(data);
+    } else if (state.visualAction === 'edit-certificate_row') {
+      patch.kind = 'certificate_row';
+      patch.action = 'html';
+      patch.html = buildCertificateRowInnerHtml(data);
     } else if (state.visualAction === 'add-project') {
       patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
       patch.kind = 'project';
@@ -1059,7 +1367,7 @@
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + NgoApi.getToken(),
       },
-      body: JSON.stringify({ page: visualPageKey(), patch: patch }),
+      body: JSON.stringify({ page: visualPatchPageKey(node), patch: patch }),
     }).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (body) {
         if (!r.ok) throw new Error(body.error || ('HTTP ' + r.status));
@@ -1154,6 +1462,178 @@
     return /^<p[\s>]/i.test(html) ? html : '<p>' + esc(html.replace(/<[^>]*>/g, '')) + '</p>';
   }
 
+  function blockFieldsFromNode(node) {
+    var title = node.querySelector('h1,h2,h3,h4,strong,.struct-stat__num,.nnt-stat-value,.nnt-stat strong,.council-stat__num,.hero-stat-num,.kpi strong');
+    var body = node.querySelector('p,.struct-stat__label,.nnt-stat-label,.nnt-stat span,.council-stat__label,.hero-stat-label,.kpi span');
+    if (node.matches('tr,.doc-row')) return { title: '', body: cleanNodeHtml(node) };
+    if (title || body) return { title: title ? cleanNodeText(title) : '', body: body ? cleanNodeText(body) : cleanNodeText(node) };
+    return { title: '', body: cleanNodeHtml(node) };
+  }
+
+  function buildSimpleStatHtml(data) {
+    return '<div class="kpi"><strong>' + esc(data.value || '') + '</strong><span>' + esc(data.label || '') + '</span></div>';
+  }
+
+  function buildSimpleLiHtml(data) {
+    var title = String(data.title || '').trim();
+    var body = String(data.body || '').trim();
+    return '<li>' + (title ? '<strong>' + esc(title) + ':</strong> ' : '') + esc(body) + '</li>';
+  }
+
+  function buildSimpleRowHtml(data, target) {
+    var html = cleanEditorHtml(data.html || '<span>Yangi qator</span>');
+    if (target && target.tagName === 'TBODY') return '<tr>' + (/<t[dh][\s>]/i.test(html) ? html : '<td>' + html + '</td>') + '</tr>';
+    return '<div class="doc-row">' + html + '</div>';
+  }
+
+  function buildSimpleCardHtml(data) {
+    return '<article class="card">' + buildSimpleBlockInnerHtml(data) + '</article>';
+  }
+
+  function buildSimpleBlockInnerHtml(data) {
+    var title = String(data.title || '').trim();
+    var body = String(data.body || '').trim();
+    if (/<[a-z][\s\S]*>/i.test(body)) return (title ? '<h3>' + esc(title) + '</h3>' : '') + cleanEditorHtml(body);
+    return (title ? '<h3>' + esc(title) + '</h3>' : '') + '<p>' + esc(body) + '</p>';
+  }
+
+  function top500RowFromNode(node) {
+    var c = rowCells(node);
+    return {
+      name: cellText(c, 1),
+      nnt: cellText(c, 2),
+      university: cellText(c, 3),
+      level: cellText(c, 4),
+      year: cellText(c, 5),
+      qs: cellText(c, 6),
+      the: cellText(c, 7)
+    };
+  }
+
+  function councilRowFromNode(node) {
+    var img = node.querySelector('.member-photo,img');
+    return {
+      agency: cleanNodeText(node.querySelector('.agency-name') || rowCells(node)[1] || ''),
+      photo: img ? img.getAttribute('src') || '' : '',
+      member_name: cleanNodeText(node.querySelector('.member-name') || ''),
+      member_role: cleanNodeText(node.querySelector('.member-role') || '')
+    };
+  }
+
+  function sustainabilityRowFromNode(node) {
+    var c = rowCells(node);
+    return {
+      organization: cellText(c, 1),
+      region: cellText(c, 2),
+      score: cleanNodeText((c[3] && (c[3].querySelector('.score-num') || c[3])) || ''),
+      level: cleanNodeText(c[4] || '')
+    };
+  }
+
+  function certificateRowFromNode(node) {
+    var c = rowCells(node);
+    var issuedTime = c[5] && c[5].querySelector('time');
+    return {
+      organization: cellText(c, 1),
+      region: cellText(c, 2),
+      score: cellText(c, 3),
+      level: cleanNodeText(c[4] || ''),
+      issued: issuedTime ? issuedTime.getAttribute('datetime') || '' : cellText(c, 5),
+      expires: cellText(c, 6)
+    };
+  }
+
+  function rowCells(node) {
+    return Array.prototype.slice.call(node ? node.children || [] : []);
+  }
+
+  function cellText(cells, index) {
+    return cleanNodeText(cells[index] || '');
+  }
+
+  function buildTop500RowHtml(data) {
+    return '<tr>' + buildTop500RowInnerHtml(data) + '</tr>';
+  }
+
+  function buildTop500RowInnerHtml(data) {
+    return '<td></td>' +
+      '<td style="font-weight:500;">' + esc(data.name || '') + '</td>' +
+      '<td>' + esc(data.nnt || '') + '</td>' +
+      '<td>' + esc(data.university || '') + '</td>' +
+      '<td>' + esc(data.level || '') + '</td>' +
+      '<td>' + esc(data.year || '') + '</td>' +
+      '<td>' + esc(data.qs || '') + '</td>' +
+      '<td>' + esc(data.the || '') + '</td>';
+  }
+
+  function buildCouncilRowHtml(data) {
+    return '<tr>' + buildCouncilRowInnerHtml(data) + '</tr>';
+  }
+
+  function buildCouncilRowInnerHtml(data) {
+    var photo = String(data.photo || '').trim();
+    var name = String(data.member_name || '').trim();
+    return '<td></td>' +
+      '<td><div class="agency-cell"><div class="agency-icon"><svg aria-hidden="true" focusable="false" fill="none" height="18" stroke="var(--green-500)" stroke-width="1.8" viewBox="0 0 24 24" width="18"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><span class="agency-name">' + esc(data.agency || '') + '</span></div></td>' +
+      '<td><div class="member-cell">' +
+      (photo ? '<img class="member-photo" src="' + escAttr(photo) + '" alt="' + escAttr(name) + '" loading="lazy" decoding="async" width="52" height="52">' : '') +
+      '<div class="member-info"><span class="member-name">' + esc(name) + '</span><span class="member-role">' + esc(data.member_role || '') + '</span></div>' +
+      '</div></td>';
+  }
+
+  function buildSustainabilityRowHtml(data) {
+    return '<tr>' + buildSustainabilityRowInnerHtml(data) + '</tr>';
+  }
+
+  function buildSustainabilityRowInnerHtml(data) {
+    var score = normalizeScore(data.score);
+    var level = String(data.level || '').trim();
+    var cls = score >= 80 ? 'sus' : score >= 60 ? 'cons' : score >= 40 ? 'grow' : 'dev';
+    var color = score >= 80 ? '#16a34a' : score >= 60 ? '#ca8a04' : score >= 40 ? '#ea580c' : '#dc2626';
+    return '<td></td>' +
+      '<td style="font-weight:500;">' + esc(data.organization || '') + '</td>' +
+      '<td>' + esc(data.region || '') + '</td>' +
+      '<td class="score-cell"><div class="score-bar-wrap"><div class="score-bar"><div class="score-fill score-fill--' + cls + '" style="width:' + score + '%"></div></div><span class="score-num" style="color:' + color + ';">' + score + '</span></div></td>' +
+      '<td><span class="idx-level-tag tag--' + cls + '">' + esc(level) + '</span></td>';
+  }
+
+  function buildCertificateRowHtml(data) {
+    return '<tr>' + buildCertificateRowInnerHtml(data) + '</tr>';
+  }
+
+  function buildCertificateRowInnerHtml(data) {
+    var score = normalizeScore(data.score);
+    var level = String(data.level || '').trim();
+    var cls = /birinchi|1|gold/i.test(level) ? 'gold' : /ikkinchi|2|silver/i.test(level) ? 'silver' : 'bronze';
+    return '<td></td>' +
+      '<td style="font-weight:500;">' + esc(data.organization || '') + '</td>' +
+      '<td>' + esc(data.region || '') + '</td>' +
+      '<td><span style="font-weight:700;color:' + (score >= 80 ? '#16a34a' : '#ca8a04') + ';">' + score + '</span></td>' +
+      '<td><span class="cert-badge cert-badge--' + cls + '"><i aria-hidden="true" class="ph ph-medal"></i> ' + esc(level) + '</span></td>' +
+      '<td>' + dateCell(data.issued) + '</td>' +
+      '<td>' + dateCell(data.expires) + '</td>';
+  }
+
+  function normalizeScore(value) {
+    var n = parseInt(value, 10);
+    if (isNaN(n)) return 0;
+    return Math.max(0, Math.min(100, n));
+  }
+
+  function dateCell(value) {
+    value = String(value || '').trim();
+    if (!value) return '&mdash;';
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      var p = value.split('-');
+      return '<time datetime="' + escAttr(value) + '">' + p[2] + '.' + p[1] + '.' + p[0] + '</time>';
+    }
+    return esc(value);
+  }
+
+  function newVisualId(prefix) {
+    return 'add:' + prefix + ':' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
+  }
+
   function cleanEditorHtml(html) {
     return String(html || '')
       .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '')
@@ -1198,6 +1678,10 @@
     var path = loc.pathname || '/';
     path = path.replace(/\/index(?:\.html)?$/, '/').replace(/\.html$/, '');
     return path || '/';
+  }
+
+  function visualPatchPageKey(node) {
+    return node && node.closest && node.closest('footer.site-footer,.site-footer') ? GLOBAL_FOOTER_PAGE : visualPageKey();
   }
 
   function onDelete() {
