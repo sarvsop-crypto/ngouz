@@ -245,6 +245,57 @@
     return bodyToHTML(tField(item, bodyBase) || tField(item, fallbackBase));
   }
 
+  function parseMediaGallery(item) {
+    var value = item && (item.media_gallery || item.gallery || item.media_items || item.attachments);
+    if (!value) return [];
+    if (Array.isArray(value)) return value.filter(Boolean);
+    if (typeof value === 'object') return [value];
+    var text = String(value || '').trim();
+    if (!text) return [];
+    try {
+      var parsed = JSON.parse(text);
+      if (Array.isArray(parsed)) return parsed.filter(Boolean);
+      if (parsed && typeof parsed === 'object') return [parsed];
+    } catch (e) {}
+    return text.split(/\n+/).map(function (line) {
+      line = line.trim();
+      if (!line) return null;
+      return { type: /\.(mp4|webm|ogg)(\?|#|$)/i.test(line) ? 'video' : 'embed', url: line };
+    }).filter(Boolean);
+  }
+
+  function mediaItemUrl(item) {
+    return mediaUrl(item.url || item.src || item.path || item.file_path || item.href);
+  }
+
+  function youtubeEmbedUrl(url) {
+    var m = String(url || '').match(/(?:youtube\.com\/watch\?v=|youtube\.com\/embed\/|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+    return m ? 'https://www.youtube.com/embed/' + encodeURIComponent(m[1]) : '';
+  }
+
+  function renderMediaGallery(item) {
+    var media = parseMediaGallery(item);
+    if (!media.length) return '';
+    var title = esc(tField(item, 'title') || item.title || 'Media');
+    var html = '<section class="detail-media-gallery" aria-label="Media galereya">';
+    media.forEach(function (m) {
+      var url = mediaItemUrl(m);
+      if (!url || !/^https?:\/\//i.test(url)) return;
+      var type = String(m.type || m.mime || '').toLowerCase();
+      var caption = m.title || m.caption || '';
+      var yt = youtubeEmbedUrl(url);
+      if (yt) {
+        html += '<figure class="detail-media-item detail-media-item--video"><iframe src="' + esc(yt) + '" title="' + title + '" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>' + (caption ? '<figcaption>' + esc(caption) + '</figcaption>' : '') + '</figure>';
+      } else if (type.indexOf('video') === 0 || /\.(mp4|webm|ogg)(\?|#|$)/i.test(url)) {
+        html += '<figure class="detail-media-item detail-media-item--video"><video controls preload="metadata" src="' + esc(url) + '"></video>' + (caption ? '<figcaption>' + esc(caption) + '</figcaption>' : '') + '</figure>';
+      } else {
+        html += '<figure class="detail-media-item"><img src="' + esc(url) + '" alt="' + title + '" loading="lazy" decoding="async">' + (caption ? '<figcaption>' + esc(caption) + '</figcaption>' : '') + '</figure>';
+      }
+    });
+    html += '</section>';
+    return html === '<section class="detail-media-gallery" aria-label="Media galereya"></section>' ? '' : html;
+  }
+
   /* ── News ─────────────────────────────────────────────────── */
   // Route news cards to the matching detail page so list-page clicks
   // stay in context. publications.html (category=nashrlar) used to
@@ -571,6 +622,7 @@
       + '<p class="detail-meta"><time datetime="' + esc(_datePart(item.date) || '') + '">' + fmtDate(item.date) + '</time><span class="detail-meta-sep">/</span><a href="' + listRoute + '">' + esc(cat) + '</a></p>'
       + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
       + '<div class="detail-body">' + renderArticleBody(item, 'body', 'excerpt') + '</div>'
+      + renderMediaGallery(item)
       + '<div class="detail-tags"><a href="' + listRoute + '" class="detail-tag">' + esc(cat) + '</a></div>'
       + shareButtons(pageUrl, item.title)
       + '</div>'
@@ -726,7 +778,7 @@
     var statusLabel = eventStatus(item) === 'upcoming' ? 'Rejalashtirilgan' : "Bo'lib o'tdi";
 
     var tt = function (k, fb) { return (window.ngoI18n && window.ngoI18n.t) ? window.ngoI18n.t(k, fb) : fb; };
-    var body = bodyToHTML(tField(item, 'description'))
+    var body = renderArticleBody(item, 'description', 'description')
       + (item.location ? '<p><strong>' + esc(tt('pages.eventDetail.location', 'Joyi:')) + '</strong> ' + esc(item.location) + '</p>' : '')
       + (item.participants ? '<p><strong>' + esc(tt('pages.eventDetail.participants', 'Ishtirokchilar:')) + '</strong> ' + esc(item.participants) + ' ' + esc(tt('pages.eventDetail.people', 'kishi')) + '</p>' : '')
       + (item.deadline ? '<p><strong>' + esc(tt('pages.eventDetail.deadline', 'Ariza muddati:')) + '</strong> <time datetime="' + esc(_datePart(item.deadline) || '') + '">' + esc(item.deadlineLabel || fmtDate(item.deadline)) + '</time></p>' : '');
@@ -755,6 +807,7 @@
       + '<p class="detail-meta"><time datetime="' + esc(_datePart(item.date) || '') + '">' + esc(item.dateLabel || fmtDate(item.date)) + '</time><span class="detail-meta-sep">/</span><a href="events">' + statusLabel + '</a></p>'
       + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
       + '<div class="detail-body">' + body + '</div>'
+      + renderMediaGallery(item)
       + '<div class="detail-tags"><a href="events" class="detail-tag">Tadbir</a><a href="events" class="detail-tag">' + statusLabel + '</a></div>'
       + shareButtons(pageUrl, item.title)
       + '</div>'

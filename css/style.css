@@ -2316,6 +2316,49 @@ body.a11y-grayscale { filter: grayscale(1); }
 .detail-body a { font-weight: 600; color: var(--green-600, #255f40); text-decoration: underline; }
 .detail-body strong { font-weight: 700; }
 
+.detail-media-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 1.75rem;
+}
+.detail-media-item {
+  margin: 0;
+  border: 1px solid var(--neutral-200, #dde0e7);
+  border-radius: 6px;
+  background: #f7faf9;
+  overflow: hidden;
+}
+.detail-media-item img,
+.detail-media-item video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  height: auto;
+  object-fit: cover;
+  background: #111;
+}
+.detail-media-item--video {
+  grid-column: 1 / -1;
+}
+.detail-media-item iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 0;
+  background: #111;
+}
+.detail-media-item figcaption {
+  padding: .65rem .75rem;
+  color: #52616f;
+  font-size: .875rem;
+  line-height: 1.45;
+}
+@media (max-width: 48rem) {
+  .detail-media-gallery { grid-template-columns: 1fr; }
+}
+
 /* Tags / pills */
 .detail-tags {
   display: flex;

@@ -13,7 +13,10 @@
         area('excerpt', 'Qisqa matn', true), area('excerpt_ru', 'Qisqa matn RU'), area('excerpt_en', 'Qisqa matn EN'),
         area('body', 'Asosiy matn', true, true), area('body_ru', 'Asosiy matn RU', false, true), area('body_en', 'Asosiy matn EN', false, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
-        text('cover_image', 'Muqova rasmi path')
+        text('cover_image', 'Muqova rasmi path'),
+        multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
+        area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
+        area('media_gallery', 'Media galereya JSON', false, true)
       ]
     },
     events: {
@@ -27,7 +30,10 @@
         text('location', 'Manzil'), number('participants', 'Ishtirokchilar'), date('deadline', 'Ro\'yxatdan o\'tish muddati'),
         area('description', 'Tavsif', true, true), area('description_ru', 'Tavsif RU', false, true), area('description_en', 'Tavsif EN', false, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
-        text('cover_image', 'Muqova rasmi path')
+        text('cover_image', 'Muqova rasmi path'),
+        multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
+        area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
+        area('media_gallery', 'Media galereya JSON', false, true)
       ]
     },
     grants: {
@@ -42,7 +48,10 @@
         select('status', 'Holat', [['open', 'Ochiq'], ['closed', 'Yopilgan'], ['active', 'Faol']]),
         area('description', 'Tavsif', true, true), area('description_ru', 'Tavsif RU', false, true), area('description_en', 'Tavsif EN', false, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
-        text('cover_image', 'Muqova rasmi path')
+        text('cover_image', 'Muqova rasmi path'),
+        multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
+        area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
+        area('media_gallery', 'Media galereya JSON', false, true)
       ]
     },
     documents: {
@@ -53,7 +62,10 @@
       fields: [
         text('title', 'Sarlavha', true), date('date', 'Sana', true), text('category', 'Kategoriya', true),
         area('excerpt', 'Qisqa matn'), area('body', 'Asosiy matn', true, true),
-        file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true), text('cover_image', 'Muqova rasmi path')
+        file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true), text('cover_image', 'Muqova rasmi path'),
+        multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
+        area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
+        area('media_gallery', 'Media galereya JSON', false, true)
       ]
     },
     publications: {
@@ -68,7 +80,10 @@
         area('excerpt', 'Qisqa matn', true), area('excerpt_ru', 'Qisqa matn RU'), area('excerpt_en', 'Qisqa matn EN'),
         area('body', 'Asosiy matn', true, true), area('body_ru', 'Asosiy matn RU', false, true), area('body_en', 'Asosiy matn EN', false, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
-        text('cover_image', 'Muqova rasmi path')
+        text('cover_image', 'Muqova rasmi path'),
+        multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
+        area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
+        area('media_gallery', 'Media galereya JSON', false, true)
       ]
     },
     videos: {
@@ -83,7 +98,10 @@
         area('excerpt', 'Qisqa matn', true), area('excerpt_ru', 'Qisqa matn RU'), area('excerpt_en', 'Qisqa matn EN'),
         area('body', 'Asosiy matn / video embed', true, true), area('body_ru', 'Asosiy matn RU', false, true), area('body_en', 'Asosiy matn EN', false, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
-        text('cover_image', 'Muqova rasmi path')
+        text('cover_image', 'Muqova rasmi path'),
+        multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
+        area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
+        area('media_gallery', 'Media galereya JSON', false, true)
       ]
     },
     digests: {
@@ -98,7 +116,10 @@
         area('excerpt', 'Qisqa matn', true), area('excerpt_ru', 'Qisqa matn RU'), area('excerpt_en', 'Qisqa matn EN'),
         area('body', 'Asosiy matn', true, true), area('body_ru', 'Asosiy matn RU', false, true), area('body_en', 'Asosiy matn EN', false, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
-        text('cover_image', 'Muqova rasmi path')
+        text('cover_image', 'Muqova rasmi path'),
+        multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
+        area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
+        area('media_gallery', 'Media galereya JSON', false, true)
       ]
     }
   };
@@ -138,6 +159,7 @@
   function checkbox(name, label) { return { kind: 'checkbox', name: name, label: label }; }
   function select(name, label, options) { return { kind: 'select', name: name, label: label, options: options || [] }; }
   function file(name, label, accept, wide) { return { kind: 'file', name: name, label: label, accept: accept || '', wide: wide !== false }; }
+  function multiFile(name, label, accept, wide) { return { kind: 'multi-file', name: name, label: label, accept: accept || '', wide: wide !== false }; }
 
   function init() {
     els.shell = document.querySelector('.va-shell');
@@ -1025,11 +1047,18 @@
         }).join('') + '</select></label>';
     }
     if (field.kind === 'textarea') {
+      if (field.name === 'media_gallery' && value && typeof value !== 'string') {
+        try { value = JSON.stringify(value, null, 2); } catch (e) { value = ''; }
+      }
       return '<label class="' + cls + '" for="' + escAttr(id) + '"><span>' + esc(field.label) + '</span><textarea id="' + escAttr(id) + '" name="' + escAttr(field.name) + '"' + req + '>' + esc(value || '') + '</textarea></label>';
     }
     if (field.kind === 'file') {
       var accept = field.accept ? ' accept="' + escAttr(field.accept) + '"' : '';
       return '<label class="' + cls + ' va-file-field" for="' + escAttr(id) + '"><span>' + esc(field.label) + '</span><input id="' + escAttr(id) + '" name="' + escAttr(field.name) + '" type="file"' + accept + '><small>JPG, PNG, WebP yoki SVG rasm tanlang. Saqlaganda yuklanadi.</small></label>';
+    }
+    if (field.kind === 'multi-file') {
+      var multiAccept = field.accept ? ' accept="' + escAttr(field.accept) + '"' : '';
+      return '<label class="' + cls + ' va-file-field" for="' + escAttr(id) + '"><span>' + esc(field.label) + '</span><input id="' + escAttr(id) + '" name="' + escAttr(field.name) + '" type="file" multiple' + multiAccept + '><small>Ko\'pi bilan 10 ta fayl. Rasmlar va video fayllar saqlaganda yuklanadi.</small></label>';
     }
     return '<label class="' + cls + '" for="' + escAttr(id) + '"><span>' + esc(field.label) + '</span><input id="' + escAttr(id) + '" name="' + escAttr(field.name) + '" type="' + field.kind + '" value="' + escAttr(value || '') + '"' + req + '></label>';
   }
@@ -1052,6 +1081,7 @@
       if (field.kind === 'checkbox') data[field.name] = !!el.checked;
       else if (field.kind === 'number') data[field.name] = el.value ? parseInt(el.value, 10) : null;
       else if (field.kind === 'file') data[field.name] = el.files && el.files[0] ? el.files[0] : null;
+      else if (field.kind === 'multi-file') data[field.name] = el.files ? Array.prototype.slice.call(el.files) : [];
       else data[field.name] = String(el.value || '').trim();
     });
     return data;
@@ -1154,12 +1184,88 @@
   }
 
   function prepareItemData(data) {
-    if (!data || !data.cover_image_file) return Promise.resolve(data);
-    return uploadVisualImage(data.cover_image_file).then(function (res) {
-      data.cover_image = res && res.path ? res.path : data.cover_image;
+    if (!data) return Promise.resolve(data);
+    var tasks = [];
+    if (data.cover_image_file) {
+      tasks.push(uploadVisualImage(data.cover_image_file).then(function (res) {
+        data.cover_image = res && res.path ? res.path : data.cover_image;
+        delete data.cover_image_file;
+      }));
+    } else {
       delete data.cover_image_file;
+    }
+    tasks.push(prepareItemMediaGallery(data));
+    return Promise.all(tasks).then(function () { return data; });
+  }
+
+  function prepareItemMediaGallery(data) {
+    var picked = Array.isArray(data.media_files) ? data.media_files.filter(Boolean) : [];
+    if (picked.length > 10) return Promise.reject(new Error('Ko\'pi bilan 10 ta media fayl yuklash mumkin.'));
+    var gallery = parseMediaGallery(data.media_gallery);
+    var linkItems = parseMediaLinks(data.video_links);
+    delete data.media_files;
+    delete data.video_links;
+
+    var uploads = picked.map(function (file) {
+      return uploadVisualMedia(file).then(function (res) {
+        return mediaItemFromUpload(file, res);
+      });
+    });
+
+    return Promise.all(uploads).then(function (uploaded) {
+      gallery = gallery.concat(uploaded.filter(Boolean)).concat(linkItems);
+      data.media_gallery = gallery.length ? JSON.stringify(gallery) : '';
       return data;
     });
+  }
+
+  function parseMediaGallery(value) {
+    if (!value) return [];
+    if (Array.isArray(value)) return value.filter(Boolean);
+    if (typeof value === 'object') return [value];
+    var textValue = String(value || '').trim();
+    if (!textValue) return [];
+    try {
+      var parsed = JSON.parse(textValue);
+      if (Array.isArray(parsed)) return parsed.filter(Boolean);
+      if (parsed && typeof parsed === 'object') return [parsed];
+    } catch (e) {}
+    return textValue.split(/\n+/).map(function (line) {
+      line = line.trim();
+      if (!line) return null;
+      return mediaItemFromUrl(line);
+    }).filter(Boolean);
+  }
+
+  function parseMediaLinks(value) {
+    return String(value || '').split(/\n+/).map(function (line) {
+      line = line.trim();
+      if (!line) return null;
+      return mediaItemFromUrl(line);
+    }).filter(Boolean);
+  }
+
+  function mediaItemFromUpload(file, res) {
+    if (!res) return null;
+    var mime = (res.mime || file.type || '').toLowerCase();
+    return {
+      type: mime.indexOf('video/') === 0 ? 'video' : 'image',
+      path: res.path || '',
+      url: uploadResultUrl(res),
+      mime: mime,
+      title: file.name || '',
+      size: res.size || file.size || 0
+    };
+  }
+
+  function mediaItemFromUrl(url) {
+    var clean = String(url || '').trim();
+    if (!/^https?:\/\//i.test(clean)) return null;
+    return {
+      type: /\.(mp4|webm|ogg)(\?|#|$)/i.test(clean) ? 'video' : 'embed',
+      url: clean,
+      title: ''
+    };
   }
 
   function prepareVisualData(data) {
@@ -1188,6 +1294,20 @@
     }
     if (picked.size > 10 * 1024 * 1024) {
       return Promise.reject(new Error('Fayl hajmi 10 MB dan oshmasligi kerak (' + (picked.size / (1024 * 1024)).toFixed(1) + ' MB tanlangan).'));
+    }
+    var fd = new FormData();
+    fd.append('file', picked);
+    return NgoApi.post('/admin/upload', fd, { timeout: 90000 });
+  }
+
+  function uploadVisualMedia(picked) {
+    if (!picked) return Promise.resolve(null);
+    var type = picked.type || '';
+    if (type && type.indexOf('image/') !== 0 && type.indexOf('video/') !== 0) {
+      return Promise.reject(new Error("Faqat rasm yoki video fayllar yuklanadi. Tanlangan fayl turi: " + type));
+    }
+    if (picked.size > 20 * 1024 * 1024) {
+      return Promise.reject(new Error('Har bir media fayl hajmi 20 MB dan oshmasligi kerak (' + (picked.size / (1024 * 1024)).toFixed(1) + ' MB tanlangan).'));
     }
     var fd = new FormData();
     fd.append('file', picked);
