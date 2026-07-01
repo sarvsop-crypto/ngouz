@@ -51,60 +51,18 @@
     return node;
   }
 
-  function deepSet(obj, dottedKey, value) {
-    var parts = dottedKey.split(".");
-    var node = obj;
-    for (var i = 0; i < parts.length - 1; i++) {
-      var p = parts[i];
-      if (node[p] == null || typeof node[p] !== "object") node[p] = {};
-      node = node[p];
-    }
-    node[parts[parts.length - 1]] = value;
-  }
-
-  function fetchOverrides(lang) {
-    // Visual-admin override layer (js/visual-admin.js writes it via
-    // /api/i18n-content). Same-origin; absent or failed → no overrides and the
-    // page still renders the deployed base dict, so an outage never blanks text.
-    return fetch("/api/i18n-content?lang=" + encodeURIComponent(lang), { cache: "no-store", headers: { accept: "application/json" } })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (res) { return (res && res.overrides) || {}; })
-      .catch(function () { return {}; });
-  }
-
   function load(lang) {
     if (cache[lang]) return Promise.resolve(cache[lang]);
     if (!BASE) BASE = resolveBaseUrl();
     // Default cache mode respects server Cache-Control headers — prod
     // /js/* sends max-age=300 must-revalidate so ETag round-trips keep
     // locale dicts cheap without trapping dev iteration on a stale copy.
-    var basePromise = fetch(BASE + lang + ".json", { cache: "default" })
+    return fetch(BASE + lang + ".json", { cache: "default" })
       .then(function (r) {
         if (!r.ok) throw new Error("i18n " + lang + " HTTP " + r.status);
         return r.json();
-      });
-    return Promise.all([basePromise, fetchOverrides(lang)])
-      .then(function (parts) {
-        var dict = parts[0];
-        var overrides = parts[1];
-        // Admin edits are merged into the freshly-parsed base dict by their
-        // dotted i18n key, so a saved edit sticks for THIS language and the
-        // UZ/RU/EN switch keeps working (each lang carries its own override).
-        for (var k in overrides) {
-          if (Object.prototype.hasOwnProperty.call(overrides, k) && typeof overrides[k] === "string") {
-            deepSet(dict, k, overrides[k]);
-          }
-        }
-        cache[lang] = dict;
-        return dict;
-      });
-  }
-
-  // Drop a cached (merged) dict so the next set()/apply refetches base +
-  // overrides — used by the visual-admin editor after saving an edit.
-  function reload(lang) {
-    if (lang) delete cache[lang];
-    else cache = {};
+      })
+      .then(function (dict) { cache[lang] = dict; return dict; });
   }
 
   function applyText(scope, dict) {
@@ -209,7 +167,6 @@
     get: function () { return current; },
     set: set,
     load: load,
-    reload: reload,
     apply: apply,
     t: t,
     onChange: onChange,

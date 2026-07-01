@@ -125,28 +125,19 @@
   };
 
   var VISUAL_TYPE = '__visual_block';
-  var I18N_TYPE = '__i18n_text';
-  var I18N_BLOB_TYPE = '__i18n_blob';
   var API_VISUAL = '/api/visual-content';
-  var API_I18N = '/api/i18n-content';
-  var I18N_LANGS = ['uz', 'ru', 'en'];
-  var I18N_LANG_LABELS = { uz: "O'zbekcha (asosiy)", ru: 'Ruscha', en: 'Inglizcha' };
   var GLOBAL_FOOTER_PAGE = '__global_footer';
-  // Containers that already get their own dedicated editor (DB collections and
-  // structured items) — plain i18n text inside them must NOT also get a
-  // separate text control, or a card would sprout controls on every heading.
-  var STRUCTURED_HANDLED = [
-    '[data-va-type]',
-    '.partner', '.useful-link-card', '.team-card', '.leader-card', '.proj-item',
-    '.criterion-card', '.apply-step', '.kpi', '.struct-stat', '.council-stat',
-    'article.card', '.vazifa-card', '.about-reg-card', '.cert-level-card',
-    '.idx-table tbody tr', '.council-table tbody tr', '.reg-table tbody tr',
-    '.doc-row:not(.head)', 'table tbody tr'
+  var GENERIC_SELECTOR = [
+    'main h1', 'main h2', 'main h3', 'main h4', 'main p', 'main li',
+    'main th', 'main td', 'main svg text', 'main tspan',
+    'main .card', 'main article.card', 'main article:not([data-va-type])',
+    'main .hero-stat', 'main .hero-stat-num', 'main .hero-stat-label', 'main .nnt-stat-box', 'main .struct-stat',
+    'main .council-stat', 'main .kpi', 'main .criterion-card', 'main .apply-step',
+    'main .partner', 'main .vazifa-card', 'main .about-reg-card', 'main .cert-level-card',
+    'main .doc-row:not(.head)', 'main tbody tr', 'main .vacancy', 'main .media-card',
+    'main img', 'main a.btn', 'main a.social-link',
+    'footer h2', 'footer p', 'footer span', 'footer a', 'footer img'
   ].join(',');
-  // Collections edited as a group of per-item i18n keys (one control on the
-  // whole item, not a separate one per inner text) — their inner text must be
-  // skipped by the single-node text layer.
-  var I18N_GROUP_HANDLED = ['.q[data-faq-item]', '.hero-stat', '.kb-stat', '.stat-chip'].join(',');
   var PROTECTED_SELECTOR = [
     'header', 'nav', 'form', 'fieldset', 'select', 'option', 'input', 'textarea', 'button',
     '[role="navigation"]', '[role="search"]', '[role="tablist"]', '[role="tab"]',
@@ -158,7 +149,7 @@
     '.va-live-controls', '.va-live-add', '.va-generic-controls', '.va-generic-add'
   ].join(',');
 
-  var state = { user: null, editing: null, editingType: null, cache: {}, visualTarget: null, visualAction: null, i18nEditing: null, blobEditing: null };
+  var state = { user: null, editing: null, editingType: null, cache: {}, visualTarget: null, visualAction: null };
   var els = {};
 
   function text(name, label, required, wide) { return { kind: 'text', name: name, label: label, required: !!required, wide: !!wide }; }
@@ -275,15 +266,11 @@
     if (!doc || !doc.body) return;
     ensureFrameStyles(doc);
     observeFrameMutations(doc);
+    assignVisualIds(doc);
     hookFrameNavigation(doc);
     injectStructuredItemControls(doc);
     injectProjectControls(doc);
-    injectBlobControls(doc);
-    injectI18nTextControls(doc);
-    injectI18nGroupControls(doc, '.q[data-faq-item]', 'Savol-javob', 'Savol-javobni tahrirlash');
-    injectI18nGroupControls(doc, '.hero-stat', "Ko'rsatkichlar", "Ko'rsatkich izohini tahrirlash");
-    injectI18nGroupControls(doc, '.kb-stat', "Ko'rsatkichlar", "Ko'rsatkich izohini tahrirlash");
-    injectI18nGroupControls(doc, '.stat-chip', "Ko'rsatkichlar", "Ko'rsatkich izohini tahrirlash");
+    injectGenericBuilderControls(doc);
     injectStructuredAddButtons(doc);
     injectAddButtons(doc);
     injectDetailPageButton(doc);
@@ -340,12 +327,7 @@
       '.partner>.va-generic-controls,.useful-link-card>.va-generic-controls,.team-card>.va-generic-controls,.leader-card>.va-generic-controls,.card>.va-generic-controls,.criterion-card>.va-generic-controls,.apply-step>.va-generic-controls,.kpi>.va-generic-controls,.struct-stat>.va-generic-controls,.nnt-stat>.va-generic-controls,.council-stat>.va-generic-controls,.cert-level-card>.va-generic-controls,.vazifa-card>.va-generic-controls{right:8px;left:auto;top:8px}',
       'tr.va-generic-editable{outline-offset:-2px}',
       'tr>.va-generic-controls{right:8px;left:auto;top:4px}',
-      '.va-generic-add{display:none}',
-      '.va-i18n-editable{outline:1px dashed rgba(14,116,144,.32);outline-offset:4px}',
-      '.va-i18n-editable:hover{outline-color:#0e7490}',
-      '.va-i18n-controls{position:absolute;z-index:9997;right:0;top:-32px;display:flex;gap:4px;padding:3px;border:1px solid #e4e7e7;background:rgba(255,255,255,.97);box-shadow:0 3px 6px rgba(100,100,100,.2);border-radius:8px;pointer-events:auto}',
-      '.va-i18n-controls button{min-height:26px;border:1px solid transparent;background:#fff;color:#0e7490;border-radius:6px;padding:0 8px;font:800 12px/1 Montserrat,system-ui,sans-serif;cursor:pointer;white-space:nowrap}',
-      '.va-i18n-controls button:hover{background:#E8F5FB}'
+      '.va-generic-add{display:none}'
     ].join('');
     doc.head.appendChild(style);
   }
@@ -357,7 +339,7 @@
     var observer = new doc.defaultView.MutationObserver(function (records) {
       var relevant = records.some(function (record) {
         var node = record.target;
-        return node && node.nodeType === 1 && !node.closest('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add,.va-context-add,.va-i18n-controls');
+        return node && node.nodeType === 1 && !node.closest('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add,.va-context-add');
       });
       if (!relevant) return;
       doc.defaultView.clearTimeout(timer);
@@ -366,578 +348,34 @@
     observer.observe(doc.body, { childList: true, subtree: true });
   }
 
-  // Plain i18n text blocks (hero titles, section headings, labels, paragraphs,
-  // footer text) get an EDIT-only control that writes back to the i18n key per
-  // language — so an edit sticks and UZ/RU/EN keeps working. No delete/add here:
-  // a heading is not something you delete. Scope is data-i18n text nodes only;
-  // data-i18n-html rich blobs and multi-item collections are handled elsewhere.
-  function injectI18nTextControls(doc) {
-    var nodes = doc.querySelectorAll('main [data-i18n]:not([data-i18n-html]), footer [data-i18n]:not([data-i18n-html])');
-    Array.prototype.forEach.call(nodes, function (node) {
-      if (!isI18nEditable(node)) return;
-      // i18n rewrites textContent on load and language switch, wiping our
-      // control child; re-add when the flag is set but the button is gone
-      // (observeFrameMutations re-runs this).
-      if (node.dataset.vaI18nInjected && node.querySelector('[data-va-i18n-edit]')) return;
-      node.dataset.vaI18nInjected = '1';
-      node.classList.add('va-i18n-editable');
+  function assignVisualIds(doc) {
+    Array.prototype.forEach.call(doc.querySelectorAll(GENERIC_SELECTOR), function (node) {
+      if (!isGenericEditable(node)) return;
+      if (!node.getAttribute('data-va-block-id')) node.setAttribute('data-va-block-id', blockId(doc, node));
+    });
+  }
+
+  function injectGenericBuilderControls(doc) {
+    Array.prototype.forEach.call(doc.querySelectorAll('[data-va-block-id]'), function (node) {
+      if (!isGenericEditable(node) || node.dataset.vaGenericInjected) return;
+      node.dataset.vaGenericInjected = '1';
+      node.classList.add('va-generic-editable');
       if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
+      if (node.tagName === 'IMG' && node.parentNode && getComputedStyle(node.parentNode).position === 'static') {
+        node.parentNode.style.position = 'relative';
+      }
       var controls = doc.createElement('div');
-      controls.className = 'va-i18n-controls';
-      controls.innerHTML = '<button type="button" data-va-i18n-edit title="Matnni tahrirlash" aria-label="Matnni tahrirlash">✎ Matn</button>';
+      controls.className = 'va-generic-controls' + (node.tagName === 'IMG' ? ' va-generic-controls--image' : '');
+      controls.innerHTML = '<button type="button" data-va-generic-edit title="Tahrirlash" aria-label="Tahrirlash">✎</button><button type="button" data-va-generic-delete title="O\'chirish" aria-label="O\'chirish">×</button>';
       controls.addEventListener('click', function (e) {
         e.preventDefault();
         e.stopPropagation();
-        openI18nEditor(node);
+        if (e.target.hasAttribute('data-va-generic-delete')) openVisualEditor(node, 'delete');
+        else openVisualEditor(node, 'edit');
       });
-      attachControls(node, controls);
+      if (node.tagName === 'IMG') node.parentNode.insertBefore(controls, node.nextSibling);
+      else attachControls(node, controls);
     });
-  }
-
-  function isI18nEditable(node) {
-    if (!node || !node.matches) return false;
-    if (!node.getAttribute('data-i18n')) return false;
-    if (node.closest('script,style,noscript')) return false;
-    if (node.closest('.visually-hidden,[hidden],[aria-hidden="true"]')) return false;
-    var inFooter = !!node.closest('footer.site-footer,.site-footer');
-    if (!inFooter && node.closest(PROTECTED_SELECTOR)) return false;
-    if (node.closest(STRUCTURED_HANDLED)) return false;
-    if (node.closest(I18N_GROUP_HANDLED)) return false;
-    return true;
-  }
-
-  // A collection item whose text is several per-item i18n keys gets ONE "✎"
-  // that opens all its keys together (each in UZ/RU/EN). Reusable across FAQ,
-  // and future keyed collections.
-  function injectI18nGroupControls(doc, selector, kickerText, titleText) {
-    Array.prototype.forEach.call(queryAll(doc, selector), function (node) {
-      if (node.dataset.vaI18nGroupInjected && node.querySelector('[data-va-i18n-group-edit]')) return;
-      if (!collectI18nFields(node).length) return;
-      node.dataset.vaI18nGroupInjected = '1';
-      node.classList.add('va-i18n-editable');
-      if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
-      var controls = doc.createElement('div');
-      controls.className = 'va-i18n-controls';
-      controls.innerHTML = '<button type="button" data-va-i18n-group-edit title="Tahrirlash" aria-label="Tahrirlash">✎ Tahrirlash</button>';
-      controls.addEventListener('click', function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-        openI18nGroupEditor(node, titleText, kickerText);
-      });
-      attachControls(node, controls);
-    });
-  }
-
-  // Single plain-text i18n node (Phase 1 path) — a group of exactly one field.
-  function openI18nEditor(node) {
-    var key = node.getAttribute('data-i18n');
-    if (!key) return;
-    startI18nEdit([{ key: key, label: i18nKicker(node) }], 'Matnni tahrirlash', i18nKicker(node));
-  }
-
-  // Collection item whose text lives across several per-item i18n keys (e.g. a
-  // FAQ question + answer) — edit them together, each in three languages.
-  function openI18nGroupEditor(node, titleText, kickerText) {
-    var fields = collectI18nFields(node);
-    if (!fields.length) return;
-    startI18nEdit(fields, titleText, kickerText);
-  }
-
-  // Gather the distinct plain-text i18n keys inside a container, in DOM order,
-  // so each becomes one labelled field. data-i18n-html (rich blobs) is left for
-  // the collection/rich editors, not this per-key path.
-  function collectI18nFields(node) {
-    var out = [];
-    var seen = {};
-    var candidates = [];
-    if (node.getAttribute('data-i18n') && !node.hasAttribute('data-i18n-html')) candidates.push(node);
-    Array.prototype.push.apply(candidates, Array.prototype.slice.call(node.querySelectorAll('[data-i18n]:not([data-i18n-html])')));
-    candidates.forEach(function (el) {
-      var k = el.getAttribute('data-i18n');
-      if (!k || seen[k]) return;
-      if (el.closest('.visually-hidden,[hidden],[aria-hidden="true"]')) return;
-      seen[k] = 1;
-      out.push({ key: k, label: i18nFieldLabel(el) });
-    });
-    return out;
-  }
-
-  function i18nFieldLabel(el) {
-    var key = el.getAttribute('data-i18n') || '';
-    if (el.matches('.faq-toggle') || /\.q\d+$/.test(key)) return 'Savol';
-    if (/\.a\d+$/.test(key)) return 'Javob';
-    if (el.matches('.hero-stat-label,.kb-stat span,.stat-chip span') || /\.stats?\./i.test(key)) return 'Izoh';
-    var tag = (el.tagName || '').toLowerCase();
-    if (/^h[1-6]$/.test(tag)) return 'Sarlavha';
-    if (tag === 'button') return 'Tugma matni';
-    return 'Matn';
-  }
-
-  function startI18nEdit(fields, titleText, kickerText) {
-    state.editingType = I18N_TYPE;
-    state.editing = null;
-    state.visualTarget = null;
-    state.i18nEditing = { fields: fields, orig: {} };
-    els.editorTitle.textContent = titleText || 'Matnni tahrirlash';
-    els.editorKicker.textContent = kickerText || 'Matn';
-    els.form.dataset.mode = 'i18n';
-    els.deleteBtn.style.display = 'none';
-    els.saveBtn.style.display = '';
-    setError(els.editorError, '');
-    els.fields.innerHTML = '<p class="va-field--wide" style="margin:0;color:#66737f;font-weight:600">Yuklanmoqda...</p>';
-    els.modal.classList.add('is-open');
-    els.modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    var token = fields.map(function (f) { return f.key; }).join('|');
-    loadI18nGroup(fields).then(function (orig) {
-      if (state.editingType !== I18N_TYPE || !state.i18nEditing ||
-          state.i18nEditing.fields.map(function (f) { return f.key; }).join('|') !== token) return;
-      state.i18nEditing.orig = orig;
-      els.fields.innerHTML = i18nFieldsHtml(fields, orig);
-    }).catch(function () {
-      if (state.editingType !== I18N_TYPE || !state.i18nEditing ||
-          state.i18nEditing.fields.map(function (f) { return f.key; }).join('|') !== token) return;
-      setError(els.editorError, "Matnlarni yuklab bo'lmadi. Qayta urinib ko'ring.");
-      els.fields.innerHTML = i18nFieldsHtml(fields, {});
-    });
-  }
-
-  function i18nKicker(node) {
-    if (node.closest('footer')) return 'Pastki qism (footer)';
-    var tag = (node.tagName || '').toLowerCase();
-    if (tag === 'h1') return 'Sahifa sarlavhasi';
-    if (/^h[2-6]$/.test(tag)) return 'Sarlavha';
-    return 'Matn';
-  }
-
-  // Load base+override dicts for all three languages once, then read every
-  // field key out of each — orig[key] = { uz, ru, en }.
-  function loadI18nGroup(fields) {
-    var win = els.frame.contentWindow;
-    var api = win && win.ngoI18n;
-    if (!api || !api.load) return Promise.resolve({});
-    return Promise.all(I18N_LANGS.map(function (lang) {
-      return api.load(lang).catch(function () { return {}; });
-    })).then(function (dicts) {
-      var byLang = { uz: dicts[0] || {}, ru: dicts[1] || {}, en: dicts[2] || {} };
-      var orig = {};
-      fields.forEach(function (f) {
-        orig[f.key] = {
-          uz: i18nLookup(byLang.uz, f.key),
-          ru: i18nLookup(byLang.ru, f.key),
-          en: i18nLookup(byLang.en, f.key)
-        };
-      });
-      return orig;
-    });
-  }
-
-  function i18nLookup(dict, key) {
-    if (!dict || !key) return '';
-    var parts = key.split('.');
-    var cur = dict;
-    for (var i = 0; i < parts.length; i++) {
-      if (cur == null) return '';
-      cur = cur[parts[i]];
-    }
-    return typeof cur === 'string' ? cur : '';
-  }
-
-  function i18nFieldsHtml(fields, orig) {
-    return fields.map(function (f, idx) {
-      var vals = (orig && orig[f.key]) || {};
-      var head = fields.length > 1
-        ? '<p class="va-field--wide" style="margin:2px 0 -4px;font-weight:800;color:#023347">' + esc(f.label) + '</p>'
-        : '';
-      var inputs = I18N_LANGS.map(function (lang) {
-        var v = vals[lang] || '';
-        var req = lang === 'uz' ? ' required' : '';
-        var caption = fields.length > 1 ? I18N_LANG_LABELS[lang] : (f.label + ' — ' + I18N_LANG_LABELS[lang]);
-        return '<label class="va-field--wide" for="va-i18n-' + idx + '-' + lang + '">' +
-          '<span>' + esc(caption) + '</span>' +
-          // Leading "\n" is swallowed by the HTML parser, so a value that itself
-          // starts with a newline round-trips correctly (no spurious diff/save).
-          '<textarea id="va-i18n-' + idx + '-' + lang + '" name="va_i18n_' + idx + '_' + lang + '"' + req + '>\n' + esc(v) + '</textarea>' +
-          '</label>';
-      }).join('');
-      return head + inputs;
-    }).join('');
-  }
-
-  function saveI18n(submitter) {
-    var info = state.i18nEditing;
-    if (!info || !info.fields || !info.fields.length) return;
-    var ops = [];
-    var uzMissing = false;
-    info.fields.forEach(function (f, idx) {
-      I18N_LANGS.forEach(function (lang) {
-        var el = els.form.elements['va_i18n_' + idx + '_' + lang];
-        var val = el ? String(el.value || '') : '';
-        if (lang === 'uz' && !val.trim()) uzMissing = true;
-        var orig = (info.orig[f.key] && info.orig[f.key][lang]) || '';
-        if (String(val) !== String(orig)) ops.push({ key: f.key, lang: lang, value: val });
-      });
-    });
-    if (uzMissing) {
-      setError(els.editorError, "O'zbekcha matn majburiy.");
-      return;
-    }
-    if (!ops.length) { closeEditor(); return; }
-    var btn = submitter || els.saveBtn;
-    lock(btn, true, 'Saqlanmoqda...');
-    Promise.all(ops.map(function (op) {
-      return saveI18nLang(op.key, op.lang, op.value);
-    })).then(function () {
-      toast('Saqlandi');
-      closeEditor();
-      reloadSite();
-    }).catch(function (err) {
-      setError(els.editorError, 'Saqlashda xatolik: ' + message(err));
-    }).then(function () { lock(btn, false); });
-  }
-
-  function saveI18nLang(key, lang, value) {
-    var token = NgoApi.getToken();
-    if (String(value).trim() === '') {
-      // Blanked → drop the override so the deployed base translation returns.
-      return fetch(API_I18N + '?lang=' + encodeURIComponent(lang) + '&key=' + encodeURIComponent(key), {
-        method: 'DELETE',
-        headers: { 'Authorization': 'Bearer ' + token }
-      }).then(i18nResponse);
-    }
-    return fetch(API_I18N, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-      body: JSON.stringify({ lang: lang, key: key, value: value })
-    }).then(i18nResponse);
-  }
-
-  function i18nResponse(r) {
-    return r.json().catch(function () { return {}; }).then(function (body) {
-      if (!r.ok) throw new Error(body.error || ('HTTP ' + r.status));
-      return body;
-    });
-  }
-
-  // ===== Blob card-grid editor =====
-  // Card grids that live inside ONE data-i18n-html blob have no per-card keys.
-  // We edit them by parsing the STORED blob string per language (never the live
-  // DOM, which carries admin chrome), mutating only the grid's item children
-  // (icons/CTAs/other structure preserved), and saving the whole key back per
-  // language. Text fields edit an element's textContent per UZ/RU/EN; attr
-  // fields edit an attribute (one value applied to all languages). rootIsGrid
-  // marks blobs whose host element IS the grid (items are its direct children).
-  function tf(name, label, sel, area) { return { name: name, label: label, sel: sel, area: !!area }; }
-  function af(name, label, sel, attr) { return { name: name, label: label, sel: sel, attr: attr }; }
-
-  var I18N_GRID_SPECS = {
-    'pages.afzalliklar.benefits':            { grid: '.benefits-grid', item: '.benefit-card', add: "Afzallik qo'shish", fields: [tf('title', 'Sarlavha', 'h3'), tf('body', 'Matn', 'p', true)] },
-    'pages.researchAreas.tracks':            { grid: '.research-grid', item: '.research-card', add: "Yo'nalish qo'shish", fields: [tf('title', 'Sarlavha', 'h3'), tf('body', 'Matn', 'p', true)] },
-    'pages.nntSchool.courses':               { grid: '.cards', item: 'article.card', add: "Kurs qo'shish", fields: [tf('title', 'Sarlavha', 'h3'), tf('body', 'Matn', 'p', true)] },
-    'pages.onlineLibrary.topics':            { grid: '.cards', item: 'article.card', add: "Mavzu qo'shish", fields: [tf('title', 'Sarlavha', 'h3'), tf('body', 'Matn', 'p', true)] },
-    'pages.services.forms':                  { grid: '.cards', item: 'article.card', add: "Karta qo'shish", fields: [tf('title', 'Sarlavha', 'h3'), tf('body', 'Matn', 'p', true)] },
-    'pages.services.initiatives':            { grid: '.list', item: '.item', add: "Tashabbus qo'shish", fields: [tf('title', 'Sarlavha', 'h3'), tf('body', 'Matn', 'p', true)] },
-    'common.partnersDirections':             { grid: '.cards', item: 'article.card', add: "Yo'nalish qo'shish", fields: [tf('title', 'Sarlavha', 'h3'), tf('body', 'Matn', 'p', true)] },
-    'pages.talimRivojlanish.cards':          { grid: '.cards', item: 'article.card', add: "Dastur qo'shish", fields: [tf('title', 'Sarlavha', 'h2'), tf('body', 'Matn', 'p', true), af('cta', 'Tugma havolasi', 'a.btn', 'href')] },
-    'pages.stajirovkaVolontyorlik.programs': { grid: '.cards', item: 'article.card', add: "Dastur qo'shish", fields: [tf('title', 'Sarlavha', 'h2'), tf('body', 'Matn', 'p', true)] },
-    'pages.multimediaRoom.cards':            { grid: '.cards', item: 'article.card', add: "Karta qo'shish", fields: [tf('title', 'Sarlavha', 'h3'), tf('body', 'Matn', 'p', true), af('cta', 'Tugma havolasi', 'a.btn', 'href')] },
-    'pages.membershipGuide.cardsHtml':       { grid: '.cards', item: 'article.card', rootIsGrid: true, add: "Karta qo'shish", fields: [tf('title', 'Sarlavha', 'h3'), tf('body', 'Matn', 'p', true), af('cta', 'Tugma havolasi', 'a.btn', 'href')] },
-    'pages.membershipGuide.stepsHtml':       { grid: '.list', item: '.item', rootIsGrid: true, add: "Bosqich qo'shish", fields: [tf('title', 'Sarlavha', 'h3'), tf('body', 'Matn', 'p', true)] },
-    'pages.about.tasks':                     { grid: '.vazifalar-grid', item: '.vazifa-card', add: "Vazifa qo'shish", fields: [tf('num', 'Raqam', '.vazifa-num'), tf('title', 'Sarlavha', 'h3'), tf('body', 'Matn', 'p', true)] },
-    'pages.sustainabilityIndex.body':        { grid: '.criteria-grid', item: '.criterion-card', add: "Mezon qo'shish", fields: [tf('title', 'Mezon', 'h3'), tf('body', 'Matn', 'p', true), tf('max', 'Maksimal ball', '.criterion-max')] },
-    'pages.infographics.gallery':            { grid: '.infographic-grid', item: '.infographic-card', add: "Infografika qo'shish", fields: [tf('title', 'Sarlavha', 'h3'), tf('body', 'Matn', 'p', true)] }
-  };
-
-  function inRegisteredBlob(node) {
-    var host = node && node.closest && node.closest('[data-i18n-html]');
-    return !!(host && I18N_GRID_SPECS[host.getAttribute('data-i18n-html')]);
-  }
-
-  function blobItemsOf(grid, spec) {
-    if (!grid) return [];
-    return Array.prototype.filter.call(grid.children, function (c) { return c.matches && c.matches(spec.item); });
-  }
-
-  function injectBlobControls(doc) {
-    Object.keys(I18N_GRID_SPECS).forEach(function (key) {
-      var spec = I18N_GRID_SPECS[key];
-      Array.prototype.forEach.call(queryAll(doc, '[data-i18n-html="' + key + '"]'), function (host) {
-        var grids = spec.rootIsGrid ? [host] : Array.prototype.slice.call(host.querySelectorAll(spec.grid));
-        grids.forEach(function (grid, gridIndex) {
-          if (!grid.dataset.vaBlobAddInjected) {
-            grid.dataset.vaBlobAddInjected = '1';
-            var wrap = doc.createElement('div');
-            wrap.className = 'va-context-add';
-            wrap.innerHTML = '<button type="button">' + esc(spec.add || "Qo'shish") + '</button>';
-            wrap.addEventListener('click', function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-              openBlobEditor({ key: key, spec: spec, gridIndex: gridIndex, action: 'add' });
-            });
-            grid.parentNode.insertBefore(wrap, grid);
-          }
-          blobItemsOf(grid, spec).forEach(function (item) {
-            if (item.dataset.vaBlobInjected && item.querySelector('[data-va-blob-edit]')) return;
-            item.dataset.vaBlobInjected = '1';
-            item.classList.add('va-generic-editable');
-            if (getComputedStyle(item).position === 'static') item.style.position = 'relative';
-            var controls = doc.createElement('div');
-            controls.className = 'va-generic-controls';
-            controls.innerHTML = '<button type="button" data-va-blob-edit title="Tahrirlash" aria-label="Tahrirlash">✎</button><button type="button" data-va-blob-delete title="O\'chirish" aria-label="O\'chirish">×</button>';
-            controls.addEventListener('click', function (e) {
-              e.preventDefault();
-              e.stopPropagation();
-              var itemIndex = blobItemsOf(grid, spec).indexOf(item);
-              if (itemIndex < 0) return;
-              if (e.target.hasAttribute('data-va-blob-delete')) runBlobDelete({ key: key, spec: spec, gridIndex: gridIndex, itemIndex: itemIndex });
-              else openBlobEditor({ key: key, spec: spec, gridIndex: gridIndex, itemIndex: itemIndex, action: 'edit' });
-            });
-            attachControls(item, controls);
-          });
-        });
-      });
-    });
-  }
-
-  function loadBlobLangs(key) {
-    var win = els.frame.contentWindow;
-    var api = win && win.ngoI18n;
-    if (!api || !api.load) return Promise.reject(new Error('i18n_yuklanmadi'));
-    return Promise.all(I18N_LANGS.map(function (lang) {
-      return api.load(lang).then(function (dict) { return i18nLookup(dict, key); }).catch(function () { return ''; });
-    })).then(function (res) {
-      var uz = res[0] || '';
-      // Untranslated RU/EN render the UZ authored HTML, so fall back to the UZ
-      // structure — keeps item counts aligned across languages for add/delete.
-      return { uz: uz, ru: res[1] || uz, en: res[2] || uz };
-    });
-  }
-
-  function parseBlob(html) {
-    var doc = new DOMParser().parseFromString('<div id="__vabroot">' + String(html || '') + '</div>', 'text/html');
-    return doc.getElementById('__vabroot');
-  }
-
-  function parsedGrid(root, spec, gridIndex) {
-    if (!root) return null;
-    if (spec.rootIsGrid) return root;
-    return root.querySelectorAll(spec.grid)[gridIndex || 0] || null;
-  }
-
-  function blobFieldTarget(item, f) {
-    return f.sel ? item.querySelector(f.sel) : item;
-  }
-
-  function loadBlobItemValues(ctx) {
-    return loadBlobLangs(ctx.key).then(function (blobs) {
-      var out = { text: {}, attr: {} };
-      ctx.spec.fields.forEach(function (f) {
-        if (f.attr) {
-          out.attr[f.name] = readBlobField(blobs.uz, ctx, f);
-        } else {
-          out.text[f.name] = {
-            uz: readBlobField(blobs.uz, ctx, f),
-            ru: readBlobField(blobs.ru, ctx, f),
-            en: readBlobField(blobs.en, ctx, f)
-          };
-        }
-      });
-      return out;
-    });
-  }
-
-  function readBlobField(html, ctx, f) {
-    var root = parseBlob(html);
-    var grid = parsedGrid(root, ctx.spec, ctx.gridIndex);
-    var item = blobItemsOf(grid, ctx.spec)[ctx.itemIndex];
-    if (!item) return '';
-    var t = blobFieldTarget(item, f);
-    if (!t) return '';
-    return f.attr ? (t.getAttribute(f.attr) || '') : String(t.textContent || '').trim();
-  }
-
-  function openBlobEditor(ctx) {
-    state.editingType = I18N_BLOB_TYPE;
-    state.editing = null;
-    state.visualTarget = null;
-    state.blobEditing = { key: ctx.key, spec: ctx.spec, gridIndex: ctx.gridIndex, itemIndex: ctx.itemIndex, action: ctx.action, orig: null };
-    els.editorTitle.textContent = ctx.action === 'add' ? "Yangi karta" : 'Kartani tahrirlash';
-    els.editorKicker.textContent = 'Sahifa kontenti';
-    els.form.dataset.mode = 'i18n-blob';
-    els.deleteBtn.style.display = 'none';
-    els.saveBtn.style.display = '';
-    setError(els.editorError, '');
-    els.modal.classList.add('is-open');
-    els.modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    if (ctx.action === 'add') {
-      els.fields.innerHTML = blobFieldsHtml(ctx.spec, { text: {}, attr: {} });
-      return;
-    }
-    els.fields.innerHTML = '<p class="va-field--wide" style="margin:0;color:#66737f;font-weight:600">Yuklanmoqda...</p>';
-    loadBlobItemValues(ctx).then(function (vals) {
-      if (state.editingType !== I18N_BLOB_TYPE || !state.blobEditing || state.blobEditing.itemIndex !== ctx.itemIndex || state.blobEditing.key !== ctx.key) return;
-      state.blobEditing.orig = vals;
-      els.fields.innerHTML = blobFieldsHtml(ctx.spec, vals);
-    }).catch(function () {
-      if (state.editingType !== I18N_BLOB_TYPE) return;
-      setError(els.editorError, "Kartani yuklab bo'lmadi. Qayta urinib ko'ring.");
-      els.fields.innerHTML = blobFieldsHtml(ctx.spec, { text: {}, attr: {} });
-    });
-  }
-
-  function blobFieldsHtml(spec, vals) {
-    return spec.fields.map(function (f, idx) {
-      if (f.attr) {
-        var av = (vals.attr && vals.attr[f.name]) || '';
-        return '<label class="va-field--wide" for="va-blob-attr-' + idx + '">' +
-          '<span>' + esc(f.label) + '</span>' +
-          '<input id="va-blob-attr-' + idx + '" name="va_blob_attr_' + idx + '" type="text" value="' + escAttr(av) + '"></label>';
-      }
-      var tv = (vals.text && vals.text[f.name]) || {};
-      var head = '<p class="va-field--wide" style="margin:2px 0 -4px;font-weight:800;color:#023347">' + esc(f.label) + '</p>';
-      var inputs = I18N_LANGS.map(function (lang) {
-        var v = tv[lang] || '';
-        var req = lang === 'uz' && idx === firstTextFieldIndex(spec) ? ' required' : '';
-        var control = f.area
-          ? '<textarea id="va-blob-' + idx + '-' + lang + '" name="va_blob_' + idx + '_' + lang + '"' + req + '>\n' + esc(v) + '</textarea>'
-          : '<input id="va-blob-' + idx + '-' + lang + '" name="va_blob_' + idx + '_' + lang + '" type="text" value="' + escAttr(v) + '"' + req + '>';
-        return '<label class="va-field--wide" for="va-blob-' + idx + '-' + lang + '">' +
-          '<span>' + esc(I18N_LANG_LABELS[lang]) + '</span>' + control + '</label>';
-      }).join('');
-      return head + inputs;
-    }).join('');
-  }
-
-  function firstTextFieldIndex(spec) {
-    for (var i = 0; i < spec.fields.length; i++) { if (!spec.fields[i].attr) return i; }
-    return -1;
-  }
-
-  function readBlobEditor(spec) {
-    var text = {}, attr = {};
-    spec.fields.forEach(function (f, idx) {
-      if (f.attr) {
-        var el = els.form.elements['va_blob_attr_' + idx];
-        attr[f.name] = el ? String(el.value || '').trim() : '';
-      } else {
-        text[f.name] = {};
-        I18N_LANGS.forEach(function (lang) {
-          var el = els.form.elements['va_blob_' + idx + '_' + lang];
-          text[f.name][lang] = el ? String(el.value || '') : '';
-        });
-      }
-    });
-    return { text: text, attr: attr };
-  }
-
-  function applyBlobFields(item, spec, data, lang) {
-    spec.fields.forEach(function (f) {
-      var t = blobFieldTarget(item, f);
-      if (!t) return;
-      if (f.attr) {
-        var av = data.attr[f.name] || '';
-        if (av) t.setAttribute(f.attr, av);
-      } else {
-        var tv = (data.text[f.name] || {})[lang];
-        if (tv == null || tv === '') tv = (data.text[f.name] || {}).uz || '';
-        t.textContent = tv;
-      }
-    });
-  }
-
-  function saveBlobEdit(submitter) {
-    var info = state.blobEditing;
-    if (!info || !info.spec) return;
-    var data = readBlobEditor(info.spec);
-    var firstIdx = firstTextFieldIndex(info.spec);
-    var firstField = firstIdx >= 0 ? info.spec.fields[firstIdx] : null;
-    if (firstField && !String((data.text[firstField.name] || {}).uz || '').trim()) {
-      setError(els.editorError, "O'zbekcha matn majburiy.");
-      return;
-    }
-    var btn = submitter || els.saveBtn;
-    lock(btn, true, 'Saqlanmoqda...');
-    loadBlobLangs(info.key).then(function (blobs) {
-      var payloads = {};
-      var abort = null;
-      I18N_LANGS.forEach(function (lang) {
-        if (abort) return;
-        var root = parseBlob(blobs[lang]);
-        var grid = parsedGrid(root, info.spec, info.gridIndex);
-        if (!grid) { abort = 'grid_topilmadi:' + lang; return; }
-        var items = blobItemsOf(grid, info.spec);
-        if (info.action === 'edit') {
-          var item = items[info.itemIndex];
-          if (!item) { abort = 'item_topilmadi:' + lang; return; }
-          applyBlobFields(item, info.spec, data, lang);
-        } else {
-          var tmpl = items[items.length - 1] || items[0];
-          if (!tmpl) { abort = 'shablon_topilmadi:' + lang; return; }
-          var newItem = tmpl.cloneNode(true);
-          stripVaChrome(newItem);
-          applyBlobFields(newItem, info.spec, data, lang);
-          grid.appendChild(newItem);
-        }
-        var html = root.innerHTML;
-        if (String(html).trim().length < 20) { abort = 'bosh_natija:' + lang; return; }
-        payloads[lang] = html;
-      });
-      if (abort) throw new Error(abort);
-      return Promise.all(I18N_LANGS.map(function (lang) { return saveI18nLang(info.key, lang, payloads[lang]); }));
-    }).then(function () {
-      toast('Saqlandi');
-      closeEditor();
-      reloadSite();
-    }).catch(function (err) {
-      setError(els.editorError, 'Saqlashda xatolik: ' + message(err));
-    }).then(function () { lock(btn, false); });
-  }
-
-  function runBlobDelete(ctx) {
-    if (!confirm("Bu kartani o'chirishni tasdiqlaysizmi?")) return;
-    loadBlobLangs(ctx.key).then(function (blobs) {
-      var payloads = {};
-      var abort = null;
-      I18N_LANGS.forEach(function (lang) {
-        if (abort) return;
-        var root = parseBlob(blobs[lang]);
-        var grid = parsedGrid(root, ctx.spec, ctx.gridIndex);
-        if (!grid) { abort = 'grid_topilmadi:' + lang; return; }
-        var items = blobItemsOf(grid, ctx.spec);
-        if (items.length <= 1) { abort = 'oxirgi_karta'; return; }
-        var item = items[ctx.itemIndex];
-        if (!item) { abort = 'item_topilmadi:' + lang; return; }
-        item.parentNode.removeChild(item);
-        var html = root.innerHTML;
-        if (String(html).trim().length < 20) { abort = 'bosh_natija:' + lang; return; }
-        payloads[lang] = html;
-      });
-      if (abort === 'oxirgi_karta') { toast("Kamida bitta karta qolishi kerak"); return null; }
-      if (abort) throw new Error(abort);
-      return Promise.all(I18N_LANGS.map(function (lang) { return saveI18nLang(ctx.key, lang, payloads[lang]); })).then(function () {
-        toast("O'chirildi");
-        reloadSite();
-      });
-    }).catch(function (err) {
-      toast("O'chirishda xatolik: " + message(err));
-    });
-  }
-
-  // Strip visual-admin chrome from a cloned node before it goes into a stored
-  // blob (defensive — stored blobs are clean, but a clone of a live item is not).
-  function stripVaChrome(node) {
-    Array.prototype.forEach.call(node.querySelectorAll('.va-live-controls,.va-live-add,.va-generic-controls,.va-i18n-controls,.va-context-add'), function (c) { c.remove(); });
-    Array.prototype.forEach.call(node.querySelectorAll('[data-va-block-id],[data-va-generic-injected],[data-va-blob-injected],[data-va-structured-injected],[data-va-i18n-injected]'), function (el) {
-      el.removeAttribute('data-va-block-id');
-      el.removeAttribute('data-va-generic-injected');
-      el.removeAttribute('data-va-blob-injected');
-      el.removeAttribute('data-va-structured-injected');
-      el.removeAttribute('data-va-i18n-injected');
-    });
-    if (node.classList) { node.classList.remove('va-generic-editable', 'va-i18n-editable', 'va-live-editable'); }
-    node.removeAttribute('data-va-blob-injected');
-    if (node.style && node.style.position === 'relative') node.style.removeProperty('position');
   }
 
   function injectStructuredAddButtons(doc) {
@@ -963,7 +401,6 @@
     ].forEach(function (cfg) {
       Array.prototype.forEach.call(queryAll(doc, cfg[0]), function (target) {
         if (target.dataset.vaContextAddInjected) return;
-        if (inRegisteredBlob(target)) return; // blob card-grid editor owns these
         target.dataset.vaContextAddInjected = '1';
         if (!target.getAttribute('data-va-block-id')) target.setAttribute('data-va-block-id', blockId(doc, target));
         var wrap = doc.createElement('div');
@@ -994,7 +431,6 @@
     ].forEach(function (cfg) {
       Array.prototype.forEach.call(queryAll(doc, cfg[0]), function (node) {
         if (cfg[1] === 'simple_block' && isLegalArticleNode(node)) return;
-        if (inRegisteredBlob(node)) return; // blob card-grid editor owns these
         if (node.closest('.visually-hidden,[hidden],[aria-hidden="true"]')) return;
         if (node.dataset.vaStructuredInjected && node.querySelector('[data-va-structured-edit]')) return;
         if (!node.getAttribute('data-va-block-id')) node.setAttribute('data-va-block-id', blockId(doc, node));
@@ -1048,6 +484,19 @@
       });
       summary.appendChild(controls);
     });
+  }
+
+  function isGenericEditable(node) {
+    if (!node || !node.matches) return false;
+    if (node.closest('script,style,noscript')) return false;
+    if (!node.closest('footer.site-footer,.site-footer') && node.closest(PROTECTED_SELECTOR)) return false;
+    if (node.hasAttribute('data-va-type') || node.closest('[data-va-type]')) return false;
+    if (node.closest('.partner,.useful-link-card,.team-card,.leader-card,.proj-item')) return false;
+    if (node.matches('tbody tr') || node.closest('.idx-table,.council-table,.reg-table')) return false;
+    if (node.id === 'siteFrame') return false;
+    var text = String(node.textContent || '').trim();
+    if (node.tagName === 'IMG') return !!node.getAttribute('src');
+    return text.length > 0 || node.tagName === 'A';
   }
 
   function queryAll(doc, selector) {
@@ -1572,7 +1021,7 @@
 
   function cleanNodeText(node) {
     var clone = node.cloneNode(true);
-    Array.prototype.forEach.call(clone.querySelectorAll('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add,.va-i18n-controls'), function (child) {
+    Array.prototype.forEach.call(clone.querySelectorAll('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add'), function (child) {
       child.remove();
     });
     return String(clone.textContent || '').trim();
@@ -1596,8 +1045,6 @@
     state.editingType = null;
     state.visualTarget = null;
     state.visualAction = null;
-    state.i18nEditing = null;
-    state.blobEditing = null;
     els.form.dataset.mode = '';
     els.saveBtn.style.display = '';
     els.deleteBtn.style.display = '';
@@ -1673,14 +1120,6 @@
 
   function onSave(e) {
     e.preventDefault();
-    if (state.editingType === I18N_TYPE) {
-      saveI18n(e.submitter);
-      return;
-    }
-    if (state.editingType === I18N_BLOB_TYPE) {
-      saveBlobEdit(e.submitter);
-      return;
-    }
     if (state.editingType === VISUAL_TYPE && state.visualAction === 'delete') {
       onDelete();
       return;
