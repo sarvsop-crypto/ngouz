@@ -16,7 +16,7 @@
         text('cover_image', 'Muqova rasmi path'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        area('media_gallery', 'Media galereya JSON', false, true)
+        hidden('media_gallery')
       ]
     },
     events: {
@@ -33,7 +33,7 @@
         text('cover_image', 'Muqova rasmi path'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        area('media_gallery', 'Media galereya JSON', false, true)
+        hidden('media_gallery')
       ]
     },
     grants: {
@@ -51,7 +51,7 @@
         text('cover_image', 'Muqova rasmi path'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        area('media_gallery', 'Media galereya JSON', false, true)
+        hidden('media_gallery')
       ]
     },
     documents: {
@@ -65,7 +65,7 @@
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true), text('cover_image', 'Muqova rasmi path'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        area('media_gallery', 'Media galereya JSON', false, true)
+        hidden('media_gallery')
       ]
     },
     publications: {
@@ -83,7 +83,7 @@
         text('cover_image', 'Muqova rasmi path'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        area('media_gallery', 'Media galereya JSON', false, true)
+        hidden('media_gallery')
       ]
     },
     videos: {
@@ -101,7 +101,7 @@
         text('cover_image', 'Muqova rasmi path'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        area('media_gallery', 'Media galereya JSON', false, true)
+        hidden('media_gallery')
       ]
     },
     digests: {
@@ -119,7 +119,7 @@
         text('cover_image', 'Muqova rasmi path'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        area('media_gallery', 'Media galereya JSON', false, true)
+        hidden('media_gallery')
       ]
     }
   };
@@ -160,6 +160,7 @@
   function select(name, label, options) { return { kind: 'select', name: name, label: label, options: options || [] }; }
   function file(name, label, accept, wide) { return { kind: 'file', name: name, label: label, accept: accept || '', wide: wide !== false }; }
   function multiFile(name, label, accept, wide) { return { kind: 'multi-file', name: name, label: label, accept: accept || '', wide: wide !== false }; }
+  function hidden(name) { return { kind: 'hidden', name: name }; }
 
   function init() {
     els.shell = document.querySelector('.va-shell');
@@ -978,6 +979,9 @@
     if (action === 'add') {
       return [select('block_kind', 'Blok turi', [['paragraph', 'Matn'], ['heading', 'Sarlavha'], ['card', 'Karta'], ['html', 'HTML']]), area('html', 'Kontent', true, true)];
     }
+    if (isDetailMetaNode(node)) {
+      return [date('date', 'Sana', false), text('label', "Bo'lim / turi", false, true), text('href', 'Havola', false, true)];
+    }
     if (node.tagName === 'IMG') return [file('file', 'Yangi rasm yuklash', 'image/*', true), text('src', 'Rasm manzili', true, true), text('alt', 'Alt matn', false, true)];
     if (node.tagName === 'A') return [text('text', 'Matn', false, true), text('href', 'Havola', false, true)];
     return [area('html', 'Kontent', true, true)];
@@ -985,6 +989,7 @@
 
   function visualItemFromNode(node, action) {
     if (action === 'add') return { block_kind: 'paragraph', html: 'Yangi matn' };
+    if (isDetailMetaNode(node)) return detailMetaFromNode(node);
     if (node.tagName === 'IMG') return { src: node.getAttribute('src') || '', alt: node.getAttribute('alt') || '' };
     if (node.tagName === 'A') return { text: cleanNodeText(node), href: node.getAttribute('href') || '' };
     return { html: cleanNodeHtml(node) };
@@ -1037,6 +1042,12 @@
       return '<label class="va-check' + cls + '" for="' + escAttr(id) + '">' +
         '<input id="' + escAttr(id) + '" name="' + escAttr(field.name) + '" type="checkbox" ' + (value ? 'checked' : '') + '>' +
         '<span>' + esc(field.label) + '</span></label>';
+    }
+    if (field.kind === 'hidden') {
+      if (value && typeof value !== 'string') {
+        try { value = JSON.stringify(value); } catch (e) { value = ''; }
+      }
+      return '<input id="' + escAttr(id) + '" name="' + escAttr(field.name) + '" type="hidden" value="' + escAttr(value || '') + '">';
     }
     var req = field.required ? ' required' : '';
     if (field.kind === 'select') {
@@ -1135,7 +1146,7 @@
         setError(els.editorError, 'Tashkilot, hudud va sertifikat darajasi majburiy.');
         return;
       }
-      if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href || data.file || data.title || data.body || data.name || data.role || data.value || data.label)) {
+      if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href || data.file || data.title || data.body || data.name || data.role || data.value || data.label || data.date)) {
         setError(els.editorError, 'Kontent bo\'sh bo\'lmasligi kerak.');
         return;
       }
@@ -1469,6 +1480,9 @@
       patch.targetId = id;
       patch.position = 'after';
       patch.html = buildAddedHtml(data.block_kind, data.html);
+    } else if (isDetailMetaNode(node)) {
+      patch.action = 'html';
+      patch.html = buildDetailMetaInnerHtml(data);
     } else if (node.tagName === 'IMG') {
       patch.action = 'attrs';
       patch.src = data.src || '';
@@ -1580,6 +1594,34 @@
     if (kind === 'card') return /class=["'][^"']*\bcard\b/.test(html) ? html : '<article class="card">' + html + '</article>';
     if (kind === 'html') return html;
     return /^<p[\s>]/i.test(html) ? html : '<p>' + esc(html.replace(/<[^>]*>/g, '')) + '</p>';
+  }
+
+  function isDetailMetaNode(node) {
+    if (!node || !node.matches) return false;
+    return node.matches('.detail-meta') || (!!node.querySelector && !!node.querySelector('time') && !!node.querySelector('.detail-meta-sep'));
+  }
+
+  function detailMetaFromNode(node) {
+    var time = node.querySelector('time');
+    var link = node.querySelector('a[href]');
+    return {
+      date: time ? normalizeDateValue(time.getAttribute('datetime') || cleanNodeText(time)) : '',
+      label: link ? cleanNodeText(link) : '',
+      href: link ? link.getAttribute('href') || '' : ''
+    };
+  }
+
+  function buildDetailMetaInnerHtml(data) {
+    var dateValue = normalizeDateValue(data.date || '');
+    var label = String(data.label || '').trim();
+    var href = String(data.href || '').trim();
+    var parts = [];
+    if (dateValue) parts.push(dateCell(dateValue));
+    if (label) {
+      if (parts.length) parts.push('<span class="detail-meta-sep">/</span>');
+      parts.push(href ? '<a href="' + escAttr(href) + '">' + esc(label) + '</a>' : '<span>' + esc(label) + '</span>');
+    }
+    return parts.join('');
   }
 
   function blockFieldsFromNode(node) {
@@ -1748,6 +1790,15 @@
       return '<time datetime="' + escAttr(value) + '">' + p[2] + '.' + p[1] + '.' + p[0] + '</time>';
     }
     return esc(value);
+  }
+
+  function normalizeDateValue(value) {
+    value = String(value || '').trim();
+    if (!value) return '';
+    if (/^\d{4}-\d{2}-\d{2}/.test(value)) return value.slice(0, 10);
+    var dotted = value.match(/^(\d{2})\.(\d{2})\.(\d{4})$/);
+    if (dotted) return dotted[3] + '-' + dotted[2] + '-' + dotted[1];
+    return value;
   }
 
   function newVisualId(prefix) {
