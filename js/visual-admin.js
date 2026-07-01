@@ -9,11 +9,11 @@
       required: ['title', 'date', 'category', 'excerpt', 'body'],
       fields: [
         text('title', 'Sarlavha', true), text('title_ru', 'Sarlavha RU'), text('title_en', 'Sarlavha EN'),
-        date('date', 'Sana', true), text('category', 'Kategoriya', true), checkbox('featured', 'Muhim yangilik'),
+        date('date', 'Sana', true), select('category', 'Kategoriya', [['elon', "E'lon"], ['yangilik', 'Yangilik'], ['tadbir', 'Tadbir'], ['matbuot', 'Matbuot'], ['boshqa', 'Boshqa']]), checkbox('featured', 'Muhim yangilik'),
         area('excerpt', 'Qisqa matn', true), area('excerpt_ru', 'Qisqa matn RU'), area('excerpt_en', 'Qisqa matn EN'),
         area('body', 'Asosiy matn', true, true), area('body_ru', 'Asosiy matn RU', false, true), area('body_en', 'Asosiy matn EN', false, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
-        text('cover_image', 'Muqova rasmi path'),
+        hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
         hidden('media_gallery')
@@ -30,7 +30,7 @@
         text('location', 'Manzil'), number('participants', 'Ishtirokchilar'), date('deadline', 'Ro\'yxatdan o\'tish muddati'),
         area('description', 'Tavsif', true, true), area('description_ru', 'Tavsif RU', false, true), area('description_en', 'Tavsif EN', false, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
-        text('cover_image', 'Muqova rasmi path'),
+        hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
         hidden('media_gallery')
@@ -43,12 +43,12 @@
       required: ['title', 'description'],
       fields: [
         text('title', 'Sarlavha', true), text('title_ru', 'Sarlavha RU'), text('title_en', 'Sarlavha EN'),
-        text('organizer', 'Tashkilotchi'), text('category', 'Kategoriya'), text('category_ru', 'Kategoriya RU'), text('category_en', 'Kategoriya EN'),
+        text('organizer', 'Tashkilotchi'), select('category', 'Kategoriya', [['grant', 'Grant'], ['tanlov', 'Tanlov'], ['loyiha', 'Loyiha'], ['stipendiya', 'Stipendiya'], ['boshqa', 'Boshqa']]), text('category_ru', 'Kategoriya RU'), text('category_en', 'Kategoriya EN'),
         text('amount', 'Mablag\''), date('deadline', 'Topshirish muddati'),
-        select('status', 'Holat', [['open', 'Ochiq'], ['closed', 'Yopilgan'], ['active', 'Faol']]),
+        select('status', 'Holat', [['active', 'Faol'], ['closed', 'Yopilgan']]),
         area('description', 'Tavsif', true, true), area('description_ru', 'Tavsif RU', false, true), area('description_en', 'Tavsif EN', false, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
-        text('cover_image', 'Muqova rasmi path'),
+        hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
         hidden('media_gallery')
@@ -60,9 +60,9 @@
       endpoint: '/admin/documents',
       required: ['title', 'date', 'category', 'body'],
       fields: [
-        text('title', 'Sarlavha', true), date('date', 'Sana', true), text('category', 'Kategoriya', true),
+        text('title', 'Sarlavha', true), date('date', 'Sana', true), select('category', 'Kategoriya', [['qonunlar', 'Qonunlar va qarorlar'], ['davlat-dasturlari', 'Davlat dasturlari'], ['nogironlar-huquqi', 'Nogironlar huquqlarini himoya qilish'], ['rasmiy-hujjat', 'Rasmiy hujjatlar']]),
         area('excerpt', 'Qisqa matn'), area('body', 'Asosiy matn', true, true),
-        file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true), text('cover_image', 'Muqova rasmi path'),
+        file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true), hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
         hidden('media_gallery')
@@ -80,7 +80,7 @@
         area('excerpt', 'Qisqa matn', true), area('excerpt_ru', 'Qisqa matn RU'), area('excerpt_en', 'Qisqa matn EN'),
         area('body', 'Asosiy matn', true, true), area('body_ru', 'Asosiy matn RU', false, true), area('body_en', 'Asosiy matn EN', false, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
-        text('cover_image', 'Muqova rasmi path'),
+        hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
         hidden('media_gallery')
@@ -96,9 +96,9 @@
         text('title', 'Sarlavha', true), text('title_ru', 'Sarlavha RU'), text('title_en', 'Sarlavha EN'),
         date('date', 'Sana', true), checkbox('featured', 'Muhim video'),
         area('excerpt', 'Qisqa matn', true), area('excerpt_ru', 'Qisqa matn RU'), area('excerpt_en', 'Qisqa matn EN'),
-        area('body', 'Asosiy matn / video embed', true, true), area('body_ru', 'Asosiy matn RU', false, true), area('body_en', 'Asosiy matn EN', false, true),
+        area('body', 'Asosiy matn', true, true), area('body_ru', 'Asosiy matn RU', false, true), area('body_en', 'Asosiy matn EN', false, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
-        text('cover_image', 'Muqova rasmi path'),
+        hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
         hidden('media_gallery')
@@ -116,7 +116,7 @@
         area('excerpt', 'Qisqa matn', true), area('excerpt_ru', 'Qisqa matn RU'), area('excerpt_en', 'Qisqa matn EN'),
         area('body', 'Asosiy matn', true, true), area('body_ru', 'Asosiy matn RU', false, true), area('body_en', 'Asosiy matn EN', false, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
-        text('cover_image', 'Muqova rasmi path'),
+        hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
         hidden('media_gallery')
@@ -430,6 +430,8 @@
       ['.criterion-card,.apply-step,.kpi,.struct-stat,.council-stat,article.card,.vazifa-card,.about-reg-card', 'simple_block']
     ].forEach(function (cfg) {
       Array.prototype.forEach.call(queryAll(doc, cfg[0]), function (node) {
+        if (cfg[1] === 'simple_block' && isLegalArticleNode(node)) return;
+        if (node.closest('.visually-hidden,[hidden],[aria-hidden="true"]')) return;
         if (node.dataset.vaStructuredInjected && node.querySelector('[data-va-structured-edit]')) return;
         if (!node.getAttribute('data-va-block-id')) node.setAttribute('data-va-block-id', blockId(doc, node));
         node.classList.add('va-generic-editable');
@@ -701,7 +703,7 @@
     if (kind === 'leader_card') return { name: '', role: '', email: '', photo: '', bio: '' };
     if (kind === 'simple_stat') return { value: '', label: '' };
     if (kind === 'simple_li') return { title: '', body: '' };
-    if (kind === 'simple_row') return { html: "<span>Yangi qator</span><span>Ma'lumot</span>" };
+    if (kind === 'simple_row') return { col_1: 'Yangi qator', col_2: "Ma'lumot", link_href: '' };
     if (kind === 'simple_card') return { title: '', body: '' };
     if (kind === 'top500_row') return { name: '', nnt: '', university: '', level: '', year: '', qs: '', the: '' };
     if (kind === 'council_row') return { agency: '', member_name: '', member_role: '', photo: '' };
@@ -736,7 +738,7 @@
     }
     if (kind === 'simple_stat') return [text('value', 'Raqam', true), text('label', 'Izoh', true, true)];
     if (kind === 'simple_li') return [text('title', 'Sarlavha', false, true), area('body', 'Matn', true, true)];
-    if (kind === 'simple_row') return [area('html', 'Qator HTML', true, true)];
+    if (kind === 'simple_row') return simpleRowFields();
     if (kind === 'simple_card' || kind === 'simple_block') return [text('title', 'Sarlavha', false, true), area('body', 'Matn', true, true)];
     if (kind === 'top500_row') {
       return [
@@ -777,6 +779,18 @@
       ];
     }
     return [];
+  }
+
+  function simpleRowFields() {
+    return [
+      text('col_1', 'Ustun 1', true, true),
+      text('col_2', 'Ustun 2', false, true),
+      text('col_3', 'Ustun 3', false, true),
+      text('col_4', 'Ustun 4', false, true),
+      text('col_5', 'Ustun 5', false, true),
+      text('col_6', 'Ustun 6', false, true),
+      text('link_href', '1-ustun havolasi', false, true)
+    ];
   }
 
   function addTitle(kind) {
@@ -822,7 +836,7 @@
     setError(els.editorError, '');
     els.fields.innerHTML = action === 'delete'
       ? deleteConfirmHtml(node)
-      : fieldsForStructuredItem(kind).map(function (field) { return fieldHtml(field, structuredItemFromNode(node, kind)); }).join('');
+      : fieldsForStructuredItem(kind, node).map(function (field) { return fieldHtml(field, structuredItemFromNode(node, kind)); }).join('');
     els.modal.classList.add('is-open');
     els.modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -868,13 +882,21 @@
     return 'Jamoa / kartalar';
   }
 
-  function fieldsForStructuredItem(kind) {
+  function fieldsForStructuredItem(kind, node) {
     if (kind === 'partner') return structuredFieldsFor('partner');
     if (kind === 'useful_link') return structuredFieldsFor('useful_link');
     if (kind === 'simple_row') return structuredFieldsFor('simple_row');
-    if (kind === 'simple_block') return structuredFieldsFor('simple_block');
+    if (kind === 'simple_block') return simpleBlockFieldsForNode(node);
     if (kind === 'top500_row' || kind === 'council_row' || kind === 'sustainability_row' || kind === 'certificate_row') return structuredFieldsFor(kind);
     return personFields(kind === 'leader_card');
+  }
+
+  function simpleBlockFieldsForNode(node) {
+    if (isStatBlockNode(node)) return [text('value', 'Raqam / qiymat', true), text('label', 'Izoh', true, true)];
+    if (node && node.matches && node.matches('.vazifa-card')) return [text('number', 'Raqam', false), text('title', 'Sarlavha', false, true), area('body', 'Matn', true, true)];
+    if (node && node.matches && node.matches('.apply-step')) return [text('title', 'Bosqich nomi', false, true), area('body', 'Matn', true, true)];
+    if (node && node.matches && node.matches('.criterion-card')) return [text('title', 'Mezon nomi', false, true), area('body', 'Matn', true, true), text('max_score', 'Maksimal ball', false)];
+    return structuredFieldsFor('simple_block');
   }
 
   function personFields(isLeader) {
@@ -912,7 +934,7 @@
       return blockFieldsFromNode(node);
     }
     if (kind === 'simple_row') {
-      return { html: cleanNodeHtml(node) };
+      return simpleRowFromNode(node);
     }
     if (kind === 'top500_row') return top500RowFromNode(node);
     if (kind === 'council_row') return councilRowFromNode(node);
@@ -977,30 +999,24 @@
 
   function visualFieldsFor(node, action) {
     if (action === 'add') {
-      return [select('block_kind', 'Blok turi', [['paragraph', 'Matn'], ['heading', 'Sarlavha'], ['card', 'Karta'], ['html', 'HTML']]), area('html', 'Kontent', true, true)];
+      return [select('block_kind', 'Blok turi', [['paragraph', 'Matn'], ['heading', 'Sarlavha'], ['card', 'Karta']]), area('body', 'Matn', true, true)];
     }
     if (isDetailMetaNode(node)) {
       return [date('date', 'Sana', false), text('label', "Bo'lim / turi", false, true), text('href', 'Havola', false, true)];
     }
     if (node.tagName === 'IMG') return [file('file', 'Yangi rasm yuklash', 'image/*', true), text('src', 'Rasm manzili', true, true), text('alt', 'Alt matn', false, true)];
     if (node.tagName === 'A') return [text('text', 'Matn', false, true), text('href', 'Havola', false, true)];
-    return [area('html', 'Kontent', true, true)];
+    if (isSimpleTextNode(node)) return [area('text', 'Matn', true, true)];
+    return [text('title', 'Sarlavha', false, true), area('body', 'Matn', true, true)];
   }
 
   function visualItemFromNode(node, action) {
-    if (action === 'add') return { block_kind: 'paragraph', html: 'Yangi matn' };
+    if (action === 'add') return { block_kind: 'paragraph', body: 'Yangi matn' };
     if (isDetailMetaNode(node)) return detailMetaFromNode(node);
     if (node.tagName === 'IMG') return { src: node.getAttribute('src') || '', alt: node.getAttribute('alt') || '' };
     if (node.tagName === 'A') return { text: cleanNodeText(node), href: node.getAttribute('href') || '' };
-    return { html: cleanNodeHtml(node) };
-  }
-
-  function cleanNodeHtml(node) {
-    var clone = node.cloneNode(true);
-    Array.prototype.forEach.call(clone.querySelectorAll('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add'), function (child) {
-      child.remove();
-    });
-    return cleanEditorHtml(clone.innerHTML).trim();
+    if (isSimpleTextNode(node)) return { text: cleanNodeText(node) };
+    return blockFieldsFromNode(node);
   }
 
   function cleanNodeText(node) {
@@ -1051,8 +1067,12 @@
     }
     var req = field.required ? ' required' : '';
     if (field.kind === 'select') {
+      var hasCurrentOption = field.options.some(function (opt) { return String(value || '') === String(opt[0]); });
+      var currentOption = value && !hasCurrentOption
+        ? '<option value="' + escAttr(value) + '" selected>' + esc(String(value)) + '</option>'
+        : '';
       return '<label class="' + cls + '" for="' + escAttr(id) + '"><span>' + esc(field.label) + '</span><select id="' + escAttr(id) + '" name="' + escAttr(field.name) + '"' + req + '>' +
-        field.options.map(function (opt) {
+        currentOption + field.options.map(function (opt) {
           var selected = String(value || '') === String(opt[0]) ? ' selected' : '';
           return '<option value="' + escAttr(opt[0]) + '"' + selected + '>' + esc(opt[1]) + '</option>';
         }).join('') + '</select></label>';
@@ -1146,7 +1166,7 @@
         setError(els.editorError, 'Tashkilot, hudud va sertifikat darajasi majburiy.');
         return;
       }
-      if (state.visualAction !== 'delete' && !(data.html || data.text || data.src || data.href || data.file || data.title || data.body || data.name || data.role || data.value || data.label || data.date)) {
+      if (state.visualAction !== 'delete' && !(data.text || data.src || data.href || data.file || data.title || data.body || data.name || data.role || data.value || data.label || data.date)) {
         setError(els.editorError, 'Kontent bo\'sh bo\'lmasligi kerak.');
         return;
       }
@@ -1407,7 +1427,7 @@
     } else if (state.visualAction === 'edit-simple_row') {
       patch.kind = 'simple_row';
       patch.action = 'html';
-      patch.html = cleanEditorHtml(data.html || '');
+      patch.html = buildSimpleRowInnerHtml(data, node);
     } else if (state.visualAction === 'add-simple_card') {
       patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
       patch.kind = 'simple_card';
@@ -1418,7 +1438,7 @@
     } else if (state.visualAction === 'edit-simple_block') {
       patch.kind = 'simple_block';
       patch.action = 'html';
-      patch.html = buildSimpleBlockInnerHtml(data);
+      patch.html = buildSimpleBlockInnerHtml(data, node);
     } else if (state.visualAction === 'add-top500_row') {
       patch.id = newVisualId('top500');
       patch.kind = 'top500_row';
@@ -1479,7 +1499,7 @@
       patch.action = 'add';
       patch.targetId = id;
       patch.position = 'after';
-      patch.html = buildAddedHtml(data.block_kind, data.html);
+      patch.html = buildAddedHtml(data.block_kind, data.body || data.text || '');
     } else if (isDetailMetaNode(node)) {
       patch.action = 'html';
       patch.html = buildDetailMetaInnerHtml(data);
@@ -1491,9 +1511,12 @@
       patch.action = 'attrs';
       patch.text = data.text || '';
       patch.href = data.href || '';
+    } else if (isSimpleTextNode(node)) {
+      patch.action = 'html';
+      patch.html = esc(data.text || '');
     } else {
       patch.action = 'html';
-      patch.html = cleanEditorHtml(data.html || '');
+      patch.html = buildSimpleBlockInnerHtml(data);
     }
     return fetch(API_VISUAL, {
       method: 'POST',
@@ -1589,11 +1612,18 @@
   }
 
   function buildAddedHtml(kind, html) {
-    html = cleanEditorHtml(html || '');
-    if (kind === 'heading') return /^<h[1-6][\s>]/i.test(html) ? html : '<h2>' + esc(html.replace(/<[^>]*>/g, '')) + '</h2>';
-    if (kind === 'card') return /class=["'][^"']*\bcard\b/.test(html) ? html : '<article class="card">' + html + '</article>';
-    if (kind === 'html') return html;
-    return /^<p[\s>]/i.test(html) ? html : '<p>' + esc(html.replace(/<[^>]*>/g, '')) + '</p>';
+    html = String(html || '').trim();
+    if (kind === 'heading') return '<h2>' + esc(html) + '</h2>';
+    if (kind === 'card') return '<article class="card"><p>' + esc(html) + '</p></article>';
+    return '<p>' + esc(html) + '</p>';
+  }
+
+  function isSimpleTextNode(node) {
+    if (!node || !node.matches) return false;
+    if (node.matches('h1,h2,h3,h4,h5,h6,p,li,th,td,span,strong,em,figcaption')) {
+      return !node.querySelector('img,svg,video,iframe,table,ul,ol,dl,form,input,textarea,select,button');
+    }
+    return false;
   }
 
   function isDetailMetaNode(node) {
@@ -1625,11 +1655,31 @@
   }
 
   function blockFieldsFromNode(node) {
+    if (isStatBlockNode(node)) {
+      return {
+        value: cleanNodeText(node.querySelector('strong,.struct-stat__num,.nnt-stat-value,.nnt-stat strong,.council-stat__num,.hero-stat-num') || node),
+        label: cleanNodeText(node.querySelector('span,.struct-stat__label,.nnt-stat-label,.council-stat__label,.hero-stat-label') || '')
+      };
+    }
+    if (node && node.matches && node.matches('.vazifa-card')) {
+      return {
+        number: cleanNodeText(node.querySelector('.vazifa-num') || ''),
+        title: cleanNodeText(node.querySelector('h3') || ''),
+        body: cleanNodeText(node.querySelector('p') || node)
+      };
+    }
+    if (node && node.matches && node.matches('.criterion-card')) {
+      return {
+        title: cleanNodeText(node.querySelector('h3') || ''),
+        body: cleanNodeText(node.querySelector('p') || node),
+        max_score: cleanNodeText(node.querySelector('.criterion-max') || '')
+      };
+    }
     var title = node.querySelector('h1,h2,h3,h4,strong,.struct-stat__num,.nnt-stat-value,.nnt-stat strong,.council-stat__num,.hero-stat-num,.kpi strong');
     var body = node.querySelector('p,.struct-stat__label,.nnt-stat-label,.nnt-stat span,.council-stat__label,.hero-stat-label,.kpi span');
-    if (node.matches('tr,.doc-row')) return { title: '', body: cleanNodeHtml(node) };
+    if (node.matches('tr,.doc-row')) return { title: '', body: cleanNodeText(node) };
     if (title || body) return { title: title ? cleanNodeText(title) : '', body: body ? cleanNodeText(body) : cleanNodeText(node) };
-    return { title: '', body: cleanNodeHtml(node) };
+    return { title: '', body: cleanNodeText(node) };
   }
 
   function buildSimpleStatHtml(data) {
@@ -1643,20 +1693,107 @@
   }
 
   function buildSimpleRowHtml(data, target) {
-    var html = cleanEditorHtml(data.html || '<span>Yangi qator</span>');
-    if (target && target.tagName === 'TBODY') return '<tr>' + (/<t[dh][\s>]/i.test(html) ? html : '<td>' + html + '</td>') + '</tr>';
-    return '<div class="doc-row">' + html + '</div>';
+    if (target && target.tagName === 'TBODY') return '<tr>' + buildSimpleTableRowInnerHtml(data) + '</tr>';
+    return '<div class="doc-row">' + buildSimpleDocRowInnerHtml(data) + '</div>';
+  }
+
+  function buildSimpleRowInnerHtml(data, node) {
+    if (node && node.tagName === 'TR') return buildSimpleTableRowInnerHtml(data);
+    if (node && node.classList && node.classList.contains('doc-row')) return buildSimpleDocRowInnerHtml(data);
+    return buildSimpleDocRowInnerHtml(data);
+  }
+
+  function buildSimpleTableRowInnerHtml(data) {
+    return simpleRowValues(data).map(function (value) {
+      return '<td>' + esc(value) + '</td>';
+    }).join('');
+  }
+
+  function buildSimpleDocRowInnerHtml(data) {
+    var cols = simpleRowValues(data);
+    if (!cols.length) cols = [''];
+    var href = String(data.link_href || '').trim();
+    return cols.map(function (value, index) {
+      if (index === 0 && href) {
+        return '<a href="' + escAttr(href) + '" style="color:#0e7490;text-decoration:underline;font-weight:600">' + esc(value) + '</a>';
+      }
+      return '<span>' + esc(value) + '</span>';
+    }).join('');
+  }
+
+  function simpleRowValues(data) {
+    var out = [];
+    for (var i = 1; i <= 6; i++) {
+      var value = String(data['col_' + i] || '').trim();
+      if (value || out.length) out.push(value);
+    }
+    while (out.length && !out[out.length - 1]) out.pop();
+    return out;
+  }
+
+  function simpleRowFromNode(node) {
+    var cells = node && node.classList && node.classList.contains('doc-row')
+      ? Array.prototype.slice.call(node.children || [])
+      : rowCells(node);
+    var out = { link_href: '' };
+    cells.slice(0, 6).forEach(function (cell, index) {
+      out['col_' + (index + 1)] = cleanNodeText(cell);
+    });
+    var link = node ? node.querySelector('a[href]') : null;
+    if (link) out.link_href = link.getAttribute('href') || '';
+    return out;
   }
 
   function buildSimpleCardHtml(data) {
     return '<article class="card">' + buildSimpleBlockInnerHtml(data) + '</article>';
   }
 
-  function buildSimpleBlockInnerHtml(data) {
+  function buildSimpleBlockInnerHtml(data, node) {
+    if (isStatBlockNode(node)) return buildStatBlockInnerHtml(data, node);
+    if (node && node.matches && node.matches('.vazifa-card')) return buildVazifaCardInnerHtml(data);
+    if (node && node.matches && node.matches('.criterion-card')) return buildCriterionCardInnerHtml(data, node);
     var title = String(data.title || '').trim();
     var body = String(data.body || '').trim();
-    if (/<[a-z][\s\S]*>/i.test(body)) return (title ? '<h3>' + esc(title) + '</h3>' : '') + cleanEditorHtml(body);
     return (title ? '<h3>' + esc(title) + '</h3>' : '') + '<p>' + esc(body) + '</p>';
+  }
+
+  function isStatBlockNode(node) {
+    return !!(node && node.matches && node.matches('.kpi,.struct-stat,.council-stat,.hero-stat,.nnt-stat,.nnt-stat-box'));
+  }
+
+  function isLegalArticleNode(node) {
+    return !!(node && node.matches && node.matches('article.card[data-i18n-html^="pages.maxfiylikSiyosati"],article.card[data-i18n-html^="pages.foydalanishShartlari"]'));
+  }
+
+  function buildStatBlockInnerHtml(data, node) {
+    var value = esc(data.value || '');
+    var label = esc(data.label || '');
+    if (node && node.matches && node.matches('.struct-stat')) return '<span class="struct-stat__num">' + value + '</span><span class="struct-stat__label">' + label + '</span>';
+    if (node && node.matches && node.matches('.council-stat')) return '<span class="council-stat__num">' + value + '</span><span class="council-stat__label">' + label + '</span>';
+    if (node && node.matches && node.matches('.hero-stat')) return '<span class="hero-stat-num">' + value + '</span><span class="hero-stat-label">' + label + '</span>';
+    if (node && node.matches && node.matches('.nnt-stat,.nnt-stat-box')) return '<strong>' + value + '</strong><span>' + label + '</span>';
+    return '<strong>' + value + '</strong><span>' + label + '</span>';
+  }
+
+  function buildVazifaCardInnerHtml(data) {
+    var number = String(data.number || '').trim();
+    var title = String(data.title || '').trim();
+    var body = String(data.body || '').trim();
+    return (number ? '<div class="vazifa-num">' + esc(number) + '</div>' : '') +
+      '<div class="vazifa-body">' +
+      (title ? '<h3>' + esc(title) + '</h3>' : '') +
+      '<p>' + esc(body) + '</p></div>';
+  }
+
+  function buildCriterionCardInnerHtml(data, node) {
+    var title = String(data.title || '').trim();
+    var body = String(data.body || '').trim();
+    var max = String(data.max_score || '').trim();
+    var icon = node ? node.querySelector('.criterion-icon') : null;
+    return (icon ? cleanEditorHtml(icon.outerHTML) : '') +
+      (title ? '<h3>' + esc(title) + '</h3>' : '') +
+      '<p>' + esc(body) + '</p>' +
+      (max ? '<span class="criterion-max">' + esc(max) + '</span>' : '');
   }
 
   function top500RowFromNode(node) {
