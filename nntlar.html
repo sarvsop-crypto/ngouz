@@ -325,6 +325,15 @@
     text-transform: uppercase;
     letter-spacing: .04em;
   }
+  /* Mission text can be long — clamp to keep cards uniform; full text on hover. */
+  .nnt-row-mission span:last-child {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    color: #4b5563;
+    font-size: 14px;
+  }
 
   /* ── Card footer ── */
   .nnt-card-footer {
@@ -660,7 +669,10 @@ loadAllOrgs(function(orgs, ok, total) {
     NNT_DATA[regionName].push({
       id: o.id || '',
       nom: o.name, rahbar: o.leader_name || '', manzil: o.address || '',
-      shakl: '', soha: o.soha || '', royxat: o.registered_at || '', azo: o.member_since || ''
+      shakl: o.ngo_form || '', huquqiy: o.legal_form || '', soha: o.soha || '',
+      tugilgan: o.leader_birth_date || '', tel: o.leader_phone || '', maqsad: o.mission || '',
+      royxat: o.registered_at || '', azo: o.member_since || '',
+      guvohnoma: o.membership_cert || '', cert: o.cert_number || ''
     });
   });
   // Sort each region's NNTs alphabetically — public visitors browsing
@@ -911,9 +923,12 @@ function render() {
           '</div>' +
         '</div>' +
         '<div class="nnt-card-body">' +
-          '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblLeader', 'Rahbar') + '</span><span>' + esc(nnt.rahbar) + '</span></div>' +
+          '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblLeader', 'Rahbar') + '</span><span>' + esc(nnt.rahbar) + (nnt.tugilgan ? ' <small style="color:#64748b">(' + esc(String(nnt.tugilgan).slice(0, 4)) + ')</small>' : '') +'</span></div>' +
+          (nnt.tel ? '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblPhone', 'Telefon') + '</span><span>' + esc(nnt.tel) + '</span></div>' : '') +
           '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblAddress', 'Manzil') + '</span><span>' + esc(nnt.manzil) + '</span></div>' +
           (nnt.shakl ? '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblForm', 'Shakl') + '</span><span>' + esc(nnt.shakl) + '</span></div>' : '') +
+          (nnt.huquqiy ? '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblLegalForm', 'Tashkiliy-huquqiy shakl') + '</span><span>' + esc(nnt.huquqiy) + '</span></div>' : '') +
+          (nnt.maqsad ? '<div class="nnt-row nnt-row-mission"><span class="nnt-row-label">' + tt('pages.nntlar.lblMission', 'Maqsad va vazifalari') + '</span><span>' + esc(nnt.maqsad) + '</span></div>' : '') +
         '</div>' +
         '<div class="nnt-card-footer">' +
           '<div class="nnt-footer-item">' +
@@ -924,6 +939,10 @@ function render() {
             '<span>' + tt('pages.nntlar.lblMember', "A'zo bo'lgan") + '</span>' +
             '<strong>' + esc(azoParts[0]) + (azoParts[1] ? ' · ' + esc(azoParts[1]) : '') + '</strong>' +
           '</div>' +
+          (nnt.guvohnoma ? '<div class="nnt-footer-item">' +
+            '<span>' + tt('pages.nntlar.lblCert', 'Guvohnoma') + '</span>' +
+            '<strong>' + esc(nnt.guvohnoma) + '</strong>' +
+          '</div>' : '') +
         '</div>' +
       '</div>'
     );
