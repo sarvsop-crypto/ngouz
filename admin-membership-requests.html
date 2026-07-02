@@ -318,13 +318,22 @@
       }
     }
     window.approveApp = function (id, currentOrgId) {
-      var orgIdStr = prompt('Tashkilot ID raqamini kiriting yoki tasdiqlang:', currentOrgId || '');
-      if (orgIdStr === null) return;
-      var orgId = parseInt(orgIdStr, 10) || null;
+      var orgId = parseInt(currentOrgId, 10) || null;
+      if (!orgId) {
+        var orgIdStr = prompt('Tashkilot ID raqamini kiriting yoki tasdiqlang:', currentOrgId || '');
+        if (orgIdStr === null) return;
+        orgId = parseInt(orgIdStr, 10) || null;
+      }
       if (!orgId) { toast('Tashkilot ID raqami kerak. NNT ro\'yxatidan toping.', 'error'); return; }
       setRowsBusy(true);
       NgoApi.patch('/admin/membership-requests/' + id, { status: 'accepted', organization_id: orgId })
-        .then(function () { toast('A’zolikka qabul qilindi. Raqamlar avtomatik shakllantirildi.', 'success'); reload(); })
+        .then(function (res) {
+          if (res && res.credentials && res.credentials.password) {
+            alert('Kabinet login maʼlumotlari\\n\\nTelefon: ' + res.credentials.phone + '\\nParol: ' + res.credentials.password + '\\n\\nParol faqat hozir ko‘rsatiladi. Uni ariza beruvchiga yuboring.');
+          }
+          toast('A’zolikka qabul qilindi. Login maʼlumotlari tayyorlandi.', 'success');
+          reload();
+        })
         .catch(function (err) { setRowsBusy(false); toast('Tasdiqlashda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); });
     };
     window.advanceApp = function (id) {
