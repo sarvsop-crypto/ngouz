@@ -689,7 +689,7 @@
               e.stopPropagation();
               var itemIndex = blobItemsOf(grid, spec).indexOf(item);
               if (itemIndex < 0) return;
-              if (e.target.hasAttribute('data-va-blob-delete')) runBlobDelete({ key: key, spec: spec, gridIndex: gridIndex, itemIndex: itemIndex });
+              if (e.target.hasAttribute('data-va-blob-delete')) openBlobEditor({ key: key, spec: spec, gridIndex: gridIndex, itemIndex: itemIndex, action: 'delete' });
               else openBlobEditor({ key: key, spec: spec, gridIndex: gridIndex, itemIndex: itemIndex, action: 'edit' });
             });
             attachControls(item, controls);
@@ -761,15 +761,23 @@
     state.editing = null;
     state.visualTarget = null;
     state.blobEditing = { key: ctx.key, spec: ctx.spec, gridIndex: ctx.gridIndex, itemIndex: ctx.itemIndex, action: ctx.action, orig: null };
-    els.editorTitle.textContent = ctx.action === 'add' ? "Yangi karta" : 'Kartani tahrirlash';
+    var isDelete = ctx.action === 'delete';
+    els.editorTitle.textContent = ctx.action === 'add' ? "Yangi karta" : isDelete ? "Kartani o'chirish" : 'Kartani tahrirlash';
     els.editorKicker.textContent = 'Sahifa kontenti';
     els.form.dataset.mode = 'i18n-blob';
-    els.deleteBtn.style.display = 'none';
-    els.saveBtn.style.display = '';
+    els.deleteBtn.style.display = isDelete ? '' : 'none';
+    els.deleteBtn.textContent = "O'chirish";
+    els.saveBtn.style.display = isDelete ? 'none' : '';
     setError(els.editorError, '');
     els.modal.classList.add('is-open');
     els.modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    if (isDelete) {
+      // In-editor confirm (no native confirm() — it blocks and is fragile);
+      // the red "O'chirish" button in the footer triggers onDelete → performBlobDelete.
+      els.fields.innerHTML = '<div class="va-delete-confirm va-field--wide"><strong>Bu kartani o\'chirishni tasdiqlaysizmi?</strong><p>Karta uch tilda (UZ/RU/EN) o\'chiriladi.</p></div>';
+      return;
+    }
     if (ctx.action === 'add') {
       els.fields.innerHTML = blobFieldsHtml(ctx.spec, { text: {}, attr: {} });
       return;
@@ -894,8 +902,11 @@
     }).then(function () { lock(btn, false); });
   }
 
-  function runBlobDelete(ctx) {
-    if (!confirm("Bu kartani o'chirishni tasdiqlaysizmi?")) return;
+  // Triggered from the in-editor delete modal (onDelete → here), not native confirm().
+  function performBlobDelete(ctx) {
+    if (!ctx || !ctx.spec) return;
+    var btn = els.deleteBtn;
+    lock(btn, true, "O'chirilmoqda...");
     loadBlobLangs(ctx.key).then(function (blobs) {
       var payloads = {};
       var abort = null;
@@ -913,15 +924,16 @@
         if (String(html).trim().length < 20) { abort = 'bosh_natija:' + lang; return; }
         payloads[lang] = html;
       });
-      if (abort === 'oxirgi_karta') { toast("Kamida bitta karta qolishi kerak"); return null; }
+      if (abort === 'oxirgi_karta') { setError(els.editorError, "Kamida bitta karta qolishi kerak."); return null; }
       if (abort) throw new Error(abort);
       return Promise.all(I18N_LANGS.map(function (lang) { return saveI18nLang(ctx.key, lang, payloads[lang]); })).then(function () {
         toast("O'chirildi");
+        closeEditor();
         reloadSite();
       });
     }).catch(function (err) {
-      toast("O'chirishda xatolik: " + message(err));
-    });
+      setError(els.editorError, "O'chirishda xatolik: " + message(err));
+    }).then(function () { lock(btn, false); });
   }
 
   // Strip visual-admin chrome from a cloned node before it goes into a stored
@@ -2554,6 +2566,10 @@
   }
 
   function onDelete() {
+    if (state.editingType === I18N_BLOB_TYPE) {
+      performBlobDelete(state.blobEditing);
+      return;
+    }
     if (state.editingType === VISUAL_TYPE) {
       if (!state.visualTarget) return;
       if (!confirm('Bu blokni o\'chirishni tasdiqlaysizmi?')) return;
