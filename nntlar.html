@@ -237,96 +237,114 @@
   /* ── Cards grid ── */
   .nnt-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(min(390px, 100%), 1fr));
+    gap: 16px;
   }
 
   /* ── Single card ── */
   .nnt-card {
     background: #fff;
-    border: 1px solid #dde8e2;
-    border-radius: 14px;
+    border: 1px solid #d8e5df;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(2, 51, 71, .05);
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100%;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    transition: box-shadow .2s, transform .2s;
+    transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease;
   }
-  .nnt-card:hover { border-color: #0e7490; }
+  .nnt-card:hover {
+    border-color: #0e7490;
+    box-shadow: 0 10px 24px rgba(2, 51, 71, .11);
+    transform: translateY(-2px);
+  }
   .nnt-card-header {
-    padding: 18px 20px 14px;
+    padding: 16px 18px 12px;
     display: flex;
-    gap: 14px;
+    gap: 12px;
     align-items: flex-start;
+    border-bottom: 1px solid #edf3f1;
   }
   .nnt-avatar {
-    width: 50px; height: 50px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #023347 0%, #0e7490 100%);
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    background: #023347;
     color: #fff;
     display: flex; align-items: center; justify-content: center;
-    font-size: 18px; font-weight: 700;
+    font-size: 15px; font-weight: 700;
     flex-shrink: 0;
     font-family: Montserrat, sans-serif;
-    letter-spacing: .03em;
   }
   .nnt-card-meta { flex: 1; min-width: 0; }
   .nnt-card-name {
-    font-size: 16px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 700;
     color: #1e2229;
-    line-height: 1.45;
-    margin: 0 0 8px;
+    line-height: 1.4;
+    margin: 0 0 10px;
+    overflow-wrap: anywhere;
   }
-  .nnt-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .nnt-tags { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
   .nnt-field-tag {
-    display: inline-block;
-    font-size: 13px; font-weight: 600;
-    padding: 4px 12px;
-    border-radius: 20px;
-    background: #e2f0e9;
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    font-size: 12px; font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: #e8f3ee;
     color: #255f40;
   }
   .nnt-region-tag {
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    font-size: 13px;
-    font-weight: 600;
-    color: #023347;
-    background: #e0f0f7;
-    padding: 4px 12px;
-    border-radius: 20px;
+    gap: 5px;
+    min-height: 24px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #0e5f75;
+    background: #e7f5f8;
+    padding: 3px 9px;
+    border-radius: 999px;
   }
 
   /* ── Card body rows ── */
   .nnt-card-body {
-    padding: 14px 20px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 11px;
-    border-top: 1px solid #eef3f1;
+    padding: 12px 18px 14px;
+    display: grid;
+    gap: 9px;
+    align-content: start;
   }
   .nnt-row {
-    display: flex;
-    gap: 10px;
-    font-size: 15px;
+    display: grid;
+    grid-template-columns: 116px minmax(0, 1fr);
+    gap: 12px;
+    font-size: 14px;
     color: #374151;
-    align-items: flex-start;
-    line-height: 1.45;
+    align-items: start;
+    line-height: 1.5;
+    min-width: 0;
   }
   .nnt-row-label {
-    color: #9ca3af;
-    font-size: 13px;
-    font-weight: 600;
-    min-width: 70px;
-    flex-shrink: 0;
-    padding-top: 1px;
+    color: #587585;
+    font-size: 11px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: .04em;
+  }
+  .nnt-row-value {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+  .nnt-row-value small {
+    color: #64748b;
+    font-weight: 600;
+  }
+  .nnt-row-strong .nnt-row-value {
+    color: #10232f;
+    font-weight: 600;
   }
   /* Mission text can be long — clamp to keep cards uniform; full text on hover. */
-  .nnt-row-mission span:last-child {
+  .nnt-row-mission .nnt-row-value {
     display: -webkit-box;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
@@ -337,31 +355,30 @@
 
   /* ── Card footer ── */
   .nnt-card-footer {
-    padding: 13px 20px;
-    background: #f8fbf9;
-    border-top: 1px solid #eef3f1;
-    display: flex;
-    gap: 0;
-    flex-wrap: wrap;
+    padding: 10px 12px;
+    background: #f7faf9;
+    border-top: 1px solid #e9f1ee;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
   }
   .nnt-footer-item {
-    font-size: 13px;
+    min-width: 0;
+    padding: 8px 10px;
+    border: 1px solid #e1ece8;
+    border-radius: 6px;
+    background: #fff;
+    font-size: 12px;
     color: #587585;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    flex: 1;
-    min-width: 120px;
-  }
-  .nnt-footer-item + .nnt-footer-item {
-    border-left: 1px solid #dde8e2;
-    padding-left: 14px;
-    margin-left: 14px;
+    display: grid;
+    gap: 4px;
   }
   .nnt-footer-item strong {
-    font-size: 14px;
+    font-size: 13px;
     color: #374151;
-    font-weight: 600;
+    font-weight: 700;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
   }
 
   /* ── Empty ── */
@@ -400,6 +417,10 @@
   @media(max-width:600px) {
     .nnt-stats { grid-template-columns: repeat(2,1fr); }
     .nnt-cards { grid-template-columns: 1fr; }
+    .nnt-card-header { padding: 14px; }
+    .nnt-card-body { padding: 12px 14px; }
+    .nnt-row { grid-template-columns: 1fr; gap: 3px; }
+    .nnt-card-footer { grid-template-columns: 1fr; }
   }
 </style>
 <script src="js/errlog.js" defer></script>
@@ -923,12 +944,12 @@ function render() {
           '</div>' +
         '</div>' +
         '<div class="nnt-card-body">' +
-          '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblLeader', 'Rahbar') + '</span><span>' + esc(nnt.rahbar) + (nnt.tugilgan ? ' <small style="color:#64748b">(' + esc(String(nnt.tugilgan).slice(0, 4)) + ')</small>' : '') +'</span></div>' +
-          (nnt.tel ? '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblPhone', 'Telefon') + '</span><span>' + esc(nnt.tel) + '</span></div>' : '') +
-          '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblAddress', 'Manzil') + '</span><span>' + esc(nnt.manzil) + '</span></div>' +
-          (nnt.shakl ? '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblForm', 'Shakl') + '</span><span>' + esc(nnt.shakl) + '</span></div>' : '') +
-          (nnt.huquqiy ? '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblLegalForm', 'Tashkiliy-huquqiy shakl') + '</span><span>' + esc(nnt.huquqiy) + '</span></div>' : '') +
-          (nnt.maqsad ? '<div class="nnt-row nnt-row-mission"><span class="nnt-row-label">' + tt('pages.nntlar.lblMission', 'Maqsad va vazifalari') + '</span><span>' + esc(nnt.maqsad) + '</span></div>' : '') +
+          '<div class="nnt-row nnt-row-strong"><span class="nnt-row-label">' + tt('pages.nntlar.lblLeader', 'Rahbar') + '</span><span class="nnt-row-value">' + esc(nnt.rahbar) + (nnt.tugilgan ? ' <small>(' + esc(String(nnt.tugilgan).slice(0, 4)) + ')</small>' : '') +'</span></div>' +
+          (nnt.tel ? '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblPhone', 'Telefon') + '</span><span class="nnt-row-value">' + esc(nnt.tel) + '</span></div>' : '') +
+          '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblAddress', 'Manzil') + '</span><span class="nnt-row-value">' + esc(nnt.manzil) + '</span></div>' +
+          (nnt.shakl ? '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblForm', 'Shakl') + '</span><span class="nnt-row-value">' + esc(nnt.shakl) + '</span></div>' : '') +
+          (nnt.huquqiy ? '<div class="nnt-row"><span class="nnt-row-label">' + tt('pages.nntlar.lblLegalForm', 'Tashkiliy-huquqiy shakl') + '</span><span class="nnt-row-value">' + esc(nnt.huquqiy) + '</span></div>' : '') +
+          (nnt.maqsad ? '<div class="nnt-row nnt-row-mission"><span class="nnt-row-label">' + tt('pages.nntlar.lblMission', 'Maqsad va vazifalari') + '</span><span class="nnt-row-value">' + esc(nnt.maqsad) + '</span></div>' : '') +
         '</div>' +
         '<div class="nnt-card-footer">' +
           '<div class="nnt-footer-item">' +
