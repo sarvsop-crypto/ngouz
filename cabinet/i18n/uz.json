@@ -686,7 +686,7 @@
       "oneIdComingSoon": "ONE ID tez orada",
       "signInVia": "orqali kirish",
       "noAccount": "Hisobingiz yo'qmi?",
-      "registerOrg": "Tashkilotni ro'yxatdan o'tkazish"
+      "registerOrg": "Kabinetga kirish so'rovi"
     },
     "loginhistory": {
       "title": "Tizimga kirish tarixi",
@@ -800,26 +800,6 @@
       "description": "Siz qidirgan sahifa olib tashlangan, ko'chirilgan yoki hech qachon mavjud bo'lmagan.",
       "goHome": "Bosh sahifaga qaytish",
       "previousPage": "Oldingi sahifa"
-    },
-    "onboarding": {
-      "skip": "O'tkazib yuborish",
-      "start": "Boshlash",
-      "next": "Keyingi",
-      "slide1": {
-        "eyebrow": "AI Grant qidiruv",
-        "title": "Sizga moslashgan grantlarni toping",
-        "body": "Tashkilot profilingiz asosida AI sun'iy intellekti UN, USAID, EU va boshqa donor manbalardan eng mos grantlarni topadi."
-      },
-      "slide2": {
-        "eyebrow": "Hisobotlar",
-        "title": "Hisobotlar bir necha qadamda",
-        "body": "Choraklik va yillik hisobotlarni mobil qurilmadan to'ldiring, hujjatlarni biriktiring va vaziyatni real vaqtda kuzating."
-      },
-      "slide3": {
-        "eyebrow": "Tadbirlar",
-        "title": "Forumlar, treninglar va networking",
-        "body": "Mintaqaviy va xalqaro tadbirlardan xabardor bo'ling, ro'yxatdan o'ting va boshqa NNTlar bilan tanishing."
-      }
     },
     "organization": {
       "title": "Tashkilot",
@@ -1227,15 +1207,10 @@
       "afterApproval": "Tasdiqdan keyin",
       "afterApprovalDesc": "Hududiy administrator soʻrovni tasdiqlasa, siz uchun kuchli vaqtinchalik parol yaratiladi.",
       "signIn": "Tizimga kirish",
-      "stepCounter": "{{current}} / 3 qadam",
       "titleIdentity": "Kabinetga kirish soʻrovi",
       "titleJoinOrg": "Tashkilotga qoʻshilish",
-      "titleVerifyOrg": "Tashkilotni tekshirish",
-      "titleReview": "Arizani tasdiqlang",
       "subtitleIdentity": "Ism, telefon raqami va tashkilot nomini kiriting. Tashkilotni reyestrdagi roʻyxatdan tanlang.",
       "subtitleInvite": "Sizni {{organization}} tashkilotiga taklif qilishgan.",
-      "subtitleVerifyOrg": "Tashkilot nomini yozing va NNT reyestridan aniq tashkilotni tanlang.",
-      "subtitleReview": "Maʼlumotlar toʻgʻri boʻlsa, arizani yuboring.",
       "fullNameLabel": "Toʻliq ism",
       "fullNamePlaceholder": "Ismingiz va familiyangiz",
       "phoneLabel": "Telefon raqam",
