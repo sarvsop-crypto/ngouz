@@ -22,12 +22,13 @@
   <script src="js/errlog.js" defer></script>
   <script src="js/i18n.js" defer></script>
   <style>
-    .commission-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(340px, .8fr); gap: 16px; margin-top: 18px; }
-    .protocol-layout { display: grid; grid-template-columns: 280px minmax(0, 1fr) 300px; gap: 16px; margin-top: 18px; }
-    .protocol-panel { background: var(--grey-0); border: 1px solid var(--grey-100); border-radius: 10px; overflow: hidden; }
+    .commission-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(340px, .85fr); gap: 16px; margin-top: 18px; }
+    .protocol-layout { display: grid; grid-template-columns: minmax(340px, 420px) minmax(0, 1fr); gap: 16px; margin-top: 18px; align-items: start; }
+    .protocol-layout > .protocol-panel:last-child { grid-column: 1 / -1; }
+    .protocol-panel { min-width: 0; background: var(--grey-0); border: 1px solid var(--grey-100); border-radius: 10px; overflow: hidden; }
     .protocol-panel__head { padding: 16px 18px; border-bottom: 1px solid var(--grey-100); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .protocol-panel__head h2, .protocol-panel__head h3 { margin: 0; font-size: 18px; color: var(--grey-900); }
-    .protocol-panel__body { padding: 18px; }
+    .protocol-panel__body { min-width: 0; padding: 18px; }
     .meta-list { display: grid; gap: 12px; }
     .meta-list div { display: grid; gap: 3px; }
     .meta-list span { font-size: 12px; color: var(--grey-500); font-weight: 700; text-transform: uppercase; }
@@ -46,10 +47,10 @@
     .sign-item { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; }
     .sign-actions { display: grid; gap: 10px; margin-top: 14px; }
     .workflow-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-    .candidate-tools { display: grid; gap: 10px; margin-top: 14px; }
-    .candidate-search { display: flex; gap: 8px; }
-    .candidate-search input, .protocol-form input { min-height: 40px; border: 1px solid var(--grey-200); border-radius: 8px; padding: 8px 10px; font: inherit; }
-    .candidate-search input { flex: 1; min-width: 0; }
+    .candidate-tools { min-width: 0; display: grid; gap: 10px; margin-top: 14px; }
+    .candidate-search { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+    .candidate-search input, .protocol-form input { box-sizing: border-box; width: 100%; min-width: 0; min-height: 40px; border: 1px solid var(--grey-200); border-radius: 8px; padding: 8px 10px; font: inherit; }
+    .candidate-tools .btn { width: 100%; min-width: 0; white-space: normal; }
     .candidate-results { max-height: 280px; overflow: auto; border: 1px solid var(--grey-100); border-radius: 10px; background: #fff; }
     .candidate-option { display: grid; grid-template-columns: auto 1fr; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--grey-100); align-items: start; }
     .candidate-option:last-child { border-bottom: 0; }
@@ -83,7 +84,10 @@
     .commission-modal { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(15, 23, 42, .45); }
     .commission-modal[aria-hidden="false"] { display: flex; }
     .verify-card { margin-top: 18px; background: #f7fbff; border: 1px solid #d7e7f7; border-radius: 10px; padding: 16px; }
-    @media (max-width: 1180px) { .commission-grid, .protocol-layout { grid-template-columns: 1fr; } }
+    @media (max-width: 1180px) {
+      .commission-grid, .protocol-layout { grid-template-columns: 1fr; }
+      .protocol-layout > .protocol-panel:last-child { grid-column: auto; }
+    }
     @media (max-width: 640px) {
       .protocol-card__top { display: grid; }
       .protocol-card__meta { grid-template-columns: 1fr; }
@@ -249,11 +253,11 @@
   </form>
 </div>
 <script src="js/pacta-foundation.js"></script>
-<script src="js/api-client.js?v=20260706designfix"></script>
+<script src="js/api-client.js?v=20260706commissionlayout"></script>
 <script>
   window.NGO_ADMIN_AUTH = { allowedRoles: ['super_admin', 'commission'] };
 </script>
-<script src="js/admin-boot.js?v=20260706designfix" defer></script>
+<script src="js/admin-boot.js?v=20260706commissionlayout" defer></script>
 <script src="js/pacta-app.js"></script>
 <script>
 (function () {
