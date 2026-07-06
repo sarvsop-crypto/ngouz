@@ -39,6 +39,17 @@
     .vote-counts span { padding: 3px 7px; border-radius: 6px; background: var(--grey-25); color: var(--grey-500); font-size: 12px; font-weight: 700; }
     .sign-list { display: grid; gap: 10px; margin-top: 12px; }
     .sign-item { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; }
+    .sign-actions { display: grid; gap: 10px; margin-top: 14px; }
+    .signature-modal { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(15, 23, 42, .45); }
+    .signature-modal[aria-hidden="false"] { display: flex; }
+    .signature-card { width: min(680px, 100%); background: #fff; border-radius: 10px; box-shadow: 0 24px 80px rgba(0,0,0,.24); overflow: hidden; }
+    .signature-card__head, .signature-card__foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--grey-100); }
+    .signature-card__foot { border-top: 1px solid var(--grey-100); border-bottom: 0; }
+    .signature-card__head h2 { margin: 0; font-size: 18px; }
+    .signature-card__body { padding: 18px; display: grid; gap: 12px; }
+    .signature-canvas-wrap { border: 1px solid var(--grey-200); border-radius: 10px; background: #fff; overflow: hidden; touch-action: none; }
+    #signatureCanvas { display: block; width: 100%; height: 220px; cursor: crosshair; }
+    .signature-hint { margin: 0; color: var(--grey-500); font-size: 13px; line-height: 1.5; }
     .verify-card { margin-top: 18px; background: #f7fbff; border: 1px solid #d7e7f7; border-radius: 10px; padding: 16px; }
     @media (max-width: 1180px) { .commission-grid, .protocol-layout { grid-template-columns: 1fr; } }
   </style>
@@ -109,6 +120,10 @@
             <div class="sign-item"><span>Kotib</span><strong>Kutilmoqda</strong></div>
             <div class="sign-item"><span>A’zolar</span><strong>Kutilmoqda</strong></div>
           </div>
+          <div class="sign-actions">
+            <button type="button" class="btn btn--primary" id="manualSignBtn" disabled><i class="ph ph-signature" aria-hidden="true"></i> Qo'lda imzolash</button>
+            <span class="text-dim" id="manualSignHint">Imzolash uchun signing holatidagi protokolni tanlang.</span>
+          </div>
           <div class="verify-card"><strong>Public verification</strong><br><span>QR sahifada Valid / Invalid, protokol raqami, komissiya, sana, imzolaganlar va vaqt ko‘rsatiladi.</span></div>
         </div>
       </section>
@@ -138,6 +153,28 @@
     </section>
   </main>
 </div>
+<div class="signature-modal" id="signatureModal" aria-hidden="true">
+  <form class="signature-card" id="signatureForm" role="dialog" aria-modal="true" aria-labelledby="signatureTitle">
+    <div class="signature-card__head">
+      <h2 id="signatureTitle">Protokolni qo'lda imzolash</h2>
+      <button type="button" class="btn btn--secondary btn--sm" id="signatureClose" aria-label="Yopish">×</button>
+    </div>
+    <div class="signature-card__body">
+      <p class="signature-hint" id="signatureProtocolText">Tanlangan protokol: —</p>
+      <div class="signature-canvas-wrap">
+        <canvas id="signatureCanvas" width="900" height="300"></canvas>
+      </div>
+      <p class="signature-hint">Sichqoncha yoki telefon ekrani orqali imzo chizing. Saqlanganda imzo rasmi protokol imzosi sifatida yoziladi.</p>
+      <p class="va-error" id="signatureError" role="alert" style="color:var(--error-600);margin:0;"></p>
+    </div>
+    <div class="signature-card__foot">
+      <button type="button" class="btn btn--secondary" id="signatureClear">Tozalash</button>
+      <span></span>
+      <button type="button" class="btn btn--secondary" id="signatureCancel">Bekor qilish</button>
+      <button type="submit" class="btn btn--primary" id="signatureSubmit">Imzolash</button>
+    </div>
+  </form>
+</div>
 <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
 <script src="js/pacta-foundation.js"></script>
 <script src="js/api-client.js"></script>
@@ -147,8 +184,12 @@
 (function () {
   var protocols = [];
   var selectedId = null;
+  var selectedProtocol = null;
+  var signData = null;
+  var hasSignatureStroke = false;
   function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
   function setText(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
+  function toast(msg) { var el = document.getElementById('cmsToast'); if (!el) return; el.textContent = msg; el.className = 'cms-toast show'; setTimeout(function () { el.classList.remove('show'); }, 3500); }
   function badge(status) {
     if (status === 'signed') return 'success';
     if (status === 'voting') return 'warning';
@@ -185,12 +226,36 @@
     setText('kpiReady', (byStatus.ready_to_sign || 0) + (byStatus.finalized || 0));
     setText('kpiSigned', byStatus.signed || 0);
   }
+  function renderSignState(data) {
+    signData = data || null;
+    var list = document.getElementById('signList');
+    var btn = document.getElementById('manualSignBtn');
+    var hint = document.getElementById('manualSignHint');
+    var myId = data && data.my_user_id;
+    var mine = null;
+    if (list && data && data.signers) {
+      data.signers.forEach(function (s) { if (parseInt(s.user_id, 10) === parseInt(myId, 10)) mine = s; });
+      list.innerHTML = data.signers.map(function (s) {
+        return '<div class="sign-item"><span>' + esc(s.name || 'Aʼzo') + ' <small class="text-dim">(' + esc(s.role || 'member') + ')</small></span><strong>' + (s.signed ? 'Imzolangan' : 'Kutilmoqda') + '</strong></div>';
+      }).join('');
+    }
+    var canSign = !!(selectedProtocol && selectedProtocol.status === 'signing' && mine && !mine.signed);
+    if (btn) btn.disabled = !canSign;
+    if (hint) {
+      hint.textContent = !selectedProtocol ? 'Imzolash uchun signing holatidagi protokolni tanlang.'
+        : selectedProtocol.status !== 'signing' ? 'Bu protokol hozir imzolash bosqichida emas.'
+        : mine && mine.signed ? 'Siz bu protokolni allaqachon imzolagansiz.'
+        : canSign ? 'Imzo chizib saqlashingiz mumkin.' : 'Komissiya aʼzosi holati aniqlanmadi.';
+    }
+  }
   window.selectProtocol = function (id) {
     selectedId = id;
     var p = protocols.find(function (x) { return parseInt(x.id, 10) === id; }) || {};
+    selectedProtocol = p;
     setText('selectedProtocol', p.number || ('#' + id));
     NgoApi.get('/commission/protocols/' + id).then(function (res) {
       var protocol = res.protocol || p;
+      selectedProtocol = protocol;
       var candidates = res.candidates || [];
       setText('selectedProtocol', protocol.number || ('#' + id));
       var votePanel = document.getElementById('votePanel');
@@ -199,7 +264,10 @@
           return '<div class="vote-row"><div><strong>' + esc(c.full_name || c.name || 'Nomzod') + '</strong><br><span class="text-dim">' + esc(c.organization_name || c.org_name || '') + '</span></div><div class="vote-counts"><span>Yoqladi ' + esc(c.yes_count || 0) + '</span><span>Qarshi ' + esc(c.no_count || 0) + '</span><span>Betaraf ' + esc(c.abstain_count || 0) + '</span></div></div>';
         }).join('') : '<div class="vote-row"><div><strong>Nomzod yo‘q</strong><br><span class="text-dim">Protokolga nomzod qo‘shing</span></div><div class="vote-counts"><span>0</span><span>0</span><span>0</span></div></div>';
       }
-    }).catch(function () {});
+      return NgoApi.get('/commission/protocols/' + id + '/sign-data');
+    }).then(renderSignState).catch(function () {
+      renderSignState(null);
+    });
   };
   function load() {
     Promise.all([
@@ -232,6 +300,60 @@
   });
   document.getElementById('newProtocolBtn').addEventListener('click', function () {
     alert('Yangi protokol formasi keyingi bosqichda ulanadi. API: POST /v1/commission/protocols');
+  });
+  var sigModal = document.getElementById('signatureModal');
+  var sigCanvas = document.getElementById('signatureCanvas');
+  var sigCtx = sigCanvas.getContext('2d');
+  function clearSignature() {
+    hasSignatureStroke = false;
+    sigCtx.clearRect(0, 0, sigCanvas.width, sigCanvas.height);
+    sigCtx.fillStyle = '#fff';
+    sigCtx.fillRect(0, 0, sigCanvas.width, sigCanvas.height);
+    sigCtx.strokeStyle = '#111827';
+    sigCtx.lineWidth = 4;
+    sigCtx.lineCap = 'round';
+    sigCtx.lineJoin = 'round';
+  }
+  function canvasPoint(ev) {
+    var rect = sigCanvas.getBoundingClientRect();
+    var p = ev.touches && ev.touches[0] ? ev.touches[0] : ev;
+    return { x: (p.clientX - rect.left) * (sigCanvas.width / rect.width), y: (p.clientY - rect.top) * (sigCanvas.height / rect.height) };
+  }
+  var drawing = false;
+  function startDraw(ev) { ev.preventDefault(); drawing = true; hasSignatureStroke = true; var p = canvasPoint(ev); sigCtx.beginPath(); sigCtx.moveTo(p.x, p.y); }
+  function draw(ev) { if (!drawing) return; ev.preventDefault(); var p = canvasPoint(ev); sigCtx.lineTo(p.x, p.y); sigCtx.stroke(); }
+  function endDraw(ev) { if (!drawing) return; ev.preventDefault(); drawing = false; }
+  sigCanvas.addEventListener('mousedown', startDraw);
+  sigCanvas.addEventListener('mousemove', draw);
+  sigCanvas.addEventListener('mouseup', endDraw);
+  sigCanvas.addEventListener('mouseleave', endDraw);
+  sigCanvas.addEventListener('touchstart', startDraw, { passive: false });
+  sigCanvas.addEventListener('touchmove', draw, { passive: false });
+  sigCanvas.addEventListener('touchend', endDraw, { passive: false });
+  function openSignature() {
+    if (!selectedId) return;
+    clearSignature();
+    setText('signatureProtocolText', 'Tanlangan protokol: ' + (selectedProtocol && selectedProtocol.number ? selectedProtocol.number : '#' + selectedId));
+    setText('signatureError', '');
+    sigModal.setAttribute('aria-hidden', 'false');
+  }
+  function closeSignature() { sigModal.setAttribute('aria-hidden', 'true'); }
+  document.getElementById('manualSignBtn').addEventListener('click', openSignature);
+  document.getElementById('signatureClose').addEventListener('click', closeSignature);
+  document.getElementById('signatureCancel').addEventListener('click', closeSignature);
+  document.getElementById('signatureClear').addEventListener('click', clearSignature);
+  document.getElementById('signatureForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!hasSignatureStroke) { setText('signatureError', 'Avval imzo chizing.'); return; }
+    var btn = document.getElementById('signatureSubmit');
+    btn.disabled = true;
+    setText('signatureError', '');
+    NgoApi.post('/commission/protocols/' + selectedId + '/sign', { signature_image: sigCanvas.toDataURL('image/png') }, { timeout: 30000 })
+      .then(function () { closeSignature(); toast('Protokol imzolandi.'); return NgoApi.get('/commission/protocols/' + selectedId + '/sign-data'); })
+      .then(renderSignState)
+      .then(load)
+      .catch(function (err) { setText('signatureError', (err && err.message) || 'Imzolashda xatolik.'); })
+      .then(function () { btn.disabled = false; });
   });
   load();
 })();
