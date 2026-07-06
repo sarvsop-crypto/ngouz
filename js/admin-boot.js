@@ -15,10 +15,15 @@
     regional_admin: 'Hududiy admin',
     portal_moderator: 'Portal moderatori',
     member_manager: 'A\'zolar boshqaruvchisi',
-    member_user: 'A\'zo'
+    member_user: 'A\'zo',
+    commission: 'Komissiya'
   };
 
-  NgoApi.requireAuth({ minRole: 'regional_admin', loginPage: 'admin-login' })
+  var authOpts = window.NGO_ADMIN_AUTH || {};
+  if (!authOpts.minRole && !authOpts.allowedRoles) authOpts.minRole = 'regional_admin';
+  authOpts.loginPage = authOpts.loginPage || 'admin-login';
+
+  NgoApi.requireAuth(authOpts)
     .then(function (user) {
       window.__CURRENT_USER__ = user;
       var slot = document.querySelector('[data-user-name]');

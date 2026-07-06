@@ -173,6 +173,12 @@
     }
     return request('GET', '/me', undefined, { loginPage: opts.loginPage }).then(function (res) {
       setUser(res.user);
+      if (opts.allowedRoles && opts.allowedRoles.length) {
+        if (opts.allowedRoles.indexOf(res.user.role) === -1) {
+          location.replace('admin-login?error=forbidden');
+          return Promise.reject(new Error('forbidden'));
+        }
+      }
       if (opts.minRole) {
         var levels = { super_admin: 100, regional_admin: 60, portal_moderator: 40, member_manager: 20, member_user: 10 };
         if ((levels[res.user.role] || 0) < (levels[opts.minRole] || 0)) {
