@@ -36,6 +36,11 @@
       if (avatar && (user.full_name || user.email)) {
         avatar.textContent = String(user.full_name || user.email).charAt(0).toUpperCase();
       }
+      document.querySelectorAll('a[href="admin-commission"], a[href="/admin-commission"]').forEach(function (link) {
+        if (user.role !== 'super_admin' && user.role !== 'commission') {
+          link.remove();
+        }
+      });
     })
     .catch(function () { /* requireAuth already handled redirect */ });
 
