@@ -281,6 +281,7 @@
   var currentCandidates = [];
   var onlyOfficeEditor = null;
   var hasSignatureStroke = false;
+  var COMMISSION_DOCUMENT_TIMEOUT_MS = 90000;
   function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
   function setText(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
   function toast(msg) { var el = document.getElementById('cmsToast'); if (!el) return; el.textContent = msg; el.className = 'cms-toast show'; setTimeout(function () { el.classList.remove('show'); }, 3500); }
@@ -528,7 +529,7 @@
   }
   function updateStatus(status) {
     if (!selectedId) return Promise.resolve();
-    return NgoApi.patch('/commission/protocols/' + selectedId, { status: status }).then(function () {
+    return NgoApi.patch('/commission/protocols/' + selectedId, { status: status }, { timeout: COMMISSION_DOCUMENT_TIMEOUT_MS }).then(function () {
       toast('Holat yangilandi.');
       reloadCurrent();
     }).catch(function (err) { toast(errText(err, 'Holatni o‘zgartirib bo‘lmadi.')); });
@@ -642,7 +643,7 @@
       number: document.getElementById('protocolNumber').value,
       meeting_date: document.getElementById('protocolDate').value,
       title: document.getElementById('protocolTitle').value
-    }).then(function (res) {
+    }, { timeout: COMMISSION_DOCUMENT_TIMEOUT_MS }).then(function (res) {
       closeProtocolModal();
       toast('Protokol yaratildi.');
       load();
