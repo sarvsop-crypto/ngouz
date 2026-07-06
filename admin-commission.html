@@ -189,6 +189,7 @@
             <p class="va-error" id="googleDocError" role="alert" style="color:var(--error-600);margin:0;"></p>
             <button type="submit" class="btn btn--secondary btn--sm" id="googleDocSubmit">Saqlash</button>
           </form>
+          <div class="verify-card" id="googleDocStatus" hidden style="margin-top:14px;"></div>
           <div class="candidate-tools" id="candidateTools" hidden>
             <div class="candidate-search">
               <input type="search" id="candidateSearchInput" placeholder="Murojaat F.I.Sh., NNT yoki STIR bo'yicha qidirish" autocomplete="off">
@@ -378,11 +379,18 @@
   function renderGoogleDocTools() {
     var form = document.getElementById('googleDocForm');
     var input = document.getElementById('googleDocUrl');
-    if (!form || !input) return;
+    var status = document.getElementById('googleDocStatus');
+    if (!form || !input || !status) return;
     var canAttach = !!(selectedProtocol && selectedProtocol.status === 'draft' && canManage());
-    form.hidden = !canAttach;
+    var hasAutoDoc = !!(selectedProtocol && selectedProtocol.google_doc_id);
+    form.hidden = !canAttach || hasAutoDoc;
     input.value = selectedProtocol && selectedProtocol.google_doc_url ? selectedProtocol.google_doc_url : '';
     setText('googleDocError', '');
+    status.hidden = !selectedProtocol || !(hasAutoDoc || selectedProtocol.google_doc_url || selectedProtocol.google_doc_status);
+    if (!status.hidden) {
+      var exported = selectedProtocol.google_doc_exported_at ? 'Eksport qilingan' : 'Draft';
+      status.innerHTML = '<strong>Google Docs</strong><br><span>' + esc(hasAutoDoc ? 'Tayyor · ' + exported : 'Havola biriktirilgan') + '</span>';
+    }
   }
   function renderSignState(data) {
     signData = data || null;
