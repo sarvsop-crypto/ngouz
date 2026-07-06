@@ -446,8 +446,9 @@
     renderCandidateTools();
     NgoApi.get('/commission/protocols/' + id).then(function (res) {
       var protocol = res.protocol || p;
-      selectedProtocol = protocol;
       currentCandidates = res.candidates || [];
+      protocol.candidate_count = currentCandidates.length;
+      selectedProtocol = protocol;
       setText('selectedProtocol', protocol.number || ('#' + id));
       renderWorkflowActions();
       renderCandidateTools();
