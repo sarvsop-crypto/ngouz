@@ -33,13 +33,31 @@
     .meta-list span { font-size: 12px; color: var(--grey-500); font-weight: 700; text-transform: uppercase; }
     .meta-list strong { font-size: 15px; color: var(--grey-900); }
     .editor-frame { min-height: 440px; display: grid; place-items: center; background: linear-gradient(180deg, #f8fafc, #eef3f7); border: 1px dashed var(--grey-200); border-radius: 10px; text-align: center; padding: 24px; color: var(--grey-500); }
+    .editor-frame.is-loaded { display: block; padding: 0; background: #fff; border-style: solid; text-align: initial; }
+    #onlyOfficeHost { width: 100%; height: 640px; min-height: 520px; }
     .vote-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--grey-100); }
     .vote-row:last-child { border-bottom: 0; }
     .vote-counts { display: flex; gap: 6px; flex-wrap: wrap; }
     .vote-counts span { padding: 3px 7px; border-radius: 6px; background: var(--grey-25); color: var(--grey-500); font-size: 12px; font-weight: 700; }
+    .vote-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; margin-top: 8px; }
+    .vote-actions .btn { padding: 7px 9px; min-height: 32px; }
+    .vote-actions .is-selected { outline: 2px solid var(--primary-500); outline-offset: 1px; }
     .sign-list { display: grid; gap: 10px; margin-top: 12px; }
     .sign-item { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; }
     .sign-actions { display: grid; gap: 10px; margin-top: 14px; }
+    .workflow-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .candidate-tools { display: grid; gap: 10px; margin-top: 14px; }
+    .candidate-search { display: flex; gap: 8px; }
+    .candidate-search input, .protocol-form input { min-height: 40px; border: 1px solid var(--grey-200); border-radius: 8px; padding: 8px 10px; font: inherit; }
+    .candidate-search input { flex: 1; min-width: 0; }
+    .candidate-results { max-height: 280px; overflow: auto; border: 1px solid var(--grey-100); border-radius: 10px; background: #fff; }
+    .candidate-option { display: grid; grid-template-columns: auto 1fr; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--grey-100); align-items: start; }
+    .candidate-option:last-child { border-bottom: 0; }
+    .candidate-option strong { display: block; color: var(--grey-900); }
+    .candidate-option span { display: block; margin-top: 2px; color: var(--grey-500); font-size: 12px; line-height: 1.35; }
+    .candidate-chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--grey-200); border-radius: 999px; padding: 5px 8px; margin: 4px 4px 0 0; font-size: 12px; }
+    .protocol-form { display: grid; gap: 12px; }
+    .protocol-form label { display: grid; gap: 6px; font-weight: 700; color: var(--grey-700); font-size: 13px; }
     .signature-modal { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(15, 23, 42, .45); }
     .signature-modal[aria-hidden="false"] { display: flex; }
     .signature-card { width: min(680px, 100%); background: #fff; border-radius: 10px; box-shadow: 0 24px 80px rgba(0,0,0,.24); overflow: hidden; }
@@ -50,6 +68,8 @@
     .signature-canvas-wrap { border: 1px solid var(--grey-200); border-radius: 10px; background: #fff; overflow: hidden; touch-action: none; }
     #signatureCanvas { display: block; width: 100%; height: 220px; cursor: crosshair; }
     .signature-hint { margin: 0; color: var(--grey-500); font-size: 13px; line-height: 1.5; }
+    .commission-modal { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(15, 23, 42, .45); }
+    .commission-modal[aria-hidden="false"] { display: flex; }
     .verify-card { margin-top: 18px; background: #f7fbff; border: 1px solid #d7e7f7; border-radius: 10px; padding: 16px; }
     @media (max-width: 1180px) { .commission-grid, .protocol-layout { grid-template-columns: 1fr; } }
   </style>
@@ -115,6 +135,7 @@
             <div><span>Kvorum</span><strong id="quorumText">—</strong></div>
             <div><span>QR tekshiruv</span><strong id="qrText">Protokol imzolangach yaratiladi</strong></div>
           </div>
+          <div class="workflow-actions" id="workflowActions" aria-live="polite"></div>
           <div class="sign-list" id="signList">
             <div class="sign-item"><span>Rais</span><strong>Kutilmoqda</strong></div>
             <div class="sign-item"><span>Kotib</span><strong>Kutilmoqda</strong></div>
@@ -138,10 +159,18 @@
             <div><span>Rol</span><strong id="commissionRole">—</strong></div>
             <div><span>Tanlangan protokol</span><strong id="selectedProtocol">Tanlanmagan</strong></div>
           </div>
+          <div class="candidate-tools" id="candidateTools" hidden>
+            <div class="candidate-search">
+              <input type="search" id="candidateSearchInput" placeholder="Murojaat F.I.Sh., NNT yoki STIR bo'yicha qidirish" autocomplete="off">
+              <button type="button" class="btn btn--secondary" id="candidateSearchBtn">Qidirish</button>
+            </div>
+            <div class="candidate-results" id="candidateResults" aria-live="polite"></div>
+            <button type="button" class="btn btn--primary" id="addCandidatesBtn" disabled>Tanlanganlarni qo'shish</button>
+          </div>
         </div>
       </aside>
       <section class="protocol-panel">
-        <div class="protocol-panel__head"><h3>OnlyOffice hujjat oynasi</h3><button type="button" class="btn btn--secondary btn--sm" id="openEditorBtn">Editor config</button></div>
+        <div class="protocol-panel__head"><h3>OnlyOffice hujjat oynasi</h3><button type="button" class="btn btn--secondary btn--sm" id="openEditorBtn">Ochish</button></div>
         <div class="protocol-panel__body"><div class="editor-frame" id="editorFrame"><div><i class="ph ph-file-doc" style="font-size:38px" aria-hidden="true"></i><br>Protokol tanlang. Draft holatda OnlyOffice editor, imzolangan holatda read-only ko‘rinadi.</div></div></div>
       </section>
       <aside class="protocol-panel">
@@ -176,6 +205,32 @@
   </form>
 </div>
 <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
+<div class="commission-modal" id="protocolModal" aria-hidden="true">
+  <form class="signature-card protocol-form" id="protocolForm" role="dialog" aria-modal="true" aria-labelledby="protocolModalTitle">
+    <div class="signature-card__head">
+      <h2 id="protocolModalTitle">Yangi protokol</h2>
+      <button type="button" class="btn btn--secondary btn--sm" id="protocolClose" aria-label="Yopish">×</button>
+    </div>
+    <div class="signature-card__body">
+      <label>Bayonnoma raqami
+        <input type="text" id="protocolNumber" required placeholder="Masalan: TOP-500-2026-01">
+      </label>
+      <label>Yig'ilish sanasi
+        <input type="date" id="protocolDate">
+      </label>
+      <label>Sarlavha
+        <input type="text" id="protocolTitle" placeholder="Ixtiyoriy">
+      </label>
+      <p class="signature-hint">Protokol yaratilgach draft holatida ochiladi. Nomzodlarni qo'shib, keyin ovoz berishga yuboring.</p>
+      <p class="va-error" id="protocolError" role="alert" style="color:var(--error-600);margin:0;"></p>
+    </div>
+    <div class="signature-card__foot">
+      <span></span>
+      <button type="button" class="btn btn--secondary" id="protocolCancel">Bekor qilish</button>
+      <button type="submit" class="btn btn--primary" id="protocolSubmit">Yaratish</button>
+    </div>
+  </form>
+</div>
 <script src="js/pacta-foundation.js"></script>
 <script src="js/api-client.js?v=20260706commissionauth"></script>
 <script>
@@ -189,14 +244,40 @@
   var selectedId = null;
   var selectedProtocol = null;
   var signData = null;
+  var tallyData = null;
+  var currentRole = null;
+  var selectedCandidateIds = {};
+  var currentCandidates = [];
+  var onlyOfficeEditor = null;
   var hasSignatureStroke = false;
   function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
   function setText(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
   function toast(msg) { var el = document.getElementById('cmsToast'); if (!el) return; el.textContent = msg; el.className = 'cms-toast show'; setTimeout(function () { el.classList.remove('show'); }, 3500); }
+  function errText(err, fallback) { return (err && err.message) || fallback || 'Xatolik yuz berdi.'; }
+  function canManage() { return currentRole === 'chair' || currentRole === 'secretary'; }
+  function isChair() { return currentRole === 'chair'; }
+  function statusLabel(status) {
+    return {
+      draft: 'Draft',
+      voting: 'Ovoz berish',
+      decided: 'Qaror qabul qilingan',
+      signing: 'Imzolash',
+      signed: 'Imzolangan',
+      archived: 'Arxiv'
+    }[status] || status || 'draft';
+  }
+  function decisionLabel(v) {
+    return {
+      recommend: 'Tavsiya etilsin',
+      reject: 'Rad etilsin',
+      waitlist: 'Kutish ro‘yxati',
+      abstain: 'Betaraf'
+    }[v] || '—';
+  }
   function badge(status) {
     if (status === 'signed') return 'success';
     if (status === 'voting') return 'warning';
-    if (status === 'ready_to_sign' || status === 'finalized') return 'info';
+    if (status === 'signing' || status === 'decided') return 'info';
     return 'neutral';
   }
   function renderRows() {
@@ -212,9 +293,9 @@
       return '<tr role="button" tabindex="0" onclick="selectProtocol(' + id + ')">' +
         '<td><strong>' + esc(p.number || ('#' + id)) + '</strong></td>' +
         '<td>' + esc(p.meeting_date || '—') + '</td>' +
-        '<td><span class="badge badge--' + badge(p.status) + '">' + esc(p.status || 'draft') + '</span></td>' +
-        '<td>' + esc(p.quorum_text || p.quorum || '—') + '</td>' +
-        '<td>' + esc(p.candidates_count || p.candidate_count || 0) + '</td>' +
+        '<td><span class="badge badge--' + badge(p.status) + '">' + esc(statusLabel(p.status)) + '</span></td>' +
+        '<td>' + esc(p.signature_count || 0) + ' / 8</td>' +
+        '<td>' + esc(p.candidate_count || 0) + '</td>' +
         '<td>' + esc((p.updated_at || p.created_at || '').slice(0, 16) || '—') + '</td>' +
       '</tr>';
     }).join('');
@@ -223,11 +304,39 @@
   function renderKpis(stats) {
     var byStatus = {};
     (protocols || []).forEach(function (p) { byStatus[p.status || 'draft'] = (byStatus[p.status || 'draft'] || 0) + 1; });
-    if (stats && stats.by_status) byStatus = stats.by_status;
+    if (stats && stats.protocols_by_status) byStatus = stats.protocols_by_status;
     setText('kpiDraft', byStatus.draft || 0);
     setText('kpiVoting', byStatus.voting || 0);
-    setText('kpiReady', (byStatus.ready_to_sign || 0) + (byStatus.finalized || 0));
+    setText('kpiReady', (byStatus.signing || 0) + (byStatus.decided || 0));
     setText('kpiSigned', byStatus.signed || 0);
+  }
+  function renderWorkflowActions() {
+    var box = document.getElementById('workflowActions');
+    if (!box) return;
+    if (!selectedProtocol) {
+      box.innerHTML = '<span class="text-dim">Protokol tanlang.</span>';
+      return;
+    }
+    var s = selectedProtocol.status || 'draft';
+    var html = '';
+    if (canManage() && s === 'draft') {
+      html += '<button type="button" class="btn btn--primary btn--sm" data-workflow="startVoting">Ovoz berishga yuborish</button>';
+    }
+    if (isChair() && s === 'voting') {
+      html += '<button type="button" class="btn btn--primary btn--sm" data-workflow="finalize">Ovozlarni yakunlash</button>';
+    }
+    if (canManage() && s === 'decided') {
+      html += '<button type="button" class="btn btn--primary btn--sm" data-workflow="startSigning">Imzolashga yuborish</button>';
+    }
+    if (canManage() && s !== 'archived' && s !== 'signed') {
+      html += '<button type="button" class="btn btn--secondary btn--sm" data-workflow="archive">Arxivlash</button>';
+    }
+    box.innerHTML = html || '<span class="text-dim">Bu bosqichda qo‘shimcha boshqaruv amali yo‘q.</span>';
+  }
+  function renderCandidateTools() {
+    var tools = document.getElementById('candidateTools');
+    if (!tools) return;
+    tools.hidden = !(selectedProtocol && selectedProtocol.status === 'draft' && canManage());
   }
   function renderSignState(data) {
     signData = data || null;
@@ -250,26 +359,75 @@
         : mine && mine.signed ? 'Siz bu protokolni allaqachon imzolagansiz.'
         : canSign ? 'Imzo chizib saqlashingiz mumkin.' : 'Komissiya aʼzosi holati aniqlanmadi.';
     }
+    if (data && data.qr_token) {
+      setText('qrText', 'QR token: ' + data.qr_token);
+    } else if (selectedProtocol && selectedProtocol.status === 'signed') {
+      setText('qrText', 'QR yaratilgan. Public verification orqali tekshiriladi.');
+    } else {
+      setText('qrText', 'Protokol imzolangach yaratiladi');
+    }
+  }
+  function renderVotePanel(candidates, tally) {
+    var votePanel = document.getElementById('votePanel');
+    if (!votePanel) return;
+    candidates = candidates || [];
+    var byCandidate = {};
+    if (tally && tally.candidates) {
+      tally.candidates.forEach(function (t) { byCandidate[parseInt(t.candidate_id, 10)] = t; });
+    }
+    if (!candidates.length) {
+      votePanel.innerHTML = '<div class="vote-row"><div><strong>Nomzod yo‘q</strong><br><span class="text-dim">Draft holatda murojaatlardan nomzod qo‘shing.</span></div><div class="vote-counts"><span>0</span></div></div>';
+      return;
+    }
+    votePanel.innerHTML = candidates.map(function (c) {
+      var cid = parseInt(c.id, 10);
+      var t = byCandidate[cid] || {};
+      var counts = t.tally || {};
+      var locked = !(selectedProtocol && selectedProtocol.status === 'voting');
+      var actions = '';
+      if (!locked) {
+        ['recommend', 'reject', 'waitlist', 'abstain'].forEach(function (v) {
+          actions += '<button type="button" class="btn btn--secondary btn--sm ' + (t.my_vote === v ? 'is-selected' : '') + '" data-vote="' + v + '" data-candidate="' + cid + '">' + esc(decisionLabel(v)) + '</button>';
+        });
+      }
+      var remove = selectedProtocol && selectedProtocol.status === 'draft' && canManage()
+        ? '<button type="button" class="btn btn--secondary btn--sm" data-remove-candidate="' + cid + '">O‘chirish</button>' : '';
+      return '<div class="vote-row"><div><strong>' + esc(c.full_name || 'Nomzod') + '</strong><br>' +
+        '<span class="text-dim">' + esc(c.nnt_name || c.organization_name || '') + (c.nnt_stir ? ' · STIR ' + esc(c.nnt_stir) : '') + '</span>' +
+        '<div class="vote-actions">' + actions + remove + '</div></div>' +
+        '<div class="vote-counts">' +
+        '<span>' + esc(decisionLabel(t.final_decision || t.computed)) + '</span>' +
+        '<span>Yoqladi ' + esc(counts.recommend || 0) + '</span>' +
+        '<span>Rad ' + esc(counts.reject || 0) + '</span>' +
+        '<span>Kutish ' + esc(counts.waitlist || 0) + '</span>' +
+        '<span>Betaraf ' + esc(counts.abstain || 0) + '</span>' +
+        '<span>Kvorum ' + esc(t.voters || 0) + '/' + esc(tally && tally.quorum_needed || '—') + '</span>' +
+        '</div></div>';
+    }).join('');
   }
   window.selectProtocol = function (id) {
     selectedId = id;
     var p = protocols.find(function (x) { return parseInt(x.id, 10) === id; }) || {};
     selectedProtocol = p;
     setText('selectedProtocol', p.number || ('#' + id));
+    renderWorkflowActions();
+    renderCandidateTools();
     NgoApi.get('/commission/protocols/' + id).then(function (res) {
       var protocol = res.protocol || p;
       selectedProtocol = protocol;
-      var candidates = res.candidates || [];
+      currentCandidates = res.candidates || [];
       setText('selectedProtocol', protocol.number || ('#' + id));
-      var votePanel = document.getElementById('votePanel');
-      if (votePanel) {
-        votePanel.innerHTML = candidates.length ? candidates.map(function (c) {
-          return '<div class="vote-row"><div><strong>' + esc(c.full_name || c.name || 'Nomzod') + '</strong><br><span class="text-dim">' + esc(c.organization_name || c.org_name || '') + '</span></div><div class="vote-counts"><span>Yoqladi ' + esc(c.yes_count || 0) + '</span><span>Qarshi ' + esc(c.no_count || 0) + '</span><span>Betaraf ' + esc(c.abstain_count || 0) + '</span></div></div>';
-        }).join('') : '<div class="vote-row"><div><strong>Nomzod yo‘q</strong><br><span class="text-dim">Protokolga nomzod qo‘shing</span></div><div class="vote-counts"><span>0</span><span>0</span><span>0</span></div></div>';
-      }
+      renderWorkflowActions();
+      renderCandidateTools();
+      return NgoApi.get('/commission/protocols/' + id + '/tally').catch(function () { return null; });
+    }).then(function (tally) {
+      tallyData = tally;
+      renderVotePanel(currentCandidates, tally);
       return NgoApi.get('/commission/protocols/' + id + '/sign-data');
-    }).then(renderSignState).catch(function () {
+    }).then(renderSignState).catch(function (err) {
+      renderVotePanel(currentCandidates, tallyData);
       renderSignState(null);
+      if (err && err.status !== 403) toast(errText(err, 'Protokol maʼlumotlarini yuklab bo‘lmadi.'));
     });
   };
   function load() {
@@ -282,27 +440,163 @@
       var list = all[1] || {};
       var stats = all[2] || {};
       setText('commissionName', dash.commission && dash.commission.name ? dash.commission.name : '—');
-      setText('commissionRole', dash.commission && dash.commission.role ? dash.commission.role : '—');
+      currentRole = dash.me && dash.me.role ? dash.me.role : currentRole;
+      setText('commissionRole', currentRole || '—');
       setText('quorumText', dash.commission && dash.commission.quorum_pct ? dash.commission.quorum_pct + '%' : '—');
       protocols = list.items || list.protocols || dash.active_protocols || [];
       renderRows();
       renderKpis(stats);
+      renderWorkflowActions();
+      renderCandidateTools();
     }).catch(function () {
       var tbody = document.getElementById('protocolRows');
       if (tbody) tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6" role="alert" style="color:var(--error-600)">Komissiya ma’lumotlarini yuklab bo‘lmadi.</td></tr>';
     });
   }
+  function reloadCurrent() {
+    load();
+    if (selectedId) setTimeout(function () { window.selectProtocol(selectedId); }, 300);
+  }
+  function updateStatus(status) {
+    if (!selectedId) return Promise.resolve();
+    return NgoApi.patch('/commission/protocols/' + selectedId, { status: status }).then(function () {
+      toast('Holat yangilandi.');
+      reloadCurrent();
+    }).catch(function (err) { toast(errText(err, 'Holatni o‘zgartirib bo‘lmadi.')); });
+  }
   document.getElementById('refreshCommission').addEventListener('click', load);
+  document.getElementById('workflowActions').addEventListener('click', function (e) {
+    var action = e.target && e.target.getAttribute('data-workflow');
+    if (!action) return;
+    if (action === 'startVoting') updateStatus('voting');
+    if (action === 'startSigning') updateStatus('signing');
+    if (action === 'archive' && confirm('Protokol arxivlansinmi?')) updateStatus('archived');
+    if (action === 'finalize') {
+      NgoApi.post('/commission/protocols/' + selectedId + '/finalize', {}).then(function () {
+        toast('Ovoz berish yakunlandi.');
+        reloadCurrent();
+      }).catch(function (err) { toast(errText(err, 'Yakunlashda xatolik.')); });
+    }
+  });
+  document.getElementById('votePanel').addEventListener('click', function (e) {
+    var vote = e.target && e.target.getAttribute('data-vote');
+    var cid = e.target && e.target.getAttribute('data-candidate');
+    var removeId = e.target && e.target.getAttribute('data-remove-candidate');
+    if (vote && cid) {
+      NgoApi.post('/commission/protocols/' + selectedId + '/candidates/' + cid + '/vote', { vote: vote }).then(function () {
+        toast('Ovoz saqlandi.');
+        window.selectProtocol(selectedId);
+      }).catch(function (err) { toast(errText(err, 'Ovoz saqlanmadi.')); });
+    }
+    if (removeId && confirm('Nomzod protokoldan o‘chirilsinmi?')) {
+      NgoApi.del('/commission/protocols/' + selectedId + '/candidates/' + removeId).then(function () {
+        toast('Nomzod o‘chirildi.');
+        window.selectProtocol(selectedId);
+        load();
+      }).catch(function (err) { toast(errText(err, 'Nomzodni o‘chirib bo‘lmadi.')); });
+    }
+  });
   document.getElementById('openEditorBtn').addEventListener('click', function () {
     if (!selectedId) return;
-    NgoApi.get('/commission/protocols/' + selectedId + '/editor-config').then(function () {
-      document.getElementById('editorFrame').textContent = 'OnlyOffice config tayyor. Keyingi bosqichda editor shu oynaga ulanadi.';
+    var frame = document.getElementById('editorFrame');
+    frame.classList.remove('is-loaded');
+    frame.textContent = 'OnlyOffice yuklanmoqda...';
+    NgoApi.get('/commission/protocols/' + selectedId + '/editor-config').then(function (res) {
+      frame.innerHTML = '<div id="onlyOfficeHost"></div>';
+      frame.classList.add('is-loaded');
+      function mount() {
+        if (!window.DocsAPI || !window.DocsAPI.DocEditor) {
+          frame.classList.remove('is-loaded');
+          frame.textContent = 'OnlyOffice skripti yuklanmadi.';
+          return;
+        }
+        if (onlyOfficeEditor && onlyOfficeEditor.destroyEditor) {
+          try { onlyOfficeEditor.destroyEditor(); } catch (e) {}
+        }
+        onlyOfficeEditor = new window.DocsAPI.DocEditor('onlyOfficeHost', res.config);
+      }
+      var src = String(res.onlyoffice_url || '').replace(/\/$/, '') + '/web-apps/apps/api/documents/api.js';
+      var existing = document.querySelector('script[data-onlyoffice-api]');
+      if (existing) { mount(); return; }
+      var s = document.createElement('script');
+      s.src = src; s.async = true; s.setAttribute('data-onlyoffice-api', '1');
+      s.onload = mount;
+      s.onerror = function () { frame.classList.remove('is-loaded'); frame.textContent = 'OnlyOffice serveriga ulanib bo‘lmadi.'; };
+      document.head.appendChild(s);
     }).catch(function (err) {
-      document.getElementById('editorFrame').textContent = 'OnlyOffice sozlanmagan yoki protokol tanlanmagan.';
+      frame.classList.remove('is-loaded');
+      frame.textContent = errText(err, 'OnlyOffice sozlanmagan yoki protokol tanlanmagan.');
     });
   });
+  var protocolModal = document.getElementById('protocolModal');
+  function closeProtocolModal() { protocolModal.setAttribute('aria-hidden', 'true'); setText('protocolError', ''); }
   document.getElementById('newProtocolBtn').addEventListener('click', function () {
-    alert('Yangi protokol formasi keyingi bosqichda ulanadi. API: POST /v1/commission/protocols');
+    if (!canManage()) { toast('Yangi protokolni faqat rais yoki kotib yaratadi.'); return; }
+    document.getElementById('protocolNumber').value = '';
+    document.getElementById('protocolDate').value = new Date().toISOString().slice(0, 10);
+    document.getElementById('protocolTitle').value = '';
+    protocolModal.setAttribute('aria-hidden', 'false');
+  });
+  document.getElementById('protocolClose').addEventListener('click', closeProtocolModal);
+  document.getElementById('protocolCancel').addEventListener('click', closeProtocolModal);
+  document.getElementById('protocolForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var btn = document.getElementById('protocolSubmit');
+    btn.disabled = true;
+    setText('protocolError', '');
+    NgoApi.post('/commission/protocols', {
+      number: document.getElementById('protocolNumber').value,
+      meeting_date: document.getElementById('protocolDate').value,
+      title: document.getElementById('protocolTitle').value
+    }).then(function (res) {
+      closeProtocolModal();
+      toast('Protokol yaratildi.');
+      load();
+      if (res && res.id) setTimeout(function () { window.selectProtocol(parseInt(res.id, 10)); }, 300);
+    }).catch(function (err) { setText('protocolError', errText(err, 'Protokol yaratilmadi.')); })
+      .then(function () { btn.disabled = false; });
+  });
+  function renderCandidateResults(items) {
+    var box = document.getElementById('candidateResults');
+    selectedCandidateIds = {};
+    document.getElementById('addCandidatesBtn').disabled = true;
+    if (!items || !items.length) {
+      box.innerHTML = '<div class="candidate-option"><span></span><div><strong>Murojaat topilmadi</strong><span>Boshqa so‘z bilan qidirib ko‘ring.</span></div></div>';
+      return;
+    }
+    box.innerHTML = items.map(function (m) {
+      return '<label class="candidate-option"><input type="checkbox" value="' + esc(m.id) + '" data-candidate-select><div><strong>' + esc(m.full_name || 'F.I.Sh. yo‘q') + '</strong><span>' + esc(m.nnt_name || '') + (m.nnt_stir ? ' · STIR ' + esc(m.nnt_stir) : '') + '</span><span>' + esc((m.reason || '').slice(0, 120)) + '</span></div></label>';
+    }).join('');
+  }
+  function searchCandidates() {
+    if (!selectedId) { toast('Avval draft protokolni tanlang.'); return; }
+    var q = document.getElementById('candidateSearchInput').value || '';
+    document.getElementById('candidateResults').innerHTML = '<div class="candidate-option"><span></span><div><strong>Yuklanmoqda...</strong></div></div>';
+    NgoApi.get('/commission/murojaats?q=' + encodeURIComponent(q) + '&limit=50').then(function (res) {
+      renderCandidateResults(res.items || []);
+    }).catch(function (err) { toast(errText(err, 'Murojaatlarni yuklab bo‘lmadi.')); });
+  }
+  document.getElementById('candidateSearchBtn').addEventListener('click', searchCandidates);
+  document.getElementById('candidateSearchInput').addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); searchCandidates(); } });
+  document.getElementById('candidateResults').addEventListener('change', function (e) {
+    if (!e.target || !e.target.hasAttribute('data-candidate-select')) return;
+    selectedCandidateIds[e.target.value] = e.target.checked;
+    var any = false;
+    Object.keys(selectedCandidateIds).forEach(function (k) { if (selectedCandidateIds[k]) any = true; });
+    document.getElementById('addCandidatesBtn').disabled = !any;
+  });
+  document.getElementById('addCandidatesBtn').addEventListener('click', function () {
+    var ids = [];
+    Object.keys(selectedCandidateIds).forEach(function (k) { if (selectedCandidateIds[k]) ids.push(parseInt(k, 10)); });
+    if (!ids.length || !selectedId) return;
+    var btn = this; btn.disabled = true;
+    NgoApi.post('/commission/protocols/' + selectedId + '/candidates', { murojaat_ids: ids }).then(function (res) {
+      toast('Nomzodlar qo‘shildi: ' + (res.added || 0));
+      searchCandidates();
+      window.selectProtocol(selectedId);
+      load();
+    }).catch(function (err) { toast(errText(err, 'Nomzod qo‘shilmadi.')); })
+      .then(function () { btn.disabled = false; });
   });
   var sigModal = document.getElementById('signatureModal');
   var sigCanvas = document.getElementById('signatureCanvas');
