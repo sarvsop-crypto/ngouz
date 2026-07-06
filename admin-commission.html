@@ -181,6 +181,14 @@
             <div><span>Rol</span><strong id="commissionRole">—</strong></div>
             <div><span>Tanlangan protokol</span><strong id="selectedProtocol">Tanlanmagan</strong></div>
           </div>
+          <form class="protocol-form" id="googleDocForm" hidden style="margin-top:14px;">
+            <label>
+              Google Docs havolasi
+              <input type="url" id="googleDocUrl" placeholder="https://docs.google.com/document/d/.../edit">
+            </label>
+            <p class="va-error" id="googleDocError" role="alert" style="color:var(--error-600);margin:0;"></p>
+            <button type="submit" class="btn btn--secondary btn--sm" id="googleDocSubmit">Saqlash</button>
+          </form>
           <div class="candidate-tools" id="candidateTools" hidden>
             <div class="candidate-search">
               <input type="search" id="candidateSearchInput" placeholder="Murojaat F.I.Sh., NNT yoki STIR bo'yicha qidirish" autocomplete="off">
@@ -192,8 +200,8 @@
         </div>
       </aside>
       <section class="protocol-panel">
-        <div class="protocol-panel__head"><h3>OnlyOffice hujjat oynasi</h3><button type="button" class="btn btn--secondary btn--sm" id="openEditorBtn">Ochish</button></div>
-        <div class="protocol-panel__body"><div class="editor-frame" id="editorFrame"><div><i class="ph ph-file-doc" style="font-size:38px" aria-hidden="true"></i><br>Protokol tanlang. Draft holatda OnlyOffice editor, imzolangan holatda read-only ko‘rinadi.</div></div></div>
+        <div class="protocol-panel__head"><h3>Hujjat oynasi</h3><button type="button" class="btn btn--secondary btn--sm" id="openEditorBtn">Ochish</button></div>
+        <div class="protocol-panel__body"><div class="editor-frame" id="editorFrame"><div><i class="ph ph-file-doc" style="font-size:38px" aria-hidden="true"></i><br>Protokol tanlang. Draft holatda hujjat tahrirlanadi, keyingi holatlarda ko‘rish uchun ochiladi.</div></div></div>
       </section>
       <aside class="protocol-panel">
         <div class="protocol-panel__head"><h3>Ovozlar</h3></div>
@@ -367,6 +375,15 @@
     if (!tools) return;
     tools.hidden = !(selectedProtocol && selectedProtocol.status === 'draft' && canManage());
   }
+  function renderGoogleDocTools() {
+    var form = document.getElementById('googleDocForm');
+    var input = document.getElementById('googleDocUrl');
+    if (!form || !input) return;
+    var canAttach = !!(selectedProtocol && selectedProtocol.status === 'draft' && canManage());
+    form.hidden = !canAttach;
+    input.value = selectedProtocol && selectedProtocol.google_doc_url ? selectedProtocol.google_doc_url : '';
+    setText('googleDocError', '');
+  }
   function renderSignState(data) {
     signData = data || null;
     var list = document.getElementById('signList');
@@ -444,6 +461,7 @@
     setText('selectedProtocol', p.number || ('#' + id));
     renderWorkflowActions();
     renderCandidateTools();
+    renderGoogleDocTools();
     NgoApi.get('/commission/protocols/' + id).then(function (res) {
       var protocol = res.protocol || p;
       currentCandidates = res.candidates || [];
@@ -452,6 +470,7 @@
       setText('selectedProtocol', protocol.number || ('#' + id));
       renderWorkflowActions();
       renderCandidateTools();
+      renderGoogleDocTools();
       return NgoApi.get('/commission/protocols/' + id + '/tally').catch(function () { return null; });
     }).then(function (tally) {
       tallyData = tally;
@@ -543,8 +562,17 @@
     if (!selectedId) return;
     var frame = document.getElementById('editorFrame');
     frame.classList.remove('is-loaded');
-    frame.textContent = 'OnlyOffice yuklanmoqda...';
+    frame.textContent = 'Hujjat yuklanmoqda...';
     NgoApi.get('/commission/protocols/' + selectedId + '/editor-config').then(function (res) {
+      if (res.provider === 'google_docs') {
+        if (!res.url) {
+          frame.innerHTML = '<div><i class="ph ph-file-doc" style="font-size:38px" aria-hidden="true"></i><br>Google Docs havolasi biriktirilmagan.</div>';
+          return;
+        }
+        window.open(res.url, '_blank', 'noopener');
+        frame.innerHTML = '<div><i class="ph ph-google-logo" style="font-size:38px" aria-hidden="true"></i><br>Google Docs yangi oynada ochildi.</div>';
+        return;
+      }
       frame.innerHTML = '<div id="onlyOfficeHost"></div>';
       frame.classList.add('is-loaded');
       function mount() {
@@ -570,6 +598,21 @@
       frame.classList.remove('is-loaded');
       frame.textContent = errText(err, 'OnlyOffice sozlanmagan yoki protokol tanlanmagan.');
     });
+  });
+  document.getElementById('googleDocForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!selectedId || !canManage()) return;
+    var btn = document.getElementById('googleDocSubmit');
+    btn.disabled = true;
+    setText('googleDocError', '');
+    NgoApi.patch('/commission/protocols/' + selectedId, {
+      google_doc_url: document.getElementById('googleDocUrl').value
+    }).then(function () {
+      toast('Google Docs havolasi saqlandi.');
+      return window.selectProtocol(selectedId);
+    }).catch(function (err) {
+      setText('googleDocError', errText(err, 'Google Docs havolasi saqlanmadi.'));
+    }).finally(function () { btn.disabled = false; });
   });
   var protocolModal = document.getElementById('protocolModal');
   function closeProtocolModal() { protocolModal.setAttribute('aria-hidden', 'true'); setText('protocolError', ''); }
