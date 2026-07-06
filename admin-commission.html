@@ -47,6 +47,7 @@
     .sign-item { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; }
     .sign-actions { display: grid; gap: 10px; margin-top: 14px; }
     .workflow-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+    .workflow-actions .btn[disabled] { opacity: .62; cursor: not-allowed; }
     .candidate-tools { min-width: 0; display: grid; gap: 10px; margin-top: 14px; }
     .candidate-search { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
     .candidate-search input, .protocol-form input { box-sizing: border-box; width: 100%; min-width: 0; min-height: 40px; border: 1px solid var(--grey-200); border-radius: 8px; padding: 8px 10px; font: inherit; }
@@ -253,11 +254,11 @@
   </form>
 </div>
 <script src="js/pacta-foundation.js"></script>
-<script src="js/api-client.js?v=20260706commissionlayout"></script>
+<script src="js/api-client.js?v=20260706buttonstates"></script>
 <script>
   window.NGO_ADMIN_AUTH = { allowedRoles: ['super_admin', 'commission'] };
 </script>
-<script src="js/admin-boot.js?v=20260706commissionlayout" defer></script>
+<script src="js/admin-boot.js?v=20260706buttonstates" defer></script>
 <script src="js/pacta-app.js"></script>
 <script>
 (function () {
@@ -341,9 +342,14 @@
       return;
     }
     var s = selectedProtocol.status || 'draft';
+    var candidateCount = parseInt(selectedProtocol.candidate_count || selectedProtocol.candidates_count || 0, 10) || 0;
     var html = '';
     if (canManage() && s === 'draft') {
-      html += '<button type="button" class="btn btn--primary btn--sm" data-workflow="startVoting">Ovoz berishga yuborish</button>';
+      if (candidateCount > 0) {
+        html += '<button type="button" class="btn btn--primary btn--sm" data-workflow="startVoting">Ovoz berishga yuborish</button>';
+      } else {
+        html += '<button type="button" class="btn btn--secondary btn--sm" disabled>Avval nomzod qo‘shing</button>';
+      }
     }
     if (isChair() && s === 'voting') {
       html += '<button type="button" class="btn btn--primary btn--sm" data-workflow="finalize">Ovozlarni yakunlash</button>';
@@ -375,12 +381,15 @@
       }).join('');
     }
     var canSign = !!(selectedProtocol && selectedProtocol.status === 'signing' && mine && !mine.signed);
-    if (btn) btn.disabled = !canSign;
+    if (btn) {
+      btn.disabled = !canSign;
+      btn.title = canSign ? 'Protokolni qo‘lda imzolash' : 'Imzolash faqat protokol signing holatiga o‘tganda ishlaydi';
+    }
     if (hint) {
       hint.textContent = !selectedProtocol ? 'Imzolash uchun signing holatidagi protokolni tanlang.'
         : selectedProtocol.status !== 'signing' ? 'Bu protokol hozir imzolash bosqichida emas.'
         : mine && mine.signed ? 'Siz bu protokolni allaqachon imzolagansiz.'
-        : canSign ? 'Imzo chizib saqlashingiz mumkin.' : 'Komissiya aʼzosi holati aniqlanmadi.';
+        : canSign ? 'Imzo chizib saqlashingiz mumkin.' : 'Siz imzolovchilar ro‘yxatida topilmadingiz.';
     }
     if (data && data.qr_token) {
       setText('qrText', 'QR token: ' + data.qr_token);
@@ -498,7 +507,8 @@
   }
   document.getElementById('refreshCommission').addEventListener('click', load);
   document.getElementById('workflowActions').addEventListener('click', function (e) {
-    var action = e.target && e.target.getAttribute('data-workflow');
+    var actionBtn = e.target.closest && e.target.closest('[data-workflow]');
+    var action = actionBtn && actionBtn.getAttribute('data-workflow');
     if (!action) return;
     if (action === 'startVoting') updateStatus('voting');
     if (action === 'startSigning') updateStatus('signing');
