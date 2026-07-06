@@ -166,6 +166,17 @@
 
   function requireAuth(opts) {
     opts = opts || {};
+    function roleHome(role) {
+      if (role === 'commission') return 'admin-commission';
+      return 'admin-dashboard';
+    }
+    function redirectForbidden(user) {
+      var target = opts.fallbackPage || roleHome(user && user.role);
+      var here = location.pathname.split('/').pop().replace(/\.html$/, '') || 'admin-dashboard';
+      if (target === here) target = 'admin-dashboard';
+      location.replace(target);
+      return Promise.reject(new Error('forbidden'));
+    }
     if (!getToken()) {
       var next = encodeURIComponent(location.pathname + location.search);
       location.replace((opts.loginPage || LOGIN_PAGE) + '?next=' + next);
@@ -175,15 +186,13 @@
       setUser(res.user);
       if (opts.allowedRoles && opts.allowedRoles.length) {
         if (opts.allowedRoles.indexOf(res.user.role) === -1) {
-          location.replace('admin-login?error=forbidden');
-          return Promise.reject(new Error('forbidden'));
+          return redirectForbidden(res.user);
         }
       }
       if (opts.minRole) {
         var levels = { super_admin: 100, regional_admin: 60, portal_moderator: 40, member_manager: 20, member_user: 10 };
         if ((levels[res.user.role] || 0) < (levels[opts.minRole] || 0)) {
-          location.replace('admin-login?error=forbidden');
-          return Promise.reject(new Error('forbidden'));
+          return redirectForbidden(res.user);
         }
       }
       return res.user;

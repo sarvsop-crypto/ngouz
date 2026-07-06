@@ -36,8 +36,14 @@
       if (avatar && (user.full_name || user.email)) {
         avatar.textContent = String(user.full_name || user.email).charAt(0).toUpperCase();
       }
-      document.querySelectorAll('a[href="admin-commission"], a[href="/admin-commission"]').forEach(function (link) {
-        if (user.role !== 'super_admin' && user.role !== 'commission') {
+      document.querySelectorAll('.sidebar__nav-link[href]').forEach(function (link) {
+        var href = (link.getAttribute('href') || '').replace(/^\//, '').replace(/\.html$/, '');
+        if (href === 'admin-login') return;
+        if (user.role === 'commission') {
+          if (href !== 'admin-commission') link.remove();
+          return;
+        }
+        if (href === 'admin-commission' && user.role !== 'super_admin') {
           link.remove();
         }
       });

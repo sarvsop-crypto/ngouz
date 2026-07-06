@@ -58,6 +58,18 @@
     .candidate-chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--grey-200); border-radius: 999px; padding: 5px 8px; margin: 4px 4px 0 0; font-size: 12px; }
     .protocol-form { display: grid; gap: 12px; }
     .protocol-form label { display: grid; gap: 6px; font-weight: 700; color: var(--grey-700); font-size: 13px; }
+    .protocol-list { display: grid; gap: 10px; padding: 16px; }
+    .protocol-card { border: 1px solid var(--grey-100); border-radius: 10px; background: #fff; padding: 14px; cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease; }
+    .protocol-card:hover, .protocol-card:focus { border-color: var(--primary-300); box-shadow: 0 8px 24px rgba(15, 23, 42, .08); outline: none; }
+    .protocol-card.is-active { border-color: var(--primary-500); box-shadow: 0 0 0 2px rgba(15, 106, 87, .12); }
+    .protocol-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .protocol-card__title { min-width: 0; display: grid; gap: 3px; }
+    .protocol-card__title strong { color: var(--grey-900); overflow-wrap: anywhere; line-height: 1.35; }
+    .protocol-card__title span { color: var(--grey-500); font-size: 12px; }
+    .protocol-card__meta { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+    .protocol-card__meta div { min-width: 0; border-radius: 8px; background: var(--grey-25); padding: 8px; }
+    .protocol-card__meta span { display: block; color: var(--grey-500); font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 3px; }
+    .protocol-card__meta strong { display: block; color: var(--grey-900); font-size: 13px; overflow-wrap: anywhere; }
     .signature-modal { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(15, 23, 42, .45); }
     .signature-modal[aria-hidden="false"] { display: flex; }
     .signature-card { width: min(680px, 100%); background: #fff; border-radius: 10px; box-shadow: 0 24px 80px rgba(0,0,0,.24); overflow: hidden; }
@@ -72,6 +84,14 @@
     .commission-modal[aria-hidden="false"] { display: flex; }
     .verify-card { margin-top: 18px; background: #f7fbff; border: 1px solid #d7e7f7; border-radius: 10px; padding: 16px; }
     @media (max-width: 1180px) { .commission-grid, .protocol-layout { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) {
+      .protocol-card__top { display: grid; }
+      .protocol-card__meta { grid-template-columns: 1fr; }
+      .candidate-search { display: grid; }
+      .vote-row { grid-template-columns: 1fr; }
+      .vote-actions { justify-content: stretch; }
+      .vote-actions .btn { width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -123,10 +143,7 @@
     <div class="commission-grid">
       <section class="table-section" aria-labelledby="protocolsTitle">
         <div class="table-section__head"><h2 class="table-section__title" id="protocolsTitle">Protokollar</h2></div>
-        <table class="table">
-          <thead><tr><th>Raqam</th><th>Sana</th><th>Holat</th><th>Kvorum</th><th>Nomzodlar</th><th>Oxirgi harakat</th></tr></thead>
-          <tbody id="protocolRows" aria-live="polite" aria-busy="true"><tr class="u-empty-row"><td colspan="6" role="status">Yuklanmoqda...</td></tr></tbody>
-        </table>
+        <div class="protocol-list" id="protocolRows" aria-live="polite" aria-busy="true"><div class="text-dim" role="status">Yuklanmoqda...</div></div>
       </section>
       <section class="protocol-panel" aria-labelledby="signTitle">
         <div class="protocol-panel__head"><h2 id="signTitle">Imzolash holati</h2><span class="badge badge--warning">Imzolashga tayyor</span></div>
@@ -232,11 +249,11 @@
   </form>
 </div>
 <script src="js/pacta-foundation.js"></script>
-<script src="js/api-client.js?v=20260706commissionauth"></script>
+<script src="js/api-client.js?v=20260706designfix"></script>
 <script>
   window.NGO_ADMIN_AUTH = { allowedRoles: ['super_admin', 'commission'] };
 </script>
-<script src="js/admin-boot.js?v=20260706commissionauth" defer></script>
+<script src="js/admin-boot.js?v=20260706designfix" defer></script>
 <script src="js/pacta-app.js"></script>
 <script>
 (function () {
@@ -281,25 +298,27 @@
     return 'neutral';
   }
   function renderRows() {
-    var tbody = document.getElementById('protocolRows');
-    if (!tbody) return;
+    var list = document.getElementById('protocolRows');
+    if (!list) return;
     if (!protocols.length) {
-      tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6" role="status">Protokol topilmadi</td></tr>';
-      tbody.setAttribute('aria-busy', 'false');
+      list.innerHTML = '<div class="text-dim" role="status">Protokol topilmadi</div>';
+      list.setAttribute('aria-busy', 'false');
       return;
     }
-    tbody.innerHTML = protocols.map(function (p) {
+    list.innerHTML = protocols.map(function (p) {
       var id = parseInt(p.id, 10) || 0;
-      return '<tr role="button" tabindex="0" onclick="selectProtocol(' + id + ')">' +
-        '<td><strong>' + esc(p.number || ('#' + id)) + '</strong></td>' +
-        '<td>' + esc(p.meeting_date || '—') + '</td>' +
-        '<td><span class="badge badge--' + badge(p.status) + '">' + esc(statusLabel(p.status)) + '</span></td>' +
-        '<td>' + esc(p.signature_count || 0) + ' / 8</td>' +
-        '<td>' + esc(p.candidate_count || 0) + '</td>' +
-        '<td>' + esc((p.updated_at || p.created_at || '').slice(0, 16) || '—') + '</td>' +
-      '</tr>';
+      var active = selectedId && parseInt(selectedId, 10) === id ? ' is-active' : '';
+      return '<article class="protocol-card' + active + '" role="button" tabindex="0" data-protocol-id="' + id + '">' +
+        '<div class="protocol-card__top"><div class="protocol-card__title"><strong>' + esc(p.number || ('#' + id)) + '</strong><span>' + esc(p.title || 'TOP-500 komissiya bayonnomasi') + '</span></div>' +
+        '<span class="badge badge--' + badge(p.status) + '">' + esc(statusLabel(p.status)) + '</span></div>' +
+        '<div class="protocol-card__meta">' +
+        '<div><span>Sana</span><strong>' + esc(p.meeting_date || '—') + '</strong></div>' +
+        '<div><span>Imzo</span><strong>' + esc(p.signature_count || 0) + ' / 8</strong></div>' +
+        '<div><span>Nomzodlar</span><strong>' + esc(p.candidate_count || 0) + '</strong></div>' +
+        '<div><span>Oxirgi harakat</span><strong>' + esc((p.updated_at || p.created_at || '').slice(0, 16) || '—') + '</strong></div>' +
+        '</div></article>';
     }).join('');
-    tbody.setAttribute('aria-busy', 'false');
+    list.setAttribute('aria-busy', 'false');
   }
   function renderKpis(stats) {
     var byStatus = {};
@@ -449,10 +468,19 @@
       renderWorkflowActions();
       renderCandidateTools();
     }).catch(function () {
-      var tbody = document.getElementById('protocolRows');
-      if (tbody) tbody.innerHTML = '<tr class="u-empty-row"><td colspan="6" role="alert" style="color:var(--error-600)">Komissiya ma’lumotlarini yuklab bo‘lmadi.</td></tr>';
+      var list = document.getElementById('protocolRows');
+      if (list) list.innerHTML = '<div role="alert" style="color:var(--error-600)">Komissiya ma’lumotlarini yuklab bo‘lmadi.</div>';
     });
   }
+  document.getElementById('protocolRows').addEventListener('click', function (e) {
+    var card = e.target.closest && e.target.closest('[data-protocol-id]');
+    if (card) window.selectProtocol(parseInt(card.getAttribute('data-protocol-id'), 10));
+  });
+  document.getElementById('protocolRows').addEventListener('keydown', function (e) {
+    if (e.key !== 'Enter' && e.key !== ' ') return;
+    var card = e.target.closest && e.target.closest('[data-protocol-id]');
+    if (card) { e.preventDefault(); window.selectProtocol(parseInt(card.getAttribute('data-protocol-id'), 10)); }
+  });
   function reloadCurrent() {
     load();
     if (selectedId) setTimeout(function () { window.selectProtocol(selectedId); }, 300);
