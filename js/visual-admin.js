@@ -16,7 +16,7 @@
         hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        hidden('media_gallery')
+        mediaGallery('media_gallery', 'Media galereya')
       ]
     },
     events: {
@@ -33,7 +33,7 @@
         hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        hidden('media_gallery')
+        mediaGallery('media_gallery', 'Media galereya')
       ]
     },
     grants: {
@@ -51,7 +51,7 @@
         hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        hidden('media_gallery')
+        mediaGallery('media_gallery', 'Media galereya')
       ]
     },
     documents: {
@@ -65,7 +65,7 @@
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true), hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        hidden('media_gallery')
+        mediaGallery('media_gallery', 'Media galereya')
       ]
     },
     publications: {
@@ -83,7 +83,7 @@
         hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        hidden('media_gallery')
+        mediaGallery('media_gallery', 'Media galereya')
       ]
     },
     videos: {
@@ -101,7 +101,7 @@
         hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        hidden('media_gallery')
+        mediaGallery('media_gallery', 'Media galereya')
       ]
     },
     digests: {
@@ -119,7 +119,7 @@
         hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
         area('video_links', 'Video havolalar (har qatorda bitta URL)', false, true),
-        hidden('media_gallery')
+        mediaGallery('media_gallery', 'Media galereya')
       ]
     }
   };
@@ -169,6 +169,7 @@
   function select(name, label, options) { return { kind: 'select', name: name, label: label, options: options || [] }; }
   function file(name, label, accept, wide) { return { kind: 'file', name: name, label: label, accept: accept || '', wide: wide !== false }; }
   function multiFile(name, label, accept, wide) { return { kind: 'multi-file', name: name, label: label, accept: accept || '', wide: wide !== false }; }
+  function mediaGallery(name, label) { return { kind: 'media-gallery', name: name, label: label, wide: true }; }
   function hidden(name) { return { kind: 'hidden', name: name }; }
 
   function init() {
@@ -1210,6 +1211,7 @@
     els.form.dataset.mode = item ? 'edit' : 'add';
     setError(els.editorError, '');
     els.fields.innerHTML = cfg.fields.map(function (field) { return fieldHtml(field, item || {}); }).join('');
+    initMediaGalleryEditor();
     els.modal.classList.add('is-open');
     els.modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
@@ -1648,15 +1650,114 @@
       }
       return '<label class="' + cls + '" for="' + escAttr(id) + '"><span>' + esc(field.label) + '</span><textarea id="' + escAttr(id) + '" name="' + escAttr(field.name) + '"' + req + '>' + esc(value || '') + '</textarea></label>';
     }
+    if (field.kind === 'media-gallery') {
+      var gallery = parseMediaGallery(value);
+      var galleryValue = gallery.length ? JSON.stringify(gallery) : '';
+      return '<div class="' + cls + ' va-media-gallery-field" data-media-gallery-field="' + escAttr(field.name) + '">' +
+        '<input id="' + escAttr(id) + '" name="' + escAttr(field.name) + '" type="hidden" value="' + escAttr(galleryValue) + '">' +
+        '<div class="va-media-gallery-head"><span>' + esc(field.label) + '</span><small>' + gallery.length + ' ta media</small></div>' +
+        '<div class="va-media-gallery-list">' + mediaGalleryEditorHtml(gallery) + '</div>' +
+        '<small class="va-media-gallery-help">Yangi rasm/video qo\'shish uchun yuqoridagi fayl tanlash maydonidan yoki video havolalar maydonidan foydalaning.</small>' +
+        '</div>';
+    }
     if (field.kind === 'file') {
       var accept = field.accept ? ' accept="' + escAttr(field.accept) + '"' : '';
-      return '<label class="' + cls + ' va-file-field" for="' + escAttr(id) + '"><span>' + esc(field.label) + '</span><input id="' + escAttr(id) + '" name="' + escAttr(field.name) + '" type="file"' + accept + '><small>JPG, PNG, WebP yoki SVG rasm tanlang. Saqlaganda yuklanadi.</small></label>';
+      return '<label class="' + cls + ' va-file-field" for="' + escAttr(id) + '"><span>' + esc(field.label) + '</span><input id="' + escAttr(id) + '" name="' + escAttr(field.name) + '" type="file"' + accept + '><small>JPG, PNG, WebP yoki GIF rasm tanlang. Saqlaganda yuklanadi.</small></label>';
     }
     if (field.kind === 'multi-file') {
       var multiAccept = field.accept ? ' accept="' + escAttr(field.accept) + '"' : '';
       return '<label class="' + cls + ' va-file-field" for="' + escAttr(id) + '"><span>' + esc(field.label) + '</span><input id="' + escAttr(id) + '" name="' + escAttr(field.name) + '" type="file" multiple' + multiAccept + '><small>Ko\'pi bilan 10 ta fayl. Rasmlar va video fayllar saqlaganda yuklanadi.</small></label>';
     }
     return '<label class="' + cls + '" for="' + escAttr(id) + '"><span>' + esc(field.label) + '</span><input id="' + escAttr(id) + '" name="' + escAttr(field.name) + '" type="' + field.kind + '" value="' + escAttr(value || '') + '"' + req + '></label>';
+  }
+
+  function mediaGalleryEditorHtml(items) {
+    if (!items.length) {
+      return '<p class="va-media-gallery-empty">Hali qo\'shimcha media yo\'q.</p>';
+    }
+    return items.map(function (item, idx) {
+      var type = mediaItemType(item);
+      var url = mediaItemDisplayUrl(item);
+      var title = item && item.title ? item.title : '';
+      var preview = '';
+      if (type === 'image' && url) {
+        preview = '<img src="' + escAttr(url) + '" alt="">';
+      } else if (type === 'video' && url) {
+        preview = '<video src="' + escAttr(url) + '" muted playsinline></video>';
+      } else {
+        preview = '<span>' + esc(type === 'embed' ? 'URL' : type.toUpperCase()) + '</span>';
+      }
+      return '<div class="va-media-gallery-item" data-media-index="' + idx + '">' +
+        '<div class="va-media-gallery-preview">' + preview + '</div>' +
+        '<label class="va-media-gallery-title" for="va-media-title-' + idx + '"><span>Nomi</span>' +
+        '<input id="va-media-title-' + idx + '" type="text" value="' + escAttr(title) + '" data-media-title></label>' +
+        '<p class="va-media-gallery-source">' + esc(type) + (url ? ' · ' + esc(url) : '') + '</p>' +
+        '<button type="button" class="va-btn va-btn--danger" data-media-remove>O\'chirish</button>' +
+        '</div>';
+    }).join('');
+  }
+
+  function initMediaGalleryEditor() {
+    Array.prototype.forEach.call(els.fields.querySelectorAll('[data-media-gallery-field]'), function (box) {
+      if (box.dataset.mediaGalleryReady) return;
+      box.dataset.mediaGalleryReady = '1';
+      box.addEventListener('click', function (e) {
+        var remove = e.target.closest && e.target.closest('[data-media-remove]');
+        if (!remove) return;
+        e.preventDefault();
+        var row = remove.closest('[data-media-index]');
+        var idx = row ? parseInt(row.getAttribute('data-media-index'), 10) : -1;
+        var items = readMediaGalleryBox(box);
+        if (idx >= 0 && idx < items.length) {
+          items.splice(idx, 1);
+          writeMediaGalleryBox(box, items);
+        }
+      });
+      box.addEventListener('input', function (e) {
+        if (!e.target.matches('[data-media-title]')) return;
+        var row = e.target.closest('[data-media-index]');
+        var idx = row ? parseInt(row.getAttribute('data-media-index'), 10) : -1;
+        var items = readMediaGalleryBox(box);
+        if (idx >= 0 && idx < items.length) {
+          items[idx].title = String(e.target.value || '').trim();
+          updateMediaGalleryHidden(box, items);
+        }
+      });
+    });
+  }
+
+  function readMediaGalleryBox(box) {
+    var hiddenEl = box.querySelector('input[type="hidden"]');
+    return parseMediaGallery(hiddenEl ? hiddenEl.value : '');
+  }
+
+  function updateMediaGalleryHidden(box, items) {
+    var hiddenEl = box.querySelector('input[type="hidden"]');
+    if (hiddenEl) hiddenEl.value = items.length ? JSON.stringify(items) : '';
+    var count = box.querySelector('.va-media-gallery-head small');
+    if (count) count.textContent = items.length + ' ta media';
+  }
+
+  function writeMediaGalleryBox(box, items) {
+    updateMediaGalleryHidden(box, items);
+    var list = box.querySelector('.va-media-gallery-list');
+    if (list) list.innerHTML = mediaGalleryEditorHtml(items);
+  }
+
+  function mediaItemType(item) {
+    var type = String((item && item.type) || '').toLowerCase();
+    if (type === 'image' || type === 'video' || type === 'embed') return type;
+    var url = String((item && (item.url || item.path)) || '').toLowerCase();
+    if (/\.(mp4|webm|ogg)(\?|#|$)/.test(url)) return 'video';
+    if (/\.(jpe?g|png|webp|gif|avif)(\?|#|$)/.test(url)) return 'image';
+    return 'embed';
+  }
+
+  function mediaItemDisplayUrl(item) {
+    if (!item) return '';
+    if (item.url) return item.url;
+    if (item.path) return uploadResultUrl({ path: item.path });
+    return '';
   }
 
   function readEditor() {
