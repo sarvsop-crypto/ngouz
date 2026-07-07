@@ -49,9 +49,10 @@
     .workflow-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
     .workflow-actions .btn[disabled] { opacity: .62; cursor: not-allowed; }
     .candidate-tools { min-width: 0; display: grid; gap: 10px; margin-top: 14px; }
+    .document-tools { min-width: 0; display: grid; gap: 10px; margin-top: 14px; }
     .candidate-search { min-width: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
-    .candidate-search input, .protocol-form input { box-sizing: border-box; width: 100%; min-width: 0; min-height: 40px; border: 1px solid var(--grey-200); border-radius: 8px; padding: 8px 10px; font: inherit; }
-    .candidate-tools .btn { width: 100%; min-width: 0; white-space: normal; }
+    .candidate-search input, .protocol-form input, .document-tools input { box-sizing: border-box; width: 100%; min-width: 0; min-height: 40px; border: 1px solid var(--grey-200); border-radius: 8px; padding: 8px 10px; font: inherit; }
+    .candidate-tools .btn, .document-tools .btn { width: 100%; min-width: 0; white-space: normal; }
     .candidate-results { max-height: 280px; overflow: auto; border: 1px solid var(--grey-100); border-radius: 10px; background: #fff; }
     .candidate-option { display: grid; grid-template-columns: auto 1fr; gap: 10px; padding: 10px 12px; border-bottom: 1px solid var(--grey-100); align-items: start; }
     .candidate-option:last-child { border-bottom: 0; }
@@ -165,9 +166,10 @@
           </div>
           <div class="sign-actions">
             <button type="button" class="btn btn--primary" id="manualSignBtn" disabled><i class="ph ph-signature" aria-hidden="true"></i> Qo'lda imzolash</button>
+            <button type="button" class="btn btn--secondary" id="finalPdfBtn" disabled><i class="ph ph-download-simple" aria-hidden="true"></i> Yakuniy PDF</button>
             <span class="text-dim" id="manualSignHint">Imzolash uchun signing holatidagi protokolni tanlang.</span>
           </div>
-          <div class="verify-card"><strong>Public verification</strong><br><span>QR sahifada Valid / Invalid, protokol raqami, komissiya, sana, imzolaganlar va vaqt ko‘rsatiladi.</span></div>
+          <div class="verify-card"><strong>Public verification</strong><br><span id="verifyLinkText">QR sahifada Valid / Invalid, protokol raqami, komissiya, sana, imzolaganlar va vaqt ko‘rsatiladi.</span></div>
         </div>
       </section>
     </div>
@@ -190,6 +192,15 @@
             <button type="submit" class="btn btn--secondary btn--sm" id="googleDocSubmit">Saqlash</button>
           </form>
           <div class="verify-card" id="googleDocStatus" hidden style="margin-top:14px;"></div>
+          <form class="document-tools" id="sourceDocxForm" hidden>
+            <label>
+              Word bayonnoma (.docx)
+              <input type="file" id="sourceDocxInput" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+            </label>
+            <button type="submit" class="btn btn--secondary btn--sm" id="sourceDocxSubmit">Word hujjatini yuklash</button>
+            <button type="button" class="btn btn--secondary btn--sm" id="sourceDocxDownload" disabled>Yuklangan Word hujjatini olish</button>
+            <p class="va-error" id="sourceDocxError" role="alert" style="color:var(--error-600);margin:0;"></p>
+          </form>
           <div class="candidate-tools" id="candidateTools" hidden>
             <div class="candidate-search">
               <input type="search" id="candidateSearchInput" placeholder="Murojaat F.I.Sh., NNT yoki STIR bo'yicha qidirish" autocomplete="off">
@@ -288,6 +299,26 @@
   function errText(err, fallback) { return (err && err.message) || fallback || 'Xatolik yuz berdi.'; }
   function canManage() { return currentRole === 'chair' || currentRole === 'secretary'; }
   function isChair() { return currentRole === 'chair'; }
+  function downloadPrivate(path, filename) {
+    return fetch(NgoApi.base + path, {
+      headers: { 'Authorization': 'Bearer ' + NgoApi.getToken() },
+      credentials: 'omit'
+    }).then(function (res) {
+      if (!res.ok) return res.json().catch(function () { return {}; }).then(function (data) {
+        throw new Error(data.message || ('HTTP ' + res.status));
+      });
+      return res.blob();
+    }).then(function (blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = filename || 'download';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    });
+  }
   function statusLabel(status) {
     return {
       draft: 'Draft',
@@ -393,10 +424,24 @@
       status.innerHTML = '<strong>Google Docs</strong><br><span>' + esc(hasAutoDoc ? 'Tayyor · ' + exported : 'Havola biriktirilgan') + '</span>';
     }
   }
+  function renderSourceDocTools() {
+    var form = document.getElementById('sourceDocxForm');
+    var download = document.getElementById('sourceDocxDownload');
+    if (!form || !download) return;
+    form.hidden = !selectedProtocol;
+    var hasDoc = !!(selectedProtocol && selectedProtocol.source_docx_path);
+    var editable = !!(selectedProtocol && selectedProtocol.status === 'draft' && canManage());
+    document.getElementById('sourceDocxInput').disabled = !editable;
+    document.getElementById('sourceDocxSubmit').disabled = !editable;
+    download.disabled = !hasDoc;
+    download.textContent = hasDoc ? 'Yuklangan Word hujjatini olish' : 'Word hujjati yuklanmagan';
+    setText('sourceDocxError', '');
+  }
   function renderSignState(data) {
     signData = data || null;
     var list = document.getElementById('signList');
     var btn = document.getElementById('manualSignBtn');
+    var pdfBtn = document.getElementById('finalPdfBtn');
     var hint = document.getElementById('manualSignHint');
     var myId = data && data.my_user_id;
     var mine = null;
@@ -417,12 +462,17 @@
         : mine && mine.signed ? 'Siz bu protokolni allaqachon imzolagansiz.'
         : canSign ? 'Imzo chizib saqlashingiz mumkin.' : 'Siz imzolovchilar ro‘yxatida topilmadingiz.';
     }
+    if (pdfBtn) pdfBtn.disabled = !(selectedProtocol && selectedProtocol.status === 'signed');
     if (data && data.qr_token) {
       setText('qrText', 'QR token: ' + data.qr_token);
+      var verify = data.verify_url || ('verify-protocol?token=' + encodeURIComponent(data.qr_token));
+      document.getElementById('verifyLinkText').innerHTML = '<a href="' + esc(verify) + '" target="_blank" rel="noopener">Tekshiruv sahifasini ochish</a>';
     } else if (selectedProtocol && selectedProtocol.status === 'signed') {
       setText('qrText', 'QR yaratilgan. Public verification orqali tekshiriladi.');
+      setText('verifyLinkText', 'QR sahifada Valid / Invalid, protokol raqami, komissiya, sana, imzolaganlar va vaqt ko‘rsatiladi.');
     } else {
       setText('qrText', 'Protokol imzolangach yaratiladi');
+      setText('verifyLinkText', 'QR sahifada Valid / Invalid, protokol raqami, komissiya, sana, imzolaganlar va vaqt ko‘rsatiladi.');
     }
   }
   function renderVotePanel(candidates, tally) {
@@ -471,6 +521,7 @@
     renderWorkflowActions();
     renderCandidateTools();
     renderGoogleDocTools();
+    renderSourceDocTools();
     NgoApi.get('/commission/protocols/' + id).then(function (res) {
       var protocol = res.protocol || p;
       currentCandidates = res.candidates || [];
@@ -480,6 +531,7 @@
       renderWorkflowActions();
       renderCandidateTools();
       renderGoogleDocTools();
+      renderSourceDocTools();
       return NgoApi.get('/commission/protocols/' + id + '/tally').catch(function () { return null; });
     }).then(function (tally) {
       tallyData = tally;
@@ -509,6 +561,7 @@
       renderKpis(stats);
       renderWorkflowActions();
       renderCandidateTools();
+      renderSourceDocTools();
     }).catch(function () {
       var list = document.getElementById('protocolRows');
       if (list) list.innerHTML = '<div role="alert" style="color:var(--error-600)">Komissiya ma’lumotlarini yuklab bo‘lmadi.</div>';
@@ -607,6 +660,34 @@
       frame.classList.remove('is-loaded');
       frame.textContent = errText(err, 'OnlyOffice sozlanmagan yoki protokol tanlanmagan.');
     });
+  });
+  document.getElementById('sourceDocxForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!selectedId || !canManage()) return;
+    var input = document.getElementById('sourceDocxInput');
+    if (!input.files || !input.files[0]) { setText('sourceDocxError', 'Avval .docx fayl tanlang.'); return; }
+    var fd = new FormData();
+    fd.append('file', input.files[0]);
+    var btn = document.getElementById('sourceDocxSubmit');
+    btn.disabled = true;
+    setText('sourceDocxError', '');
+    NgoApi.post('/commission/protocols/' + selectedId + '/source-docx', fd, { timeout: COMMISSION_DOCUMENT_TIMEOUT_MS }).then(function () {
+      toast('Word hujjati yuklandi.');
+      input.value = '';
+      return window.selectProtocol(selectedId);
+    }).catch(function (err) {
+      setText('sourceDocxError', errText(err, 'Word hujjati yuklanmadi.'));
+    }).then(function () { btn.disabled = false; renderSourceDocTools(); });
+  });
+  document.getElementById('sourceDocxDownload').addEventListener('click', function () {
+    if (!selectedId) return;
+    downloadPrivate('/commission/protocols/' + selectedId + '/source-docx', 'bayonnoma-' + selectedId + '.docx')
+      .catch(function (err) { toast(errText(err, 'Word hujjatini yuklab bo‘lmadi.')); });
+  });
+  document.getElementById('finalPdfBtn').addEventListener('click', function () {
+    if (!selectedId || !(selectedProtocol && selectedProtocol.status === 'signed')) return;
+    downloadPrivate('/commission/protocols/' + selectedId + '/final-pdf', 'bayonnoma-' + selectedId + '-signed.pdf')
+      .catch(function (err) { toast(errText(err, 'Yakuniy PDF yuklab bo‘lmadi.')); });
   });
   document.getElementById('googleDocForm').addEventListener('submit', function (e) {
     e.preventDefault();
