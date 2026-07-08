@@ -1911,13 +1911,7 @@
     delete data.media_files;
     delete data.video_links;
 
-    var uploads = picked.map(function (file) {
-      return uploadVisualMedia(file).then(function (res) {
-        return mediaItemFromUpload(file, res);
-      });
-    });
-
-    return Promise.all(uploads).then(function (uploaded) {
+    return uploadVisualMediaFiles(picked).then(function (uploaded) {
       gallery = gallery.concat(uploaded.filter(Boolean)).concat(linkItems);
       data.media_gallery = gallery.length ? JSON.stringify(gallery) : '';
       return data;
@@ -2017,6 +2011,29 @@
     var fd = new FormData();
     fd.append('file', picked);
     return NgoApi.post('/admin/upload', fd, { timeout: 90000 });
+  }
+
+  function uploadVisualMediaFiles(files) {
+    files = Array.isArray(files) ? files.filter(Boolean) : [];
+    if (!files.length) return Promise.resolve([]);
+    for (var i = 0; i < files.length; i++) {
+      var picked = files[i];
+      var type = picked.type || '';
+      if (type && type.indexOf('image/') !== 0 && type.indexOf('video/') !== 0) {
+        return Promise.reject(new Error("Faqat rasm yoki video fayllar yuklanadi. Tanlangan fayl turi: " + type));
+      }
+      if (picked.size > 20 * 1024 * 1024) {
+        return Promise.reject(new Error('Har bir media fayl hajmi 20 MB dan oshmasligi kerak (' + (picked.size / (1024 * 1024)).toFixed(1) + ' MB tanlangan).'));
+      }
+    }
+    var fd = new FormData();
+    files.forEach(function (picked) { fd.append('file[]', picked); });
+    return NgoApi.post('/admin/upload', fd, { timeout: 120000 }).then(function (res) {
+      var uploaded = res && Array.isArray(res.files) ? res.files : (res && res.path ? [res] : []);
+      return uploaded.map(function (item, idx) {
+        return mediaItemFromUpload(files[idx] || {}, item);
+      }).filter(Boolean);
+    });
   }
 
   function uploadResultUrl(res) {
