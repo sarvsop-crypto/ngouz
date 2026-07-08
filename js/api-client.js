@@ -168,6 +168,7 @@
     opts = opts || {};
     function roleHome(role) {
       if (role === 'commission') return 'admin-commission';
+      if (role === 'leader') return 'admin-leader-signing';
       return 'admin-dashboard';
     }
     function redirectForbidden(user) {
@@ -190,7 +191,7 @@
         }
       }
       if (opts.minRole) {
-        var levels = { super_admin: 100, regional_admin: 60, portal_moderator: 40, member_manager: 20, member_user: 10 };
+        var levels = { super_admin: 100, leader: 80, regional_admin: 60, portal_moderator: 40, member_manager: 20, member_user: 10, commission: 5 };
         if ((levels[res.user.role] || 0) < (levels[opts.minRole] || 0)) {
           return redirectForbidden(res.user);
         }

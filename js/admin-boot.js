@@ -12,6 +12,7 @@
   // Falls back to the raw code if upstream returns a role we don't know.
   var ROLE_LABELS = {
     super_admin: 'Bosh admin',
+    leader: 'Rahbar',
     regional_admin: 'Hududiy admin',
     portal_moderator: 'Portal moderatori',
     member_manager: 'A\'zolar boshqaruvchisi',
