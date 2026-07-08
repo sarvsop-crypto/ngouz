@@ -406,7 +406,7 @@
   }
 
   function renderTurnstile() {
-    if (tsWidgetId) return true;
+    if (tsWidgetId !== null) return true;
     if (!window.turnstile || !window.turnstile.render) return false;
     var el = document.getElementById('grantsTurnstile');
     if (!el) return false;
@@ -427,7 +427,7 @@
           tsToken = '';
         },
       });
-      return !!tsWidgetId;
+      return tsWidgetId !== null && tsWidgetId !== undefined;
     } catch (_) {
       return false;
     }
@@ -458,7 +458,7 @@
 
   function resetTurnstile() {
     tsToken = '';
-    if (window.turnstile && tsWidgetId) try { window.turnstile.reset(tsWidgetId); } catch (_) {}
+    if (window.turnstile && tsWidgetId !== null) try { window.turnstile.reset(tsWidgetId); } catch (_) {}
   }
 
   waitForTurnstile().catch(function () {});
