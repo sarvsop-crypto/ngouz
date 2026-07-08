@@ -235,12 +235,15 @@ export default {
 
     let resp;
     try {
-      // 25s upstream timeout. CF Workers default to 30s wall-clock but
-      // a plain fetch with no AbortController can stall for the full
-      // budget — we want to surface a clean 504 to the frontend before
-      // CF kills us with a generic 1101.
+      // Most API calls should fail fast, but AI grant search legitimately
+      // runs longer: router LLM + web search + page fetch + synthesizer.
+      // Frontend and PHP both allow 90s, so keep the proxy budget aligned
+      // for that route instead of cutting it at the generic API timeout.
+      const upstreamTimeoutMs = url.pathname === '/v1/public/grants-search' || url.pathname === '/v1/cabinet/grants-search'
+        ? 95000
+        : 25000;
       const ctrl = new AbortController();
-      const timer = setTimeout(() => ctrl.abort(), 25000);
+      const timer = setTimeout(() => ctrl.abort(), upstreamTimeoutMs);
       try {
         resp = await fetch(targetUrl, {
           method: request.method,
