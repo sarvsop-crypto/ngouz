@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="icon" type="image/x-icon" sizes="32x32" href="favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rahbar imzosi — O'zNNTMA Admin</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://ngo-api-proxy.sarvsop.workers.dev" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" integrity="sha384-6p9AefaqUhEVheRlj1mpAkbngHXy9mbYMrIdcIt4Jlc9lOLIablJq3bBsLOjGwZ7" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/pacta-tokens.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-contracts.page.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-topbar.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-notifications.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-app.css?v=20260605">
+  <link rel="stylesheet" href="css/pacta-foundation.css?v=20260628banner">
+  <link rel="stylesheet" href="css/pacta-modal.css?v=20260605">
+  <script src="js/errlog.js" defer></script>
+  <script src="js/admin-modal.js" defer></script>
+  <script src="js/i18n.js" defer></script>
+</head>
+<body>
+<noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa ishlashi uchun JavaScript yoqilgan bo'lishi kerak.</div></noscript>
+<a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
+<div class="layout">
+  <main class="main" id="main-content" tabindex="-1" style="margin-left:0">
+    <header class="topbar">
+      <div class="topbar-left">
+        <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><span aria-current="page">Rahbar imzosi</span></nav>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-notifications">
+          <button type="button" class="topbar-notifications-btn" id="notificationsBtn" aria-label="Bildirishnomalar" aria-expanded="false" aria-haspopup="true"><i class="ph ph-bell" aria-hidden="true"></i></button>
+          <span class="topbar-notifications-badge" aria-hidden="true"></span>
+        </div>
+        <div class="topbar-divider" aria-hidden="true"></div>
+        <div class="main__profile">
+          <div class="main__profile-avatar u-avatar-badge-sm">R</div>
+          <div>
+            <div class="main__profile-name" data-user-name>Rahbar</div>
+            <div class="main__profile-role" data-user-role>Rahbar</div>
+          </div>
+        </div>
+        <a data-action="logout" href="admin-login" class="btn btn--secondary"><i class="ph ph-sign-out" aria-hidden="true"></i> Chiqish</a>
+      </div>
+    </header>
+
+    <div class="main__header">
+      <div>
+        <h1 class="main__title">Rahbar imzosini kutayotgan arizalar</h1>
+        <p class="text-dim" style="margin:6px 0 0">Superadmin tasdig'idan o'tgan shartnoma va guvohnomalarni ko'rib chiqing.</p>
+      </div>
+      <div class="main__btns">
+        <button type="button" class="btn btn--secondary" id="refreshBtn"><i class="ph ph-arrow-clockwise" aria-hidden="true"></i> Yangilash</button>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card">
+        <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock" aria-hidden="true"></i></div></div>
+        <div class="card__body"><div><p class="card__label">Imzo kutilmoqda</p><p class="card__value" id="kpiPending">—</p></div></div>
+      </div>
+      <div class="card">
+        <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-file-text" aria-hidden="true"></i></div></div>
+        <div class="card__body"><div><p class="card__label">Hujjat raqami bor</p><p class="card__value" id="kpiNumbered">—</p></div></div>
+      </div>
+      <div class="card">
+        <div class="card__head"><div class="card__icon"><i class="ph ph-calendar-blank" aria-hidden="true"></i></div></div>
+        <div class="card__body"><div><p class="card__label">Oxirgi yangilanish</p><p class="card__value" id="kpiUpdated" style="font-size:18px">—</p></div></div>
+      </div>
+    </div>
+
+    <section class="table-section" aria-labelledby="leaderQueueTitle">
+      <div class="table-section__head">
+        <h2 class="table-section__title" id="leaderQueueTitle">Imzolash navbati</h2>
+      </div>
+      <table class="table">
+        <caption class="u-visually-hidden">Rahbar imzosini kutayotgan a'zolik arizalari</caption>
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tashkilot</th>
+            <th scope="col">Rahbar</th>
+            <th scope="col">Shartnoma</th>
+            <th scope="col">Guvohnoma</th>
+            <th scope="col">Sana</th>
+            <th scope="col"><span class="u-visually-hidden">Amallar</span></th>
+          </tr>
+        </thead>
+        <tbody id="leaderRows" aria-live="polite" aria-busy="true">
+          <tr class="u-empty-row"><td colspan="7" role="status">Yuklanmoqda...</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</div>
+
+<div class="notifications-panel" id="notificationsPanel" role="dialog" aria-label="Bildirishnomalar" aria-modal="true" aria-hidden="true">
+  <div class="notifications-panel__header">
+    <h2 class="notifications-panel__title">Bildirishnomalar</h2>
+    <button type="button" class="notifications-panel__close" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+  </div>
+  <div class="notifications-panel__list" id="notifPanelList" aria-live="polite">
+    <p class="text-dim" style="padding:20px;text-align:center">Yuklanmoqda...</p>
+  </div>
+  <div class="notifications-panel__footer">
+    <button type="button" class="notifications-panel__mark-read" id="notifMarkAllRead" hidden>Barchasini o'qildi deb belgilash</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="leaderDetailModal" role="dialog" aria-modal="true" aria-labelledby="leaderDetailTitle" aria-hidden="true">
+  <div class="modal modal--wide">
+    <div class="modal__head">
+      <h2 class="modal__title" id="leaderDetailTitle">Ariza tafsilotlari</h2>
+      <button type="button" class="modal__close" onclick="closeLeaderModal()" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
+    </div>
+    <div class="modal__body" id="leaderDetailBody" aria-live="polite">
+      <p class="text-dim">Yuklanmoqda...</p>
+    </div>
+    <div class="modal__footer">
+      <button type="button" class="btn btn--secondary" onclick="closeLeaderModal()">Yopish</button>
+    </div>
+  </div>
+</div>
+
+<div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
+<script src="js/pacta-app.js"></script>
+<script src="js/pacta-foundation.js"></script>
+<script src="js/pacta-notifications.js"></script>
+<script src="js/api-client.js"></script>
+<script>window.NGO_ADMIN_AUTH = { allowedRoles: ['leader', 'super_admin'], fallbackPage: 'admin-leader-signing' };</script>
+<script src="js/admin-boot.js" defer></script>
+<script>
+(function () {
+  var items = [];
+  var toastTimer;
+  function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+  function toast(msg, type) {
+    var el = document.getElementById('cmsToast');
+    if (!el) return;
+    el.textContent = msg;
+    el.className = 'cms-toast cms-toast--' + (type || 'info') + ' show';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 4000);
+  }
+  function money(v) {
+    var n = parseInt(v, 10);
+    return n ? (n / 100).toLocaleString('uz-UZ') + ' UZS' : '—';
+  }
+  function setBusy(busy) {
+    var rows = document.getElementById('leaderRows');
+    if (rows) {
+      rows.setAttribute('aria-busy', busy ? 'true' : 'false');
+      rows.querySelectorAll('button').forEach(function (b) { b.disabled = !!busy; });
+    }
+  }
+  function render() {
+    document.getElementById('kpiPending').textContent = items.length;
+    document.getElementById('kpiNumbered').textContent = items.filter(function (i) { return i.contract_number && i.cert_number; }).length;
+    document.getElementById('kpiUpdated').textContent = new Date().toLocaleString('uz-UZ', { dateStyle: 'short', timeStyle: 'short' });
+    var rows = document.getElementById('leaderRows');
+    if (!items.length) {
+      rows.innerHTML = '<tr class="u-empty-row"><td colspan="7" role="status">Imzolash uchun ariza yo‘q</td></tr>';
+      return;
+    }
+    rows.innerHTML = items.map(function (a) {
+      var id = parseInt(a.id, 10) || 0;
+      return '<tr>' +
+        '<td><strong>#' + esc(a.id) + '</strong></td>' +
+        '<td>' + esc(a.org_name || '') + '<br><span style="font-size:12px;color:#798384">STIR: ' + esc(a.inn || '—') + '</span></td>' +
+        '<td>' + esc(a.leader_name || '—') + '</td>' +
+        '<td>' + esc(a.contract_number || '—') + '</td>' +
+        '<td>' + esc(a.cert_number || '—') + '</td>' +
+        '<td>' + esc(String(a.updated_at || a.created_at || '').slice(0, 16)) + '</td>' +
+        '<td style="white-space:nowrap">' +
+          '<button type="button" class="btn btn--sm btn--secondary" onclick="viewLeaderApp(' + id + ')"><i class="ph ph-eye" aria-hidden="true"></i> Ko‘rish</button> ' +
+          '<button type="button" class="btn btn--sm btn--primary" onclick="signLeaderApp(' + id + ')"><i class="ph ph-pen-nib" aria-hidden="true"></i> Imzolash</button>' +
+        '</td>' +
+      '</tr>';
+    }).join('');
+  }
+  function reload() {
+    setBusy(true);
+    NgoApi.get('/admin/membership-requests?status=leader_review&limit=200')
+      .then(function (res) {
+        items = (res.items || []).sort(function (a, b) {
+          return (new Date(b.updated_at || b.created_at).getTime() || 0) - (new Date(a.updated_at || a.created_at).getTime() || 0);
+        });
+        render();
+      })
+      .catch(function (err) {
+        var rows = document.getElementById('leaderRows');
+        rows.innerHTML = '<tr class="u-empty-row"><td colspan="7" role="alert" style="color:var(--error-600)">Yuklashda xatolik: ' + esc((err && err.message) || 'nomaʼlum') + '</td></tr>';
+      })
+      .then(function () { setBusy(false); });
+  }
+  window.closeLeaderModal = function () {
+    if (window.AdminModal) window.AdminModal.close('leaderDetailModal');
+  };
+  window.viewLeaderApp = function (id) {
+    var body = document.getElementById('leaderDetailBody');
+    body.innerHTML = '<p class="text-dim">Yuklanmoqda...</p>';
+    if (window.AdminModal) window.AdminModal.open('leaderDetailModal');
+    NgoApi.get('/admin/membership-requests/' + id)
+      .then(function (res) {
+        var a = res.application || {};
+        var docs = res.membership_documents || [];
+        var payments = res.payments || [];
+        var history = res.history || [];
+        document.getElementById('leaderDetailTitle').textContent = '#' + (a.id || '') + ' — ' + (a.org_name || 'Ariza');
+        var docHtml = docs.length ? docs.map(function (d) {
+          return '<li><strong>' + esc(d.kind) + '</strong> · ' + esc(d.number || '') + ' · <span class="badge badge--' + (d.status === 'signed' ? 'success' : 'info') + '">' + esc(d.status || '') + '</span> ' +
+            (d.file_path ? '<button type="button" class="btn btn--sm btn--secondary" onclick="downloadLeaderDoc(' + (parseInt(d.id, 10) || 0) + ')"><i class="ph ph-download-simple" aria-hidden="true"></i> DOCX</button>' : '') + '</li>';
+        }).join('') : '<li>Hujjatlar hali shakllanmagan</li>';
+        var payHtml = payments.length ? payments.map(function (p) {
+          return '<li>' + esc(p.provider || '') + ' · ' + money(p.amount) + ' · ' + esc(p.state || '') + ' · ' + esc(String(p.perform_time || p.created_at || '').slice(0, 16)) + '</li>';
+        }).join('') : '<li>To‘lovlar yo‘q</li>';
+        var histHtml = history.length ? history.map(function (h) {
+          return '<li><strong>' + esc(h.action) + '</strong> · ' + esc(h.actor_name || h.actor_role || 'Tizim') + ' · ' + esc(h.from_status || '—') + ' → ' + esc(h.to_status || '—') + '<br><span class="text-dim">' + esc(h.note || '') + ' · ' + esc(h.created_at || '') + '</span></li>';
+        }).join('') : '<li>Tarix yo‘q</li>';
+        body.innerHTML =
+          '<div class="cards" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-bottom:16px">' +
+            '<div class="card"><div class="card__body"><div><p class="card__label">Holat</p><p class="card__value" style="font-size:18px">Rahbar tasdig‘ida</p></div></div></div>' +
+            '<div class="card"><div class="card__body"><div><p class="card__label">Shartnoma</p><p class="card__value" style="font-size:18px">' + esc(a.contract_number || '—') + '</p></div></div></div>' +
+            '<div class="card"><div class="card__body"><div><p class="card__label">Guvohnoma</p><p class="card__value" style="font-size:18px">' + esc(a.cert_number || '—') + '</p></div></div></div>' +
+          '</div>' +
+          '<section style="margin-bottom:16px"><h3>NNT</h3><p><strong>' + esc(a.org_name || '') + '</strong><br>STIR: ' + esc(a.inn || '—') + '<br>Rahbar: ' + esc(a.leader_name || '—') + '<br>Telefon: ' + esc(a.phone || '—') + '</p>' +
+          '<div class="u-inline-stack" style="gap:8px;flex-wrap:wrap;margin-top:10px">' +
+            '<button type="button" class="btn btn--secondary" onclick="returnLeaderApp(' + (parseInt(a.id,10)||0) + ')"><i class="ph ph-arrow-counter-clockwise" aria-hidden="true"></i> Qaytarish</button>' +
+            '<button type="button" class="btn btn--secondary" onclick="rejectLeaderApp(' + (parseInt(a.id,10)||0) + ')"><i class="ph ph-x" aria-hidden="true"></i> Rad etish</button>' +
+            '<button type="button" class="btn btn--primary" onclick="signLeaderApp(' + (parseInt(a.id,10)||0) + ')"><i class="ph ph-pen-nib" aria-hidden="true"></i> Imzolash</button>' +
+          '</div></section>' +
+          '<section style="margin-bottom:16px"><h3>Shakllangan hujjatlar</h3><ul>' + docHtml + '</ul></section>' +
+          '<section style="margin-bottom:16px"><h3>To‘lovlar</h3><ul>' + payHtml + '</ul></section>' +
+          '<section><h3>Tarix</h3><ul>' + histHtml + '</ul></section>';
+      })
+      .catch(function (err) { body.innerHTML = '<p role="alert" style="color:var(--error-600)">Yuklashda xatolik: ' + esc((err && err.message) || 'nomaʼlum') + '</p>'; });
+  };
+  window.signLeaderApp = function (id) {
+    var payload = prompt('Imzo maʼlumoti yoki imzo identifikatori:');
+    if (payload === null) return;
+    payload = (payload || '').trim();
+    if (!payload) { toast('Imzo maʼlumoti majburiy.', 'error'); return; }
+    setBusy(true);
+    NgoApi.post('/admin/membership-requests/' + id + '/sign', { signature_payload: payload })
+      .then(function () { toast('Hujjatlar imzolandi.', 'success'); closeLeaderModal(); reload(); })
+      .catch(function (err) { setBusy(false); toast('Imzolashda xatolik: ' + ((err && err.message) || 'nomaʼlum'), 'error'); });
+  };
+  window.returnLeaderApp = function (id) {
+    var note = prompt('Superadminga qaytarish sababi:');
+    if (note === null) return;
+    note = (note || '').trim();
+    if (!note) { toast('Qaytarish sababi majburiy.', 'error'); return; }
+    setBusy(true);
+    NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', return_reason: note, review_note: note })
+      .then(function () { toast('Ariza qaytarildi.', 'success'); closeLeaderModal(); reload(); })
+      .catch(function (err) { setBusy(false); toast('Qaytarishda xatolik: ' + ((err && err.message) || 'nomaʼlum'), 'error'); });
+  };
+  window.rejectLeaderApp = function (id) {
+    var note = prompt('Rad etish sababi:');
+    if (note === null) return;
+    note = (note || '').trim();
+    if (!note) { toast('Rad etish sababi majburiy.', 'error'); return; }
+    setBusy(true);
+    NgoApi.patch('/admin/membership-requests/' + id, { status: 'rejected', reject_reason: note, review_note: note })
+      .then(function () { toast('Ariza rad etildi.', 'success'); closeLeaderModal(); reload(); })
+      .catch(function (err) { setBusy(false); toast('Rad etishda xatolik: ' + ((err && err.message) || 'nomaʼlum'), 'error'); });
+  };
+  window.downloadLeaderDoc = function (id) {
+    var token = NgoApi.getToken ? NgoApi.getToken() : '';
+    if (!token) { toast('Hujjatni yuklab olish uchun tizimga kiring.', 'error'); return; }
+    fetch(NgoApi.base + '/admin/membership-documents/' + encodeURIComponent(id) + '/download', {
+      headers: { Authorization: 'Bearer ' + token }
+    }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.blob();
+    }).then(function (blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = 'membership-hujjat-' + id + '.docx';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }).catch(function (err) {
+      toast('Hujjatni yuklab olishda xatolik: ' + ((err && err.message) || 'nomaʼlum'), 'error');
+    });
+  };
+  document.getElementById('refreshBtn').addEventListener('click', reload);
+  reload();
+})();
+</script>
+</body>
+</html>
