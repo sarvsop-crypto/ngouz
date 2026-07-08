@@ -179,32 +179,33 @@
   .grants-ai__answer.show { display: block; }
 
   .grants-ai__results { margin-top: 14px; display: grid; gap: 10px; }
-  .grant-card {
+  .grants-ai__card {
     background: #fff; border: 1px solid var(--g-border); border-radius: 14px;
     padding: 14px 16px;
     display: flex; flex-direction: column; gap: 7px;
+    min-height: 0;
     transition: border-color .15s, box-shadow .15s;
   }
-  .grant-card:hover { border-color: var(--g-brand); box-shadow: 0 4px 14px rgba(14,116,144,.1); }
-  .grant-card h4 { margin: 0; font-size: 15px; color: var(--g-ink); font-weight: 600; letter-spacing: -.005em; }
-  .grant-card .donor { font-size: 12px; color: var(--g-muted); margin: 0; }
-  .grant-card .deadline {
+  .grants-ai__card:hover { border-color: var(--g-brand); box-shadow: 0 4px 14px rgba(14,116,144,.1); }
+  .grants-ai__card h4 { margin: 0; font-size: 15px; color: var(--g-ink); font-weight: 600; letter-spacing: -.005em; }
+  .grants-ai__card .donor { font-size: 12px; color: var(--g-muted); margin: 0; }
+  .grants-ai__card .deadline {
     display: inline-block; font-size: 11px; font-weight: 600;
     color: var(--g-brand); background: var(--g-brand-light);
     padding: 3px 8px; border-radius: 6px; align-self: flex-start;
   }
-  .grant-card .body { margin: 0; font-size: 13px; color: var(--g-body); line-height: 1.45; }
-  .grant-card a {
+  .grants-ai__card .body { margin: 0; font-size: 13px; color: var(--g-body); line-height: 1.45; }
+  .grants-ai__card a {
     display: inline-flex; align-items: center; gap: 4px;
     color: var(--g-brand); font-weight: 500; font-size: 13px; text-decoration: none;
     align-self: flex-start; margin-top: 2px;
   }
-  .grant-card a:hover { text-decoration: underline; }
+  .grants-ai__card a:hover { text-decoration: underline; }
 
   @media (max-width: 560px) {
     .grants-ai__header h2 { font-size: 22px; }
     .grants-ai__panel { padding: 12px; }
-    .grant-card { padding: 12px 14px; }
+    .grants-ai__card { padding: 12px 14px; }
   }
 </style>
 <script src="js/errlog.js" defer></script>
@@ -492,7 +493,7 @@
     }
     grants.forEach(function (g) {
       var card = document.createElement('div');
-      card.className = 'grant-card';
+      card.className = 'grants-ai__card';
       // The AI returns g.link as a free-form string. esc() prevents
       // attribute breakout, but a 'javascript:alert(1)' would still
       // execute on click. Allow only http(s) and bare //-prefixed URLs.
