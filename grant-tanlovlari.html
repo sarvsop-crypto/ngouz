@@ -182,20 +182,22 @@
   .grant-card {
     background: #fff; border: 1px solid var(--g-border); border-radius: 14px;
     padding: 14px 16px;
+    display: flex; flex-direction: column; gap: 7px;
     transition: border-color .15s, box-shadow .15s;
   }
   .grant-card:hover { border-color: var(--g-brand); box-shadow: 0 4px 14px rgba(14,116,144,.1); }
-  .grant-card h4 { margin: 0 0 4px; font-size: 15px; color: var(--g-ink); font-weight: 600; letter-spacing: -.005em; }
-  .grant-card .donor { font-size: 12px; color: var(--g-muted); margin: 0 0 6px; }
+  .grant-card h4 { margin: 0; font-size: 15px; color: var(--g-ink); font-weight: 600; letter-spacing: -.005em; }
+  .grant-card .donor { font-size: 12px; color: var(--g-muted); margin: 0; }
   .grant-card .deadline {
     display: inline-block; font-size: 11px; font-weight: 600;
     color: var(--g-brand); background: var(--g-brand-light);
-    padding: 3px 8px; border-radius: 6px; margin-bottom: 8px;
+    padding: 3px 8px; border-radius: 6px; align-self: flex-start;
   }
-  .grant-card .body { margin: 0 0 10px; font-size: 13px; color: var(--g-body); line-height: 1.5; }
+  .grant-card .body { margin: 0; font-size: 13px; color: var(--g-body); line-height: 1.45; }
   .grant-card a {
     display: inline-flex; align-items: center; gap: 4px;
     color: var(--g-brand); font-weight: 500; font-size: 13px; text-decoration: none;
+    align-self: flex-start; margin-top: 2px;
   }
   .grant-card a:hover { text-decoration: underline; }
 
@@ -499,11 +501,14 @@
         var t = String(g.link).trim();
         if (/^(https?:\/\/|\/\/)/i.test(t)) safeLink = t;
       }
+      var meta = [];
+      if (g.donor) meta.push(esc(g.donor));
+      if (g.source) meta.push(esc(g.source));
       card.innerHTML =
         '<h4>' + esc(g.name) + '</h4>' +
-        '<p class="donor">' + esc(g.donor || '') + (g.source ? ' · ' + esc(g.source) : '') + '</p>' +
+        (meta.length ? '<p class="donor">' + meta.join(' · ') + '</p>' : '') +
         (g.deadline && g.deadline !== 'unknown' ? '<span class="deadline">' + L.deadline + esc(g.deadline) + '</span>' : '') +
-        '<p class="body">' + esc(g.summary || '') + '</p>' +
+        (g.summary ? '<p class="body">' + esc(g.summary) + '</p>' : '') +
         (safeLink ? '<a href="' + esc(safeLink) + '" target="_blank" rel="noopener noreferrer">' + L.open + ARROW + '</a>' : '');
       resultsEl.appendChild(card);
     });
