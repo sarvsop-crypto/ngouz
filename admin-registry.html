@@ -27,6 +27,47 @@
   <link rel="stylesheet" href="css/pacta-app.css?v=20260605">
   <link rel="stylesheet" href="css/pacta-foundation.css?v=20260628banner">
   <link rel="stylesheet" href="css/pacta-modal.css?v=20260605">
+  <style>
+    .org-card-modal { max-width: 1120px; width: min(1120px, calc(100vw - 32px)); max-height: 90vh; overflow: auto; }
+    .org-card { display: grid; gap: 18px; color: var(--grey-600,#4b5563); }
+    .org-card__summary { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 16px; align-items: start; padding: 18px; border: 1px solid var(--grey-200,#e5e7eb); border-radius: 8px; background: #f8faf9; }
+    .org-card__name { margin: 0 0 8px; font-size: 20px; line-height: 1.25; color: var(--grey-900,#111827); }
+    .org-card__meta { display: flex; flex-wrap: wrap; gap: 8px 14px; margin: 0; padding: 0; list-style: none; font-size: 13px; color: var(--grey-500,#667085); }
+    .org-card__stats { display: grid; grid-template-columns: repeat(3,minmax(96px,1fr)); gap: 10px; }
+    .org-card__stat { min-width: 0; padding: 10px 12px; border: 1px solid var(--grey-200,#e5e7eb); border-radius: 8px; background: #fff; }
+    .org-card__stat span { display: block; font-size: 12px; color: var(--grey-500,#667085); }
+    .org-card__stat strong { display: block; margin-top: 3px; font-size: 14px; color: var(--grey-900,#111827); overflow-wrap: anywhere; }
+    .org-card__grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 14px; }
+    .org-card__section { min-width: 0; border: 1px solid var(--grey-200,#e5e7eb); border-radius: 8px; background: #fff; overflow: hidden; }
+    .org-card__section--wide { grid-column: 1 / -1; }
+    .org-card__section-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--grey-200,#e5e7eb); background: #fbfcfc; }
+    .org-card__section-title { margin: 0; font-size: 15px; line-height: 1.3; color: var(--grey-900,#111827); }
+    .org-card__count { font-size: 12px; color: var(--grey-500,#667085); }
+    .org-card__body { padding: 14px; }
+    .org-card__dl { display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 9px 12px; margin: 0; font-size: 13px; }
+    .org-card__dl dt { color: var(--grey-500,#667085); }
+    .org-card__dl dd { margin: 0; color: var(--grey-900,#111827); overflow-wrap: anywhere; }
+    .org-card__empty { margin: 0; color: var(--grey-500,#667085); font-size: 13px; }
+    .org-card__table-wrap { overflow: auto; }
+    .org-card__table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .org-card__table th, .org-card__table td { padding: 9px 10px; border-bottom: 1px solid var(--grey-200,#e5e7eb); text-align: left; vertical-align: top; }
+    .org-card__table th { color: var(--grey-500,#667085); font-weight: 600; background: #fbfcfc; white-space: nowrap; }
+    .org-card__table td { color: var(--grey-800,#1f2937); }
+    .org-card__doc-name { font-weight: 600; color: var(--grey-900,#111827); }
+    .org-card__subtle { display: block; margin-top: 2px; color: var(--grey-500,#667085); font-size: 12px; }
+    .org-card__download { white-space: nowrap; }
+    .badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 5px; font-size: 12px; font-weight: 600; line-height: 1.4; }
+    .badge--success { background: var(--success-0,#ecfdf3); border: 1px solid var(--success-25,#d1fadf); color: var(--success-700,#027a48); }
+    .badge--warning { background: var(--warning-0,#fff7e6); border: 1px solid var(--warning-25,#fdecc8); color: var(--warning-200,#966422); }
+    .badge--danger { background: var(--error-0,#fef3f2); border: 1px solid var(--error-25,#fee4e2); color: var(--error-600,#b42318); }
+    @media (max-width: 860px) {
+      .org-card-modal { width: calc(100vw - 18px); }
+      .org-card__summary, .org-card__grid { grid-template-columns: 1fr; }
+      .org-card__stats { grid-template-columns: 1fr; }
+      .org-card__dl { grid-template-columns: 1fr; }
+      .org-card__dl dt { font-weight: 600; }
+    }
+  </style>
 <script src="js/errlog.js" defer></script>
 <link rel="manifest" href="/manifest.webmanifest" />
 <script src="js/sw-register.js" defer></script>
@@ -336,35 +377,210 @@
         var apps = res.membership_applications || [];
         var docs = res.documents || [];
         var payments = res.payments || [];
+        var membershipDocs = res.membership_documents || [];
+        var users = res.users || [];
         var history = res.history || [];
+        var auditLogs = res.audit_logs || [];
         var html = '<div class="modal-overlay is-open" id="orgCardModal" role="dialog" aria-modal="true" aria-labelledby="orgCardTitle" style="display:flex;">'
-          + '<div class="modal" style="max-width:920px;max-height:88vh;overflow:auto;">'
-          + '<div class="modal__head"><h2 class="modal__title" id="orgCardTitle">' + esc(org.name || ('#' + id)) + '</h2><button type="button" class="modal__close" id="orgCardClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>'
-          + '<div class="modal__body">'
-          + '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:16px;">'
-          + '<p><strong>STIR:</strong> ' + esc(org.inn || '—') + '</p><p><strong>Hudud:</strong> ' + esc(org.region_code || '—') + '</p>'
-          + '<p><strong>Rahbar:</strong> ' + esc(org.leader_name || '—') + '</p><p><strong>Aʼzolik:</strong> ' + esc(org.status || '—') + '</p>'
-          + '<p><strong>Shartnoma:</strong> ' + esc(org.contract_number || '—') + '</p><p><strong>Sertifikat:</strong> ' + esc(org.cert_number || '—') + '</p>'
-          + '<p><strong>Tavsiyanoma:</strong> ' + esc(org.recommendation_number || '—') + '</p><p><strong>Toʻlov:</strong> ' + esc(org.payment_status || '—') + '</p>'
-          + '</div>'
-          + '<h3 style="font-size:16px;margin:14px 0 8px;">Arizalar</h3>' + table(apps, ['id','status','review_note','return_reason','reject_reason','created_at'])
-          + '<h3 style="font-size:16px;margin:14px 0 8px;">Hujjatlar</h3>' + table(docs, ['id','name','category','signed_at','locked_at','created_at'])
-          + '<h3 style="font-size:16px;margin:14px 0 8px;">Toʻlovlar</h3>' + table(payments, ['id','purpose','amount','state','created_at','updated_at'])
-          + '<h3 style="font-size:16px;margin:14px 0 8px;">Tarix</h3>' + table(history, ['created_at','actor_name','action','from_status','to_status','note'])
-          + '</div></div></div>';
+          + '<div class="modal org-card-modal">'
+          + '<div class="modal__head"><h2 class="modal__title" id="orgCardTitle">NNT elektron kartasi</h2><button type="button" class="modal__close" id="orgCardClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>'
+          + '<div class="modal__body"><div class="org-card">'
+          + renderOrgSummary(org, id, apps, docs, payments, membershipDocs)
+          + '<div class="org-card__grid">'
+          + section('Umumiy maʼlumotlar', detailsList([
+              ['Nomi', org.name || ('#' + id)],
+              ['STIR', org.inn],
+              ['Hudud', org.region_code],
+              ['Manzil', org.address],
+              ['Rahbar', org.leader_name],
+              ['Telefon', org.phone],
+              ['Email', org.email],
+              ['Roʻyxatdan oʻtgan sana', dateOnly(org.registered_at)],
+              ['Aʼzo bo‘lgan sana', dateOnly(org.member_since)],
+              ['Aʼzolik tugashi', dateOnly(org.membership_expires_at)]
+            ]))
+          + section('Hujjat raqamlari', detailsList([
+              ['Shartnoma raqami', org.contract_number],
+              ['Sertifikat raqami', org.cert_number],
+              ['Tavsiyanoma raqami', org.recommendation_number],
+              ['Tavsiyanoma holati', labelFor(org.recommendation_status)],
+              ['Toʻlov holati', labelFor(org.payment_status)],
+              ['Toʻlov summasi', money(org.payment_amount)],
+              ['Toʻlov sanasi', dateTime(org.payment_paid_at)]
+            ]))
+          + section('Tashkilot foydalanuvchilari', usersTable(users), users.length)
+          + section('Aʼzolik arizalari', applicationsTable(apps), apps.length)
+          + section('Yuklangan hujjatlar', uploadedDocsTable(docs), docs.length, true)
+          + section('Shakllantirilgan hujjatlar', membershipDocsTable(membershipDocs), membershipDocs.length, true)
+          + section('Toʻlovlar tarixi', paymentsTable(payments), payments.length, true)
+          + section('Jarayon tarixi', historyTable(history), history.length, true)
+          + section('Audit jurnali', auditTable(auditLogs), auditLogs.length, true)
+          + '</div></div></div></div></div>';
         var old = document.getElementById('orgCardModal');
         if (old) old.remove();
         document.body.insertAdjacentHTML('beforeend', html);
-        document.getElementById('orgCardClose').addEventListener('click', function () { document.getElementById('orgCardModal').remove(); });
+        var modal = document.getElementById('orgCardModal');
+        document.getElementById('orgCardClose').addEventListener('click', closeOrgCard);
+        modal.addEventListener('click', function (event) { if (event.target === modal) closeOrgCard(); });
       }).catch(function (err) {
         toast('Kartani ochishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error');
       });
     };
-    function table(rows, cols) {
-      if (!rows || !rows.length) return '<p style="color:#798384;margin:0 0 10px;">Maʼlumot yoʻq.</p>';
-      return '<div style="overflow:auto;"><table class="table"><thead><tr>' + cols.map(function (c) { return '<th>' + esc(c) + '</th>'; }).join('') + '</tr></thead><tbody>'
-        + rows.slice(0, 50).map(function (r) { return '<tr>' + cols.map(function (c) { return '<td>' + esc(r[c] || '—') + '</td>'; }).join('') + '</tr>'; }).join('')
-        + '</tbody></table></div>';
+    function closeOrgCard() {
+      var el = document.getElementById('orgCardModal');
+      if (el) el.remove();
+    }
+    function section(title, body, count, wide) {
+      return '<section class="org-card__section' + (wide ? ' org-card__section--wide' : '') + '">'
+        + '<div class="org-card__section-head"><h3 class="org-card__section-title">' + esc(title) + '</h3>'
+        + (count == null ? '' : '<span class="org-card__count">' + esc(count) + '</span>') + '</div>'
+        + '<div class="org-card__body">' + body + '</div></section>';
+    }
+    function renderOrgSummary(org, id, apps, docs, payments, membershipDocs) {
+      return '<div class="org-card__summary">'
+        + '<div><h3 class="org-card__name">' + esc(org.name || ('#' + id)) + '</h3>'
+        + '<ul class="org-card__meta">'
+        + '<li>STIR: <strong>' + esc(org.inn || '—') + '</strong></li>'
+        + '<li>Hudud: <strong>' + esc(org.region_code || '—') + '</strong></li>'
+        + '<li>Rahbar: <strong>' + esc(org.leader_name || '—') + '</strong></li>'
+        + '<li>' + statusBadge(org.status) + '</li>'
+        + '</ul></div>'
+        + '<div class="org-card__stats">'
+        + stat('Arizalar', apps.length)
+        + stat('Hujjatlar', docs.length + membershipDocs.length)
+        + stat('Toʻlovlar', payments.length)
+        + '</div></div>';
+    }
+    function stat(label, value) {
+      return '<div class="org-card__stat"><span>' + esc(label) + '</span><strong>' + esc(value) + '</strong></div>';
+    }
+    function detailsList(rows) {
+      return '<dl class="org-card__dl">' + rows.map(function (r) {
+        return '<dt>' + esc(r[0]) + '</dt><dd>' + esc(blank(r[1])) + '</dd>';
+      }).join('') + '</dl>';
+    }
+    function emptyMsg() {
+      return '<p class="org-card__empty">Maʼlumot yoʻq.</p>';
+    }
+    function table(headers, rows) {
+      if (!rows || !rows.length) return emptyMsg();
+      return '<div class="org-card__table-wrap"><table class="org-card__table"><thead><tr>'
+        + headers.map(function (h) { return '<th scope="col">' + esc(h) + '</th>'; }).join('')
+        + '</tr></thead><tbody>' + rows.join('') + '</tbody></table></div>';
+    }
+    function applicationsTable(rows) {
+      return table(['Holat', 'Sabab / izoh', 'Yuborilgan', 'Yangilangan'], rows.slice(0, 50).map(function (r) {
+        var note = r.return_reason || r.reject_reason || r.review_note || r.note || '—';
+        return '<tr><td>' + statusBadge(r.status) + '</td><td>' + esc(note) + '</td><td>' + esc(dateTime(r.created_at)) + '</td><td>' + esc(dateTime(r.updated_at)) + '</td></tr>';
+      }));
+    }
+    function uploadedDocsTable(rows) {
+      return table(['Hujjat', 'Holat', 'Sana', 'Fayl'], rows.slice(0, 80).map(function (r) {
+        var title = '<span class="org-card__doc-name">' + esc(r.name || ('Hujjat #' + r.id)) + '</span><span class="org-card__subtle">' + esc([r.category, formatBytes(r.size_bytes), r.mime_type].filter(Boolean).join(' · ') || '—') + '</span>';
+        var locked = r.locked_at ? 'Bloklangan' : (r.signed_at ? 'Imzolangan' : 'Yuklangan');
+        return '<tr><td>' + title + '</td><td>' + esc(locked) + '</td><td>' + esc(dateTime(r.created_at || r.signed_at || r.locked_at)) + '</td><td>' + esc(r.file_path || '—') + '</td></tr>';
+      }));
+    }
+    function membershipDocsTable(rows) {
+      return table(['Hujjat', 'Raqam', 'Holat', 'Sana', 'Amal'], rows.slice(0, 80).map(function (r) {
+        var title = '<span class="org-card__doc-name">' + esc(docKind(r.kind)) + '</span><span class="org-card__subtle">' + esc(r.file_path || '—') + '</span>';
+        return '<tr><td>' + title + '</td><td>' + esc(blank(r.number)) + '</td><td>' + statusBadge(r.status) + '</td><td>' + esc(dateTime(r.signed_at || r.generated_at)) + '</td><td>' + downloadButton('/admin/membership-documents/' + r.id + '/download', docKind(r.kind) + '-' + (r.number || r.id)) + '</td></tr>';
+      }));
+    }
+    function paymentsTable(rows) {
+      return table(['Maqsad', 'Summa', 'Holat', 'Provider', 'Sana'], rows.slice(0, 80).map(function (r) {
+        return '<tr><td>' + esc(labelFor(r.purpose)) + '</td><td>' + esc(money(r.amount)) + '</td><td>' + statusBadge(r.state) + '</td><td>' + esc(blank(r.provider)) + '</td><td>' + esc(dateTime(r.perform_time || r.updated_at || r.created_at)) + '</td></tr>';
+      }));
+    }
+    function usersTable(rows) {
+      return table(['Foydalanuvchi', 'Rol', 'Holat', 'Aloqa'], rows.slice(0, 20).map(function (r) {
+        var contact = [r.phone, r.email].filter(Boolean).join(' · ') || '—';
+        return '<tr><td>' + esc(r.full_name || ('#' + r.id)) + '</td><td>' + esc(labelFor(r.role)) + '</td><td>' + statusBadge(r.status) + '</td><td>' + esc(contact) + '</td></tr>';
+      }));
+    }
+    function historyTable(rows) {
+      return table(['Sana', 'Foydalanuvchi', 'Amal', 'Holat', 'Izoh'], rows.slice(0, 100).map(function (r) {
+        var flow = [labelFor(r.from_status), labelFor(r.to_status)].filter(function (v) { return v && v !== '—'; }).join(' → ') || '—';
+        return '<tr><td>' + esc(dateTime(r.created_at)) + '</td><td>' + esc(r.actor_name || ('#' + (r.actor_id || '—'))) + '</td><td>' + esc(labelFor(r.action)) + '</td><td>' + esc(flow) + '</td><td>' + esc(r.note || '—') + '</td></tr>';
+      }));
+    }
+    function auditTable(rows) {
+      return table(['Sana', 'Foydalanuvchi', 'Amal', 'Obyekt'], rows.slice(0, 100).map(function (r) {
+        var actor = r.actor_name || r.actor_role || (r.actor_id ? ('#' + r.actor_id) : 'Tizim');
+        return '<tr><td>' + esc(dateTime(r.created_at)) + '</td><td>' + esc(actor) + '</td><td>' + esc(labelFor(r.action)) + '</td><td>' + esc([r.entity, r.entity_id].filter(Boolean).join(' #') || '—') + '</td></tr>';
+      }));
+    }
+    function downloadButton(path, filename) {
+      return '<button type="button" class="btn--ghost-sm org-card__download" onclick="downloadOrgFile(' + esc(JSON.stringify(path)) + ', ' + esc(JSON.stringify(filename || 'document')) + ')" title="Yuklab olish"><i class="ph ph-download-simple" aria-hidden="true"></i></button>';
+    }
+    window.downloadOrgFile = function(path, filename) {
+      var token = '';
+      try { token = localStorage.getItem('ngo_api_token') || sessionStorage.getItem('ngo_api_token') || ''; } catch (_) {}
+      if (!token) { toast('Hujjatni yuklab olish uchun tizimga kiring.', 'error'); return; }
+      fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1' + path, {
+        headers: { Authorization: 'Bearer ' + token }
+      }).then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.blob();
+      }).then(function (blob) {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = String(filename || 'document').replace(/[\\/:*?"<>|]+/g, '_');
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+      }).catch(function (err) {
+        toast('Hujjatni yuklab bo‘lmadi: ' + ((err && err.message) || 'nomaʼlum'), 'error');
+      });
+    };
+    function dateOnly(value) {
+      if (!value) return '—';
+      return String(value).slice(0, 10);
+    }
+    function dateTime(value) {
+      if (!value) return '—';
+      return String(value).replace('T', ' ').slice(0, 19);
+    }
+    function money(value) {
+      if (value == null || value === '') return '—';
+      var n = Number(value);
+      if (!isFinite(n)) return value;
+      if (Math.abs(n) >= 1000) n = n / 100;
+      return n.toLocaleString('uz-UZ') + ' UZS';
+    }
+    function formatBytes(value) {
+      var n = Number(value || 0);
+      if (!n || !isFinite(n)) return '';
+      if (n < 1024) return n + ' B';
+      if (n < 1048576) return Math.round(n / 1024) + ' KB';
+      return (n / 1048576).toFixed(1) + ' MB';
+    }
+    function blank(value) {
+      return value == null || value === '' ? '—' : value;
+    }
+    function statusBadge(value) {
+      var v = String(value || '—');
+      var key = v.toLowerCase();
+      var kind = key === 'active' || key === 'paid' || key === 'accepted' || key === 'signed' || key === 'approved' ? 'success'
+        : key === 'rejected' || key === 'cancelled' || key === 'inactive' ? 'danger'
+        : 'warning';
+      return '<span class="badge badge--' + kind + '">' + esc(labelFor(v)) + '</span>';
+    }
+    function docKind(value) {
+      var map = { application: 'Ariza', contract: 'Shartnoma', certificate: 'Sertifikat', recommendation: 'Tavsiyanoma' };
+      return map[value] || labelFor(value || 'Hujjat');
+    }
+    function labelFor(value) {
+      var map = {
+        active: 'Faol', inactive: 'Noaktiv', pending: 'Kutilmoqda', paid: 'Toʻlangan',
+        membership: 'Aʼzolik', submitted: 'Yuborildi', regional_review: 'Hududiy ko‘rib chiqish',
+        superadmin_review: 'Superadmin ko‘rib chiqmoqda', leader_review: 'Rahbar tasdig‘ida',
+        accepted: 'Aʼzolikka qabul qilindi', rejected: 'Rad etildi', returned: 'Qaytarildi',
+        generated: 'Shakllantirilgan', signed: 'Imzolangan', draft: 'Qoralama'
+      };
+      return value == null || value === '' ? '—' : (map[value] || value);
     }
 
     function loadPage(seq) {
