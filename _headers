@@ -57,6 +57,10 @@
 /*.html
   Cache-Control: public, max-age=300, must-revalidate
 
+/admin-leader-signing
+  Content-Type: text/html; charset=utf-8
+  Cache-Control: public, max-age=300, must-revalidate
+
 /
   Cache-Control: public, max-age=300, must-revalidate
 
