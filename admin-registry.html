@@ -56,6 +56,11 @@
     .org-card__doc-name { font-weight: 600; color: var(--grey-900,#111827); }
     .org-card__subtle { display: block; margin-top: 2px; color: var(--grey-500,#667085); font-size: 12px; }
     .org-card__download { white-space: nowrap; }
+    .registry-filters { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; padding: 14px 18px; border-top: 1px solid var(--grey-100,#eef2f2); background: #fbfcfc; }
+    .registry-filters__field { display: grid; gap: 5px; min-width: 0; }
+    .registry-filters__field label { font-size: 12px; font-weight: 600; color: var(--grey-500,#667085); }
+    .registry-filters__field input, .registry-filters__field select { width: 100%; min-width: 0; min-height: 38px; border: 1px solid var(--grey-200,#e5e7eb); border-radius: 8px; padding: 7px 10px; font: inherit; font-size: 13px; background: #fff; color: var(--grey-900,#111827); }
+    .registry-filters__actions { display: flex; align-items: end; gap: 8px; }
     .badge { display: inline-flex; align-items: center; gap: 6px; padding: 3px 9px; border-radius: 5px; font-size: 12px; font-weight: 600; line-height: 1.4; }
     .badge--success { background: var(--success-0,#ecfdf3); border: 1px solid var(--success-25,#d1fadf); color: var(--success-700,#027a48); }
     .badge--warning { background: var(--warning-0,#fff7e6); border: 1px solid var(--warning-25,#fdecc8); color: var(--warning-200,#966422); }
@@ -66,6 +71,8 @@
       .org-card__stats { grid-template-columns: 1fr; }
       .org-card__dl { grid-template-columns: 1fr; }
       .org-card__dl dt { font-weight: 600; }
+      .registry-filters { grid-template-columns: 1fr; }
+      .registry-filters__actions { align-items: stretch; }
     }
   </style>
 <script src="js/errlog.js" defer></script>
@@ -181,6 +188,79 @@
             <input id="registrySearch" type="search" enterkeyhint="search" class="table-section__search" data-i18n-placeholder="admin.registry.searchPlaceholder" placeholder="Qidirish..." data-i18n-aria-label="admin.ui.search" aria-label="Qidirish" maxlength="200" aria-controls="registryTableBody" />
           </div>
         </div>
+        <form class="registry-filters" id="registryFilters" role="search" aria-label="Reyestr filtrlari">
+          <div class="registry-filters__field">
+            <label for="filterInn">STIR</label>
+            <input id="filterInn" type="search" inputmode="numeric" maxlength="20" autocomplete="off">
+          </div>
+          <div class="registry-filters__field">
+            <label for="filterRegion">Hudud</label>
+            <select id="filterRegion">
+              <option value="">Barchasi</option>
+              <option value="toshkent-sh">Toshkent shahri</option>
+              <option value="toshkent-v">Toshkent viloyati</option>
+              <option value="samarqand">Samarqand viloyati</option>
+              <option value="fargona">Fargʻona viloyati</option>
+              <option value="buxoro">Buxoro viloyati</option>
+              <option value="namangan">Namangan viloyati</option>
+              <option value="andijon">Andijon viloyati</option>
+              <option value="qashqadaryo">Qashqadaryo viloyati</option>
+              <option value="surxondaryo">Surxondaryo viloyati</option>
+              <option value="xorazm">Xorazm viloyati</option>
+              <option value="jizzax">Jizzax viloyati</option>
+              <option value="sirdaryo">Sirdaryo viloyati</option>
+              <option value="navoiy">Navoiy viloyati</option>
+              <option value="karakalpakstan">Qoraqalpogʻiston Respublikasi</option>
+            </select>
+          </div>
+          <div class="registry-filters__field">
+            <label for="filterStatus">Aʼzolik holati</label>
+            <select id="filterStatus">
+              <option value="active">Faol</option>
+              <option value="pending">Yangi</option>
+              <option value="inactive">Noaktiv</option>
+              <option value="all">Barchasi</option>
+            </select>
+          </div>
+          <div class="registry-filters__field">
+            <label for="filterLeader">Tashkilot rahbari</label>
+            <input id="filterLeader" type="search" maxlength="200" autocomplete="off">
+          </div>
+          <div class="registry-filters__field">
+            <label for="filterContract">Shartnoma raqami</label>
+            <input id="filterContract" type="search" maxlength="80" autocomplete="off">
+          </div>
+          <div class="registry-filters__field">
+            <label for="filterCertificate">Sertifikat raqami</label>
+            <input id="filterCertificate" type="search" maxlength="80" autocomplete="off">
+          </div>
+          <div class="registry-filters__field">
+            <label for="filterRecommendation">Tavsiyanoma raqami</label>
+            <input id="filterRecommendation" type="search" maxlength="80" autocomplete="off">
+          </div>
+          <div class="registry-filters__field">
+            <label for="filterRecommendationStatus">Tavsiyanoma holati</label>
+            <select id="filterRecommendationStatus">
+              <option value="">Barchasi</option>
+              <option value="pending">Kutilmoqda</option>
+              <option value="generated">Shakllantirilgan</option>
+              <option value="signed">Imzolangan</option>
+              <option value="rejected">Rad etilgan</option>
+            </select>
+          </div>
+          <div class="registry-filters__field">
+            <label for="filterRegisteredFrom">Roʻyxat sanasi: dan</label>
+            <input id="filterRegisteredFrom" type="date">
+          </div>
+          <div class="registry-filters__field">
+            <label for="filterRegisteredTo">Roʻyxat sanasi: gacha</label>
+            <input id="filterRegisteredTo" type="date">
+          </div>
+          <div class="registry-filters__actions">
+            <button type="submit" class="btn btn--secondary"><i class="ph ph-funnel" aria-hidden="true"></i> Filtrlash</button>
+            <button type="button" class="btn btn--secondary" id="registryFiltersReset"><i class="ph ph-x" aria-hidden="true"></i> Tozalash</button>
+          </div>
+        </form>
         <table class="table">
           <caption class="u-visually-hidden" data-i18n="admin.registry.tableCaption">Ro'yxatdan o'tgan NNT tashkilotlari</caption>
           <thead>
@@ -323,6 +403,18 @@
     var offset = 0;
     var total = 0;
     var searchQ = '';
+    var filters = {
+      inn: '',
+      region: '',
+      status: 'active',
+      leader_name: '',
+      contract_number: '',
+      cert_number: '',
+      recommendation_number: '',
+      recommendation_status: '',
+      registered_from: '',
+      registered_to: ''
+    };
     // Bumped each time a fresh load is initiated (initial mount or
     // search-input change). Recursive paginating loadPage() calls
     // inherit the seq so an in-flight sweep is invalidated wholesale
@@ -333,14 +425,30 @@
     function esc(s) { return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
     function renderKpi() {
-      document.getElementById('kpiTotal').textContent = total;
-      document.getElementById('kpiActive').textContent = total; // all imported orgs are active
+      var visible = currentDisplayItems();
+      document.getElementById('kpiTotal').textContent = visible.length;
+      document.getElementById('kpiActive').textContent = visible.filter(function (o) { return o.status === 'active'; }).length;
+    }
+
+    function currentDisplayItems() {
+      var q = searchQ.toLowerCase();
+      var filtered = items;
+      if (q) filtered = filtered.filter(function(o) { return ((o.name||'')+' '+(o.inn||'')+' '+(o.leader_name||'')+' '+(o.region_code||'')+' '+(o.contract_number||'')+' '+(o.cert_number||'')+' '+(o.recommendation_number||'')).toLowerCase().indexOf(q) !== -1; });
+      if (filters.status && filters.status !== 'all') filtered = filtered.filter(function (o) { return String(o.status || '') === filters.status; });
+      if (filters.inn) filtered = filtered.filter(function (o) { return String(o.inn || '').toLowerCase().indexOf(filters.inn.toLowerCase()) !== -1; });
+      if (filters.region) filtered = filtered.filter(function (o) { return String(o.region_code || '') === filters.region; });
+      if (filters.leader_name) filtered = filtered.filter(function (o) { return String(o.leader_name || '').toLowerCase().indexOf(filters.leader_name.toLowerCase()) !== -1; });
+      if (filters.contract_number) filtered = filtered.filter(function (o) { return String(o.contract_number || '').toLowerCase().indexOf(filters.contract_number.toLowerCase()) !== -1; });
+      if (filters.cert_number) filtered = filtered.filter(function (o) { return String(o.cert_number || '').toLowerCase().indexOf(filters.cert_number.toLowerCase()) !== -1; });
+      if (filters.recommendation_number) filtered = filtered.filter(function (o) { return String(o.recommendation_number || '').toLowerCase().indexOf(filters.recommendation_number.toLowerCase()) !== -1; });
+      if (filters.recommendation_status) filtered = filtered.filter(function (o) { return String(o.recommendation_status || '') === filters.recommendation_status; });
+      if (filters.registered_from) filtered = filtered.filter(function (o) { return String(o.registered_at || '').slice(0, 10) >= filters.registered_from; });
+      if (filters.registered_to) filtered = filtered.filter(function (o) { return String(o.registered_at || '').slice(0, 10) <= filters.registered_to; });
+      return filtered;
     }
 
     function renderTable() {
-      var q = searchQ.toLowerCase();
-      var filtered = items;
-      if (q) filtered = items.filter(function(o) { return ((o.name||'')+' '+(o.inn||'')+' '+(o.leader_name||'')+' '+(o.region_code||'')+' '+(o.contract_number||'')+' '+(o.cert_number||'')+' '+(o.recommendation_number||'')).toLowerCase().indexOf(q) !== -1; });
+      var filtered = currentDisplayItems();
       var tbody = document.getElementById('registryTableBody');
       if (!filtered.length) {
         tbody.innerHTML = '<tr class="u-empty-row"><td colspan="8" role="status">' +
@@ -586,14 +694,48 @@
       return value == null || value === '' ? '—' : (map[value] || value);
     }
 
+    function buildRegistryQuery(extra) {
+      var params = new URLSearchParams();
+      params.set('limit', '200');
+      params.set('offset', String(offset));
+      if (searchQ) params.set('q', searchQ);
+      Object.keys(filters).forEach(function (key) {
+        if (filters[key] !== '') params.set(key === 'region' ? 'region' : key, filters[key]);
+      });
+      Object.keys(extra || {}).forEach(function (key) {
+        if (extra[key] == null || extra[key] === '') params.delete(key);
+        else params.set(key, extra[key]);
+      });
+      return params.toString();
+    }
+
+    function readRegistryFilters() {
+      filters.inn = document.getElementById('filterInn').value.trim();
+      filters.region = document.getElementById('filterRegion').value;
+      filters.status = document.getElementById('filterStatus').value || 'active';
+      filters.leader_name = document.getElementById('filterLeader').value.trim();
+      filters.contract_number = document.getElementById('filterContract').value.trim();
+      filters.cert_number = document.getElementById('filterCertificate').value.trim();
+      filters.recommendation_number = document.getElementById('filterRecommendation').value.trim();
+      filters.recommendation_status = document.getElementById('filterRecommendationStatus').value;
+      filters.registered_from = document.getElementById('filterRegisteredFrom').value;
+      filters.registered_to = document.getElementById('filterRegisteredTo').value;
+    }
+
+    function reloadRegistry() {
+      items = [];
+      offset = 0;
+      loadPage();
+    }
+
     function loadPage(seq) {
       if (seq === undefined) seq = ++loadSeq;
-      NgoApi.get('/admin/organizations?limit=200&offset=' + offset + (searchQ ? '&q=' + encodeURIComponent(searchQ) : ''))
+      NgoApi.get('/admin/organizations?' + buildRegistryQuery())
         .then(function(res) {
           if (seq !== loadSeq) return; // stale — newer search/load supersedes
           items = items.concat(res.items || []);
           total = res.total;
-          if (items.length < total && !searchQ) { offset += 200; loadPage(seq); }
+          if (items.length < total) { offset += 200; loadPage(seq); }
           else {
             // Alphabetical by name — admins use this table to look up
             // specific NNTs; raw API order made finding "Mehrijon"
@@ -759,33 +901,110 @@
       if (searchDebounce) clearTimeout(searchDebounce);
       searchDebounce = setTimeout(function () {
         searchQ = val;
-        items = []; offset = 0;
-        loadPage();
+        reloadRegistry();
       }, 250);
+    });
+
+    document.getElementById('registryFilters').addEventListener('submit', function (event) {
+      event.preventDefault();
+      readRegistryFilters();
+      reloadRegistry();
+    });
+    document.querySelectorAll('#registryFilters input, #registryFilters select').forEach(function (el) {
+      el.addEventListener('change', function () {
+        readRegistryFilters();
+        reloadRegistry();
+      });
+    });
+    document.getElementById('registryFiltersReset').addEventListener('click', function () {
+      document.getElementById('filterInn').value = '';
+      document.getElementById('filterRegion').value = '';
+      document.getElementById('filterStatus').value = 'active';
+      document.getElementById('filterLeader').value = '';
+      document.getElementById('filterContract').value = '';
+      document.getElementById('filterCertificate').value = '';
+      document.getElementById('filterRecommendation').value = '';
+      document.getElementById('filterRecommendationStatus').value = '';
+      document.getElementById('filterRegisteredFrom').value = '';
+      document.getElementById('filterRegisteredTo').value = '';
+      readRegistryFilters();
+      reloadRegistry();
     });
 
     loadPage();
 
     function exportRegistry(format) {
-        var token = '';
-        try { token = localStorage.getItem('ngo_api_token') || sessionStorage.getItem('ngo_api_token') || ''; } catch (_) {}
-        if (!token) { toast('Eksport uchun tizimga kiring.', 'error'); return; }
         format = format || 'csv';
-        fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1/admin/organizations/export?format=' + encodeURIComponent(format), {
-          headers: { Authorization: 'Bearer ' + token }
-        }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.blob(); })
-          .then(function (blob) {
-            var url = URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = 'nnt-royxati-' + new Date().toISOString().slice(0, 10) + '.' + format;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
-          }).catch(function (err) {
-            toast('Eksportda xatolik: ' + ((err && err.message) || 'nomaʼlum'), 'error');
-          });
+        var exportItems = currentDisplayItems();
+        if (!exportItems.length) { toast('Eksport uchun maʼlumot yoʻq.', 'warning'); return; }
+        var headers = [
+          ['id', 'ID'],
+          ['name', 'NNT nomi'],
+          ['inn', 'STIR'],
+          ['region_code', 'Hudud'],
+          ['leader_name', 'Rahbar'],
+          ['phone', 'Telefon'],
+          ['email', 'Email'],
+          ['registered_at', 'Roʻyxatdan oʻtgan sana'],
+          ['member_since', 'Aʼzo boʻlgan sana'],
+          ['status', 'Holat'],
+          ['contract_number', 'Shartnoma raqami'],
+          ['cert_number', 'Sertifikat raqami'],
+          ['recommendation_number', 'Tavsiyanoma raqami'],
+          ['recommendation_status', 'Tavsiyanoma holati'],
+          ['payment_status', 'Toʻlov holati'],
+          ['payment_amount', 'Toʻlov summasi'],
+          ['payment_paid_at', 'Toʻlov sanasi'],
+          ['membership_expires_at', 'Aʼzolik tugashi']
+        ];
+        var rows = exportItems.map(function (row) {
+          return headers.map(function (h) { return row[h[0]] == null ? '' : String(row[h[0]]); });
+        });
+        var stamp = new Date().toISOString().slice(0, 10);
+        if (format === 'pdf') {
+          openRegistryPrintExport(headers, rows);
+          return;
+        }
+        if (format === 'xlsx') {
+          var html = '<html><head><meta charset="UTF-8"></head><body><table><thead><tr>'
+            + headers.map(function (h) { return '<th>' + esc(h[1]) + '</th>'; }).join('')
+            + '</tr></thead><tbody>'
+            + rows.map(function (r) { return '<tr>' + r.map(function (v) { return '<td>' + esc(v) + '</td>'; }).join('') + '</tr>'; }).join('')
+            + '</tbody></table></body></html>';
+          downloadText('\ufeff' + html, 'nnt-royxati-' + stamp + '.xls', 'application/vnd.ms-excel;charset=utf-8');
+          return;
+        }
+        var csv = headers.map(function (h) { return csvCell(h[1]); }).join(',') + '\n'
+          + rows.map(function (r) { return r.map(csvCell).join(','); }).join('\n');
+        downloadText('\ufeff' + csv, 'nnt-royxati-' + stamp + '.csv', 'text/csv;charset=utf-8');
+    }
+    function csvCell(value) {
+      return '"' + String(value == null ? '' : value).replace(/"/g, '""') + '"';
+    }
+    function downloadText(text, filename, type) {
+      var blob = new Blob([text], { type: type });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    }
+    function openRegistryPrintExport(headers, rows) {
+      var win = window.open('', '_blank', 'noopener');
+      if (!win) { toast('Brauzer yangi oynani blokladi.', 'warning'); return; }
+      var html = '<!doctype html><html><head><meta charset="UTF-8"><title>NNT reyestri</title>'
+        + '<style>body{font-family:Arial,sans-serif;color:#111827}table{width:100%;border-collapse:collapse;font-size:10px}th,td{border:1px solid #d1d5db;padding:4px;text-align:left;vertical-align:top}th{background:#f3f4f6}@media print{@page{size:A4 landscape;margin:10mm}}</style>'
+        + '</head><body><h1 style="font-size:18px">NNT reyestri</h1><table><thead><tr>'
+        + headers.map(function (h) { return '<th>' + esc(h[1]) + '</th>'; }).join('')
+        + '</tr></thead><tbody>'
+        + rows.map(function (r) { return '<tr>' + r.map(function (v) { return '<td>' + esc(v) + '</td>'; }).join('') + '</tr>'; }).join('')
+        + '</tbody></table><script>setTimeout(function(){window.print()},300)<\/script></body></html>';
+      win.document.open();
+      win.document.write(html);
+      win.document.close();
     }
     document.querySelectorAll('[data-export-format]').forEach(function (btn) {
       btn.addEventListener('click', function () { exportRegistry(this.getAttribute('data-export-format')); });
