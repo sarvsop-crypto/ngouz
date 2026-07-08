@@ -241,10 +241,10 @@
       .catch(function (err) { body.innerHTML = '<p role="alert" style="color:var(--error-600)">Yuklashda xatolik: ' + esc((err && err.message) || 'nomaʼlum') + '</p>'; });
   };
   window.signLeaderApp = function (id) {
-    var payload = prompt('Imzo maʼlumoti yoki imzo identifikatori:');
+    var payload = prompt('Ichki tasdiq maʼlumoti yoki imzo identifikatori (ERI/e-imzo emas):');
     if (payload === null) return;
     payload = (payload || '').trim();
-    if (!payload) { toast('Imzo maʼlumoti majburiy.', 'error'); return; }
+    if (!payload) { toast('Ichki tasdiq maʼlumoti majburiy.', 'error'); return; }
     setBusy(true);
     NgoApi.post('/admin/membership-requests/' + id + '/sign', { signature_payload: payload })
       .then(function () { toast('Hujjatlar imzolandi.', 'success'); closeLeaderModal(); reload(); })

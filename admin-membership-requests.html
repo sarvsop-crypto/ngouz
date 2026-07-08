@@ -422,10 +422,10 @@
         '<section><h3>Tarix</h3><ul>' + histHtml + '</ul></section>';
     }
     window.signApp = function (id) {
-      var payload = prompt('ERI imzo maʼlumoti yoki imzo identifikatori:');
+      var payload = prompt('Ichki tasdiq maʼlumoti yoki imzo identifikatori (ERI/e-imzo emas):');
       if (payload === null) return;
       payload = (payload || '').trim();
-      if (!payload) { toast('Imzo maʼlumoti majburiy.', 'error'); return; }
+      if (!payload) { toast('Ichki tasdiq maʼlumoti majburiy.', 'error'); return; }
       NgoApi.post('/admin/membership-requests/' + id + '/sign', { signature_payload: payload })
         .then(function () { toast('Rahbar imzosi saqlandi.', 'success'); viewApp(id); reload(); })
         .catch(function (err) { toast('Imzolashda xatolik: ' + ((err && err.message) || "noma'lum"), 'error'); });
