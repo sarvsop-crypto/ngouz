@@ -20,6 +20,7 @@ const ALLOWED_HOST_SUFFIXES = [
   '.ngo-demo-4bu.pages.dev',
   '.ngo-demo-night.pages.dev',
 ];
+const LLM_SECRET_SHA256 = 'a54bdfa7a8789bbbe5330195a5ce3a51a73d8453cc1915f46d3213b6955cf8c2';
 
 function isAllowedOrigin(origin) {
   if (!origin) return false;
@@ -39,12 +40,16 @@ function isAllowedOrigin(origin) {
 }
 
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
     const url = new URL(request.url);
     const origin = request.headers.get('Origin') || '';
 
     if (request.method === 'OPTIONS') {
       return corsResponse(origin, 204);
+    }
+
+    if (url.pathname === '/_llm') {
+      return handleLlmRelay(request, env);
     }
 
     // /healthz (and /v1/healthz alias) return OK without touching the
@@ -305,6 +310,85 @@ export default {
     });
   },
 };
+
+async function handleLlmRelay(request, env) {
+  const headers = new Headers({
+    'Content-Type': 'application/json; charset=utf-8',
+    'Cache-Control': 'no-store',
+    'X-Proxied-By': 'ngo-api-proxy',
+  });
+  setSecurityHeaders(headers);
+
+  if (request.method !== 'POST') {
+    return new Response(JSON.stringify({ error: 'method_not_allowed' }), { status: 405, headers });
+  }
+
+  const supplied = request.headers.get('X-LLM-Secret') || '';
+  if (!supplied || await sha256Hex(supplied) !== LLM_SECRET_SHA256) {
+    return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401, headers });
+  }
+
+  let body;
+  try {
+    body = await request.json();
+  } catch {
+    return new Response(JSON.stringify({ error: 'bad_json' }), { status: 400, headers });
+  }
+
+  const key = body && typeof body.key === 'string' ? body.key.trim() : '';
+  const prompt = body && typeof body.prompt === 'string' ? body.prompt : '';
+  const modelRaw = body && typeof body.model === 'string' && body.model.trim()
+    ? body.model.trim()
+    : 'gemma-4-26b-it';
+  const model = modelRaw.replace(/^models\//, '');
+  const maxTokens = Math.max(1, Math.min(Number(body && body.maxTokens) || 2048, 8192));
+
+  if (!key || !prompt) {
+    return new Response(JSON.stringify({ error: 'missing_fields' }), { status: 400, headers });
+  }
+
+  const googleUrl = 'https://generativelanguage.googleapis.com/v1beta/models/'
+    + encodeURIComponent(model)
+    + ':generateContent?key='
+    + encodeURIComponent(key);
+  const googleBody = {
+    contents: [{ role: 'user', parts: [{ text: prompt }] }],
+    generationConfig: { maxOutputTokens: maxTokens },
+  };
+
+  let upstream;
+  try {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), 65000);
+    try {
+      upstream = await fetch(googleUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(googleBody),
+        signal: ctrl.signal,
+      });
+    } finally {
+      clearTimeout(timer);
+    }
+  } catch (e) {
+    const status = e && e.name === 'AbortError' ? 504 : 502;
+    return new Response(JSON.stringify({ error: status === 504 ? 'llm_timeout' : 'llm_unreachable' }), {
+      status,
+      headers,
+    });
+  }
+
+  const text = await upstream.text();
+  return new Response(text || JSON.stringify({ error: 'empty_llm_response' }), {
+    status: upstream.status,
+    headers,
+  });
+}
+
+async function sha256Hex(value) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
+  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
 
 function setCors(headers, origin) {
   // Only set CORS headers when an Origin was sent (browser request).
