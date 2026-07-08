@@ -11,6 +11,8 @@
   var TOKEN_KEY  = 'ngo_api_token';
   var USER_KEY   = 'ngo_api_user';
   var LOGIN_PAGE = 'admin-login';
+  var IDLE_TIMEOUT_MS = 30 * 60 * 1000;
+  var ACTIVITY_KEY = 'ngo_api_last_activity';
 
   // Read from localStorage first (persistent "Tizimda qolish"), then
   // sessionStorage (tab-only). Write to whichever the user picked at
@@ -41,6 +43,7 @@
     try {
       localStorage.removeItem(TOKEN_KEY); localStorage.removeItem(USER_KEY);
       sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(USER_KEY);
+      localStorage.removeItem(ACTIVITY_KEY);
     } catch (e) {}
   }
 
@@ -160,6 +163,53 @@
     });
   }
 
+  function startIdleLogout(opts) {
+    opts = opts || {};
+    var timeoutMs = typeof opts.timeoutMs === 'number' ? opts.timeoutMs : IDLE_TIMEOUT_MS;
+    if (timeoutMs <= 0 || window.__NGO_IDLE_LOGOUT_STARTED__) return;
+    window.__NGO_IDLE_LOGOUT_STARTED__ = true;
+
+    var timer = null;
+    var loginPage = opts.loginPage || (location.pathname.indexOf('/cabinet/') === 0 ? 'cabinet-login' : LOGIN_PAGE);
+
+    function rememberActivity() {
+      if (!getToken()) return;
+      try { localStorage.setItem(ACTIVITY_KEY, String(Date.now())); } catch (e) {}
+      arm();
+    }
+
+    function lastActivity() {
+      try {
+        var v = parseInt(localStorage.getItem(ACTIVITY_KEY) || '0', 10);
+        return v > 0 ? v : Date.now();
+      } catch (e) {
+        return Date.now();
+      }
+    }
+
+    function expire() {
+      if (!getToken()) return;
+      logout().catch(function () {});
+      var next = encodeURIComponent(location.pathname + location.search);
+      location.replace(loginPage + '?error=session_expired&next=' + next);
+    }
+
+    function arm() {
+      if (timer) clearTimeout(timer);
+      if (!getToken()) return;
+      var remaining = timeoutMs - (Date.now() - lastActivity());
+      timer = setTimeout(remaining <= 0 ? expire : arm, Math.max(remaining, 1000));
+    }
+
+    ['click', 'keydown', 'mousemove', 'mousedown', 'touchstart', 'scroll', 'focus'].forEach(function (eventName) {
+      window.addEventListener(eventName, rememberActivity, { passive: true, capture: true });
+    });
+    window.addEventListener('storage', function (ev) {
+      if (ev.key === ACTIVITY_KEY || ev.key === TOKEN_KEY) arm();
+    });
+    if (getToken()) rememberActivity();
+  }
+
   function me() {
     return request('GET', '/me');
   }
@@ -214,5 +264,6 @@
     getUser  : getUser,
     clearToken: clearToken,
     requireAuth: requireAuth,
+    startIdleLogout: startIdleLogout,
   };
 })();

@@ -26,6 +26,7 @@
 
   NgoApi.requireAuth(authOpts)
     .then(function (user) {
+      if (NgoApi.startIdleLogout) NgoApi.startIdleLogout({ loginPage: authOpts.loginPage });
       window.__CURRENT_USER__ = user;
       var slot = document.querySelector('[data-user-name]');
       if (slot) slot.textContent = user.full_name || user.email;
