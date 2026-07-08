@@ -56,6 +56,18 @@
     .org-card__doc-name { font-weight: 600; color: var(--grey-900,#111827); }
     .org-card__subtle { display: block; margin-top: 2px; color: var(--grey-500,#667085); font-size: 12px; }
     .org-card__download { white-space: nowrap; }
+    .doc-viewer-modal { width: min(1180px, calc(100vw - 28px)); height: min(860px, calc(100vh - 28px)); max-width: none; max-height: none; display: flex; flex-direction: column; overflow: hidden; }
+    .doc-viewer-modal .modal__body { flex: 1; min-height: 0; padding: 0; gap: 0; background: #f3f6f5; }
+    .doc-viewer__toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--grey-200,#e5e7eb); background: #fff; }
+    .doc-viewer__name { min-width: 0; color: var(--grey-900,#111827); font-size: 13px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .doc-viewer__controls { display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .doc-viewer__zoom { min-width: 54px; text-align: center; color: var(--grey-600,#4b5563); font-size: 12px; font-variant-numeric: tabular-nums; }
+    .doc-viewer__stage { flex: 1; min-height: 0; overflow: auto; display: grid; place-items: start center; padding: 18px; }
+    .doc-viewer__frame { transform-origin: top center; width: min(900px, 100%); min-height: 100%; border: 1px solid var(--grey-200,#e5e7eb); border-radius: 8px; background: #fff; box-shadow: 0 12px 30px rgba(15,23,42,.12); overflow: hidden; }
+    .doc-viewer__frame iframe, .doc-viewer__frame img { display: block; width: 100%; height: 100%; min-height: 680px; border: 0; object-fit: contain; background: #fff; }
+    .doc-viewer__frame img { height: auto; min-height: 0; }
+    .doc-viewer__unsupported { padding: 42px; text-align: center; color: var(--grey-500,#667085); }
+    .doc-viewer__unsupported i { display: block; margin-bottom: 12px; font-size: 40px; color: var(--grey-400,#98a2b3); }
     .registry-filters { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 10px; padding: 14px 18px; border-top: 1px solid var(--grey-100,#eef2f2); background: #fbfcfc; }
     .registry-filters__field { display: grid; gap: 5px; min-width: 0; }
     .registry-filters__field label { font-size: 12px; font-weight: 600; color: var(--grey-500,#667085); }
@@ -73,6 +85,10 @@
       .org-card__dl dt { font-weight: 600; }
       .registry-filters { grid-template-columns: 1fr; }
       .registry-filters__actions { align-items: stretch; }
+      .doc-viewer-modal { width: calc(100vw - 12px); height: calc(100vh - 12px); }
+      .doc-viewer__toolbar { align-items: stretch; flex-direction: column; }
+      .doc-viewer__controls { justify-content: space-between; }
+      .doc-viewer__stage { padding: 10px; }
     }
   </style>
 <script src="js/errlog.js" defer></script>
@@ -645,6 +661,7 @@
     window.previewOrgFile = function(path, filename) {
       fetchOrgFile(path + (path.indexOf('?') === -1 ? '?' : '&') + 'inline=1', filename, true);
     };
+    var docViewerState = { url: '', name: '', scale: 1, blob: null };
     function fetchOrgFile(path, filename, preview) {
       var token = '';
       try { token = localStorage.getItem('ngo_api_token') || sessionStorage.getItem('ngo_api_token') || ''; } catch (_) {}
@@ -657,9 +674,7 @@
       }).then(function (blob) {
         var url = URL.createObjectURL(blob);
         if (preview) {
-          var opened = window.open(url, '_blank', 'noopener');
-          if (!opened) toast('Brauzer yangi oynani blokladi. Yuklab olish tugmasidan foydalaning.', 'warning');
-          setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+          openDocumentViewer(url, blob, filename || 'document');
         } else {
           var a = document.createElement('a');
           a.href = url;
@@ -672,6 +687,89 @@
       }).catch(function (err) {
         toast('Hujjatni yuklab bo‘lmadi: ' + ((err && err.message) || 'nomaʼlum'), 'error');
       });
+    }
+    function openDocumentViewer(url, blob, filename) {
+      closeDocumentViewer();
+      docViewerState = { url: url, name: filename || 'document', scale: 1, blob: blob };
+      var type = String((blob && blob.type) || '').toLowerCase();
+      var name = String(filename || 'document');
+      var lower = name.toLowerCase();
+      var content = '';
+      if (type.indexOf('pdf') !== -1 || /\.pdf(\?|$)/.test(lower)) {
+        content = '<iframe src="' + esc(url) + '#toolbar=0&navpanes=0" title="' + esc(name) + '"></iframe>';
+      } else if (type.indexOf('image/') === 0 || /\.(png|jpe?g|gif|webp)(\?|$)/.test(lower)) {
+        content = '<img src="' + esc(url) + '" alt="' + esc(name) + '">';
+      } else {
+        content = '<div class="doc-viewer__unsupported"><i class="ph ph-file-text" aria-hidden="true"></i><p>Bu formatni brauzer ichida ko‘rib bo‘lmaydi. Faylni yuklab oling yoki alohida oynada oching.</p></div>';
+      }
+      var html = '<div class="modal-overlay is-open" id="documentViewerModal" role="dialog" aria-modal="true" aria-labelledby="documentViewerTitle" style="display:flex;">'
+        + '<div class="modal doc-viewer-modal">'
+        + '<div class="modal__head"><h2 class="modal__title" id="documentViewerTitle">Hujjatni ko‘rish</h2><button type="button" class="modal__close" id="documentViewerClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>'
+        + '<div class="modal__body">'
+        + '<div class="doc-viewer__toolbar"><div class="doc-viewer__name" title="' + esc(name) + '">' + esc(name) + '</div>'
+        + '<div class="doc-viewer__controls">'
+        + '<button type="button" class="btn--ghost-sm" onclick="zoomDocumentViewer(-0.1)" title="Kichraytirish"><i class="ph ph-magnifying-glass-minus" aria-hidden="true"></i></button>'
+        + '<span class="doc-viewer__zoom" id="documentViewerZoom">100%</span>'
+        + '<button type="button" class="btn--ghost-sm" onclick="zoomDocumentViewer(0.1)" title="Kattalashtirish"><i class="ph ph-magnifying-glass-plus" aria-hidden="true"></i></button>'
+        + '<button type="button" class="btn--ghost-sm" onclick="resetDocumentViewerZoom()" title="100%"><i class="ph ph-arrows-in-simple" aria-hidden="true"></i></button>'
+        + '<button type="button" class="btn--ghost-sm" onclick="openDocumentViewerTab()" title="Yangi oynada ochish"><i class="ph ph-arrow-square-out" aria-hidden="true"></i></button>'
+        + '<button type="button" class="btn--ghost-sm" onclick="downloadDocumentViewer()" title="Yuklab olish"><i class="ph ph-download-simple" aria-hidden="true"></i></button>'
+        + '</div></div>'
+        + '<div class="doc-viewer__stage"><div class="doc-viewer__frame" id="documentViewerFrame">' + content + '</div></div>'
+        + '</div></div></div>';
+      document.body.insertAdjacentHTML('beforeend', html);
+      document.body.style.overflow = 'hidden';
+      document.getElementById('documentViewerClose').addEventListener('click', closeDocumentViewer);
+      document.getElementById('documentViewerModal').addEventListener('click', function (event) {
+        if (event.target && event.target.id === 'documentViewerModal') closeDocumentViewer();
+      });
+      document.addEventListener('keydown', handleDocumentViewerKey);
+      try { document.getElementById('documentViewerClose').focus(); } catch (_) {}
+    }
+    function handleDocumentViewerKey(event) {
+      if (!document.getElementById('documentViewerModal')) return;
+      if (event.key === 'Escape') closeDocumentViewer();
+      if ((event.ctrlKey || event.metaKey) && (event.key === '+' || event.key === '=')) { event.preventDefault(); zoomDocumentViewer(0.1); }
+      if ((event.ctrlKey || event.metaKey) && event.key === '-') { event.preventDefault(); zoomDocumentViewer(-0.1); }
+      if ((event.ctrlKey || event.metaKey) && event.key === '0') { event.preventDefault(); resetDocumentViewerZoom(); }
+    }
+    window.zoomDocumentViewer = function(delta) {
+      docViewerState.scale = Math.max(0.5, Math.min(2.5, docViewerState.scale + delta));
+      applyDocumentViewerZoom();
+    };
+    window.resetDocumentViewerZoom = function() {
+      docViewerState.scale = 1;
+      applyDocumentViewerZoom();
+    };
+    function applyDocumentViewerZoom() {
+      var frame = document.getElementById('documentViewerFrame');
+      var label = document.getElementById('documentViewerZoom');
+      if (!frame || !label) return;
+      frame.style.transform = 'scale(' + docViewerState.scale.toFixed(2) + ')';
+      frame.style.marginBottom = ((docViewerState.scale - 1) * 680) + 'px';
+      label.textContent = Math.round(docViewerState.scale * 100) + '%';
+    }
+    window.openDocumentViewerTab = function() {
+      if (!docViewerState.url) return;
+      var opened = window.open(docViewerState.url, '_blank', 'noopener');
+      if (!opened) toast('Brauzer yangi oynani blokladi.', 'warning');
+    };
+    window.downloadDocumentViewer = function() {
+      if (!docViewerState.url) return;
+      var a = document.createElement('a');
+      a.href = docViewerState.url;
+      a.download = String(docViewerState.name || 'document').replace(/[\\/:*?"<>|]+/g, '_');
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+    };
+    function closeDocumentViewer() {
+      var el = document.getElementById('documentViewerModal');
+      if (el) el.remove();
+      document.removeEventListener('keydown', handleDocumentViewerKey);
+      if (docViewerState.url) URL.revokeObjectURL(docViewerState.url);
+      docViewerState = { url: '', name: '', scale: 1, blob: null };
+      if (!document.getElementById('orgCardModal')) document.body.style.overflow = '';
     }
     function dateOnly(value) {
       if (!value) return '—';
