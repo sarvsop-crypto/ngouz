@@ -99,6 +99,144 @@
 <script src="js/i18n.js" defer></script>
 <script src="js/uzmap.js" defer></script>
 <style>
+.dues-payment-section {
+  background: #f6faf8;
+  padding: 42px 0;
+}
+.dues-payment-card {
+  align-items: stretch;
+  background: #fff;
+  border: 1px solid #dbe7e2;
+  border-radius: 8px;
+  box-shadow: 0 18px 45px rgba(15, 75, 64, .10);
+  display: grid;
+  gap: 24px;
+  grid-template-columns: minmax(0, .9fr) minmax(320px, 1.1fr);
+  padding: 28px;
+}
+.dues-payment-copy h2 {
+  color: #12372f;
+  font-size: 1.6rem;
+  line-height: 1.2;
+  margin: 0 0 10px;
+}
+.dues-payment-copy p {
+  color: #51635e;
+  line-height: 1.6;
+  margin: 0;
+}
+.dues-payment-form {
+  display: grid;
+  gap: 14px;
+}
+.dues-payment-field {
+  display: grid;
+  gap: 7px;
+}
+.dues-payment-field label {
+  color: #183b34;
+  font-size: .88rem;
+  font-weight: 700;
+}
+.dues-payment-field input {
+  border: 1px solid #cddbd7;
+  border-radius: 8px;
+  color: #10231f;
+  font: inherit;
+  min-height: 46px;
+  padding: 0 13px;
+}
+.dues-payment-field input:focus {
+  border-color: #0f6a57;
+  box-shadow: 0 0 0 3px rgba(15, 106, 87, .14);
+  outline: 0;
+}
+.dues-search-results {
+  display: grid;
+  gap: 8px;
+  min-height: 28px;
+}
+.dues-search-option {
+  background: #f8fbfa;
+  border: 1px solid #dbe7e2;
+  border-radius: 8px;
+  color: #173b34;
+  cursor: pointer;
+  display: grid;
+  gap: 4px;
+  padding: 11px 12px;
+  text-align: left;
+}
+.dues-search-option[aria-pressed="true"] {
+  background: #e7f4ef;
+  border-color: #0f6a57;
+}
+.dues-search-option strong {
+  font-size: .94rem;
+}
+.dues-search-option span {
+  color: #64746f;
+  font-size: .82rem;
+}
+.dues-payment-actions {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.dues-payment-actions button {
+  align-items: center;
+  background: #0f6a57;
+  border: 0;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-weight: 700;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 18px;
+}
+.dues-payment-actions button:disabled {
+  cursor: not-allowed;
+  opacity: .55;
+}
+.dues-payment-note {
+  color: #5f6f6a;
+  font-size: .84rem;
+  line-height: 1.45;
+  margin: 0;
+}
+.dues-payment-status {
+  border-radius: 8px;
+  display: none;
+  font-size: .9rem;
+  line-height: 1.45;
+  padding: 10px 12px;
+}
+.dues-payment-status.is-visible {
+  display: block;
+}
+.dues-payment-status.is-error {
+  background: #fee2e2;
+  border: 1px solid #fca5a5;
+  color: #991b1b;
+}
+.dues-payment-status.is-info {
+  background: #e7f4ef;
+  border: 1px solid #b7d8cc;
+  color: #174238;
+}
+@media (max-width: 860px) {
+  .dues-payment-card {
+    grid-template-columns: 1fr;
+    padding: 22px;
+  }
+  .dues-payment-section {
+    padding: 28px 0;
+  }
+}
 </style>
 </head>
 <body class="home-page">
@@ -287,6 +425,33 @@
 <span class="hero-stat-label" data-i18n="pages.index.stats.training">Malaka oshirgan NNTlar soni</span>
 </div>
 </div>
+</div>
+</div>
+</section>
+<section class="dues-payment-section" aria-labelledby="duesPaymentTitle">
+<div class="container">
+<div class="dues-payment-card" id="membershipDuesCard">
+<div class="dues-payment-copy">
+<h2 id="duesPaymentTitle">A'zolik badalini to'lash</h2>
+<p>NNT nomi yoki STIR orqali tashkilotingizni toping. To'lov Payme orqali amalga oshiriladi va tizimda avtomatik qayd etiladi.</p>
+</div>
+<form class="dues-payment-form" id="membershipDuesForm">
+<div class="dues-payment-field">
+<label for="duesSearchInput">NNT nomi yoki STIR</label>
+<input id="duesSearchInput" type="search" autocomplete="off" placeholder="Masalan: tashkilot nomi yoki 9 xonali STIR" maxlength="200" aria-describedby="duesSearchHelp"/>
+<p class="dues-payment-note" id="duesSearchHelp">Faqat to'lov kutilayotgan tashkilotlar ko'rsatiladi.</p>
+</div>
+<div class="dues-search-results" id="duesSearchResults" role="listbox" aria-label="Topilgan tashkilotlar"></div>
+<div class="dues-payment-field">
+<label for="duesPhoneInput">To'lovchi telefon raqami</label>
+<input id="duesPhoneInput" type="tel" inputmode="tel" autocomplete="tel" placeholder="+998 __ ___ __ __" maxlength="40"/>
+</div>
+<div class="dues-payment-status" id="duesPaymentStatus" role="status" aria-live="polite"></div>
+<div class="dues-payment-actions">
+<button type="submit" id="duesPayBtn" disabled>Payme orqali to'lash</button>
+<p class="dues-payment-note">Tashkilot tanlangandan so'ng Payme sahifasiga o'tasiz.</p>
+</div>
+</form>
 </div>
 </div>
 </section>
@@ -1082,6 +1247,123 @@ function memSubmit(e) {
     fail('Tarmoq xatosi. Internet aloqangizni tekshiring.');
   });
 }
+</script>
+<script>
+(function () {
+  var form = document.getElementById('membershipDuesForm');
+  if (!form) return;
+  var apiBase = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
+  var searchInput = document.getElementById('duesSearchInput');
+  var phoneInput = document.getElementById('duesPhoneInput');
+  var resultsBox = document.getElementById('duesSearchResults');
+  var payBtn = document.getElementById('duesPayBtn');
+  var statusBox = document.getElementById('duesPaymentStatus');
+  var selectedOrg = null;
+  var searchTimer = null;
+  var activeSearch = 0;
+
+  function setStatus(message, type) {
+    statusBox.textContent = message || '';
+    statusBox.className = 'dues-payment-status' + (message ? ' is-visible is-' + (type || 'info') : '');
+  }
+
+  function setResults(items) {
+    resultsBox.innerHTML = '';
+    if (!items.length) {
+      var empty = document.createElement('p');
+      empty.className = 'dues-payment-note';
+      empty.textContent = searchInput.value.trim().length >= 2 ? "To'lov kutilayotgan tashkilot topilmadi." : '';
+      resultsBox.appendChild(empty);
+      return;
+    }
+    items.forEach(function (org) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'dues-search-option';
+      btn.setAttribute('role', 'option');
+      btn.setAttribute('aria-pressed', selectedOrg && selectedOrg.id === org.id ? 'true' : 'false');
+      var name = document.createElement('strong');
+      name.textContent = org.name || 'Nomsiz tashkilot';
+      var meta = document.createElement('span');
+      meta.textContent = [org.inn ? 'STIR: ' + org.inn : '', org.region_code || ''].filter(Boolean).join(' · ');
+      btn.appendChild(name);
+      btn.appendChild(meta);
+      btn.addEventListener('click', function () {
+        selectedOrg = org;
+        setResults(items);
+        validate();
+        setStatus('Tanlandi: ' + (org.name || 'NNT'), 'info');
+      });
+      resultsBox.appendChild(btn);
+    });
+  }
+
+  function validate() {
+    payBtn.disabled = !(selectedOrg && phoneInput.value.trim().length >= 7);
+  }
+
+  function search() {
+    var q = searchInput.value.trim();
+    selectedOrg = null;
+    validate();
+    setStatus('', 'info');
+    if (q.length < 2) {
+      setResults([]);
+      return;
+    }
+    var searchId = ++activeSearch;
+    resultsBox.setAttribute('aria-busy', 'true');
+    fetch(apiBase + '/public/membership-dues/search?q=' + encodeURIComponent(q), {
+      headers: { 'Accept': 'application/json' }
+    }).then(function (r) {
+      return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; });
+    }).then(function (res) {
+      if (searchId !== activeSearch) return;
+      if (!res.ok) throw new Error(res.data && res.data.message || 'search failed');
+      setResults(Array.isArray(res.data.items) ? res.data.items : []);
+    }).catch(function () {
+      if (searchId !== activeSearch) return;
+      resultsBox.innerHTML = '';
+      setStatus("Qidiruvda xatolik. Iltimos keyinroq urinib ko'ring.", 'error');
+    }).finally(function () {
+      if (searchId === activeSearch) resultsBox.setAttribute('aria-busy', 'false');
+    });
+  }
+
+  searchInput.addEventListener('input', function () {
+    window.clearTimeout(searchTimer);
+    searchTimer = window.setTimeout(search, 280);
+  });
+  phoneInput.addEventListener('input', validate);
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!selectedOrg) {
+      setStatus('Avval tashkilotni tanlang.', 'error');
+      return;
+    }
+    if (!phoneInput.value.trim()) {
+      setStatus('Telefon raqamini kiriting.', 'error');
+      return;
+    }
+    payBtn.disabled = true;
+    payBtn.textContent = 'Payme sahifasi ochilmoqda...';
+    setStatus('', 'info');
+    fetch(apiBase + '/public/membership-dues/pay', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ organization_id: selectedOrg.id, phone: phoneInput.value.trim() })
+    }).then(function (r) {
+      return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; });
+    }).then(function (res) {
+      if (!res.ok || !res.data.checkout_url) throw new Error(res.data && res.data.message || 'payment failed');
+      window.location.href = res.data.checkout_url;
+    }).catch(function (err) {
+      payBtn.textContent = "Payme orqali to'lash";
+      validate();
+      setStatus(err && err.message ? err.message : "To'lovni boshlashda xatolik.", 'error');
+    });
+  });
+})();
 </script>
 <div class="search-overlay" id="searchOverlay" role="dialog" data-i18n-aria-label="search.modalAria" aria-label="Qidirish" aria-modal="true" aria-hidden="true">
   <div class="search-overlay__box">
