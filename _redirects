@@ -13,6 +13,7 @@
 # /admin shortcut → admin login (admin-boot handles token-aware routing).
 /admin /admin-login 302
 /admin/ /admin-login 302
+/admin-leader-signing /admin-leader-signing.html 200
 
 # /cabinet is now the React member-app SPA. All routing under /cabinet/
 # (asset serving, legacy static-path 301s, and SPA fallback) is handled by
