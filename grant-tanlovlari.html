@@ -386,11 +386,16 @@
   }
 
   function userErrorMessage(data, status) {
-    if (data && data.message_uz) return data.message_uz;
+    if (data && data.message_uz) {
+      var suffix = data.trace ? ' #' + data.trace : (data.error ? ' (' + data.error + ')' : '');
+      return data.message_uz + suffix;
+    }
     if (status === 429) return 'So\'rovlar soni vaqtincha cheklangan. Birozdan keyin qayta urinib ko\'ring.';
     if (status === 403 || status === 401) return 'Xavfsizlik tekshiruvi yakunlanmadi. Sahifani yangilab, qayta urinib ko\'ring.';
-    if (status >= 500 || (data && (data.error === 'server_error' || data.stage))) return LABELS.uz.srv;
-    return LABELS.uz.srv;
+    if (status >= 500 || (data && (data.error === 'server_error' || data.stage))) {
+      return LABELS.uz.srv + (data && data.error ? ' Kod: ' + data.error : '');
+    }
+    return LABELS.uz.srv + (data && data.error ? ' Kod: ' + data.error : '');
   }
 
   var tsWidgetId = null;
