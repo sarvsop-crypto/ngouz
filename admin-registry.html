@@ -378,9 +378,7 @@
         var docs = res.documents || [];
         var payments = res.payments || [];
         var membershipDocs = res.membership_documents || [];
-        var users = res.users || [];
         var history = res.history || [];
-        var auditLogs = res.audit_logs || [];
         var html = '<div class="modal-overlay is-open" id="orgCardModal" role="dialog" aria-modal="true" aria-labelledby="orgCardTitle" style="display:flex;">'
           + '<div class="modal org-card-modal">'
           + '<div class="modal__head"><h2 class="modal__title" id="orgCardTitle">NNT elektron kartasi</h2><button type="button" class="modal__close" id="orgCardClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>'
@@ -408,13 +406,11 @@
               ['Toʻlov summasi', money(org.payment_amount)],
               ['Toʻlov sanasi', dateTime(org.payment_paid_at)]
             ]))
-          + section('Tashkilot foydalanuvchilari', usersTable(users), users.length)
           + section('Aʼzolik arizalari', applicationsTable(apps), apps.length)
           + section('Yuklangan hujjatlar', uploadedDocsTable(docs), docs.length, true)
           + section('Shakllantirilgan hujjatlar', membershipDocsTable(membershipDocs), membershipDocs.length, true)
           + section('Toʻlovlar tarixi', paymentsTable(payments), payments.length, true)
           + section('Jarayon tarixi', historyTable(history), history.length, true)
-          + section('Audit jurnali', auditTable(auditLogs), auditLogs.length, true)
           + '</div></div></div></div></div>';
         var old = document.getElementById('orgCardModal');
         if (old) old.remove();
@@ -492,22 +488,10 @@
         return '<tr><td>' + esc(labelFor(r.purpose)) + '</td><td>' + esc(money(r.amount)) + '</td><td>' + statusBadge(r.state) + '</td><td>' + esc(blank(r.provider)) + '</td><td>' + esc(dateTime(r.perform_time || r.updated_at || r.created_at)) + '</td></tr>';
       }));
     }
-    function usersTable(rows) {
-      return table(['Foydalanuvchi', 'Rol', 'Holat', 'Aloqa'], rows.slice(0, 20).map(function (r) {
-        var contact = [r.phone, r.email].filter(Boolean).join(' · ') || '—';
-        return '<tr><td>' + esc(r.full_name || ('#' + r.id)) + '</td><td>' + esc(labelFor(r.role)) + '</td><td>' + statusBadge(r.status) + '</td><td>' + esc(contact) + '</td></tr>';
-      }));
-    }
     function historyTable(rows) {
       return table(['Sana', 'Foydalanuvchi', 'Amal', 'Holat', 'Izoh'], rows.slice(0, 100).map(function (r) {
         var flow = [labelFor(r.from_status), labelFor(r.to_status)].filter(function (v) { return v && v !== '—'; }).join(' → ') || '—';
         return '<tr><td>' + esc(dateTime(r.created_at)) + '</td><td>' + esc(r.actor_name || ('#' + (r.actor_id || '—'))) + '</td><td>' + esc(labelFor(r.action)) + '</td><td>' + esc(flow) + '</td><td>' + esc(r.note || '—') + '</td></tr>';
-      }));
-    }
-    function auditTable(rows) {
-      return table(['Sana', 'Foydalanuvchi', 'Amal', 'Obyekt'], rows.slice(0, 100).map(function (r) {
-        var actor = r.actor_name || r.actor_role || (r.actor_id ? ('#' + r.actor_id) : 'Tizim');
-        return '<tr><td>' + esc(dateTime(r.created_at)) + '</td><td>' + esc(actor) + '</td><td>' + esc(labelFor(r.action)) + '</td><td>' + esc([r.entity, r.entity_id].filter(Boolean).join(' #') || '—') + '</td></tr>';
       }));
     }
     function downloadButton(path, filename) {
