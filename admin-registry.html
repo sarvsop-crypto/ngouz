@@ -471,10 +471,14 @@
       }));
     }
     function uploadedDocsTable(rows) {
-      return table(['Hujjat', 'Holat', 'Sana', 'Fayl'], rows.slice(0, 80).map(function (r) {
+      return table(['Hujjat', 'Holat', 'Sana', 'Amal'], rows.slice(0, 80).map(function (r) {
         var title = '<span class="org-card__doc-name">' + esc(r.name || ('Hujjat #' + r.id)) + '</span><span class="org-card__subtle">' + esc([r.category, formatBytes(r.size_bytes), r.mime_type].filter(Boolean).join(' · ') || '—') + '</span>';
         var locked = r.locked_at ? 'Bloklangan' : (r.signed_at ? 'Imzolangan' : 'Yuklangan');
-        return '<tr><td>' + title + '</td><td>' + esc(locked) + '</td><td>' + esc(dateTime(r.created_at || r.signed_at || r.locked_at)) + '</td><td>' + esc(r.file_path || '—') + '</td></tr>';
+        var path = '/admin/cabinet-documents/' + r.id + '/file';
+        return '<tr><td>' + title + '</td><td>' + esc(locked) + '</td><td>' + esc(dateTime(r.created_at || r.signed_at || r.locked_at)) + '</td><td>'
+          + previewButton(path, r.name || ('document-' + r.id))
+          + downloadButton(path, r.name || ('document-' + r.id))
+          + '</td></tr>';
       }));
     }
     function membershipDocsTable(rows) {
@@ -497,7 +501,16 @@
     function downloadButton(path, filename) {
       return '<button type="button" class="btn--ghost-sm org-card__download" onclick="downloadOrgFile(' + esc(JSON.stringify(path)) + ', ' + esc(JSON.stringify(filename || 'document')) + ')" title="Yuklab olish"><i class="ph ph-download-simple" aria-hidden="true"></i></button>';
     }
+    function previewButton(path, filename) {
+      return '<button type="button" class="btn--ghost-sm org-card__download" onclick="previewOrgFile(' + esc(JSON.stringify(path)) + ', ' + esc(JSON.stringify(filename || 'document')) + ')" title="Ko‘rish"><i class="ph ph-eye" aria-hidden="true"></i></button>';
+    }
     window.downloadOrgFile = function(path, filename) {
+      fetchOrgFile(path, filename, false);
+    };
+    window.previewOrgFile = function(path, filename) {
+      fetchOrgFile(path + (path.indexOf('?') === -1 ? '?' : '&') + 'inline=1', filename, true);
+    };
+    function fetchOrgFile(path, filename, preview) {
       var token = '';
       try { token = localStorage.getItem('ngo_api_token') || sessionStorage.getItem('ngo_api_token') || ''; } catch (_) {}
       if (!token) { toast('Hujjatni yuklab olish uchun tizimga kiring.', 'error'); return; }
@@ -508,17 +521,23 @@
         return r.blob();
       }).then(function (blob) {
         var url = URL.createObjectURL(blob);
-        var a = document.createElement('a');
-        a.href = url;
-        a.download = String(filename || 'document').replace(/[\\/:*?"<>|]+/g, '_');
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        if (preview) {
+          var opened = window.open(url, '_blank', 'noopener');
+          if (!opened) toast('Brauzer yangi oynani blokladi. Yuklab olish tugmasidan foydalaning.', 'warning');
+          setTimeout(function () { URL.revokeObjectURL(url); }, 60000);
+        } else {
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = String(filename || 'document').replace(/[\\/:*?"<>|]+/g, '_');
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+        }
       }).catch(function (err) {
         toast('Hujjatni yuklab bo‘lmadi: ' + ((err && err.message) || 'nomaʼlum'), 'error');
       });
-    };
+    }
     function dateOnly(value) {
       if (!value) return '—';
       return String(value).slice(0, 10);
