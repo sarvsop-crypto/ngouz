@@ -303,8 +303,8 @@
         </div>
         <div class="modal__row">
           <div class="modal__field">
-            <label class="modal__label" for="nnt-type"><span data-i18n="admin.table.type">Turi</span> <span aria-hidden="true" style="color:#dc2626">*</span></label>
-            <select id="nnt-type" class="modal__select" required>
+            <label class="modal__label" for="nnt-type"><span data-i18n="admin.table.type">Turi</span></label>
+            <select id="nnt-type" class="modal__select">
               <option value="" data-i18n="admin.registry.form.typeSelect">Turini tanlang</option>
               <option data-i18n="admin.registry.type.social">Ijtimoiy</option>
               <option data-i18n="admin.registry.type.charity">Xayriya</option>
@@ -403,6 +403,8 @@
     var offset = 0;
     var total = 0;
     var searchQ = '';
+    var isRegistryLoading = false;
+    var orgCardLastFocus = null;
     var filters = {
       inn: '',
       region: '',
@@ -428,6 +430,18 @@
       var visible = currentDisplayItems();
       document.getElementById('kpiTotal').textContent = visible.length;
       document.getElementById('kpiActive').textContent = visible.filter(function (o) { return o.status === 'active'; }).length;
+    }
+
+    function setRegistryLoading(loading) {
+      isRegistryLoading = !!loading;
+      var tbody = document.getElementById('registryTableBody');
+      if (tbody) tbody.setAttribute('aria-busy', loading ? 'true' : 'false');
+      document.querySelectorAll('[data-export-format]').forEach(function (btn) {
+        btn.disabled = !!loading;
+        btn.setAttribute('aria-disabled', loading ? 'true' : 'false');
+        if (loading) btn.setAttribute('title', 'Barcha sahifalar yuklangandan keyin eksport qilish mumkin');
+        else btn.removeAttribute('title');
+      });
     }
 
     function currentDisplayItems() {
@@ -522,17 +536,30 @@
           + '</div></div></div></div></div>';
         var old = document.getElementById('orgCardModal');
         if (old) old.remove();
+        orgCardLastFocus = document.activeElement;
         document.body.insertAdjacentHTML('beforeend', html);
+        document.body.style.overflow = 'hidden';
         var modal = document.getElementById('orgCardModal');
         document.getElementById('orgCardClose').addEventListener('click', closeOrgCard);
         modal.addEventListener('click', function (event) { if (event.target === modal) closeOrgCard(); });
+        document.addEventListener('keydown', handleOrgCardKey);
+        try { document.getElementById('orgCardClose').focus(); } catch (_) {}
       }).catch(function (err) {
         toast('Kartani ochishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error');
       });
     };
+    function handleOrgCardKey(event) {
+      if (event.key === 'Escape') closeOrgCard();
+    }
     function closeOrgCard() {
       var el = document.getElementById('orgCardModal');
       if (el) el.remove();
+      document.removeEventListener('keydown', handleOrgCardKey);
+      document.body.style.overflow = '';
+      if (orgCardLastFocus && typeof orgCardLastFocus.focus === 'function') {
+        try { orgCardLastFocus.focus(); } catch (_) {}
+      }
+      orgCardLastFocus = null;
     }
     function section(title, body, count, wide) {
       return '<section class="org-card__section' + (wide ? ' org-card__section--wide' : '') + '">'
@@ -722,14 +749,30 @@
       filters.registered_to = document.getElementById('filterRegisteredTo').value;
     }
 
+    function configureRegionalFilter() {
+      var user = NgoApi.getUser ? NgoApi.getUser() : null;
+      var region = user && user.region_code ? String(user.region_code) : '';
+      var role = user && user.role ? String(user.role) : '';
+      var select = document.getElementById('filterRegion');
+      if (!select || !region || role === 'super_admin') return;
+      select.value = region;
+      select.disabled = true;
+      select.setAttribute('aria-describedby', 'filterRegionScope');
+      if (!document.getElementById('filterRegionScope')) {
+        select.insertAdjacentHTML('afterend', '<small id="filterRegionScope" class="text-dim">Hududiy admin faqat o‘z hududidagi NNTlarni ko‘radi.</small>');
+      }
+    }
+
     function reloadRegistry() {
       items = [];
       offset = 0;
+      setRegistryLoading(true);
       loadPage();
     }
 
     function loadPage(seq) {
       if (seq === undefined) seq = ++loadSeq;
+      setRegistryLoading(true);
       NgoApi.get('/admin/organizations?' + buildRegistryQuery())
         .then(function(res) {
           if (seq !== loadSeq) return; // stale — newer search/load supersedes
@@ -744,6 +787,7 @@
               return String(a.name || '').localeCompare(String(b.name || ''), 'uz');
             });
             renderTable(); renderKpi();
+            setRegistryLoading(false);
           }
         })
         .catch(function (err) {
@@ -751,11 +795,7 @@
           if (err && err.status === 401) return; // api-client redirects
           var tbody = document.getElementById('registryTableBody');
           if (tbody) tbody.innerHTML = '<tr class="u-empty-row"><td colspan="8" role="alert" style="color:var(--error-600,#dc2626)">NNT ro\'yxatini yuklab bo\'lmadi. Sahifani yangilang yoki internet aloqangizni tekshiring.</td></tr>';
-        })
-        .then(function () {
-          if (seq !== loadSeq) return;
-          var t = document.getElementById('registryTableBody');
-          if (t) t.setAttribute('aria-busy', 'false');
+          setRegistryLoading(false);
         });
     }
 
@@ -819,18 +859,16 @@
     if (modalSaveBtn) {
       modalSaveBtn.addEventListener('click', function() {
         var name = document.getElementById('nnt-name').value.trim();
-        var type = document.getElementById('nnt-type').value;
         var region = document.getElementById('nnt-region').value;
         var year = document.getElementById('nnt-year').value;
         var status = document.getElementById('nnt-status').value || 'active';
         var phone = document.getElementById('nnt-contact').value.trim();
         var miss = !name ? 'nnt-name'
-                 : !type ? 'nnt-type'
                  : !region ? 'nnt-region'
                  : !year ? 'nnt-year'
                  : null;
         if (miss) {
-          toast('Majburiy maydonlarni to\'ldiring (nom, turi, hudud, yil).', 'error');
+          toast('Majburiy maydonlarni to\'ldiring (nom, hudud, yil).', 'error');
           var el = document.getElementById(miss);
           if (el) try { el.focus(); } catch (_) {}
           return;
@@ -872,7 +910,8 @@
         btn.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i> Saqlanmoqda...';
         var addModal = document.getElementById('addNntModal');
         if (addModal) addModal.setAttribute('aria-busy', 'true');
-        NgoApi.post('/admin/organizations', { name: name, region_code: regionCode, status: status, phone: phone })
+        var memberDate = String(yearNum) + '-01-01';
+        NgoApi.post('/admin/organizations', { name: name, region_code: regionCode, status: status, phone: phone, member_since: memberDate, registered_at: memberDate })
           .then(function(res) {
             btn.disabled = false; btn.innerHTML = addLabel;
             if (addModal) addModal.setAttribute('aria-busy', 'false');
@@ -910,7 +949,17 @@
       readRegistryFilters();
       reloadRegistry();
     });
-    document.querySelectorAll('#registryFilters input, #registryFilters select').forEach(function (el) {
+    var filterDebounce = null;
+    document.querySelectorAll('#registryFilters input').forEach(function (el) {
+      el.addEventListener('input', function () {
+        if (filterDebounce) clearTimeout(filterDebounce);
+        filterDebounce = setTimeout(function () {
+          readRegistryFilters();
+          reloadRegistry();
+        }, 300);
+      });
+    });
+    document.querySelectorAll('#registryFilters select').forEach(function (el) {
       el.addEventListener('change', function () {
         readRegistryFilters();
         reloadRegistry();
@@ -918,7 +967,8 @@
     });
     document.getElementById('registryFiltersReset').addEventListener('click', function () {
       document.getElementById('filterInn').value = '';
-      document.getElementById('filterRegion').value = '';
+      var regionSelect = document.getElementById('filterRegion');
+      if (!regionSelect.disabled) regionSelect.value = '';
       document.getElementById('filterStatus').value = 'active';
       document.getElementById('filterLeader').value = '';
       document.getElementById('filterContract').value = '';
@@ -931,10 +981,17 @@
       reloadRegistry();
     });
 
+    configureRegionalFilter();
+    readRegistryFilters();
+    setRegistryLoading(true);
     loadPage();
 
     function exportRegistry(format) {
         format = format || 'csv';
+        if (isRegistryLoading || items.length < total) {
+          toast('Eksportdan oldin reyestr to\'liq yuklanishini kuting.', 'warning');
+          return;
+        }
         var exportItems = currentDisplayItems();
         if (!exportItems.length) { toast('Eksport uchun maʼlumot yoʻq.', 'warning'); return; }
         var headers = [
@@ -960,6 +1017,7 @@
         var rows = exportItems.map(function (row) {
           return headers.map(function (h) { return row[h[0]] == null ? '' : String(row[h[0]]); });
         });
+        var sheetRows = rows.map(function (r) { return r.map(safeSheetValue); });
         var stamp = new Date().toISOString().slice(0, 10);
         if (format === 'pdf') {
           openRegistryPrintExport(headers, rows);
@@ -969,14 +1027,18 @@
           var html = '<html><head><meta charset="UTF-8"></head><body><table><thead><tr>'
             + headers.map(function (h) { return '<th>' + esc(h[1]) + '</th>'; }).join('')
             + '</tr></thead><tbody>'
-            + rows.map(function (r) { return '<tr>' + r.map(function (v) { return '<td>' + esc(v) + '</td>'; }).join('') + '</tr>'; }).join('')
+            + sheetRows.map(function (r) { return '<tr>' + r.map(function (v) { return '<td>' + esc(v) + '</td>'; }).join('') + '</tr>'; }).join('')
             + '</tbody></table></body></html>';
           downloadText('\ufeff' + html, 'nnt-royxati-' + stamp + '.xls', 'application/vnd.ms-excel;charset=utf-8');
           return;
         }
         var csv = headers.map(function (h) { return csvCell(h[1]); }).join(',') + '\n'
-          + rows.map(function (r) { return r.map(csvCell).join(','); }).join('\n');
+          + sheetRows.map(function (r) { return r.map(csvCell).join(','); }).join('\n');
         downloadText('\ufeff' + csv, 'nnt-royxati-' + stamp + '.csv', 'text/csv;charset=utf-8');
+    }
+    function safeSheetValue(value) {
+      var s = String(value == null ? '' : value);
+      return /^[\s]*[=+\-@]/.test(s) ? "'" + s : s;
     }
     function csvCell(value) {
       return '"' + String(value == null ? '' : value).replace(/"/g, '""') + '"';
