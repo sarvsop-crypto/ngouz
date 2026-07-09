@@ -295,7 +295,15 @@
   var COMMISSION_DOCUMENT_TIMEOUT_MS = 90000;
   function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
   function setText(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
-  function toast(msg) { var el = document.getElementById('cmsToast'); if (!el) return; el.textContent = msg; el.className = 'cms-toast show'; setTimeout(function () { el.classList.remove('show'); }, 3500); }
+  var toastTimer = null;
+  function toast(msg, type) {
+    var el = document.getElementById('cmsToast');
+    if (!el) return;
+    el.textContent = msg;
+    el.className = 'cms-toast cms-toast--' + (type || 'info') + ' show';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3500);
+  }
   function errText(err, fallback) { return (err && err.message) || fallback || 'Xatolik yuz berdi.'; }
   function canManage() { return currentRole === 'chair' || currentRole === 'secretary'; }
   function isChair() { return currentRole === 'chair'; }
@@ -730,7 +738,7 @@
   var protocolModal = document.getElementById('protocolModal');
   function closeProtocolModal() { protocolModal.setAttribute('aria-hidden', 'true'); setText('protocolError', ''); }
   document.getElementById('newProtocolBtn').addEventListener('click', function () {
-    if (!canManage()) { toast('Yangi protokolni faqat rais yoki kotib yaratadi.'); return; }
+    if (!canManage()) { toast('Yangi protokolni faqat rais yoki kotib yaratadi.', 'warning'); return; }
     document.getElementById('protocolNumber').value = '';
     document.getElementById('protocolDate').value = new Date().toISOString().slice(0, 10);
     document.getElementById('protocolTitle').value = '';
