@@ -52,32 +52,17 @@
 
     <div class="main__header">
       <div>
-        <h1 class="main__title">Rahbar imzosini kutayotgan arizalar</h1>
-        <p class="text-dim" style="margin:6px 0 0">Superadmin tasdig'idan o'tgan shartnoma va guvohnomalarni ko'rib chiqing.</p>
+        <h1 class="main__title">Imzolash navbati</h1>
+        <p class="text-dim" style="margin:6px 0 0">Arizani oching, hujjatlarni tekshiring, keyin imzolang yoki qaytaring.</p>
       </div>
       <div class="main__btns">
         <button type="button" class="btn btn--secondary" id="refreshBtn"><i class="ph ph-arrow-clockwise" aria-hidden="true"></i> Yangilash</button>
       </div>
     </div>
 
-    <div class="cards">
-      <div class="card">
-        <div class="card__head"><div class="card__icon card__icon--warning"><i class="ph ph-clock" aria-hidden="true"></i></div></div>
-        <div class="card__body"><div><p class="card__label">Imzo kutilmoqda</p><p class="card__value" id="kpiPending">—</p></div></div>
-      </div>
-      <div class="card">
-        <div class="card__head"><div class="card__icon card__icon--success"><i class="ph ph-file-text" aria-hidden="true"></i></div></div>
-        <div class="card__body"><div><p class="card__label">Hujjat raqami bor</p><p class="card__value" id="kpiNumbered">—</p></div></div>
-      </div>
-      <div class="card">
-        <div class="card__head"><div class="card__icon"><i class="ph ph-calendar-blank" aria-hidden="true"></i></div></div>
-        <div class="card__body"><div><p class="card__label">Oxirgi yangilanish</p><p class="card__value" id="kpiUpdated" style="font-size:18px">—</p></div></div>
-      </div>
-    </div>
-
     <section class="table-section" aria-labelledby="leaderQueueTitle">
       <div class="table-section__head">
-        <h2 class="table-section__title" id="leaderQueueTitle">Imzolash navbati</h2>
+        <h2 class="table-section__title" id="leaderQueueTitle">Arizalar</h2>
       </div>
       <table class="table">
         <caption class="u-visually-hidden">Rahbar imzosini kutayotgan a'zolik arizalari</caption>
@@ -85,15 +70,13 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">Tashkilot</th>
-            <th scope="col">Rahbar</th>
-            <th scope="col">Shartnoma</th>
-            <th scope="col">Guvohnoma</th>
+            <th scope="col">Hujjatlar</th>
             <th scope="col">Sana</th>
             <th scope="col"><span class="u-visually-hidden">Amallar</span></th>
           </tr>
         </thead>
         <tbody id="leaderRows" aria-live="polite" aria-busy="true">
-          <tr class="u-empty-row"><td colspan="7" role="status">Yuklanmoqda...</td></tr>
+          <tr class="u-empty-row"><td colspan="5" role="status">Yuklanmoqda...</td></tr>
         </tbody>
       </table>
     </section>
@@ -160,22 +143,17 @@
     }
   }
   function render() {
-    document.getElementById('kpiPending').textContent = items.length;
-    document.getElementById('kpiNumbered').textContent = items.filter(function (i) { return i.contract_number && i.cert_number; }).length;
-    document.getElementById('kpiUpdated').textContent = new Date().toLocaleString('uz-UZ', { dateStyle: 'short', timeStyle: 'short' });
     var rows = document.getElementById('leaderRows');
     if (!items.length) {
-      rows.innerHTML = '<tr class="u-empty-row"><td colspan="7" role="status">Imzolash uchun ariza yo‘q</td></tr>';
+      rows.innerHTML = '<tr class="u-empty-row"><td colspan="5" role="status">Imzolash uchun ariza yo‘q</td></tr>';
       return;
     }
     rows.innerHTML = items.map(function (a) {
       var id = parseInt(a.id, 10) || 0;
       return '<tr>' +
         '<td><strong>#' + esc(a.id) + '</strong></td>' +
-        '<td>' + esc(a.org_name || '') + '<br><span style="font-size:12px;color:#798384">STIR: ' + esc(a.inn || '—') + '</span></td>' +
-        '<td>' + esc(a.leader_name || '—') + '</td>' +
-        '<td>' + esc(a.contract_number || '—') + '</td>' +
-        '<td>' + esc(a.cert_number || '—') + '</td>' +
+        '<td><strong>' + esc(a.org_name || '') + '</strong><br><span style="font-size:12px;color:#798384">STIR: ' + esc(a.inn || '—') + ' · Rahbar: ' + esc(a.leader_name || '—') + '</span></td>' +
+        '<td>Shartnoma: <strong>' + esc(a.contract_number || '—') + '</strong><br>Guvohnoma: <strong>' + esc(a.cert_number || '—') + '</strong></td>' +
         '<td>' + esc(String(a.updated_at || a.created_at || '').slice(0, 16)) + '</td>' +
         '<td style="white-space:nowrap">' +
           '<button type="button" class="btn btn--sm btn--secondary" onclick="viewLeaderApp(' + id + ')"><i class="ph ph-eye" aria-hidden="true"></i> Ko‘rish</button> ' +
@@ -195,7 +173,7 @@
       })
       .catch(function (err) {
         var rows = document.getElementById('leaderRows');
-        rows.innerHTML = '<tr class="u-empty-row"><td colspan="7" role="alert" style="color:var(--error-600)">Yuklashda xatolik: ' + esc((err && err.message) || 'nomaʼlum') + '</td></tr>';
+        rows.innerHTML = '<tr class="u-empty-row"><td colspan="5" role="alert" style="color:var(--error-600)">Yuklashda xatolik: ' + esc((err && err.message) || 'nomaʼlum') + '</td></tr>';
       })
       .then(function () { setBusy(false); });
   }
