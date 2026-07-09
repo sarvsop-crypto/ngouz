@@ -49,6 +49,19 @@
           link.remove();
         }
       });
+      if (user.role === 'commission') {
+        document.querySelectorAll('.breadcrumbs a[href]').forEach(function (link) {
+          var href = (link.getAttribute('href') || '').replace(/^\//, '').replace(/\.html$/, '');
+          if (href !== 'admin-commission') {
+            var span = document.createElement('span');
+            span.textContent = link.textContent || '';
+            link.parentNode.replaceChild(span, link);
+          }
+        });
+        document.querySelectorAll('.sidebar__nav-section').forEach(function (section) {
+          if (!section.querySelector('.sidebar__nav-link')) section.remove();
+        });
+      }
     })
     .catch(function () { /* requireAuth already handled redirect */ });
 
