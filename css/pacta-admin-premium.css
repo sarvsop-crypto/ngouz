@@ -27,22 +27,6 @@ body {
   padding-bottom: 42px;
 }
 
-.main::before {
-  content: "";
-  position: fixed;
-  inset: 36px 0 auto 0;
-  height: 260px;
-  pointer-events: none;
-  background:
-    linear-gradient(135deg, rgba(14, 116, 144, .18), rgba(184, 130, 25, .08) 52%, rgba(15, 118, 110, .10));
-  border-bottom: 1px solid rgba(6, 47, 58, .06);
-}
-
-.main > * {
-  position: relative;
-  z-index: 1;
-}
-
 .sidebar {
   background: linear-gradient(180deg, #073342 0, #082d38 58%, #0b2630 100%);
   border-right: 1px solid rgba(255, 255, 255, .08);
@@ -281,7 +265,4 @@ body {
     border-radius: 14px;
   }
 
-  .main::before {
-    height: 220px;
-  }
 }
