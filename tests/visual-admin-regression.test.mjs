@@ -58,6 +58,16 @@ test('generic rows pass content validation and keep a reload-stable target', asy
   assert.match(overrides, /main table tbody/);
 });
 
+test('database add buttons own their click before card controls can intercept it', async () => {
+  const admin = await source('js/visual-admin.js');
+  const helper = admin.slice(admin.indexOf('function injectAddButtons'), admin.indexOf('function currentDetailType'));
+  assert.match(helper, /data-va-add-type/);
+  assert.match(helper, /button\.addEventListener\('click'/);
+  assert.match(helper, /stopImmediatePropagation/);
+  assert.match(helper, /\}, true\)/);
+  assert.doesNotMatch(helper, /wrap\.addEventListener\('click'/);
+});
+
 test('added patches keep stable identity through edit and use DELETE for removal', async () => {
   const admin = await source('js/visual-admin.js');
   const overrides = await source('js/visual-overrides.js');

@@ -1157,11 +1157,14 @@
         var wrap = doc.createElement('div');
         wrap.className = 'va-live-add';
         wrap.innerHTML = '<button type="button" title="Qo\'shish" aria-label="Qo\'shish">+</button>';
-        wrap.addEventListener('click', function (e) {
+        var button = wrap.querySelector('button');
+        button.setAttribute('data-va-add-type', pair[1]);
+        button.addEventListener('click', function (e) {
           e.preventDefault();
           e.stopPropagation();
-          openEditor(pair[1], null);
-        });
+          if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+          openEditor(button.getAttribute('data-va-add-type'), null);
+        }, true);
         target.parentNode.insertBefore(wrap, target);
       });
     });
@@ -1175,11 +1178,14 @@
     wrap.id = 'vaDetailAdd';
     wrap.className = 'va-live-add va-live-add--floating';
     wrap.innerHTML = '<button type="button" title="Qo\'shish" aria-label="Qo\'shish">+</button>';
-    wrap.addEventListener('click', function (e) {
+    var button = wrap.querySelector('button');
+    button.setAttribute('data-va-add-type', type);
+    button.addEventListener('click', function (e) {
       e.preventDefault();
       e.stopPropagation();
-      openEditor(type, null);
-    });
+      if (typeof e.stopImmediatePropagation === 'function') e.stopImmediatePropagation();
+      openEditor(button.getAttribute('data-va-add-type'), null);
+    }, true);
     doc.body.appendChild(wrap);
   }
 
