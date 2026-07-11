@@ -67,6 +67,7 @@ test('database add buttons own their click before card controls can intercept it
   assert.match(helper, /\}, true\)/);
   assert.doesNotMatch(helper, /wrap\.addEventListener\('click'/);
   assert.match(admin, /\.va-live-add\{position:relative;z-index:10001/);
+  assert.match(admin, /\.va-live-editable>\.va-live-controls\{right:8px;top:8px\}/);
 });
 
 test('API-backed cards never receive duplicate generic block controls', async () => {

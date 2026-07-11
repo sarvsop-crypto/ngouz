@@ -336,6 +336,7 @@
       '.va-live-editable{outline:1px solid rgba(14,116,144,.42);outline-offset:5px}',
       '.va-live-editable:hover{outline-color:#0e7490}',
       '.va-live-controls{position:absolute;z-index:9999;right:10px;top:-38px;display:flex;gap:4px;padding:4px;border:1px solid #e4e7e7;background:rgba(255,255,255,.96);box-shadow:0 3px 6px rgba(100,100,100,.2);border-radius:8px;pointer-events:auto}',
+      '.va-live-editable>.va-live-controls{right:8px;top:8px}',
       '.va-live-controls button,.va-live-add button{width:30px;height:30px;border:1px solid transparent;background:#fff;color:#023347;border-radius:6px;padding:0;font:800 15px/1 Montserrat,system-ui,sans-serif;cursor:pointer}',
       '.va-live-controls button:hover{background:#E8F5FB;color:#023347}',
       '.va-live-controls button:last-child{color:#b42318}',
