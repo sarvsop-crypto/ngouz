@@ -203,6 +203,7 @@
       window.NGO_VISUAL_OVERRIDES_OBSERVING = true;
     } catch (e) {
       window.NGO_VISUAL_OVERRIDES_OBSERVING = false;
+      console.error('[ngo:visual-overrides:observer]', e && e.stack || e);
     }
   }
 

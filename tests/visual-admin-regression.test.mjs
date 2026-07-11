@@ -34,6 +34,21 @@ test('refresh never replaces an existing added node and strips its controls', as
   assert.doesNotMatch(addBranch, /replaceChild/);
 });
 
+test('optional employee and leader fields cannot crash cleanNodeText', async () => {
+  const admin = await source('js/visual-admin.js');
+  const helper = admin.slice(admin.indexOf('function cleanNodeText'), admin.indexOf('function deleteConfirmHtml'));
+  assert.match(helper, /!node \|\| typeof node\.cloneNode !== 'function'/);
+  assert.match(helper, /return String\(node \|\| ''\)\.trim\(\)/);
+});
+
+test('observer and uncaught runtime errors carry source labels', async () => {
+  const admin = await source('js/visual-admin.js');
+  const overrides = await source('js/visual-overrides.js');
+  assert.match(admin, /ngo:visual-admin:frame-observer/);
+  assert.match(admin, /ngo:' \+ label \+ ':uncaught/);
+  assert.match(overrides, /ngo:visual-overrides:observer/);
+});
+
 test('added patches keep stable identity through edit and use DELETE for removal', async () => {
   const admin = await source('js/visual-admin.js');
   const overrides = await source('js/visual-overrides.js');

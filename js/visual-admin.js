@@ -185,6 +185,7 @@
   function hidden(name) { return { kind: 'hidden', name: name }; }
 
   function init() {
+    installRuntimeErrorDiagnostics(window, 'visual-admin-shell');
     els.shell = document.querySelector('.va-shell');
     els.loginForm = document.getElementById('loginForm');
     els.loginError = document.getElementById('loginError');
@@ -286,6 +287,7 @@
     var doc;
     try { doc = els.frame.contentDocument; } catch (e) { return; }
     if (!doc || !doc.body) return;
+    installRuntimeErrorDiagnostics(doc.defaultView, 'visual-admin-frame');
     ensureFrameStyles(doc);
     observeFrameMutations(doc);
     hookFrameNavigation(doc);
@@ -385,7 +387,23 @@
       doc.documentElement.dataset.vaMutationHooked = '1';
     } catch (e) {
       delete doc.documentElement.dataset.vaMutationHooked;
+      console.error('[ngo:visual-admin:frame-observer]', e && e.stack || e);
     }
+  }
+
+  function installRuntimeErrorDiagnostics(view, label) {
+    if (!view || view.__NGO_VISUAL_ERROR_DIAGNOSTICS__) return;
+    view.__NGO_VISUAL_ERROR_DIAGNOSTICS__ = true;
+    view.addEventListener('error', function (event) {
+      var error = event && event.error;
+      console.error(
+        '[ngo:' + label + ':uncaught]',
+        event && event.filename || '(no filename)',
+        event && event.lineno || 0,
+        event && event.colno || 0,
+        error && error.stack || event && event.message || error || 'unknown error'
+      );
+    }, true);
   }
 
   // Plain i18n text blocks (hero titles, section headings, labels, paragraphs,
@@ -1632,6 +1650,7 @@
   }
 
   function cleanNodeText(node) {
+    if (!node || typeof node.cloneNode !== 'function') return String(node || '').trim();
     var clone = node.cloneNode(true);
     Array.prototype.forEach.call(clone.querySelectorAll('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add,.va-i18n-controls'), function (child) {
       child.remove();
