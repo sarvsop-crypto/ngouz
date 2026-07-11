@@ -49,6 +49,15 @@ test('observer and uncaught runtime errors carry source labels', async () => {
   assert.match(overrides, /ngo:visual-overrides:observer/);
 });
 
+test('generic rows pass content validation and keep a reload-stable target', async () => {
+  const admin = await source('js/visual-admin.js');
+  const overrides = await source('js/visual-overrides.js');
+  const validation = admin.slice(admin.indexOf("state.visualAction !== 'delete'"), admin.indexOf("var visualBtn"));
+  assert.match(validation, /data\.col_1/);
+  assert.match(overrides, /main \.doc-table/);
+  assert.match(overrides, /main table tbody/);
+});
+
 test('added patches keep stable identity through edit and use DELETE for removal', async () => {
   const admin = await source('js/visual-admin.js');
   const overrides = await source('js/visual-overrides.js');

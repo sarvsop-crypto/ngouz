@@ -1907,7 +1907,7 @@
         setError(els.editorError, 'Tashkilot, hudud va sertifikat darajasi majburiy.');
         return;
       }
-      if (state.visualAction !== 'delete' && !(data.text || data.src || data.href || data.file || data.title || data.body || data.name || data.role || data.value || data.label || data.date)) {
+      if (state.visualAction !== 'delete' && !(data.text || data.src || data.href || data.file || data.title || data.body || data.name || data.role || data.value || data.label || data.date || data.col_1)) {
         setError(els.editorError, 'Kontent bo\'sh bo\'lmasligi kerak.');
         return;
       }

@@ -13,7 +13,7 @@
     'main .hero-stat', 'main .hero-stat-num', 'main .hero-stat-label', 'main .nnt-stat-box', 'main .struct-stat',
     'main .council-stat', 'main .kpi', 'main .criterion-card', 'main .apply-step',
     'main .partner', 'main .vazifa-card', 'main .about-reg-card', 'main .cert-level-card',
-    'main .doc-row:not(.head)', 'main tbody tr', 'main .vacancy', 'main .media-card',
+    'main .doc-table', 'main table tbody', 'main .doc-row:not(.head)', 'main tbody tr', 'main .vacancy', 'main .media-card',
     'main img', 'main a.btn', 'main a.social-link',
     'main .partner-grid', 'main .partner', 'main .useful-links-grid', 'main .useful-link-card',
     'main .team-grid', 'main .team-card', 'main .leader-card',
