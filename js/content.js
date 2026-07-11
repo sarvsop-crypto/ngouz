@@ -822,10 +822,11 @@
   // grant with a future deadline but no status field rendered as
   // 'Yopilgan' on the public /grants page.
   function grantStatus(g) {
-    if (g.status === 'active' || g.status === 'closed') return g.status;
+    if (g.status === 'open' || g.status === 'upcoming' || g.status === 'closed') return g.status;
+    if (g.status === 'active') return 'open';
     if (g.deadline) {
       var t = new Date(g.deadline).getTime();
-      if (!isNaN(t)) return t >= new Date().setHours(0, 0, 0, 0) ? 'active' : 'closed';
+      if (!isNaN(t)) return t >= new Date().setHours(0, 0, 0, 0) ? 'open' : 'closed';
     }
     return 'closed';
   }
@@ -835,8 +836,8 @@
     // Active grants first (nearest deadline first — most actionable),
     // closed grants second (most-recent first). Was raw API order.
     var sorted = items.slice().sort(function (a, b) {
-      var aActive = grantStatus(a) === 'active' ? 1 : 0;
-      var bActive = grantStatus(b) === 'active' ? 1 : 0;
+      var aActive = grantStatus(a) !== 'closed' ? 1 : 0;
+      var bActive = grantStatus(b) !== 'closed' ? 1 : 0;
       if (aActive !== bActive) return bActive - aActive;
       var ad = new Date(a.deadline || 0).getTime() || 0;
       var bd = new Date(b.deadline || 0).getTime() || 0;
@@ -852,14 +853,19 @@
       var cover = g.cover_image
         ? '<div class="card-cover" style="' + coverStyle(g) + '" aria-hidden="true"></div>'
         : '';
-      var isActive = grantStatus(g) === 'active';
+      var status = grantStatus(g);
+      var isOpen = status === 'open';
       // Hide the "Ariza topshirish" CTA on closed grants — applications
       // wouldn't be accepted, so the button just frustrates users.
-      var cta = isActive
+      var cta = isOpen
         ? '<a class="btn btn-inline" href="service-request" data-i18n="pages.grants.apply">Ariza topshirish</a>'
+        : status === 'upcoming'
+          ? '<span class="btn btn-inline" style="opacity:.55;cursor:not-allowed" aria-disabled="true">Kutilmoqda</span>'
         : '<span class="btn btn-inline" style="opacity:.55;cursor:not-allowed" aria-disabled="true" data-i18n="pages.grants.closed">Tanlov yopilgan</span>';
-      var statusTag = isActive
+      var statusTag = isOpen
         ? ' · <span data-i18n="pages.grants.tagActive">Faol</span>'
+        : status === 'upcoming'
+          ? ' · <span>Kutilmoqda</span>'
         : ' · <span data-i18n="pages.grants.tagClosed">Yopilgan</span>';
       var amount = g.amount ? esc(g.amount) : '<span class="grant-meta-empty">—</span>';
       var deadline = (g.deadline || g.deadlineLabel)

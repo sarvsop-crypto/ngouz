@@ -340,7 +340,7 @@
       '.va-live-controls button:hover{background:#E8F5FB;color:#023347}',
       '.va-live-controls button:last-child{color:#b42318}',
       '.va-live-controls button:last-child:hover{background:#fff8f7}',
-      '.va-live-add{position:relative;z-index:9998;display:flex;justify-content:flex-end;margin:0 0 10px;pointer-events:auto}',
+      '.va-live-add{position:relative;z-index:10001;display:flex;justify-content:flex-end;margin:0 0 10px;pointer-events:auto}',
       '.va-live-add button{width:36px;height:36px;background:#023347;color:#fff;border-color:#023347;border-radius:8px;font-size:22px;box-shadow:0 3px 6px rgba(100,100,100,.2)}',
       '.va-context-add{position:relative;z-index:9998;display:flex;justify-content:flex-end;margin:0 0 12px;pointer-events:auto}',
       '.va-context-add button{min-height:36px;border:1px solid #023347;background:#023347;color:#fff;border-radius:8px;padding:8px 12px;font:800 13px/1 Montserrat,system-ui,sans-serif;box-shadow:0 3px 6px rgba(100,100,100,.2);cursor:pointer}',
@@ -1049,6 +1049,10 @@
     ].forEach(function (cfg) {
       Array.prototype.forEach.call(queryAll(doc, cfg[0]), function (node) {
         if (cfg[1] === 'simple_block' && isLegalArticleNode(node)) return;
+        // API-backed cards own their database edit/delete controls. Treating
+        // them as generic page blocks creates a second control pair whose
+        // negative offset can cover the database Add/Delete buttons.
+        if (node.hasAttribute('data-va-type') || node.hasAttribute('data-va-id')) return;
         if (inRegisteredBlob(node)) return; // blob card-grid editor owns these
         if (node.closest('.visually-hidden,[hidden],[aria-hidden="true"]')) return;
         if (node.dataset.vaStructuredInjected && node.querySelector('[data-va-structured-edit]')) return;

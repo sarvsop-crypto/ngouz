@@ -66,6 +66,13 @@ test('database add buttons own their click before card controls can intercept it
   assert.match(helper, /stopImmediatePropagation/);
   assert.match(helper, /\}, true\)/);
   assert.doesNotMatch(helper, /wrap\.addEventListener\('click'/);
+  assert.match(admin, /\.va-live-add\{position:relative;z-index:10001/);
+});
+
+test('API-backed cards never receive duplicate generic block controls', async () => {
+  const admin = await source('js/visual-admin.js');
+  const helper = admin.slice(admin.indexOf('function injectStructuredItemControls'), admin.indexOf('function attachControls'));
+  assert.match(helper, /node\.hasAttribute\('data-va-type'\) \|\| node\.hasAttribute\('data-va-id'\)/);
 });
 
 test('added patches keep stable identity through edit and use DELETE for removal', async () => {
@@ -85,6 +92,7 @@ test('added patches keep stable identity through edit and use DELETE for removal
 
 test('visual-admin grant statuses match the API contract', async () => {
   const admin = await source('js/visual-admin.js');
+  const content = await source('js/content.js');
   const api = await source('../../api.ngo.uz/controllers/AdminContentController.php');
   const grantSection = admin.slice(admin.indexOf('grants: {'), admin.indexOf('documents: {'));
   assert.match(grantSection, /\['open', 'Ochiq'\]/);
@@ -92,6 +100,10 @@ test('visual-admin grant statuses match the API contract', async () => {
   assert.match(grantSection, /\['closed', 'Yopilgan'\]/);
   assert.doesNotMatch(grantSection, /\['active'/);
   assert.match(api, /array\('open','closed','upcoming', null, ''\)/);
+  const renderer = content.slice(content.indexOf('function grantStatus'), content.indexOf('/* ── Documents'));
+  assert.match(renderer, /g\.status === 'open' \|\| g\.status === 'upcoming' \|\| g\.status === 'closed'/);
+  assert.match(renderer, /status === 'upcoming'/);
+  assert.match(renderer, /Kutilmoqda/);
 });
 
 test('document edit payload can round-trip body, status and archive state', async () => {
