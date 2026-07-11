@@ -38,6 +38,7 @@ export async function onRequestDelete({ request, env }) {
   const id = String(url.searchParams.get('id') || '').slice(0, 240);
   if (!id) return json({ error: 'missing_id' }, 400);
   const items = await readItems(env, page);
+  if (!items.some((x) => x.id === id)) return json({ error: 'not_found' }, 404);
   await writeItems(env, page, items.filter((x) => x.id !== id));
   return json({ ok: true, page, id }, 200);
 }

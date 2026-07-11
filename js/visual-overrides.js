@@ -46,6 +46,8 @@
   }
 
   function blockId(node) {
+    var addedId = node && node.getAttribute && node.getAttribute('data-va-added-id');
+    if (addedId) return addedId;
     var parts = [];
     var cur = node;
     while (cur && cur.nodeType === 1 && cur !== document.body) {
@@ -150,6 +152,13 @@
       node.appendChild(template.content);
     }
     node.setAttribute('data-va-added-id', patch.id);
+    // Added records use the patch id as their permanent editor identity. A
+    // positional DOM path changes whenever a sibling is added or removed and,
+    // more importantly, cannot be mapped back to the original `add` patch for
+    // later edits/deletion.
+    node.setAttribute('data-va-block-id', patch.id);
+    node.setAttribute('data-va-added-target-id', patch.targetId || '');
+    node.setAttribute('data-va-added-position', patch.position || 'after');
     return node;
   }
 

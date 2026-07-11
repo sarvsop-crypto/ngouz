@@ -45,7 +45,7 @@
         text('title', 'Sarlavha', true), text('title_ru', 'Sarlavha RU'), text('title_en', 'Sarlavha EN'),
         text('organizer', 'Tashkilotchi'), select('category', 'Kategoriya', [['grant', 'Grant'], ['tanlov', 'Tanlov'], ['loyiha', 'Loyiha'], ['stipendiya', 'Stipendiya'], ['boshqa', 'Boshqa']]), text('category_ru', 'Kategoriya RU'), text('category_en', 'Kategoriya EN'),
         text('amount', 'Mablag\''), date('deadline', 'Topshirish muddati'),
-        select('status', 'Holat', [['active', 'Faol'], ['closed', 'Yopilgan']]),
+        select('status', 'Holat', [['open', 'Ochiq'], ['upcoming', 'Kutilmoqda'], ['closed', 'Yopilgan']]),
         area('description', 'Tavsif', true, true), area('description_ru', 'Tavsif RU', false, true), area('description_en', 'Tavsif EN', false, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true),
         hidden('cover_image'),
@@ -61,6 +61,8 @@
       required: ['title', 'date', 'category', 'body'],
       fields: [
         text('title', 'Sarlavha', true), date('date', 'Sana', true), select('category', 'Kategoriya', [['qonunlar', 'Qonunlar va qarorlar'], ['davlat-dasturlari', 'Davlat dasturlari'], ['nogironlar-huquqi', 'Nogironlar huquqlarini himoya qilish'], ['rasmiy-hujjat', 'Rasmiy hujjatlar']]),
+        select('status', 'Nashr holati', [['published', 'Nashr qilingan'], ['draft', 'Qoralama']]),
+        checkbox('is_archive', 'Arxivda'),
         area('excerpt', 'Qisqa matn'), area('body', 'Asosiy matn', true, true),
         file('cover_image_file', 'Muqova rasmi yuklash', 'image/*', true), hidden('cover_image'),
         multiFile('media_files', "Qo'shimcha rasm/video yuklash", 'image/*,video/*', true),
@@ -158,7 +160,17 @@
     '.va-live-controls', '.va-live-add', '.va-generic-controls', '.va-generic-add'
   ].join(',');
 
-  var state = { user: null, editing: null, editingType: null, cache: {}, visualTarget: null, visualAction: null, i18nEditing: null, blobEditing: null };
+  var state = {
+    user: null,
+    editing: null,
+    editingType: null,
+    cache: {},
+    visualTarget: null,
+    visualAction: null,
+    confirmingDelete: false,
+    i18nEditing: null,
+    blobEditing: null
+  };
   var els = {};
 
   function text(name, label, required, wide) { return { kind: 'text', name: name, label: label, required: !!required, wide: !!wide }; }
@@ -292,7 +304,10 @@
       if (!node.getAttribute('data-va-id') || node.querySelector(':scope > .va-live-controls')) return;
       if (!isEditableType(node.getAttribute('data-va-type'))) return;
       node.classList.add('va-live-editable');
-      if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
+      if (getComputedStyle(node).position === 'static') {
+        node.dataset.vaPositionInjected = '1';
+        node.style.position = 'relative';
+      }
       var controls = doc.createElement('div');
       controls.className = 'va-live-controls';
       controls.innerHTML = '<button type="button" data-va-edit title="Tahrirlash" aria-label="Tahrirlash">✎</button><button type="button" data-va-delete title="O\'chirish" aria-label="O\'chirish">×</button>';
@@ -382,7 +397,10 @@
       if (node.dataset.vaI18nInjected && node.querySelector('[data-va-i18n-edit]')) return;
       node.dataset.vaI18nInjected = '1';
       node.classList.add('va-i18n-editable');
-      if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
+      if (getComputedStyle(node).position === 'static') {
+        node.dataset.vaPositionInjected = '1';
+        node.style.position = 'relative';
+      }
       var controls = doc.createElement('div');
       controls.className = 'va-i18n-controls';
       controls.innerHTML = '<button type="button" data-va-i18n-edit title="Matnni tahrirlash" aria-label="Matnni tahrirlash">✎ Matn</button>';
@@ -1012,7 +1030,10 @@
         if (node.dataset.vaStructuredInjected && node.querySelector('[data-va-structured-edit]')) return;
         if (!node.getAttribute('data-va-block-id')) node.setAttribute('data-va-block-id', blockId(doc, node));
         node.classList.add('va-generic-editable');
-        if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
+        if (getComputedStyle(node).position === 'static') {
+          node.dataset.vaPositionInjected = '1';
+          node.style.position = 'relative';
+        }
         var controls = doc.createElement('div');
         controls.className = 'va-generic-controls';
         controls.innerHTML = '<button type="button" data-va-structured-edit title="Tahrirlash" aria-label="Tahrirlash">✎</button><button type="button" data-va-structured-delete title="O\'chirish" aria-label="O\'chirish">×</button>';
@@ -1047,7 +1068,10 @@
       if (node.dataset.vaProjectInjected) return;
       node.dataset.vaProjectInjected = '1';
       node.classList.add('va-generic-editable');
-      if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
+      if (getComputedStyle(node).position === 'static') {
+        node.dataset.vaPositionInjected = '1';
+        node.style.position = 'relative';
+      }
       var summary = node.querySelector('summary') || node;
       if (getComputedStyle(summary).position === 'static') summary.style.position = 'relative';
       var controls = doc.createElement('div');
@@ -1072,6 +1096,8 @@
   }
 
   function blockId(doc, node) {
+    var addedId = node && node.getAttribute && node.getAttribute('data-va-added-id');
+    if (addedId) return addedId;
     var parts = [];
     var cur = node;
     while (cur && cur.nodeType === 1 && cur !== doc.body) {
@@ -1204,18 +1230,29 @@
     state.editingType = type;
     state.editing = item || null;
     state.visualAction = null;
-    els.editorTitle.textContent = item ? cfg.singular + 'ni tahrirlash' : 'Yangi ' + cfg.singular;
+    state.confirmingDelete = !!confirmDelete;
+    els.editorTitle.textContent = confirmDelete ? cfg.singular + "ni o'chirish" : item ? cfg.singular + 'ni tahrirlash' : 'Yangi ' + cfg.singular;
     els.editorKicker.textContent = cfg.label;
     els.deleteBtn.style.display = item ? '' : 'none';
-    els.saveBtn.style.display = '';
-    els.form.dataset.mode = item ? 'edit' : 'add';
+    els.saveBtn.style.display = confirmDelete ? 'none' : '';
+    els.form.dataset.mode = confirmDelete ? 'delete-confirm' : item ? 'edit' : 'add';
     setError(els.editorError, '');
-    els.fields.innerHTML = cfg.fields.map(function (field) { return fieldHtml(field, item || {}); }).join('');
-    initMediaGalleryEditor();
+    els.fields.innerHTML = confirmDelete
+      ? databaseDeleteConfirmHtml(cfg, item)
+      : cfg.fields.map(function (field) { return fieldHtml(field, item || {}); }).join('');
+    if (!confirmDelete) initMediaGalleryEditor();
     els.modal.classList.add('is-open');
     els.modal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    if (confirmDelete) setTimeout(onDelete, 60);
+  }
+
+  function databaseDeleteConfirmHtml(cfg, item) {
+    var label = item && (item.title || item.name || item.id) || cfg.singular;
+    return '<div class="va-delete-confirm va-field--wide">' +
+      '<strong>Bu ' + esc(cfg.singular) + "ni o'chirishni tasdiqlaysizmi?</strong>" +
+      '<p>' + esc(String(label).slice(0, 220)) + '</p>' +
+      '<p>Bu amalni bekor qilib bo\'lmaydi.</p>' +
+      '</div>';
   }
 
   function openVisualEditor(node, action) {
@@ -1223,6 +1260,7 @@
     state.editing = null;
     state.visualTarget = node;
     state.visualAction = action;
+    state.confirmingDelete = action === 'delete';
     var item = visualItemFromNode(node, action);
     els.editorTitle.textContent = action === 'add' ? "Kontent qo'shish" : action === 'delete' ? "Blokni o'chirish" : 'Blokni tahrirlash';
     els.editorKicker.textContent = 'Sahifa kontenti';
@@ -1249,6 +1287,7 @@
     state.visualAction = 'add-' + kind;
     els.editorTitle.textContent = addTitle(kind);
     els.editorKicker.textContent = addKicker(kind);
+    state.confirmingDelete = false;
     els.form.dataset.mode = 'visual-add-' + kind;
     els.deleteBtn.style.display = 'none';
     els.saveBtn.style.display = '';
@@ -1393,6 +1432,7 @@
     state.editing = null;
     state.visualTarget = node;
     state.visualAction = action + '-' + kind;
+    state.confirmingDelete = action === 'delete';
     els.editorTitle.textContent = action === 'delete' ? itemDeleteTitle(kind) : itemEditTitle(kind);
     els.editorKicker.textContent = itemKicker(kind);
     els.form.dataset.mode = 'visual-' + state.visualAction;
@@ -1523,6 +1563,7 @@
     state.editing = null;
     state.visualTarget = node;
     state.visualAction = action === 'delete' ? 'delete-project' : 'edit-project';
+    state.confirmingDelete = action === 'delete';
     els.editorTitle.textContent = action === 'delete' ? "Loyihani o'chirish" : 'Loyihani tahrirlash';
     els.editorKicker.textContent = 'Loyihalar';
     els.form.dataset.mode = 'visual-' + state.visualAction;
@@ -1612,6 +1653,7 @@
     state.visualAction = null;
     state.i18nEditing = null;
     state.blobEditing = null;
+    state.confirmingDelete = false;
     els.form.dataset.mode = '';
     els.saveBtn.style.display = '';
     els.deleteBtn.style.display = '';
@@ -2046,6 +2088,7 @@
   function saveVisualPatch(data) {
     var node = state.visualTarget;
     var id = node && node.getAttribute('data-va-block-id');
+    var addedId = node && node.getAttribute('data-va-added-id');
     var patch = { id: id, kind: (node && node.tagName || '').toLowerCase(), action: 'html' };
     if (state.visualAction === 'delete' || state.visualAction === 'delete-project' || /^delete-/.test(state.visualAction || '')) {
       patch.action = 'delete';
@@ -2065,13 +2108,13 @@
       patch.html = buildUsefulLinkHtml(data);
     } else if (state.visualAction === 'edit-partner') {
       patch.kind = 'partner';
-      patch.action = 'html';
-      patch.html = buildPartnerInnerHtml(data);
+      patch.action = addedId ? 'add' : 'html';
+      patch.html = addedId ? buildPartnerHtml(data) : buildPartnerInnerHtml(data);
     } else if (state.visualAction === 'edit-useful_link') {
       patch.kind = 'useful_link';
-      patch.action = 'attrs';
+      patch.action = addedId ? 'add' : 'attrs';
       patch.href = data.href || '';
-      patch.html = buildUsefulLinkInnerHtml(data);
+      patch.html = addedId ? buildUsefulLinkHtml(data) : buildUsefulLinkInnerHtml(data);
     } else if (state.visualAction === 'add-person_card') {
       patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
       patch.kind = 'person_card';
@@ -2081,12 +2124,12 @@
       patch.html = buildPersonCardHtml(data);
     } else if (state.visualAction === 'edit-person_card') {
       patch.kind = 'person_card';
-      patch.action = 'html';
-      patch.html = buildPersonCardInnerHtml(data);
+      patch.action = addedId ? 'add' : 'html';
+      patch.html = addedId ? buildPersonCardHtml(data) : buildPersonCardInnerHtml(data);
     } else if (state.visualAction === 'edit-leader_card') {
       patch.kind = 'leader_card';
-      patch.action = 'html';
-      patch.html = buildLeaderCardInnerHtml(data);
+      patch.action = addedId ? 'add' : 'html';
+      patch.html = addedId ? rebuildAddedNode(node, buildLeaderCardInnerHtml(data)) : buildLeaderCardInnerHtml(data);
     } else if (state.visualAction === 'add-leader_card') {
       patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
       patch.kind = 'leader_card';
@@ -2117,8 +2160,9 @@
       patch.html = buildSimpleRowHtml(data, node);
     } else if (state.visualAction === 'edit-simple_row') {
       patch.kind = 'simple_row';
-      patch.action = 'html';
-      patch.html = buildSimpleRowInnerHtml(data, node);
+      patch.action = addedId ? 'add' : 'html';
+      var simpleRowHtml = buildSimpleRowInnerHtml(data, node);
+      patch.html = addedId ? rebuildAddedNode(node, simpleRowHtml) : simpleRowHtml;
     } else if (state.visualAction === 'add-simple_card') {
       patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
       patch.kind = 'simple_card';
@@ -2128,8 +2172,9 @@
       patch.html = buildSimpleCardHtml(data);
     } else if (state.visualAction === 'edit-simple_block') {
       patch.kind = 'simple_block';
-      patch.action = 'html';
-      patch.html = buildSimpleBlockInnerHtml(data, node);
+      patch.action = addedId ? 'add' : 'html';
+      var simpleBlockHtml = buildSimpleBlockInnerHtml(data, node);
+      patch.html = addedId ? rebuildAddedNode(node, simpleBlockHtml) : simpleBlockHtml;
     } else if (state.visualAction === 'add-top500_row') {
       patch.id = newVisualId('top500');
       patch.kind = 'top500_row';
@@ -2139,8 +2184,9 @@
       patch.html = buildTop500RowHtml(data);
     } else if (state.visualAction === 'edit-top500_row') {
       patch.kind = 'top500_row';
-      patch.action = 'html';
-      patch.html = buildTop500RowInnerHtml(data);
+      patch.action = addedId ? 'add' : 'html';
+      var top500Html = buildTop500RowInnerHtml(data);
+      patch.html = addedId ? rebuildAddedNode(node, top500Html) : top500Html;
     } else if (state.visualAction === 'add-council_row') {
       patch.id = newVisualId('council');
       patch.kind = 'council_row';
@@ -2150,8 +2196,9 @@
       patch.html = buildCouncilRowHtml(data);
     } else if (state.visualAction === 'edit-council_row') {
       patch.kind = 'council_row';
-      patch.action = 'html';
-      patch.html = buildCouncilRowInnerHtml(data);
+      patch.action = addedId ? 'add' : 'html';
+      var councilHtml = buildCouncilRowInnerHtml(data);
+      patch.html = addedId ? rebuildAddedNode(node, councilHtml) : councilHtml;
     } else if (state.visualAction === 'add-sustainability_row') {
       patch.id = newVisualId('sustainability');
       patch.kind = 'sustainability_row';
@@ -2161,8 +2208,9 @@
       patch.html = buildSustainabilityRowHtml(data);
     } else if (state.visualAction === 'edit-sustainability_row') {
       patch.kind = 'sustainability_row';
-      patch.action = 'html';
-      patch.html = buildSustainabilityRowInnerHtml(data);
+      patch.action = addedId ? 'add' : 'html';
+      var sustainabilityHtml = buildSustainabilityRowInnerHtml(data);
+      patch.html = addedId ? rebuildAddedNode(node, sustainabilityHtml) : sustainabilityHtml;
     } else if (state.visualAction === 'add-certificate_row') {
       patch.id = newVisualId('certificate');
       patch.kind = 'certificate_row';
@@ -2172,8 +2220,9 @@
       patch.html = buildCertificateRowHtml(data);
     } else if (state.visualAction === 'edit-certificate_row') {
       patch.kind = 'certificate_row';
-      patch.action = 'html';
-      patch.html = buildCertificateRowInnerHtml(data);
+      patch.action = addedId ? 'add' : 'html';
+      var certificateHtml = buildCertificateRowInnerHtml(data);
+      patch.html = addedId ? rebuildAddedNode(node, certificateHtml) : certificateHtml;
     } else if (state.visualAction === 'add-project') {
       patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
       patch.kind = 'project';
@@ -2183,8 +2232,8 @@
       patch.html = buildProjectHtml(data);
     } else if (state.visualAction === 'edit-project') {
       patch.kind = 'project';
-      patch.action = 'html';
-      patch.html = buildProjectInnerHtml(data);
+      patch.action = addedId ? 'add' : 'html';
+      patch.html = addedId ? buildProjectHtml(data) : buildProjectInnerHtml(data);
     } else if (state.visualAction === 'add') {
       patch.id = 'add:' + Date.now().toString(36) + ':' + Math.random().toString(36).slice(2, 7);
       patch.action = 'add';
@@ -2195,19 +2244,36 @@
       patch.action = 'html';
       patch.html = buildDetailMetaInnerHtml(data);
     } else if (node.tagName === 'IMG') {
-      patch.action = 'attrs';
-      patch.src = data.src || '';
-      patch.alt = data.alt || '';
+      if (addedId) {
+        patch.action = 'add';
+        patch.html = '<img src="' + escAttr(data.src || '') + '" alt="' + escAttr(data.alt || '') + '">';
+      } else {
+        patch.action = 'attrs';
+        patch.src = data.src || '';
+        patch.alt = data.alt || '';
+      }
     } else if (node.tagName === 'A') {
-      patch.action = 'attrs';
-      patch.text = data.text || '';
-      patch.href = data.href || '';
+      if (addedId) {
+        patch.action = 'add';
+        patch.html = '<a href="' + escAttr(data.href || '') + '">' + esc(data.text || '') + '</a>';
+      } else {
+        patch.action = 'attrs';
+        patch.text = data.text || '';
+        patch.href = data.href || '';
+      }
     } else if (isSimpleTextNode(node)) {
-      patch.action = 'html';
-      patch.html = esc(data.text || '');
+      patch.action = addedId ? 'add' : 'html';
+      patch.html = addedId ? rebuildAddedNode(node, esc(data.text || '')) : esc(data.text || '');
     } else {
-      patch.action = 'html';
-      patch.html = buildSimpleBlockInnerHtml(data);
+      patch.action = addedId ? 'add' : 'html';
+      var innerHtml = buildSimpleBlockInnerHtml(data, node);
+      patch.html = addedId ? rebuildAddedNode(node, innerHtml) : innerHtml;
+    }
+    if (addedId && patch.action === 'add') {
+      patch.id = addedId;
+      patch.targetId = node.getAttribute('data-va-added-target-id') ||
+        (node.parentElement && node.parentElement.getAttribute('data-va-block-id')) || '';
+      patch.position = node.getAttribute('data-va-added-position') || 'append';
     }
     return fetch(API_VISUAL, {
       method: 'POST',
@@ -2222,6 +2288,20 @@
         return body;
       });
     });
+  }
+
+  function rebuildAddedNode(node, innerHtml) {
+    var clone = node.cloneNode(false);
+    if (clone.getAttribute('data-va-position-injected') === '1') clone.style.removeProperty('position');
+    clone.removeAttribute('data-va-added-id');
+    clone.removeAttribute('data-va-block-id');
+    clone.removeAttribute('data-va-generic-injected');
+    clone.removeAttribute('data-va-added-target-id');
+    clone.removeAttribute('data-va-added-position');
+    clone.removeAttribute('data-va-position-injected');
+    clone.classList.remove('va-generic-editable');
+    clone.innerHTML = cleanEditorHtml(innerHtml);
+    return clone.outerHTML;
   }
 
   function buildPartnerHtml(data) {
@@ -2690,10 +2770,18 @@
     }
     if (state.editingType === VISUAL_TYPE) {
       if (!state.visualTarget) return;
-      if (!confirm('Bu blokni o\'chirishni tasdiqlaysizmi?')) return;
+      if (!state.confirmingDelete) {
+        var visualAction = state.visualAction || 'edit';
+        if (visualAction === 'edit-project') openProjectEditor(state.visualTarget, 'delete');
+        else if (/^edit-(partner|useful_link|person_card|leader_card|simple_row|simple_block|top500_row|council_row|sustainability_row|certificate_row)$/.test(visualAction)) {
+          openStructuredItemEditor(state.visualTarget, visualAction.replace(/^edit-/, ''), 'delete');
+        } else openVisualEditor(state.visualTarget, 'delete');
+        return;
+      }
       lock(els.deleteBtn, true, 'O\'chirilmoqda...');
-      if (state.visualAction !== 'delete' && !/^delete-/.test(state.visualAction || '')) state.visualAction = 'delete';
-      saveVisualPatch({}).then(function () {
+      var addedId = state.visualTarget.getAttribute('data-va-added-id');
+      var deleteRequest = addedId ? deleteVisualPatch(addedId) : saveVisualPatch({});
+      deleteRequest.then(function () {
         toast('O\'chirildi');
         closeEditor();
         reloadSite();
@@ -2709,7 +2797,10 @@
       return;
     }
     var title = state.editing.title || state.editing.name || state.editing.id;
-    if (!confirm('O\'chirishni tasdiqlaysizmi: ' + title + '?')) return;
+    if (!state.confirmingDelete) {
+      openEditor(state.editingType, state.editing, true);
+      return;
+    }
     lock(els.deleteBtn, true, 'O\'chirilmoqda...');
     var req = cfg.direct
       ? NgoApi.del(cfg.endpoint + '/' + encodeURIComponent(state.editing.id))
@@ -2722,6 +2813,18 @@
     }).catch(function (err) {
       setError(els.editorError, 'O\'chirishda xatolik: ' + message(err));
     }).then(function () { lock(els.deleteBtn, false); });
+  }
+
+  function deleteVisualPatch(id) {
+    return fetch(API_VISUAL + '?page=' + encodeURIComponent(visualPageKey()) + '&id=' + encodeURIComponent(id), {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + NgoApi.getToken() }
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (body) {
+        if (!r.ok) throw new Error(body.error || ('HTTP ' + r.status));
+        return body;
+      });
+    });
   }
 
   function showLoadError(err) {
