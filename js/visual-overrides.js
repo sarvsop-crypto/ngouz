@@ -74,15 +74,17 @@
       var target = document.querySelector('[data-va-block-id="' + cssEscape(patch.targetId || '') + '"]') || document.querySelector('main .container, main, body');
       if (!target || !patch.html) return;
       var marker = document.querySelector('[data-va-added-id="' + cssEscape(patch.id) + '"]');
+      // `refresh()` also runs after dynamic DOM changes. Replacing an existing
+      // marker here strips the editor controls that visual-admin just attached,
+      // which triggers both observers again and creates a replace/reinject loop.
+      // Patch content only changes across a page load (the API is fetched once),
+      // so an existing marker is already the current representation.
+      if (marker) return;
       var node = htmlToAddedNode(patch);
-      if (marker) {
-        marker.parentNode.replaceChild(node, marker);
-      } else {
-        if (patch.position === 'before') target.parentNode.insertBefore(node, target);
-        else if (patch.position === 'prepend') target.insertBefore(node, target.firstChild);
-        else if (patch.position === 'append') target.appendChild(node);
-        else target.parentNode.insertBefore(node, target.nextSibling);
-      }
+      if (patch.position === 'before') target.parentNode.insertBefore(node, target);
+      else if (patch.position === 'prepend') target.insertBefore(node, target.firstChild);
+      else if (patch.position === 'append') target.appendChild(node);
+      else target.parentNode.insertBefore(node, target.nextSibling);
       return;
     }
     if (!el) return;
@@ -182,18 +184,26 @@
 
   function observeMutations() {
     if (window.NGO_VISUAL_OVERRIDES_OBSERVING || !window.MutationObserver) return;
-    window.NGO_VISUAL_OVERRIDES_OBSERVING = true;
+    var target = document.body;
+    if (!target || typeof target.nodeType !== 'number') return;
     var observer = new MutationObserver(function (records) {
       if (isRefreshing) return;
       var relevant = records.some(function (record) {
-        var node = record.target;
-        return node && node.nodeType === 1 && !node.closest('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add');
+        return Array.prototype.some.call(record.addedNodes || [], function (node) {
+          if (!node || node.nodeType !== 1) return false;
+          return !(node.matches && node.matches('.va-live-controls,.va-live-add,.va-generic-controls,.va-generic-add,.va-context-add,.va-i18n-controls'));
+        });
       });
       if (!relevant) return;
       clearTimeout(refreshTimer);
       refreshTimer = setTimeout(refresh, 120);
     });
-    observer.observe(document.body, { childList: true, subtree: true });
+    try {
+      observer.observe(target, { childList: true, subtree: true });
+      window.NGO_VISUAL_OVERRIDES_OBSERVING = true;
+    } catch (e) {
+      window.NGO_VISUAL_OVERRIDES_OBSERVING = false;
+    }
   }
 
   function cssEscape(value) {

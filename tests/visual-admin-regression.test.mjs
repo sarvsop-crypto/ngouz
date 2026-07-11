@@ -20,10 +20,18 @@ test('dynamic content triggers idempotent control reinjection', async () => {
   const admin = await source('js/visual-admin.js');
   const overrides = await source('js/visual-overrides.js');
   assert.match(admin, /function observeFrameMutations\(doc\)/);
-  assert.match(admin, /observer\.observe\(doc\.body, \{ childList: true, subtree: true \}\)/);
+  assert.match(admin, /typeof target\.nodeType !== 'number'/);
+  assert.match(admin, /observer\.observe\(target, \{ childList: true, subtree: true \}\)/);
   assert.match(overrides, /function observeMutations\(\)/);
-  assert.match(overrides, /observer\.observe\(document\.body, \{ childList: true, subtree: true \}\)/);
+  assert.match(overrides, /observer\.observe\(target, \{ childList: true, subtree: true \}\)/);
   assert.match(overrides, /data-va-block-id', patch\.id/);
+});
+
+test('refresh never replaces an existing added node and strips its controls', async () => {
+  const overrides = await source('js/visual-overrides.js');
+  const addBranch = overrides.slice(overrides.indexOf("if (patch.action === 'add')"), overrides.indexOf("if (!el) return"));
+  assert.match(addBranch, /if \(marker\) return/);
+  assert.doesNotMatch(addBranch, /replaceChild/);
 });
 
 test('added patches keep stable identity through edit and use DELETE for removal', async () => {

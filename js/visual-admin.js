@@ -368,7 +368,8 @@
 
   function observeFrameMutations(doc) {
     if (!doc.defaultView || !doc.defaultView.MutationObserver || doc.documentElement.dataset.vaMutationHooked) return;
-    doc.documentElement.dataset.vaMutationHooked = '1';
+    var target = doc.body;
+    if (!target || typeof target.nodeType !== 'number') return;
     var timer = 0;
     var observer = new doc.defaultView.MutationObserver(function (records) {
       var relevant = records.some(function (record) {
@@ -379,7 +380,12 @@
       doc.defaultView.clearTimeout(timer);
       timer = doc.defaultView.setTimeout(injectEditorLayer, 180);
     });
-    observer.observe(doc.body, { childList: true, subtree: true });
+    try {
+      observer.observe(target, { childList: true, subtree: true });
+      doc.documentElement.dataset.vaMutationHooked = '1';
+    } catch (e) {
+      delete doc.documentElement.dataset.vaMutationHooked;
+    }
   }
 
   // Plain i18n text blocks (hero titles, section headings, labels, paragraphs,
