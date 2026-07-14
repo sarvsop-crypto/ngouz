@@ -2117,7 +2117,7 @@
   function uploadResultUrl(res) {
     if (!res) return '';
     if (res.url) return res.url;
-    if (res.path) return 'https://ngo-api-proxy.sarvsop.workers.dev/media.php?path=' + encodeURIComponent(res.path);
+    if (res.path) return 'https://api.ngo.uz/media.php?path=' + encodeURIComponent(res.path);
     return '';
   }
 

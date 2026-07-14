@@ -483,7 +483,7 @@
       document.getElementById('fCoverImage').value = item.cover_image || '';
       var preview = document.getElementById('fCoverPreview');
       if (item.cover_image) {
-        preview.src = 'https://ngo-api-proxy.sarvsop.workers.dev/media.php?path=' + encodeURIComponent(item.cover_image);
+        preview.src = 'https://api.ngo.uz/media.php?path=' + encodeURIComponent(item.cover_image);
         preview.style.display = 'block';
       } else {
         preview.style.display = 'none';
@@ -525,9 +525,9 @@
         status.textContent = 'Yuklandi!';
         var preview = document.getElementById('fCoverPreview');
         // Backend usually returns both path + url; if it only returns
-        // path, build the proxied media URL ourselves so the preview
-        // doesn't break with src="undefined".
-        preview.src = res.url || ('https://ngo-api-proxy.sarvsop.workers.dev/media.php?path=' + encodeURIComponent(res.path || ''));
+        // path, build the media URL ourselves so the preview doesn't
+        // break with src="undefined".
+        preview.src = res.url || ('https://api.ngo.uz/media.php?path=' + encodeURIComponent(res.path || ''));
         preview.style.display = 'block';
       });
     });

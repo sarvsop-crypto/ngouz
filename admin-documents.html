@@ -367,7 +367,7 @@
       document.getElementById('fCoverImage').value = item.cover_image || '';
       var preview = document.getElementById('fCoverPreview');
       if (item.cover_image) {
-        preview.src = 'https://ngo-api-proxy.sarvsop.workers.dev/media.php?path=' + encodeURIComponent(item.cover_image);
+        preview.src = 'https://api.ngo.uz/media.php?path=' + encodeURIComponent(item.cover_image);
         preview.style.display = 'block';
       } else {
         preview.style.display = 'none';
@@ -401,7 +401,7 @@
         status.style.color = '';
         status.textContent = 'Yuklandi!';
         var preview = document.getElementById('fCoverPreview');
-        preview.src = res.url || ('https://ngo-api-proxy.sarvsop.workers.dev/media.php?path=' + encodeURIComponent(res.path || ''));
+        preview.src = res.url || ('https://api.ngo.uz/media.php?path=' + encodeURIComponent(res.path || ''));
         preview.style.display = 'block';
       });
     });

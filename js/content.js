@@ -6,7 +6,7 @@
 
 (function () {
   var API_BASE = 'https://ngo-api-proxy.sarvsop.workers.dev/v1/public/';
-  var MEDIA_BASE = 'https://ngo-api-proxy.sarvsop.workers.dev/media.php?path=';
+  var MEDIA_BASE = 'https://api.ngo.uz/media.php?path=';
   var TIMEOUT_MS = 15000;
 
   // Wrapper around fetch with a 15s AbortController timeout. Without
