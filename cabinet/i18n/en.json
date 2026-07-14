@@ -257,6 +257,10 @@
       "emptyTitle": "No documents yet",
       "emptySubtitle": "Your organization's documents will appear here. Tap + above to upload the first one."
     },
+    "membership": {
+      "emptyTitle": "No membership applications",
+      "emptySubtitle": "After a membership application is submitted, its status will appear here."
+    },
     "common": {
       "back": "Back",
       "search": "Search",
@@ -1102,8 +1106,6 @@
       "title": "Reports",
       "defaultType": "Report",
       "newReport": "New report",
-      "searchSoon": "Search coming soon",
-      "archiveSoon": "Archive coming soon",
       "filterAll": "All",
       "filterReturned": "Returned",
       "filterReview": "In review",
@@ -1118,9 +1120,6 @@
       "nextDeadlineDate": "15 October 2026",
       "empty": "No reports found",
       "emptySub": "No reports in this status. Change the filters or add a new report.",
-      "acceptedSummaryPre": "In the last 12 months,",
-      "acceptedSummaryPost": "of your submitted reports were accepted.",
-      "showArchive": "Show 2024 and earlier",
       "currentYear": "Current year",
       "yearCount": "{{count}}",
       "actionNeeded": "Action needed",

@@ -257,6 +257,10 @@
       "emptyTitle": "Hujjatlar hali yo'q",
       "emptySubtitle": "Tashkilotingiz hujjatlari shu yerda ko'rinadi. Birinchi hujjatni yuklash uchun yuqoridagi + tugmasini bosing."
     },
+    "membership": {
+      "emptyTitle": "Aʼzolik arizalari topilmadi",
+      "emptySubtitle": "Aʼzolik arizasi yuborilgandan so‘ng holati shu yerda ko‘rinadi."
+    },
     "common": {
       "back": "Orqaga",
       "search": "Qidirish",
@@ -1102,8 +1106,6 @@
       "title": "Hisobotlar",
       "defaultType": "Hisobot",
       "newReport": "Yangi hisobot",
-      "searchSoon": "Qidiruv tez orada",
-      "archiveSoon": "Arxiv tez orada",
       "filterAll": "Hammasi",
       "filterReturned": "Qaytarildi",
       "filterReview": "Ko'rilmoqda",
@@ -1118,9 +1120,6 @@
       "nextDeadlineDate": "15 oktyabr 2026",
       "empty": "Hisobotlar topilmadi",
       "emptySub": "Bu holatda hisobotlar yo'q. Filtrlarni o'zgartiring yoki yangi hisobot qo'shing.",
-      "acceptedSummaryPre": "Oxirgi 12 oyda topshirgan",
-      "acceptedSummaryPost": "hisobot qabul qilindi.",
-      "showArchive": "2024 va undan oldingilarni ko'rsatish",
       "currentYear": "Joriy yil",
       "yearCount": "{{count}} ta",
       "actionNeeded": "Amal kerak",
