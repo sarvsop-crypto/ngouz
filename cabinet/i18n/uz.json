@@ -384,7 +384,6 @@
       "deleteConfirmMessage": "Bu amalni qaytarib bo'lmaydi.",
       "headerTitle": "Grant arizasi",
       "shareAria": "Ulashish",
-      "actionsAria": "Amallar",
       "reviewStatusBadge": "Ko'rib chiqilmoqda · 3-bosqich",
       "reviewIntroBefore": "Arizangiz NNTMA va EU Delegation tomonidan birgalikda baholanmoqda. Kutilayotgan javob —",
       "reviewIntroHighlight": "iyul oxiri",
@@ -715,9 +714,6 @@
       "showPassword": "Parolni ko'rsatish",
       "securityNote": "A'zo tashkilotlar telefon raqami (yoki email) va paroli bilan kiradi.",
       "signIn": "Kirish",
-      "or": "yoki",
-      "oneIdComingSoon": "ONE ID tez orada",
-      "signInVia": "orqali kirish",
       "noAccount": "Hisobingiz yo'qmi?",
       "backToLogin": "Login sahifasiga qaytish",
       "registerOrg": "Kabinetga kirish so'rovi"
@@ -965,8 +961,7 @@
       "paymentOpening": "Ochilyapti...",
       "continuePayme": "Payme orqali davom etish",
       "paymentFailed": "To'lovni boshlash imkoni bo'lmadi",
-      "paymentAlreadyPaid": "A'zolik to'lovi allaqachon tasdiqlangan",
-      "payComingSoon": "To`lov tez orada qo`shiladi"
+      "paymentAlreadyPaid": "A'zolik to'lovi allaqachon tasdiqlangan"
     },
     "profileedit": {
       "title": "Profilni tahrirlash",
@@ -979,8 +974,7 @@
       "emailLabel": "Email",
       "roleLabel": "Rol",
       "regionLabel": "Hudud",
-      "notEditable": "oʻzgartirib boʻlmaydi",
-      "avatarSoon": "Rasm yuklash tez orada qo'shiladi"
+      "notEditable": "oʻzgartirib boʻlmaydi"
     },
     "reportdetail": {
       "reportTitle": "Hisobot",
@@ -1189,8 +1183,6 @@
       "events": "Tadbirlar",
       "eventsDetail": "Eslatmalar",
       "news": "Yangiliklar",
-      "comingSoon": "Tez orada",
-      "comingSoonTag": "tez orada",
       "languageChanged": "Til o'zgartirildi",
       "securityTitle": "Xavfsizlik",
       "securityHeroTitle": "Hisobingiz himoyalangan",
@@ -1225,11 +1217,6 @@
       "cabinetUser": "Kabinet foydalanuvchisi",
       "sendFailed": "Yuborib bo'lmadi",
       "privacyTitle": "Maxfiylik",
-      "privacyPending": "Maxfiylik sozlamalari hozircha mahalliy. Hisobni o'chirish so'rovi qo'llab-quvvatlash xizmati orqali rasmiylashtiriladi.",
-      "dataCollection": "Ma'lumotlar yig'ish",
-      "usageStats": "Foydalanish statistikasi",
-      "anonymous": "Anonim",
-      "marketingMessages": "Marketing xabarnomalari",
       "documents": "Hujjatlar",
       "privacyPolicy": "Maxfiylik siyosati",
       "termsOfUse": "Foydalanish shartlari",

@@ -384,7 +384,6 @@
       "deleteConfirmMessage": "This action cannot be undone.",
       "headerTitle": "Grant application",
       "shareAria": "Share",
-      "actionsAria": "Actions",
       "reviewStatusBadge": "Under review · stage 3",
       "reviewIntroBefore": "Your application is being jointly assessed by the NGO Support Agency and the EU Delegation. Expected response —",
       "reviewIntroHighlight": "end of July",
@@ -715,9 +714,6 @@
       "showPassword": "Show password",
       "securityNote": "Member organizations sign in with their phone number (or email) and password.",
       "signIn": "Sign in",
-      "or": "or",
-      "oneIdComingSoon": "ONE ID coming soon",
-      "signInVia": "sign in with",
       "noAccount": "Don't have an account?",
       "backToLogin": "Back to login",
       "registerOrg": "Request cabinet access"
@@ -965,8 +961,7 @@
       "paymentOpening": "Opening...",
       "continuePayme": "Continue with Payme",
       "paymentFailed": "Could not start payment",
-      "paymentAlreadyPaid": "Membership payment is already confirmed",
-      "payComingSoon": "Payment coming soon"
+      "paymentAlreadyPaid": "Membership payment is already confirmed"
     },
     "profileedit": {
       "title": "Edit profile",
@@ -979,8 +974,7 @@
       "emailLabel": "Email",
       "roleLabel": "Role",
       "regionLabel": "Region",
-      "notEditable": "cannot be changed",
-      "avatarSoon": "Photo upload is coming soon"
+      "notEditable": "cannot be changed"
     },
     "reportdetail": {
       "reportTitle": "Report",
@@ -1189,8 +1183,6 @@
       "events": "Events",
       "eventsDetail": "Reminders",
       "news": "News",
-      "comingSoon": "Coming soon",
-      "comingSoonTag": "soon",
       "languageChanged": "Language changed",
       "securityTitle": "Security",
       "securityHeroTitle": "Your account is protected",
@@ -1225,11 +1217,6 @@
       "cabinetUser": "Cabinet user",
       "sendFailed": "Failed to send",
       "privacyTitle": "Privacy",
-      "privacyPending": "Privacy settings are currently local. Account deletion requests are processed through the support service.",
-      "dataCollection": "Data collection",
-      "usageStats": "Usage statistics",
-      "anonymous": "Anonymous",
-      "marketingMessages": "Marketing messages",
       "documents": "Documents",
       "privacyPolicy": "Privacy policy",
       "termsOfUse": "Terms of use",

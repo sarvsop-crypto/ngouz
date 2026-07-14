@@ -385,7 +385,6 @@
       "deleteConfirmMessage": "Это действие нельзя отменить.",
       "headerTitle": "Заявка на грант",
       "shareAria": "Поделиться",
-      "actionsAria": "Действия",
       "reviewStatusBadge": "На рассмотрении · этап 3",
       "reviewIntroBefore": "Ваша заявка совместно оценивается NNTMA и Делегацией ЕС. Ожидаемый ответ —",
       "reviewIntroHighlight": "конец июля",
@@ -720,9 +719,6 @@
       "showPassword": "Показать пароль",
       "securityNote": "Организации-члены входят по номеру телефона (или email) и паролю.",
       "signIn": "Войти",
-      "or": "или",
-      "oneIdComingSoon": "ONE ID скоро",
-      "signInVia": "вход через",
       "noAccount": "Нет аккаунта?",
       "backToLogin": "Вернуться ко входу",
       "registerOrg": "Запросить доступ к кабинету"
@@ -970,8 +966,7 @@
       "paymentOpening": "Открывается...",
       "continuePayme": "Продолжить через Payme",
       "paymentFailed": "Не удалось начать оплату",
-      "paymentAlreadyPaid": "Членский взнос уже подтверждён",
-      "payComingSoon": "Оплата скоро будет доступна"
+      "paymentAlreadyPaid": "Членский взнос уже подтверждён"
     },
     "profileedit": {
       "title": "Редактировать профиль",
@@ -984,8 +979,7 @@
       "emailLabel": "Эл. почта",
       "roleLabel": "Роль",
       "regionLabel": "Регион",
-      "notEditable": "нельзя изменить",
-      "avatarSoon": "Загрузка фото появится скоро"
+      "notEditable": "нельзя изменить"
     },
     "reportdetail": {
       "reportTitle": "Отчёт",
@@ -1195,8 +1189,6 @@
       "events": "Мероприятия",
       "eventsDetail": "Напоминания",
       "news": "Новости",
-      "comingSoon": "Скоро",
-      "comingSoonTag": "скоро",
       "languageChanged": "Язык изменён",
       "securityTitle": "Безопасность",
       "securityHeroTitle": "Ваш аккаунт защищён",
@@ -1231,11 +1223,6 @@
       "cabinetUser": "Пользователь кабинета",
       "sendFailed": "Не удалось отправить",
       "privacyTitle": "Конфиденциальность",
-      "privacyPending": "Настройки конфиденциальности пока локальны. Запрос на удаление аккаунта оформляется через службу поддержки.",
-      "dataCollection": "Сбор данных",
-      "usageStats": "Статистика использования",
-      "anonymous": "Анонимно",
-      "marketingMessages": "Маркетинговые уведомления",
       "documents": "Документы",
       "privacyPolicy": "Политика конфиденциальности",
       "termsOfUse": "Условия использования",
