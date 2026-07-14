@@ -1,0 +1,1 @@
+var e=[`.pdf`,`.doc`,`.docx`,`.xls`,`.xlsx`,`.jpg`,`.jpeg`,`.png`,`application/pdf`,`application/msword`,`application/vnd.openxmlformats-officedocument.wordprocessingml.document`,`application/vnd.ms-excel`,`application/vnd.openxmlformats-officedocument.spreadsheetml.sheet`,`image/jpeg`,`image/png`].join(`,`);export{e as t};
