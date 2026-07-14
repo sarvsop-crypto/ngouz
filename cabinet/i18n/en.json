@@ -1177,6 +1177,7 @@
       "notificationsTitle": "Notifications",
       "channels": "Channels",
       "pushNotifications": "Push notifications",
+      "pushComingLater": "Will be enabled in the next mobile app version",
       "pushMobileOnly": "Available in the mobile app only",
       "pushNotRegistered": "This device is not registered yet",
       "pushRegistered": "{{count}} device registered",

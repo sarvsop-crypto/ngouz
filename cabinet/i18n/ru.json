@@ -1183,6 +1183,7 @@
       "notificationsTitle": "Уведомления",
       "channels": "Каналы",
       "pushNotifications": "Push-уведомления",
+      "pushComingLater": "Будет включено в следующей версии мобильного приложения",
       "pushMobileOnly": "Доступно только в мобильном приложении",
       "pushNotRegistered": "Это устройство ещё не подключено",
       "pushRegistered": "Подключено устройств: {{count}}",
