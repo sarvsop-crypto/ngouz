@@ -13,7 +13,7 @@ const LEGACY = {
   'cabinet-register': 'signup',
   'cabinet-forgot-password-request': 'forgot-password',
   'cabinet-dashboard': 'home',
-  'cabinet-reports': 'reports',
+  'cabinet-reports': 'home',
   'cabinet-grants': 'grants',
   'cabinet-events': 'events',
   'cabinet-news': 'news',
@@ -50,6 +50,18 @@ export async function onRequest(context) {
   // Serve the real static asset if one exists (assets/, brand/, i18n/, ...).
   const assetRes = await env.ASSETS.fetch(request);
   if (assetRes.status !== 404) return assetRes;
+
+  // Asset URLs are content-addressed. A missing asset means a stale client or
+  // old bookmark; do not serve the SPA HTML as JavaScript/CSS.
+  if (/^(assets|brand|i18n)\//.test(rest) || rest === 'manifest.webmanifest' || rest === 'sw.js') {
+    return new Response('Not found', {
+      status: 404,
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'no-store',
+      },
+    });
+  }
 
   // SPA fallback: serve the cabinet entry document with a 200 so React Router
   // can resolve the client-side route (e.g. /cabinet/home, /cabinet/profile).
