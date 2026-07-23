@@ -181,7 +181,7 @@
       "licenses": "Litsenziyalar",
       "creditsSection": "Yaratuvchilar",
       "creditsOrg": "O'zbekiston nodavlat notijorat tashkilotlari milliy assotsiatsiyasi.",
-      "creditsDescription": "Ushbu mobil ilova a'zo tashkilotlar uchun grantlar, hisobotlar va tadbirlarni boshqarishni soddalashtirish maqsadida yaratilgan.",
+      "creditsDescription": "Ushbu mobil ilova a'zo tashkilotlar uchun grantlar, arizalar, hujjatlar va tadbirlarni boshqarishni soddalashtirish maqsadida yaratilgan.",
       "allRightsReserved": "Barcha huquqlar himoyalangan"
     },
     "changepassword": {
@@ -219,7 +219,6 @@
       "category": {
         "ustav": "Ustav",
         "sertifikat": "Sertifikat",
-        "hisobot": "Hisobot",
         "byudjet": "Byudjet",
         "boshqa": "Boshqa"
       },
@@ -233,7 +232,7 @@
       "sectionRequired": "Asosiy hujjatlar",
       "sectionSupplementary": "Qo'shimcha hujjatlar",
       "sectionResources": "Qo'shimcha resurslar",
-      "templatesTitle": "Hisobot va andoza shakllar",
+      "templatesTitle": "Andoza shakllar",
       "templatesSubtitle": "NNTMA tomonidan tasdiqlangan rasmiy shakllar",
       "templatesCount": "{{count}} ta",
       "updatedAt": "{{meta}} · yangilangan {{date}}",
@@ -631,10 +630,7 @@
       "nextAction": "Keyingi amal",
       "openAction": "Ochish",
       "daysLeft": "{{count}} kun qoldi",
-      "submitReport": "Topshirish",
-      "totalReports": "Jami hisobotlar",
       "unread": "O'qilmagan",
-      "newReport": "Yangi hisobot",
       "steps": "{{count}} qadam",
       "grants": "Grantlar",
       "grantsOpen": "{{count}} ochiq",
@@ -652,7 +648,6 @@
       "filter": "Filtrlash",
       "filterAll": "Hammasi",
       "filterUnread": "O'qilmagan",
-      "filterReports": "Hisobotlar",
       "filterGrants": "Grantlar",
       "filterEvents": "Tadbirlar",
       "groupToday": "Bugun",
@@ -660,7 +655,7 @@
       "groupOlder": "Avvalroq",
       "archiveNote": "30 kundan eski bildirishnomalar avtomatik arxivlanadi",
       "emptyTitle": "Bildirishnomalar yo'q",
-      "emptyHint": "Yangi bildirishnomalar shu yerda paydo bo'ladi — hisobotlar, grantlar va tadbirlar bo'yicha yangiliklar.",
+      "emptyHint": "Yangi bildirishnomalar shu yerda paydo bo'ladi — grantlar, arizalar va tadbirlar bo'yicha yangiliklar.",
       "filterEmpty": "Bu filtrda bildirishnomalar yo'q.",
       "swipeRead": "O'qilgan",
       "filterDialogLabel": "Bildirishnomalarni filtrlash",
@@ -682,9 +677,6 @@
       "today": "Bugun",
       "view": "Ko'rish",
       "kind": {
-        "report_returned": "Hisobot qaytarildi",
-        "report_accepted": "Hisobot qabul qilindi",
-        "report_due": "Hisobot muddati",
         "grant_new": "Yangi grant tanlovi",
         "app_approved": "Ariza tasdiqlandi",
         "app_review": "Ariza ko'rib chiqilmoqda",
@@ -801,14 +793,9 @@
     },
     "news": {
       "title": "Yangiliklar",
-      "tabAll": "Hammasi",
-      "tabPinned": "Muhim",
-      "tabUpdates": "Yangilanish",
       "empty": "Yangiliklar topilmadi",
-      "pinnedBadge": "Muhim",
       "tag": {
         "news": "Yangilik",
-        "update": "Yangilanish",
         "event": "Tadbir",
         "announcement": "E'lon"
       }
@@ -906,7 +893,6 @@
       "duesUntil": "gacha",
       "pay": "To'lash",
       "myActivity": "Mening faoliyatim",
-      "reports": "Hisobotlar",
       "applications": "Arizalar",
       "membershipApplications": "A'zolik arizalari",
       "savedGrants": "Saqlangan grantlar",
@@ -936,8 +922,6 @@
       "notifNewGrantsSub": "Sohangizga mos tanlovlar",
       "notifAppStatus": "Ariza holati o'zgarishi",
       "notifAppStatusSub": "NNTMA javoblari va sharhlari",
-      "notifReportReminders": "Hisobot eslatmalari",
-      "notifReportRemindersSub": "Muddat tugashidan 7 kun oldin",
       "notifNewEvents": "Yangi tadbirlar va vebinarlar",
       "notifNews": "NNTMA yangiliklari",
       "notifNewsSub": "Oyiga 1-2 marta",
@@ -976,156 +960,6 @@
       "roleLabel": "Rol",
       "regionLabel": "Hudud",
       "notEditable": "oʻzgartirib boʻlmaydi"
-    },
-    "reportdetail": {
-      "reportTitle": "Hisobot",
-      "actions": "Amallar",
-      "copyCreated": "Nusxa yaratildi",
-      "copyFailed": "Nusxa yaratib bo'lmadi",
-      "reportDeleted": "Hisobot o'chirildi",
-      "deleteFailed": "O'chirib bo'lmadi",
-      "statusDraftLabel": "Qoralama",
-      "statusDraftBlurb": "Hisobot hali to'liq emas. Topshirishdan oldin barcha maydonlarni tekshiring.",
-      "statusAcceptedLabel": "Tasdiqlandi",
-      "statusReturnedLabel": "Qaytarildi",
-      "timelineCreated": "Yaratilgan",
-      "timelineSubmitted": "Topshirilgan",
-      "timelineReview": "Ko'rib chiqilmoqda",
-      "timelineNow": "Hozir",
-      "timelineFinalDecision": "Yakuniy qaror",
-      "timelineCurrent": "Joriy",
-      "reviewNoteLabel": "NNTMA ko'rib chiqish izohi",
-      "statusHistory": "Holat tarixi",
-      "uploadedFile": "Yuklangan fayl",
-      "fileMeta": "1,4 MB · Yuklangan {{date}}",
-      "download": "Yuklab olish",
-      "openFile": "Faylni ochish",
-      "downloadFile": "Faylni yuklab olish",
-      "metaLabel": "Ma'lumotlar",
-      "metaPeriod": "Davr",
-      "metaType": "Turi",
-      "metaOrganization": "Tashkilot",
-      "metaId": "ID",
-      "yourNote": "Sizning izohingiz",
-      "makeCopy": "Nusxa yaratish",
-      "makeCopyShort": "Nusxa olish",
-      "reEdit": "Qayta tahrirlash",
-      "editOnlyDraftReturned": "Tahrirlash faqat qoralama va qaytarilgan hisobotlarda mavjud.",
-      "backToList": "Ro'yxatga qaytish",
-      "deleteDraftTitle": "Qoralamani o'chirasizmi?",
-      "deleteDraftMessage": "Bu amalni qaytarib bo'lmaydi.",
-      "status": {
-        "submitted": {
-          "label": "Ko'rib chiqilmoqda",
-          "short": "Ko'rib chiqilmoqda",
-          "blurb": "Hisobotingiz NNTMA mas'ul xodimi tomonidan ko'rib chiqilmoqda. Odatda 3–5 ish kuni davom etadi."
-        },
-        "returned": {
-          "label": "Qaytarildi",
-          "short": "Qaytarildi",
-          "blurb": "Hisobotda kamchiliklar aniqlandi. Quyidagi izohni o'qib, tuzating va qayta topshiring."
-        },
-        "accepted": {
-          "label": "Tasdiqlandi",
-          "short": "Tasdiqlandi",
-          "blurb": "Hisobotingiz qabul qilindi va NNTMA reestrida saqlandi. Hech qanday qo'shimcha amal talab qilinmaydi."
-        }
-      }
-    },
-    "reportnew": {
-      "toastSubmitted": "Hisobot ko'rib chiqishga yuborildi",
-      "errorSubmitFailed": "Hisobot yuborilmadi",
-      "title": "Yangi hisobot",
-      "stepCounter": "{{step}}-qadam · 3 tadan",
-      "step1Heading": "Hisobot turini tanlang",
-      "step1Subtitle": "Topshirayotgan hisobot turingizga mos toifani tanlang. Har bir turning o'z andoza shakli mavjud.",
-      "reportTypeLabel": "Hisobot turi",
-      "templatesHintPrefix": "Hisobot andozalarini",
-      "templatesHintLink": "Hujjatlar bo'limidan",
-      "templatesHintSuffix": "yuklab olishingiz mumkin.",
-      "step2Heading": "Davrni tanlang",
-      "step2Subtitle": "Qaysi davr uchun {{type}} topshirilmoqda?",
-      "reportFallback": "hisobot",
-      "reportFallbackCap": "Hisobot",
-      "reportPeriodLabel": "Hisobot davri",
-      "deadlinePrefix": "{{period}} hisobotini topshirish muddati",
-      "deadlineDate": "15 iyul 2026",
-      "deadlineSuffix": "— {{days}} kun qoldi.",
-      "step3Heading": "Faylni yuklang",
-      "step3Subtitle": "PDF, DOCX yoki XLSX formatda. Maksimal hajm — 25 MB.",
-      "summaryLabel": "Topshirilmoqda",
-      "fileReady": "Tayyor",
-      "replaceFileAria": "Boshqa hisobot fayli tanlash",
-      "replaceFile": "Boshqa fayl tanlash",
-      "pickFileAria": "Hisobot faylini tanlash",
-      "uploadFile": "Fayl yuklash",
-      "uploadHint": "PDF, DOCX, XLSX · 25MB gacha",
-      "noteLabel": "Izoh (ixtiyoriy)",
-      "notePlaceholder": "Hisobotga doir qo'shimcha ma'lumot yoki tushuntirish yozing…",
-      "consent": "Yuklangan fayl mazmunining haqiqiyligini tasdiqlayman va NNTMA tomonidan ko'rib chiqilishiga roziman.",
-      "submitting": "Yuborilmoqda...",
-      "submit": "Topshirish",
-      "continue": "Davom etish",
-      "type": {
-        "activity": {
-          "title": "Faoliyat hisoboti",
-          "desc": "Choraklik faoliyat natijalari"
-        },
-        "financial": {
-          "title": "Moliyaviy hisobot",
-          "desc": "Daromad, xarajat, balanslar"
-        },
-        "annual": {
-          "title": "Yillik hisobot",
-          "desc": "Yil yakuni bo'yicha umumiy hisobot"
-        },
-        "special": {
-          "title": "Maxsus hisobot",
-          "desc": "Loyiha yoki tadbir bo'yicha"
-        }
-      },
-      "period": {
-        "quarterMonths": {
-          "1": "Yanvar – Mart",
-          "2": "Aprel – Iyun",
-          "3": "Iyul – Sentyabr",
-          "4": "Oktyabr – Dekabr"
-        },
-        "annualSub": "Yil yakuni",
-        "statusDone": "topshirilgan",
-        "statusOpen": "ochiq",
-        "statusLocked": "ochilmagan"
-      }
-    },
-    "reports": {
-      "title": "Hisobotlar",
-      "defaultType": "Hisobot",
-      "newReport": "Yangi hisobot",
-      "filterAll": "Hammasi",
-      "filterReturned": "Qaytarildi",
-      "filterReview": "Ko'rilmoqda",
-      "filterAccepted": "Tasdiqlandi",
-      "filterDraft": "Qoralama",
-      "returnedCallout_one": "{{count}} ta hisobot qayta tahrirlash uchun qaytarildi",
-      "returnedCallout_other": "{{count}} ta hisobot qayta tahrirlash uchun qaytarildi",
-      "returnedInstruction": "NNTMA izohini o'qib, tuzating va qayta topshiring. Yangi muddat —",
-      "returnedDeadline": "25 iyun 2026",
-      "nextDeadline": "Keyingi muddat",
-      "nextDeadlineReport": "2026 Q3 faoliyat hisoboti",
-      "nextDeadlineDate": "15 oktyabr 2026",
-      "empty": "Hisobotlar topilmadi",
-      "emptySub": "Bu holatda hisobotlar yo'q. Filtrlarni o'zgartiring yoki yangi hisobot qo'shing.",
-      "currentYear": "Joriy yil",
-      "yearCount": "{{count}} ta",
-      "actionNeeded": "Amal kerak",
-      "status": {
-        "draft": "Qoralama",
-        "submitted": "Topshirilgan",
-        "review": "Ko'rib chiqilmoqda",
-        "returned": "Qaytarildi",
-        "accepted": "Tasdiqlandi"
-      },
-      "annualSuffix": "yillik"
     },
     "savedgrants": {
       "title": "Saqlangan grantlar",
@@ -1177,8 +1011,6 @@
       "pushRegistered": "{{count}} ta qurilma ulangan",
       "email": "Email",
       "topics": "Mavzular",
-      "reports": "Hisobotlar",
-      "reportsDetail": "Tasdiq, qaytarish",
       "grants": "Grantlar",
       "grantsDetail": "Yangi mos grantlar",
       "events": "Tadbirlar",
@@ -1198,7 +1030,6 @@
       "deleteAccount": "Hisobni o'chirish",
       "helpTitle": "Yordam",
       "faq": "Ko'p so'raladigan savollar",
-      "faqSubmitReport": "Hisobot qanday topshiriladi?",
       "faqSubmitGrant": "Grant arizasini qanday yuboraman?",
       "faqForgotPassword": "Parolimni unutdim, nima qilay?",
       "contact": "Aloqa",
@@ -1207,7 +1038,6 @@
       "requestReceived": "Murojaatingiz qabul qilindi",
       "requestReceivedDesc": "24 soat ichida javob qaytaramiz. Email orqali yuboriladi.",
       "topic": "Mavzu",
-      "topicReports": "Hisobotlar",
       "topicGrants": "Grantlar",
       "topicEvents": "Tadbirlar",
       "topicAccount": "Hisob va kirish",
@@ -1303,9 +1133,9 @@
       "mainNavigation": "Asosiy navigatsiya",
       "tab": {
         "home": "Bosh",
-        "reports": "Hisobot",
         "grants": "Grant",
         "events": "Tadbir",
+        "news": "Yangilik",
         "profile": "Profil"
       }
     },

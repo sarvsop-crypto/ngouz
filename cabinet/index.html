@@ -2,12 +2,11 @@
 <html lang="uz">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover, interactive-widget=overlays-content" />
     <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0F1014" media="(prefers-color-scheme: dark)" />
-    <!-- No-flash theme: a blocking, same-origin (CSP-clean) script sets the theme
-         before first paint, so dark users don't see a light flash. -->
-    <script src="/cabinet/theme-init.js"></script>
+    <!-- No-flash theme: CSP allows this exact hash in public/_headers. -->
+    <script>(function(){try{var t=localStorage.getItem('ngouz_theme');var dark=t==='dark'||(t!=='light'&&window.matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.setAttribute('data-theme',dark?'dark':'light');}catch(e){}})();</script>
     <link rel="manifest" href="/cabinet/manifest.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,11 +21,11 @@
     <link rel="icon" type="image/png" href="/cabinet/brand/logo-oznntma.png" />
     <link rel="apple-touch-icon" href="/cabinet/brand/logo-oznntma.png" />
     <link rel="preconnect" href="https://ngo-api-proxy.sarvsop.workers.dev" crossorigin />
-    <script type="module" crossorigin src="/cabinet/assets/index-Buc0mzLg.js"></script>
-    <link rel="modulepreload" crossorigin href="/cabinet/assets/Shell-Db4jzUdP.js">
+    <script type="module" crossorigin src="/cabinet/assets/index-DWW0UzLc.js"></script>
+    <link rel="modulepreload" crossorigin href="/cabinet/assets/Shell-BQnLXJbN.js">
     <link rel="modulepreload" crossorigin href="/cabinet/assets/dist-CQS6rvaI.js">
     <link rel="modulepreload" crossorigin href="/cabinet/assets/api-DSJ3kGL9.js">
-    <link rel="stylesheet" crossorigin href="/cabinet/assets/index-DE8hrIfC.css">
+    <link rel="stylesheet" crossorigin href="/cabinet/assets/index-BIUgNzQS.css">
   </head>
   <body>
     <noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>

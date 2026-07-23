@@ -181,7 +181,7 @@
       "licenses": "Лицензии",
       "creditsSection": "Разработчики",
       "creditsOrg": "Национальная ассоциация негосударственных некоммерческих организаций Узбекистана.",
-      "creditsDescription": "Это мобильное приложение создано для упрощения управления грантами, отчётами и мероприятиями для организаций-членов.",
+      "creditsDescription": "Это мобильное приложение создано для упрощения управления грантами, заявками, документами и мероприятиями для организаций-членов.",
       "allRightsReserved": "Все права защищены"
     },
     "changepassword": {
@@ -219,7 +219,6 @@
       "category": {
         "ustav": "Устав",
         "sertifikat": "Сертификат",
-        "hisobot": "Отчёт",
         "byudjet": "Бюджет",
         "boshqa": "Другое"
       },
@@ -233,7 +232,7 @@
       "sectionRequired": "Основные документы",
       "sectionSupplementary": "Дополнительные документы",
       "sectionResources": "Дополнительные ресурсы",
-      "templatesTitle": "Отчётные и типовые формы",
+      "templatesTitle": "Типовые формы",
       "templatesSubtitle": "Официальные формы, утверждённые ННОА",
       "templatesCount": "{{count}} шт.",
       "updatedAt": "{{meta}} · обновлено {{date}}",
@@ -636,10 +635,7 @@
       "nextAction": "Следующее действие",
       "openAction": "Открыть",
       "daysLeft": "осталось {{count}} дн.",
-      "submitReport": "Сдать",
-      "totalReports": "Всего отчётов",
       "unread": "Непрочитанные",
-      "newReport": "Новый отчёт",
       "steps": "{{count}} шага",
       "grants": "Гранты",
       "grantsOpen": "{{count}} открыто",
@@ -657,7 +653,6 @@
       "filter": "Фильтр",
       "filterAll": "Все",
       "filterUnread": "Непрочитанные",
-      "filterReports": "Отчёты",
       "filterGrants": "Гранты",
       "filterEvents": "Мероприятия",
       "groupToday": "Сегодня",
@@ -665,7 +660,7 @@
       "groupOlder": "Ранее",
       "archiveNote": "Уведомления старше 30 дней архивируются автоматически",
       "emptyTitle": "Уведомлений нет",
-      "emptyHint": "Новые уведомления появятся здесь — по отчётам, грантам и мероприятиям.",
+      "emptyHint": "Новые уведомления появятся здесь — по грантам, заявкам и мероприятиям.",
       "filterEmpty": "В этом фильтре нет уведомлений.",
       "swipeRead": "Прочитано",
       "filterDialogLabel": "Фильтрация уведомлений",
@@ -687,9 +682,6 @@
       "today": "Сегодня",
       "view": "Открыть",
       "kind": {
-        "report_returned": "Отчёт возвращён",
-        "report_accepted": "Отчёт принят",
-        "report_due": "Срок отчёта",
         "grant_new": "Новый грантовый конкурс",
         "app_approved": "Заявка одобрена",
         "app_review": "Заявка на рассмотрении",
@@ -806,14 +798,9 @@
     },
     "news": {
       "title": "Новости",
-      "tabAll": "Все",
-      "tabPinned": "Важные",
-      "tabUpdates": "Обновления",
       "empty": "Новости не найдены",
-      "pinnedBadge": "Важное",
       "tag": {
         "news": "Новость",
-        "update": "Обновление",
         "event": "Мероприятие",
         "announcement": "Объявление"
       }
@@ -941,8 +928,6 @@
       "notifNewGrantsSub": "Конкурсы, подходящие вашей сфере",
       "notifAppStatus": "Изменение статуса заявки",
       "notifAppStatusSub": "Ответы и комментарии НАННО",
-      "notifReportReminders": "Напоминания об отчётах",
-      "notifReportRemindersSub": "За 7 дней до истечения срока",
       "notifNewEvents": "Новые мероприятия и вебинары",
       "notifNews": "Новости НАННО",
       "notifNewsSub": "1-2 раза в месяц",
@@ -981,157 +966,6 @@
       "roleLabel": "Роль",
       "regionLabel": "Регион",
       "notEditable": "нельзя изменить"
-    },
-    "reportdetail": {
-      "reportTitle": "Отчёт",
-      "actions": "Действия",
-      "copyCreated": "Копия создана",
-      "copyFailed": "Не удалось создать копию",
-      "reportDeleted": "Отчёт удалён",
-      "deleteFailed": "Не удалось удалить",
-      "statusDraftLabel": "Черновик",
-      "statusDraftBlurb": "Отчёт ещё не завершён. Перед отправкой проверьте все поля.",
-      "statusAcceptedLabel": "Принято",
-      "statusReturnedLabel": "Возвращено",
-      "timelineCreated": "Создано",
-      "timelineSubmitted": "Отправлено",
-      "timelineReview": "На рассмотрении",
-      "timelineNow": "Сейчас",
-      "timelineFinalDecision": "Окончательное решение",
-      "timelineCurrent": "Текущий",
-      "reviewNoteLabel": "Комментарий рассмотрения ННОА",
-      "statusHistory": "История статусов",
-      "uploadedFile": "Загруженный файл",
-      "fileMeta": "1,4 МБ · Загружено {{date}}",
-      "download": "Скачать",
-      "openFile": "Открыть файл",
-      "downloadFile": "Скачать файл",
-      "metaLabel": "Сведения",
-      "metaPeriod": "Период",
-      "metaType": "Тип",
-      "metaOrganization": "Организация",
-      "metaId": "ID",
-      "yourNote": "Ваш комментарий",
-      "makeCopy": "Создать копию",
-      "makeCopyShort": "Копировать",
-      "reEdit": "Редактировать заново",
-      "editOnlyDraftReturned": "Редактирование доступно только для черновиков и возвращённых отчётов.",
-      "backToList": "Вернуться к списку",
-      "deleteDraftTitle": "Удалить черновик?",
-      "deleteDraftMessage": "Это действие нельзя отменить.",
-      "status": {
-        "submitted": {
-          "label": "На рассмотрении",
-          "short": "На рассмотрении",
-          "blurb": "Ваш отчёт рассматривается ответственным сотрудником ННОА. Обычно это занимает 3–5 рабочих дней."
-        },
-        "returned": {
-          "label": "Возвращён",
-          "short": "Возвращён",
-          "blurb": "В отчёте выявлены недочёты. Прочитайте примечание ниже, исправьте и подайте повторно."
-        },
-        "accepted": {
-          "label": "Принят",
-          "short": "Принят",
-          "blurb": "Ваш отчёт принят и сохранён в реестре ННОА. Никаких дополнительных действий не требуется."
-        }
-      }
-    },
-    "reportnew": {
-      "toastSubmitted": "Отчёт отправлен на рассмотрение",
-      "errorSubmitFailed": "Не удалось отправить отчёт",
-      "title": "Новый отчёт",
-      "stepCounter": "Шаг {{step}} · из 3",
-      "step1Heading": "Выберите тип отчёта",
-      "step1Subtitle": "Выберите категорию, соответствующую типу подаваемого отчёта. У каждого типа есть свой шаблон.",
-      "reportTypeLabel": "Тип отчёта",
-      "templatesHintPrefix": "Шаблоны отчётов можно скачать в",
-      "templatesHintLink": "разделе «Документы»",
-      "templatesHintSuffix": ".",
-      "step2Heading": "Выберите период",
-      "step2Subtitle": "За какой период подаётся {{type}}?",
-      "reportFallback": "отчёт",
-      "reportFallbackCap": "Отчёт",
-      "reportPeriodLabel": "Период отчёта",
-      "deadlinePrefix": "Срок подачи отчёта за {{period}} —",
-      "deadlineDate": "15 июля 2026",
-      "deadlineSuffix": "— осталось {{days}} дн.",
-      "step3Heading": "Загрузите файл",
-      "step3Subtitle": "В формате PDF, DOCX или XLSX. Максимальный размер — 25 МБ.",
-      "summaryLabel": "Подаётся",
-      "fileReady": "Готово",
-      "replaceFileAria": "Выбрать другой файл отчёта",
-      "replaceFile": "Выбрать другой файл",
-      "pickFileAria": "Выбрать файл отчёта",
-      "uploadFile": "Загрузить файл",
-      "uploadHint": "PDF, DOCX, XLSX · до 25 МБ",
-      "noteLabel": "Примечание (необязательно)",
-      "notePlaceholder": "Напишите дополнительную информацию или пояснение к отчёту…",
-      "consent": "Подтверждаю достоверность содержания загруженного файла и согласен(на) на его рассмотрение ННОМА.",
-      "submitting": "Отправка...",
-      "submit": "Подать",
-      "continue": "Продолжить",
-      "type": {
-        "activity": {
-          "title": "Отчёт о деятельности",
-          "desc": "Результаты деятельности за квартал"
-        },
-        "financial": {
-          "title": "Финансовый отчёт",
-          "desc": "Доходы, расходы, балансы"
-        },
-        "annual": {
-          "title": "Годовой отчёт",
-          "desc": "Сводный отчёт по итогам года"
-        },
-        "special": {
-          "title": "Специальный отчёт",
-          "desc": "По проекту или мероприятию"
-        }
-      },
-      "period": {
-        "quarterMonths": {
-          "1": "Январь – март",
-          "2": "Апрель – июнь",
-          "3": "Июль – сентябрь",
-          "4": "Октябрь – декабрь"
-        },
-        "annualSub": "Итоги года",
-        "statusDone": "сдан",
-        "statusOpen": "открыт",
-        "statusLocked": "не открыт"
-      }
-    },
-    "reports": {
-      "title": "Отчёты",
-      "defaultType": "Отчёт",
-      "newReport": "Новый отчёт",
-      "filterAll": "Все",
-      "filterReturned": "Возвращено",
-      "filterReview": "На проверке",
-      "filterAccepted": "Принято",
-      "filterDraft": "Черновик",
-      "returnedCallout_one": "{{count}} отчёт возвращён на доработку",
-      "returnedCallout_few": "{{count}} отчёта возвращено на доработку",
-      "returnedCallout_many": "{{count}} отчётов возвращено на доработку",
-      "returnedInstruction": "Прочитайте замечание ННОА, исправьте и подайте повторно. Новый срок —",
-      "returnedDeadline": "25 июня 2026",
-      "nextDeadline": "Следующий срок",
-      "nextDeadlineReport": "Отчёт о деятельности за 3 кв. 2026",
-      "nextDeadlineDate": "15 октября 2026",
-      "empty": "Отчёты не найдены",
-      "emptySub": "В этом статусе отчётов нет. Измените фильтры или добавьте новый отчёт.",
-      "currentYear": "Текущий год",
-      "yearCount": "{{count}} шт.",
-      "actionNeeded": "Требует действий",
-      "status": {
-        "draft": "Черновик",
-        "submitted": "Отправлен",
-        "review": "На рассмотрении",
-        "returned": "Возвращён",
-        "accepted": "Принят"
-      },
-      "annualSuffix": "годовой"
     },
     "savedgrants": {
       "title": "Сохранённые гранты",
@@ -1183,8 +1017,6 @@
       "pushRegistered": "Подключено устройств: {{count}}",
       "email": "Email",
       "topics": "Темы",
-      "reports": "Отчёты",
-      "reportsDetail": "Подтверждение, возврат",
       "grants": "Гранты",
       "grantsDetail": "Новые подходящие гранты",
       "events": "Мероприятия",
@@ -1204,7 +1036,6 @@
       "deleteAccount": "Удалить аккаунт",
       "helpTitle": "Помощь",
       "faq": "Часто задаваемые вопросы",
-      "faqSubmitReport": "Как подать отчёт?",
       "faqSubmitGrant": "Как отправить заявку на грант?",
       "faqForgotPassword": "Я забыл пароль, что делать?",
       "contact": "Контакты",
@@ -1213,7 +1044,6 @@
       "requestReceived": "Ваше обращение принято",
       "requestReceivedDesc": "Мы ответим в течение 24 часов. Ответ будет отправлен по email.",
       "topic": "Тема",
-      "topicReports": "Отчёты",
       "topicGrants": "Гранты",
       "topicEvents": "Мероприятия",
       "topicAccount": "Аккаунт и вход",
@@ -1309,9 +1139,9 @@
       "mainNavigation": "Основная навигация",
       "tab": {
         "home": "Главная",
-        "reports": "Отчёты",
         "grants": "Гранты",
         "events": "События",
+        "news": "Новости",
         "profile": "Профиль"
       }
     },

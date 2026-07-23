@@ -181,7 +181,7 @@
       "licenses": "Licenses",
       "creditsSection": "Credits",
       "creditsOrg": "National Association of Non-Governmental Non-Profit Organizations of Uzbekistan.",
-      "creditsDescription": "This mobile app was created to simplify the management of grants, reports and events for member organizations.",
+      "creditsDescription": "This mobile app was created to simplify the management of grants, applications, documents and events for member organizations.",
       "allRightsReserved": "All rights reserved"
     },
     "changepassword": {
@@ -219,7 +219,6 @@
       "category": {
         "ustav": "Charter",
         "sertifikat": "Certificate",
-        "hisobot": "Report",
         "byudjet": "Budget",
         "boshqa": "Other"
       },
@@ -233,7 +232,7 @@
       "sectionRequired": "Core documents",
       "sectionSupplementary": "Supplementary documents",
       "sectionResources": "Additional resources",
-      "templatesTitle": "Reports and template forms",
+      "templatesTitle": "Template forms",
       "templatesSubtitle": "Official forms approved by NNTMA",
       "templatesCount": "{{count}} forms",
       "updatedAt": "{{meta}} · updated {{date}}",
@@ -631,10 +630,7 @@
       "nextAction": "Next action",
       "openAction": "Open",
       "daysLeft": "{{count}} days left",
-      "submitReport": "Submit",
-      "totalReports": "Total reports",
       "unread": "Unread",
-      "newReport": "New report",
       "steps": "{{count}} steps",
       "grants": "Grants",
       "grantsOpen": "{{count}} open",
@@ -652,7 +648,6 @@
       "filter": "Filter",
       "filterAll": "All",
       "filterUnread": "Unread",
-      "filterReports": "Reports",
       "filterGrants": "Grants",
       "filterEvents": "Events",
       "groupToday": "Today",
@@ -660,7 +655,7 @@
       "groupOlder": "Earlier",
       "archiveNote": "Notifications older than 30 days are archived automatically",
       "emptyTitle": "No notifications",
-      "emptyHint": "New notifications will appear here — updates on reports, grants and events.",
+      "emptyHint": "New notifications will appear here — updates on grants, applications and events.",
       "filterEmpty": "No notifications in this filter.",
       "swipeRead": "Read",
       "filterDialogLabel": "Filter notifications",
@@ -682,9 +677,6 @@
       "today": "Today",
       "view": "View",
       "kind": {
-        "report_returned": "Report returned",
-        "report_accepted": "Report accepted",
-        "report_due": "Report due",
         "grant_new": "New grant competition",
         "app_approved": "Application approved",
         "app_review": "Application under review",
@@ -801,14 +793,9 @@
     },
     "news": {
       "title": "News",
-      "tabAll": "All",
-      "tabPinned": "Pinned",
-      "tabUpdates": "Updates",
       "empty": "No news found",
-      "pinnedBadge": "Pinned",
       "tag": {
         "news": "News",
-        "update": "Update",
         "event": "Event",
         "announcement": "Announcement"
       }
@@ -906,7 +893,6 @@
       "duesUntil": "due by",
       "pay": "Pay",
       "myActivity": "My activity",
-      "reports": "Reports",
       "applications": "Applications",
       "membershipApplications": "Membership applications",
       "savedGrants": "Saved grants",
@@ -936,8 +922,6 @@
       "notifNewGrantsSub": "Calls matching your field",
       "notifAppStatus": "Application status changes",
       "notifAppStatusSub": "NANNO responses and comments",
-      "notifReportReminders": "Report reminders",
-      "notifReportRemindersSub": "7 days before the deadline",
       "notifNewEvents": "New events and webinars",
       "notifNews": "NANNO news",
       "notifNewsSub": "1-2 times a month",
@@ -976,156 +960,6 @@
       "roleLabel": "Role",
       "regionLabel": "Region",
       "notEditable": "cannot be changed"
-    },
-    "reportdetail": {
-      "reportTitle": "Report",
-      "actions": "Actions",
-      "copyCreated": "Copy created",
-      "copyFailed": "Could not create copy",
-      "reportDeleted": "Report deleted",
-      "deleteFailed": "Could not delete",
-      "statusDraftLabel": "Draft",
-      "statusDraftBlurb": "The report is not yet complete. Check all fields before submitting.",
-      "statusAcceptedLabel": "Accepted",
-      "statusReturnedLabel": "Returned",
-      "timelineCreated": "Created",
-      "timelineSubmitted": "Submitted",
-      "timelineReview": "Under review",
-      "timelineNow": "Now",
-      "timelineFinalDecision": "Final decision",
-      "timelineCurrent": "Current",
-      "reviewNoteLabel": "NGO Affairs review note",
-      "statusHistory": "Status history",
-      "uploadedFile": "Uploaded file",
-      "fileMeta": "1.4 MB · Uploaded {{date}}",
-      "download": "Download",
-      "openFile": "Open file",
-      "downloadFile": "Download file",
-      "metaLabel": "Details",
-      "metaPeriod": "Period",
-      "metaType": "Type",
-      "metaOrganization": "Organization",
-      "metaId": "ID",
-      "yourNote": "Your note",
-      "makeCopy": "Make a copy",
-      "makeCopyShort": "Copy",
-      "reEdit": "Re-edit",
-      "editOnlyDraftReturned": "Editing is available only for draft and returned reports.",
-      "backToList": "Back to list",
-      "deleteDraftTitle": "Delete draft?",
-      "deleteDraftMessage": "This action cannot be undone.",
-      "status": {
-        "submitted": {
-          "label": "Under review",
-          "short": "Under review",
-          "blurb": "Your report is being reviewed by the responsible NGO Association officer. This usually takes 3–5 business days."
-        },
-        "returned": {
-          "label": "Returned",
-          "short": "Returned",
-          "blurb": "Issues were found in the report. Read the note below, make corrections and resubmit."
-        },
-        "accepted": {
-          "label": "Accepted",
-          "short": "Accepted",
-          "blurb": "Your report has been accepted and stored in the NGO Association registry. No further action is required."
-        }
-      }
-    },
-    "reportnew": {
-      "toastSubmitted": "Report submitted for review",
-      "errorSubmitFailed": "Failed to submit report",
-      "title": "New report",
-      "stepCounter": "Step {{step}} · of 3",
-      "step1Heading": "Choose report type",
-      "step1Subtitle": "Select the category that matches the report you are submitting. Each type has its own template form.",
-      "reportTypeLabel": "Report type",
-      "templatesHintPrefix": "You can download report templates from the",
-      "templatesHintLink": "Documents section",
-      "templatesHintSuffix": ".",
-      "step2Heading": "Choose period",
-      "step2Subtitle": "For which period is the {{type}} being submitted?",
-      "reportFallback": "report",
-      "reportFallbackCap": "Report",
-      "reportPeriodLabel": "Report period",
-      "deadlinePrefix": "The deadline to submit the {{period}} report is",
-      "deadlineDate": "15 July 2026",
-      "deadlineSuffix": "— {{days}} days left.",
-      "step3Heading": "Upload file",
-      "step3Subtitle": "In PDF, DOCX or XLSX format. Maximum size — 25 MB.",
-      "summaryLabel": "Submitting",
-      "fileReady": "Ready",
-      "replaceFileAria": "Choose a different report file",
-      "replaceFile": "Choose a different file",
-      "pickFileAria": "Choose report file",
-      "uploadFile": "Upload file",
-      "uploadHint": "PDF, DOCX, XLSX · up to 25 MB",
-      "noteLabel": "Note (optional)",
-      "notePlaceholder": "Add any extra information or explanation about the report…",
-      "consent": "I confirm that the content of the uploaded file is authentic and consent to its review by the NNGOA.",
-      "submitting": "Submitting...",
-      "submit": "Submit",
-      "continue": "Continue",
-      "type": {
-        "activity": {
-          "title": "Activity report",
-          "desc": "Quarterly activity results"
-        },
-        "financial": {
-          "title": "Financial report",
-          "desc": "Income, expenses, balances"
-        },
-        "annual": {
-          "title": "Annual report",
-          "desc": "Summary report for the year-end"
-        },
-        "special": {
-          "title": "Special report",
-          "desc": "For a project or event"
-        }
-      },
-      "period": {
-        "quarterMonths": {
-          "1": "January – March",
-          "2": "April – June",
-          "3": "July – September",
-          "4": "October – December"
-        },
-        "annualSub": "Year-end",
-        "statusDone": "submitted",
-        "statusOpen": "open",
-        "statusLocked": "not open"
-      }
-    },
-    "reports": {
-      "title": "Reports",
-      "defaultType": "Report",
-      "newReport": "New report",
-      "filterAll": "All",
-      "filterReturned": "Returned",
-      "filterReview": "In review",
-      "filterAccepted": "Accepted",
-      "filterDraft": "Draft",
-      "returnedCallout_one": "{{count}} report returned for revision",
-      "returnedCallout_other": "{{count}} reports returned for revision",
-      "returnedInstruction": "Read the NGO authority's note, make corrections and resubmit. New deadline —",
-      "returnedDeadline": "25 June 2026",
-      "nextDeadline": "Next deadline",
-      "nextDeadlineReport": "2026 Q3 activity report",
-      "nextDeadlineDate": "15 October 2026",
-      "empty": "No reports found",
-      "emptySub": "No reports in this status. Change the filters or add a new report.",
-      "currentYear": "Current year",
-      "yearCount": "{{count}}",
-      "actionNeeded": "Action needed",
-      "status": {
-        "draft": "Draft",
-        "submitted": "Submitted",
-        "review": "Under review",
-        "returned": "Returned",
-        "accepted": "Accepted"
-      },
-      "annualSuffix": "annual"
     },
     "savedgrants": {
       "title": "Saved grants",
@@ -1177,8 +1011,6 @@
       "pushRegistered": "{{count}} device registered",
       "email": "Email",
       "topics": "Topics",
-      "reports": "Reports",
-      "reportsDetail": "Approval, return",
       "grants": "Grants",
       "grantsDetail": "New matching grants",
       "events": "Events",
@@ -1198,7 +1030,6 @@
       "deleteAccount": "Delete account",
       "helpTitle": "Help",
       "faq": "Frequently asked questions",
-      "faqSubmitReport": "How do I submit a report?",
       "faqSubmitGrant": "How do I submit a grant application?",
       "faqForgotPassword": "I forgot my password, what should I do?",
       "contact": "Contact",
@@ -1207,7 +1038,6 @@
       "requestReceived": "Your request has been received",
       "requestReceivedDesc": "We will respond within 24 hours. The reply will be sent by email.",
       "topic": "Topic",
-      "topicReports": "Reports",
       "topicGrants": "Grants",
       "topicEvents": "Events",
       "topicAccount": "Account and login",
@@ -1303,9 +1133,9 @@
       "mainNavigation": "Main navigation",
       "tab": {
         "home": "Home",
-        "reports": "Reports",
         "grants": "Grants",
         "events": "Events",
+        "news": "News",
         "profile": "Profile"
       }
     },
