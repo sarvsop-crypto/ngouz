@@ -337,6 +337,21 @@
   var MANAGE_ROLES = { chair: true, secretary: true };
   function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
   function setText(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
+  function setButtonPending(btn, pending, label) {
+    if (!btn) return false;
+    if (pending) {
+      if (btn.getAttribute('aria-busy') === 'true') return false;
+      btn._idleHtml = btn.innerHTML;
+      btn.disabled = true;
+      btn.setAttribute('aria-busy', 'true');
+      btn.textContent = label;
+      return true;
+    }
+    btn.disabled = false;
+    btn.removeAttribute('aria-busy');
+    if (btn._idleHtml !== undefined) btn.innerHTML = btn._idleHtml;
+    return true;
+  }
   var toastTimer = null;
   function toast(msg, type) {
     var el = document.getElementById('cmsToast');
@@ -791,21 +806,12 @@
   function updateStatus(status, triggerButton) {
     if (!selectedId) return Promise.resolve();
     setText('workflowError', '');
-    var originalHtml = triggerButton ? triggerButton.innerHTML : '';
-    if (triggerButton) {
-      triggerButton.disabled = true;
-      triggerButton.setAttribute('aria-busy', 'true');
-      triggerButton.textContent = 'Jarayon boshlanmoqda...';
-    }
+    if (triggerButton && !setButtonPending(triggerButton, true, 'Jarayon boshlanmoqda...')) return Promise.resolve();
     return NgoApi.patch('/commission/protocols/' + selectedId, { status: status }, { timeout: COMMISSION_DOCUMENT_TIMEOUT_MS }).then(function () {
       toast('Holat yangilandi.');
       reloadCurrent();
     }).catch(function (err) {
-      if (triggerButton && triggerButton.isConnected) {
-        triggerButton.disabled = false;
-        triggerButton.removeAttribute('aria-busy');
-        triggerButton.innerHTML = originalHtml;
-      }
+      if (triggerButton && triggerButton.isConnected) setButtonPending(triggerButton, false);
       var msg = errText(err, 'Holatni o‘zgartirib bo‘lmadi.');
       setText('workflowError', msg);
       toast(msg, 'error');
@@ -893,7 +899,7 @@
     var fd = new FormData();
     fd.append('file', input.files[0]);
     var btn = document.getElementById('sourceDocxSubmit');
-    btn.disabled = true;
+    if (!setButtonPending(btn, true, 'Yuklanmoqda...')) return;
     setText('sourceDocxError', '');
     NgoApi.post('/commission/protocols/' + selectedId + '/source-docx', fd, { timeout: COMMISSION_DOCUMENT_TIMEOUT_MS }).then(function () {
       toast('Word hujjati yuklandi.');
@@ -901,7 +907,7 @@
       return window.selectProtocol(selectedId);
     }).catch(function (err) {
       setText('sourceDocxError', errText(err, 'Word hujjati yuklanmadi.'));
-    }).then(function () { btn.disabled = false; renderSourceDocTools(); });
+    }).then(function () { setButtonPending(btn, false); renderSourceDocTools(); });
   });
   document.getElementById('sourceDocxDownload').addEventListener('click', function () {
     if (!selectedId) return;
@@ -917,7 +923,7 @@
     e.preventDefault();
     if (!selectedId || !canManage()) return;
     var btn = document.getElementById('googleDocSubmit');
-    btn.disabled = true;
+    if (!setButtonPending(btn, true, 'Saqlanmoqda...')) return;
     setText('googleDocError', '');
     NgoApi.patch('/commission/protocols/' + selectedId, {
       google_doc_url: document.getElementById('googleDocUrl').value
@@ -926,7 +932,7 @@
       return window.selectProtocol(selectedId);
     }).catch(function (err) {
       setText('googleDocError', errText(err, 'Google Docs havolasi saqlanmadi.'));
-    }).finally(function () { btn.disabled = false; });
+    }).finally(function () { setButtonPending(btn, false); });
   });
   var protocolModal = document.getElementById('protocolModal');
   function closeProtocolModal() { protocolModal.setAttribute('aria-hidden', 'true'); setText('protocolError', ''); setText('protocolStatus', ''); }
@@ -946,8 +952,7 @@
     var btn = document.getElementById('protocolSubmit');
     var number = document.getElementById('protocolNumber').value.trim();
     if (!number) { setText('protocolError', 'Bayonnoma raqamini kiriting.'); return; }
-    btn.disabled = true;
-    btn.textContent = 'Protokol yaratilmoqda, iltimos kuting...';
+    if (!setButtonPending(btn, true, 'Protokol yaratilmoqda, iltimos kuting...')) return;
     setText('protocolError', '');
     setText('protocolStatus', 'Protokol yaratilmoqda, iltimos kuting...');
     NgoApi.post('/commission/protocols', {
@@ -961,7 +966,7 @@
       var id = res && (res.id || (res.protocol && res.protocol.id));
       if (id) setTimeout(function () { window.selectProtocol(parseInt(id, 10)); }, 300);
     }).catch(function (err) { setText('protocolError', errText(err, 'Protokol yaratilmadi.')); })
-      .then(function () { btn.disabled = false; btn.textContent = 'Yaratish'; setText('protocolStatus', ''); });
+      .then(function () { setButtonPending(btn, false); setText('protocolStatus', ''); });
   });
   function renderCandidateResults(items) {
     var box = document.getElementById('candidateResults');
@@ -996,14 +1001,15 @@
     var ids = [];
     Object.keys(selectedCandidateIds).forEach(function (k) { if (selectedCandidateIds[k]) ids.push(parseInt(k, 10)); });
     if (!ids.length || !selectedId) return;
-    var btn = this; btn.disabled = true;
+    var btn = this;
+    if (!setButtonPending(btn, true, 'Qo‘shilmoqda...')) return;
     NgoApi.post('/commission/protocols/' + selectedId + '/candidates', { murojaat_ids: ids }).then(function (res) {
       toast('Nomzodlar qo‘shildi: ' + (res.added || 0));
       searchCandidates();
       window.selectProtocol(selectedId);
       load();
     }).catch(function (err) { toast(errText(err, 'Nomzod qo‘shilmadi.')); })
-      .then(function () { btn.disabled = false; });
+      .then(function () { setButtonPending(btn, false); });
   });
   var sigModal = document.getElementById('signatureModal');
   var sigCanvas = document.getElementById('signatureCanvas');
@@ -1058,7 +1064,7 @@
     e.preventDefault();
     if (!hasSignatureStroke) { setText('signatureError', 'Avval imzo chizing.'); return; }
     var btn = document.getElementById('signatureSubmit');
-    btn.disabled = true;
+    if (!setButtonPending(btn, true, 'Yuborilmoqda...')) return;
     setText('signatureError', '');
     var payload = { signature_image: sigCanvas.toDataURL('image/png'), votes: pendingVotes };
     NgoApi.post('/commission/protocols/' + selectedId + '/ballot', payload, { timeout: COMMISSION_DOCUMENT_TIMEOUT_MS })
@@ -1069,7 +1075,7 @@
         reloadCurrent();
       })
       .catch(function (err) { setText('signatureError', (err && err.message) || 'Imzolashda xatolik.'); })
-      .then(function () { btn.disabled = false; });
+      .then(function () { setButtonPending(btn, false); });
   });
   setCurrentRole(currentRole);
   load();
