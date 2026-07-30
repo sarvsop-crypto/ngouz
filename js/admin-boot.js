@@ -24,39 +24,6 @@
   if (!authOpts.minRole && !authOpts.allowedRoles) authOpts.minRole = 'regional_admin';
   authOpts.loginPage = authOpts.loginPage || 'admin-login';
 
-  function initSidebarToggle() {
-    var sidebar = document.querySelector('.sidebar');
-    var toggle = document.getElementById('sidebarToggle');
-    if (!sidebar || !toggle || toggle.dataset.boundSidebarToggle === '1') return;
-
-    toggle.dataset.boundSidebarToggle = '1';
-
-    function setCollapsed(collapsed) {
-      sidebar.classList.toggle('is-collapsed', collapsed);
-      toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
-      toggle.setAttribute('aria-label', collapsed ? 'Yon panelni ochish' : 'Yon panelni yopish');
-      try {
-        localStorage.setItem('ngo_admin_sidebar_collapsed', collapsed ? '1' : '0');
-      } catch (e) {}
-    }
-
-    try {
-      if (localStorage.getItem('ngo_admin_sidebar_collapsed') === '1') {
-        setCollapsed(true);
-      } else {
-        setCollapsed(sidebar.classList.contains('is-collapsed'));
-      }
-    } catch (e) {
-      setCollapsed(sidebar.classList.contains('is-collapsed'));
-    }
-
-    toggle.addEventListener('click', function () {
-      setCollapsed(!sidebar.classList.contains('is-collapsed'));
-    });
-  }
-
-  initSidebarToggle();
-
   NgoApi.requireAuth(authOpts)
     .then(function (user) {
       if (NgoApi.startIdleLogout) NgoApi.startIdleLogout({ loginPage: authOpts.loginPage });

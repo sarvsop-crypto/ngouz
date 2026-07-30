@@ -397,36 +397,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  var sidebarToggle = document.getElementById('sidebarToggle');
-  var sidebar = document.querySelector('.sidebar');
-  if (sidebarToggle && sidebar) {
-    // Give the sidebar an id (matches setupMobileSidebar's choice in
-    // pacta-foundation.js) so aria-controls on the collapse button
-    // resolves. Idempotent — first writer wins.
-    if (!sidebar.id) sidebar.id = 'pactaSidebar';
-    if (!sidebarToggle.hasAttribute('aria-controls')) {
-      sidebarToggle.setAttribute('aria-controls', sidebar.id);
-    }
-    var SIDEBAR_KEY = 'ngo_sidebar_collapsed_v1';
-    function applySidebarState(collapsed) {
-      sidebar.classList.toggle('is-collapsed', collapsed);
-      sidebarToggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
-      sidebarToggle.textContent = collapsed ? '\u203a' : '\u2039';
-      // Sync aria-label to match the action the user is about to take \u2014
-      // "yopish" (close) when expanded, "ochish" (open) when collapsed.
-      sidebarToggle.setAttribute('aria-label',
-        collapsed ? 'Yon panelni ochish' : 'Yon panelni yopish');
-    }
-    try {
-      if (localStorage.getItem(SIDEBAR_KEY) === '1') applySidebarState(true);
-    } catch (e) { /* swallow */ }
-    sidebarToggle.addEventListener('click', function () {
-      var willCollapse = !sidebar.classList.contains('is-collapsed');
-      applySidebarState(willCollapse);
-      try { localStorage.setItem(SIDEBAR_KEY, willCollapse ? '1' : '0'); } catch (e) {}
-    });
-  }
-
   // --- Filter chips: radio-group + dispatch a filter-change event ---
   // Initialize aria-pressed once so AT users can read the current
   // selection without waiting for the first click to flip a value

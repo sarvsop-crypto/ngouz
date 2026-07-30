@@ -691,6 +691,10 @@
       var btn = document.getElementById('sidebarToggle');
       if (!sidebar || !btn || btn.dataset.collapseWired === '1') return;
       btn.dataset.collapseWired = '1';
+      if (sidebar.getAttribute('data-sidebar-default') === 'expanded') {
+        apply(sidebar, btn, false);
+        return;
+      }
       try {
         var saved = localStorage.getItem(KEY);
         if (saved === '1') apply(sidebar, btn, true);
@@ -738,4 +742,3 @@
     init();
   }
 })();
-

@@ -101,6 +101,8 @@
     .commission-modal { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(15, 23, 42, .45); }
     .commission-modal[aria-hidden="false"] { display: flex; }
     .verify-card { margin-top: 18px; background: #f7fbff; border: 1px solid #d7e7f7; border-radius: 10px; padding: 16px; }
+    button.sidebar__logo { border: 0; cursor: pointer; font: inherit; }
+    button.sidebar__logo:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
     .member-form { display: grid; grid-template-columns: minmax(220px, 1fr) minmax(160px, 220px) auto; gap: 10px; align-items: end; }
     .member-form label { display: grid; gap: 6px; color: var(--grey-700); font-size: 13px; font-weight: 700; }
     .member-form input, .member-form select { box-sizing: border-box; width: 100%; min-height: 42px; border: 1px solid var(--grey-200); border-radius: 8px; padding: 8px 10px; background: #fff; color: var(--grey-900); font: inherit; }
@@ -160,9 +162,9 @@
 <noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui;text-align:center">Bu sahifa ishlashi uchun JavaScript yoqilgan bo‘lishi kerak.</div></noscript>
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
 <div class="layout">
-  <aside class="sidebar">
+  <aside class="sidebar" data-sidebar-default="expanded">
     <div class="sidebar__header">
-      <div class="u-inline-stack"><div class="sidebar__logo u-logo-badge">N</div><span class="sidebar__title">O'zNNTMA Admin</span></div>
+      <div class="u-inline-stack"><button type="button" class="sidebar__logo u-logo-badge" id="commissionRefreshLogo" aria-label="Joriy sahifani yangilash" title="Joriy sahifani yangilash">N</button><span class="sidebar__title">O'zNNTMA Admin</span></div>
       <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Yon panelni yopish" aria-expanded="true">&lsaquo;</button>
     </div>
     <nav class="sidebar__nav" aria-label="Admin menyusi">
@@ -927,6 +929,9 @@
     });
   }
   document.getElementById('refreshCommission').addEventListener('click', load);
+  document.getElementById('commissionRefreshLogo').addEventListener('click', function () {
+    window.location.reload();
+  });
   document.getElementById('advancedToggle').addEventListener('click', function () {
     setAdvancedVisible(!advancedOpen);
   });
