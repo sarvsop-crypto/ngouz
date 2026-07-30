@@ -72,7 +72,7 @@
         avatar.textContent = String(user.full_name || user.email).charAt(0).toUpperCase();
       }
       document.querySelectorAll('.sidebar__nav-link[href]').forEach(function (link) {
-        var href = (link.getAttribute('href') || '').replace(/^\//, '').replace(/\.html$/, '');
+        var href = (link.getAttribute('href') || '').split('?')[0].replace(/^\//, '').replace(/\.html$/, '');
         if (href === 'admin-login') return;
         if (user.role === 'commission') {
           if (href !== 'admin-commission') link.remove();

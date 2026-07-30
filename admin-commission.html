@@ -101,6 +101,17 @@
     .commission-modal { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(15, 23, 42, .45); }
     .commission-modal[aria-hidden="false"] { display: flex; }
     .verify-card { margin-top: 18px; background: #f7fbff; border: 1px solid #d7e7f7; border-radius: 10px; padding: 16px; }
+    .member-form { display: grid; grid-template-columns: minmax(220px, 1fr) minmax(160px, 220px) auto; gap: 10px; align-items: end; }
+    .member-form label { display: grid; gap: 6px; color: var(--grey-700); font-size: 13px; font-weight: 700; }
+    .member-form input, .member-form select { box-sizing: border-box; width: 100%; min-height: 42px; border: 1px solid var(--grey-200); border-radius: 8px; padding: 8px 10px; background: #fff; color: var(--grey-900); font: inherit; }
+    .member-list { display: grid; gap: 10px; padding: 16px; }
+    .member-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(150px, 190px) auto; gap: 12px; align-items: center; padding: 14px; border: 1px solid var(--grey-100); border-radius: 8px; background: #fff; }
+    .member-row__identity { min-width: 0; display: grid; gap: 3px; }
+    .member-row__identity strong, .member-row__identity span { overflow-wrap: anywhere; }
+    .member-row__identity span { color: var(--grey-500); font-size: 12px; }
+    .member-row select { width: 100%; min-height: 38px; border: 1px solid var(--grey-200); border-radius: 8px; padding: 7px 9px; background: #fff; font: inherit; }
+    .member-row__actions { min-width: 116px; display: flex; justify-content: flex-end; }
+    .member-row.is-inactive { opacity: .68; background: var(--grey-25); }
     @media (max-width: 1180px) {
       .commission-grid, .protocol-layout { grid-template-columns: 1fr; }
       .protocol-layout > .protocol-panel:last-child { grid-column: auto; }
@@ -140,6 +151,8 @@
       .vote-actions .btn { width: 100%; }
       .document-summary__row { grid-template-columns: 1fr; }
       .document-summary__row .btn { width: 100%; }
+      .member-form, .member-row { grid-template-columns: 1fr; }
+      .member-row__actions, .member-row__actions .btn { width: 100%; }
     }
   </style>
 </head>
@@ -155,7 +168,9 @@
     <nav class="sidebar__nav" aria-label="Admin menyusi">
       <div class="sidebar__nav-section">
         <div class="sidebar__nav-label">KOMISSIYA</div>
-        <a href="admin-commission" class="sidebar__nav-link is-active" aria-current="page"><span class="sidebar__nav-icon"><i class="ph ph-gavel" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Komissiya</span></a>
+        <a href="admin-commission" class="sidebar__nav-link" data-commission-view="current"><span class="sidebar__nav-icon"><i class="ph ph-gavel" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Joriy bayonnomalar</span></a>
+        <a href="admin-commission?view=history" class="sidebar__nav-link" data-commission-view="history"><span class="sidebar__nav-icon"><i class="ph ph-archive" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Oldingi bayonnomalar</span></a>
+        <a href="admin-commission?view=members" class="sidebar__nav-link" data-commission-view="members" data-chair-only hidden><span class="sidebar__nav-icon"><i class="ph ph-users-three" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Komissiya a’zolari</span></a>
       </div>
       <div class="sidebar__nav-section u-mt-auto">
         <a data-action="logout" href="admin-login" class="sidebar__nav-link logout"><span class="sidebar__nav-icon"><i class="ph ph-sign-out" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
@@ -172,8 +187,8 @@
 
     <div class="main__header">
       <div>
-        <h1 class="main__title">Komissiya ish navbati</h1>
-        <p class="text-dim" style="margin:6px 0 0">Protokolni tanlang. Keyingi amallar faqat tanlangan protokol uchun ochiladi.</p>
+        <h1 class="main__title" id="mainHeaderTitle">Komissiya ish navbati</h1>
+        <p class="text-dim" id="mainHeaderHint" style="margin:6px 0 0">Protokolni tanlang. Keyingi amallar faqat tanlangan protokol uchun ochiladi.</p>
       </div>
       <div class="main__btns">
         <button type="button" class="btn btn--secondary" id="refreshCommission"><i class="ph ph-arrow-clockwise" aria-hidden="true"></i> Yangilash</button>
@@ -181,7 +196,7 @@
       </div>
     </div>
 
-    <div class="commission-grid">
+    <div class="commission-grid" id="protocolListView">
       <section class="table-section" aria-labelledby="protocolsTitle">
         <div class="table-section__head"><h2 class="table-section__title" id="protocolsTitle">Protokollar</h2></div>
         <div class="protocol-list" id="protocolRows" aria-live="polite" aria-busy="true"><div class="text-dim" role="status">Yuklanmoqda...</div></div>
@@ -259,6 +274,29 @@
         </div>
       </aside>
     </section>
+
+    <section id="memberView" hidden>
+      <section class="table-section" aria-labelledby="memberFormTitle" style="margin-top:18px;">
+        <div class="table-section__head"><h2 class="table-section__title" id="memberFormTitle">A’zo qo‘shish</h2></div>
+        <div class="protocol-panel__body">
+          <form class="member-form" id="memberForm" novalidate>
+            <label>Email
+              <input type="email" id="memberEmail" placeholder="name@commission.ngo.uz" autocomplete="off" required>
+            </label>
+            <label>Komissiyadagi roli
+              <select id="memberRole"><option value="member">A’zo</option><option value="secretary">Kotib</option></select>
+            </label>
+            <button type="submit" class="btn btn--primary" id="memberSubmit"><i class="ph ph-user-plus" aria-hidden="true"></i> Qo‘shish</button>
+          </form>
+          <p class="signature-hint" style="margin-top:10px;">Faqat mavjud va faol komissiya hisobini email orqali qo‘shish mumkin.</p>
+          <p class="va-error" id="memberError" role="alert" style="color:var(--error-600);margin:8px 0 0;"></p>
+        </div>
+      </section>
+      <section class="table-section" aria-labelledby="membersTitle" style="margin-top:18px;">
+        <div class="table-section__head"><h2 class="table-section__title" id="membersTitle">Komissiya tarkibi</h2></div>
+        <div class="member-list" id="memberRows" aria-live="polite" aria-busy="true"><div class="text-dim">Yuklanmoqda...</div></div>
+      </section>
+    </section>
   </main>
 </div>
 <div class="signature-modal" id="signatureModal" aria-hidden="true">
@@ -333,6 +371,9 @@
   var onlyOfficeEditor = null;
   var hasSignatureStroke = false;
   var advancedOpen = false;
+  var viewParam = new URLSearchParams(window.location.search).get('view');
+  var currentView = viewParam === 'history' || viewParam === 'members' ? viewParam : 'current';
+  var commissionRoleResolved = false;
   var COMMISSION_DOCUMENT_TIMEOUT_MS = 90000;
   var MANAGE_ROLES = { chair: true, secretary: true };
   function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
@@ -380,9 +421,36 @@
     var role = normalizeRole(currentRole);
     return role === 'chair';
   }
+  function renderViewChrome() {
+    document.querySelectorAll('[data-commission-view]').forEach(function (link) {
+      var active = link.getAttribute('data-commission-view') === currentView;
+      link.classList.toggle('is-active', active);
+      if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current');
+    });
+    document.querySelectorAll('[data-chair-only]').forEach(function (link) {
+      link.hidden = !isChair();
+    });
+    if (commissionRoleResolved && currentView === 'members' && !isChair()) {
+      window.location.replace('admin-commission');
+      return;
+    }
+    var memberView = document.getElementById('memberView');
+    var protocolListView = document.getElementById('protocolListView');
+    var isMembers = currentView === 'members';
+    if (memberView) memberView.hidden = !isMembers;
+    if (protocolListView) protocolListView.hidden = isMembers;
+    if (isMembers) setWorkspaceVisible(false);
+    setText('mainHeaderTitle', currentView === 'members' ? 'Komissiya a’zolari' : currentView === 'history' ? 'Oldingi bayonnomalar' : 'Komissiya ish navbati');
+    setText('mainHeaderHint', currentView === 'members'
+      ? 'Faol komissiya tarkibini boshqaring.'
+      : currentView === 'history' ? 'Imzolangan va arxivlangan bayonnomalarni ko‘ring.' : 'Protokolni tanlang. Keyingi amallar faqat tanlangan protokol uchun ochiladi.');
+    setText('protocolsTitle', currentView === 'history' ? 'Oldingi bayonnomalar' : 'Joriy bayonnomalar');
+  }
   function setCurrentRole(role) {
+    if (role) commissionRoleResolved = true;
     currentRole = normalizeRole(role);
     setText('commissionRole', currentRole || '—');
+    renderViewChrome();
     renderCreateAction();
     renderStageChrome();
     renderWorkflowActions();
@@ -395,8 +463,8 @@
     var btn = document.getElementById('newProtocolBtn');
     if (!btn) return;
     var ready = !!normalizeRole(currentRole);
-    var allowed = canManage();
-    btn.hidden = !ready;
+    var allowed = canManage() && currentView === 'current';
+    btn.hidden = !ready || currentView !== 'current';
     btn.disabled = !ready || !allowed;
     btn.title = !ready ? 'Komissiya roli yuklanmoqda.'
       : allowed ? 'Yangi protokol yaratish'
@@ -747,31 +815,72 @@
       if (err && err.status !== 403) toast(errText(err, 'Protokol maʼlumotlarini yuklab bo‘lmadi.'));
     });
   };
+  function roleLabel(role) {
+    return { chair: 'Rais', secretary: 'Kotib', member: 'A’zo' }[role] || role || 'A’zo';
+  }
+  function renderMembers(items) {
+    var box = document.getElementById('memberRows');
+    if (!box) return;
+    if (!items || !items.length) {
+      box.innerHTML = '<div class="text-dim">Komissiya a’zolari topilmadi.</div>';
+      box.setAttribute('aria-busy', 'false');
+      return;
+    }
+    box.innerHTML = items.map(function (member) {
+      var active = parseInt(member.active, 10) === 1 && member.user_status === 'active';
+      var protectedChair = member.role === 'chair';
+      var roleControl = protectedChair
+        ? '<strong>' + roleLabel(member.role) + '</strong>'
+        : '<select data-member-role="' + esc(member.id) + '"' + (active ? '' : ' disabled') + ' aria-label="' + esc((member.full_name || member.email) + ' roli') + '">' +
+          '<option value="member"' + (member.role === 'member' ? ' selected' : '') + '>A’zo</option>' +
+          '<option value="secretary"' + (member.role === 'secretary' ? ' selected' : '') + '>Kotib</option></select>';
+      var action = protectedChair ? '<span class="badge badge--success">Rais</span>'
+        : active ? '<button type="button" class="btn btn--secondary btn--sm" data-member-remove="' + esc(member.id) + '">Olib tashlash</button>'
+        : '<button type="button" class="btn btn--secondary btn--sm" data-member-reactivate="' + esc(member.id) + '" data-member-email="' + esc(member.email) + '" data-member-current-role="' + esc(member.role) + '">Qayta qo‘shish</button>';
+      return '<div class="member-row' + (active ? '' : ' is-inactive') + '">' +
+        '<div class="member-row__identity"><strong>' + esc(member.full_name || 'F.I.Sh. ko‘rsatilmagan') + '</strong><span>' + esc(member.email) + '</span>' +
+        '<span>' + (active ? 'Faol' : 'Tarkibdan chiqarilgan') + '</span></div><div>' + roleControl + '</div><div class="member-row__actions">' + action + '</div></div>';
+    }).join('');
+    box.setAttribute('aria-busy', 'false');
+  }
+  function loadMembers() {
+    var box = document.getElementById('memberRows');
+    if (box) { box.setAttribute('aria-busy', 'true'); box.innerHTML = '<div class="text-dim">Yuklanmoqda...</div>'; }
+    return NgoApi.get('/commission/members').then(function (res) {
+      renderMembers(res.items || []);
+    }).catch(function (err) {
+      if (box) box.innerHTML = '<div role="alert" style="color:var(--error-600)">' + esc(errText(err, 'Komissiya tarkibini yuklab bo‘lmadi.')) + '</div>';
+    });
+  }
   function load() {
-    Promise.all([
-      NgoApi.get('/commission/dashboard').catch(function () { return {}; }),
-      NgoApi.get('/commission/protocols').catch(function () { return { items: [] }; }),
-      NgoApi.get('/commission/stats').catch(function () { return {}; })
-    ]).then(function (all) {
-      var dash = all[0] || {};
-      var list = all[1] || {};
-      var stats = all[2] || {};
+    NgoApi.get('/commission/dashboard').then(function (dash) {
       setText('commissionName', dash.commission && dash.commission.name ? dash.commission.name : '—');
       setCurrentRole(dash.me && dash.me.role ? dash.me.role : currentRole);
       setText('quorumText', dash.commission && dash.commission.quorum_pct ? dash.commission.quorum_pct + '%' : '—');
-      protocols = list.items || list.protocols || dash.active_protocols || [];
-      renderRows();
-      renderKpis(stats);
-      renderStageChrome();
-      renderWorkflowActions();
-      renderCandidateTools();
-      renderGoogleDocTools();
-      renderSourceDocTools();
-      renderDocumentSummary();
-      if (!selectedId) setWorkspaceVisible(false);
-    }).catch(function () {
+      if (currentView === 'members') {
+        if (!isChair()) return;
+        return loadMembers();
+      }
+      return Promise.all([
+        NgoApi.get('/commission/protocols?scope=' + encodeURIComponent(currentView === 'history' ? 'history' : 'current')),
+        NgoApi.get('/commission/stats').catch(function () { return {}; })
+      ]).then(function (all) {
+        var list = all[0] || {};
+        var stats = all[1] || {};
+        protocols = list.items || list.protocols || [];
+        renderRows();
+        renderKpis(stats);
+        renderStageChrome();
+        renderWorkflowActions();
+        renderCandidateTools();
+        renderGoogleDocTools();
+        renderSourceDocTools();
+        renderDocumentSummary();
+        if (!selectedId) setWorkspaceVisible(false);
+      });
+    }).catch(function (err) {
       var list = document.getElementById('protocolRows');
-      if (list) list.innerHTML = '<div role="alert" style="color:var(--error-600)">Komissiya ma’lumotlarini yuklab bo‘lmadi.</div>';
+      if (list && currentView !== 'members') list.innerHTML = '<div role="alert" style="color:var(--error-600)">' + esc(errText(err, 'Komissiya ma’lumotlarini yuklab bo‘lmadi.')) + '</div>';
     });
   }
   document.getElementById('protocolRows').addEventListener('click', function (e) {
@@ -1076,6 +1185,65 @@
       })
       .catch(function (err) { setText('signatureError', (err && err.message) || 'Imzolashda xatolik.'); })
       .then(function () { setButtonPending(btn, false); });
+  });
+  document.getElementById('memberForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!isChair()) return;
+    var email = document.getElementById('memberEmail').value.trim();
+    var role = document.getElementById('memberRole').value;
+    if (!email) { setText('memberError', 'Email manzilini kiriting.'); return; }
+    var btn = document.getElementById('memberSubmit');
+    if (!setButtonPending(btn, true, 'Qo‘shilmoqda...')) return;
+    setText('memberError', '');
+    NgoApi.post('/commission/members', { email: email, role: role }).then(function () {
+      document.getElementById('memberEmail').value = '';
+      toast('Komissiya a’zosi qo‘shildi.');
+      return loadMembers();
+    }).catch(function (err) {
+      setText('memberError', errText(err, 'Komissiya a’zosini qo‘shib bo‘lmadi.'));
+    }).then(function () { setButtonPending(btn, false); });
+  });
+  document.getElementById('memberRows').addEventListener('change', function (e) {
+    var select = e.target.closest && e.target.closest('[data-member-role]');
+    if (!select || !isChair()) return;
+    select.disabled = true;
+    setText('memberError', '');
+    NgoApi.patch('/commission/members/' + encodeURIComponent(select.getAttribute('data-member-role')), { role: select.value }).then(function () {
+      toast('A’zo roli yangilandi.');
+      return loadMembers();
+    }).catch(function (err) {
+      setText('memberError', errText(err, 'A’zo rolini yangilab bo‘lmadi.'));
+      return loadMembers();
+    });
+  });
+  document.getElementById('memberRows').addEventListener('click', function (e) {
+    var remove = e.target.closest && e.target.closest('[data-member-remove]');
+    var reactivate = e.target.closest && e.target.closest('[data-member-reactivate]');
+    if (!isChair() || (!remove && !reactivate)) return;
+    setText('memberError', '');
+    if (remove) {
+      if (!confirm('Bu a’zo komissiya tarkibidan chiqarilsinmi?')) return;
+      if (!setButtonPending(remove, true, 'Olib tashlanmoqda...')) return;
+      NgoApi.del('/commission/members/' + encodeURIComponent(remove.getAttribute('data-member-remove'))).then(function () {
+        toast('A’zo komissiya tarkibidan chiqarildi.');
+        return loadMembers();
+      }).catch(function (err) {
+        setText('memberError', errText(err, 'A’zoni olib tashlab bo‘lmadi.'));
+        setButtonPending(remove, false);
+      });
+      return;
+    }
+    if (!setButtonPending(reactivate, true, 'Qo‘shilmoqda...')) return;
+    NgoApi.post('/commission/members', {
+      email: reactivate.getAttribute('data-member-email'),
+      role: reactivate.getAttribute('data-member-current-role') === 'secretary' ? 'secretary' : 'member'
+    }).then(function () {
+      toast('A’zo komissiya tarkibiga qayta qo‘shildi.');
+      return loadMembers();
+    }).catch(function (err) {
+      setText('memberError', errText(err, 'A’zoni qayta qo‘shib bo‘lmadi.'));
+      setButtonPending(reactivate, false);
+    });
   });
   setCurrentRole(currentRole);
   load();
