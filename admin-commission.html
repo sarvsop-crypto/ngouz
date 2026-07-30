@@ -183,31 +183,31 @@
     <header class="topbar">
       <div class="topbar-left"><nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><span aria-current="page">Komissiya</span></nav></div>
       <div class="topbar-right">
-        <div class="main__profile"><div class="main__profile-avatar u-avatar-badge-sm">K</div><div><div class="main__profile-name" data-user-name>Komissiya</div><div class="main__profile-role" data-user-role>Protokollar</div></div></div>
+        <div class="main__profile"><div class="main__profile-avatar u-avatar-badge-sm">K</div><div><div class="main__profile-name" data-user-name>Komissiya</div><div class="main__profile-role" data-user-role>Bayonnomalar</div></div></div>
       </div>
     </header>
 
     <div class="main__header">
       <div>
         <h1 class="main__title" id="mainHeaderTitle">Komissiya ish navbati</h1>
-        <p class="text-dim" id="mainHeaderHint" style="margin:6px 0 0">Protokolni tanlang. Keyingi amallar faqat tanlangan protokol uchun ochiladi.</p>
+        <p class="text-dim" id="mainHeaderHint" style="margin:6px 0 0">Bayonnomani tanlang. Keyingi amallar faqat tanlangan bayonnoma uchun ochiladi.</p>
       </div>
       <div class="main__btns">
         <button type="button" class="btn btn--secondary" id="refreshCommission"><i class="ph ph-arrow-clockwise" aria-hidden="true"></i> Yangilash</button>
-        <button type="button" class="btn btn--primary" id="newProtocolBtn" hidden disabled><i class="ph ph-plus" aria-hidden="true"></i> Yangi protokol</button>
+        <button type="button" class="btn btn--primary" id="newProtocolBtn" hidden disabled><i class="ph ph-plus" aria-hidden="true"></i> Yangi bayonnoma</button>
       </div>
     </div>
 
     <div class="commission-grid" id="protocolListView">
       <section class="table-section" aria-labelledby="protocolsTitle">
-        <div class="table-section__head"><h2 class="table-section__title" id="protocolsTitle">Protokollar</h2></div>
+        <div class="table-section__head"><h2 class="table-section__title" id="protocolsTitle">Bayonnomalar</h2></div>
         <div class="protocol-list" id="protocolRows" aria-live="polite" aria-busy="true"><div class="text-dim" role="status">Yuklanmoqda...</div></div>
       </section>
       <section class="protocol-panel" id="signPanel" aria-labelledby="signTitle" hidden>
         <div class="protocol-panel__head"><h2 id="signTitle">Ovoz va imzo holati</h2><span class="badge badge--warning">Amal kutilmoqda</span></div>
         <div class="protocol-panel__body">
           <div class="meta-list">
-            <div><span>QR tekshiruv</span><strong id="qrText">Protokol imzolangach yaratiladi</strong></div>
+            <div><span>QR tekshiruv</span><strong id="qrText">Bayonnoma imzolangach yaratiladi</strong></div>
           </div>
           <div class="workflow-actions" id="workflowActions" aria-live="polite"></div>
           <p class="va-error" id="workflowError" role="alert" style="color:var(--error-600);margin:8px 0 0;"></p>
@@ -225,7 +225,7 @@
       </section>
     </div>
 
-    <section class="protocol-layout" id="protocolWorkspace" aria-label="Protokol ish oynasi" hidden>
+    <section class="protocol-layout" id="protocolWorkspace" aria-label="Bayonnoma ish oynasi" hidden>
       <div class="protocol-toolbar">
         <button type="button" class="btn btn--secondary btn--sm" id="advancedToggle" aria-expanded="false">Qo'shimcha sozlamalar</button>
       </div>
@@ -235,7 +235,7 @@
           <div class="meta-list">
             <div><span>Komissiya</span><strong id="commissionName">—</strong></div>
             <div><span>Rol</span><strong id="commissionRole">—</strong></div>
-            <div><span>Tanlangan protokol</span><strong id="selectedProtocol">Tanlanmagan</strong></div>
+            <div><span>Tanlangan bayonnoma</span><strong id="selectedProtocol">Tanlanmagan</strong></div>
           </div>
           <form class="protocol-form" id="googleDocForm" hidden style="margin-top:14px;">
             <label>
@@ -267,7 +267,7 @@
       </aside>
       <section class="protocol-panel advanced-panel is-hidden">
         <div class="protocol-panel__head"><h3>Hujjat oynasi</h3><button type="button" class="btn btn--secondary btn--sm" id="openEditorBtn">Ochish</button></div>
-        <div class="protocol-panel__body"><div class="editor-frame" id="editorFrame"><div><i class="ph ph-file-doc" style="font-size:38px" aria-hidden="true"></i><br>Protokol tanlang. Draft holatda hujjat tahrirlanadi, keyingi holatlarda ko‘rish uchun ochiladi.</div></div></div>
+        <div class="protocol-panel__body"><div class="editor-frame" id="editorFrame"><div><i class="ph ph-file-doc" style="font-size:38px" aria-hidden="true"></i><br>Bayonnomani tanlang. Draft holatda hujjat tahrirlanadi, keyingi holatlarda ko‘rish uchun ochiladi.</div></div></div>
       </section>
       <aside class="protocol-panel">
         <div class="protocol-panel__head"><h3>Ovozlar</h3></div>
@@ -304,15 +304,15 @@
 <div class="signature-modal" id="signatureModal" aria-hidden="true">
   <form class="signature-card" id="signatureForm" role="dialog" aria-modal="true" aria-labelledby="signatureTitle">
     <div class="signature-card__head">
-      <h2 id="signatureTitle">Protokolni qo'lda imzolash</h2>
+      <h2 id="signatureTitle">Bayonnomani qo'lda imzolash</h2>
       <button type="button" class="btn btn--secondary btn--sm" id="signatureClose" aria-label="Yopish">×</button>
     </div>
     <div class="signature-card__body">
-      <p class="signature-hint" id="signatureProtocolText">Tanlangan protokol: —</p>
+      <p class="signature-hint" id="signatureProtocolText">Tanlangan bayonnoma: —</p>
       <div class="signature-canvas-wrap">
         <canvas id="signatureCanvas" width="900" height="300"></canvas>
       </div>
-      <p class="signature-hint">Sichqoncha yoki telefon ekrani orqali imzo chizing. Saqlanganda imzo rasmi protokol imzosi sifatida yoziladi.</p>
+      <p class="signature-hint">Sichqoncha yoki telefon ekrani orqali imzo chizing. Saqlanganda imzo rasmi bayonnoma imzosi sifatida yoziladi.</p>
       <p class="va-error" id="signatureError" role="alert" style="color:var(--error-600);margin:0;"></p>
     </div>
     <div class="signature-card__foot">
@@ -327,7 +327,7 @@
 <div class="commission-modal" id="protocolModal" aria-hidden="true">
   <form class="signature-card protocol-form" id="protocolForm" role="dialog" aria-modal="true" aria-labelledby="protocolModalTitle" novalidate>
     <div class="signature-card__head">
-      <h2 id="protocolModalTitle">Yangi protokol</h2>
+      <h2 id="protocolModalTitle">Yangi bayonnoma</h2>
       <button type="button" class="btn btn--secondary btn--sm" id="protocolClose" aria-label="Yopish">×</button>
     </div>
     <div class="signature-card__body">
@@ -340,7 +340,7 @@
       <label>Sarlavha
         <input type="text" id="protocolTitle" placeholder="Ixtiyoriy">
       </label>
-      <p class="signature-hint">Protokol yaratilgach draft holatida ochiladi. Nomzodlarni qo'shib, keyin ovoz berishga yuboring.</p>
+      <p class="signature-hint">Bayonnoma yaratilgach draft holatida ochiladi. Nomzodlarni qo'shib, keyin ovoz berishga yuboring.</p>
       <p class="signature-hint" id="protocolStatus" role="status" aria-live="polite"></p>
       <p class="va-error" id="protocolError" role="alert" style="color:var(--error-600);margin:0;"></p>
     </div>
@@ -445,7 +445,7 @@
     setText('mainHeaderTitle', currentView === 'members' ? 'Komissiya a’zolari' : currentView === 'history' ? 'Oldingi bayonnomalar' : 'Komissiya ish navbati');
     setText('mainHeaderHint', currentView === 'members'
       ? 'Faol komissiya tarkibini boshqaring.'
-      : currentView === 'history' ? 'Imzolangan va arxivlangan bayonnomalarni ko‘ring.' : 'Protokolni tanlang. Keyingi amallar faqat tanlangan protokol uchun ochiladi.');
+      : currentView === 'history' ? 'Imzolangan va arxivlangan bayonnomalarni ko‘ring.' : 'Bayonnomani tanlang. Keyingi amallar faqat tanlangan bayonnoma uchun ochiladi.');
     setText('protocolsTitle', currentView === 'history' ? 'Oldingi bayonnomalar' : 'Joriy bayonnomalar');
   }
   function setCurrentRole(role) {
@@ -469,8 +469,8 @@
     btn.hidden = !ready || currentView !== 'current';
     btn.disabled = !ready || !allowed;
     btn.title = !ready ? 'Komissiya roli yuklanmoqda.'
-      : allowed ? 'Yangi protokol yaratish'
-      : 'Yangi protokol yaratish huquqi yo‘q.';
+      : allowed ? 'Yangi bayonnoma yaratish'
+      : 'Yangi bayonnoma yaratish huquqi yo‘q.';
     btn.setAttribute('aria-disabled', btn.disabled ? 'true' : 'false');
   }
   function downloadWithTicket(type) {
@@ -525,7 +525,7 @@
     var list = document.getElementById('protocolRows');
     if (!list) return;
     if (!protocols.length) {
-      list.innerHTML = '<div class="text-dim" role="status">Protokol topilmadi</div>';
+      list.innerHTML = '<div class="text-dim" role="status">Bayonnoma topilmadi</div>';
       list.setAttribute('aria-busy', 'false');
       return;
     }
@@ -582,7 +582,7 @@
     var box = document.getElementById('workflowActions');
     if (!box) return;
     if (!selectedProtocol) {
-      box.innerHTML = '<span class="text-dim">Protokol tanlang.</span>';
+      box.innerHTML = '<span class="text-dim">Bayonnomani tanlang.</span>';
       return;
     }
     var s = selectedProtocol.status || 'draft';
@@ -644,7 +644,7 @@
     }
     box.innerHTML =
       '<div class="document-summary__row"><div><strong>Google Docs</strong><span>' +
-      esc(googleUrl ? 'Ishchi hujjat. Imzolash tugaguncha ko‘rish/tahrirlash uchun shu ochiladi.' : 'Bu protokolga Google Docs havolasi biriktirilmagan.') +
+      esc(googleUrl ? 'Ishchi hujjat. Imzolash tugaguncha ko‘rish/tahrirlash uchun shu ochiladi.' : 'Bu bayonnomaga Google Docs havolasi biriktirilmagan.') +
       '</span></div>' +
       (googleUrl ? '<button type="button" class="btn btn--secondary btn--sm" data-document-action="google-doc"><i class="ph ph-file-doc" aria-hidden="true"></i> Ochish</button>' : '<span class="text-dim">Yo‘q</span>') +
       '</div>' +
@@ -652,7 +652,7 @@
       esc(signed ? 'Yetarli imzolangan ovozlar yig‘ilgan. PDF yuklab olishga tayyor.' : 'Yetarli imzolangan ovozlar yig‘ilganda avtomatik yaratiladi.') +
       '</span></div>' + pdfAction + '</div>' +
       '<div class="document-summary__row"><div><strong>QR tekshiruv</strong><span>' +
-      esc(qr ? 'Public verification sahifasi tayyor.' : 'Protokol to‘liq imzolangach yaratiladi.') +
+      esc(qr ? 'Public verification sahifasi tayyor.' : 'Bayonnoma to‘liq imzolangach yaratiladi.') +
       '</span></div>' +
       (verifyUrl ? '<a class="btn btn--secondary btn--sm" href="' + esc(verifyUrl) + '" target="_blank" rel="noopener"><i class="ph ph-qr-code" aria-hidden="true"></i> Ochish</a>' : '<span class="text-dim">Kutilmoqda</span>') +
       '</div>' +
@@ -710,11 +710,11 @@
       btn.title = canSubmitBallot ? 'Tanlangan ovozlarni imzo bilan yuborish' : 'Avval barcha nomzodlar bo‘yicha ovoz bering';
     }
     if (hint) {
-      hint.textContent = !selectedProtocol ? 'Protokolni tanlang.'
+      hint.textContent = !selectedProtocol ? 'Bayonnomani tanlang.'
         : mine && mine.signed ? 'Siz ovoz va imzoni yuborgansiz. Boshqa amal kerak emas.'
         : selectedProtocol.status === 'voting' && !allVotesSelected ? 'Barcha nomzodlar bo‘yicha variantni tanlang.'
         : canSubmitBallot ? 'Tayyor. Imzo chizib, ovozlarni yuboring.'
-        : selectedProtocol.status === 'signed' ? 'Protokol yakunlangan.'
+        : selectedProtocol.status === 'signed' ? 'Bayonnoma yakunlangan.'
         : 'Hozir sizdan amal talab qilinmaydi.';
     }
     var canDownloadPdf = !!(selectedProtocol && selectedProtocol.status === 'signed');
@@ -728,7 +728,7 @@
     } else if (selectedProtocol && selectedProtocol.status === 'signed') {
       setText('qrText', 'QR yaratilgan. Public verification orqali tekshiriladi.');
     } else {
-      setText('qrText', 'Protokol imzolangach yaratiladi');
+      setText('qrText', 'Bayonnoma imzolangach yaratiladi');
     }
     renderVotePanel(currentCandidates, tallyData);
     renderDocumentSummary();
@@ -814,7 +814,7 @@
     }).catch(function (err) {
       renderVotePanel(currentCandidates, tallyData);
       renderSignState(null);
-      if (err && err.status !== 403) toast(errText(err, 'Protokol maʼlumotlarini yuklab bo‘lmadi.'));
+      if (err && err.status !== 403) toast(errText(err, 'Bayonnoma maʼlumotlarini yuklab bo‘lmadi.'));
     });
   };
   function roleLabel(role) {
@@ -940,7 +940,7 @@
     var action = actionBtn && actionBtn.getAttribute('data-workflow');
     if (!action) return;
     if (action === 'startVoting') updateStatus('voting', actionBtn);
-    if (action === 'archive' && confirm('Protokol arxivlansinmi?')) updateStatus('archived');
+    if (action === 'archive' && confirm('Bayonnoma arxivlansinmi?')) updateStatus('archived');
   });
   document.getElementById('votePanel').addEventListener('click', function (e) {
     if (e.target && e.target.disabled) return;
@@ -952,7 +952,7 @@
       renderVotePanel(currentCandidates, tallyData);
       renderSignState(signData);
     }
-    if (removeId && confirm('Nomzod protokoldan o‘chirilsinmi?')) {
+    if (removeId && confirm('Nomzod bayonnomadan o‘chirilsinmi?')) {
       NgoApi.del('/commission/protocols/' + selectedId + '/candidates/' + removeId).then(function () {
         toast('Nomzod o‘chirildi.');
         window.selectProtocol(selectedId);
@@ -1002,7 +1002,7 @@
       document.head.appendChild(s);
     }).catch(function (err) {
       frame.classList.remove('is-loaded');
-      frame.textContent = errText(err, 'OnlyOffice sozlanmagan yoki protokol tanlanmagan.');
+      frame.textContent = errText(err, 'OnlyOffice sozlanmagan yoki bayonnoma tanlanmagan.');
     });
   });
   document.getElementById('sourceDocxForm').addEventListener('submit', function (e) {
@@ -1051,7 +1051,7 @@
   var protocolModal = document.getElementById('protocolModal');
   function closeProtocolModal() { protocolModal.setAttribute('aria-hidden', 'true'); setText('protocolError', ''); setText('protocolStatus', ''); }
   document.getElementById('newProtocolBtn').addEventListener('click', function () {
-    if (!canManage()) { toast('Yangi protokol yaratish huquqi yo‘q.', 'warning'); return; }
+    if (!canManage()) { toast('Yangi bayonnoma yaratish huquqi yo‘q.', 'warning'); return; }
     document.getElementById('protocolNumber').value = '';
     document.getElementById('protocolDate').value = new Date().toISOString().slice(0, 10);
     document.getElementById('protocolTitle').value = '';
@@ -1066,20 +1066,20 @@
     var btn = document.getElementById('protocolSubmit');
     var number = document.getElementById('protocolNumber').value.trim();
     if (!number) { setText('protocolError', 'Bayonnoma raqamini kiriting.'); return; }
-    if (!setButtonPending(btn, true, 'Protokol yaratilmoqda, iltimos kuting...')) return;
+    if (!setButtonPending(btn, true, 'Bayonnoma yaratilmoqda, iltimos kuting...')) return;
     setText('protocolError', '');
-    setText('protocolStatus', 'Protokol yaratilmoqda, iltimos kuting...');
+    setText('protocolStatus', 'Bayonnoma yaratilmoqda, iltimos kuting...');
     NgoApi.post('/commission/protocols', {
       number: number,
       meeting_date: document.getElementById('protocolDate').value,
       title: document.getElementById('protocolTitle').value
     }, { timeout: COMMISSION_DOCUMENT_TIMEOUT_MS }).then(function (res) {
       closeProtocolModal();
-      toast('Protokol yaratildi.');
+      toast('Bayonnoma yaratildi.');
       load();
       var id = res && (res.id || (res.protocol && res.protocol.id));
       if (id) setTimeout(function () { window.selectProtocol(parseInt(id, 10)); }, 300);
-    }).catch(function (err) { setText('protocolError', errText(err, 'Protokol yaratilmadi.')); })
+    }).catch(function (err) { setText('protocolError', errText(err, 'Bayonnoma yaratilmadi.')); })
       .then(function () { setButtonPending(btn, false); setText('protocolStatus', ''); });
   });
   function renderCandidateResults(items) {
@@ -1095,7 +1095,7 @@
     }).join('');
   }
   function searchCandidates() {
-    if (!selectedId) { toast('Avval draft protokolni tanlang.'); return; }
+    if (!selectedId) { toast('Avval draft holatidagi bayonnomani tanlang.'); return; }
     var q = document.getElementById('candidateSearchInput').value || '';
     document.getElementById('candidateResults').innerHTML = '<div class="candidate-option"><span></span><div><strong>Yuklanmoqda...</strong></div></div>';
     NgoApi.get('/commission/murojaats?q=' + encodeURIComponent(q) + '&limit=50').then(function (res) {
@@ -1165,7 +1165,7 @@
       setText('signatureSubmit', 'Yuborish');
     }
     clearSignature();
-    setText('signatureProtocolText', 'Tanlangan protokol: ' + (selectedProtocol && selectedProtocol.number ? selectedProtocol.number : '#' + selectedId));
+    setText('signatureProtocolText', 'Tanlangan bayonnoma: ' + (selectedProtocol && selectedProtocol.number ? selectedProtocol.number : '#' + selectedId));
     setText('signatureError', '');
     sigModal.setAttribute('aria-hidden', 'false');
   }
