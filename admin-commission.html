@@ -290,7 +290,7 @@
             </label>
             <button type="submit" class="btn btn--primary" id="memberSubmit"><i class="ph ph-user-plus" aria-hidden="true"></i> Qo‘shish</button>
           </form>
-          <p class="signature-hint" style="margin-top:10px;">Faqat mavjud va faol komissiya hisobini email orqali qo‘shish mumkin.</p>
+          <p class="signature-hint" style="margin-top:10px;">Faqat mavjud komissiya hisobini email orqali qo‘shish mumkin. Tarkibdan chiqarilgan foydalanuvchi tizimga kira olmaydi.</p>
           <p class="va-error" id="memberError" role="alert" style="color:var(--error-600);margin:8px 0 0;"></p>
         </div>
       </section>
@@ -1230,7 +1230,7 @@
       if (!confirm('Bu a’zo komissiya tarkibidan chiqarilsinmi?')) return;
       if (!setButtonPending(remove, true, 'Olib tashlanmoqda...')) return;
       NgoApi.del('/commission/members/' + encodeURIComponent(remove.getAttribute('data-member-remove'))).then(function () {
-        toast('A’zo komissiya tarkibidan chiqarildi.');
+        toast('A’zo tarkibdan chiqarildi va uning hisobi bloklandi.');
         return loadMembers();
       }).catch(function (err) {
         setText('memberError', errText(err, 'A’zoni olib tashlab bo‘lmadi.'));
