@@ -796,7 +796,7 @@
     renderGoogleDocTools();
     renderSourceDocTools();
     renderDocumentSummary();
-    NgoApi.get('/commission/protocols/' + id).then(function (res) {
+    return NgoApi.get('/commission/protocols/' + id).then(function (res) {
       var protocol = res.protocol || p;
       setCurrentRole(res.my_role);
       currentCandidates = res.candidates || [];
@@ -824,10 +824,12 @@
       }
       renderWorkflowActions();
       renderSignState(state[1]);
+      return true;
     }).catch(function (err) {
       renderVotePanel(currentCandidates, tallyData);
       renderSignState(null);
       if (err && err.status !== 403) toast(errText(err, 'Bayonnoma maʼlumotlarini yuklab bo‘lmadi.'));
+      return false;
     });
   };
   function roleLabel(role) {
@@ -873,10 +875,11 @@
       renderMembers(res.items || []);
     }).catch(function (err) {
       if (box) box.innerHTML = '<div role="alert" style="color:var(--error-600)">' + esc(errText(err, 'Komissiya tarkibini yuklab bo‘lmadi.')) + '</div>';
+      throw err;
     });
   }
   function load() {
-    NgoApi.get('/commission/dashboard').then(function (dash) {
+    return NgoApi.get('/commission/dashboard').then(function (dash) {
       setText('commissionName', dash.commission && dash.commission.name ? dash.commission.name : '—');
       setCurrentRole(dash.me && dash.me.role ? dash.me.role : currentRole);
       setText('quorumText', dash.commission && dash.commission.quorum_pct ? dash.commission.quorum_pct + '%' : '—');
@@ -901,9 +904,12 @@
         renderDocumentSummary();
         if (!selectedId) setWorkspaceVisible(false);
       });
+    }).then(function () {
+      return true;
     }).catch(function (err) {
       var list = document.getElementById('protocolRows');
       if (list && currentView !== 'members') list.innerHTML = '<div role="alert" style="color:var(--error-600)">' + esc(errText(err, 'Komissiya ma’lumotlarini yuklab bo‘lmadi.')) + '</div>';
+      return false;
     });
   }
   document.getElementById('protocolRows').addEventListener('click', function (e) {
@@ -931,9 +937,26 @@
     var card = e.target.closest && e.target.closest('[data-protocol-id]');
     if (card) { e.preventDefault(); window.selectProtocol(parseInt(card.getAttribute('data-protocol-id'), 10)); }
   });
-  function reloadCurrent() {
-    load();
-    if (selectedId) setTimeout(function () { window.selectProtocol(selectedId); }, 300);
+  function reloadCurrent(triggerButton, notify) {
+    var id = selectedId;
+    if (triggerButton && !setButtonPending(triggerButton, true, 'Yangilanmoqda...')) return Promise.resolve(false);
+    return load().then(function (loaded) {
+      if (!loaded) return false;
+      if (!id || currentView === 'members') return true;
+      var stillVisible = protocols.some(function (p) { return parseInt(p.id, 10) === parseInt(id, 10); });
+      if (!stillVisible) {
+        selectedId = null;
+        selectedProtocol = null;
+        setWorkspaceVisible(false);
+        return true;
+      }
+      return window.selectProtocol(id);
+    }).then(function (refreshed) {
+      if (notify) toast(refreshed ? 'Ma’lumotlar yangilandi.' : 'Ma’lumotlarni yangilab bo‘lmadi.', refreshed ? undefined : 'error');
+      return refreshed;
+    }).finally(function () {
+      if (triggerButton && triggerButton.isConnected) setButtonPending(triggerButton, false);
+    });
   }
   function updateStatus(status, triggerButton) {
     if (!selectedId) return Promise.resolve();
@@ -949,7 +972,9 @@
       toast(msg, 'error');
     });
   }
-  document.getElementById('refreshCommission').addEventListener('click', load);
+  document.getElementById('refreshCommission').addEventListener('click', function () {
+    reloadCurrent(this, true);
+  });
   document.getElementById('commissionRefreshLogo').addEventListener('click', function () {
     window.location.reload();
   });
