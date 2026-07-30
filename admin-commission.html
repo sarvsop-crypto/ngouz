@@ -200,7 +200,7 @@
             <div class="sign-item"><span>A’zolar</span><strong>Kutilmoqda</strong></div>
           </div>
           <div class="sign-actions">
-            <button type="button" class="btn btn--primary" id="manualSignBtn" disabled><i class="ph ph-signature" aria-hidden="true"></i> Ovoz va imzoni yuborish</button>
+            <button type="button" class="btn btn--primary" id="manualSignBtn" hidden disabled><i class="ph ph-signature" aria-hidden="true"></i> Ovoz va imzoni yuborish</button>
             <button type="button" class="btn btn--secondary" id="finalPdfBtn" disabled><i class="ph ph-download-simple" aria-hidden="true"></i> Yakuniy PDF</button>
             <span class="text-dim" id="manualSignHint">Barcha nomzodlar bo‘yicha variantni tanlang.</span>
           </div>
@@ -712,19 +712,21 @@
       renderGoogleDocTools();
       renderSourceDocTools();
       renderDocumentSummary();
-      return NgoApi.get('/commission/protocols/' + id + '/tally').catch(function () { return null; });
-    }).then(function (tally) {
-      tallyData = tally;
-      if (tally && tally.my_role) setCurrentRole(tally.my_role);
-      if (tally && tally.candidates) {
-        tally.candidates.forEach(function (item) {
+      return Promise.all([
+        NgoApi.get('/commission/protocols/' + id + '/tally').catch(function () { return null; }),
+        NgoApi.get('/commission/protocols/' + id + '/ballot-status')
+      ]);
+    }).then(function (state) {
+      tallyData = state[0];
+      if (tallyData && tallyData.my_role) setCurrentRole(tallyData.my_role);
+      if (tallyData && tallyData.candidates) {
+        tallyData.candidates.forEach(function (item) {
           if (item.my_vote) pendingVotes[parseInt(item.candidate_id, 10)] = item.my_vote;
         });
       }
       renderWorkflowActions();
-      renderVotePanel(currentCandidates, tally);
-      return NgoApi.get('/commission/protocols/' + id + '/ballot-status');
-    }).then(renderSignState).catch(function (err) {
+      renderSignState(state[1]);
+    }).catch(function (err) {
       renderVotePanel(currentCandidates, tallyData);
       renderSignState(null);
       if (err && err.status !== 403) toast(errText(err, 'Protokol maʼlumotlarini yuklab bo‘lmadi.'));
@@ -786,13 +788,24 @@
     load();
     if (selectedId) setTimeout(function () { window.selectProtocol(selectedId); }, 300);
   }
-  function updateStatus(status) {
+  function updateStatus(status, triggerButton) {
     if (!selectedId) return Promise.resolve();
     setText('workflowError', '');
+    var originalHtml = triggerButton ? triggerButton.innerHTML : '';
+    if (triggerButton) {
+      triggerButton.disabled = true;
+      triggerButton.setAttribute('aria-busy', 'true');
+      triggerButton.textContent = 'Jarayon boshlanmoqda...';
+    }
     return NgoApi.patch('/commission/protocols/' + selectedId, { status: status }, { timeout: COMMISSION_DOCUMENT_TIMEOUT_MS }).then(function () {
       toast('Holat yangilandi.');
       reloadCurrent();
     }).catch(function (err) {
+      if (triggerButton && triggerButton.isConnected) {
+        triggerButton.disabled = false;
+        triggerButton.removeAttribute('aria-busy');
+        triggerButton.innerHTML = originalHtml;
+      }
       var msg = errText(err, 'Holatni o‘zgartirib bo‘lmadi.');
       setText('workflowError', msg);
       toast(msg, 'error');
@@ -806,7 +819,7 @@
     var actionBtn = e.target.closest && e.target.closest('[data-workflow]');
     var action = actionBtn && actionBtn.getAttribute('data-workflow');
     if (!action) return;
-    if (action === 'startVoting') updateStatus('voting');
+    if (action === 'startVoting') updateStatus('voting', actionBtn);
     if (action === 'archive' && confirm('Protokol arxivlansinmi?')) updateStatus('archived');
   });
   document.getElementById('votePanel').addEventListener('click', function (e) {
