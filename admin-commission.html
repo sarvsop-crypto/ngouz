@@ -25,6 +25,7 @@
   <style>
     .commission-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 18px; }
     .protocol-layout { display: grid; grid-template-columns: minmax(340px, 420px) minmax(0, 1fr); gap: 16px; margin-top: 18px; align-items: start; }
+    [hidden] { display: none !important; }
     .protocol-layout[hidden], .protocol-panel[hidden] { display: none !important; }
     .protocol-layout > .protocol-panel:last-child { grid-column: 1 / -1; }
     .protocol-toolbar { grid-column: 1 / -1; display: flex; justify-content: flex-end; }
@@ -47,9 +48,15 @@
     .vote-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; margin-top: 8px; }
     .vote-actions .btn { padding: 7px 9px; min-height: 32px; }
     .vote-actions .is-selected { outline: 2px solid var(--primary-500); outline-offset: 1px; }
+    .vote-actions .is-selected[disabled] { opacity: 1; cursor: default; }
     .sign-list { display: grid; gap: 10px; margin-top: 12px; }
     .sign-item { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; }
     .sign-actions { display: grid; gap: 10px; margin-top: 14px; }
+    .document-summary { display: grid; gap: 10px; margin-top: 14px; }
+    .document-summary__row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 12px; border: 1px solid var(--grey-100); border-radius: 10px; background: #fff; }
+    .document-summary__row strong { display: block; color: var(--grey-900); font-size: 14px; }
+    .document-summary__row span { display: block; margin-top: 3px; color: var(--grey-500); font-size: 12px; line-height: 1.35; }
+    .document-summary__row .btn { min-width: 118px; justify-content: center; white-space: normal; }
     .workflow-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
     .workflow-actions .btn[disabled] { opacity: .62; cursor: not-allowed; }
     .candidate-tools { min-width: 0; display: grid; gap: 10px; margin-top: 14px; }
@@ -66,9 +73,13 @@
     .protocol-form { display: grid; gap: 12px; }
     .protocol-form label { display: grid; gap: 6px; font-weight: 700; color: var(--grey-700); font-size: 13px; }
     .protocol-list { display: grid; gap: 10px; padding: 16px; }
+    .protocol-list__item { min-width: 0; }
     .protocol-card { border: 1px solid var(--grey-100); border-radius: 10px; background: #fff; padding: 14px; cursor: pointer; transition: border-color .15s ease, box-shadow .15s ease; }
     .protocol-card:hover, .protocol-card:focus { border-color: var(--primary-300); box-shadow: 0 8px 24px rgba(15, 23, 42, .08); outline: none; }
     .protocol-card.is-active { border-color: var(--primary-500); box-shadow: 0 0 0 2px rgba(15, 106, 87, .12); }
+    .protocol-list__item.is-expanded .protocol-card { border-radius: 10px 10px 0 0; box-shadow: none; }
+    .protocol-card__documents { margin-top: -1px; padding: 0 14px 14px; border: 1px solid var(--primary-500); border-top: 0; border-radius: 0 0 10px 10px; background: #fff; }
+    .protocol-card__documents .document-summary__row { padding: 12px 0; border: 0; border-top: 1px solid var(--grey-100); border-radius: 0; }
     .protocol-card__top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
     .protocol-card__title { min-width: 0; display: grid; gap: 3px; }
     .protocol-card__title strong { color: var(--grey-900); overflow-wrap: anywhere; line-height: 1.35; }
@@ -95,12 +106,40 @@
       .protocol-layout > .protocol-panel:last-child { grid-column: auto; }
     }
     @media (max-width: 640px) {
+      .layout,
+      .main {
+        width: 100%;
+        max-width: 100vw;
+        min-width: 0;
+        overflow-x: hidden;
+      }
+      .main {
+        padding-inline: 12px;
+      }
+      .main__header,
+      .topbar,
+      .table-section,
+      .protocol-panel,
+      .protocol-layout,
+      .commission-grid,
+      .protocol-list,
+      .protocol-card,
+      .protocol-card__title,
+      .protocol-card__meta,
+      .workflow-actions,
+      .sign-actions {
+        min-width: 0;
+      }
+      .main__btns, .workflow-actions, .sign-actions { width: 100%; }
+      .main__btns .btn, .workflow-actions .btn, .sign-actions .btn { width: 100%; white-space: normal; }
       .protocol-card__top { display: grid; }
       .protocol-card__meta { grid-template-columns: 1fr; }
       .candidate-search { display: grid; }
       .vote-row { grid-template-columns: 1fr; }
       .vote-actions { justify-content: stretch; }
       .vote-actions .btn { width: 100%; }
+      .document-summary__row { grid-template-columns: 1fr; }
+      .document-summary__row .btn { width: 100%; }
     }
   </style>
 </head>
@@ -138,7 +177,7 @@
       </div>
       <div class="main__btns">
         <button type="button" class="btn btn--secondary" id="refreshCommission"><i class="ph ph-arrow-clockwise" aria-hidden="true"></i> Yangilash</button>
-        <button type="button" class="btn btn--primary" id="newProtocolBtn"><i class="ph ph-plus" aria-hidden="true"></i> Yangi protokol</button>
+        <button type="button" class="btn btn--primary" id="newProtocolBtn" hidden disabled><i class="ph ph-plus" aria-hidden="true"></i> Yangi protokol</button>
       </div>
     </div>
 
@@ -148,24 +187,23 @@
         <div class="protocol-list" id="protocolRows" aria-live="polite" aria-busy="true"><div class="text-dim" role="status">Yuklanmoqda...</div></div>
       </section>
       <section class="protocol-panel" id="signPanel" aria-labelledby="signTitle" hidden>
-        <div class="protocol-panel__head"><h2 id="signTitle">Imzolash holati</h2><span class="badge badge--warning">Imzolashga tayyor</span></div>
+        <div class="protocol-panel__head"><h2 id="signTitle">Ovoz va imzo holati</h2><span class="badge badge--warning">Amal kutilmoqda</span></div>
         <div class="protocol-panel__body">
           <div class="meta-list">
-            <div><span>Kvorum</span><strong id="quorumText">—</strong></div>
             <div><span>QR tekshiruv</span><strong id="qrText">Protokol imzolangach yaratiladi</strong></div>
           </div>
           <div class="workflow-actions" id="workflowActions" aria-live="polite"></div>
+          <p class="va-error" id="workflowError" role="alert" style="color:var(--error-600);margin:8px 0 0;"></p>
           <div class="sign-list" id="signList">
             <div class="sign-item"><span>Rais</span><strong>Kutilmoqda</strong></div>
             <div class="sign-item"><span>Kotib</span><strong>Kutilmoqda</strong></div>
             <div class="sign-item"><span>A’zolar</span><strong>Kutilmoqda</strong></div>
           </div>
           <div class="sign-actions">
-            <button type="button" class="btn btn--primary" id="manualSignBtn" disabled><i class="ph ph-signature" aria-hidden="true"></i> Qo'lda imzolash</button>
+            <button type="button" class="btn btn--primary" id="manualSignBtn" disabled><i class="ph ph-signature" aria-hidden="true"></i> Ovoz va imzoni yuborish</button>
             <button type="button" class="btn btn--secondary" id="finalPdfBtn" disabled><i class="ph ph-download-simple" aria-hidden="true"></i> Yakuniy PDF</button>
             <span class="text-dim" id="manualSignHint">Imzolash uchun signing holatidagi protokolni tanlang.</span>
           </div>
-          <div class="verify-card"><strong>Public verification</strong><br><span id="verifyLinkText">QR sahifada Valid / Invalid, protokol raqami, komissiya, sana, imzolaganlar va vaqt ko‘rsatiladi.</span></div>
         </div>
       </section>
     </div>
@@ -197,7 +235,7 @@
               <input type="file" id="sourceDocxInput" accept=".docx,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
             </label>
             <button type="submit" class="btn btn--secondary btn--sm" id="sourceDocxSubmit">Word hujjatini yuklash</button>
-            <button type="button" class="btn btn--secondary btn--sm" id="sourceDocxDownload" disabled>Yuklangan Word hujjatini olish</button>
+            <button type="button" class="btn btn--secondary btn--sm" id="sourceDocxDownload" hidden disabled>Yuklangan Word hujjatini olish</button>
             <p class="va-error" id="sourceDocxError" role="alert" style="color:var(--error-600);margin:0;"></p>
           </form>
           <div class="candidate-tools" id="candidateTools" hidden>
@@ -247,14 +285,14 @@
 </div>
 <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
 <div class="commission-modal" id="protocolModal" aria-hidden="true">
-  <form class="signature-card protocol-form" id="protocolForm" role="dialog" aria-modal="true" aria-labelledby="protocolModalTitle">
+  <form class="signature-card protocol-form" id="protocolForm" role="dialog" aria-modal="true" aria-labelledby="protocolModalTitle" novalidate>
     <div class="signature-card__head">
       <h2 id="protocolModalTitle">Yangi protokol</h2>
       <button type="button" class="btn btn--secondary btn--sm" id="protocolClose" aria-label="Yopish">×</button>
     </div>
     <div class="signature-card__body">
       <label>Bayonnoma raqami
-        <input type="text" id="protocolNumber" required placeholder="Masalan: TOP-500-2026-01">
+        <input type="text" id="protocolNumber" placeholder="Masalan: TOP-500-2026-01">
       </label>
       <label>Yig'ilish sanasi
         <input type="date" id="protocolDate">
@@ -263,6 +301,7 @@
         <input type="text" id="protocolTitle" placeholder="Ixtiyoriy">
       </label>
       <p class="signature-hint">Protokol yaratilgach draft holatida ochiladi. Nomzodlarni qo'shib, keyin ovoz berishga yuboring.</p>
+      <p class="signature-hint" id="protocolStatus" role="status" aria-live="polite"></p>
       <p class="va-error" id="protocolError" role="alert" style="color:var(--error-600);margin:0;"></p>
     </div>
     <div class="signature-card__foot">
@@ -287,12 +326,15 @@
   var signData = null;
   var tallyData = null;
   var currentRole = null;
+  var pendingVotes = {};
+  var myBallotSubmitted = false;
   var selectedCandidateIds = {};
   var currentCandidates = [];
   var onlyOfficeEditor = null;
   var hasSignatureStroke = false;
   var advancedOpen = false;
   var COMMISSION_DOCUMENT_TIMEOUT_MS = 90000;
+  var MANAGE_ROLES = { chair: true, secretary: true };
   function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
   function setText(id, v) { var el = document.getElementById(id); if (el) el.textContent = v; }
   var toastTimer = null;
@@ -305,33 +347,77 @@
     toastTimer = setTimeout(function () { el.classList.remove('show'); }, 3500);
   }
   function errText(err, fallback) { return (err && err.message) || fallback || 'Xatolik yuz berdi.'; }
-  function canManage() { return currentRole === 'chair' || currentRole === 'secretary'; }
-  function isChair() { return currentRole === 'chair'; }
-  function downloadPrivate(path, filename) {
-    return fetch(NgoApi.base + path, {
-      headers: { 'Authorization': 'Bearer ' + NgoApi.getToken() },
-      credentials: 'omit'
-    }).then(function (res) {
-      if (!res.ok) return res.json().catch(function () { return {}; }).then(function (data) {
-        throw new Error(data.message || ('HTTP ' + res.status));
+  function readStoredAdminRole() {
+    try {
+      var raw = localStorage.getItem('ngo_api_user') || sessionStorage.getItem('ngo_api_user') || '';
+      var user = raw ? JSON.parse(raw) : null;
+      return user && user.role ? user.role : '';
+    } catch (e) {
+      return '';
+    }
+  }
+  function normalizeRole(role) {
+    role = String(role || '').trim();
+    return role || readStoredAdminRole() || '';
+  }
+  function canManage() { return !!MANAGE_ROLES[normalizeRole(currentRole)]; }
+  function isChair() {
+    var role = normalizeRole(currentRole);
+    return role === 'chair';
+  }
+  function setCurrentRole(role) {
+    currentRole = normalizeRole(role);
+    setText('commissionRole', currentRole || '—');
+    renderCreateAction();
+    renderStageChrome();
+    renderWorkflowActions();
+    renderCandidateTools();
+    renderGoogleDocTools();
+    renderSourceDocTools();
+    renderDocumentSummary();
+  }
+  function renderCreateAction() {
+    var btn = document.getElementById('newProtocolBtn');
+    if (!btn) return;
+    var ready = !!normalizeRole(currentRole);
+    var allowed = canManage();
+    btn.hidden = !ready;
+    btn.disabled = !ready || !allowed;
+    btn.title = !ready ? 'Komissiya roli yuklanmoqda.'
+      : allowed ? 'Yangi protokol yaratish'
+      : 'Yangi protokol yaratish huquqi yo‘q.';
+    btn.setAttribute('aria-disabled', btn.disabled ? 'true' : 'false');
+  }
+  function downloadWithTicket(type) {
+    if (!selectedId) return Promise.resolve();
+    toast('Fayl tayyorlanmoqda...');
+    return NgoApi.post('/commission/protocols/' + selectedId + '/download-ticket', { type: type }).then(function (res) {
+      if (!res || !res.url) throw new Error('Yuklab olish havolasi olinmadi.');
+      return fetch(NgoApi.base + res.url, { credentials: 'omit' });
+    }).then(function (response) {
+      if (!response.ok) throw new Error('Faylni serverdan olishda xatolik yuz berdi.');
+      var disposition = response.headers.get('Content-Disposition') || '';
+      var filenameMatch = disposition.match(/filename="([^"]+)"/i);
+      var filename = filenameMatch ? filenameMatch[1] : (type === 'final_pdf' ? 'bayonnoma.pdf' : 'bayonnoma.docx');
+      return response.blob().then(function (blob) {
+        var objectUrl = URL.createObjectURL(blob);
+        var link = document.createElement('a');
+        link.href = objectUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        setTimeout(function () { URL.revokeObjectURL(objectUrl); }, 1000);
       });
-      return res.blob();
-    }).then(function (blob) {
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement('a');
-      a.href = url;
-      a.download = filename || 'download';
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    }).then(function () {
+      toast('Brauzer yuklab olishni boshladi.');
     });
   }
   function statusLabel(status) {
     return {
       draft: 'Draft',
-      voting: 'Ovoz berish',
-      decided: 'Qaror qabul qilingan',
+      voting: 'Ovoz va imzo yuborish',
+      decided: 'Yakuniy hujjat tayyorlanmoqda',
       signing: 'Imzolash',
       signed: 'Imzolangan',
       archived: 'Arxiv'
@@ -362,15 +448,17 @@
     list.innerHTML = protocols.map(function (p) {
       var id = parseInt(p.id, 10) || 0;
       var active = selectedId && parseInt(selectedId, 10) === id ? ' is-active' : '';
-      return '<article class="protocol-card' + active + '" role="button" tabindex="0" data-protocol-id="' + id + '">' +
+      return '<div class="protocol-list__item' + (active ? ' is-expanded' : '') + '"><article class="protocol-card' + active + '" role="button" tabindex="0" data-protocol-id="' + id + '">' +
         '<div class="protocol-card__top"><div class="protocol-card__title"><strong>' + esc(p.number || ('#' + id)) + '</strong><span>' + esc(p.title || 'TOP-500 komissiya bayonnomasi') + '</span></div>' +
         '<span class="badge badge--' + badge(p.status) + '">' + esc(statusLabel(p.status)) + '</span></div>' +
         '<div class="protocol-card__meta">' +
         '<div><span>Sana</span><strong>' + esc(p.meeting_date || '—') + '</strong></div>' +
-        '<div><span>Imzo</span><strong>' + esc(p.signature_count || 0) + ' / 8</strong></div>' +
+        '<div><span>Yuborilgan</span><strong>' + esc(p.signature_count || 0) + '</strong></div>' +
         '<div><span>Nomzodlar</span><strong>' + esc(p.candidate_count || 0) + '</strong></div>' +
         '<div><span>Oxirgi harakat</span><strong>' + esc((p.updated_at || p.created_at || '').slice(0, 16) || '—') + '</strong></div>' +
-        '</div></article>';
+        '</div></article>' +
+        (active ? '<div class="document-summary protocol-card__documents" id="documentSummary" aria-live="polite"></div>' : '') +
+        '</div>';
     }).join('');
     list.setAttribute('aria-busy', 'false');
   }
@@ -400,6 +488,12 @@
       btn.textContent = advancedOpen ? 'Qo‘shimcha sozlamalarni yashirish' : 'Qo‘shimcha sozlamalar';
     }
   }
+  function renderStageChrome() {
+    var advancedBtn = document.getElementById('advancedToggle');
+    var canUseDraftTools = !!(selectedProtocol && selectedProtocol.status === 'draft' && canManage());
+    if (advancedBtn) advancedBtn.hidden = !canUseDraftTools;
+    if (!canUseDraftTools && advancedOpen) setAdvancedVisible(false);
+  }
   function renderWorkflowActions() {
     var box = document.getElementById('workflowActions');
     if (!box) return;
@@ -412,20 +506,13 @@
     var html = '';
     if (canManage() && s === 'draft') {
       if (candidateCount > 0) {
-        html += '<button type="button" class="btn btn--primary btn--sm" data-workflow="startVoting">Ovoz berishga yuborish</button>';
+        html += '<button type="button" class="btn btn--primary btn--sm" data-workflow="startVoting">Jarayonni boshlash</button>';
       } else {
-        html += '<button type="button" class="btn btn--secondary btn--sm" disabled>Avval nomzod qo‘shing</button>';
+        html += '<span class="text-dim">Avval nomzod qo‘shing.</span>';
       }
     }
-    if (isChair() && s === 'voting') {
-      html += '<button type="button" class="btn btn--primary btn--sm" data-workflow="finalize">Ovozlarni yakunlash</button>';
-    }
-    if (canManage() && s === 'decided') {
-      html += '<button type="button" class="btn btn--primary btn--sm" data-workflow="startSigning">Imzolashga yuborish</button>';
-    }
-    if (canManage() && s !== 'archived' && s !== 'signed') {
-      html += '<button type="button" class="btn btn--secondary btn--sm" data-workflow="archive">Arxivlash</button>';
-    }
+    if (s === 'voting') html += '<span class="text-dim">Har bir aʼzo ovoz va imzosini bir marta yuboradi.</span>';
+    if (s === 'decided') html += '<span class="text-dim">Natija hisoblandi. Yakuniy hujjat tayyorlanmoqda.</span>';
     box.innerHTML = html || '<span class="text-dim">Bu bosqichda qo‘shimcha boshqaruv amali yo‘q.</span>';
   }
   function renderCandidateTools() {
@@ -445,21 +532,70 @@
     setText('googleDocError', '');
     status.hidden = !selectedProtocol || !(hasAutoDoc || selectedProtocol.google_doc_url || selectedProtocol.google_doc_status);
     if (!status.hidden) {
-      var exported = selectedProtocol.google_doc_exported_at ? 'Eksport qilingan' : 'Draft';
+      var exported = selectedProtocol.google_doc_status === 'export_failed'
+        ? 'Eksportda xatolik, lekin Google Docs havolasi ochiladi'
+        : selectedProtocol.google_doc_exported_at ? 'Eksport qilingan' : 'Draft';
       status.innerHTML = '<strong>Google Docs</strong><br><span>' + esc(hasAutoDoc ? 'Tayyor · ' + exported : 'Havola biriktirilgan') + '</span>';
     }
+  }
+  function renderDocumentSummary() {
+    var box = document.getElementById('documentSummary');
+    if (!box) return;
+    if (!selectedProtocol) {
+      box.hidden = true;
+      box.innerHTML = '';
+      return;
+    }
+    box.hidden = false;
+    var googleUrl = selectedProtocol.google_doc_url || '';
+    var hasWord = !!selectedProtocol.source_docx_path;
+    var signed = selectedProtocol.status === 'signed';
+    var qr = signData && signData.qr_token ? signData.qr_token : selectedProtocol.qr_token;
+    var verifyUrl = signData && signData.verify_url ? signData.verify_url : (qr ? 'verify-protocol?token=' + encodeURIComponent(qr) : '');
+    var pdfAction = '';
+    if (signed) {
+      pdfAction = '<button type="button" class="btn btn--secondary btn--sm" data-document-action="final-pdf"><i class="ph ph-download-simple" aria-hidden="true"></i> Yuklab olish</button>';
+    } else {
+      pdfAction = '<span class="text-dim">Kutilmoqda</span>';
+    }
+    box.innerHTML =
+      '<div class="document-summary__row"><div><strong>Google Docs</strong><span>' +
+      esc(googleUrl ? 'Ishchi hujjat. Imzolash tugaguncha ko‘rish/tahrirlash uchun shu ochiladi.' : 'Bu protokolga Google Docs havolasi biriktirilmagan.') +
+      '</span></div>' +
+      (googleUrl ? '<button type="button" class="btn btn--secondary btn--sm" data-document-action="google-doc"><i class="ph ph-file-doc" aria-hidden="true"></i> Ochish</button>' : '<span class="text-dim">Yo‘q</span>') +
+      '</div>' +
+      '<div class="document-summary__row"><div><strong>Yakuniy PDF</strong><span>' +
+      esc(signed ? 'Yetarli imzolangan ovozlar yig‘ilgan. PDF yuklab olishga tayyor.' : 'Yetarli imzolangan ovozlar yig‘ilganda avtomatik yaratiladi.') +
+      '</span></div>' + pdfAction + '</div>' +
+      '<div class="document-summary__row"><div><strong>QR tekshiruv</strong><span>' +
+      esc(qr ? 'Public verification sahifasi tayyor.' : 'Protokol to‘liq imzolangach yaratiladi.') +
+      '</span></div>' +
+      (verifyUrl ? '<a class="btn btn--secondary btn--sm" href="' + esc(verifyUrl) + '" target="_blank" rel="noopener"><i class="ph ph-qr-code" aria-hidden="true"></i> Ochish</a>' : '<span class="text-dim">Kutilmoqda</span>') +
+      '</div>' +
+      (canManage() || hasWord ? '<div class="document-summary__row"><div><strong>Word hujjati</strong><span>' +
+      esc(hasWord ? 'Yuklangan Word hujjati saqlangan.' : 'Word faqat draft bosqichida rais/kotib tomonidan yuklanadi.') +
+      '</span></div>' +
+      (hasWord && canManage() ? '<button type="button" class="btn btn--secondary btn--sm" data-document-action="source-docx"><i class="ph ph-download-simple" aria-hidden="true"></i> Yuklab olish</button>' : '<span class="text-dim">' + esc(hasWord ? 'Rais/kotib' : 'Yo‘q') + '</span>') +
+      '</div>' : '');
   }
   function renderSourceDocTools() {
     var form = document.getElementById('sourceDocxForm');
     var download = document.getElementById('sourceDocxDownload');
     if (!form || !download) return;
-    form.hidden = !selectedProtocol;
     var hasDoc = !!(selectedProtocol && selectedProtocol.source_docx_path);
     var editable = !!(selectedProtocol && selectedProtocol.status === 'draft' && canManage());
-    document.getElementById('sourceDocxInput').disabled = !editable;
-    document.getElementById('sourceDocxSubmit').disabled = !editable;
-    download.disabled = !hasDoc;
-    download.textContent = hasDoc ? 'Yuklangan Word hujjatini olish' : 'Word hujjati yuklanmagan';
+    var canUpload = editable && !hasDoc;
+    form.hidden = !selectedProtocol || !canManage() || (!canUpload && !hasDoc);
+    var uploadLabel = form.querySelector('label');
+    var input = document.getElementById('sourceDocxInput');
+    var submit = document.getElementById('sourceDocxSubmit');
+    if (uploadLabel) uploadLabel.hidden = !canUpload;
+    input.disabled = !canUpload;
+    submit.hidden = !canUpload;
+    submit.disabled = !canUpload;
+    download.hidden = !hasDoc;
+    download.disabled = !hasDoc || !canManage();
+    download.textContent = 'Yuklangan Word hujjatini olish';
     setText('sourceDocxError', '');
   }
   function renderSignState(data) {
@@ -468,37 +604,55 @@
     var btn = document.getElementById('manualSignBtn');
     var pdfBtn = document.getElementById('finalPdfBtn');
     var hint = document.getElementById('manualSignHint');
+    var actions = document.querySelector('.sign-actions');
     var myId = data && data.my_user_id;
     var mine = null;
     if (list && data && data.signers) {
       data.signers.forEach(function (s) { if (parseInt(s.user_id, 10) === parseInt(myId, 10)) mine = s; });
       list.innerHTML = data.signers.map(function (s) {
-        return '<div class="sign-item"><span>' + esc(s.name || 'Aʼzo') + ' <small class="text-dim">(' + esc(s.role || 'member') + ')</small></span><strong>' + (s.signed ? 'Imzolangan' : 'Kutilmoqda') + '</strong></div>';
+        return '<div class="sign-item"><span>' + esc(s.name || 'Aʼzo') + ' <small class="text-dim">(' + esc(s.role || 'member') + ')</small></span><strong>' + (s.signed ? 'Ovoz va imzo yuborilgan' : 'Kutilmoqda') + '</strong></div>';
       }).join('');
     }
-    var canSign = !!(selectedProtocol && selectedProtocol.status === 'signing' && mine && !mine.signed);
+    myBallotSubmitted = !!(mine && mine.signed);
+    var allVotesSelected = !!(currentCandidates.length && currentCandidates.every(function (c) {
+      return !!pendingVotes[parseInt(c.id, 10)];
+    }));
+    var canSubmitBallot = !!(selectedProtocol && selectedProtocol.status === 'voting' && mine && !mine.signed && allVotesSelected);
+    var canLegacySign = !!(selectedProtocol && selectedProtocol.status === 'signing' && mine && !mine.signed);
+    var canSign = canSubmitBallot || canLegacySign;
+    var showSubmit = !!(mine && !mine.signed && selectedProtocol && (selectedProtocol.status === 'voting' || selectedProtocol.status === 'signing'));
     if (btn) {
+      btn.hidden = !showSubmit;
       btn.disabled = !canSign;
-      btn.title = canSign ? 'Protokolni qo‘lda imzolash' : 'Imzolash faqat protokol signing holatiga o‘tganda ishlaydi';
+      btn.innerHTML = canLegacySign
+        ? '<i class="ph ph-signature" aria-hidden="true"></i> Imzolash'
+        : '<i class="ph ph-signature" aria-hidden="true"></i> Ovoz va imzoni yuborish';
+      btn.title = canSubmitBallot ? 'Tanlangan ovozlarni imzo bilan yuborish' : (canLegacySign ? 'Protokolni imzolash' : 'Avval barcha nomzodlar bo‘yicha ovoz bering');
     }
     if (hint) {
-      hint.textContent = !selectedProtocol ? 'Imzolash uchun signing holatidagi protokolni tanlang.'
-        : selectedProtocol.status !== 'signing' ? 'Bu protokol hozir imzolash bosqichida emas.'
-        : mine && mine.signed ? 'Siz bu protokolni allaqachon imzolagansiz.'
-        : canSign ? 'Imzo chizib saqlashingiz mumkin.' : 'Siz imzolovchilar ro‘yxatida topilmadingiz.';
+      hint.textContent = !selectedProtocol ? 'Protokolni tanlang.'
+        : mine && mine.signed ? 'Siz ovoz va imzoni yuborgansiz. Boshqa amal kerak emas.'
+        : selectedProtocol.status === 'voting' && !allVotesSelected ? 'Barcha nomzodlar bo‘yicha variantni tanlang.'
+        : canSubmitBallot ? 'Tayyor. Imzo chizib, ovozlarni yuboring.'
+        : canLegacySign ? 'Ushbu eski protokolni imzolashingiz mumkin.'
+        : selectedProtocol.status === 'signed' ? 'Protokol yakunlangan.'
+        : 'Hozir sizdan amal talab qilinmaydi.';
     }
-    if (pdfBtn) pdfBtn.disabled = !(selectedProtocol && selectedProtocol.status === 'signed');
+    var canDownloadPdf = !!(selectedProtocol && selectedProtocol.status === 'signed');
+    if (pdfBtn) {
+      pdfBtn.hidden = !canDownloadPdf;
+      pdfBtn.disabled = !canDownloadPdf;
+    }
+    if (actions) actions.hidden = !(showSubmit || canDownloadPdf || myBallotSubmitted || (selectedProtocol && selectedProtocol.status === 'signing'));
     if (data && data.qr_token) {
       setText('qrText', 'QR token: ' + data.qr_token);
-      var verify = data.verify_url || ('verify-protocol?token=' + encodeURIComponent(data.qr_token));
-      document.getElementById('verifyLinkText').innerHTML = '<a href="' + esc(verify) + '" target="_blank" rel="noopener">Tekshiruv sahifasini ochish</a>';
     } else if (selectedProtocol && selectedProtocol.status === 'signed') {
       setText('qrText', 'QR yaratilgan. Public verification orqali tekshiriladi.');
-      setText('verifyLinkText', 'QR sahifada Valid / Invalid, protokol raqami, komissiya, sana, imzolaganlar va vaqt ko‘rsatiladi.');
     } else {
       setText('qrText', 'Protokol imzolangach yaratiladi');
-      setText('verifyLinkText', 'QR sahifada Valid / Invalid, protokol raqami, komissiya, sana, imzolaganlar va vaqt ko‘rsatiladi.');
     }
+    renderVotePanel(currentCandidates, tallyData);
+    renderDocumentSummary();
   }
   function renderVotePanel(candidates, tally) {
     var votePanel = document.getElementById('votePanel');
@@ -515,53 +669,65 @@
     votePanel.innerHTML = candidates.map(function (c) {
       var cid = parseInt(c.id, 10);
       var t = byCandidate[cid] || {};
-      var counts = t.tally || {};
-      var locked = !(selectedProtocol && selectedProtocol.status === 'voting');
+      var locked = !(selectedProtocol && selectedProtocol.status === 'voting') || myBallotSubmitted;
       var actions = '';
       if (!locked) {
         ['recommend', 'reject', 'waitlist', 'abstain'].forEach(function (v) {
-          actions += '<button type="button" class="btn btn--secondary btn--sm ' + (t.my_vote === v ? 'is-selected' : '') + '" data-vote="' + v + '" data-candidate="' + cid + '">' + esc(decisionLabel(v)) + '</button>';
+          var selected = pendingVotes[cid] === v;
+          actions += '<button type="button" class="btn btn--secondary btn--sm ' + (selected ? 'is-selected' : '') + '" data-vote="' + v + '" data-candidate="' + cid + '" aria-pressed="' + (selected ? 'true' : 'false') + '" title="Variantni tanlash">' + esc(decisionLabel(v)) + (selected ? ' ✓' : '') + '</button>';
         });
+      } else if (myBallotSubmitted) {
+        actions = '<span class="text-dim">Ovoz va imzo yuborildi.</span>';
       }
       var remove = selectedProtocol && selectedProtocol.status === 'draft' && canManage()
         ? '<button type="button" class="btn btn--secondary btn--sm" data-remove-candidate="' + cid + '">O‘chirish</button>' : '';
       return '<div class="vote-row"><div><strong>' + esc(c.full_name || 'Nomzod') + '</strong><br>' +
         '<span class="text-dim">' + esc(c.nnt_name || c.organization_name || '') + (c.nnt_stir ? ' · STIR ' + esc(c.nnt_stir) : '') + '</span>' +
         '<div class="vote-actions">' + actions + remove + '</div></div>' +
-        '<div class="vote-counts">' +
-        '<span>' + esc(decisionLabel(t.final_decision || t.computed)) + '</span>' +
-        '<span>Yoqladi ' + esc(counts.recommend || 0) + '</span>' +
-        '<span>Rad ' + esc(counts.reject || 0) + '</span>' +
-        '<span>Kutish ' + esc(counts.waitlist || 0) + '</span>' +
-        '<span>Betaraf ' + esc(counts.abstain || 0) + '</span>' +
-        '<span>Kvorum ' + esc(t.voters || 0) + '/' + esc(tally && tally.quorum_needed || '—') + '</span>' +
-        '</div></div>';
+        '<div class="vote-counts"><span>' + esc(myBallotSubmitted ? 'Yuborilgan' : (pendingVotes[cid] ? decisionLabel(pendingVotes[cid]) : 'Tanlanmagan')) + '</span></div></div>';
     }).join('');
   }
   window.selectProtocol = function (id) {
     setWorkspaceVisible(true);
-    setAdvancedVisible(false);
     selectedId = id;
     var p = protocols.find(function (x) { return parseInt(x.id, 10) === id; }) || {};
     selectedProtocol = p;
+    signData = null;
+    pendingVotes = {};
+    myBallotSubmitted = false;
+    renderRows();
+    setAdvancedVisible(!!(p.status === 'draft' && canManage()));
     setText('selectedProtocol', p.number || ('#' + id));
+    renderStageChrome();
     renderWorkflowActions();
     renderCandidateTools();
     renderGoogleDocTools();
     renderSourceDocTools();
+    renderDocumentSummary();
     NgoApi.get('/commission/protocols/' + id).then(function (res) {
       var protocol = res.protocol || p;
+      setCurrentRole(res.my_role);
       currentCandidates = res.candidates || [];
       protocol.candidate_count = currentCandidates.length;
       selectedProtocol = protocol;
       setText('selectedProtocol', protocol.number || ('#' + id));
+      renderStageChrome();
+      if (protocol.status === 'draft' && canManage()) setAdvancedVisible(true);
       renderWorkflowActions();
       renderCandidateTools();
       renderGoogleDocTools();
       renderSourceDocTools();
+      renderDocumentSummary();
       return NgoApi.get('/commission/protocols/' + id + '/tally').catch(function () { return null; });
     }).then(function (tally) {
       tallyData = tally;
+      if (tally && tally.my_role) setCurrentRole(tally.my_role);
+      if (tally && tally.candidates) {
+        tally.candidates.forEach(function (item) {
+          if (item.my_vote) pendingVotes[parseInt(item.candidate_id, 10)] = item.my_vote;
+        });
+      }
+      renderWorkflowActions();
       renderVotePanel(currentCandidates, tally);
       return NgoApi.get('/commission/protocols/' + id + '/sign-data');
     }).then(renderSignState).catch(function (err) {
@@ -580,15 +746,17 @@
       var list = all[1] || {};
       var stats = all[2] || {};
       setText('commissionName', dash.commission && dash.commission.name ? dash.commission.name : '—');
-      currentRole = dash.me && dash.me.role ? dash.me.role : currentRole;
-      setText('commissionRole', currentRole || '—');
+      setCurrentRole(dash.me && dash.me.role ? dash.me.role : currentRole);
       setText('quorumText', dash.commission && dash.commission.quorum_pct ? dash.commission.quorum_pct + '%' : '—');
       protocols = list.items || list.protocols || dash.active_protocols || [];
       renderRows();
       renderKpis(stats);
+      renderStageChrome();
       renderWorkflowActions();
       renderCandidateTools();
+      renderGoogleDocTools();
       renderSourceDocTools();
+      renderDocumentSummary();
       if (!selectedId) setWorkspaceVisible(false);
     }).catch(function () {
       var list = document.getElementById('protocolRows');
@@ -596,6 +764,22 @@
     });
   }
   document.getElementById('protocolRows').addEventListener('click', function (e) {
+    var documentBtn = e.target.closest && e.target.closest('[data-document-action]');
+    if (documentBtn && selectedProtocol) {
+      var action = documentBtn.getAttribute('data-document-action');
+      if (action === 'google-doc' && selectedProtocol.google_doc_url) {
+        window.open(selectedProtocol.google_doc_url, '_blank', 'noopener');
+      }
+      if (action === 'source-docx') {
+        downloadWithTicket('source_docx')
+          .catch(function (err) { toast(errText(err, 'Word hujjatini yuklab bo‘lmadi.')); });
+      }
+      if (action === 'final-pdf' && selectedProtocol.status === 'signed') {
+        downloadWithTicket('final_pdf')
+          .catch(function (err) { toast(errText(err, 'Yakuniy PDF yuklab bo‘lmadi.')); });
+      }
+      return;
+    }
     var card = e.target.closest && e.target.closest('[data-protocol-id]');
     if (card) window.selectProtocol(parseInt(card.getAttribute('data-protocol-id'), 10));
   });
@@ -610,10 +794,15 @@
   }
   function updateStatus(status) {
     if (!selectedId) return Promise.resolve();
+    setText('workflowError', '');
     return NgoApi.patch('/commission/protocols/' + selectedId, { status: status }, { timeout: COMMISSION_DOCUMENT_TIMEOUT_MS }).then(function () {
       toast('Holat yangilandi.');
       reloadCurrent();
-    }).catch(function (err) { toast(errText(err, 'Holatni o‘zgartirib bo‘lmadi.')); });
+    }).catch(function (err) {
+      var msg = errText(err, 'Holatni o‘zgartirib bo‘lmadi.');
+      setText('workflowError', msg);
+      toast(msg, 'error');
+    });
   }
   document.getElementById('refreshCommission').addEventListener('click', load);
   document.getElementById('advancedToggle').addEventListener('click', function () {
@@ -624,24 +813,17 @@
     var action = actionBtn && actionBtn.getAttribute('data-workflow');
     if (!action) return;
     if (action === 'startVoting') updateStatus('voting');
-    if (action === 'startSigning') updateStatus('signing');
     if (action === 'archive' && confirm('Protokol arxivlansinmi?')) updateStatus('archived');
-    if (action === 'finalize') {
-      NgoApi.post('/commission/protocols/' + selectedId + '/finalize', {}).then(function () {
-        toast('Ovoz berish yakunlandi.');
-        reloadCurrent();
-      }).catch(function (err) { toast(errText(err, 'Yakunlashda xatolik.')); });
-    }
   });
   document.getElementById('votePanel').addEventListener('click', function (e) {
+    if (e.target && e.target.disabled) return;
     var vote = e.target && e.target.getAttribute('data-vote');
     var cid = e.target && e.target.getAttribute('data-candidate');
     var removeId = e.target && e.target.getAttribute('data-remove-candidate');
     if (vote && cid) {
-      NgoApi.post('/commission/protocols/' + selectedId + '/candidates/' + cid + '/vote', { vote: vote }).then(function () {
-        toast('Ovoz saqlandi.');
-        window.selectProtocol(selectedId);
-      }).catch(function (err) { toast(errText(err, 'Ovoz saqlanmadi.')); });
+      pendingVotes[parseInt(cid, 10)] = vote;
+      renderVotePanel(currentCandidates, tallyData);
+      renderSignState(signData);
     }
     if (removeId && confirm('Nomzod protokoldan o‘chirilsinmi?')) {
       NgoApi.del('/commission/protocols/' + selectedId + '/candidates/' + removeId).then(function () {
@@ -664,6 +846,10 @@
         }
         window.open(res.url, '_blank', 'noopener');
         frame.innerHTML = '<div><i class="ph ph-google-logo" style="font-size:38px" aria-hidden="true"></i><br>Google Docs yangi oynada ochildi.</div>';
+        return;
+      }
+      if (res.provider === 'onlyoffice' && res.configured === false) {
+        frame.innerHTML = '<div><i class="ph ph-file-doc" style="font-size:38px" aria-hidden="true"></i><br>' + esc(res.message || 'OnlyOffice sozlanmagan. Word hujjatini yuklash va olish ishlaydi.') + '</div>';
         return;
       }
       frame.innerHTML = '<div id="onlyOfficeHost"></div>';
@@ -694,7 +880,7 @@
   });
   document.getElementById('sourceDocxForm').addEventListener('submit', function (e) {
     e.preventDefault();
-    if (!selectedId || !canManage()) return;
+    if (!selectedId || !canManage() || !selectedProtocol || selectedProtocol.status !== 'draft') return;
     var input = document.getElementById('sourceDocxInput');
     if (!input.files || !input.files[0]) { setText('sourceDocxError', 'Avval .docx fayl tanlang.'); return; }
     var fd = new FormData();
@@ -712,12 +898,12 @@
   });
   document.getElementById('sourceDocxDownload').addEventListener('click', function () {
     if (!selectedId) return;
-    downloadPrivate('/commission/protocols/' + selectedId + '/source-docx', 'bayonnoma-' + selectedId + '.docx')
+    downloadWithTicket('source_docx')
       .catch(function (err) { toast(errText(err, 'Word hujjatini yuklab bo‘lmadi.')); });
   });
   document.getElementById('finalPdfBtn').addEventListener('click', function () {
-    if (!selectedId || !(selectedProtocol && selectedProtocol.status === 'signed')) return;
-    downloadPrivate('/commission/protocols/' + selectedId + '/final-pdf', 'bayonnoma-' + selectedId + '-signed.pdf')
+    if (!selectedId || !(selectedProtocol && selectedProtocol.status === 'signed' && isChair())) return;
+    downloadWithTicket('final_pdf')
       .catch(function (err) { toast(errText(err, 'Yakuniy PDF yuklab bo‘lmadi.')); });
   });
   document.getElementById('googleDocForm').addEventListener('submit', function (e) {
@@ -736,12 +922,14 @@
     }).finally(function () { btn.disabled = false; });
   });
   var protocolModal = document.getElementById('protocolModal');
-  function closeProtocolModal() { protocolModal.setAttribute('aria-hidden', 'true'); setText('protocolError', ''); }
+  function closeProtocolModal() { protocolModal.setAttribute('aria-hidden', 'true'); setText('protocolError', ''); setText('protocolStatus', ''); }
   document.getElementById('newProtocolBtn').addEventListener('click', function () {
-    if (!canManage()) { toast('Yangi protokolni faqat rais yoki kotib yaratadi.', 'warning'); return; }
+    if (!canManage()) { toast('Yangi protokol yaratish huquqi yo‘q.', 'warning'); return; }
     document.getElementById('protocolNumber').value = '';
     document.getElementById('protocolDate').value = new Date().toISOString().slice(0, 10);
     document.getElementById('protocolTitle').value = '';
+    setText('protocolStatus', '');
+    setText('protocolError', '');
     protocolModal.setAttribute('aria-hidden', 'false');
   });
   document.getElementById('protocolClose').addEventListener('click', closeProtocolModal);
@@ -749,19 +937,24 @@
   document.getElementById('protocolForm').addEventListener('submit', function (e) {
     e.preventDefault();
     var btn = document.getElementById('protocolSubmit');
+    var number = document.getElementById('protocolNumber').value.trim();
+    if (!number) { setText('protocolError', 'Bayonnoma raqamini kiriting.'); return; }
     btn.disabled = true;
+    btn.textContent = 'Protokol yaratilmoqda, iltimos kuting...';
     setText('protocolError', '');
+    setText('protocolStatus', 'Protokol yaratilmoqda, iltimos kuting...');
     NgoApi.post('/commission/protocols', {
-      number: document.getElementById('protocolNumber').value,
+      number: number,
       meeting_date: document.getElementById('protocolDate').value,
       title: document.getElementById('protocolTitle').value
     }, { timeout: COMMISSION_DOCUMENT_TIMEOUT_MS }).then(function (res) {
       closeProtocolModal();
       toast('Protokol yaratildi.');
       load();
-      if (res && res.id) setTimeout(function () { window.selectProtocol(parseInt(res.id, 10)); }, 300);
+      var id = res && (res.id || (res.protocol && res.protocol.id));
+      if (id) setTimeout(function () { window.selectProtocol(parseInt(id, 10)); }, 300);
     }).catch(function (err) { setText('protocolError', errText(err, 'Protokol yaratilmadi.')); })
-      .then(function () { btn.disabled = false; });
+      .then(function () { btn.disabled = false; btn.textContent = 'Yaratish'; setText('protocolStatus', ''); });
   });
   function renderCandidateResults(items) {
     var box = document.getElementById('candidateResults');
@@ -836,6 +1029,17 @@
   sigCanvas.addEventListener('touchend', endDraw, { passive: false });
   function openSignature() {
     if (!selectedId) return;
+    if (selectedProtocol && selectedProtocol.status === 'voting') {
+      var complete = currentCandidates.length && currentCandidates.every(function (c) {
+        return !!pendingVotes[parseInt(c.id, 10)];
+      });
+      if (!complete) { toast('Avval barcha nomzodlar bo‘yicha ovoz bering.', 'error'); return; }
+      setText('signatureTitle', 'Ovoz va imzoni yuborish');
+      setText('signatureSubmit', 'Yuborish');
+    } else {
+      setText('signatureTitle', 'Protokolni imzolash');
+      setText('signatureSubmit', 'Imzolash');
+    }
     clearSignature();
     setText('signatureProtocolText', 'Tanlangan protokol: ' + (selectedProtocol && selectedProtocol.number ? selectedProtocol.number : '#' + selectedId));
     setText('signatureError', '');
@@ -852,13 +1056,21 @@
     var btn = document.getElementById('signatureSubmit');
     btn.disabled = true;
     setText('signatureError', '');
-    NgoApi.post('/commission/protocols/' + selectedId + '/sign', { signature_image: sigCanvas.toDataURL('image/png') }, { timeout: 30000 })
-      .then(function () { closeSignature(); toast('Protokol imzolandi.'); return NgoApi.get('/commission/protocols/' + selectedId + '/sign-data'); })
-      .then(renderSignState)
-      .then(load)
+    var isBallot = !!(selectedProtocol && selectedProtocol.status === 'voting');
+    var path = '/commission/protocols/' + selectedId + (isBallot ? '/ballot' : '/sign');
+    var payload = { signature_image: sigCanvas.toDataURL('image/png') };
+    if (isBallot) payload.votes = pendingVotes;
+    NgoApi.post(path, payload, { timeout: COMMISSION_DOCUMENT_TIMEOUT_MS })
+      .then(function (res) {
+        closeSignature();
+        toast(isBallot ? 'Ovoz va imzo yuborildi.' : 'Protokol imzolandi.');
+        if (res && res.completed) toast('Natija hisoblandi va yakuniy PDF yaratildi.');
+        reloadCurrent();
+      })
       .catch(function (err) { setText('signatureError', (err && err.message) || 'Imzolashda xatolik.'); })
       .then(function () { btn.disabled = false; });
   });
+  setCurrentRole(currentRole);
   load();
 })();
 </script>
