@@ -96,6 +96,37 @@
   display: flex; align-items: center; justify-content: flex-end; gap: 15px;
 }
 
+.modal--logout { width: min(440px, calc(100vw - 32px)); }
+.modal--logout .modal__header {
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--grey-100, #e4e7e7);
+  align-items: center;
+}
+.modal--logout .modal__body { padding-block: 24px; }
+.modal--logout .modal__footer {
+  padding-top: 18px;
+  border-top: 1px solid var(--grey-100, #e4e7e7);
+}
+.logout-dialog__content { display: grid; grid-template-columns: 48px minmax(0, 1fr); gap: 16px; align-items: start; }
+.logout-dialog__icon {
+  width: 48px; height: 48px; border-radius: 10px;
+  display: grid; place-items: center;
+  background: var(--error-0, #fff0f3); color: var(--error-100, #b91c1c);
+  font-size: 24px;
+}
+.logout-dialog__title { margin: 1px 0 6px !important; color: var(--grey-900, #171a1b); font-size: 16px; font-weight: 700; line-height: 1.4; }
+.logout-dialog__copy { margin: 0 !important; color: var(--grey-500, #798384); font-size: 14px; line-height: 1.55; }
+.modal--logout .modal__btn { min-width: 124px; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+
+@media (max-width: 480px) {
+  .modal-overlay { padding: 16px; }
+  .modal--logout .modal__header,
+  .modal--logout .modal__body,
+  .modal--logout .modal__footer { padding-inline: 20px; }
+  .modal--logout .modal__footer { display: grid; grid-template-columns: 1fr; }
+  .modal--logout .modal__btn { width: 100%; }
+}
+
 /* Modal icon header */
 .modal__icon {
   width: 60px; height: 60px; border-radius: 12px;
@@ -336,4 +367,3 @@ tr[data-href]:hover td { background: var(--grey-25,#f6f8fa); }
 
 /* â”€â”€ Zoom controls â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 .zoom-level { font-size: 16px; font-weight: 500; min-width: 50px; text-align: center; }
-
