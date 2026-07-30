@@ -103,17 +103,20 @@
     .verify-card { margin-top: 18px; background: #f7fbff; border: 1px solid #d7e7f7; border-radius: 10px; padding: 16px; }
     button.sidebar__logo { border: 0; cursor: pointer; font: inherit; }
     button.sidebar__logo:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-    .member-form { display: grid; grid-template-columns: minmax(220px, 1fr) minmax(160px, 220px) auto; gap: 10px; align-items: end; }
+    .member-form { display: grid; grid-template-columns: minmax(180px, 1fr) minmax(220px, 1fr) minmax(150px, 190px) auto; gap: 10px; align-items: end; }
     .member-form label { display: grid; gap: 6px; color: var(--grey-700); font-size: 13px; font-weight: 700; }
     .member-form input, .member-form select { box-sizing: border-box; width: 100%; min-height: 42px; border: 1px solid var(--grey-200); border-radius: 8px; padding: 8px 10px; background: #fff; color: var(--grey-900); font: inherit; }
     .member-list { display: grid; gap: 10px; padding: 16px; }
-    .member-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(150px, 190px) auto; gap: 12px; align-items: center; padding: 14px; border: 1px solid var(--grey-100); border-radius: 8px; background: #fff; }
+    .member-row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(150px, 190px) minmax(230px, auto); gap: 12px; align-items: center; padding: 14px; border: 1px solid var(--grey-100); border-radius: 8px; background: #fff; }
     .member-row__identity { min-width: 0; display: grid; gap: 3px; }
     .member-row__identity strong, .member-row__identity span { overflow-wrap: anywhere; }
     .member-row__identity span { color: var(--grey-500); font-size: 12px; }
     .member-row select { width: 100%; min-height: 38px; border: 1px solid var(--grey-200); border-radius: 8px; padding: 7px 9px; background: #fff; font: inherit; }
-    .member-row__actions { min-width: 116px; display: flex; justify-content: flex-end; }
+    .member-row__actions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
     .member-row.is-inactive { opacity: .68; background: var(--grey-25); }
+    .member-credentials { display: grid; gap: 12px; }
+    .member-credentials__value { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 12px; border: 1px solid #b8d7ef; border-radius: 8px; background: #fff; }
+    .member-credentials__value code { min-width: 0; overflow-wrap: anywhere; color: var(--grey-900); font-size: 16px; font-weight: 700; }
     @media (max-width: 1180px) {
       .commission-grid, .protocol-layout { grid-template-columns: 1fr; }
       .protocol-layout > .protocol-panel:last-child { grid-column: auto; }
@@ -155,6 +158,8 @@
       .document-summary__row .btn { width: 100%; }
       .member-form, .member-row { grid-template-columns: 1fr; }
       .member-row__actions, .member-row__actions .btn { width: 100%; }
+      .member-credentials__value { grid-template-columns: 1fr; }
+      .member-credentials__value .btn { width: 100%; }
     }
   </style>
 </head>
@@ -282,6 +287,9 @@
         <div class="table-section__head"><h2 class="table-section__title" id="memberFormTitle">A’zo qo‘shish</h2></div>
         <div class="protocol-panel__body">
           <form class="member-form" id="memberForm" novalidate>
+            <label>F.I.Sh.
+              <input type="text" id="memberFullName" placeholder="Ism familiya" autocomplete="off">
+            </label>
             <label>Email
               <input type="email" id="memberEmail" placeholder="name@commission.ngo.uz" autocomplete="off" required>
             </label>
@@ -290,8 +298,13 @@
             </label>
             <button type="submit" class="btn btn--primary" id="memberSubmit"><i class="ph ph-user-plus" aria-hidden="true"></i> Qo‘shish</button>
           </form>
-          <p class="signature-hint" style="margin-top:10px;">Faqat mavjud komissiya hisobini email orqali qo‘shish mumkin. Tarkibdan chiqarilgan foydalanuvchi tizimga kira olmaydi.</p>
+          <p class="signature-hint" style="margin-top:10px;">Yangi email uchun hisob va vaqtinchalik parol avtomatik yaratiladi. Tarkibdan chiqarilgan foydalanuvchi tizimga kira olmaydi.</p>
           <p class="va-error" id="memberError" role="alert" style="color:var(--error-600);margin:8px 0 0;"></p>
+          <div class="verify-card member-credentials" id="memberCredentials" hidden aria-live="polite">
+            <div><strong id="memberCredentialName">Kirish ma’lumotlari</strong><br><span class="text-dim">Kirish manzili: https://www.ngo.uz/admin-commission</span></div>
+            <div class="member-credentials__value"><code id="memberCredentialEmail"></code></div>
+            <div class="member-credentials__value"><code id="memberCredentialPassword"></code><button type="button" class="btn btn--secondary btn--sm" id="copyMemberPassword"><i class="ph ph-copy" aria-hidden="true"></i> Parolni nusxalash</button></div>
+          </div>
         </div>
       </section>
       <section class="table-section" aria-labelledby="membersTitle" style="margin-top:18px;">
@@ -820,6 +833,13 @@
   function roleLabel(role) {
     return { chair: 'Rais', secretary: 'Kotib', member: 'A’zo' }[role] || role || 'A’zo';
   }
+  function showMemberCredentials(credentials) {
+    if (!credentials) return;
+    setText('memberCredentialName', (credentials.full_name || 'Komissiya a’zosi') + ' uchun kirish ma’lumotlari');
+    setText('memberCredentialEmail', credentials.email || '');
+    setText('memberCredentialPassword', credentials.password || '');
+    document.getElementById('memberCredentials').hidden = false;
+  }
   function renderMembers(items) {
     var box = document.getElementById('memberRows');
     if (!box) return;
@@ -837,7 +857,8 @@
           '<option value="member"' + (member.role === 'member' ? ' selected' : '') + '>A’zo</option>' +
           '<option value="secretary"' + (member.role === 'secretary' ? ' selected' : '') + '>Kotib</option></select>';
       var action = protectedChair ? '<span class="badge badge--success">Rais</span>'
-        : active ? '<button type="button" class="btn btn--secondary btn--sm" data-member-remove="' + esc(member.id) + '">Olib tashlash</button>'
+        : active ? '<button type="button" class="btn btn--secondary btn--sm" data-member-reset-password="' + esc(member.id) + '"><i class="ph ph-key" aria-hidden="true"></i> Yangi parol berish</button>' +
+          '<button type="button" class="btn btn--secondary btn--sm" data-member-remove="' + esc(member.id) + '">Olib tashlash</button>'
         : '<button type="button" class="btn btn--secondary btn--sm" data-member-reactivate="' + esc(member.id) + '" data-member-email="' + esc(member.email) + '" data-member-current-role="' + esc(member.role) + '">Qayta qo‘shish</button>';
       return '<div class="member-row' + (active ? '' : ' is-inactive') + '">' +
         '<div class="member-row__identity"><strong>' + esc(member.full_name || 'F.I.Sh. ko‘rsatilmagan') + '</strong><span>' + esc(member.email) + '</span>' +
@@ -1195,13 +1216,16 @@
     e.preventDefault();
     if (!isChair()) return;
     var email = document.getElementById('memberEmail').value.trim();
+    var fullName = document.getElementById('memberFullName').value.trim();
     var role = document.getElementById('memberRole').value;
     if (!email) { setText('memberError', 'Email manzilini kiriting.'); return; }
     var btn = document.getElementById('memberSubmit');
     if (!setButtonPending(btn, true, 'Qo‘shilmoqda...')) return;
     setText('memberError', '');
-    NgoApi.post('/commission/members', { email: email, role: role }).then(function () {
+    NgoApi.post('/commission/members', { email: email, full_name: fullName, role: role }).then(function (res) {
       document.getElementById('memberEmail').value = '';
+      document.getElementById('memberFullName').value = '';
+      if (res && res.credentials) showMemberCredentials(res.credentials);
       toast('Komissiya a’zosi qo‘shildi.');
       return loadMembers();
     }).catch(function (err) {
@@ -1224,8 +1248,22 @@
   document.getElementById('memberRows').addEventListener('click', function (e) {
     var remove = e.target.closest && e.target.closest('[data-member-remove]');
     var reactivate = e.target.closest && e.target.closest('[data-member-reactivate]');
-    if (!isChair() || (!remove && !reactivate)) return;
+    var resetPassword = e.target.closest && e.target.closest('[data-member-reset-password]');
+    if (!isChair() || (!remove && !reactivate && !resetPassword)) return;
     setText('memberError', '');
+    if (resetPassword) {
+      if (!confirm('Eski parol bekor qilinib, yangi parol berilsinmi?')) return;
+      if (!setButtonPending(resetPassword, true, 'Yaratilmoqda...')) return;
+      NgoApi.post('/commission/members/' + encodeURIComponent(resetPassword.getAttribute('data-member-reset-password')) + '/reset-password', {}).then(function (res) {
+        if (res && res.credentials) showMemberCredentials(res.credentials);
+        toast('Yangi parol yaratildi. Eski parol bekor qilindi.');
+        return loadMembers();
+      }).catch(function (err) {
+        setText('memberError', errText(err, 'Yangi parol yaratib bo‘lmadi.'));
+        setButtonPending(resetPassword, false);
+      });
+      return;
+    }
     if (remove) {
       if (!confirm('Bu a’zo komissiya tarkibidan chiqarilsinmi?')) return;
       if (!setButtonPending(remove, true, 'Olib tashlanmoqda...')) return;
@@ -1242,12 +1280,22 @@
     NgoApi.post('/commission/members', {
       email: reactivate.getAttribute('data-member-email'),
       role: reactivate.getAttribute('data-member-current-role') === 'secretary' ? 'secretary' : 'member'
-    }).then(function () {
+    }).then(function (res) {
+      if (res && res.credentials) showMemberCredentials(res.credentials);
       toast('A’zo komissiya tarkibiga qayta qo‘shildi.');
       return loadMembers();
     }).catch(function (err) {
       setText('memberError', errText(err, 'A’zoni qayta qo‘shib bo‘lmadi.'));
       setButtonPending(reactivate, false);
+    });
+  });
+  document.getElementById('copyMemberPassword').addEventListener('click', function () {
+    var password = document.getElementById('memberCredentialPassword').textContent;
+    if (!password) return;
+    navigator.clipboard.writeText(password).then(function () {
+      toast('Parol nusxalandi.');
+    }).catch(function () {
+      setText('memberError', 'Parolni nusxalab bo‘lmadi. Uni belgilang va qo‘lda nusxalang.');
     });
   });
   setCurrentRole(currentRole);
