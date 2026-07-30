@@ -202,7 +202,7 @@
           <div class="sign-actions">
             <button type="button" class="btn btn--primary" id="manualSignBtn" disabled><i class="ph ph-signature" aria-hidden="true"></i> Ovoz va imzoni yuborish</button>
             <button type="button" class="btn btn--secondary" id="finalPdfBtn" disabled><i class="ph ph-download-simple" aria-hidden="true"></i> Yakuniy PDF</button>
-            <span class="text-dim" id="manualSignHint">Imzolash uchun signing holatidagi protokolni tanlang.</span>
+            <span class="text-dim" id="manualSignHint">Barcha nomzodlar bo‘yicha variantni tanlang.</span>
           </div>
         </div>
       </section>
@@ -417,8 +417,7 @@
     return {
       draft: 'Draft',
       voting: 'Ovoz va imzo yuborish',
-      decided: 'Yakuniy hujjat tayyorlanmoqda',
-      signing: 'Imzolash',
+      finalizing: 'Yakuniy hujjat tayyorlanmoqda',
       signed: 'Imzolangan',
       archived: 'Arxiv'
     }[status] || status || 'draft';
@@ -434,7 +433,7 @@
   function badge(status) {
     if (status === 'signed') return 'success';
     if (status === 'voting') return 'warning';
-    if (status === 'signing' || status === 'decided') return 'info';
+    if (status === 'finalizing') return 'info';
     return 'neutral';
   }
   function renderRows() {
@@ -468,7 +467,7 @@
     if (stats && stats.protocols_by_status) byStatus = stats.protocols_by_status;
     setText('kpiDraft', byStatus.draft || 0);
     setText('kpiVoting', byStatus.voting || 0);
-    setText('kpiReady', (byStatus.signing || 0) + (byStatus.decided || 0));
+    setText('kpiReady', byStatus.finalizing || 0);
     setText('kpiSigned', byStatus.signed || 0);
   }
   function setWorkspaceVisible(visible) {
@@ -512,7 +511,7 @@
       }
     }
     if (s === 'voting') html += '<span class="text-dim">Har bir aʼzo ovoz va imzosini bir marta yuboradi.</span>';
-    if (s === 'decided') html += '<span class="text-dim">Natija hisoblandi. Yakuniy hujjat tayyorlanmoqda.</span>';
+    if (s === 'finalizing') html += '<span class="text-dim">Natija hisoblandi. Yakuniy hujjat tayyorlanmoqda.</span>';
     box.innerHTML = html || '<span class="text-dim">Bu bosqichda qo‘shimcha boshqaruv amali yo‘q.</span>';
   }
   function renderCandidateTools() {
@@ -618,23 +617,18 @@
       return !!pendingVotes[parseInt(c.id, 10)];
     }));
     var canSubmitBallot = !!(selectedProtocol && selectedProtocol.status === 'voting' && mine && !mine.signed && allVotesSelected);
-    var canLegacySign = !!(selectedProtocol && selectedProtocol.status === 'signing' && mine && !mine.signed);
-    var canSign = canSubmitBallot || canLegacySign;
-    var showSubmit = !!(mine && !mine.signed && selectedProtocol && (selectedProtocol.status === 'voting' || selectedProtocol.status === 'signing'));
+    var showSubmit = !!(mine && !mine.signed && selectedProtocol && selectedProtocol.status === 'voting');
     if (btn) {
       btn.hidden = !showSubmit;
-      btn.disabled = !canSign;
-      btn.innerHTML = canLegacySign
-        ? '<i class="ph ph-signature" aria-hidden="true"></i> Imzolash'
-        : '<i class="ph ph-signature" aria-hidden="true"></i> Ovoz va imzoni yuborish';
-      btn.title = canSubmitBallot ? 'Tanlangan ovozlarni imzo bilan yuborish' : (canLegacySign ? 'Protokolni imzolash' : 'Avval barcha nomzodlar bo‘yicha ovoz bering');
+      btn.disabled = !canSubmitBallot;
+      btn.innerHTML = '<i class="ph ph-signature" aria-hidden="true"></i> Ovoz va imzoni yuborish';
+      btn.title = canSubmitBallot ? 'Tanlangan ovozlarni imzo bilan yuborish' : 'Avval barcha nomzodlar bo‘yicha ovoz bering';
     }
     if (hint) {
       hint.textContent = !selectedProtocol ? 'Protokolni tanlang.'
         : mine && mine.signed ? 'Siz ovoz va imzoni yuborgansiz. Boshqa amal kerak emas.'
         : selectedProtocol.status === 'voting' && !allVotesSelected ? 'Barcha nomzodlar bo‘yicha variantni tanlang.'
         : canSubmitBallot ? 'Tayyor. Imzo chizib, ovozlarni yuboring.'
-        : canLegacySign ? 'Ushbu eski protokolni imzolashingiz mumkin.'
         : selectedProtocol.status === 'signed' ? 'Protokol yakunlangan.'
         : 'Hozir sizdan amal talab qilinmaydi.';
     }
@@ -643,7 +637,7 @@
       pdfBtn.hidden = !canDownloadPdf;
       pdfBtn.disabled = !canDownloadPdf;
     }
-    if (actions) actions.hidden = !(showSubmit || canDownloadPdf || myBallotSubmitted || (selectedProtocol && selectedProtocol.status === 'signing'));
+    if (actions) actions.hidden = !(showSubmit || canDownloadPdf || myBallotSubmitted);
     if (data && data.qr_token) {
       setText('qrText', 'QR token: ' + data.qr_token);
     } else if (selectedProtocol && selectedProtocol.status === 'signed') {
@@ -729,7 +723,7 @@
       }
       renderWorkflowActions();
       renderVotePanel(currentCandidates, tally);
-      return NgoApi.get('/commission/protocols/' + id + '/sign-data');
+      return NgoApi.get('/commission/protocols/' + id + '/ballot-status');
     }).then(renderSignState).catch(function (err) {
       renderVotePanel(currentCandidates, tallyData);
       renderSignState(null);
@@ -1036,9 +1030,6 @@
       if (!complete) { toast('Avval barcha nomzodlar bo‘yicha ovoz bering.', 'error'); return; }
       setText('signatureTitle', 'Ovoz va imzoni yuborish');
       setText('signatureSubmit', 'Yuborish');
-    } else {
-      setText('signatureTitle', 'Protokolni imzolash');
-      setText('signatureSubmit', 'Imzolash');
     }
     clearSignature();
     setText('signatureProtocolText', 'Tanlangan protokol: ' + (selectedProtocol && selectedProtocol.number ? selectedProtocol.number : '#' + selectedId));
@@ -1056,14 +1047,11 @@
     var btn = document.getElementById('signatureSubmit');
     btn.disabled = true;
     setText('signatureError', '');
-    var isBallot = !!(selectedProtocol && selectedProtocol.status === 'voting');
-    var path = '/commission/protocols/' + selectedId + (isBallot ? '/ballot' : '/sign');
-    var payload = { signature_image: sigCanvas.toDataURL('image/png') };
-    if (isBallot) payload.votes = pendingVotes;
-    NgoApi.post(path, payload, { timeout: COMMISSION_DOCUMENT_TIMEOUT_MS })
+    var payload = { signature_image: sigCanvas.toDataURL('image/png'), votes: pendingVotes };
+    NgoApi.post('/commission/protocols/' + selectedId + '/ballot', payload, { timeout: COMMISSION_DOCUMENT_TIMEOUT_MS })
       .then(function (res) {
         closeSignature();
-        toast(isBallot ? 'Ovoz va imzo yuborildi.' : 'Protokol imzolandi.');
+        toast('Ovoz va imzo yuborildi.');
         if (res && res.completed) toast('Natija hisoblandi va yakuniy PDF yaratildi.');
         reloadCurrent();
       })
