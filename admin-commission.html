@@ -608,7 +608,7 @@
         html += '<span class="text-dim">Avval nomzod qo‘shing.</span>';
       }
     }
-    if (s === 'voting') html += '<span class="text-dim">Har bir aʼzo ovoz va imzosini bir marta yuboradi.</span>';
+    if (s === 'voting') html += '<span class="text-dim">Barcha faol aʼzolar ovoz va imzosini yuborgach bayonnoma yakunlanadi.</span>';
     if (s === 'finalizing') html += '<span class="text-dim">Natija hisoblandi. Yakuniy hujjat tayyorlanmoqda.</span>';
     box.innerHTML = html || '<span class="text-dim">Bu bosqichda qo‘shimcha boshqaruv amali yo‘q.</span>';
   }
@@ -662,7 +662,7 @@
       (googleUrl ? '<button type="button" class="btn btn--secondary btn--sm" data-document-action="google-doc"><i class="ph ph-file-doc" aria-hidden="true"></i> Ochish</button>' : '<span class="text-dim">Yo‘q</span>') +
       '</div>' +
       '<div class="document-summary__row"><div><strong>Yakuniy PDF</strong><span>' +
-      esc(signed ? 'Yetarli imzolangan ovozlar yig‘ilgan. PDF yuklab olishga tayyor.' : 'Yetarli imzolangan ovozlar yig‘ilganda avtomatik yaratiladi.') +
+      esc(signed ? 'Barcha faol aʼzolarning ovoz va imzolari yig‘ilgan. PDF yuklab olishga tayyor.' : 'Barcha faol aʼzolar ovoz berib imzolagandan keyin avtomatik yaratiladi.') +
       '</span></div>' + pdfAction + '</div>' +
       '<div class="document-summary__row"><div><strong>QR tekshiruv</strong><span>' +
       esc(qr ? 'Public verification sahifasi tayyor.' : 'Bayonnoma to‘liq imzolangach yaratiladi.') +
@@ -882,7 +882,6 @@
     return NgoApi.get('/commission/dashboard').then(function (dash) {
       setText('commissionName', dash.commission && dash.commission.name ? dash.commission.name : '—');
       setCurrentRole(dash.me && dash.me.role ? dash.me.role : currentRole);
-      setText('quorumText', dash.commission && dash.commission.quorum_pct ? dash.commission.quorum_pct + '%' : '—');
       if (currentView === 'members') {
         if (!isChair()) return;
         return loadMembers();
@@ -1231,7 +1230,7 @@
       .then(function (res) {
         closeSignature();
         toast('Ovoz va imzo yuborildi.');
-        if (res && res.completed) toast('Natija hisoblandi va yakuniy PDF yaratildi.');
+        if (res && res.completed) toast('Barcha aʼzolar yubordi. Natija hisoblandi va yakuniy PDF yaratildi.');
         reloadCurrent();
       })
       .catch(function (err) { setText('signatureError', (err && err.message) || 'Imzolashda xatolik.'); })
