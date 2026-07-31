@@ -223,7 +223,7 @@
           </div>
           <div class="sign-actions">
             <button type="button" class="btn btn--primary" id="manualSignBtn" hidden disabled><i class="ph ph-signature" aria-hidden="true"></i> Ovoz va imzoni yuborish</button>
-            <button type="button" class="btn btn--secondary" id="finalPdfBtn" disabled><i class="ph ph-download-simple" aria-hidden="true"></i> Yakuniy PDF</button>
+            <button type="button" class="btn btn--secondary" id="finalPdfBtn" disabled><i class="ph ph-download-simple" aria-hidden="true"></i> PDF yuklab olish</button>
             <span class="text-dim" id="manualSignHint">Barcha nomzodlar bo‘yicha variantni tanlang.</span>
           </div>
         </div>
@@ -646,14 +646,12 @@
     box.hidden = false;
     var googleUrl = selectedProtocol.google_doc_url || '';
     var hasWord = !!selectedProtocol.source_docx_path;
-    var signed = selectedProtocol.status === 'signed';
+    var canDownloadPdf = canManage() && !!(selectedProtocol.google_doc_id || selectedProtocol.final_pdf_ready);
     var qr = signData && signData.qr_token ? signData.qr_token : selectedProtocol.qr_token;
     var verifyUrl = signData && signData.verify_url ? signData.verify_url : (qr ? 'verify-protocol?token=' + encodeURIComponent(qr) : '');
     var pdfAction = '';
-    if (signed) {
+    if (canDownloadPdf) {
       pdfAction = '<button type="button" class="btn btn--secondary btn--sm" data-document-action="final-pdf"><i class="ph ph-download-simple" aria-hidden="true"></i> Yuklab olish</button>';
-    } else {
-      pdfAction = '<span class="text-dim">Kutilmoqda</span>';
     }
     box.innerHTML =
       '<div class="document-summary__row"><div><strong>Google Docs</strong><span>' +
@@ -661,9 +659,9 @@
       '</span></div>' +
       (googleUrl ? '<button type="button" class="btn btn--secondary btn--sm" data-document-action="google-doc"><i class="ph ph-file-doc" aria-hidden="true"></i> Ochish</button>' : '<span class="text-dim">Yo‘q</span>') +
       '</div>' +
-      '<div class="document-summary__row"><div><strong>Yakuniy PDF</strong><span>' +
-      esc(signed ? 'Barcha faol aʼzolarning ovoz va imzolari yig‘ilgan. PDF yuklab olishga tayyor.' : 'Barcha faol aʼzolar ovoz berib imzolagandan keyin avtomatik yaratiladi.') +
-      '</span></div>' + pdfAction + '</div>' +
+      (canManage() ? '<div class="document-summary__row"><div><strong>Bayonnoma PDF</strong><span>' +
+      esc(canDownloadPdf ? 'Google Docs hujjatining hozirgi holatidan PDF yaratiladi. Ovoz va imzolar soni cheklamaydi.' : 'PDF yaratish uchun Google Docs hujjati kerak.') +
+      '</span></div>' + (pdfAction || '<span class="text-dim">Yo‘q</span>') + '</div>' : '') +
       '<div class="document-summary__row"><div><strong>QR tekshiruv</strong><span>' +
       esc(qr ? 'Public verification sahifasi tayyor.' : 'Bayonnoma to‘liq imzolangach yaratiladi.') +
       '</span></div>' +
@@ -730,7 +728,7 @@
         : selectedProtocol.status === 'signed' ? 'Bayonnoma yakunlangan.'
         : 'Hozir sizdan amal talab qilinmaydi.';
     }
-    var canDownloadPdf = !!(selectedProtocol && selectedProtocol.status === 'signed');
+    var canDownloadPdf = !!(selectedProtocol && canManage() && (selectedProtocol.google_doc_id || selectedProtocol.final_pdf_ready));
     if (pdfBtn) {
       pdfBtn.hidden = !canDownloadPdf;
       pdfBtn.disabled = !canDownloadPdf;
@@ -922,9 +920,9 @@
         downloadWithTicket('source_docx')
           .catch(function (err) { toast(errText(err, 'Word hujjatini yuklab bo‘lmadi.')); });
       }
-      if (action === 'final-pdf' && selectedProtocol.status === 'signed') {
+      if (action === 'final-pdf' && canManage()) {
         downloadWithTicket('final_pdf')
-          .catch(function (err) { toast(errText(err, 'Yakuniy PDF yuklab bo‘lmadi.')); });
+          .catch(function (err) { toast(errText(err, 'PDF yuklab bo‘lmadi.')); });
       }
       return;
     }
@@ -1074,9 +1072,9 @@
       .catch(function (err) { toast(errText(err, 'Word hujjatini yuklab bo‘lmadi.')); });
   });
   document.getElementById('finalPdfBtn').addEventListener('click', function () {
-    if (!selectedId || !(selectedProtocol && selectedProtocol.status === 'signed' && isChair())) return;
+    if (!selectedId || !selectedProtocol || !canManage()) return;
     downloadWithTicket('final_pdf')
-      .catch(function (err) { toast(errText(err, 'Yakuniy PDF yuklab bo‘lmadi.')); });
+      .catch(function (err) { toast(errText(err, 'PDF yuklab bo‘lmadi.')); });
   });
   document.getElementById('googleDocForm').addEventListener('submit', function (e) {
     e.preventDefault();
