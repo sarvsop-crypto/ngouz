@@ -88,6 +88,11 @@
       return;
     }
     if (!el) return;
+    // A patch is immutable for the lifetime of this page load. Reapplying an
+    // HTML patch after visual-admin adds its controls would erase those controls
+    // and start an observer loop. A dynamically re-rendered replacement is a new
+    // DOM node without this marker, so it still receives the patch once.
+    if (el.getAttribute('data-va-applied-patch') === patch.id) return;
     if (patch.action === 'html' && patch.html != null) el.innerHTML = patch.html;
     else if (patch.action === 'text' && patch.text != null) el.textContent = patch.text;
     else if (patch.action === 'attrs') {
@@ -97,6 +102,7 @@
       if (patch.text != null && el.tagName === 'A') el.textContent = patch.text;
       if (patch.html != null) el.innerHTML = patch.html;
     }
+    el.setAttribute('data-va-applied-patch', patch.id);
   }
 
   function refresh() {
