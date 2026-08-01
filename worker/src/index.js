@@ -218,6 +218,7 @@ export default {
       // or update Google Docs. Keep those routes aligned with their clients.
       const longRunningRequest = url.pathname === '/v1/public/grants-search'
         || url.pathname === '/v1/cabinet/grants-search'
+        || /\/v1\/commission\/protocols\/\d+\/(?:final-pdf|source-docx)$/.test(url.pathname)
         || (url.pathname.startsWith('/v1/commission/protocols')
           && request.method !== 'GET' && request.method !== 'HEAD');
       const upstreamTimeoutMs = longRunningRequest ? 95000 : 25000;

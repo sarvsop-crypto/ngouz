@@ -24,7 +24,8 @@ export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const lang = normalizeLang(url.searchParams.get('lang'));
   const overrides = await readOverrides(env, lang);
-  return json({ lang, overrides }, 200, { 'cache-control': 'no-store' });
+  const sanitized = await sanitizeOverrides(overrides);
+  return json({ lang, overrides: sanitized.values }, 200, { 'cache-control': 'no-store' });
 }
 
 export async function onRequestPost({ request, env }) {
@@ -107,6 +108,16 @@ async function writeOverrides(env, lang, overrides) {
 
 function key(lang) {
   return 'i18n-content:' + lang;
+}
+
+async function sanitizeOverrides(overrides) {
+  const values = {};
+  await Promise.all(Object.entries(overrides).map(async ([key, value]) => {
+    const original = String(value == null ? '' : value);
+    const safe = original.includes('<') ? await sanitizeHtml(original) : original;
+    values[key] = safe;
+  }));
+  return { values };
 }
 
 function json(obj, status, extra) {
