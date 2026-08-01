@@ -7,7 +7,7 @@
  *
  * Versioned cache name — bump CACHE_VERSION to invalidate on rollouts.
  */
-const CACHE_VERSION = 'ngo-v516';
+const CACHE_VERSION = 'ngo-v517';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 
 const PRECACHE = [
@@ -51,6 +51,8 @@ function isStaticAsset(url) {
 // putting in cache.
 async function cachePut(cache, req, res) {
   if (!res || !res.ok) return;
+  const cacheControl = (res.headers.get('Cache-Control') || '').toLowerCase();
+  if (cacheControl.includes('no-store') || cacheControl.includes('private') || res.headers.has('Set-Cookie')) return;
   if (!res.redirected) {
     cache.put(req, res.clone()).catch(() => {});
     return;
@@ -74,6 +76,9 @@ self.addEventListener('fetch', (event) => {
 
   // Skip cross-origin requests entirely — let the browser handle them.
   if (url.origin !== self.location.origin) return;
+
+  // Authenticated surfaces must never be stored in the public-site cache.
+  if (/^\/admin(?:-|\/|$)/.test(url.pathname) || /^\/cabinet(?:\/|$)/.test(url.pathname)) return;
 
   // Cache-first for static assets.
   if (isStaticAsset(url)) {
