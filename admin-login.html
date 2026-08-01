@@ -135,13 +135,13 @@
       function safeNext() {
         var n = qParams.get('next');
         if (!n) return 'admin-dashboard';
-        try { n = decodeURIComponent(n); } catch (e) { return 'admin-dashboard'; }
-        if (/^[a-z]+:/i.test(n)
-            || (n.charAt(0) === '/' && (n.charAt(1) === '/' || n.charAt(1) === '\\'))
-            || n.charAt(0) === '\\') {
+        try {
+          var target = new URL(n, location.origin);
+          if (target.origin !== location.origin) return 'admin-dashboard';
+          return target.pathname + target.search + target.hash;
+        } catch (e) {
           return 'admin-dashboard';
         }
-        return n;
       }
       if (NgoApi.getToken()) {
         NgoApi.me().then(function () {

@@ -1,42 +1,21 @@
-const ORIGIN = 'http://api.ngo.uz';
+const ORIGIN = 'https://api.ngo.uz';
 const ALLOWED_ORIGINS = [
   'https://ngo.uz',
   'https://www.ngo.uz',
-  'https://ngouz.pages.dev',
-  'https://ngo-demo.pages.dev',
-  'https://ngo-demo-4bu.pages.dev',
-  'https://ngo-demo-night.pages.dev',
-  'http://localhost:5173',
-  'http://localhost:5174',
-  'http://localhost:3000',
+  'https://admin.ngo.uz',
+  'https://cabinet.ngo.uz',
 ];
-// Pages preview URLs follow `<deployment-id>.<project>.pages.dev`.
-// Allow them so branch/PR deploys of either Pages project can use the
-// proxy without re-deploying it. Anchored to the literal suffix to
-// reject `…ngouz.pages.dev.attacker.com`.
-const ALLOWED_HOST_SUFFIXES = [
-  '.ngouz.pages.dev',
-  '.ngo-demo.pages.dev',
-  '.ngo-demo-4bu.pages.dev',
-  '.ngo-demo-night.pages.dev',
-];
+const ALLOWED_LLM_MODELS = new Set([
+  'gemini-2.5-flash',
+  'gemma-3-27b-it',
+  'gemma-4-26b-it',
+  'gemma-4-31b-it',
+]);
 const LLM_SECRET_SHA256 = 'a54bdfa7a8789bbbe5330195a5ce3a51a73d8453cc1915f46d3213b6955cf8c2';
 
 function isAllowedOrigin(origin) {
   if (!origin) return false;
-  if (ALLOWED_ORIGINS.includes(origin)) return true;
-  let host;
-  try {
-    const u = new URL(origin);
-    if (u.protocol !== 'https:') return false;
-    host = u.host;
-  } catch {
-    return false;
-  }
-  for (const suffix of ALLOWED_HOST_SUFFIXES) {
-    if (host.endsWith(suffix) && host.length > suffix.length) return true;
-  }
-  return false;
+  return ALLOWED_ORIGINS.includes(origin);
 }
 
 export default {
@@ -73,8 +52,8 @@ export default {
           time: new Date().toISOString(),
           // Bump on each meaningful change so external monitors can detect
           // a deploy without diffing other fields. Increments naturally
-          // line up with our iteration log; latest = iter 394.
-          version: 394,
+          // line up with our iteration log; latest = iter 403.
+          version: 403,
         }),
         { status: 200, headers },
       );
@@ -235,13 +214,13 @@ export default {
 
     let resp;
     try {
-      // Most API calls should fail fast, but AI grant search legitimately
-      // runs longer: router LLM + web search + page fetch + synthesizer.
-      // Frontend and PHP both allow 90s, so keep the proxy budget aligned
-      // for that route instead of cutting it at the generic API timeout.
-      const upstreamTimeoutMs = url.pathname === '/v1/public/grants-search' || url.pathname === '/v1/cabinet/grants-search'
-        ? 95000
-        : 25000;
+      // Grant search waits for Gemini, while commission mutations can create
+      // or update Google Docs. Keep those routes aligned with their clients.
+      const longRunningRequest = url.pathname === '/v1/public/grants-search'
+        || url.pathname === '/v1/cabinet/grants-search'
+        || (url.pathname.startsWith('/v1/commission/protocols')
+          && request.method !== 'GET' && request.method !== 'HEAD');
+      const upstreamTimeoutMs = longRunningRequest ? 95000 : 25000;
       const ctrl = new AbortController();
       const timer = setTimeout(() => ctrl.abort(), upstreamTimeoutMs);
       try {
@@ -342,12 +321,19 @@ async function handleLlmRelay(request, env) {
   const prompt = body && typeof body.prompt === 'string' ? body.prompt : '';
   const modelRaw = body && typeof body.model === 'string' && body.model.trim()
     ? body.model.trim()
-    : 'gemma-4-26b-it';
+    : 'gemini-2.5-flash';
   const model = modelRaw.replace(/^models\//, '');
-  const maxTokens = Math.max(1, Math.min(Number(body && body.maxTokens) || 2048, 8192));
+  const maxTokens = Math.max(64, Math.min(Number(body && body.maxTokens) || 2048, 8192));
+  const googleSearch = body && body.googleSearch === true;
 
   if (!key || !prompt) {
     return new Response(JSON.stringify({ error: 'missing_fields' }), { status: 400, headers });
+  }
+  if (!ALLOWED_LLM_MODELS.has(model)) {
+    return new Response(JSON.stringify({ error: 'model_not_allowed' }), { status: 400, headers });
+  }
+  if (googleSearch && model !== 'gemini-2.5-flash') {
+    return new Response(JSON.stringify({ error: 'search_model_not_allowed' }), { status: 400, headers });
   }
 
   const googleUrl = 'https://generativelanguage.googleapis.com/v1beta/models/'
@@ -358,6 +344,7 @@ async function handleLlmRelay(request, env) {
     contents: [{ role: 'user', parts: [{ text: prompt }] }],
     generationConfig: { maxOutputTokens: maxTokens },
   };
+  if (googleSearch) googleBody.tools = [{ google_search: {} }, { url_context: {} }];
 
   let upstream;
   try {

@@ -67,6 +67,26 @@
 # bots ignore it; X-Robots-Tag is the authoritative no-listing signal.
 /admin-*
   X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-cache, no-store, must-revalidate
 
 /cabinet/*
+  ! X-Frame-Options
+  ! Cache-Control
+  ! Content-Security-Policy
   X-Robots-Tag: noindex, nofollow
+  X-Frame-Options: DENY
+  Cache-Control: no-store
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-SsALTW4079zm4q5qPZE3586fcpK+jLS+dfqHgV+Zjys='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://ngo-api-proxy.sarvsop.workers.dev; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://ngo-api-proxy.sarvsop.workers.dev; worker-src 'self'; manifest-src 'self'; object-src 'none'; upgrade-insecure-requests
+
+/cabinet/assets/*
+  ! Cache-Control
+  Cache-Control: public, max-age=31536000, immutable
+
+/cabinet
+  ! X-Frame-Options
+  ! Cache-Control
+  ! Content-Security-Policy
+  X-Robots-Tag: noindex, nofollow
+  X-Frame-Options: DENY
+  Cache-Control: no-store
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'sha256-SsALTW4079zm4q5qPZE3586fcpK+jLS+dfqHgV+Zjys='; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://ngo-api-proxy.sarvsop.workers.dev; frame-src 'none'; frame-ancestors 'none'; base-uri 'self'; form-action 'self' https://ngo-api-proxy.sarvsop.workers.dev; worker-src 'self'; manifest-src 'self'; object-src 'none'; upgrade-insecure-requests

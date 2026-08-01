@@ -315,7 +315,7 @@
       ? '<span class="gov-news-archive-badge">Arxiv</span>' : '';
     return '<article class="gov-news-card" data-cat="' + esc(cat) + '" data-va-type="' + esc(vaType) + '" data-va-id="' + esc(n.id || '') + '">'
       + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
-      + '<div class="gov-news-img-inner" style="' + coverStyle(n) + '"></div>'
+      + '<div class="gov-news-img-inner" style="' + esc(coverStyle(n)) + '"></div>'
       + '<div class="gov-news-overlay"></div>' + archiveBadge + '</a>'
       + '<div class="gov-news-content">'
       + '<div class="gov-news-header">'
@@ -620,7 +620,7 @@
       + '</div>'
       + '<h1 class="detail-title">' + esc(tField(item,'title')) + '</h1>'
       + '<p class="detail-meta"><time datetime="' + esc(_datePart(item.date) || '') + '">' + fmtDate(item.date) + '</time><span class="detail-meta-sep">/</span><a href="' + listRoute + '">' + esc(cat) + '</a></p>'
-      + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
+      + '<div class="detail-cover" style="' + esc(coverStyle(item)) + '"></div>'
       + '<div class="detail-body">' + renderArticleBody(item, 'body', 'excerpt') + '</div>'
       + renderMediaGallery(item)
       + '<div class="detail-tags"><a href="' + listRoute + '" class="detail-tag">' + esc(cat) + '</a></div>'
@@ -654,7 +654,7 @@
       ? '<span class="gov-news-archive-badge" data-i18n="common.archive">Arxiv</span>' : '';
     return '<article class="gov-news-card" data-cat="' + esc(cat) + '" data-va-type="events" data-va-id="' + esc(e.id || '') + '">'
       + '<a href="' + url + '" class="gov-news-img" tabindex="-1" aria-hidden="true">'
-      + '<div class="gov-news-img-inner" style="' + coverStyle(e) + '"></div>'
+      + '<div class="gov-news-img-inner" style="' + esc(coverStyle(e)) + '"></div>'
       + '<div class="gov-news-overlay"></div>' + archiveBadge + '</a>'
       + '<div class="gov-news-content">'
       + '<div class="gov-news-header">'
@@ -805,7 +805,7 @@
       + '</div>'
       + '<h1 class="detail-title">' + esc(tField(item,'title')) + '</h1>'
       + '<p class="detail-meta"><time datetime="' + esc(_datePart(item.date) || '') + '">' + esc(item.dateLabel || fmtDate(item.date)) + '</time><span class="detail-meta-sep">/</span><a href="events">' + statusLabel + '</a></p>'
-      + '<div class="detail-cover" style="' + coverStyle(item) + '"></div>'
+      + '<div class="detail-cover" style="' + esc(coverStyle(item)) + '"></div>'
       + '<div class="detail-body">' + body + '</div>'
       + renderMediaGallery(item)
       + '<div class="detail-tags"><a href="events" class="detail-tag">Tadbir</a><a href="events" class="detail-tag">' + statusLabel + '</a></div>'
@@ -851,7 +851,7 @@
       var safeId = String(g.id || '').replace(/[^A-Za-z0-9_-]/g, '');
       var id = safeId ? ' id="' + safeId + '"' : '';
       var cover = g.cover_image
-        ? '<div class="card-cover" style="' + coverStyle(g) + '" aria-hidden="true"></div>'
+        ? '<div class="card-cover" style="' + esc(coverStyle(g)) + '" aria-hidden="true"></div>'
         : '';
       var status = grantStatus(g);
       var isOpen = status === 'open';

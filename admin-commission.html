@@ -40,7 +40,6 @@
     .meta-list strong { font-size: 15px; color: var(--grey-900); }
     .editor-frame { min-height: 440px; display: grid; place-items: center; background: linear-gradient(180deg, #f8fafc, #eef3f7); border: 1px dashed var(--grey-200); border-radius: 10px; text-align: center; padding: 24px; color: var(--grey-500); }
     .editor-frame.is-loaded { display: block; padding: 0; background: #fff; border-style: solid; text-align: initial; }
-    #onlyOfficeHost { width: 100%; height: 640px; min-height: 520px; }
     .vote-row { display: grid; grid-template-columns: 1fr auto; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--grey-100); }
     .vote-row:last-child { border-bottom: 0; }
     .vote-counts { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -383,7 +382,6 @@
   var myBallotSubmitted = false;
   var selectedCandidateIds = {};
   var currentCandidates = [];
-  var onlyOfficeEditor = null;
   var hasSignatureStroke = false;
   var advancedOpen = false;
   var viewParam = new URLSearchParams(window.location.search).get('view');
@@ -1009,43 +1007,15 @@
     frame.classList.remove('is-loaded');
     frame.textContent = 'Hujjat yuklanmoqda...';
     NgoApi.get('/commission/protocols/' + selectedId + '/editor-config').then(function (res) {
-      if (res.provider === 'google_docs') {
-        if (!res.url) {
-          frame.innerHTML = '<div><i class="ph ph-file-doc" style="font-size:38px" aria-hidden="true"></i><br>Google Docs havolasi biriktirilmagan.</div>';
-          return;
-        }
-        window.open(res.url, '_blank', 'noopener');
-        frame.innerHTML = '<div><i class="ph ph-google-logo" style="font-size:38px" aria-hidden="true"></i><br>Google Docs yangi oynada ochildi.</div>';
+      if (res.provider !== 'google_docs' || !res.url) {
+        frame.innerHTML = '<div><i class="ph ph-file-doc" style="font-size:38px" aria-hidden="true"></i><br>Google Docs havolasi biriktirilmagan.</div>';
         return;
       }
-      if (res.provider === 'onlyoffice' && res.configured === false) {
-        frame.innerHTML = '<div><i class="ph ph-file-doc" style="font-size:38px" aria-hidden="true"></i><br>' + esc(res.message || 'OnlyOffice sozlanmagan. Word hujjatini yuklash va olish ishlaydi.') + '</div>';
-        return;
-      }
-      frame.innerHTML = '<div id="onlyOfficeHost"></div>';
-      frame.classList.add('is-loaded');
-      function mount() {
-        if (!window.DocsAPI || !window.DocsAPI.DocEditor) {
-          frame.classList.remove('is-loaded');
-          frame.textContent = 'OnlyOffice skripti yuklanmadi.';
-          return;
-        }
-        if (onlyOfficeEditor && onlyOfficeEditor.destroyEditor) {
-          try { onlyOfficeEditor.destroyEditor(); } catch (e) {}
-        }
-        onlyOfficeEditor = new window.DocsAPI.DocEditor('onlyOfficeHost', res.config);
-      }
-      var src = String(res.onlyoffice_url || '').replace(/\/$/, '') + '/web-apps/apps/api/documents/api.js';
-      var existing = document.querySelector('script[data-onlyoffice-api]');
-      if (existing) { mount(); return; }
-      var s = document.createElement('script');
-      s.src = src; s.async = true; s.setAttribute('data-onlyoffice-api', '1');
-      s.onload = mount;
-      s.onerror = function () { frame.classList.remove('is-loaded'); frame.textContent = 'OnlyOffice serveriga ulanib bo‘lmadi.'; };
-      document.head.appendChild(s);
+      window.open(res.url, '_blank', 'noopener');
+      frame.innerHTML = '<div><i class="ph ph-google-logo" style="font-size:38px" aria-hidden="true"></i><br>Google Docs yangi oynada ochildi.</div>';
     }).catch(function (err) {
       frame.classList.remove('is-loaded');
-      frame.textContent = errText(err, 'OnlyOffice sozlanmagan yoki bayonnoma tanlanmagan.');
+      frame.textContent = errText(err, 'Google Docs hujjatini ochib bo‘lmadi.');
     });
   });
   document.getElementById('sourceDocxForm').addEventListener('submit', function (e) {

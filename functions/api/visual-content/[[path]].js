@@ -1,5 +1,6 @@
+import { safeImage, safeLink, sanitizeHtml } from '../../_shared/sanitize-html.js';
+
 const API_ME = 'https://ngo-api-proxy.sarvsop.workers.dev/v1/me';
-const ROLE_LEVELS = { super_admin: 100, regional_admin: 60, portal_moderator: 40, member_manager: 20, member_user: 10 };
 
 export async function onRequestOptions() {
   return json({}, 204);
@@ -9,7 +10,8 @@ export async function onRequestGet({ request, env }) {
   const url = new URL(request.url);
   const page = normalizePage(url.searchParams.get('page') || '/');
   const items = await readItems(env, page);
-  return json({ page, items: items.filter(isPublicItem).map(publicItem) }, 200, { 'cache-control': 'no-store' });
+  const safeItems = await Promise.all(items.filter(isPublicItem).map(async (item) => publicItem(await sanitizePatch(item))));
+  return json({ page, items: safeItems }, 200, { 'cache-control': 'no-store' });
 }
 
 export async function onRequestPost({ request, env }) {
@@ -18,7 +20,7 @@ export async function onRequestPost({ request, env }) {
   let body;
   try { body = await request.json(); } catch { return json({ error: 'bad_json' }, 400); }
   const page = normalizePage(body.page || '/');
-  const patch = sanitizePatch(body.patch || {});
+  const patch = await sanitizePatch(body.patch || {});
   if (!patch.id || !patch.action) return json({ error: 'invalid_patch' }, 400);
   const items = await readItems(env, page);
   const now = new Date().toISOString();
@@ -51,7 +53,7 @@ async function requireAdmin(request) {
     if (!res.ok) return { ok: false, status: 401, error: 'invalid_auth' };
     const data = await res.json();
     const user = data.user || data;
-    if ((ROLE_LEVELS[user.role] || 0) < ROLE_LEVELS.regional_admin) {
+    if (user.role !== 'super_admin') {
       return { ok: false, status: 403, error: 'forbidden' };
     }
     return { ok: true, ...user };
@@ -86,16 +88,16 @@ function key(page) {
   return 'visual-content:' + page;
 }
 
-function sanitizePatch(input) {
+async function sanitizePatch(input) {
   const out = {
     id: String(input.id || '').slice(0, 240),
     action: String(input.action || '').slice(0, 24),
     kind: String(input.kind || '').slice(0, 24),
   };
   if (input.text != null) out.text = String(input.text).slice(0, 20000);
-  if (input.html != null) out.html = sanitizeHtml(String(input.html).slice(0, 40000));
-  if (input.src != null) out.src = safeUrl(input.src);
-  if (input.href != null) out.href = safeUrl(input.href);
+  if (input.html != null) out.html = await sanitizeHtml(String(input.html).slice(0, 40000));
+  if (input.src != null) out.src = safeImage(input.src);
+  if (input.href != null) out.href = safeLink(input.href);
   if (input.alt != null) out.alt = String(input.alt).slice(0, 500);
   if (input.targetId != null) out.targetId = String(input.targetId).slice(0, 240);
   if (input.position != null) out.position = String(input.position).slice(0, 24);
@@ -121,19 +123,6 @@ function publicItem(input) {
 function isPublicItem(input) {
   const html = String(input.html || '');
   return !html.includes('VA-TEST-MARKER');
-}
-
-function sanitizeHtml(html) {
-  return html
-    .replace(/<script[\s\S]*?>[\s\S]*?<\/script>/gi, '')
-    .replace(/\son[a-z]+\s*=\s*(['"]).*?\1/gi, '')
-    .replace(/\s(href|src)\s*=\s*(['"])\s*javascript:[\s\S]*?\2/gi, '');
-}
-
-function safeUrl(value) {
-  const v = String(value || '').trim().slice(0, 2000);
-  if (/^\s*javascript:/i.test(v)) return '';
-  return v;
 }
 
 function json(obj, status, extra) {
