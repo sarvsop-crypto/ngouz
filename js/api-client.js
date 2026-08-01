@@ -1,48 +1,29 @@
 /**
  * api-client.js — shared API client for admin + cabinet pages.
- * Uses bearer token in localStorage (persistent) or sessionStorage
- * (tab-only) so it works across ngo.uz / ngouz.pages.dev / admin.ngo.uz.
+ * Browser sessions use a host-only HttpOnly cookie issued by api.ngo.uz.
+ * The CSRF token and the visual-editor capability stay in memory only.
  *
  * Loaded by admin-*.html and cabinet/*.html before any page-specific JS.
  */
 
 (function () {
-  var API_BASE = 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
-  var TOKEN_KEY  = 'ngo_api_token';
+  var API_BASE = 'https://api.ngo.uz/v1';
   var USER_KEY   = 'ngo_api_user';
   var LOGIN_PAGE = 'admin-login';
   var IDLE_TIMEOUT_MS = 30 * 60 * 1000;
   var ACTIVITY_KEY = 'ngo_api_last_activity';
+  var csrfToken = '';
+  var csrfBootstrap = null;
+  var visualCapability = null;
 
-  // Read from localStorage first (persistent "Tizimda qolish"), then
-  // sessionStorage (tab-only). Write to whichever the user picked at
-  // login; default is localStorage to preserve the previous behavior
-  // for callers that don't pass a persistent flag.
-  function getToken() {
-    try { return localStorage.getItem(TOKEN_KEY) || sessionStorage.getItem(TOKEN_KEY) || ''; }
-    catch (e) { return ''; }
-  }
-  // If `persistent` is omitted, infer from where the existing token
-  // lives — keeps requireAuth()'s setUser(res.user) refresh from
-  // accidentally upgrading a tab-only session to permanent.
-  function setToken(t, persistent) {
+  function clearSession() {
+    csrfToken = '';
+    visualCapability = null;
     try {
-      if (persistent === undefined) {
-        persistent = !sessionStorage.getItem(TOKEN_KEY);
-      }
-      if (persistent === false) {
-        sessionStorage.setItem(TOKEN_KEY, t || '');
-        localStorage.removeItem(TOKEN_KEY);
-      } else {
-        localStorage.setItem(TOKEN_KEY, t || '');
-        sessionStorage.removeItem(TOKEN_KEY);
-      }
-    } catch (e) {}
-  }
-  function clearToken() {
-    try {
-      localStorage.removeItem(TOKEN_KEY); localStorage.removeItem(USER_KEY);
-      sessionStorage.removeItem(TOKEN_KEY); sessionStorage.removeItem(USER_KEY);
+      localStorage.removeItem('ngo_api_token');
+      sessionStorage.removeItem('ngo_api_token');
+      localStorage.removeItem(USER_KEY);
+      sessionStorage.removeItem(USER_KEY);
       localStorage.removeItem(ACTIVITY_KEY);
     } catch (e) {}
   }
@@ -51,19 +32,11 @@
     try { return JSON.parse(localStorage.getItem(USER_KEY) || sessionStorage.getItem(USER_KEY) || 'null'); }
     catch (e) { return null; }
   }
-  function setUser(u, persistent) {
+  function setUser(u) {
     try {
       var s = JSON.stringify(u || null);
-      if (persistent === undefined) {
-        persistent = !sessionStorage.getItem(TOKEN_KEY);
-      }
-      if (persistent === false) {
-        sessionStorage.setItem(USER_KEY, s);
-        localStorage.removeItem(USER_KEY);
-      } else {
-        localStorage.setItem(USER_KEY, s);
-        sessionStorage.removeItem(USER_KEY);
-      }
+      sessionStorage.setItem(USER_KEY, s);
+      localStorage.removeItem(USER_KEY);
     } catch (e) {}
   }
 
@@ -75,10 +48,16 @@
     var url = isAbsolute ? path : API_BASE + path;
     var headers = { 'Accept': 'application/json' };
     if (body !== undefined && !(body instanceof FormData)) headers['Content-Type'] = 'application/json';
-    var t = getToken();
-    if (t && !opts.noAuth) headers['Authorization'] = 'Bearer ' + t;
+    var safeMethod = method === 'GET' || method === 'HEAD' || method === 'OPTIONS';
+    if (!safeMethod && !opts.noAuth && !csrfToken) {
+      if (!csrfBootstrap) {
+        csrfBootstrap = me().then(function () { return true; }).finally(function () { csrfBootstrap = null; });
+      }
+      return csrfBootstrap.then(function () { return request(method, path, body, opts); });
+    }
+    if (!safeMethod && !opts.noAuth && csrfToken) headers['X-CSRF-Token'] = csrfToken;
 
-    var init = { method: method, headers: headers, credentials: 'omit' };
+    var init = { method: method, headers: headers, credentials: 'include' };
     if (body !== undefined && body !== null) {
       init.body = (body instanceof FormData) ? body : JSON.stringify(body);
     }
@@ -115,9 +94,7 @@
       var parse = ct.indexOf('application/json') !== -1 ? r.json() : r.text();
       return parse.then(function (data) {
         if (r.status === 401 && !opts.noAuth) {
-          // Always clear an invalid token — keeping it means every
-          // follow-up request silently 401s with no recovery path.
-          clearToken();
+          clearSession();
           // Auto-redirect on 401 unless caller explicitly opts out
           // (opts.noRedirect) or we're already on a login page.
           // Previously this required opts.authRedirect: true and most
@@ -145,21 +122,20 @@
     });
   }
 
-  function login(email, password, opts) {
-    var persistent = !opts || opts.persistent !== false;
-    return request('POST', '/auth/login', { email: email, password: password, client: 'mobile' }, { noAuth: true, noRedirect: true })
+  function login(email, password) {
+    return request('POST', '/auth/login', { email: email, password: password }, { noAuth: true, noRedirect: true })
       .then(function (res) {
-        if (res && res.token) {
-          setToken(res.token, persistent);
-          setUser(res.user, persistent);
+        if (res && res.user && res.csrf) {
+          csrfToken = res.csrf;
+          setUser(res.user);
         }
         return res;
       });
   }
 
   function logout() {
-    return request('POST', '/auth/logout', undefined, { keepalive: true }).catch(function () {}).then(function () {
-      clearToken();
+    return request('POST', '/auth/logout', undefined, { keepalive: true }).then(function () {
+      clearSession();
     });
   }
 
@@ -173,7 +149,7 @@
     var loginPage = opts.loginPage || (location.pathname.indexOf('/cabinet/') === 0 ? 'cabinet-login' : LOGIN_PAGE);
 
     function rememberActivity() {
-      if (!getToken()) return;
+      if (!getUser()) return;
       try { localStorage.setItem(ACTIVITY_KEY, String(Date.now())); } catch (e) {}
       arm();
     }
@@ -188,15 +164,18 @@
     }
 
     function expire() {
-      if (!getToken()) return;
-      logout().catch(function () {});
+      if (!getUser()) return;
       var next = encodeURIComponent(location.pathname + location.search);
-      location.replace(loginPage + '?error=session_expired&next=' + next);
+      logout().then(function () {
+        location.replace(loginPage + '?error=session_expired&next=' + next);
+      }).catch(function () {
+        timer = setTimeout(expire, 30000);
+      });
     }
 
     function arm() {
       if (timer) clearTimeout(timer);
-      if (!getToken()) return;
+      if (!getUser()) return;
       var remaining = timeoutMs - (Date.now() - lastActivity());
       timer = setTimeout(remaining <= 0 ? expire : arm, Math.max(remaining, 1000));
     }
@@ -205,13 +184,31 @@
       window.addEventListener(eventName, rememberActivity, { passive: true, capture: true });
     });
     window.addEventListener('storage', function (ev) {
-      if (ev.key === ACTIVITY_KEY || ev.key === TOKEN_KEY) arm();
+      if (ev.key === ACTIVITY_KEY || ev.key === USER_KEY) arm();
     });
-    if (getToken()) rememberActivity();
+    if (getUser()) rememberActivity();
   }
 
   function me() {
-    return request('GET', '/me');
+    return request('GET', '/me').then(function (res) {
+      csrfToken = (res && res.csrf) || '';
+      if (res && res.user) setUser(res.user);
+      return res;
+    });
+  }
+
+  function visualToken() {
+    var now = Date.now();
+    if (visualCapability && visualCapability.expiresAt - now > 15000) {
+      return Promise.resolve(visualCapability.token);
+    }
+    return request('POST', '/auth/visual-token', {}).then(function (res) {
+      visualCapability = {
+        token: res.token,
+        expiresAt: new Date(res.expires_at).getTime()
+      };
+      return visualCapability.token;
+    });
   }
 
   function requireAuth(opts) {
@@ -228,13 +225,7 @@
       location.replace(target);
       return Promise.reject(new Error('forbidden'));
     }
-    if (!getToken()) {
-      var next = encodeURIComponent(location.pathname + location.search);
-      location.replace((opts.loginPage || LOGIN_PAGE) + '?next=' + next);
-      return Promise.reject(new Error('no_token'));
-    }
-    return request('GET', '/me', undefined, { loginPage: opts.loginPage }).then(function (res) {
-      setUser(res.user);
+    return me().then(function (res) {
       if (opts.allowedRoles && opts.allowedRoles.length) {
         if (opts.allowedRoles.indexOf(res.user.role) === -1) {
           return redirectForbidden(res.user);
@@ -260,9 +251,9 @@
     login    : login,
     logout   : logout,
     me       : me,
-    getToken : getToken,
     getUser  : getUser,
-    clearToken: clearToken,
+    clearSession: clearSession,
+    visualToken: visualToken,
     requireAuth: requireAuth,
     startIdleLogout: startIdleLogout,
   };

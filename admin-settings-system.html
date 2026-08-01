@@ -190,8 +190,8 @@
       <a href="admin-notifications" class="btn btn--primary" data-i18n="admin.ui.allNotifications">Barcha bildirishnomalar</a>
     </div>
   </div>
-  <script src="js/api-client.js"></script>
-  <script src="js/admin-boot.js" defer></script>
+  <script src="js/api-client.js?v=20260801-cookie-auth"></script>
+  <script src="js/admin-boot.js?v=20260801-cookie-auth" defer></script>
   <script src="js/pacta-foundation.js" defer></script>
   <script src="js/pacta-notifications.js"></script>
   <script src="js/pacta-app.js"></script>
@@ -354,10 +354,8 @@
       });
     }
     window.downloadBackup = function (id) {
-      var token = NgoApi.getToken ? NgoApi.getToken() : '';
-      if (!token) { setBackupStatus('Yuklab olish uchun tizimga kiring.', 'error'); return; }
       fetch(NgoApi.base + '/admin/backups/' + encodeURIComponent(id) + '/download', {
-        headers: { Authorization: 'Bearer ' + token }
+        credentials: 'include'
       }).then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
         return r.blob();

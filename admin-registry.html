@@ -401,8 +401,8 @@
   <script src="js/pacta-foundation.js"></script>
   <script src="js/pacta-notifications.js"></script>
   <script src="js/admin-modal.js"></script>
-  <script src="js/api-client.js"></script>
-  <script src="js/admin-boot.js" defer></script>
+  <script src="js/api-client.js?v=20260801-cookie-auth"></script>
+  <script src="js/admin-boot.js?v=20260801-cookie-auth" defer></script>
   <script>
   (function () {
     var toastTimer;
@@ -665,11 +665,8 @@
     };
     var docViewerState = { url: '', name: '', scale: 1, blob: null };
     function fetchOrgFile(path, filename, preview) {
-      var token = '';
-      try { token = localStorage.getItem('ngo_api_token') || sessionStorage.getItem('ngo_api_token') || ''; } catch (_) {}
-      if (!token) { toast('Hujjatni yuklab olish uchun tizimga kiring.', 'error'); return; }
-      fetch('https://ngo-api-proxy.sarvsop.workers.dev/v1' + path, {
-        headers: { Authorization: 'Bearer ' + token }
+      fetch(NgoApi.base + path, {
+        credentials: 'include'
       }).then(function (r) {
         if (!r.ok) throw new Error('HTTP ' + r.status);
         return r.blob();
@@ -1088,11 +1085,6 @@
 
     function exportRegistry(format) {
         format = format || 'csv';
-        var token = NgoApi.getToken ? NgoApi.getToken() : '';
-        if (!token) {
-          toast('Eksport uchun tizimga qayta kiring.', 'error');
-          return;
-        }
         var searchInput = document.getElementById('registrySearch');
         if (searchInput) searchQ = searchInput.value.trim();
         readRegistryFilters();
@@ -1103,7 +1095,7 @@
           btn.disabled = true;
           btn.setAttribute('aria-disabled', 'true');
         });
-        fetch(url, { headers: { Authorization: 'Bearer ' + token } })
+        fetch(url, { credentials: 'include' })
           .then(function (res) {
             if (!res.ok) throw new Error('HTTP ' + res.status);
             return res.blob().then(function (blob) {

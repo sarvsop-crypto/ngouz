@@ -1,10 +1,17 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 const root = new URL('../', import.meta.url);
+const apiRoot = process.env.NGO_API_ROOT
+  ? pathToFileURL(resolve(process.env.NGO_API_ROOT) + '/')
+  : new URL('../../api.ngo.uz/', root);
 
 async function source(path) {
+  const apiPrefix = '../../api.ngo.uz/';
+  if (path.startsWith(apiPrefix)) return readFile(new URL(path.slice(apiPrefix.length), apiRoot), 'utf8');
   return readFile(new URL(path, root), 'utf8');
 }
 
@@ -113,7 +120,10 @@ test('document edit payload can round-trip body, status and archive state', asyn
   const documentSection = admin.slice(admin.indexOf('documents: {'), admin.indexOf('publications: {'));
   assert.match(documentSection, /select\('status'/);
   assert.match(documentSection, /checkbox\('is_archive'/);
-  assert.match(api, /SELECT id, date, category, title, excerpt, body, status, is_archive, cover_image/);
+  const listMethod = api.slice(api.indexOf('public function documentsList'), api.indexOf('public function documentsCreate'));
+  for (const field of ['body', 'status', 'is_archive', 'cover_image']) {
+    assert.match(listMethod, new RegExp('\\b' + field + '\\b'));
+  }
 });
 
 test('content delete handlers reject stale or incorrect ids', async () => {
@@ -124,9 +134,8 @@ test('content delete handlers reject stale or incorrect ids', async () => {
 });
 
 test('visual patch DELETE returns 404 and preserves storage when id is absent', async () => {
-  const workerSource = await source('functions/api/visual-content/[[path]].js');
-  const moduleUrl = 'data:text/javascript;base64,' + Buffer.from(workerSource).toString('base64');
-  const worker = await import(moduleUrl);
+  const moduleUrl = new URL('../functions/api/visual-content/[[path]].js', import.meta.url);
+  const worker = await import(moduleUrl.href + '?case=delete-missing');
   let stored = JSON.stringify([{ id: 'add:kept', action: 'add' }]);
   let writes = 0;
   const env = {
@@ -156,9 +165,8 @@ test('visual patch DELETE returns 404 and preserves storage when id is absent', 
 });
 
 test('visual patch DELETE removes exactly the requested add patch', async () => {
-  const workerSource = await source('functions/api/visual-content/[[path]].js');
-  const moduleUrl = 'data:text/javascript;base64,' + Buffer.from(workerSource).toString('base64');
-  const worker = await import(moduleUrl + '#delete-success');
+  const moduleUrl = new URL('../functions/api/visual-content/[[path]].js', import.meta.url);
+  const worker = await import(moduleUrl.href + '?case=delete-success');
   let stored = JSON.stringify([
     { id: 'add:remove-me', action: 'add' },
     { id: 'add:keep-me', action: 'add' }

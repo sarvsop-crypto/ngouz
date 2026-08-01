@@ -589,7 +589,7 @@
   // Here we mirror that behavior using the /admin/notifications
   // endpoint when running on an admin page.
   function hydrateAdminNotifPanel() {
-    if (typeof NgoApi === 'undefined' || !NgoApi.getToken || !NgoApi.getToken()) return;
+    if (typeof NgoApi === 'undefined' || !NgoApi.getUser || !NgoApi.getUser()) return;
     var listEl = document.getElementById('notifPanelList');
     if (!listEl) return;
     // Skip if cabinet-chrome already wired this (it runs first on

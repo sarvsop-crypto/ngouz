@@ -263,9 +263,9 @@
   </div>
 
   <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
-  <script src="js/api-client.js"></script>
+  <script src="js/api-client.js?v=20260801-cookie-auth"></script>
   <script src="js/admin-modal.js" defer></script>
-  <script src="js/admin-boot.js" defer></script>
+  <script src="js/admin-boot.js?v=20260801-cookie-auth" defer></script>
   <script>
   (function () {
     var DOC_API = (window.NgoApi && NgoApi.base) || 'https://ngo-api-proxy.sarvsop.workers.dev/v1';
@@ -361,12 +361,9 @@
       box.innerHTML = html || '—';
     }
 
-    // Fetch a submission's PDF with the admin bearer token and open it as a
-    // blob URL (token stays out of the address bar / logs).
+    // Fetch a submission's PDF with the HttpOnly admin session.
     window.openMurojaatDoc = function (id, key) {
-      var tok = '';
-      try { tok = localStorage.getItem('ngo_api_token') || sessionStorage.getItem('ngo_api_token') || ''; } catch (e) {}
-      fetch(DOC_API + '/admin/murojaat/' + id + '/doc/' + key, { headers: { 'Authorization': 'Bearer ' + tok } })
+      fetch(DOC_API + '/admin/murojaat/' + id + '/doc/' + key, { credentials: 'include' })
         .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.blob(); })
         .then(function (b) {
           var u = URL.createObjectURL(b);

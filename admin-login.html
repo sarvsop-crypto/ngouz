@@ -67,10 +67,6 @@
           </div>
 
           <div class="form-options">
-            <label class="checkbox-wrap">
-              <input type="checkbox" name="remember" />
-              <span data-i18n="admin.login.form.rememberMe">Tizimda qolish</span>
-            </label>
             <a href="admin-forgot-password-request" class="form-options__forgot" data-i18n="admin.login.form.forgotPassword">Parolni unutdingizmi?</a>
           </div>
 
@@ -109,7 +105,7 @@
     });
   </script>
 
-  <script src="js/api-client.js"></script>
+  <script src="js/api-client.js?v=20260801-cookie-auth"></script>
   <script>
     (function () {
       // Surface the ?error=... query param that admin-boot/requireAuth
@@ -143,14 +139,11 @@
           return 'admin-dashboard';
         }
       }
-      if (NgoApi.getToken()) {
-        NgoApi.me().then(function () {
-          location.replace(safeNext());
-        }).catch(function () {
-          NgoApi.clearToken();
-        });
-        return;
-      }
+      NgoApi.me().then(function () {
+        location.replace(safeNext());
+      }).catch(function () {
+        NgoApi.clearSession();
+      });
       var form = document.getElementById('adminLoginForm');
       form.addEventListener('submit', function (ev) {
         ev.preventDefault();
@@ -162,16 +155,14 @@
         if (!form.checkValidity()) { form.reportValidity(); return; }
         var emailEl = form.querySelector('input[name="email"]');
         var passEl  = form.querySelector('input[name="password"]');
-        var rememberEl = form.querySelector('input[name="remember"]');
         var btn     = form.querySelector('button[type="submit"]');
         var email   = (emailEl.value || '').trim();
         var pass    = passEl.value || '';
-        var remember = !!(rememberEl && rememberEl.checked);
         var loginLabel = btn.innerHTML;
         btn.disabled = true;
         btn.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i> Kirilmoqda...';
         form.setAttribute('aria-busy', 'true');
-        NgoApi.login(email, pass, { persistent: remember }).then(function (res) {
+        NgoApi.login(email, pass).then(function () {
           location.replace(safeNext());
         }).catch(function (err) {
           btn.disabled = false;

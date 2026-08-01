@@ -218,18 +218,17 @@
   }
 
   function boot() {
-    if (!NgoApi.getToken()) { showLogin(); return; }
     NgoApi.me().then(function (res) {
       state.user = res.user || res;
       if (!canUseVisualAdmin(state.user)) {
-        NgoApi.clearToken();
+        NgoApi.logout();
         showLogin();
         setError(els.loginError, 'Bu sahifa uchun admin huquqi kerak.');
         return;
       }
       showApp();
     }).catch(function () {
-      NgoApi.clearToken();
+      NgoApi.clearSession();
       showLogin();
     });
   }
@@ -250,12 +249,11 @@
     lock(btn, true, 'Kirilmoqda...');
     NgoApi.login(
       document.getElementById('loginEmail').value.trim(),
-      document.getElementById('loginPassword').value,
-      { persistent: document.getElementById('loginRemember').checked }
+      document.getElementById('loginPassword').value
     ).then(function (res) {
       state.user = res.user;
       if (!canUseVisualAdmin(state.user)) {
-        NgoApi.clearToken();
+        NgoApi.logout();
         showLogin();
         setError(els.loginError, 'Bu sahifa uchun admin huquqi kerak.');
         return;
@@ -641,19 +639,20 @@
   }
 
   function saveI18nLang(key, lang, value) {
-    var token = NgoApi.getToken();
-    if (String(value).trim() === '') {
-      // Blanked → drop the override so the deployed base translation returns.
-      return fetch(API_I18N + '?lang=' + encodeURIComponent(lang) + '&key=' + encodeURIComponent(key), {
-        method: 'DELETE',
-        headers: { 'Authorization': 'Bearer ' + token }
+    return NgoApi.visualToken().then(function (token) {
+      if (String(value).trim() === '') {
+        // Blanked → drop the override so the deployed base translation returns.
+        return fetch(API_I18N + '?lang=' + encodeURIComponent(lang) + '&key=' + encodeURIComponent(key), {
+          method: 'DELETE',
+          headers: { 'Authorization': 'Bearer ' + token }
+        }).then(i18nResponse);
+      }
+      return fetch(API_I18N, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ lang: lang, key: key, value: value })
       }).then(i18nResponse);
-    }
-    return fetch(API_I18N, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
-      body: JSON.stringify({ lang: lang, key: key, value: value })
-    }).then(i18nResponse);
+    });
   }
 
   function i18nResponse(r) {
@@ -2311,17 +2310,19 @@
         (node.parentElement && node.parentElement.getAttribute('data-va-block-id')) || '';
       patch.position = node.getAttribute('data-va-added-position') || 'append';
     }
-    return fetch(API_VISUAL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + NgoApi.getToken(),
-      },
-      body: JSON.stringify({ page: visualPatchPageKey(node), patch: patch }),
-    }).then(function (r) {
-      return r.json().catch(function () { return {}; }).then(function (body) {
-        if (!r.ok) throw new Error(body.error || ('HTTP ' + r.status));
-        return body;
+    return NgoApi.visualToken().then(function (token) {
+      return fetch(API_VISUAL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token,
+        },
+        body: JSON.stringify({ page: visualPatchPageKey(node), patch: patch }),
+      }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (body) {
+          if (!r.ok) throw new Error(body.error || ('HTTP ' + r.status));
+          return body;
+        });
       });
     });
   }
@@ -2852,13 +2853,15 @@
   }
 
   function deleteVisualPatch(id) {
-    return fetch(API_VISUAL + '?page=' + encodeURIComponent(visualPageKey()) + '&id=' + encodeURIComponent(id), {
-      method: 'DELETE',
-      headers: { 'Authorization': 'Bearer ' + NgoApi.getToken() }
-    }).then(function (r) {
-      return r.json().catch(function () { return {}; }).then(function (body) {
-        if (!r.ok) throw new Error(body.error || ('HTTP ' + r.status));
-        return body;
+    return NgoApi.visualToken().then(function (token) {
+      return fetch(API_VISUAL + '?page=' + encodeURIComponent(visualPageKey()) + '&id=' + encodeURIComponent(id), {
+        method: 'DELETE',
+        headers: { 'Authorization': 'Bearer ' + token }
+      }).then(function (r) {
+        return r.json().catch(function () { return {}; }).then(function (body) {
+          if (!r.ok) throw new Error(body.error || ('HTTP ' + r.status));
+          return body;
+        });
       });
     });
   }

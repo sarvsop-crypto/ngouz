@@ -369,13 +369,6 @@ document.addEventListener('DOMContentLoaded', function () {
               window.location.href = dest;
             });
           } else {
-            // Fall back to manual token clear if api-client didn't load.
-            try {
-              localStorage.removeItem('ngo_api_token');
-              localStorage.removeItem('ngo_api_user');
-              sessionStorage.removeItem('ngo_api_token');
-              sessionStorage.removeItem('ngo_api_user');
-            } catch (e) { /* swallow */ }
             window.location.href = dest;
           }
         };

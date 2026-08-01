@@ -115,9 +115,9 @@
 <script src="js/pacta-app.js"></script>
 <script src="js/pacta-foundation.js"></script>
 <script src="js/pacta-notifications.js"></script>
-<script src="js/api-client.js"></script>
+<script src="js/api-client.js?v=20260801-cookie-auth"></script>
 <script>window.NGO_ADMIN_AUTH = { allowedRoles: ['leader', 'super_admin'], fallbackPage: 'admin-leader-signing' };</script>
-<script src="js/admin-boot.js" defer></script>
+<script src="js/admin-boot.js?v=20260801-cookie-auth" defer></script>
 <script>
 (function () {
   var items = [];
@@ -250,10 +250,8 @@
       .catch(function (err) { setBusy(false); toast('Rad etishda xatolik: ' + ((err && err.message) || 'nomaʼlum'), 'error'); });
   };
   window.downloadLeaderDoc = function (id) {
-    var token = NgoApi.getToken ? NgoApi.getToken() : '';
-    if (!token) { toast('Hujjatni yuklab olish uchun tizimga kiring.', 'error'); return; }
     fetch(NgoApi.base + '/admin/membership-documents/' + encodeURIComponent(id) + '/download', {
-      headers: { Authorization: 'Bearer ' + token }
+      credentials: 'include'
     }).then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.blob();
