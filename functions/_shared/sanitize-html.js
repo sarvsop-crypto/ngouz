@@ -106,6 +106,12 @@ function safeStyle(value) {
     if (separator < 1) return false;
     const property = declaration.slice(0, separator).trim().toLowerCase();
     const propertyValue = declaration.slice(separator + 1).trim();
+    const loweredValue = propertyValue.toLowerCase();
+    if (loweredValue.includes('expression(') || loweredValue.includes('url(')
+      || loweredValue.includes('behavior(') || loweredValue.includes('-moz-binding')) return false;
+    if (property === 'grid-column') {
+      return /^(?:-?\d+|span\s+\d+)\s*\/\s*(?:-?\d+|span\s+\d+)$/.test(propertyValue);
+    }
     return ALLOWED_STYLE_PROPERTIES.has(property)
       && propertyValue.length <= 200
       && /^[#(),.%\-A-Za-z0-9_\s]+$/.test(propertyValue);
