@@ -7,7 +7,7 @@
  *
  * Versioned cache name — bump CACHE_VERSION to invalidate on rollouts.
  */
-const CACHE_VERSION = 'ngo-v521-admin-identity-picker';
+const CACHE_VERSION = 'ngo-v522-admin-hidden-buttons';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 
 const PRECACHE = [

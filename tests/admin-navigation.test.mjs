@@ -49,6 +49,7 @@ test('one role matrix protects menu visibility and direct page access', async ()
 test('messaging UX opens people, separates groups, and removes generic thread creation', async () => {
   const html = await source('admin-messages.html');
   const js = await source('js/admin-messages.js');
+  const appCss = await source('css/pacta-app.css');
   assert.match(html, /id="peoplePickerBtn"[^>]*>[\s\S]*?Odam topish/);
   assert.match(html, /id="groupCreateBtn"/);
   assert.match(html, /id="peopleSearch"/);
@@ -58,8 +59,11 @@ test('messaging UX opens people, separates groups, and removes generic thread cr
   assert.match(js, /created: false/);
   assert.match(js, /type: 'direct', recipient_user_id:/);
   assert.match(js, /Mavjud suhbat/);
+  assert.match(js, /if \(state\.users\.length\) renderPeople\(\)/);
+  assert.match(js, /var usersReady = NgoApi\.get\('\/admin\/messages\/users'\)\.then/);
   assert.match(js, /NgoAdminReady\.then\(init\)/);
   assert.doesNotMatch(js, /setTimeout\(function \(\) \{ wait/);
+  assert.match(appCss, /\.btn\[hidden\]\s*\{\s*display:\s*none;\s*\}/);
 });
 
 test('mobile drawer has focus trapping, inert background, and focus restoration', async () => {
