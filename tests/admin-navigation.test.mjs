@@ -70,6 +70,9 @@ test('mobile drawer has focus trapping, inert background, and focus restoration'
   const foundation = await source('js/pacta-foundation.js');
   assert.match(foundation, /main\.setAttribute\('inert', ''\)/);
   assert.match(foundation, /event\.key === 'Tab'/);
-  assert.match(foundation, /restoreFocus\.focus\(\)/);
+  assert.match(foundation, /mobileSidebarRestoreFocus\.focus\(\)/);
   assert.match(foundation, /NgoAdminNavigationReady/);
+  assert.match(foundation, /closest\('\.mobile-nav-toggle'\)/);
+  assert.match(foundation, /function mobileSidebarParts\(\)/);
+  assert.doesNotMatch(foundation, /mobileSidebarWired/);
 });
