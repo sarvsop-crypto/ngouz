@@ -83,6 +83,7 @@
     var unread = state.threads.reduce(function (sum, thread) { return sum + Number(thread.unread_count || 0); }, 0);
     if (window.NgoAdminNavigation) NgoAdminNavigation.setBadge('messages', unread);
     el('threadList').setAttribute('aria-busy', 'false');
+    if (state.users.length) renderPeople();
   }
 
   function existingDirect(userId) {
