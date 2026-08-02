@@ -459,11 +459,13 @@
 
   function init(user) {
     wireEvents(user);
-    Promise.all([NgoApi.get('/admin/messages/users'), loadThreads(false)]).then(function (results) {
-      state.users = arr(results[0].items);
+    var usersReady = NgoApi.get('/admin/messages/users').then(function (response) {
+      state.users = arr(response.items);
       el('peoplePickerBtn').disabled = false;
       if (user.role === 'super_admin') el('groupCreateBtn').disabled = false;
       renderPeople();
+    });
+    Promise.all([usersReady, loadThreads(false)]).then(function () {
       return NgoApi.get('/admin/collaboration/events?bootstrap=1');
     }).then(function (response) {
       state.eventCursor = response.cursor || 0;

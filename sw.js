@@ -7,7 +7,7 @@
  *
  * Versioned cache name — bump CACHE_VERSION to invalidate on rollouts.
  */
-const CACHE_VERSION = 'ngo-v519-admin-identity';
+const CACHE_VERSION = 'ngo-v520-admin-identity-retry';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 
 const PRECACHE = [
