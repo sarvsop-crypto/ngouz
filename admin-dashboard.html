@@ -57,6 +57,7 @@
           <a href="admin-registry" class="sidebar__nav-link" data-i18n-title="admin.nav.registry" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.registry">NNT Ro'yxati</span></a>
           <a href="admin-regions" class="sidebar__nav-link" data-i18n-title="admin.nav.regions" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.regions">Hududlar</span></a>
           <a href="admin-tasks" class="sidebar__nav-link" data-i18n-title="admin.nav.tasks" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.tasks">Topshiriqlar</span></a>
+          <a href="admin-messages" class="sidebar__nav-link" data-i18n-title="admin.nav.messages" title="Ichki xabarlar"><span class="sidebar__nav-icon"><i class="ph ph-chats-circle" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.messages">Ichki xabarlar</span><span class="unread-badge" id="dashboardNavUnread" hidden></span></a>
           <a href="admin-users" class="sidebar__nav-link" data-i18n-title="admin.nav.users" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.users">Foydalanuvchilar</span></a>
           <a href="admin-reports" class="sidebar__nav-link" data-i18n-title="admin.nav.reports" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.reports">Hisobotlar</span></a>
           <a href="admin-analytics" class="sidebar__nav-link" data-i18n-title="admin.nav.analytics" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.analytics">Tahliliy ma'lumotlar</span></a>
@@ -112,8 +113,15 @@
             <button type="button" class="quick-filter" data-range="mine">Mening hududim</button>
           </div>
           <button type="button" class="btn btn--secondary" id="exportDashboardBtn"><i class="ph ph-download-simple" aria-hidden="true"></i> <span data-i18n="admin.dashboard.export">Eksport</span></button>
+          <a href="admin-tasks?action=new" class="btn btn--primary" id="dashboardAssignTask" hidden><i class="ph ph-check-square" aria-hidden="true"></i> Topshiriq tayinlash</a>
           <a href="admin-membership-requests" class="btn btn--primary"><i class="ph ph-plus" aria-hidden="true"></i> <span data-i18n="admin.dashboard.newRequest">Yangi ariza</span></a>
         </div>
+      </div>
+
+      <div class="cards cards--system" aria-label="Hamkorlik ko'rsatkichlari">
+        <a class="card" href="admin-tasks?due=overdue"><div class="card__body"><div><p class="card__label">Kechikkan topshiriqlar</p><p class="card__value" id="dashboardTaskOverdue">—</p></div></div></a>
+        <a class="card" href="admin-tasks?status=blocked"><div class="card__body"><div><p class="card__label">Bloklangan topshiriqlar</p><p class="card__value" id="dashboardTaskBlocked">—</p></div></div></a>
+        <a class="card" href="admin-messages"><div class="card__body"><div><p class="card__label">O'qilmagan ichki xabarlar</p><p class="card__value" id="dashboardUnreadMessages">—</p></div></div></a>
       </div>
 
       <div class="cards cards--priority">
@@ -468,5 +476,6 @@
     }
   })();
   </script>
+  <script src="js/admin-dashboard-collaboration.js?v=20260802" defer></script>
 </body>
 </html>

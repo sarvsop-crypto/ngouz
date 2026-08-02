@@ -72,6 +72,9 @@
       "tasks": {
         "title": "Tasks"
       },
+      "messages": {
+        "title": "Internal messages"
+      },
       "users": {
         "title": "User management"
       }
@@ -84,6 +87,7 @@
       "regions": "Regions",
       "documents": "Documents",
       "tasks": "Tasks",
+      "messages": "Internal messages",
       "users": "Users",
       "reports": "Reports",
       "analytics": "Analytics",
@@ -110,6 +114,11 @@
       "delete": "Delete",
       "edit": "Edit",
       "irreversible": "This action cannot be undone."
+    },
+    "collaboration": {
+      "common": { "search": "Search", "status": "Status", "priority": "Priority", "sort": "Sort", "apply": "Apply", "loading": "Loading...", "offline": "Offline", "retry": "Retry" },
+      "tasks": { "title": "Tasks", "new": "Assign task", "open": "Open", "overdue": "Overdue", "blocked": "Blocked", "done": "Completed", "list": "Task list", "discussion": "Discussion", "history": "History", "files": "Files", "conflict": "The task was changed by another user." },
+      "messages": { "title": "Internal messages — O'zNNTMA Admin", "heading": "Internal messages", "threads": "Conversations", "new": "New conversation", "send": "Send", "reply": "Reply", "typing": "is typing...", "degraded": "Connection is unstable; reconnecting." }
     },
     "table": {
       "name": "Name",

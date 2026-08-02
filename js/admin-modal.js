@@ -48,6 +48,8 @@
         ? document.activeElement : null),
     };
     stack.push(entry);
+    el.hidden = false;
+    el.removeAttribute('inert');
     el.classList.add('is-open');
     el.setAttribute('aria-hidden', 'false');
     // Body-only overflow:hidden left the page scrollable through the
@@ -81,6 +83,8 @@
     if (el) {
       el.classList.remove('is-open');
       el.setAttribute('aria-hidden', 'true');
+      el.setAttribute('inert', '');
+      el.hidden = true;
     }
     if (!stack.length) {
       document.documentElement.classList.remove('is-modal-open');
@@ -139,6 +143,12 @@
   // readers announce them properly even before the dialog is opened.
   // Idempotent — only fills attributes the page didn't already set.
   function decorateTriggers() {
+    document.querySelectorAll('.modal-overlay[aria-hidden="true"]').forEach(function (dialog) {
+      if (!dialog.classList.contains('is-open')) {
+        dialog.setAttribute('inert', '');
+        dialog.hidden = true;
+      }
+    });
     document.querySelectorAll('[data-modal-open]').forEach(function (btn) {
       var targetId = btn.getAttribute('data-modal-open');
       if (!btn.hasAttribute('aria-haspopup')) btn.setAttribute('aria-haspopup', 'dialog');

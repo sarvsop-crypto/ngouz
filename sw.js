@@ -7,7 +7,7 @@
  *
  * Versioned cache name — bump CACHE_VERSION to invalidate on rollouts.
  */
-const CACHE_VERSION = 'ngo-v517';
+const CACHE_VERSION = 'ngo-v518-collaboration';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 
 const PRECACHE = [
@@ -39,7 +39,8 @@ self.addEventListener('activate', (event) => {
 });
 
 function isStaticAsset(url) {
-  if (/^\/js\/(api-client|admin-boot|visual-admin)\.js$/.test(url.pathname)) return false;
+  if (/^\/js\/(api-client|admin-[a-z0-9-]+|visual-admin)\.js$/.test(url.pathname)
+      || url.pathname === '/css/pacta-collaboration.page.css') return false;
   return /^\/(js|css|img|fonts)\//.test(url.pathname)
       || /^\/favicon\.(svg|ico)$/.test(url.pathname)
       || /^\/manifest\.webmanifest$/.test(url.pathname);

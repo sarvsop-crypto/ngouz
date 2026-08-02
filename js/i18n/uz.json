@@ -72,6 +72,9 @@
       "tasks": {
         "title": "Topshiriqlar"
       },
+      "messages": {
+        "title": "Ichki xabarlar"
+      },
       "users": {
         "title": "Foydalanuvchilar boshqaruvi"
       }
@@ -84,6 +87,7 @@
       "regions": "Hududlar",
       "documents": "Hujjatlar",
       "tasks": "Topshiriqlar",
+      "messages": "Ichki xabarlar",
       "users": "Foydalanuvchilar",
       "reports": "Hisobotlar",
       "analytics": "Tahliliy ma'lumotlar",
@@ -110,6 +114,11 @@
       "delete": "O'chirish",
       "edit": "Tahrirlash",
       "irreversible": "Bu amalni qaytarib bo'lmaydi."
+    },
+    "collaboration": {
+      "common": { "search": "Qidirish", "status": "Holat", "priority": "Muhimlik", "sort": "Saralash", "apply": "Qo'llash", "loading": "Yuklanmoqda...", "offline": "Aloqa yo'q", "retry": "Qayta urinish" },
+      "tasks": { "title": "Topshiriqlar", "new": "Topshiriq tayinlash", "open": "Ochiq", "overdue": "Kechikkan", "blocked": "Bloklangan", "done": "Bajarilgan", "list": "Topshiriqlar ro'yxati", "discussion": "Muhokama", "history": "Tarix", "files": "Fayllar", "conflict": "Topshiriq boshqa foydalanuvchi tomonidan yangilangan." },
+      "messages": { "title": "Ichki xabarlar — O'zNNTMA Admin", "heading": "Ichki xabarlar", "threads": "Suhbatlar", "new": "Yangi suhbat", "send": "Yuborish", "reply": "Javob", "typing": "yozmoqda...", "degraded": "Aloqa sust, qayta ulanmoqda." }
     },
     "table": {
       "name": "Nomi",

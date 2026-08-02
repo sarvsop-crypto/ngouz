@@ -75,7 +75,9 @@
     // leak when the response arrives normally.
     var timeoutMs = (typeof opts.timeout === 'number') ? opts.timeout : DEFAULT_TIMEOUT_MS;
     var timer = null;
-    if (timeoutMs > 0 && typeof AbortController === 'function') {
+    if (opts.signal) {
+      init.signal = opts.signal;
+    } else if (timeoutMs > 0 && typeof AbortController === 'function') {
       var ctrl = new AbortController();
       timer = setTimeout(function () { ctrl.abort(); }, timeoutMs);
       init.signal = ctrl.signal;
@@ -91,7 +93,9 @@
       throw err;
     }).then(function (r) {
       var ct = r.headers.get('content-type') || '';
-      var parse = ct.indexOf('application/json') !== -1 ? r.json() : r.text();
+      var parse = opts.responseType === 'blob'
+        ? r.blob()
+        : (ct.indexOf('application/json') !== -1 ? r.json() : r.text());
       return parse.then(function (data) {
         if (r.status === 401 && !opts.noAuth) {
           clearSession();
@@ -211,6 +215,33 @@
     });
   }
 
+  function upload(path, formData, onProgress) {
+    if (!csrfToken) {
+      if (!csrfBootstrap) csrfBootstrap = me().then(function () { return true; }).finally(function () { csrfBootstrap = null; });
+      return csrfBootstrap.then(function () { return upload(path, formData, onProgress); });
+    }
+    return new Promise(function (resolve, reject) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', /^https?:\/\//.test(path) ? path : API_BASE + path);
+      xhr.withCredentials = true;
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.setRequestHeader('X-CSRF-Token', csrfToken);
+      xhr.upload.onprogress = function (ev) {
+        if (ev.lengthComputable && onProgress) onProgress(Math.round(ev.loaded / ev.total * 100));
+      };
+      xhr.onerror = function () { reject(new Error('network_error')); };
+      xhr.onabort = function () { var e = new Error('aborted'); e.code = 'aborted'; reject(e); };
+      xhr.onload = function () {
+        var data = null;
+        try { data = xhr.responseText ? JSON.parse(xhr.responseText) : {}; } catch (e) { data = xhr.responseText; }
+        if (xhr.status >= 200 && xhr.status < 300) { resolve(data); return; }
+        var err = new Error((data && data.message) || ('HTTP ' + xhr.status));
+        err.status = xhr.status; err.code = data && data.error; err.payload = data; reject(err);
+      };
+      xhr.send(formData);
+    });
+  }
+
   function requireAuth(opts) {
     opts = opts || {};
     function roleHome(role) {
@@ -248,6 +279,8 @@
     put      : function (p, b, opts) { return request('PUT',    p, b, opts); },
     patch    : function (p, b, opts) { return request('PATCH',  p, b, opts); },
     del      : function (p, opts) { return request('DELETE', p, undefined, opts); },
+    download : function (p, opts) { opts = opts || {}; opts.responseType = 'blob'; return request('GET', p, undefined, opts); },
+    upload   : upload,
     login    : login,
     logout   : logout,
     me       : me,
