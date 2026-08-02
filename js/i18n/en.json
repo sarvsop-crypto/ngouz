@@ -99,7 +99,10 @@
       "news": "News",
       "events": "Events",
       "grants": "Grants",
+      "notifications": "Notifications",
       "settings": "Settings",
+      "commission": "Commission",
+      "leaderSigning": "Leader signature",
       "logout": "Log out"
     },
     "ui": {

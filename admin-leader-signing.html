@@ -28,7 +28,8 @@
 <noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center">Bu sahifa ishlashi uchun JavaScript yoqilgan bo'lishi kerak.</div></noscript>
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
 <div class="layout">
-  <main class="main" id="main-content" tabindex="-1" style="margin-left:0">
+  <aside class="sidebar" data-admin-navigation aria-busy="true"></aside>
+  <main class="main" id="main-content" tabindex="-1">
     <header class="topbar">
       <div class="topbar-left">
         <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><span aria-current="page">Rahbar imzosi</span></nav>
@@ -113,11 +114,12 @@
 
 <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
 <script src="js/pacta-app.js"></script>
-<script src="js/pacta-foundation.js"></script>
+<script src="js/pacta-foundation.js?v=20260802-admin-identity"></script>
 <script src="js/pacta-notifications.js"></script>
 <script src="js/api-client.js?v=20260801-cookie-auth"></script>
 <script>window.NGO_ADMIN_AUTH = { allowedRoles: ['leader', 'super_admin'], fallbackPage: 'admin-leader-signing' };</script>
-<script src="js/admin-boot.js?v=20260801-cookie-auth" defer></script>
+<script src="js/admin-navigation.js?v=20260802" defer></script>
+<script src="js/admin-boot.js?v=20260802-admin-identity" defer></script>
 <script>
 (function () {
   var items = [];

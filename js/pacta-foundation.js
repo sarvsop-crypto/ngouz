@@ -292,6 +292,8 @@
     var topbarLeft = document.querySelector('.topbar-left') || document.querySelector('.topbar');
 
     if (!sidebar || !topbarLeft) return;
+    if (sidebar.dataset.mobileSidebarWired === '1') return;
+    sidebar.dataset.mobileSidebarWired = '1';
 
     var menuBtn = document.querySelector('.mobile-nav-toggle');
     if (!menuBtn) {
@@ -318,6 +320,8 @@
       document.body.appendChild(backdrop);
     }
 
+    var restoreFocus = null;
+    var main = document.querySelector('main');
     function setOpen(nextState) {
       var isMobile = window.matchMedia('(max-width: 1024px)').matches;
       if (!isMobile) {
@@ -325,6 +329,7 @@
         backdrop.classList.remove('is-visible');
         document.body.classList.remove('sidebar-open');
         menuBtn.setAttribute('aria-expanded', 'false');
+        if (main) main.removeAttribute('inert');
         return;
       }
 
@@ -332,6 +337,18 @@
       backdrop.classList.toggle('is-visible', nextState);
       document.body.classList.toggle('sidebar-open', nextState);
       menuBtn.setAttribute('aria-expanded', nextState ? 'true' : 'false');
+      if (main) {
+        if (nextState) main.setAttribute('inert', '');
+        else main.removeAttribute('inert');
+      }
+      if (nextState) {
+        restoreFocus = document.activeElement;
+        var first = sidebar.querySelector('input, a[href], button:not([disabled])');
+        if (first) first.focus();
+      } else if (restoreFocus && restoreFocus.focus) {
+        restoreFocus.focus();
+        restoreFocus = null;
+      }
     }
 
     menuBtn.addEventListener('click', function () {
@@ -346,13 +363,20 @@
     document.addEventListener('keydown', function (event) {
       if (event.key === 'Escape') {
         setOpen(false);
+        return;
+      }
+      if (event.key === 'Tab' && sidebar.classList.contains('is-mobile-open')) {
+        var focusable = Array.prototype.slice.call(sidebar.querySelectorAll('a[href]:not([hidden]), input:not([disabled]), button:not([disabled])'));
+        if (!focusable.length) return;
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
       }
     });
 
-    sidebar.querySelectorAll('a').forEach(function (link) {
-      link.addEventListener('click', function () {
-        setOpen(false);
-      });
+    sidebar.addEventListener('click', function (event) {
+      if (event.target.closest('a')) setOpen(false);
     });
 
     window.addEventListener('resize', function () {
@@ -735,6 +759,13 @@
     initChartTextRepair();
     hydrateAdminNotifPanel();
   }
+
+  document.addEventListener('NgoAdminNavigationReady', function () {
+    hardenLandmarks();
+    normalizeButtons();
+    setupMobileSidebar();
+    setupSidebarCollapse();
+  });
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);

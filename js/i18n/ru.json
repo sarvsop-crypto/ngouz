@@ -99,7 +99,10 @@
       "news": "Новости",
       "events": "Мероприятия",
       "grants": "Гранты",
+      "notifications": "Уведомления",
       "settings": "Настройки",
+      "commission": "Комиссия",
+      "leaderSigning": "Подпись руководителя",
       "logout": "Выйти"
     },
     "ui": {

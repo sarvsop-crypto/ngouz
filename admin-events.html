@@ -62,52 +62,7 @@
 <noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui,-apple-system,Segoe UI,sans-serif;text-align:center" data-i18n="admin.events.noscript">Bu sahifa to'liq ishlashi uchun JavaScript yoqilgan bo'lishi kerak. Iltimos, brauzeringizda JavaScriptni yoqing.</div></noscript>
   <a class="skip-link" href="#main-content" data-i18n="admin.events.skipToMain">Asosiy kontentga o'tish</a>
   <div class="layout">
-    <aside class="sidebar">
-      <div class="sidebar__header">
-        <div class="u-inline-stack">
-          <div class="sidebar__logo u-logo-badge">N</div>
-          <span class="sidebar__title" data-i18n="admin.brand">O'zNNTMA Admin</span>
-        </div>
-        <button type="button" class="sidebar__collapse" id="sidebarToggle" data-i18n-aria-label="admin.sidebarCollapse" aria-label="Yon panelni yopish" aria-expanded="true">&lsaquo;</button>
-      </div>
-      <div class="sidebar__search" id="sidebarSearchTrigger">
-        <span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass" aria-hidden="true"></i></span>
-        <input type="search" enterkeyhint="search" data-i18n-placeholder="common.searchAria" placeholder="Qidirish" data-i18n-aria-label="common.searchAria" aria-label="Qidirish" maxlength="200" />
-      </div>
-      <nav class="sidebar__nav" data-i18n-aria-label="admin.menuAria" aria-label="Admin menyusi">
-        <div class="sidebar__nav-section">
-          <div class="sidebar__nav-label" data-i18n="admin.sec.main">ASOSIY MENYU</div>
-          <a href="admin-dashboard" class="sidebar__nav-link" data-i18n-title="admin.nav.dashboard" title="Boshqaruv paneli"><span class="sidebar__nav-icon"><i class="ph ph-squares-four" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.dashboard">Boshqaruv paneli</span></a>
-          <a href="admin-membership-requests" class="sidebar__nav-link" data-i18n-title="admin.nav.membershipRequests" title="A'zolik arizalari"><span class="sidebar__nav-icon"><i class="ph ph-file-text" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.membershipRequests">A'zolik arizalari</span></a>
-          <a href="admin-grant-applications" class="sidebar__nav-link" data-i18n-title="admin.nav.grantApplications" title="Grant arizalari"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.grantApplications">Grant arizalari</span></a>
-          <a href="admin-registry" class="sidebar__nav-link" data-i18n-title="admin.nav.registry" title="NNT Ro'yxati"><span class="sidebar__nav-icon"><i class="ph ph-list-bullets" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.registry">NNT Ro'yxati</span></a>
-          <a href="admin-regions" class="sidebar__nav-link" data-i18n-title="admin.nav.regions" title="Hududlar"><span class="sidebar__nav-icon"><i class="ph ph-map-pin" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.regions">Hududlar</span></a>
-          <a href="admin-documents" class="sidebar__nav-link" data-i18n-title="admin.nav.documents" title="Hujjatlar"><span class="sidebar__nav-icon"><i class="ph ph-folder-open" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.documents">Hujjatlar</span></a>
-          <a href="admin-tasks" class="sidebar__nav-link" data-i18n-title="admin.nav.tasks" title="Topshiriqlar"><span class="sidebar__nav-icon"><i class="ph ph-check-square" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.tasks">Topshiriqlar</span></a>
-          <a href="admin-messages" class="sidebar__nav-link" data-i18n-title="admin.nav.messages" title="Ichki xabarlar"><span class="sidebar__nav-icon"><i class="ph ph-chats-circle" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.messages">Ichki xabarlar</span></a>
-          <a href="admin-users" class="sidebar__nav-link" data-i18n-title="admin.nav.users" title="Foydalanuvchilar"><span class="sidebar__nav-icon"><i class="ph ph-users" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.users">Foydalanuvchilar</span></a>
-          <a href="admin-reports" class="sidebar__nav-link" data-i18n-title="admin.nav.reports" title="Hisobotlar"><span class="sidebar__nav-icon"><i class="ph ph-chart-bar" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.reports">Hisobotlar</span></a>
-          <a href="admin-analytics" class="sidebar__nav-link" data-i18n-title="admin.nav.analytics" title="Tahliliy ma'lumotlar"><span class="sidebar__nav-icon"><i class="ph ph-trend-up" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.analytics">Tahliliy ma'lumotlar</span></a>
-        </div>
-        <div class="sidebar__nav-section">
-          <div class="sidebar__nav-label" data-i18n="admin.sec.content">KONTENT</div>
-          <a href="admin-news" class="sidebar__nav-link" data-i18n-title="admin.nav.news" title="Yangiliklar"><span class="sidebar__nav-icon"><i class="ph ph-newspaper" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.news">Yangiliklar</span></a>
-          <a href="admin-events" class="sidebar__nav-link is-active" aria-current="page" data-i18n-title="admin.nav.events" title="Tadbirlar"><span class="sidebar__nav-icon"><i class="ph ph-calendar-blank" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.events">Tadbirlar</span></a>
-          <a href="admin-grants" class="sidebar__nav-link" data-i18n-title="admin.nav.grants" title="Grantlar"><span class="sidebar__nav-icon"><i class="ph ph-hand-coins" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.grants">Grantlar</span></a>
-          <a href="admin-settings" class="sidebar__nav-link" data-i18n-title="admin.nav.settings" title="Sozlamalar"><span class="sidebar__nav-icon"><i class="ph ph-gear" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.settings">Sozlamalar</span></a>
-        </div>
-        <div class="sidebar__nav-section">
-          <div class="sidebar__nav-label" data-i18n="admin.sec.requests">MUROJAATLAR</div>
-          <a href="admin-service-requests" class="sidebar__nav-link" data-i18n-title="admin.nav.serviceRequests" title="Xizmat so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-wrench" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.serviceRequests">Xizmat so'rovlari</span></a>
-          <a href="admin-corruption-reports" class="sidebar__nav-link" data-i18n-title="admin.nav.corruptionReports" title="Korrupsiya murojaatlari"><span class="sidebar__nav-icon"><i class="ph ph-shield-warning" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.corruptionReports">Korrupsiya murojaatlari</span></a>
-          <a href="admin-feedback" class="sidebar__nav-link" data-i18n-title="admin.nav.feedback" title="Qayta aloqa"><span class="sidebar__nav-icon"><i class="ph ph-chat-dots" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.feedback">Qayta aloqa</span></a>
-          <a href="admin-password-reset-requests" class="sidebar__nav-link" data-i18n-title="admin.nav.passwordResetReq" title="Parol tiklash so'rovlari"><span class="sidebar__nav-icon"><i class="ph ph-key" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.passwordReset">Parol tiklash</span></a>
-        </div>
-        <div class="sidebar__nav-section u-mt-auto">
-          <a data-action="logout" href="admin-login" class="sidebar__nav-link logout" id="logoutTrigger" data-i18n-title="admin.nav.logout" title="Chiqish"><span class="sidebar__nav-icon"><i class="ph ph-sign-out" aria-hidden="true"></i></span><span class="sidebar__nav-link-text" data-i18n="admin.nav.logout">Chiqish</span></a>
-        </div>
-      </nav>
-    </aside>
+    <aside class="sidebar" data-admin-navigation aria-busy="true"></aside>
 
     <main class="main" id="main-content" tabindex="-1">
       <header class="topbar">
@@ -314,10 +269,10 @@
   <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
 
   <script src="js/pacta-app.js"></script>
-  <script src="js/pacta-foundation.js"></script>
+  <script src="js/pacta-foundation.js?v=20260802-admin-identity"></script>
   <script src="js/pacta-notifications.js"></script>
   <script src="js/api-client.js?v=20260801-cookie-auth"></script>
-  <script src="js/admin-boot.js?v=20260801-cookie-auth" defer></script>
+  <script src="js/admin-navigation.js?v=20260802" defer></script><script src="js/admin-boot.js?v=20260802-admin-identity" defer></script>
   <script src="js/admin-cms.js"></script>
   <script>
   (function () {

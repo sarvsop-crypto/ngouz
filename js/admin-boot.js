@@ -7,6 +7,18 @@
     console.error('admin-boot: NgoApi not loaded');
     return;
   }
+  if (!window.NgoAdminNavigation) {
+    console.error('admin-boot: NgoAdminNavigation not loaded');
+    return;
+  }
+
+  var readyResolve;
+  var readyReject;
+  window.NgoAdminReady = new Promise(function (resolve, reject) {
+    readyResolve = resolve;
+    readyReject = reject;
+  });
+  window.NgoAdminReady.catch(function () {});
 
   // role code → Uzbek label, matched to the labels admin-cms uses.
   // Falls back to the raw code if upstream returns a role we don't know.
@@ -21,13 +33,15 @@
   };
 
   var authOpts = window.NGO_ADMIN_AUTH || {};
-  if (!authOpts.minRole && !authOpts.allowedRoles) authOpts.minRole = 'regional_admin';
+  authOpts.allowedRoles = NgoAdminNavigation.allowedRoles();
+  delete authOpts.minRole;
   authOpts.loginPage = authOpts.loginPage || 'admin-login';
 
   NgoApi.requireAuth(authOpts)
     .then(function (user) {
       if (NgoApi.startIdleLogout) NgoApi.startIdleLogout({ loginPage: authOpts.loginPage });
       window.__CURRENT_USER__ = user;
+      NgoAdminNavigation.mount(user);
       var slot = document.querySelector('[data-user-name]');
       if (slot) slot.textContent = user.full_name || user.email;
       var role = document.querySelector('[data-user-role]');
@@ -38,31 +52,11 @@
       if (avatar && (user.full_name || user.email)) {
         avatar.textContent = String(user.full_name || user.email).charAt(0).toUpperCase();
       }
-      document.querySelectorAll('.sidebar__nav-link[href]').forEach(function (link) {
-        var href = (link.getAttribute('href') || '').split('?')[0].replace(/^\//, '').replace(/\.html$/, '');
-        if (href === 'admin-login') return;
-        if (user.role === 'commission') {
-          if (href !== 'admin-commission') link.remove();
-          return;
-        }
-        if (href === 'admin-commission' && user.role !== 'super_admin') {
-          link.remove();
-        }
-      });
-      if (user.role === 'commission') {
-        document.querySelectorAll('.breadcrumbs a[href]').forEach(function (link) {
-          var href = (link.getAttribute('href') || '').replace(/^\//, '').replace(/\.html$/, '');
-          if (href !== 'admin-commission') {
-            var span = document.createElement('span');
-            span.textContent = link.textContent || '';
-            link.parentNode.replaceChild(span, link);
-          }
-        });
-        document.querySelectorAll('.sidebar__nav-section').forEach(function (section) {
-          if (!section.querySelector('.sidebar__nav-link')) section.remove();
-        });
-      }
+      readyResolve(user);
     })
-    .catch(function () { /* requireAuth already handled redirect */ });
+    .catch(function (error) {
+      readyReject(error);
+      /* requireAuth already handled redirect */
+    });
 
 })();

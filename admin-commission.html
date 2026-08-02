@@ -166,23 +166,7 @@
 <noscript><div role="alert" style="padding:16px 22px;background:#fff8db;border-bottom:1px solid #f3d27a;color:#7a5800;font:14px/1.5 system-ui;text-align:center">Bu sahifa ishlashi uchun JavaScript yoqilgan bo‘lishi kerak.</div></noscript>
 <a class="skip-link" href="#main-content">Asosiy kontentga o'tish</a>
 <div class="layout">
-  <aside class="sidebar" data-sidebar-default="expanded">
-    <div class="sidebar__header">
-      <div class="u-inline-stack"><button type="button" class="sidebar__logo u-logo-badge" id="commissionRefreshLogo" aria-label="Joriy sahifani yangilash" title="Joriy sahifani yangilash">N</button><span class="sidebar__title">O'zNNTMA Admin</span></div>
-      <button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Yon panelni yopish" aria-expanded="true">&lsaquo;</button>
-    </div>
-    <nav class="sidebar__nav" aria-label="Admin menyusi">
-      <div class="sidebar__nav-section">
-        <div class="sidebar__nav-label">KOMISSIYA</div>
-        <a href="admin-commission" class="sidebar__nav-link" data-commission-view="current"><span class="sidebar__nav-icon"><i class="ph ph-gavel" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Joriy bayonnomalar</span></a>
-        <a href="admin-commission?view=history" class="sidebar__nav-link" data-commission-view="history"><span class="sidebar__nav-icon"><i class="ph ph-archive" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Oldingi bayonnomalar</span></a>
-        <a href="admin-commission?view=members" class="sidebar__nav-link" data-commission-view="members" data-chair-only hidden><span class="sidebar__nav-icon"><i class="ph ph-users-three" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Komissiya a’zolari</span></a>
-      </div>
-      <div class="sidebar__nav-section u-mt-auto">
-        <a data-action="logout" href="admin-login" class="sidebar__nav-link logout"><span class="sidebar__nav-icon"><i class="ph ph-sign-out" aria-hidden="true"></i></span><span class="sidebar__nav-link-text">Chiqish</span></a>
-      </div>
-    </nav>
-    </aside>
+  <aside class="sidebar" data-admin-navigation aria-busy="true"></aside>
   <main class="main" id="main-content" tabindex="-1">
     <header class="topbar">
       <div class="topbar-left"><nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><span aria-current="page">Komissiya</span></nav></div>
@@ -363,12 +347,12 @@
     </div>
   </form>
 </div>
-<script src="js/pacta-foundation.js"></script>
+<script src="js/pacta-foundation.js?v=20260802-admin-identity"></script>
 <script src="js/api-client.js?v=20260801-cookie-auth"></script>
 <script>
   window.NGO_ADMIN_AUTH = { allowedRoles: ['super_admin', 'commission'] };
 </script>
-<script src="js/admin-boot.js?v=20260801-cookie-auth" defer></script>
+<script src="js/admin-navigation.js?v=20260802" defer></script><script src="js/admin-boot.js?v=20260802-admin-identity" defer></script>
 <script src="js/pacta-app.js?v=20260730logoutdesign"></script>
 <script>
 (function () {

@@ -99,7 +99,10 @@
       "news": "Yangiliklar",
       "events": "Tadbirlar",
       "grants": "Grantlar",
+      "notifications": "Bildirishnomalar",
       "settings": "Sozlamalar",
+      "commission": "Komissiya",
+      "leaderSigning": "Rahbar imzosi",
       "logout": "Chiqish"
     },
     "ui": {
