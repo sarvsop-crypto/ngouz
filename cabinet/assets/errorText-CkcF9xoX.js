@@ -1,1 +1,0 @@
-import{l as e}from"./index-BQl4q4Xi.js";function t(t,n){return t instanceof e?t.status===0||t.code===`network`?n(`cabinet.common.networkError`):t.message:t instanceof TypeError||t instanceof DOMException&&(t.name===`TimeoutError`||t.name===`AbortError`)?n(`cabinet.common.networkError`):t instanceof Error&&t.message?t.message:n(`cabinet.common.errorGeneric`)}export{t};

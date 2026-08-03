@@ -181,7 +181,7 @@
 <noscript><p style="background:#fff8db;border:1px solid #f3d27a;border-radius:8px;padding:12px 14px;margin-bottom:14px;color:#7a5800;font-size:14px;" data-i18n-html="pages.membership.noscript">Bu forma JavaScript yoqilgan brauzerda ishlaydi. Iltimos, brauzerda JavaScript-ni yoqing yoki <a href="qayta-aloqa" style="color:#7a5800;text-decoration:underline">qayta aloqa formasi</a> orqali murojaat qiling.</p></noscript>
 <form id="membership-form" novalidate>
 <div class="form-grid">
-<div class="form-field"><label class="form-label" for="mem-org-name" data-i18n-html="pages.membership.f.orgName">Tashkilot nomi <span aria-hidden="true">*</span></label><input autocomplete="organization" id="mem-org-name" name="tashkilot_nomi" required="" maxlength="300"/></div>
+<div class="form-field"><label class="form-label" for="mem-org-name" data-i18n-html="pages.membership.f.orgName">Tashkilot nomi <span aria-hidden="true">*</span></label><input autocomplete="organization" id="mem-org-name" name="tashkilot_nomi" list="membership-org-options" required="" maxlength="300"/><datalist id="membership-org-options"></datalist><small class="form-help">Reyestrdagi tashkilotni tanlang.</small></div>
 <div class="form-field"><label class="form-label" for="mem-activity" data-i18n-html="pages.membership.f.activity">Faoliyat sohasi <span aria-hidden="true">*</span></label><input id="mem-activity" name="faoliyat_sohasi" required="" maxlength="200"/></div>
 <div class="form-field"><label class="form-label" for="mem-legal-type" data-i18n-html="pages.membership.f.legalType">Tashkiliy-huquqiy shakli <span aria-hidden="true">*</span></label><input id="mem-legal-type" name="tashkiliy_shakl" required="" maxlength="100"/></div>
 <div class="form-field"><label class="form-label" for="mem-head" data-i18n-html="pages.membership.f.head">Tashkilot rahbari F.I.Sh. <span aria-hidden="true">*</span></label><input autocomplete="name" id="mem-head" name="rahbar_fio" required="" maxlength="200"/></div>
@@ -245,6 +245,20 @@
   var checkbox = document.getElementById('reg-ok');
   var submitBtn = document.getElementById('submit-membership');
   var form = document.getElementById('membership-form');
+  var orgInput = document.getElementById('mem-org-name');
+  var orgOptions = document.getElementById('membership-org-options');
+  var orgTimer = null;
+  if (orgInput && orgOptions) orgInput.addEventListener('input', function () {
+    clearTimeout(orgTimer);
+    var q = orgInput.value.trim();
+    if (q.length < 2) { orgOptions.innerHTML = ''; return; }
+    orgTimer = setTimeout(function () {
+      fetchT(API + '/public/organizations?q=' + encodeURIComponent(q) + '&limit=20', { headers: { Accept: 'application/json' } })
+        .then(function (r) { return r.ok ? r.json() : { items: [] }; })
+        .then(function (d) { orgOptions.innerHTML = ''; (d.items || []).forEach(function (org) { var option = document.createElement('option'); option.value = org.name; orgOptions.appendChild(option); }); })
+        .catch(function () {});
+    }, 250);
+  });
 
   // Enable submit only when reglament checkbox is checked
   if (checkbox && submitBtn) {
@@ -294,34 +308,26 @@
       var email    = form.email.value.trim();
       var telegram = form.telegram_raqam.value.trim();
       var region   = form.hudud.value;
-      // Backend /v1/public/membership returns 404 — endpoint not yet
-      // implemented. Route applications to /v1/public/contact (which
-      // works) so admins still see them in the contact inbox. Body
-      // packs the structured fields as plain text for human review;
-      // when the dedicated endpoint exists this can revert to a real
-      // /membership POST.
-      var bodyText =
-        "Tashkilot: " + orgName +
-        "\nFaoliyat sohasi: " + activity +
-        "\nTashkiliy shakl: " + legal +
-        "\nHudud: " + region +
-        "\nTelefon: " + phone +
-        "\nTelegram: " + telegram;
-
-      fetchT(API + '/public/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          full_name: leader,
-          phone: phone,
-          email: email,
-          subject: "A'zolik arizasi: " + orgName,
-          body: bodyText
-        })
+      var keyName = 'ngo_membership_request_id';
+      var requestId = sessionStorage.getItem(keyName);
+      if (!requestId) {
+        requestId = crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c==='x'?r:(r&3|8);return v.toString(16);});
+        sessionStorage.setItem(keyName, requestId);
+      }
+      fetchT(API + '/public/organizations?q=' + encodeURIComponent(orgName) + '&limit=20', { headers: { Accept: 'application/json' } })
+      .then(function (r) { return r.json().then(function (d) { if (!r.ok) throw new Error(d.message || 'Tashkilot reyestrini yuklab bo‘lmadi.'); return d; }); })
+      .then(function (lookup) {
+        var matches=(lookup.items||[]).filter(function(org){return String(org.name).trim().toLocaleLowerCase()===orgName.toLocaleLowerCase();});
+        if (matches.length!==1) throw new Error('Reyestrdagi tashkilotni ro‘yxatdan aniq tanlang.');
+        return fetchT(API + '/public/membership', {
+          method:'POST', headers:{'Content-Type':'application/json','Accept':'application/json'},
+          body:JSON.stringify({client_request_id:requestId,organization_id:matches[0].id,full_name:leader,phone:phone,email:email,activity_type:activity,note:'Tashkiliy shakl: '+legal+'\nHudud: '+region+'\nTelegram: '+telegram})
+        });
       })
       .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; }); })
       .then(function (res) {
         if (res.ok) {
+          sessionStorage.removeItem(keyName);
           var rawId = res.data && res.data.id;
           var idStr = (rawId !== undefined && rawId !== null && rawId !== '')
             ? '#' + String(rawId).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')
@@ -340,7 +346,7 @@
           showFormError('Xatolik: ' + ((res.data && res.data.message) || 'Iltimos qaytadan urinib ko\'ring.'));
         }
       })
-      .catch(function () {
+      .catch(function (err) {
         submitBtn.disabled = false;
         // Restore the captured original innerHTML — earlier this used
         // textContent='Ariza yuborish', which would strip any spinner/
@@ -348,7 +354,7 @@
         // success-path restore that uses defaultBtnHtml).
         submitBtn.innerHTML = defaultBtnHtml;
         form.setAttribute('aria-busy', 'false');
-        showFormError('Tarmoq xatosi. Internet aloqangizni tekshiring va qayta urinib ko\'ring.');
+        showFormError(err && err.message ? err.message : 'Tarmoq xatosi. Internet aloqangizni tekshiring va qayta urinib ko\'ring.');
       });
     });
   }

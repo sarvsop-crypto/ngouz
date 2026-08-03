@@ -196,93 +196,25 @@
 </div>
 <script src="js/search-overlay.js" defer></script>
 <script>
-// reporting-forms previously used <form action="report-status" method="get">
-// — submitting just navigated to a static page that hardcoded a fake
-// "REP-2026-0220" tracking number (cleaned up in iter 122). Authed
-// member orgs go through the cabinet for real report tracking; this
-// public form now POSTs to /v1/public/contact (same route /qayta-aloqa
-// uses) so unauthed orgs can still register intent to submit and the
-// admin team can follow up.
 (function () {
-  var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
-  var form = document.getElementById('reportingForm');
-  if (!form) return;
-
-  // Wire consent checkbox to submit button — without this the
-  // submit button stayed disabled="" forever, so users couldn't
-  // submit a report at all (silent blocker on the public form).
-  var consent = document.getElementById('report-confirm');
-  var submitBtn = document.getElementById('report-submit');
-  if (consent && submitBtn) {
-    var syncSubmit = function () { submitBtn.disabled = !consent.checked; };
-    consent.addEventListener('change', syncSubmit);
-    syncSubmit();
-  }
-
-  function showFormError(msg) {
-    var el = document.getElementById('reportFormError');
-    if (!el) return;
-    el.textContent = msg;
-    el.style.display = 'block';
-    try { el.scrollIntoView({ block: 'nearest' }); } catch (e) {}
-  }
-  function clearFormError() {
-    var el = document.getElementById('reportFormError');
-    if (el) { el.style.display = 'none'; el.textContent = ''; }
-  }
-  form.addEventListener('submit', function (e) {
+  var form=document.getElementById('reportingForm');
+  var consent=document.getElementById('report-confirm');
+  var submit=document.getElementById('report-submit');
+  if(!form||!consent||!submit)return;
+  var sync=function(){submit.disabled=!consent.checked;};
+  consent.addEventListener('change',sync); sync();
+  form.addEventListener('submit',function(e){
     e.preventDefault();
-    if (!form.checkValidity()) { form.reportValidity(); return; }
-    clearFormError();
-    var org    = document.getElementById('report-org').value.trim();
-    var stir   = document.getElementById('report-stir').value.trim();
-    var fio    = document.getElementById('report-fio').value.trim();
-    var email  = document.getElementById('report-email').value.trim();
-    var type   = document.getElementById('report-type').value;
-    var period = document.getElementById('report-period').value.trim();
-    var btn = form.querySelector('button[type="submit"]');
-    var defaultLabel = btn.innerHTML;
-    btn.disabled = true; btn.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i> Yuborilmoqda...';
-    form.setAttribute('aria-busy', 'true');
-    var body = "Tashkilot: " + org + "\nSTIR: " + stir + "\nMas'ul: " + fio + "\nDavr: " + period;
-    fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        full_name: fio,
-        email: email,
-        subject: 'Hisobot yuborish: ' + type,
-        body: body
-      })
-    })
-    .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; }); })
-    .then(function (res) {
-      if (res.ok) {
-        // HTML-escape the server-returned id before innerHTML — same
-        // defense-in-depth pattern as membership.html iter 869, in case
-        // the backend ever returns an id with < or " in it.
-        var rawId = res.data && res.data.id;
-        var idStr = (rawId !== undefined && rawId !== null && rawId !== '')
-          ? '#' + String(rawId).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')
-          : '—';
-        form.innerHTML = '<div role="status" tabindex="-1" id="formSuccessMsg" style="text-align:center;padding:32px 0">'
-          + '<h3 style="color:#0e7490;margin-bottom:10px">Murojaatingiz qabul qilindi</h3>'
-          + '<p style="margin-bottom:18px">Murojaat ID: <strong>' + idStr + '</strong></p>'
-          + '<p>Hisobot fayli va to‘liq materiallar uchun admin xodimi 3 ish kuni ichida ko‘rsatilgan email orqali bog‘lanadi.</p>'
-          + '<a class="btn" href="reporting-forms" style="margin-top:18px;display:inline-block">Yangi murojaat</a>'
-          + '</div>';
-        var sm = document.getElementById('formSuccessMsg'); if (sm) sm.focus();
-      } else {
-        btn.disabled = false; btn.innerHTML = defaultLabel;
-        form.setAttribute('aria-busy', 'false');
-        showFormError((res.data && res.data.message) || "Xatolik yuz berdi. Qaytadan urinib ko‘ring.");
-      }
-    })
-    .catch(function () {
-      btn.disabled = false; btn.innerHTML = defaultLabel;
-      form.setAttribute('aria-busy', 'false');
-      showFormError('Tarmoq xatosi. Internet aloqangizni tekshiring.');
-    });
+    if(!form.checkValidity()){form.reportValidity();return;}
+    sessionStorage.setItem('ngo_report_draft',JSON.stringify({
+      organization:document.getElementById('report-org').value.trim(),
+      inn:document.getElementById('report-stir').value.trim(),
+      responsible:document.getElementById('report-fio').value.trim(),
+      email:document.getElementById('report-email').value.trim(),
+      title:document.getElementById('report-type').value,
+      period:document.getElementById('report-period').value.trim()
+    }));
+    window.location.href='cabinet/cabinet-login?return=%2Freports';
   });
 })();
 </script>

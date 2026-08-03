@@ -123,6 +123,7 @@
 <script>
 (function () {
   var items = [];
+  function versionFor(id) { var item=items.find(function(a){return parseInt(a.id,10)===parseInt(id,10);}); return item ? (parseInt(item.version,10)||1) : 0; }
   var toastTimer;
   function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
   function toast(msg, type) {
@@ -227,7 +228,7 @@
     payload = (payload || '').trim();
     if (!payload) { toast('Ichki tasdiq maʼlumoti majburiy.', 'error'); return; }
     setBusy(true);
-    NgoApi.post('/admin/membership-requests/' + id + '/sign', { signature_payload: payload })
+    NgoApi.post('/admin/membership-requests/' + id + '/sign', { signature_payload: payload, version: versionFor(id) })
       .then(function () { toast('Hujjatlar imzolandi.', 'success'); closeLeaderModal(); reload(); })
       .catch(function (err) { setBusy(false); toast('Imzolashda xatolik: ' + ((err && err.message) || 'nomaʼlum'), 'error'); });
   };
@@ -237,7 +238,7 @@
     note = (note || '').trim();
     if (!note) { toast('Qaytarish sababi majburiy.', 'error'); return; }
     setBusy(true);
-    NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', return_reason: note, review_note: note })
+    NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', return_reason: note, review_note: note, version: versionFor(id) })
       .then(function () { toast('Ariza qaytarildi.', 'success'); closeLeaderModal(); reload(); })
       .catch(function (err) { setBusy(false); toast('Qaytarishda xatolik: ' + ((err && err.message) || 'nomaʼlum'), 'error'); });
   };
@@ -247,7 +248,7 @@
     note = (note || '').trim();
     if (!note) { toast('Rad etish sababi majburiy.', 'error'); return; }
     setBusy(true);
-    NgoApi.patch('/admin/membership-requests/' + id, { status: 'rejected', reject_reason: note, review_note: note })
+    NgoApi.patch('/admin/membership-requests/' + id, { status: 'rejected', reject_reason: note, review_note: note, version: versionFor(id) })
       .then(function () { toast('Ariza rad etildi.', 'success'); closeLeaderModal(); reload(); })
       .catch(function (err) { setBusy(false); toast('Rad etishda xatolik: ' + ((err && err.message) || 'nomaʼlum'), 'error'); });
   };

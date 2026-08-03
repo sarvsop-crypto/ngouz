@@ -232,7 +232,8 @@
       var note = prompt('Tasdiqlash izohi (ixtiyoriy):', '');
       if (note === null) return;
       setRowsBusy(true);
-      NgoApi.patch('/admin/grant-applications/' + id, { status: 'approved', review_note: note || null })
+      var app = items.filter(function (x) { return parseInt(x.id, 10) === id; })[0];
+      NgoApi.patch('/admin/grant-applications/' + id, { status: 'approved', review_note: note || null, version: parseInt(app && app.version, 10) || 1 })
         .then(function () { toast('Ariza tasdiqlandi.', 'success'); reload(); })
         .catch(function (err) { setRowsBusy(false); toast('Tasdiqlashda xatolik: ' + ((err && err.message) || "noma'lum"), 'error'); });
     };
@@ -243,7 +244,8 @@
       note = (note || '').trim();
       if (!note) { toast("Rad etish sababi bo'sh bo'lishi mumkin emas.", 'error'); return; }
       setRowsBusy(true);
-      NgoApi.patch('/admin/grant-applications/' + id, { status: 'declined', review_note: note })
+      var app = items.filter(function (x) { return parseInt(x.id, 10) === id; })[0];
+      NgoApi.patch('/admin/grant-applications/' + id, { status: 'declined', review_note: note, version: parseInt(app && app.version, 10) || 1 })
         .then(function () { toast('Ariza rad etildi.', 'success'); reload(); })
         .catch(function (err) { setRowsBusy(false); toast('Rad etishda xatolik: ' + ((err && err.message) || "noma'lum"), 'error'); });
     };

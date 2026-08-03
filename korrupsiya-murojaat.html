@@ -280,14 +280,18 @@
     var defaultBtnHtml = btn.innerHTML;
     btn.disabled = true; btn.innerHTML = '<i class="ph ph-spinner" aria-hidden="true"></i> Yuborilmoqda...';
     form.setAttribute('aria-busy', 'true');
+    var requestKeyName = 'ngo_corruption_contact_id';
+    var requestId = sessionStorage.getItem(requestKeyName) || (crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c==='x'?r:(r&3|8);return v.toString(16);}));
+    sessionStorage.setItem(requestKeyName, requestId);
     fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/contact', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ full_name: name, phone: phone, subject: 'Korrupsiyaga qarshi murojaat', body: body })
+      body: JSON.stringify({ client_request_id: requestId, full_name: name, phone: phone, subject: 'Korrupsiyaga qarshi murojaat', body: body })
     })
     .then(function(r) { return r.json().then(function(d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; }); })
     .then(function(res) {
       if (res.ok) {
+        sessionStorage.removeItem(requestKeyName);
         form.innerHTML =
           '<div role="status" tabindex="-1" id="formSuccessMsg" style="text-align:center;padding:40px 0"><h3 style="color:#0e7490">Murojaatingiz qabul qilindi!</h3>'
           + '<p>Maxfiylik kafolatlanadi.</p>'

@@ -131,6 +131,7 @@
     function esc(s) { return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 
     var items = [];
+    function versionFor(id) { var item=items.find(function(r){return parseInt(r.id,10)===parseInt(id,10);}); return item ? (parseInt(item.version,10)||1) : 0; }
     function loadReports() {
       return NgoApi.get('/admin/reports?limit=200').then(_renderReports).catch(function (err) {
         if (err && err.status === 401) return; // api-client redirects
@@ -192,7 +193,7 @@
     }
     window.acceptReport = function(id) {
       setRowsBusy(true);
-      NgoApi.patch('/admin/reports/' + id, { status: 'accepted' })
+      NgoApi.patch('/admin/reports/' + id, { status: 'accepted', version: versionFor(id) })
         .then(function() { toast('Hisobot qabul qilindi.', 'success'); loadReports(); })
         .catch(function (err) {
           setRowsBusy(false);
@@ -205,7 +206,7 @@
       note = (note || '').trim();
       if (!note) { toast('Qaytarish sababi bo\'sh bo\'lishi mumkin emas.', 'error'); return; }
       setRowsBusy(true);
-      NgoApi.patch('/admin/reports/' + id, { status: 'returned', review_note: note })
+      NgoApi.patch('/admin/reports/' + id, { status: 'returned', review_note: note, version: versionFor(id) })
         .then(function() { toast('Hisobot qaytarildi.', 'success'); loadReports(); })
         .catch(function (err) {
           setRowsBusy(false);

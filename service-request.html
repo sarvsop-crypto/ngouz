@@ -258,6 +258,9 @@
   var fetchT = function (url, init) { if (typeof AbortController !== "function") return fetch(url, init || {}); var c = new AbortController(); var t = setTimeout(function () { c.abort(); }, 15000); init = init || {}; init.signal = c.signal; return fetch(url, init).finally(function () { clearTimeout(t); }); };
   var form = document.getElementById('serviceRequestForm');
   if (!form) return;
+  var requestKeyName = 'ngo_service_request_id';
+  var requestId = sessionStorage.getItem(requestKeyName) || (crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c==='x'?r:(r&3|8);return v.toString(16);}));
+  sessionStorage.setItem(requestKeyName, requestId);
   function showFormError(msg) {
     var box = document.getElementById('serviceRequestFormErr');
     if (!box) {
@@ -287,6 +290,7 @@
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        client_request_id: requestId,
         full_name: fio,
         phone: phone,
         email: email,
@@ -297,6 +301,7 @@
     .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; }); })
     .then(function (res) {
       if (res.ok) {
+        sessionStorage.removeItem(requestKeyName);
         // HTML-escape res.data.id before innerHTML — defense-in-depth
         // matching the iter 869 fix in membership.html and iter 900
         // in reporting-forms.html.

@@ -156,6 +156,7 @@
   <script>
   (function () {
     var items = [];
+    function versionFor(id) { var item=items.find(function(a){return parseInt(a.id,10)===parseInt(id,10);}); return item ? (parseInt(item.version,10)||1) : 0; }
     var statusFilter = (new URLSearchParams(location.search).get('status') || 'all').trim() || 'all';
     var searchQ = '';
 
@@ -282,7 +283,7 @@
       }
       if (!orgId) { toast('Tashkilot ID raqami kerak. NNT ro\'yxatidan toping.', 'error'); return; }
       setRowsBusy(true);
-      NgoApi.patch('/admin/membership-requests/' + id, { status: 'accepted', organization_id: orgId })
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'accepted', organization_id: orgId, version: versionFor(id) })
         .then(function (res) {
           if (res && res.credentials && res.credentials.password) {
             alert('Kabinet login maʼlumotlari\\n\\nTelefon: ' + res.credentials.phone + '\\nParol: ' + res.credentials.password + '\\n\\nParol faqat hozir ko‘rsatiladi. Uni ariza beruvchiga yuboring.');
@@ -300,7 +301,7 @@
       if (current === 'payment_pending') next = 'paid';
       if (current === 'paid') next = 'regional_review';
       setRowsBusy(true);
-      NgoApi.patch('/admin/membership-requests/' + id, { status: next })
+      NgoApi.patch('/admin/membership-requests/' + id, { status: next, version: versionFor(id) })
         .then(function () { toast('Ariza holati yangilandi.', 'success'); reload(); })
         .catch(function (err) { setRowsBusy(false); toast('Holatni yangilashda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); });
     };
@@ -310,7 +311,7 @@
       note = (note || '').trim();
       if (!note) { toast('Qaytarish sababi bo\'sh bo\'lishi mumkin emas.', 'error'); return; }
       setRowsBusy(true);
-      NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', return_reason: note, review_note: note })
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'returned', return_reason: note, review_note: note, version: versionFor(id) })
         .then(function () { toast('Ariza qaytarildi.', 'success'); reload(); })
         .catch(function (err) { setRowsBusy(false); toast('Qaytarishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); });
     };
@@ -320,7 +321,7 @@
       note = (note || '').trim();
       if (!note) { toast('Rad etish sababi bo\'sh bo\'lishi mumkin emas.', 'error'); return; }
       setRowsBusy(true);
-      NgoApi.patch('/admin/membership-requests/' + id, { status: 'rejected', reject_reason: note, review_note: note })
+      NgoApi.patch('/admin/membership-requests/' + id, { status: 'rejected', reject_reason: note, review_note: note, version: versionFor(id) })
         .then(function () { toast('Ariza rad etildi.', 'success'); reload(); })
         .catch(function (err) { setRowsBusy(false); toast('Rad etishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); });
     };
@@ -382,7 +383,7 @@
       if (payload === null) return;
       payload = (payload || '').trim();
       if (!payload) { toast('Ichki tasdiq maʼlumoti majburiy.', 'error'); return; }
-      NgoApi.post('/admin/membership-requests/' + id + '/sign', { signature_payload: payload })
+      NgoApi.post('/admin/membership-requests/' + id + '/sign', { signature_payload: payload, version: versionFor(id) })
         .then(function () { toast('Rahbar imzosi saqlandi.', 'success'); viewApp(id); reload(); })
         .catch(function (err) { toast('Imzolashda xatolik: ' + ((err && err.message) || "noma'lum"), 'error'); });
     };

@@ -334,6 +334,10 @@
     // Build multipart FormData straight from the form so file inputs are
     // included. Append consent flags only when checked.
     var fd = new FormData(form);
+    var requestKeyName = 'ngo_ustama_request_id';
+    var requestId = sessionStorage.getItem(requestKeyName) || (crypto.randomUUID ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c==='x'?r:(r&3|8);return v.toString(16);}));
+    sessionStorage.setItem(requestKeyName, requestId);
+    fd.append('client_request_id', requestId);
     fd.append('consent_accuracy', '1');
     fd.append('consent_rules', '1');
 
@@ -350,7 +354,8 @@
     })
     .then(function (r) { return r.json().then(function (d) { return { status: r.status, ok: r.ok, data: d }; }, function () { return { status: r.status, ok: r.ok, data: {} }; }); })
     .then(function (res) {
-      if (res.status === 201) {
+      if (res.ok) {
+        sessionStorage.removeItem(requestKeyName);
         var rawId = res.data && res.data.id;
         var idStr = (rawId !== undefined && rawId !== null && rawId !== '')
           ? '#' + String(rawId).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')

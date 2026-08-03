@@ -1226,25 +1226,25 @@ function memSubmit(e) {
     box.textContent = msg || 'Xatolik. Iltimos qaytadan urinib ko’ring.';
   };
 
-  fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/membership', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify({
-      org_name: orgName,
-      full_name: leader,
-      phone: phone,
-      email: email,
-      region_code: region,
-      leader_name: leader,
-      note: note
-    })
+  var requestKeyName='ngo_home_membership_request_id';
+  var requestId=sessionStorage.getItem(requestKeyName);
+  if(!requestId){requestId=crypto.randomUUID?crypto.randomUUID():'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0,v=c==='x'?r:(r&3|8);return v.toString(16);});sessionStorage.setItem(requestKeyName,requestId);}
+  fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/organizations?q='+encodeURIComponent(orgName)+'&limit=20',{headers:{Accept:'application/json'}})
+  .then(function(r){return r.json().then(function(d){if(!r.ok)throw new Error(d.message||'Tashkilot reyestrini yuklab bo‘lmadi.');return d;});})
+  .then(function(lookup){
+    var matches=(lookup.items||[]).filter(function(org){return String(org.name).trim().toLocaleLowerCase()===orgName.toLocaleLowerCase();});
+    if(matches.length!==1)throw new Error('Reyestrdagi tashkilot nomini aniq kiriting.');
+    return fetchT('https://ngo-api-proxy.sarvsop.workers.dev/v1/public/membership', {
+      method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({client_request_id:requestId,organization_id:matches[0].id,full_name:leader,phone:phone,email:email,activity_type:note,note:'Hudud: '+region})
+    });
   }).then(function (r) {
     return r.json().then(function (d) { return { ok: r.ok, data: d }; }, function () { return { ok: r.ok, data: {} }; });
   }).then(function (res) {
-    if (res.ok) done();
+    if (res.ok) { sessionStorage.removeItem(requestKeyName); done(); }
     else fail(res.data && res.data.message);
-  }).catch(function () {
-    fail('Tarmoq xatosi. Internet aloqangizni tekshiring.');
+  }).catch(function (err) {
+    fail(err && err.message ? err.message : 'Tarmoq xatosi. Internet aloqangizni tekshiring.');
   });
 }
 </script>
