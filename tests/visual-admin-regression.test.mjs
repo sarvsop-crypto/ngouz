@@ -60,6 +60,18 @@ test('optional employee and leader fields cannot crash cleanNodeText', async () 
   assert.match(helper, /return String\(node \|\| ''\)\.trim\(\)/);
 });
 
+test('person-card editing separates email metadata and constrains long addresses', async () => {
+  const admin = await source('js/visual-admin.js');
+  const css = await source('css/style.css');
+  assert.match(admin, /metaClone\.querySelectorAll\('a\[href\^="mailto:"\]'\)/);
+  assert.match(admin, /metaText = cleanNodeText\(metaClone\)/);
+  assert.match(admin, /var metaWithoutLabel = meta\.replace/);
+  assert.match(admin, /metaWithoutLabel\.toLowerCase\(\).*meta = ''/);
+  assert.match(css, /\.team-card \{ min-width:0;/);
+  assert.match(css, /\.team-meta \{ width:100%; min-width:0;/);
+  assert.match(css, /overflow-wrap:anywhere; word-break:normal/);
+});
+
 test('observer and uncaught runtime errors carry source labels', async () => {
   const admin = await source('js/visual-admin.js');
   const overrides = await source('js/visual-overrides.js');

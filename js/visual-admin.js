@@ -1581,13 +1581,24 @@
     if (kind === 'certificate_row') return certificateRowFromNode(node);
     var img = node.querySelector('img');
     var email = node.querySelector('a[href^="mailto:"]');
+    var metaNode = node.querySelector('.team-meta');
+    var metaText = '';
+    if (metaNode) {
+      var metaClone = metaNode.cloneNode(true);
+      Array.prototype.slice.call(metaClone.querySelectorAll('a[href^="mailto:"]')).forEach(function (mailLink) {
+        var row = mailLink.parentNode;
+        if (row && row.tagName === 'SPAN') row.remove();
+        else mailLink.remove();
+      });
+      metaText = cleanNodeText(metaClone);
+    }
     return {
       photo: img ? img.getAttribute('src') || '' : '',
       name: cleanNodeText(node.querySelector('h2,h3,.leader-name') || node),
       role: cleanNodeText(node.querySelector('.team-role,.leader-role') || ''),
       region: cleanNodeText(node.querySelector('.team-region') || ''),
       email: email ? (email.getAttribute('href') || '').replace(/^mailto:/i, '') : '',
-      meta: cleanNodeText(node.querySelector('.team-meta') || ''),
+      meta: metaText,
       bio: cleanNodeText(node.querySelector('.leader-expand-body') || '')
     };
   }
@@ -2377,6 +2388,8 @@
     var region = String(data.region || '').trim();
     var email = String(data.email || '').trim();
     var meta = String(data.meta || '').trim();
+    var metaWithoutLabel = meta.replace(/^Email\s*:\s*/i, '').replace(/\s+/g, '');
+    if (email && metaWithoutLabel.toLowerCase() === email.replace(/\s+/g, '').toLowerCase()) meta = '';
     return '<div class="team-photo">' + (photo ? '<img src="' + escAttr(photo) + '" alt="' + escAttr(name) + '" loading="lazy" decoding="async" width="130" height="130">' : '') + '</div>' +
       '<h3>' + esc(name) + '</h3>' +
       '<p class="team-role">' + esc(role) + '</p>' +
