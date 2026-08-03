@@ -11,7 +11,7 @@ test('all staff-facing pages consume the canonical staff directory', async () =>
   const pages = ['our-team.html', 'hududiy-bolinmalar.html', 'vacancies.html', 'leadership.html', 'structure.html'];
   for (const page of pages) {
     const html = await read(page);
-    assert.match(html, /js\/staff-directory\.js\?v=20260803stafflifecycle/);
+    assert.match(html, /js\/staff-directory\.js\?v=20260803stafflifecycle2/);
   }
   assert.doesNotMatch(await read('our-team.html'), /const teamData/);
   assert.doesNotMatch(await read('hududiy-bolinmalar.html'), /const teamData/);
