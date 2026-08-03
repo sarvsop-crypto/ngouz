@@ -1767,8 +1767,7 @@
     },
     "vacancies": {
       "title": "Bo'sh ish o'rinlari",
-      "sub": "O'ZNNTMA ochiq ish o'rni eʼlon va tanlovlari.",
-      "list": "<h2 id=\"vacanciesListTitle\" class=\"visually-hidden\">Ochiq ish o'rinlari ro'yxati</h2><div class=\"cards\"><article class=\"card\"><h3>Bo'linma boshlig'i</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">To'liq stavka · Navoiy viloyati</p><p>Navoiy viloyati hududiy bo'linmasi faoliyatini boshqarish va muvofiqlashtirish.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Ariza topshirish</a></div></article><article class=\"card\"><h3>Mutaxassis</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">To'liq stavka · Samarqand viloyati</p><p>Samarqand viloyati hududiy bo'linmasida NNT a'zolari bilan ishlash va qo'llab-quvvatlash.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Ariza topshirish</a></div></article><article class=\"card\"><h3>Mutaxassis</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">To'liq stavka · Farg'ona viloyati</p><p>Farg'ona viloyati hududiy bo'linmasida NNT a'zolari bilan ishlash va qo'llab-quvvatlash.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Ariza topshirish</a></div></article></div>"
+      "sub": "O'ZNNTMA ochiq ish o'rni eʼlon va tanlovlari."
     },
     "videoDetail": {
       "title": "Video tafsiloti",

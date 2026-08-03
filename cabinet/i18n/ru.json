@@ -1626,8 +1626,7 @@
     },
     "vacancies": {
       "title": "Вакансии",
-      "sub": "Открытые вакансии и конкурсы УзНАННО.",
-      "list": "<h2 id=\"vacanciesListTitle\" class=\"visually-hidden\">Список открытых вакансий</h2><div class=\"cards\"><article class=\"card\"><h3>Руководитель подразделения</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">Полная ставка · Навоийская область</p><p>Руководство и координация деятельности регионального подразделения в Навоийской области.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Подать заявку</a></div></article><article class=\"card\"><h3>Специалист</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">Полная ставка · Самаркандская область</p><p>Работа с ННО-членами и их поддержка в региональном подразделении Самаркандской области.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Подать заявку</a></div></article><article class=\"card\"><h3>Специалист</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">Полная ставка · Ферганская область</p><p>Работа с ННО-членами и их поддержка в региональном подразделении Ферганской области.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Подать заявку</a></div></article></div>"
+      "sub": "Открытые вакансии и конкурсы УзНАННО."
     },
     "videoDetail": {
       "title": "Сведения о видео",

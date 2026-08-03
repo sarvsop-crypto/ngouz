@@ -3409,6 +3409,9 @@ select:focus-visible,
 .team-card .team-meta a { color:var(--green-500); text-decoration:none; overflow-wrap:anywhere; word-break:normal; }
 .team-card .team-meta a:hover { text-decoration:underline; }
 .team-card.vacancy .team-photo { background:var(--neutral-200); }
+.staff-vacancy-label { color:#be123c; font-weight:700; }
+.vacancy-card__meta { color:var(--green-500); font-weight:600; margin:4px 0 8px; }
+.staff-directory-error { grid-column:1/-1; padding:22px; border:1px solid #fecaca; border-radius:12px; background:#fff1f2; color:#9f1239; }
   
 
 /* iter 52: footer legal/copyright row */

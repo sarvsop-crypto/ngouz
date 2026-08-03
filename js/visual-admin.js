@@ -127,6 +127,7 @@
   };
 
   var VISUAL_TYPE = '__visual_block';
+  var STAFF_TYPE = '__staff_position';
   var I18N_TYPE = '__i18n_text';
   var I18N_BLOB_TYPE = '__i18n_blob';
   var API_VISUAL = '/api/visual-content';
@@ -169,7 +170,11 @@
     visualAction: null,
     confirmingDelete: false,
     i18nEditing: null,
-    blobEditing: null
+    blobEditing: null,
+    staffAction: null,
+    staffPosition: null,
+    staffRegions: [],
+    staffRequestId: null
   };
   var els = {};
 
@@ -289,6 +294,7 @@
     ensureFrameStyles(doc);
     observeFrameMutations(doc);
     hookFrameNavigation(doc);
+    injectStaffControls(doc);
     injectStructuredItemControls(doc);
     injectProjectControls(doc);
     injectBlobControls(doc);
@@ -336,6 +342,8 @@
       '.va-live-controls{position:absolute;z-index:9999;right:10px;top:-38px;display:flex;gap:4px;padding:4px;border:1px solid #e4e7e7;background:rgba(255,255,255,.96);box-shadow:0 3px 6px rgba(100,100,100,.2);border-radius:8px;pointer-events:auto}',
       '.va-live-editable>.va-live-controls{right:8px;top:8px}',
       '.va-live-controls button,.va-live-add button{width:30px;height:30px;border:1px solid transparent;background:#fff;color:#023347;border-radius:6px;padding:0;font:800 15px/1 Montserrat,system-ui,sans-serif;cursor:pointer}',
+      '.va-staff-controls{top:8px;right:8px;left:auto;flex-wrap:wrap;max-width:calc(100% - 16px)}',
+      '.va-staff-controls button{width:auto;min-width:30px;padding:0 9px;font-size:11px}',
       '.va-live-controls button:hover{background:#E8F5FB;color:#023347}',
       '.va-live-controls button:last-child{color:#b42318}',
       '.va-live-controls button:last-child:hover{background:#fff8f7}',
@@ -995,6 +1003,156 @@
     if (node.style && node.style.position === 'relative') node.style.removeProperty('position');
   }
 
+  function injectStaffControls(doc) {
+    Array.prototype.forEach.call(doc.querySelectorAll('[data-staff-position-id]'), function (node) {
+      if (node.dataset.vaStaffInjected) return;
+      node.dataset.vaStaffInjected = '1';
+      node.classList.add('va-live-editable');
+      if (getComputedStyle(node).position === 'static') node.style.position = 'relative';
+      var vacant = node.classList.contains('vacancy') || !!node.querySelector('.staff-vacancy-label');
+      var controls = doc.createElement('div');
+      controls.className = 'va-live-controls va-staff-controls';
+      controls.innerHTML = '<button type="button" data-staff-action="edit">Tahrirlash</button>' +
+        (vacant ? '<button type="button" data-staff-action="fill">Xodimga aylantirish</button>' : '<button type="button" data-staff-action="vacate">Vakansiyaga aylantirish</button>') +
+        '<button type="button" data-staff-action="history">Tarix</button>';
+      controls.addEventListener('click', function (event) {
+        var button = event.target.closest('[data-staff-action]');
+        if (!button) return;
+        event.preventDefault();
+        event.stopPropagation();
+        openStaffEditor(node.getAttribute('data-staff-position-id'), button.getAttribute('data-staff-action'));
+      });
+      node.appendChild(controls);
+    });
+
+    Array.prototype.forEach.call(doc.querySelectorAll('[data-staff-directory]'), function (target) {
+      if (state.user.role !== 'super_admin' || target.dataset.vaStaffAddInjected) return;
+      target.dataset.vaStaffAddInjected = '1';
+      var wrap = doc.createElement('div');
+      wrap.className = 'va-context-add';
+      wrap.innerHTML = '<button type="button">Yangi pozitsiya</button>';
+      wrap.addEventListener('click', function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        openStaffEditor(null, 'create');
+      });
+      target.parentNode.insertBefore(wrap, target);
+    });
+  }
+
+  function staffRequestId() {
+    var cryptoApi = window.crypto || window.msCrypto;
+    if (cryptoApi && cryptoApi.randomUUID) return cryptoApi.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (char) {
+      var random = cryptoApi && cryptoApi.getRandomValues ? cryptoApi.getRandomValues(new Uint8Array(1))[0] & 15 : Math.floor(Math.random() * 16);
+      return (char === 'x' ? random : (random & 3 | 8)).toString(16);
+    });
+  }
+
+  function loadStaffContext(id) {
+    var positionRequest = id ? NgoApi.get('/admin/staff/positions/' + encodeURIComponent(id)) : Promise.resolve({ item: null });
+    return Promise.all([positionRequest, NgoApi.get('/admin/staff/positions')]).then(function (responses) {
+      var directory = responses[1] && responses[1].items || [];
+      var seen = {};
+      state.staffRegions = directory.filter(function (item) {
+        if (!item.region_code || seen[item.region_code]) return false;
+        seen[item.region_code] = true;
+        return true;
+      }).map(function (item) { return [item.region_code, (item.region && item.region.uz) || item.region_code]; });
+      return responses[0] && responses[0].item || null;
+    });
+  }
+
+  function openStaffEditor(id, action) {
+    state.editingType = STAFF_TYPE;
+    state.staffAction = action;
+    state.staffPosition = null;
+    state.staffRequestId = staffRequestId();
+    state.confirmingDelete = false;
+    els.editorKicker.textContent = 'Yagona xodim va vakansiya reyestri';
+    els.editorTitle.textContent = action === 'fill' ? "Vakansiyani xodimga aylantirish" : action === 'vacate' ? "Xodimni vakansiyaga aylantirish" : action === 'history' ? "Pozitsiya tarixi" : action === 'create' ? "Yangi pozitsiya" : "Pozitsiyani tahrirlash";
+    els.deleteBtn.style.display = 'none';
+    els.saveBtn.style.display = action === 'history' ? 'none' : '';
+    els.form.dataset.mode = 'staff-' + action;
+    setError(els.editorError, '');
+    els.fields.innerHTML = '<p class="va-field--wide">Yuklanmoqda...</p>';
+    els.modal.classList.add('is-open');
+    els.modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    loadStaffContext(id).then(function (item) {
+      state.staffPosition = item;
+      if (action === 'history') return loadStaffHistory(item);
+      renderStaffFields(item, action);
+    }).catch(function (error) {
+      setError(els.editorError, 'Ma\'lumotni yuklashda xatolik: ' + message(error));
+      els.fields.innerHTML = '';
+    });
+  }
+
+  function staffPositionDefaults(item) {
+    item = item || {};
+    return {
+      section: item.section || 'central_team', category: item.category || 'central', region_code: item.region_code || '',
+      department: item.department || '', title_uz: item.title && item.title.uz || '', title_ru: item.title && item.title.ru || '',
+      title_en: item.title && item.title.en || '', vacancy_description_uz: item.vacancy_description && item.vacancy_description.uz || '',
+      vacancy_description_ru: item.vacancy_description && item.vacancy_description.ru || '', vacancy_description_en: item.vacancy_description && item.vacancy_description.en || '',
+      sort_order: item.sort_order == null ? 0 : item.sort_order, is_published: true
+    };
+  }
+
+  function staffPositionFields() {
+    return [
+      select('section', "Bo'lim", [['central_team', 'Markaziy jamoa'], ['leadership', 'Rahbariyat'], ['regional_branch', "Hududiy bo'linma"]]),
+      select('category', 'Toifa', [['central', 'Markaziy xodim'], ['leader', 'Rahbar'], ['head', "Bo'linma boshlig'i"], ['specialist', 'Mutaxassis'], ['other', 'Boshqa']]),
+      select('region_code', 'Hudud', [['', 'Hududsiz']].concat(state.staffRegions)), text('department', "Bo'linma / departament"),
+      text('title_uz', "Lavozim — O'zbekcha", true, true), text('title_ru', 'Lavozim — Ruscha', false, true), text('title_en', 'Lavozim — Inglizcha', false, true),
+      area('vacancy_description_uz', "Vakansiya tavsifi — O'zbekcha", false, true), area('vacancy_description_ru', 'Vakansiya tavsifi — Ruscha', false, true), area('vacancy_description_en', 'Vakansiya tavsifi — Inglizcha', false, true),
+      number('sort_order', 'Tartib raqami')
+    ];
+  }
+
+  function renderStaffFields(item, action) {
+    var defaults = staffPositionDefaults(item);
+    var fields = staffPositionFields();
+    if (action === 'fill') {
+      fields = fields.concat([text('full_name', 'Xodim F.I.Sh.', true, true), text('email', 'Email'), text('phone', 'Telefon'), file('photo_file', 'Xodim rasmi', 'image/*', true)]);
+    }
+    if (action === 'vacate') fields = [area('reason', "Bo'shatish sababi", true, true)];
+    els.fields.innerHTML = fields.map(function (field) { return fieldHtml(field, defaults); }).join('') +
+      ((action === 'fill' || action === 'vacate') ? '<div class="va-field--wide va-staff-preview" data-staff-preview></div><label class="va-check va-field--wide"><input name="confirmed" type="checkbox" required><span>Natijani ko\'rib chiqdim va ushbu atomar o\'zgarishni tasdiqlayman.</span></label>' : '');
+    if (state.user.role !== 'super_admin') {
+      ['section', 'category', 'region_code'].forEach(function (name) {
+        if (els.form.elements[name]) els.form.elements[name].disabled = true;
+      });
+    }
+    if (action === 'fill' || action === 'vacate') {
+      els.fields.oninput = renderStaffPreview;
+      renderStaffPreview();
+    }
+  }
+
+  function renderStaffPreview() {
+    var preview = els.fields.querySelector('[data-staff-preview]');
+    if (!preview) return;
+    var action = state.staffAction;
+    var name = els.form.elements.full_name && els.form.elements.full_name.value.trim();
+    var title = els.form.elements.title_uz && els.form.elements.title_uz.value.trim();
+    var reason = els.form.elements.reason && els.form.elements.reason.value.trim();
+    preview.innerHTML = '<strong>Natija oldindan ko\'rish</strong><p>' + (action === 'fill' ? esc((name || 'Yangi xodim') + ' — ' + (title || 'lavozim')) : esc((state.staffPosition && state.staffPosition.current_assignment && state.staffPosition.current_assignment.person.full_name || 'Xodim') + ' vakansiyaga aylantiriladi. Sabab: ' + (reason || '—'))) + '</p>';
+  }
+
+  function loadStaffHistory(item) {
+    if (!item) return Promise.reject(new Error('position_not_found'));
+    return NgoApi.get('/admin/staff/positions/' + encodeURIComponent(item.id) + '/history').then(function (response) {
+      var history = response.items || [];
+      var assignments = response.assignments || [];
+      var vacancies = response.vacancies || [];
+      els.fields.innerHTML = '<div class="va-field--wide"><p><strong>Barqaror ID:</strong> ' + esc(item.id) + '</p>' +
+        '<p><strong>Tayinlovlar:</strong> ' + assignments.length + ' · <strong>Vakansiya davrlari:</strong> ' + vacancies.length + '</p>' +
+        '<ol class="va-staff-history">' + history.map(function (entry) { return '<li><strong>' + esc(entry.event_type || entry.action || 'O\'zgarish') + '</strong><span>' + esc(entry.created_at || '') + '</span></li>'; }).join('') + '</ol></div>';
+    });
+  }
+
   function injectStructuredAddButtons(doc) {
     [
       ['.partner-grid', 'partner', "Hamkor qo'shish"],
@@ -1017,6 +1175,7 @@
       ['.proj-accordion', 'project', "Loyiha qo'shish"]
     ].forEach(function (cfg) {
       Array.prototype.forEach.call(queryAll(doc, cfg[0]), function (target) {
+        if (target.hasAttribute('data-staff-directory')) return;
         if (target.dataset.vaContextAddInjected) return;
         if (inRegisteredBlob(target)) return; // blob card-grid editor owns these
         target.dataset.vaContextAddInjected = '1';
@@ -1699,6 +1858,11 @@
     state.visualAction = null;
     state.i18nEditing = null;
     state.blobEditing = null;
+    state.staffAction = null;
+    state.staffPosition = null;
+    state.staffRegions = [];
+    state.staffRequestId = null;
+    els.fields.oninput = null;
     state.confirmingDelete = false;
     els.form.dataset.mode = '';
     els.saveBtn.style.display = '';
@@ -1874,6 +2038,10 @@
 
   function onSave(e) {
     e.preventDefault();
+    if (state.editingType === STAFF_TYPE) {
+      saveStaffPosition(e.submitter || els.form.querySelector('button[type="submit"]'));
+      return;
+    }
     if (state.editingType === I18N_TYPE) {
       saveI18n(e.submitter);
       return;
@@ -1961,6 +2129,80 @@
     }).catch(function (err) {
       setError(els.editorError, 'Saqlashda xatolik: ' + message(err));
     }).then(function () { lock(btn, false); });
+  }
+
+  function staffFormData() {
+    var data = {};
+    Array.prototype.forEach.call(els.form.elements, function (element) {
+      if (!element.name) return;
+      if (element.type === 'file') data[element.name] = element.files && element.files[0] || null;
+      else if (element.type === 'checkbox') data[element.name] = !!element.checked;
+      else if (element.type === 'number') data[element.name] = element.value === '' ? 0 : parseInt(element.value, 10);
+      else data[element.name] = String(element.value || '').trim();
+    });
+    return data;
+  }
+
+  function saveStaffPosition(button) {
+    var action = state.staffAction;
+    var item = state.staffPosition;
+    var data = staffFormData();
+    if ((action === 'fill' || action === 'vacate') && !data.confirmed) {
+      setError(els.editorError, 'Avval natijani tasdiqlang.');
+      return;
+    }
+    if ((action === 'fill' || action === 'create' || action === 'edit') && !data.title_uz) {
+      setError(els.editorError, "Lavozim nomi majburiy.");
+      return;
+    }
+    if (action === 'fill' && !data.full_name) {
+      setError(els.editorError, 'Xodim F.I.Sh. majburiy.');
+      return;
+    }
+    if (action === 'vacate' && !data.reason) {
+      setError(els.editorError, "Bo'shatish sababi majburiy.");
+      return;
+    }
+
+    delete data.confirmed;
+    var photo = data.photo_file;
+    delete data.photo_file;
+    lock(button, true, 'Saqlanmoqda...');
+    var upload = photo ? uploadVisualImage(photo).then(function (result) { data.photo_url = uploadResultUrl(result); }) : Promise.resolve();
+    upload.then(function () {
+      if (action === 'create') return NgoApi.post('/admin/staff/positions', data);
+      if (!item || !item.id) throw new Error('position_not_loaded');
+      data.expected_version = item.version;
+      if (action === 'edit') return NgoApi.patch('/admin/staff/positions/' + encodeURIComponent(item.id), data);
+      if (action === 'fill') {
+        data.client_request_id = state.staffRequestId;
+        return NgoApi.post('/admin/staff/positions/' + encodeURIComponent(item.id) + '/fill', data);
+      }
+      if (action === 'vacate') {
+        return NgoApi.post('/admin/staff/positions/' + encodeURIComponent(item.id) + '/vacate', {
+          expected_version: item.version,
+          client_request_id: state.staffRequestId,
+          reason: data.reason
+        });
+      }
+      throw new Error('unsupported_staff_action');
+    }).then(showStaffSuccess).catch(function (error) {
+      var conflict = error && error.status === 409 ? ' Pozitsiya boshqa administrator tomonidan o\'zgartirilgan; sahifani yangilang va qayta tekshiring.' : '';
+      setError(els.editorError, 'Saqlashda xatolik: ' + message(error) + conflict);
+    }).then(function () { lock(button, false); });
+  }
+
+  function showStaffSuccess(response) {
+    var item = response && response.item || state.staffPosition;
+    var publicUrl = response && response.public_url;
+    if (!publicUrl && item) publicUrl = item.section === 'leadership' ? '/leadership' : item.section === 'regional_branch' ? '/hududiy-bolinmalar' : '/our-team';
+    els.editorTitle.textContent = 'O\'zgarish saqlandi';
+    els.fields.innerHTML = '<div class="va-field--wide va-staff-success"><strong>Yagona reyestr atomar ravishda yangilandi.</strong>' +
+      (publicUrl ? '<p><a class="va-btn va-btn--primary" href="' + escAttr(publicUrl) + '" target="_blank" rel="noopener">Natijani saytda ko\'rish</a></p>' : '') +
+      '<p>Pozitsiya ID: ' + esc(item && item.id || response && response.position_id || '') + '</p></div>';
+    els.saveBtn.style.display = 'none';
+    toast('Xodim va vakansiya holati saqlandi');
+    reloadSite();
   }
 
   function saveItem(data) {

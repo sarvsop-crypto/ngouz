@@ -1620,8 +1620,7 @@
     },
     "vacancies": {
       "title": "Vacancies",
-      "sub": "Open vacancies and competitions at UzNANNGO.",
-      "list": "<h2 id=\"vacanciesListTitle\" class=\"visually-hidden\">List of open positions</h2><div class=\"cards\"><article class=\"card\"><h3>Branch head</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">Full-time · Navoiy Region</p><p>Lead and coordinate activities of the regional branch in Navoiy Region.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Apply</a></div></article><article class=\"card\"><h3>Specialist</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">Full-time · Samarkand Region</p><p>Work with and support member NGOs in the Samarkand Region branch.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Apply</a></div></article><article class=\"card\"><h3>Specialist</h3><p style=\"color:var(--green-500);font-weight:600;margin:4px 0 8px\">Full-time · Fergana Region</p><p>Work with and support member NGOs in the Fergana Region branch.</p><div class=\"card-action\"><a class=\"btn\" href=\"stajirovka-volontyorlik\">Apply</a></div></article></div>"
+      "sub": "Open vacancies and competitions at UzNANNGO."
     },
     "videoDetail": {
       "title": "Video details",

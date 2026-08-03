@@ -167,11 +167,11 @@
 <div class="container">
 <h2 id="branchListTitle" class="visually-hidden" data-i18n="pages.hududiyBolinmalar.listAria">Hududiy bo'linmalar ro'yxati</h2>
 <div class="team-meta-bar">
-<span class="team-chip" data-i18n="pages.hududiyBolinmalar.chipTotal">Jami: 28 pozitsiya</span>
-<span class="team-chip" data-i18n="pages.hududiyBolinmalar.chipBranches">Hududiy bo'linmalar: 14</span>
-<span class="team-chip" data-i18n="pages.hududiyBolinmalar.chipHeads">Boshlig'lar: 14</span>
-<span class="team-chip" data-i18n="pages.hududiyBolinmalar.chipSpecialists">Mutaxassislar: 11</span>
-<span class="team-chip" data-i18n="pages.hududiyBolinmalar.chipVacancies">Bo'sh ish o'rinlari: 3</span>
+<span class="team-chip" data-staff-stat="total">Jami: —</span>
+<span class="team-chip" data-staff-stat="branches">Hududiy bo'linmalar: —</span>
+<span class="team-chip" data-staff-stat="heads">Boshliqlar: —</span>
+<span class="team-chip" data-staff-stat="specialists">Mutaxassislar: —</span>
+<span class="team-chip" data-staff-stat="vacancies">Bo'sh ish o'rinlari: —</span>
 </div>
 <div class="team-controls" role="search" data-i18n-aria-label="pages.hududiyBolinmalar.searchAria" aria-label="Hududiy bo'linmalarni qidirish va filtrlash">
 <input data-i18n-aria-label="pages.ourTeam.searchInputAria" aria-label="Xodim qidiruvi" class="team-search" id="teamSearch" data-i18n-placeholder="pages.hududiyBolinmalar.searchPlaceholder" placeholder="Ism, viloyat yoki lavozim bo'yicha qidiring" type="search" enterkeyhint="search" maxlength="200"/>
@@ -180,7 +180,7 @@
 <button class="team-filter" data-filter="specialist" type="button" aria-pressed="false" aria-controls="teamGrid" data-i18n="pages.hududiyBolinmalar.filterSpecialists">Mutaxassislar</button>
 <button class="team-filter" data-filter="vacancy" type="button" aria-pressed="false" aria-controls="teamGrid" data-i18n="pages.hududiyBolinmalar.filterVacancies">Bo'sh ish o'rinlari</button>
 </div>
-<div class="team-grid" id="teamGrid" style="grid-template-columns:repeat(auto-fit,minmax(360px,1fr))"></div>
+<div class="team-grid" id="teamGrid" data-staff-directory="regional" aria-busy="true" style="grid-template-columns:repeat(auto-fit,minmax(360px,1fr))"></div>
 <div aria-live="polite" class="team-empty" id="teamEmpty" role="status" data-i18n="common.searchNoResults">Qidiruv bo'yicha natija topilmadi.</div>
 </div>
 </section>
@@ -223,106 +223,7 @@
 </nav>
 </div>
 </footer>
-<script>
-  const teamData = [
-    {name:"Karimxo'jayev Quvatbay Joldasbayevich", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"head", region:"Qoraqalpog'iston Respublikasi", region_ru:"Республика Каракалпакстан", region_en:"Republic of Karakalpakstan", photo:"staff-20.png", email:"karimxodjaevquwat@gmail.com"},
-    {name:"Qudiyarov Rasul Qaypbayevich", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"specialist", region:"Qoraqalpog'iston Respublikasi", region_ru:"Республика Каракалпакстан", region_en:"Republic of Karakalpakstan", photo:"staff-21.jpg", email:"rasulkudiyarov@mail.ru"},
-    {name:"Valiyev Sherzod Ikromiddinovich", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"head", region:"Andijon viloyati", region_ru:"Андижанская область", region_en:"Andijan region", photo:"staff-22.jpg", email:"wsh1983z@gmail.com"},
-    {name:"Nasiridinov Islomiddin Isomiddin o'g'li", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"specialist", region:"Andijon viloyati", region_ru:"Андижанская область", region_en:"Andijan region", photo:"staff-23.jpg", email:"nasiridinov94@gmail.com"},
-    {name:"Boltayev Jasurbek G'ulomovich", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"head", region:"Buxoro viloyati", region_ru:"Бухарская область", region_en:"Bukhara region", photo:"staff-24.png", email:"jasurbek.boltaev@bk.ru"},
-    {name:"Pardayev Ruslan Salimovich", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"specialist", region:"Buxoro viloyati", region_ru:"Бухарская область", region_en:"Bukhara region", photo:"staff-25.jpg", email:"pardaevruslan7@gmail.com"},
-    {name:"Kamalova Nazifa Mirzaliyevna", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"head", region:"Jizzax viloyati", region_ru:"Джизакская область", region_en:"Jizzakh region", photo:"staff-26.png", email:"uznntmajizzax01@gmail.com"},
-    {name:"Xolboyev Maxmud Ikrom o'g'li", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"specialist", region:"Jizzax viloyati", region_ru:"Джизакская область", region_en:"Jizzakh region", photo:"staff-27.png", email:"maxmudxolboyev0702@gmail.com"},
-    {name:"Xushnazarov Jasur Bobir o'g'li", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"head", region:"Qashqadaryo viloyati", region_ru:"Кашкадарьинская область", region_en:"Kashkadarya region", photo:"staff-28.png", email:"Xushnazaroj@gmail.com"},
-    {name:"Bozorov Jahongir Shavkatovich", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"specialist", region:"Qashqadaryo viloyati", region_ru:"Кашкадарьинская область", region_en:"Kashkadarya region", photo:"staff-29.png", email:"jahongirshavkatovich@gmail.com"},
-    {name:"Vakant", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"vacancy", region:"Navoiy viloyati", region_ru:"Навоийская область", region_en:"Navoiy region"},
-    {name:"Toshpo'latov Ilhom Tolib o'g'li", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"specialist", region:"Navoiy viloyati", region_ru:"Навоийская область", region_en:"Navoiy region", photo:"staff-31.jpg", email:"toshpulatovilhom740@gmail.com"},
-    {name:"Karimov Ikromjon Isoqjonovich", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"head", region:"Namangan viloyati", region_ru:"Наманганская область", region_en:"Namangan region", photo:"staff-32.png", email:"ikromjon.060666@gmail.com"},
-    {name:"Maxmudov Rustamjon Ilhomjon o'g'li", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"specialist", region:"Namangan viloyati", region_ru:"Наманганская область", region_en:"Namangan region", photo:"staff-33.png", email:"rustamjonmahmudovoo773@gmail.com"},
-    {name:"Kenjayev Shoim O'rolovich", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"head", region:"Samarqand viloyati", region_ru:"Самаркандская область", region_en:"Samarkand region", photo:"staff-34.png", email:"kenjayevshoim1991@gmail.com"},
-    {name:"Vakant", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"vacancy", region:"Samarqand viloyati", region_ru:"Самаркандская область", region_en:"Samarkand region"},
-    {name:"Irismetov Alisher Isamatovich", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"head", region:"Sirdaryo viloyati", region_ru:"Сырдарьинская область", region_en:"Syrdarya region", photo:"staff-36.png", email:"alisher2990@mail.ru"},
-    {name:"Qo'ldasheva Saida Xaitbayevna", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"specialist", region:"Sirdaryo viloyati", region_ru:"Сырдарьинская область", region_en:"Syrdarya region", photo:"staff-37.jpg", email:"saidaqoldosheva121@gmail.com"},
-    {name:"Abduraxmonov Xurshidjon Xayitqulovich", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"head", region:"Surxondaryo viloyati", region_ru:"Сурхандарьинская область", region_en:"Surkhandarya region", photo:"staff-38.png", email:"xurshid.magnat@gmail.com"},
-    {name:"Xaitov Shuxrat O'ktam o'g'li", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"specialist", region:"Surxondaryo viloyati", region_ru:"Сурхандарьинская область", region_en:"Surkhandarya region", photo:"staff-39.png", email:"Shifohayot@gmail.com"},
-    {name:"Xolmatov Ibrohim Isroilovich", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"head", region:"Toshkent viloyati", region_ru:"Ташкентская область", region_en:"Tashkent region", photo:"staff-40.png", email:"iholmatov07@gmail.com"},
-    {name:"Murodova Dilnoza Ravshanbekovna", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"specialist", region:"Toshkent viloyati", region_ru:"Ташкентская область", region_en:"Tashkent region", photo:"staff-41.jpg", email:"muradovadilnoza589@gmail.com"},
-    {name:"Fozilov Dilmurod Xomidovich", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"head", region:"Farg'ona viloyati", region_ru:"Ферганская область", region_en:"Fergana region", photo:"staff-42.png", email:"fozilovd848@gmail.com"},
-    {name:"Vakant", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"vacancy", region:"Farg'ona viloyati", region_ru:"Ферганская область", region_en:"Fergana region"},
-    {name:"Masharipov Ortiqjon Shuxrat o'g'li", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"head", region:"Xorazm viloyati", region_ru:"Хорезмская область", region_en:"Khorezm region", photo:"staff-44.png", email:"ortiqboymasharipov96@gmail.com"},
-    {name:"Babajonova Mo'tabar Baxtiyor qizi", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"specialist", region:"Xorazm viloyati", region_ru:"Хорезмская область", region_en:"Khorezm region", photo:"staff-45.png", email:"motabarxonsultanova@gmail.com"},
-    {name:"Rajabov Farrux Alisherovich", role:"Bo'linma boshlig'i", role_ru:"Руководитель подразделения", role_en:"Branch head", group:"head", region:"Toshkent shahri", region_ru:"город Ташкент", region_en:"Tashkent city", photo:"staff-46.png", email:"farruh.radjabov@bk.ru"},
-    {name:"Vaxabov Abdulaziz Abdumalik o'g'li", role:"Mutaxassis", role_ru:"Специалист", role_en:"Specialist", group:"specialist", region:"Toshkent shahri", region_ru:"город Ташкент", region_en:"Tashkent city", photo:"staff-47.png", email:"vakhabov1811@gmail.com"}
-  ];
-
-  const grid = document.getElementById('teamGrid');
-  const empty = document.getElementById('teamEmpty');
-  const search = document.getElementById('teamSearch');
-  const filters = Array.from(document.querySelectorAll('.team-filter'));
-  let activeFilter = 'all';
-
-  function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-  function curLang() {
-    var l = (window.ngoI18n && window.ngoI18n.get && window.ngoI18n.get()) ||
-      (function () { try { return localStorage.getItem('ngo_public_lang_v1') || 'uz'; } catch (e) { return 'uz'; } })();
-    return (l === 'ru' || l === 'en') ? l : 'uz';
-  }
-  function makeCard(item) {
-    const card = document.createElement('article');
-    const isVacancy = item.group === 'vacancy';
-    card.className = 'team-card' + (isVacancy ? ' vacancy' : '');
-    // Names stay verbatim; role + region are localized (Uzbek fallback).
-    var l = curLang();
-    var role = (l === 'ru' ? item.role_ru : l === 'en' ? item.role_en : item.role) || item.role;
-    var region = (l === 'ru' ? item.region_ru : l === 'en' ? item.region_en : item.region) || item.region;
-    var vacancyLabel = (window.ngoI18n && window.ngoI18n.t) ? window.ngoI18n.t('pages.ourTeam.vacancy', "Bo'sh ish o'rni") : "Bo'sh ish o'rni";
-    card.innerHTML =
-      '<div class="team-photo">' + (item.photo ? '<img src="img/staff/' + esc(item.photo) + '" alt="' + esc(item.name) + '" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block" decoding="async" width="130" height="130"/>' : '') + '</div>' +
-      '<h3>' + esc(item.name) + '</h3>' +
-      '<p class="team-role">' + esc(role) + '</p>' +
-      (region ? '<p class="team-region">' + esc(region) + '</p>' : '') +
-      '<div class="team-meta">' +
-      (item.email ? '<span>Email: <a href="mailto:' + esc(item.email) + '">' + esc(item.email) + '</a></span>' : '') +
-      (isVacancy ? '<span style="color:#be123c;font-weight:700">' + esc(vacancyLabel) + '</span>' : '') +
-      '</div>';
-    return card;
-  }
-
-  function render() {
-    const q = (search.value || '').trim().toLowerCase();
-    const rows = teamData.filter(function(item) {
-      const byFilter = activeFilter === 'all' ? true : item.group === activeFilter;
-      const text = (item.name + ' ' + item.role + ' ' + (item.region || '') + ' ' + (item.email || '')).toLowerCase();
-      const bySearch = !q || text.includes(q);
-      return byFilter && bySearch;
-    });
-    grid.innerHTML = '';
-    rows.forEach(function(item) { grid.appendChild(makeCard(item)); });
-    empty.style.display = rows.length ? 'none' : 'block';
-  }
-
-  filters.forEach(function(btn) {
-    if (!btn.hasAttribute('aria-pressed')) {
-      btn.setAttribute('aria-pressed', btn.classList.contains('active') ? 'true' : 'false');
-    }
-    btn.addEventListener('click', function() {
-      activeFilter = btn.getAttribute('data-filter');
-      filters.forEach(function(x) {
-        var isActive = x === btn;
-        x.classList.toggle('active', isActive);
-        x.setAttribute('aria-pressed', isActive ? 'true' : 'false');
-      });
-      render();
-    });
-  });
-  search.addEventListener('input', render);
-  render();
-  // Re-render role/region titles on language switch + once the dict first loads.
-  if (window.ngoI18n) {
-    if (typeof window.ngoI18n.onChange === 'function') window.ngoI18n.onChange(render);
-    if (typeof window.ngoI18n.onReady === 'function') window.ngoI18n.onReady(render);
-  }
-</script>
+<script src="js/staff-directory.js?v=20260803stafflifecycle" defer></script>
 <script src="js/main.js?v=20260628grantdropdown" defer></script>
 
 <div class="search-overlay" id="searchOverlay" role="dialog" aria-label="Qidirish" aria-modal="true" aria-hidden="true">
