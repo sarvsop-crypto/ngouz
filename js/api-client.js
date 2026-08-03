@@ -9,7 +9,8 @@
 (function () {
   var API_BASE = 'https://api.ngo.uz/v1';
   var USER_KEY   = 'ngo_api_user';
-  var LOGIN_PAGE = 'admin-login';
+  var LOGIN_PAGE = '/admin-login';
+  var CABINET_LOGIN_PAGE = '/cabinet/cabinet-login';
   var IDLE_TIMEOUT_MS = 30 * 60 * 1000;
   var ACTIVITY_KEY = 'ngo_api_last_activity';
   var csrfToken = '';
@@ -110,7 +111,7 @@
             // Auto-pick login page from URL when caller didn't say.
             // /cabinet/* → cabinet-login, everything else → admin-login.
             var loginPage = opts.loginPage
-              || (location.pathname.indexOf('/cabinet/') === 0 ? 'cabinet-login' : LOGIN_PAGE);
+              || (location.pathname.indexOf('/cabinet/') === 0 ? CABINET_LOGIN_PAGE : LOGIN_PAGE);
             location.href = loginPage + '?error=session_expired&next=' + next;
           }
         }
@@ -150,7 +151,7 @@
     window.__NGO_IDLE_LOGOUT_STARTED__ = true;
 
     var timer = null;
-    var loginPage = opts.loginPage || (location.pathname.indexOf('/cabinet/') === 0 ? 'cabinet-login' : LOGIN_PAGE);
+    var loginPage = opts.loginPage || (location.pathname.indexOf('/cabinet/') === 0 ? CABINET_LOGIN_PAGE : LOGIN_PAGE);
 
     function rememberActivity() {
       if (!getUser()) return;
@@ -193,8 +194,8 @@
     if (getUser()) rememberActivity();
   }
 
-  function me() {
-    return request('GET', '/me').then(function (res) {
+  function me(opts) {
+    return request('GET', '/me', undefined, opts).then(function (res) {
       csrfToken = (res && res.csrf) || '';
       if (res && res.user) setUser(res.user);
       return res;
@@ -245,14 +246,14 @@
   function requireAuth(opts) {
     opts = opts || {};
     function roleHome(role) {
-      if (role === 'commission') return 'admin-commission';
-      if (role === 'leader') return 'admin-leader-signing';
-      return 'admin-dashboard';
+      if (role === 'commission') return '/admin-commission';
+      if (role === 'leader') return '/admin-leader-signing';
+      return '/admin-dashboard';
     }
     function redirectForbidden(user) {
       var target = opts.fallbackPage || roleHome(user && user.role);
       var here = location.pathname.split('/').pop().replace(/\.html$/, '') || 'admin-dashboard';
-      if (target === here) target = 'admin-dashboard';
+      if (target.replace(/^\//, '') === here) target = '/admin-dashboard';
       location.replace(target);
       return Promise.reject(new Error('forbidden'));
     }

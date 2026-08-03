@@ -218,7 +218,7 @@
   }
 
   function boot() {
-    NgoApi.me().then(function (res) {
+    NgoApi.me({ noRedirect: true }).then(function (res) {
       state.user = res.user || res;
       if (!canUseVisualAdmin(state.user)) {
         NgoApi.logout();

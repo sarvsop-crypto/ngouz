@@ -15,6 +15,18 @@ async function source(path) {
   return readFile(new URL(path, root), 'utf8');
 }
 
+test('visual-admin owns its unauthenticated state and shared redirects stay root-relative', async () => {
+  const admin = await source('js/visual-admin.js');
+  const client = await source('js/api-client.js');
+  const boot = await source('js/admin-boot.js');
+  assert.match(admin, /NgoApi\.me\(\{ noRedirect: true \}\)/);
+  assert.match(client, /var LOGIN_PAGE = '\/admin-login'/);
+  assert.match(client, /var CABINET_LOGIN_PAGE = '\/cabinet\/cabinet-login'/);
+  assert.match(client, /function me\(opts\)/);
+  assert.match(client, /request\('GET', '\/me', undefined, opts\)/);
+  assert.match(boot, /authOpts\.loginPage = authOpts\.loginPage \|\| '\/admin-login'/);
+});
+
 test('database deletes require an explicit confirmation state', async () => {
   const js = await source('js/visual-admin.js');
   assert.doesNotMatch(js, /setTimeout\(onDelete/);

@@ -35,7 +35,7 @@
   var authOpts = window.NGO_ADMIN_AUTH || {};
   authOpts.allowedRoles = NgoAdminNavigation.allowedRoles();
   delete authOpts.minRole;
-  authOpts.loginPage = authOpts.loginPage || 'admin-login';
+  authOpts.loginPage = authOpts.loginPage || '/admin-login';
 
   NgoApi.requireAuth(authOpts)
     .then(function (user) {
