@@ -107,6 +107,14 @@ test('API-backed cards never receive duplicate generic block controls', async ()
   assert.match(helper, /node\.hasAttribute\('data-va-type'\) \|\| node\.hasAttribute\('data-va-id'\)/);
 });
 
+test('vacancy cards expose their canonical vacant state to visual-admin controls', async () => {
+  const directory = await source('js/staff-directory.js');
+  const admin = await source('js/visual-admin.js');
+  assert.match(directory, /class="card vacancy-card vacancy"/);
+  assert.match(admin, /node\.classList\.contains\('vacancy'\)/);
+  assert.match(admin, /data-staff-action="fill">Xodimga aylantirish/);
+});
+
 test('added patches keep stable identity through edit and use DELETE for removal', async () => {
   const admin = await source('js/visual-admin.js');
   const overrides = await source('js/visual-overrides.js');

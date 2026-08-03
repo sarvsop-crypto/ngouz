@@ -94,7 +94,7 @@
     var label = labels();
     var region = translated(item.region);
     var description = translated(item.vacancy_description);
-    return '<article id="position-' + esc(item.id) + '" class="card vacancy-card" data-staff-position-id="' + esc(item.id) + '" data-va-type="staff_position" data-va-id="' + esc(item.id) + '">' +
+    return '<article id="position-' + esc(item.id) + '" class="card vacancy-card vacancy" data-staff-position-id="' + esc(item.id) + '" data-va-type="staff_position" data-va-id="' + esc(item.id) + '">' +
       '<h3>' + esc(translated(item.title)) + '</h3><p class="vacancy-card__meta">' + esc(label.fullTime + (region ? ' · ' + region : '')) + '</p>' +
       (description ? '<p>' + esc(description) + '</p>' : '') +
       '<div class="card-action"><a class="btn" href="stajirovka-volontyorlik?vacancy_id=' + encodeURIComponent(item.id) + '">' + esc(label.apply) + '</a></div></article>';
