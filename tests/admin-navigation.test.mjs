@@ -40,6 +40,9 @@ test('one role matrix protects menu visibility and direct page access', async ()
   assert.deepEqual(Array.from(navigation.allowedRoles('admin-users')), ['super_admin']);
   assert.deepEqual(Array.from(navigation.allowedRoles('admin-settings-system')), ['super_admin']);
   assert.deepEqual(Array.from(navigation.allowedRoles('admin-messages')), ['super_admin', 'regional_admin']);
+  for (const page of ['admin-service-requests', 'admin-corruption-reports', 'admin-feedback']) {
+    assert.deepEqual(Array.from(navigation.allowedRoles(page)), ['super_admin'], page + ' must match the production inbox API role contract');
+  }
   assert.deepEqual(Array.from(navigation.allowedRoles('admin-commission')), ['commission']);
   assert.deepEqual(Array.from(navigation.allowedRoles('admin-leader-signing')), ['leader']);
   for (const file of (await readdir(root)).filter((name) => /^admin-.*\.html$/.test(name)
@@ -55,9 +58,17 @@ test('one role matrix protects menu visibility and direct page access', async ()
 
   const items = navigation.definition.flatMap((section) => Array.from(section.items));
   const regionalRoutes = items.filter((item) => Array.from(item.roles).includes('regional_admin')).map((item) => item.route);
-  for (const forbidden of ['admin-users', 'admin-password-reset-requests', 'admin-commission', 'admin-leader-signing']) {
+  for (const forbidden of ['admin-users', 'admin-password-reset-requests', 'admin-service-requests', 'admin-corruption-reports', 'admin-feedback', 'admin-commission', 'admin-leader-signing']) {
     assert.ok(!regionalRoutes.includes(forbidden), forbidden + ' leaked into regional navigation');
   }
+});
+
+test('dashboard never calls the superadmin contact inbox for a regional user', async () => {
+  const html = await source('admin-dashboard.html');
+  assert.match(html, /NgoAdminReady\.then\(function \(user\) \{/);
+  assert.match(html, /if \(user\.role !== 'super_admin'\)/);
+  assert.match(html, /return NgoApi\.get\('\/admin\/contact-messages\?limit=200&status=new'\)/);
+  assert.match(html, /Bu bo\\'lim faqat bosh admin uchun/);
 });
 
 test('messaging UX opens people, separates groups, and removes generic thread creation', async () => {

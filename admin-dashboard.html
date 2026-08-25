@@ -312,7 +312,7 @@
       var t = ((m.subject || '') + ' ' + (m.body || '')).toLowerCase();
       return DASHBOARD_CORRUPTION_KEYWORDS.some(function (kw) { return t.indexOf(kw) !== -1; });
     }
-    NgoApi.get('/admin/contact-messages?limit=200&status=new').then(function (res) {
+    function renderRecentMessages(res) {
       var tbody = document.getElementById('dashboardRecentRows');
       if (!tbody) return;
       var feedbackOnly = (res.items || [])
@@ -327,13 +327,27 @@
         return '<tr><td>#' + esc(m.id) + '</td><td>' + esc(m.full_name || '—') + '</td><td>' + esc(m.email || m.phone || '—') + '</td><td>' + esc(m.subject || '—') + '</td>'
           + '<td><span class="badge badge--warning">Yangi</span></td><td>' + (m.created_at ? '<time datetime="' + esc(String(m.created_at).slice(0,10)) + '">' + esc(String(m.created_at).slice(0,10)) + '</time>' : '') + '</td></tr>';
       }).join('');
-    }).catch(function (err) {
+    }
+    function renderRecentMessagesError(err) {
       if (err && err.status === 401) return;
       var tbody = document.getElementById('dashboardRecentRows');
       if (tbody) tbody.innerHTML = '<tr><td colspan="6" role="alert" class="empty-state" style="color:var(--error-600,#dc2626)">Xabarlarni yuklab bo\'lmadi.</td></tr>';
-    }).then(function () {
+    }
+    function finishRecentMessages() {
       var t = document.getElementById('dashboardRecentRows');
       if (t) t.setAttribute('aria-busy', 'false');
+    }
+    NgoAdminReady.then(function (user) {
+      if (user.role !== 'super_admin') {
+        var tbody = document.getElementById('dashboardRecentRows');
+        if (tbody) tbody.innerHTML = '<tr><td colspan="6" role="status" class="empty-state">Bu bo\'lim faqat bosh admin uchun</td></tr>';
+        return;
+      }
+      return NgoApi.get('/admin/contact-messages?limit=200&status=new')
+        .then(renderRecentMessages)
+        .catch(renderRecentMessagesError);
+    }).catch(renderRecentMessagesError).then(function () {
+      finishRecentMessages();
     });
 
     document.querySelectorAll('.quick-filter').forEach(function (btn) {

@@ -21,9 +21,9 @@
       item('analytics', 'admin-analytics', 'trend-up', "Tahliliy ma'lumotlar", 'admin.nav.analytics', OPERATIONS)
     ]},
     { key: 'requests', label: 'MUROJAATLAR', items: [
-      item('serviceRequests', 'admin-service-requests', 'wrench', "Xizmat so'rovlari", 'admin.nav.serviceRequests', OPERATIONS),
-      item('corruptionReports', 'admin-corruption-reports', 'shield-warning', 'Korrupsiya murojaatlari', 'admin.nav.corruptionReports', OPERATIONS),
-      item('feedback', 'admin-feedback', 'chat-dots', 'Qayta aloqa', 'admin.nav.feedback', OPERATIONS),
+      item('serviceRequests', 'admin-service-requests', 'wrench', "Xizmat so'rovlari", 'admin.nav.serviceRequests', ADMIN),
+      item('corruptionReports', 'admin-corruption-reports', 'shield-warning', 'Korrupsiya murojaatlari', 'admin.nav.corruptionReports', ADMIN),
+      item('feedback', 'admin-feedback', 'chat-dots', 'Qayta aloqa', 'admin.nav.feedback', ADMIN),
       item('scientificAppeals', 'admin-murojaat', 'graduation-cap', 'Ilmiy daraja murojaatlari', 'admin.nav.scientificAppeals', OPERATIONS),
       item('passwordReset', 'admin-password-reset-requests', 'key', "Parol tiklash so'rovlari", 'admin.nav.passwordResetReq', ADMIN)
     ]},
@@ -50,9 +50,9 @@
     'admin-users': ADMIN,
     'admin-reports': OPERATIONS,
     'admin-analytics': OPERATIONS,
-    'admin-service-requests': OPERATIONS,
-    'admin-corruption-reports': OPERATIONS,
-    'admin-feedback': OPERATIONS,
+    'admin-service-requests': ADMIN,
+    'admin-corruption-reports': ADMIN,
+    'admin-feedback': ADMIN,
     'admin-murojaat': OPERATIONS,
     'admin-password-reset-requests': ADMIN,
     'admin-news': OPERATIONS,
