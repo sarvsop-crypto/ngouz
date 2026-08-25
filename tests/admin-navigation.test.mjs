@@ -12,7 +12,7 @@ async function source(path) {
 test('every authenticated admin page uses exactly one canonical navigation mount', async () => {
   const files = (await readdir(root)).filter((name) => /^admin-.*\.html$/.test(name)
     && !['admin-login.html', 'admin-forgot-password-request.html'].includes(name));
-  assert.equal(files.length, 26);
+  assert.equal(files.length, 24);
   for (const file of files) {
     const html = await source(file);
     assert.equal((html.match(/data-admin-navigation/g) || []).length, 1, file + ' must have one mount');
@@ -21,6 +21,14 @@ test('every authenticated admin page uses exactly one canonical navigation mount
     const boot = html.indexOf('js/admin-boot.js');
     assert.ok(navigation >= 0 && navigation < boot, file + ' must load canonical navigation before auth boot');
   }
+});
+
+test('retired grant-application and generic-document admin surfaces cannot return', async () => {
+  const code = await source('js/admin-navigation.js');
+  assert.doesNotMatch(code, /admin-grant-applications|admin-documents|grantApplications/);
+  const files = await readdir(root);
+  assert.ok(!files.includes('admin-grant-applications.html'));
+  assert.ok(!files.includes('admin-documents.html'));
 });
 
 test('one role matrix protects menu visibility and direct page access', async () => {

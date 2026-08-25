@@ -12,10 +12,8 @@
     { key: 'main', label: 'ASOSIY MENYU', items: [
       item('dashboard', 'admin-dashboard', 'squares-four', 'Boshqaruv paneli', 'admin.nav.dashboard', OPERATIONS),
       item('membership', 'admin-membership-requests', 'file-text', "A'zolik arizalari", 'admin.nav.membershipRequests', OPERATIONS),
-      item('grantApplications', 'admin-grant-applications', 'hand-coins', 'Grant arizalari', 'admin.nav.grantApplications', OPERATIONS),
       item('registry', 'admin-registry', 'list-bullets', "NNT Ro'yxati", 'admin.nav.registry', OPERATIONS),
       item('regions', 'admin-regions', 'map-pin', 'Hududlar', 'admin.nav.regions', OPERATIONS),
-      item('documents', 'admin-documents', 'folder-open', 'Hujjatlar', 'admin.nav.documents', OPERATIONS),
       item('tasks', 'admin-tasks', 'check-square', 'Topshiriqlar', 'admin.nav.tasks', OPERATIONS),
       item('messages', 'admin-messages', 'chats-circle', 'Ichki xabarlar', 'admin.nav.messages', OPERATIONS, 'messages'),
       item('users', 'admin-users', 'users', 'Foydalanuvchilar', 'admin.nav.users', ADMIN),
@@ -45,10 +43,8 @@
   var pageRoles = {
     'admin-dashboard': OPERATIONS,
     'admin-membership-requests': OPERATIONS,
-    'admin-grant-applications': OPERATIONS,
     'admin-registry': OPERATIONS,
     'admin-regions': OPERATIONS,
-    'admin-documents': OPERATIONS,
     'admin-tasks': OPERATIONS,
     'admin-messages': OPERATIONS,
     'admin-users': ADMIN,

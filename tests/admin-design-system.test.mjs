@@ -11,7 +11,7 @@ async function source(path) {
 }
 
 test('every authenticated route consumes the one canonical Al-Beruni admin shell', async () => {
-  assert.equal(authenticated.length, 26);
+  assert.equal(authenticated.length, 24);
   for (const file of authenticated) {
     const html = await source(file);
     for (const asset of [
@@ -179,4 +179,10 @@ test('task markup and renderer keep one matching attachment contract', async () 
     assert.doesNotMatch(html, new RegExp(`id="${obsoleteId}"`), `${obsoleteId} must not return`);
     assert.doesNotMatch(js, new RegExp(`['"]${obsoleteId}['"]`), `${obsoleteId} must not be queried`);
   }
+});
+
+test('dynamic superadmin metadata cannot be overwritten by late i18n hydration', async () => {
+  const html = await source('admin-users.html');
+  assert.match(html, /id="saMeta" role="status">Yuklanmoqda\.\.\.<\/p>/);
+  assert.doesNotMatch(html, /id="saMeta"[^>]*data-i18n/);
 });

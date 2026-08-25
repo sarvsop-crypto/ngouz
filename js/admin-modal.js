@@ -1,7 +1,7 @@
 /**
  * admin-modal.js — a11y-aware open/close for admin CMS modal-overlay
  * dialogs. Used on admin-news / admin-events / admin-grants /
- * admin-documents in place of the inline openModal/closeModal helpers
+ * authenticated admin pages in place of inline openModal/closeModal helpers
  * that lacked focus management.
  *
  * Exposes window.AdminModal.{open,close}. Each modal must have
