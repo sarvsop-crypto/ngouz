@@ -337,17 +337,18 @@
       var t = document.getElementById('dashboardRecentRows');
       if (t) t.setAttribute('aria-busy', 'false');
     }
-    NgoAdminReady.then(function (user) {
+    document.addEventListener('NgoAdminNavigationReady', function (event) {
+      var user = event.detail.user;
       if (user.role !== 'super_admin') {
         var tbody = document.getElementById('dashboardRecentRows');
         if (tbody) tbody.innerHTML = '<tr><td colspan="6" role="status" class="empty-state">Bu bo\'lim faqat bosh admin uchun</td></tr>';
+        finishRecentMessages();
         return;
       }
-      return NgoApi.get('/admin/contact-messages?limit=200&status=new')
+      NgoApi.get('/admin/contact-messages?limit=200&status=new')
         .then(renderRecentMessages)
-        .catch(renderRecentMessagesError);
-    }).catch(renderRecentMessagesError).then(function () {
-      finishRecentMessages();
+        .catch(renderRecentMessagesError)
+        .then(finishRecentMessages);
     });
 
     document.querySelectorAll('.quick-filter').forEach(function (btn) {

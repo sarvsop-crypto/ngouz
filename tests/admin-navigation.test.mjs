@@ -65,9 +65,10 @@ test('one role matrix protects menu visibility and direct page access', async ()
 
 test('dashboard never calls the superadmin contact inbox for a regional user', async () => {
   const html = await source('admin-dashboard.html');
-  assert.match(html, /NgoAdminReady\.then\(function \(user\) \{/);
+  assert.match(html, /document\.addEventListener\('NgoAdminNavigationReady', function \(event\) \{/);
+  assert.match(html, /var user = event\.detail\.user/);
   assert.match(html, /if \(user\.role !== 'super_admin'\)/);
-  assert.match(html, /return NgoApi\.get\('\/admin\/contact-messages\?limit=200&status=new'\)/);
+  assert.match(html, /NgoApi\.get\('\/admin\/contact-messages\?limit=200&status=new'\)/);
   assert.match(html, /Bu bo\\'lim faqat bosh admin uchun/);
 });
 
