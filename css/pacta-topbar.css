@@ -1,154 +1,131 @@
-/* Shared Pacta top bar – one header, left (breadcrumb) + right (actions).
-   Avoid: width: fit-content on header; position: absolute on bell/user; flex:1 on breadcrumb. */
-
+/* Canonical authenticated topbar. */
 .topbar {
+  position: sticky;
+  top: 0;
+  z-index: 90;
   width: 100%;
-  height: 80px;
-  padding: 0 30px;
+  height: var(--topbar-height);
+  min-height: var(--topbar-height);
+  padding: 0 20px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--grey-100, #e5e7eb);
-  flex-shrink: 0;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+  background: color-mix(in oklch, var(--surface) 96%, transparent);
+  backdrop-filter: blur(10px);
 }
-
 .topbar-left {
+  min-width: 0;
   display: flex;
   align-items: center;
+  gap: 10px;
 }
-
 .topbar-right {
+  min-width: 0;
   margin-left: auto;
   display: flex;
   align-items: center;
-  gap: 15px;
+  gap: 8px;
 }
-
-/* Breadcrumb */
 .breadcrumbs {
-  font-size: 18px;
+  min-width: 0;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
   font-weight: 500;
-  color: var(--grey-400);
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
-.breadcrumbs a {
-  color: var(--grey-400);
-  text-decoration: none;
-}
-.breadcrumbs a:hover {
-  color: var(--primary-500);
-}
-.breadcrumbs span {
-  color: var(--grey-900);
-}
-
-/* Notifications – wrapper only for badge positioning; no absolute on button */
-.topbar-notifications {
-  position: relative;
-  flex-shrink: 0;
-}
-.topbar-notifications-btn {
-  width: 50px;
-  height: 50px;
+.breadcrumbs a { color: var(--muted); text-decoration: none; }
+.breadcrumbs a:hover { color: var(--accent-ink); }
+.breadcrumbs span { color: var(--ink); }
+.mobile-nav-toggle {
+  width: 34px;
+  height: 34px;
+  flex: none;
+  display: none;
+  place-items: center;
   padding: 0;
-  border-radius: 50%;
-  border: 1px solid var(--grey-100);
-  background: var(--grey-0);
-  color: var(--grey-900);
-  font-size: 23px;
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--ink-2);
   cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
 }
-.topbar-notifications-btn:hover {
-  background: var(--grey-25, #f6f8fa);
-  border-color: var(--grey-100);
+.mobile-nav-toggle:hover { background: var(--surface-2); color: var(--ink); }
+.mobile-nav-toggle:focus-visible { box-shadow: var(--focus-ring); }
+.topbar-notifications { position: relative; flex: none; }
+.topbar-notifications-btn {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  line-height: 0;
+  transition: background .12s ease, color .12s ease;
 }
+.topbar-notifications-btn:hover { background: var(--surface-2); color: var(--ink); }
+.topbar-notifications-btn:focus-visible { box-shadow: var(--focus-ring); }
 .topbar-notifications-badge {
   position: absolute;
   top: 5px;
   right: 5px;
-  width: 10px;
-  height: 10px;
+  width: 7px;
+  height: 7px;
+  border: 1.5px solid var(--surface);
   border-radius: 50%;
-  background: var(--error-100, #df1c41);
+  background: var(--critical);
   pointer-events: none;
 }
-
-.topbar-divider {
-  width: 1px;
-  height: 25px;
-  background: var(--grey-100);
-  flex-shrink: 0;
-}
-
+.topbar-divider { width: 1px; height: 24px; flex: none; background: var(--line); }
 .main__profile {
+  min-width: 0;
   display: flex;
   align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
+  gap: 8px;
+}
+.main__profile > :last-child {
+  min-width: 0;
+  display: grid;
+  gap: 1px;
 }
 .main__profile-avatar {
-  width: 45px;
-  height: 45px;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--accent-line);
   border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--primary-500, #2563eb);
-  color: #fff;
-  font-weight: 600;
-  font-size: 18px;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font: 600 11px/1 var(--font-mono);
 }
-.main__profile-name {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--grey-900);
-  line-height: 1.3;
-}
+.main__profile-name,
 .main__profile-role {
-  font-size: 15px;
-  font-weight: 400;
-  color: var(--grey-500);
-  line-height: 1.3;
+  display: block;
+  max-width: 160px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
+.main__profile-name { color: var(--ink); font-size: 11.5px; font-weight: 600; line-height: 1.25; }
+.main__profile-role { color: var(--muted); font-size: 10.5px; line-height: 1.25; }
 
-/* --- Responsive: keep the top bar within the viewport on phones ---
-   The right-side profile block (avatar + name + role) was flex-shrink:0
-   with no truncation, so on narrow screens it pushed ~20-33px past the
-   viewport on every admin page. Below 640px we compact the bar: tighter
-   padding, a truncatable breadcrumb, and an avatar-only profile. */
+@media (max-width: 1024px) {
+  .topbar { padding-inline: 12px; }
+  .mobile-nav-toggle { display: grid; }
+}
 @media (max-width: 640px) {
-  .topbar {
-    padding: 0 16px;
-    gap: 10px;
-  }
-  .topbar-left {
-    min-width: 0;
-    flex: 1 1 auto;
-  }
-  .breadcrumbs {
-    font-size: 15px;
-    min-width: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .topbar-right {
-    gap: 10px;
-    flex-shrink: 0;
-  }
-  .topbar-divider {
-    display: none;
-  }
-  /* Avatar-only profile on phones — the name/role text is the part that
-     overflowed; the avatar alone is the standard compact pattern. */
+  .topbar { gap: 8px; }
+  .topbar-left { flex: 1; }
+  .topbar-divider,
   .main__profile-name,
-  .main__profile-role {
-    display: none;
-  }
+  .main__profile-role { display: none; }
+  .breadcrumbs { max-width: 50vw; }
 }

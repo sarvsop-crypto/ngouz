@@ -1,0 +1,117 @@
+/* First-party SVG icon system for authenticated administration. */
+.ph {
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  flex: none;
+  background-color: currentColor;
+  -webkit-mask: var(--ph-icon) center / contain no-repeat;
+  mask: var(--ph-icon) center / contain no-repeat;
+  vertical-align: -.125em;
+}
+.ph-spinner { animation: admin-icon-spin 1s linear infinite; }
+@keyframes admin-icon-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .ph-spinner { animation: none; } }
+.ph-activity { --ph-icon: url("../img/admin-icons/activity.svg"); }
+.ph-arrow-clockwise { --ph-icon: url("../img/admin-icons/arrow-clockwise.svg"); }
+.ph-arrow-counter-clockwise { --ph-icon: url("../img/admin-icons/arrow-counter-clockwise.svg"); }
+.ph-arrow-left { --ph-icon: url("../img/admin-icons/arrow-left.svg"); }
+.ph-arrow-right { --ph-icon: url("../img/admin-icons/arrow-right.svg"); }
+.ph-arrow-square-out { --ph-icon: url("../img/admin-icons/arrow-square-out.svg"); }
+.ph-arrow-u-up-left { --ph-icon: url("../img/admin-icons/arrow-u-up-left.svg"); }
+.ph-arrows-clockwise { --ph-icon: url("../img/admin-icons/arrows-clockwise.svg"); }
+.ph-arrows-in-simple { --ph-icon: url("../img/admin-icons/arrows-in-simple.svg"); }
+.ph-bell { --ph-icon: url("../img/admin-icons/bell.svg"); }
+.ph-buildings { --ph-icon: url("../img/admin-icons/buildings.svg"); }
+.ph-calendar-dots { --ph-icon: url("../img/admin-icons/calendar-dots.svg"); }
+.ph-calendar-blank { --ph-icon: url("../img/admin-icons/calendar-blank.svg"); }
+.ph-chart-bar { --ph-icon: url("../img/admin-icons/chart-bar.svg"); }
+.ph-chart-line { --ph-icon: url("../img/admin-icons/chart-line.svg"); }
+.ph-chat-dots { --ph-icon: url("../img/admin-icons/chat-dots.svg"); }
+.ph-chats-circle { --ph-icon: url("../img/admin-icons/chats-circle.svg"); }
+.ph-check { --ph-icon: url("../img/admin-icons/check.svg"); }
+.ph-check-circle { --ph-icon: url("../img/admin-icons/check-circle.svg"); }
+.ph-check-square { --ph-icon: url("../img/admin-icons/check-square.svg"); }
+.ph-clipboard-text { --ph-icon: url("../img/admin-icons/clipboard-text.svg"); }
+.ph-clock { --ph-icon: url("../img/admin-icons/clock.svg"); }
+.ph-cloud-arrow-up { --ph-icon: url("../img/admin-icons/cloud-arrow-up.svg"); }
+.ph-copy { --ph-icon: url("../img/admin-icons/copy.svg"); }
+.ph-credit-card { --ph-icon: url("../img/admin-icons/credit-card.svg"); }
+.ph-crown-simple { --ph-icon: url("../img/admin-icons/crown-simple.svg"); }
+.ph-database { --ph-icon: url("../img/admin-icons/database.svg"); }
+.ph-device-mobile { --ph-icon: url("../img/admin-icons/device-mobile.svg"); }
+.ph-download-simple { --ph-icon: url("../img/admin-icons/download-simple.svg"); }
+.ph-envelope { --ph-icon: url("../img/admin-icons/envelope.svg"); }
+.ph-envelope-simple { --ph-icon: url("../img/admin-icons/envelope-simple.svg"); }
+.ph-envelope-simple-open { --ph-icon: url("../img/admin-icons/envelope-simple-open.svg"); }
+.ph-export { --ph-icon: url("../img/admin-icons/export.svg"); }
+.ph-eye { --ph-icon: url("../img/admin-icons/eye.svg"); }
+.ph-eye-slash { --ph-icon: url("../img/admin-icons/eye-slash.svg"); }
+.ph-file { --ph-icon: url("../img/admin-icons/file.svg"); }
+.ph-file-arrow-down { --ph-icon: url("../img/admin-icons/file-arrow-down.svg"); }
+.ph-file-doc { --ph-icon: url("../img/admin-icons/file-doc.svg"); }
+.ph-file-pdf { --ph-icon: url("../img/admin-icons/file-pdf.svg"); }
+.ph-file-text { --ph-icon: url("../img/admin-icons/file-text.svg"); }
+.ph-file-xls { --ph-icon: url("../img/admin-icons/file-xls.svg"); }
+.ph-files { --ph-icon: url("../img/admin-icons/files.svg"); }
+.ph-flag-banner { --ph-icon: url("../img/admin-icons/flag-banner.svg"); }
+.ph-floppy-disk { --ph-icon: url("../img/admin-icons/floppy-disk.svg"); }
+.ph-folder-open { --ph-icon: url("../img/admin-icons/folder-open.svg"); }
+.ph-funnel { --ph-icon: url("../img/admin-icons/funnel.svg"); }
+.ph-gear { --ph-icon: url("../img/admin-icons/gear.svg"); }
+.ph-globe { --ph-icon: url("../img/admin-icons/globe.svg"); }
+.ph-gift { --ph-icon: url("../img/admin-icons/gift.svg"); }
+.ph-google-logo { --ph-icon: url("../img/admin-icons/google-logo.svg"); }
+.ph-graduation-cap { --ph-icon: url("../img/admin-icons/graduation-cap.svg"); }
+.ph-hand-coins { --ph-icon: url("../img/admin-icons/hand-coins.svg"); }
+.ph-identification-card { --ph-icon: url("../img/admin-icons/identification-card.svg"); }
+.ph-image-square { --ph-icon: url("../img/admin-icons/image-square.svg"); }
+.ph-info { --ph-icon: url("../img/admin-icons/info.svg"); }
+.ph-key { --ph-icon: url("../img/admin-icons/key.svg"); }
+.ph-lightning { --ph-icon: url("../img/admin-icons/lightning.svg"); }
+.ph-list-bullets { --ph-icon: url("../img/admin-icons/list-bullets.svg"); }
+.ph-lock { --ph-icon: url("../img/admin-icons/lock.svg"); }
+.ph-lock-key { --ph-icon: url("../img/admin-icons/lock-key.svg"); }
+.ph-lock-open { --ph-icon: url("../img/admin-icons/lock-open.svg"); }
+.ph-magnifying-glass { --ph-icon: url("../img/admin-icons/magnifying-glass.svg"); }
+.ph-magnifying-glass-minus { --ph-icon: url("../img/admin-icons/magnifying-glass-minus.svg"); }
+.ph-magnifying-glass-plus { --ph-icon: url("../img/admin-icons/magnifying-glass-plus.svg"); }
+.ph-map-pin { --ph-icon: url("../img/admin-icons/map-pin.svg"); }
+.ph-map-trifold { --ph-icon: url("../img/admin-icons/map-trifold.svg"); }
+.ph-medal { --ph-icon: url("../img/admin-icons/medal.svg"); }
+.ph-megaphone { --ph-icon: url("../img/admin-icons/megaphone.svg"); }
+.ph-monitor { --ph-icon: url("../img/admin-icons/monitor.svg"); }
+.ph-newspaper { --ph-icon: url("../img/admin-icons/newspaper.svg"); }
+.ph-paper-plane-tilt { --ph-icon: url("../img/admin-icons/paper-plane-tilt.svg"); }
+.ph-paperclip { --ph-icon: url("../img/admin-icons/paperclip.svg"); }
+.ph-pen-nib { --ph-icon: url("../img/admin-icons/pen-nib.svg"); }
+.ph-pencil-simple { --ph-icon: url("../img/admin-icons/pencil-simple.svg"); }
+.ph-plus { --ph-icon: url("../img/admin-icons/plus.svg"); }
+.ph-prohibit { --ph-icon: url("../img/admin-icons/prohibit.svg"); }
+.ph-qr-code { --ph-icon: url("../img/admin-icons/qr-code.svg"); }
+.ph-question { --ph-icon: url("../img/admin-icons/question.svg"); }
+.ph-scales { --ph-icon: url("../img/admin-icons/scales.svg"); }
+.ph-seal-check { --ph-icon: url("../img/admin-icons/seal-check.svg"); }
+.ph-shield { --ph-icon: url("../img/admin-icons/shield.svg"); }
+.ph-shield-check { --ph-icon: url("../img/admin-icons/shield-check.svg"); }
+.ph-shield-warning { --ph-icon: url("../img/admin-icons/shield-warning.svg"); }
+.ph-sign-in { --ph-icon: url("../img/admin-icons/sign-in.svg"); }
+.ph-sign-out { --ph-icon: url("../img/admin-icons/sign-out.svg"); }
+.ph-signature { --ph-icon: url("../img/admin-icons/signature.svg"); }
+.ph-sliders { --ph-icon: url("../img/admin-icons/sliders.svg"); }
+.ph-spinner { --ph-icon: url("../img/admin-icons/spinner.svg"); }
+.ph-speaker-high { --ph-icon: url("../img/admin-icons/speaker-high.svg"); }
+.ph-squares-four { --ph-icon: url("../img/admin-icons/squares-four.svg"); }
+.ph-star { --ph-icon: url("../img/admin-icons/star.svg"); }
+.ph-trash { --ph-icon: url("../img/admin-icons/trash.svg"); }
+.ph-trend-up { --ph-icon: url("../img/admin-icons/trend-up.svg"); }
+.ph-user { --ph-icon: url("../img/admin-icons/user.svg"); }
+.ph-user-magnifying-glass { --ph-icon: url("../img/admin-icons/user-magnifying-glass.svg"); }
+.ph-user-plus { --ph-icon: url("../img/admin-icons/user-plus.svg"); }
+.ph-video-camera { --ph-icon: url("../img/admin-icons/video-camera.svg"); }
+.ph-users { --ph-icon: url("../img/admin-icons/users.svg"); }
+.ph-users-three { --ph-icon: url("../img/admin-icons/users-three.svg"); }
+.ph-warning { --ph-icon: url("../img/admin-icons/warning.svg"); }
+.ph-wrench { --ph-icon: url("../img/admin-icons/wrench.svg"); }
+.ph-x { --ph-icon: url("../img/admin-icons/x.svg"); }
+.ph-x-circle { --ph-icon: url("../img/admin-icons/x-circle.svg"); }

@@ -32,11 +32,17 @@ test('one role matrix protects menu visibility and direct page access', async ()
   assert.deepEqual(Array.from(navigation.allowedRoles('admin-users')), ['super_admin']);
   assert.deepEqual(Array.from(navigation.allowedRoles('admin-settings-system')), ['super_admin']);
   assert.deepEqual(Array.from(navigation.allowedRoles('admin-messages')), ['super_admin', 'regional_admin']);
-  assert.deepEqual(Array.from(navigation.allowedRoles('admin-commission')), ['super_admin', 'commission']);
-  assert.deepEqual(Array.from(navigation.allowedRoles('admin-leader-signing')), ['super_admin', 'leader']);
+  assert.deepEqual(Array.from(navigation.allowedRoles('admin-commission')), ['commission']);
+  assert.deepEqual(Array.from(navigation.allowedRoles('admin-leader-signing')), ['leader']);
   for (const file of (await readdir(root)).filter((name) => /^admin-.*\.html$/.test(name)
     && !['admin-login.html', 'admin-forgot-password-request.html'].includes(name))) {
     assert.ok(navigation.pageRoles[file.replace(/\.html$/, '')], file + ' is missing from the page permission matrix');
+  }
+
+  const discoverableRoutes = new Set(navigation.definition.flatMap((section) => Array.from(section.items)
+    .flatMap((item) => [item.route, ...Array.from(item.aliases)])));
+  for (const page of Object.keys(navigation.pageRoles)) {
+    assert.ok(discoverableRoutes.has(page), page + ' is an orphaned direct-only admin route');
   }
 
   const items = navigation.definition.flatMap((section) => Array.from(section.items));
@@ -50,6 +56,8 @@ test('messaging UX opens people, separates groups, and removes generic thread cr
   const html = await source('admin-messages.html');
   const js = await source('js/admin-messages.js');
   const appCss = await source('css/pacta-app.css');
+  const collaborationCss = await source('css/pacta-collaboration.page.css');
+  assert.match(html, /<body class="admin-messages-page">/);
   assert.match(html, /id="peoplePickerBtn"[^>]*>[\s\S]*?Odam topish/);
   assert.match(html, /id="groupCreateBtn"/);
   assert.match(html, /id="peopleSearch"/);
@@ -62,8 +70,20 @@ test('messaging UX opens people, separates groups, and removes generic thread cr
   assert.match(js, /if \(state\.users\.length\) renderPeople\(\)/);
   assert.match(js, /var usersReady = NgoApi\.get\('\/admin\/messages\/users'\)\.then/);
   assert.match(js, /NgoAdminReady\.then\(init\)/);
+  assert.match(html, /js\/admin-messages\.js\?v=20260825-alberuni/);
+  assert.match(js, /function fileKind\(name\)/);
+  for (const kind of ['pdf', 'document', 'spreadsheet', 'image', 'video', 'audio', 'file']) {
+    assert.match(collaborationCss, new RegExp(`attachment--${kind}`));
+  }
+  for (const icon of ['file-pdf', 'file-doc', 'file-xls', 'image-square', 'video-camera', 'speaker-high']) {
+    assert.match(js, new RegExp(icon));
+  }
   assert.doesNotMatch(js, /setTimeout\(function \(\) \{ wait/);
   assert.match(appCss, /\.btn\[hidden\]\s*\{\s*display:\s*none;\s*\}/);
+  assert.match(collaborationCss, /\.admin-messages-page \.main\s*\{[^}]*overflow:\s*hidden/);
+  assert.match(collaborationCss, /\.messages-layout\s*\{[^}]*min-height:\s*0;[^}]*flex:\s*1/);
+  assert.match(collaborationCss, /\.message-log\s*\{[^}]*min-height:\s*0;[^}]*overflow:\s*auto/);
+  assert.doesNotMatch(collaborationCss, /height:\s*calc\(100svh/);
 });
 
 test('mobile drawer has focus trapping, inert background, and focus restoration', async () => {
@@ -74,5 +94,7 @@ test('mobile drawer has focus trapping, inert background, and focus restoration'
   assert.match(foundation, /NgoAdminNavigationReady/);
   assert.match(foundation, /closest\('\.mobile-nav-toggle'\)/);
   assert.match(foundation, /function mobileSidebarParts\(\)/);
+  assert.match(foundation, /var sidebarCollapseInitialized = false/);
+  assert.match(foundation, /if \(sidebarCollapseInitialized\) return/);
   assert.doesNotMatch(foundation, /mobileSidebarWired/);
 });

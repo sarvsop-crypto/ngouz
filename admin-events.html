@@ -15,43 +15,23 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="robots" content="noindex, nofollow" />
   <link rel="preconnect" href="https://ngo-api-proxy.sarvsop.workers.dev" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" integrity="sha384-6p9AefaqUhEVheRlj1mpAkbngHXy9mbYMrIdcIt4Jlc9lOLIablJq3bBsLOjGwZ7" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/pacta-tokens.css?v=20260622">
-  <link rel="stylesheet" href="css/pacta-contracts.page.css?v=20260622">
-  <link rel="stylesheet" href="css/pacta-sidebar.css?v=20260622">
-  <link rel="stylesheet" href="css/pacta-topbar.css?v=20260622">
-  <link rel="stylesheet" href="css/pacta-notifications.css?v=20260622">
-  <link rel="stylesheet" href="css/pacta-app.css?v=20260622">
-  <link rel="stylesheet" href="css/pacta-foundation.css?v=20260628banner">
-  <link rel="stylesheet" href="css/pacta-modal.css?v=20260622">
-  <style>
-    .modal--wide { max-width: 720px; }
-    .modal__grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .modal__input, .modal__select, .modal__textarea {
-      width: 100%; padding: 9px 12px; border: 1px solid var(--grey-100, #dfe1e7);
-      border-radius: 8px; font-size: 14px; font-family: inherit;
-      background: var(--grey-0, #fff); color: var(--grey-900, #0d0d12);
-      transition: border-color .15s;
-    }
-    .modal__input:focus, .modal__select:focus, .modal__textarea:focus { outline: none; border-color: var(--primary-400, #6366f1); }
-    .modal__textarea { resize: vertical; min-height: 100px; }
-    /* .cms-toast moved to pacta-foundation.css (iter 603). */
-    .u-td-truncate { max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .btn--ghost-sm { padding: 5px 8px; background: none; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; color: var(--grey-400,#818898); transition: background .12s, color .12s; }
-    .btn--ghost-sm:hover { background: var(--grey-25,#f6f8fa); color: var(--grey-700,#2b2d3a); }
-    .btn--ghost-sm.danger:hover { background: #fef2f2; color: #dc2626; }
-    .u-empty-row td { text-align: center; padding: 40px; color: var(--grey-400,#818898); font-size: 14px; }
-    .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,.4); border-top-color: #fff; border-radius: 50%; animation: spin .6s linear infinite; vertical-align: middle; margin-right: 6px; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/pacta-tokens.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-icons.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-contracts.page.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-sidebar.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-topbar.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-notifications.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-app.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-foundation.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-cms.page.css?v=20260825-alberuni">
 <script src="js/errlog.js" defer></script>
-<script src="js/admin-modal.js" defer></script>
+<script src="js/admin-modal.js?v=20260825-alberuni" defer></script>
 <link rel="manifest" href="/manifest.webmanifest" />
 <script src="js/sw-register.js" defer></script>
 <script src="js/i18n.js" defer></script>
 </head>
-<body>
+<body class="admin-cms-page">
 <div class="test-mode-banner" role="status" aria-live="polite">
 <div class="container test-mode-inner">
 <svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="16"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" x2="12" y1="9" y2="13"/><line x1="12" x2="12.01" y1="17" y2="17"/></svg>
@@ -151,17 +131,6 @@
   </div>
 
   <!-- Create / Edit Modal -->
-  <style>
-    .lang-tabs { display:flex; gap:4px; align-items:center; flex-wrap:wrap; margin-bottom:14px; border-bottom:1px solid var(--grey-100,#e5e7eb); }
-    .lang-tab { padding:8px 16px; font:inherit; font-size:14px; font-weight:600; color:var(--grey-500,#6b7280); cursor:pointer; background:none; border:none; border-bottom:2px solid transparent; margin-bottom:-1px; }
-    .lang-tab:hover { color:var(--grey-900,#111827); }
-    .lang-tab.is-active { color:var(--primary-500,#0e7490); border-bottom-color:var(--primary-500,#0e7490); }
-    .lang-tabs__hint { margin-left:auto; font-size:12px; font-weight:400; color:var(--grey-500,#6b7280); }
-    .lang-panel { display:none; }
-    #cmsForm.lang-uz .lang-panel[data-lang-panel="uz"],
-    #cmsForm.lang-ru .lang-panel[data-lang-panel="ru"],
-    #cmsForm.lang-en .lang-panel[data-lang-panel="en"] { display:block; }
-  </style>
   <div class="modal-overlay" id="formModal" role="dialog" aria-modal="true" aria-labelledby="formModalTitle" aria-hidden="true">
     <div class="modal modal--wide">
       <div class="modal__head">
@@ -268,11 +237,11 @@
 
   <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
 
-  <script src="js/pacta-app.js"></script>
-  <script src="js/pacta-foundation.js?v=20260802-admin-identity-mobile"></script>
+  <script src="js/pacta-app.js?v=20260825-alberuni"></script>
+  <script src="js/pacta-foundation.js?v=20260825-alberuni"></script>
   <script src="js/pacta-notifications.js"></script>
   <script src="js/api-client.js?v=20260801-cookie-auth"></script>
-  <script src="js/admin-navigation.js?v=20260802" defer></script><script src="js/admin-boot.js?v=20260802-admin-identity" defer></script>
+  <script src="js/admin-navigation.js?v=20260825-alberuni" defer></script><script src="js/admin-boot.js?v=20260802-admin-identity" defer></script>
   <script src="js/admin-cms.js"></script>
   <script>
   (function () {
@@ -282,13 +251,6 @@
     var deleteId  = null;
     var statusFilter = 'all';
     var searchQ      = '';
-
-    function openModal(id) {
-      if (window.AdminModal) window.AdminModal.open(id);
-    }
-    function closeModal(id) {
-      if (window.AdminModal) window.AdminModal.close(id);
-    }
 
     var toastTimer;
     function toast(msg, type) {
@@ -472,27 +434,27 @@
       editingId = id;
       document.getElementById('formModalTitle').textContent = 'Tadbirni tahrirlash';
       fillForm(item);
-      openModal('formModal');
+      window.AdminModal.open('formModal');
     };
 
     window.confirmDelete = function (id) {
       var item = items.find(function (i) { return i.id === id; });
       deleteId = id;
       document.getElementById('deleteName').textContent = item ? String(item.title || '').slice(0, 60) : id;
-      openModal('deleteModal');
+      window.AdminModal.open('deleteModal');
     };
 
     document.getElementById('newItemBtn').addEventListener('click', function () {
       editingId = null;
       document.getElementById('formModalTitle').textContent = 'Yangi tadbir';
       clearForm();
-      openModal('formModal');
+      window.AdminModal.open('formModal');
     });
 
-    document.getElementById('formModalClose').addEventListener('click', function () { closeModal('formModal'); });
-    document.getElementById('formCancelBtn').addEventListener('click', function () { closeModal('formModal'); });
-    document.getElementById('deleteModalClose').addEventListener('click', function () { closeModal('deleteModal'); });
-    document.getElementById('deleteCancelBtn').addEventListener('click', function () { closeModal('deleteModal'); });
+    document.getElementById('formModalClose').addEventListener('click', function () { window.AdminModal.close('formModal'); });
+    document.getElementById('formCancelBtn').addEventListener('click', function () { window.AdminModal.close('formModal'); });
+    document.getElementById('deleteModalClose').addEventListener('click', function () { window.AdminModal.close('deleteModal'); });
+    document.getElementById('deleteCancelBtn').addEventListener('click', function () { window.AdminModal.close('deleteModal'); });
 
     document.getElementById('cmsForm').addEventListener('submit', function (e) {
       e.preventDefault();
@@ -548,7 +510,7 @@
       var op = editingId ? AdminCMS.update(TYPE, editingId, data) : AdminCMS.create(TYPE, data);
       op.then(function () {
         toast(editingId ? 'Tadbir yangilandi' : 'Yangi tadbir saqlandi', 'success');
-        closeModal('formModal');
+        window.AdminModal.close('formModal');
         reload();
       }).catch(function (err) {
         errEl.textContent = 'Saqlashda xatolik: ' + ((err && err.message) || 'noma\'lum');
@@ -569,7 +531,7 @@
       if (delModal) delModal.setAttribute('aria-busy', 'true');
       AdminCMS.remove(TYPE, deleteId).then(function () {
         toast('Tadbir o\'chirildi', 'info');
-        closeModal('deleteModal');
+        window.AdminModal.close('deleteModal');
         reload();
         deleteId = null;
       }).catch(function (err) {
@@ -595,8 +557,6 @@
       });
     });
 
-    document.getElementById('formModal').addEventListener('click',   function (e) { if (e.target === this) closeModal('formModal'); });
-    document.getElementById('deleteModal').addEventListener('click', function (e) { if (e.target === this) closeModal('deleteModal'); });
 
     AdminCMS.load(TYPE, function (err, data) {
       var bodyEl = document.getElementById('eventsTableBody');

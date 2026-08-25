@@ -710,6 +710,8 @@
   // pass so this works for both initial-render (admin) and late-
   // injected (cabinet) sidebar markup, and persist state so the
   // collapsed preference survives page navigations.
+  var sidebarCollapseInitialized = false;
+
   function setupSidebarCollapse() {
     var KEY = 'admin_sidebar_collapsed';
     function apply(sidebar, btn, collapsed) {
@@ -740,8 +742,13 @@
     // also get hydrated without each cabinet page needing its own
     // wire-up call.
     setTimeout(hydrate, 80);
-    // Document-level click delegate — handles both early and late
-    // mounted toggles, and survives any future re-mount of the sidebar.
+    // Hydration may run both when navigation mounts and on DOMContentLoaded.
+    // Bind the delegated handler once so one click produces one state change.
+    if (sidebarCollapseInitialized) return;
+    sidebarCollapseInitialized = true;
+
+    // Document-level click delegate — handles both early and late mounted
+    // toggles, and survives any future re-mount of the sidebar.
     document.addEventListener('click', function (e) {
       var btn = e.target && e.target.closest && e.target.closest('#sidebarToggle');
       if (!btn) return;

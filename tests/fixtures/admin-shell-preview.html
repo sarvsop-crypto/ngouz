@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NGO.UZ admin shell preview</title>
+  <link rel="stylesheet" href="../../css/pacta-tokens.css">
+  <link rel="stylesheet" href="../../css/pacta-icons.css">
+  <link rel="stylesheet" href="../../css/pacta-sidebar.css">
+  <link rel="stylesheet" href="../../css/pacta-topbar.css">
+  <link rel="stylesheet" href="../../css/pacta-app.css">
+  <link rel="stylesheet" href="../../css/pacta-foundation.css">
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar" data-admin-navigation aria-busy="true"></aside>
+    <main class="main" id="main-content">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="mobile-nav-toggle" aria-label="Menyuni ochish"><i class="ph ph-list-bullets" aria-hidden="true"></i></button>
+          <nav class="breadcrumbs" aria-label="Sahifa joylashuvi"><a href="#">Boshqaruv</a> / <span>Boshqaruv paneli</span></nav>
+        </div>
+        <div class="topbar-right">
+          <div class="topbar-notifications"><button class="topbar-notifications-btn" aria-label="Bildirishnomalar"><i class="ph ph-bell" aria-hidden="true"></i></button><span class="topbar-notifications-badge"></span></div>
+          <span class="topbar-divider"></span>
+          <div class="main__profile"><span class="main__profile-avatar">S</span><span><span class="main__profile-name">NGO API Admin</span><span class="main__profile-role">Bosh admin</span></span></div>
+        </div>
+      </header>
+      <div class="main__header">
+        <div><p class="eyebrow">OPERATSION MARKAZ</p><h1 class="main__title">Boshqaruv paneli</h1></div>
+        <div class="main__btns"><button class="btn btn--secondary"><i class="ph ph-download-simple" aria-hidden="true"></i> Eksport</button><button class="btn btn--primary" data-modal-open="previewModal"><i class="ph ph-plus" aria-hidden="true"></i> Yangi ariza</button></div>
+      </div>
+      <section class="cards" aria-label="Asosiy ko‘rsatkichlar">
+        <article class="card"><div class="card__head"><span class="card__icon"><i class="ph ph-file-text"></i></span><span class="badge badge--warning">Kutilmoqda</span></div><div class="card__body"><div><p class="card__label">A’zolik arizalari</p><p class="card__value">24</p></div></div></article>
+        <article class="card"><div class="card__head"><span class="card__icon card__icon--success"><i class="ph ph-check-circle"></i></span></div><div class="card__body"><div><p class="card__label">Faol NNTlar</p><p class="card__value">2 389</p></div></div></article>
+        <article class="card"><div class="card__head"><span class="card__icon card__icon--info"><i class="ph ph-map-pin"></i></span></div><div class="card__body"><div><p class="card__label">Hududlar</p><p class="card__value">15</p></div></div></article>
+        <article class="card"><div class="card__head"><span class="card__icon card__icon--warning"><i class="ph ph-clock"></i></span></div><div class="card__body"><div><p class="card__label">Ochiq topshiriqlar</p><p class="card__value">8</p></div></div></article>
+      </section>
+      <section class="table-section" style="margin-top:16px">
+        <div class="table-section__head"><h2 class="table-section__title">So‘nggi arizalar</h2><input class="table-section__search" type="search" placeholder="Qidirish…" aria-label="Arizalarni qidirish"></div>
+        <div class="table-responsive"><table class="table"><thead><tr><th>#</th><th>Tashkilot</th><th>Hudud</th><th>Holat</th><th>Sana</th></tr></thead><tbody><tr><td>#29</td><td>Yangi taraqqiyot NNT</td><td>Toshkent shahri</td><td><span class="badge badge--warning">Ko‘rib chiqilmoqda</span></td><td>25.08.2026</td></tr><tr><td>#28</td><td>Fuqarolik tashabbuslari markazi</td><td>Farg‘ona viloyati</td><td><span class="badge badge--success">Tasdiqlandi</span></td><td>24.08.2026</td></tr><tr><td>#27</td><td>Ekologik rivojlanish fondi</td><td>Samarqand viloyati</td><td><span class="badge badge--neutral">Yangi</span></td><td>23.08.2026</td></tr></tbody></table></div>
+      </section>
+    </main>
+  </div>
+  <div class="modal-overlay" id="previewModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="previewModalTitle">
+    <div class="modal"><div class="modal__head"><h2 class="modal__title" id="previewModalTitle">Yangi ariza</h2><button class="modal__close" data-modal-close aria-label="Yopish"><i class="ph ph-x"></i></button></div><div class="modal__body"><label class="form-group"><span class="form-label">Tashkilot nomi</span><input class="form-control" value="Yangi NNT"></label></div><div class="modal__foot"><button class="btn btn--secondary" data-modal-close>Yopish</button><button class="btn btn--primary">Saqlash</button></div></div>
+  </div>
+  <script src="../../js/admin-navigation.js"></script>
+  <script src="../../js/admin-modal.js?v=20260825-alberuni"></script>
+  <script src="../../js/pacta-foundation.js?v=20260825-alberuni"></script>
+  <script>window.NgoAdminNavigation.mount({role:'super_admin',full_name:'NGO API Admin'});</script>
+</body>
+</html>

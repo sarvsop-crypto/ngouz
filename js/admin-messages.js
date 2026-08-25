@@ -118,10 +118,29 @@
     }).join('');
   }
 
+  function fileKind(name) {
+    var extension = String(name || '').toLocaleLowerCase().split('.').pop();
+    if (extension === 'pdf') return 'pdf';
+    if (/^(doc|docx|odt|rtf)$/.test(extension)) return 'document';
+    if (/^(xls|xlsx|csv|ods)$/.test(extension)) return 'spreadsheet';
+    if (/^(png|jpe?g|webp|gif)$/.test(extension)) return 'image';
+    if (/^(mp4|webm|mov)$/.test(extension)) return 'video';
+    if (/^(ogg|mp3|wav|m4a)$/.test(extension)) return 'audio';
+    return 'file';
+  }
+  function fileIcon(kind) {
+    return { pdf: 'file-pdf', document: 'file-doc', spreadsheet: 'file-xls', image: 'image-square',
+      video: 'video-camera', audio: 'speaker-high', file: 'file' }[kind];
+  }
   function attachmentHtml(attachment) {
-    return '<div class="attachment"><i class="ph ph-file"></i><button type="button" data-download="'
-      + esc(attachment.attachment_id) + '" data-name="' + esc(attachment.original_name) + '">'
-      + esc(attachment.original_name) + '</button><small>' + esc(attachment.size_bytes || '') + '</small></div>';
+    var name = attachment.original_name || 'Fayl';
+    var kind = fileKind(name);
+    return '<div class="attachment attachment--' + kind + '"><span class="attachment__icon" aria-hidden="true"><i class="ph ph-'
+      + fileIcon(kind) + '"></i></span><button class="attachment__download" type="button" data-download="'
+      + esc(attachment.attachment_id) + '" data-name="' + esc(name) + '" aria-label="' + esc(name)
+      + ' faylini yuklab olish"><span class="attachment__name">' + esc(name)
+      + '</span><i class="ph ph-download-simple" aria-hidden="true"></i></button><small>'
+      + esc(attachment.size_bytes || '') + '</small></div>';
   }
   function readState(message) {
     var readers = arr(message.read_by);
@@ -298,7 +317,10 @@
   }
   function renderUploads() {
     el('uploadList').innerHTML = state.uploads.map(function (upload) {
-      return '<div>' + esc(upload.file.name) + ' <progress max="100" value="' + upload.progress + '"></progress> ' + upload.progress + '%</div>';
+      var kind = fileKind(upload.file.name);
+      return '<div class="upload-item upload-item--' + kind + '"><span class="attachment__icon" aria-hidden="true"><i class="ph ph-'
+        + fileIcon(kind) + '"></i></span><span class="upload-item__name">' + esc(upload.file.name)
+        + '</span><progress max="100" value="' + upload.progress + '"></progress><span>' + upload.progress + '%</span></div>';
     }).join('');
   }
   function download(id, name) {

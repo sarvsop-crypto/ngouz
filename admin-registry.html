@@ -17,16 +17,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://ngo-api-proxy.sarvsop.workers.dev" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" integrity="sha384-6p9AefaqUhEVheRlj1mpAkbngHXy9mbYMrIdcIt4Jlc9lOLIablJq3bBsLOjGwZ7" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/pacta-tokens.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-vendors.page.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-sidebar.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-topbar.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-notifications.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-app.css?v=20260802-hidden">
-  <link rel="stylesheet" href="css/pacta-foundation.css?v=20260628banner">
-  <link rel="stylesheet" href="css/pacta-modal.css?v=20260605">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/pacta-tokens.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-icons.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-vendors.page.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-sidebar.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-topbar.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-notifications.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-app.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-foundation.css?v=20260825-alberuni">
   <style>
     .org-card-modal { max-width: 1120px; width: min(1120px, calc(100vw - 32px)); max-height: 90vh; overflow: auto; }
     .org-card { display: grid; gap: 18px; color: var(--grey-600,#4b5563); }
@@ -353,12 +352,11 @@
   </div>
 
   <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
-  <script src="js/pacta-app.js"></script>
-  <script src="js/pacta-foundation.js?v=20260802-admin-identity-mobile"></script>
+  <script src="js/admin-modal.js?v=20260825-alberuni" defer></script><script src="js/pacta-app.js?v=20260825-alberuni"></script>
+  <script src="js/pacta-foundation.js?v=20260825-alberuni"></script>
   <script src="js/pacta-notifications.js"></script>
-  <script src="js/admin-modal.js"></script>
   <script src="js/api-client.js?v=20260801-cookie-auth"></script>
-  <script src="js/admin-navigation.js?v=20260802" defer></script><script src="js/admin-boot.js?v=20260802-admin-identity" defer></script>
+  <script src="js/admin-navigation.js?v=20260825-alberuni" defer></script><script src="js/admin-boot.js?v=20260802-admin-identity" defer></script>
   <script>
   (function () {
     var toastTimer;
@@ -377,7 +375,6 @@
     var searchQ = '';
     var isRegistryLoading = false;
     var isRegistryExporting = false;
-    var orgCardLastFocus = null;
     var filters = {
       inn: '',
       region: '',
@@ -475,9 +472,9 @@
         var payments = res.payments || [];
         var membershipDocs = res.membership_documents || [];
         var history = res.history || [];
-        var html = '<div class="modal-overlay is-open" id="orgCardModal" role="dialog" aria-modal="true" aria-labelledby="orgCardTitle" style="display:flex;">'
+        var html = '<div class="modal-overlay" id="orgCardModal" role="dialog" aria-modal="true" aria-labelledby="orgCardTitle" aria-hidden="true" hidden inert>'
           + '<div class="modal org-card-modal">'
-          + '<div class="modal__head"><h2 class="modal__title" id="orgCardTitle">NNT elektron kartasi</h2><button type="button" class="modal__close" id="orgCardClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>'
+          + '<div class="modal__head"><h2 class="modal__title" id="orgCardTitle">NNT elektron kartasi</h2><button type="button" class="modal__close" id="orgCardClose" data-modal-close="orgCardModal" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>'
           + '<div class="modal__body"><div class="org-card">'
           + renderOrgSummary(org, id, apps, docs, payments, membershipDocs)
           + '<div class="org-card__grid">'
@@ -510,30 +507,18 @@
           + '</div></div></div></div></div>';
         var old = document.getElementById('orgCardModal');
         if (old) old.remove();
-        orgCardLastFocus = document.activeElement;
+        var opener = document.activeElement;
         document.body.insertAdjacentHTML('beforeend', html);
-        document.body.style.overflow = 'hidden';
         var modal = document.getElementById('orgCardModal');
-        document.getElementById('orgCardClose').addEventListener('click', closeOrgCard);
-        modal.addEventListener('click', function (event) { if (event.target === modal) closeOrgCard(); });
-        document.addEventListener('keydown', handleOrgCardKey);
-        try { document.getElementById('orgCardClose').focus(); } catch (_) {}
+        modal.addEventListener('adminmodal:closed', function () { modal.remove(); }, { once: true });
+        window.AdminModal.decorate();
+        window.AdminModal.open('orgCardModal', opener);
       }).catch(function (err) {
         toast('Kartani ochishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error');
       });
     };
-    function handleOrgCardKey(event) {
-      if (event.key === 'Escape') closeOrgCard();
-    }
     function closeOrgCard() {
-      var el = document.getElementById('orgCardModal');
-      if (el) el.remove();
-      document.removeEventListener('keydown', handleOrgCardKey);
-      document.body.style.overflow = '';
-      if (orgCardLastFocus && typeof orgCardLastFocus.focus === 'function') {
-        try { orgCardLastFocus.focus(); } catch (_) {}
-      }
-      orgCardLastFocus = null;
+      window.AdminModal.close('orgCardModal');
     }
     function section(title, body, count, wide) {
       return '<section class="org-card__section' + (wide ? ' org-card__section--wide' : '') + '">'
@@ -657,9 +642,9 @@
       } else {
         content = '<div class="doc-viewer__unsupported"><i class="ph ph-file-text" aria-hidden="true"></i><p>Bu formatni brauzer ichida ko‘rib bo‘lmaydi. Faylni yuklab oling yoki alohida oynada oching.</p></div>';
       }
-      var html = '<div class="modal-overlay is-open" id="documentViewerModal" role="dialog" aria-modal="true" aria-labelledby="documentViewerTitle" style="display:flex;">'
+      var html = '<div class="modal-overlay" id="documentViewerModal" role="dialog" aria-modal="true" aria-labelledby="documentViewerTitle" aria-hidden="true" hidden inert>'
         + '<div class="modal doc-viewer-modal">'
-        + '<div class="modal__head"><h2 class="modal__title" id="documentViewerTitle">Hujjatni ko‘rish</h2><button type="button" class="modal__close" id="documentViewerClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>'
+        + '<div class="modal__head"><h2 class="modal__title" id="documentViewerTitle">Hujjatni ko‘rish</h2><button type="button" class="modal__close" id="documentViewerClose" data-modal-close="documentViewerModal" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button></div>'
         + '<div class="modal__body">'
         + '<div class="doc-viewer__toolbar"><div class="doc-viewer__name" title="' + esc(name) + '">' + esc(name) + '</div>'
         + '<div class="doc-viewer__controls">'
@@ -673,17 +658,18 @@
         + '<div class="doc-viewer__stage"><div class="doc-viewer__frame" id="documentViewerFrame">' + content + '</div></div>'
         + '</div></div></div>';
       document.body.insertAdjacentHTML('beforeend', html);
-      document.body.style.overflow = 'hidden';
-      document.getElementById('documentViewerClose').addEventListener('click', closeDocumentViewer);
-      document.getElementById('documentViewerModal').addEventListener('click', function (event) {
-        if (event.target && event.target.id === 'documentViewerModal') closeDocumentViewer();
-      });
+      var modal = document.getElementById('documentViewerModal');
+      modal.addEventListener('adminmodal:closed', function () {
+        document.removeEventListener('keydown', handleDocumentViewerKey);
+        resetDocumentViewerState();
+        modal.remove();
+      }, { once: true });
       document.addEventListener('keydown', handleDocumentViewerKey);
-      try { document.getElementById('documentViewerClose').focus(); } catch (_) {}
+      window.AdminModal.decorate();
+      window.AdminModal.open('documentViewerModal', document.activeElement);
     }
     function handleDocumentViewerKey(event) {
       if (!document.getElementById('documentViewerModal')) return;
-      if (event.key === 'Escape') closeDocumentViewer();
       if ((event.ctrlKey || event.metaKey) && (event.key === '+' || event.key === '=')) { event.preventDefault(); zoomDocumentViewer(0.1); }
       if ((event.ctrlKey || event.metaKey) && event.key === '-') { event.preventDefault(); zoomDocumentViewer(-0.1); }
       if ((event.ctrlKey || event.metaKey) && event.key === '0') { event.preventDefault(); resetDocumentViewerZoom(); }
@@ -720,11 +706,15 @@
     };
     function closeDocumentViewer() {
       var el = document.getElementById('documentViewerModal');
-      if (el) el.remove();
-      document.removeEventListener('keydown', handleDocumentViewerKey);
+      if (el) {
+        window.AdminModal.close('documentViewerModal');
+        return;
+      }
+      resetDocumentViewerState();
+    }
+    function resetDocumentViewerState() {
       if (docViewerState.url) URL.revokeObjectURL(docViewerState.url);
       docViewerState = { url: '', name: '', scale: 1, blob: null };
-      if (!document.getElementById('orgCardModal')) document.body.style.overflow = '';
     }
     function dateOnly(value) {
       if (!value) return '—';
@@ -969,7 +959,7 @@
             btn.disabled = false; btn.innerHTML = addLabel;
             if (addModal) addModal.setAttribute('aria-busy', 'false');
             items = []; offset = 0; loadPage();
-            if (addModal) { addModal.classList.remove('is-open'); addModal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+            if (addModal) window.AdminModal.close('addNntModal');
             toast('NNT qo\'shildi.', 'success');
           })
           .catch(function(err) {

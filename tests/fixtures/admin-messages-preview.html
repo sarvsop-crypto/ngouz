@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin messages layout fixture</title>
+  <link rel="stylesheet" href="../../css/pacta-tokens.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="../../css/pacta-icons.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="../../css/pacta-sidebar.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="../../css/pacta-topbar.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="../../css/pacta-app.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="../../css/pacta-foundation.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="../../css/pacta-collaboration.page.css?v=20260825-alberuni">
+</head>
+<body class="admin-messages-page">
+  <div class="layout">
+    <aside class="sidebar" data-admin-navigation></aside>
+    <main class="main" id="main-content">
+      <header class="topbar">
+        <div class="topbar-left"><nav class="breadcrumbs">Boshqaruv / <span>Ichki xabarlar</span></nav></div>
+        <div class="topbar-right"><button class="topbar-notifications-btn" aria-label="Bildirishnomalar"><i class="ph ph-bell"></i></button><div class="main__profile"><span class="main__profile-avatar">S</span><span><span class="main__profile-name">NGO API Admin</span><span class="main__profile-role">Bosh admin</span></span></div></div>
+      </header>
+      <div class="main__header"><h1 class="main__title">Ichki xabarlar</h1><div class="main__btns"><button class="btn btn--primary"><i class="ph ph-user-magnifying-glass"></i> Odam topish</button></div></div>
+      <div class="chat-connection" data-state="online">Yangilanish faol</div>
+      <div class="messages-layout" data-mobile-view="chat">
+        <section class="thread-panel"><div class="thread-head"><h2>Suhbatlar</h2><span>3</span></div><div class="thread-search"><input class="collab-input" type="search" placeholder="Suhbatlarni qidirish…"></div><div class="thread-list"><button class="thread-item" aria-selected="true"><span class="thread-row"><strong class="thread-title">Toshkent shahri administratori</strong><span>14:28</span></span><span class="thread-preview">Hujjatni ko‘rib chiqdim.</span></button></div></section>
+        <section class="chat-panel">
+          <div class="chat-head"><button class="btn btn--secondary mobile-chat-back" aria-label="Suhbatlar ro‘yxatiga qaytish"><i class="ph ph-arrow-left"></i></button><div><h2>Toshkent shahri administratori</h2><div class="chat-presence">Hozir tizimda</div></div><span class="badge badge--info">Hududiy admin</span></div>
+          <div class="history-control"></div>
+          <div class="message-log" role="log">
+            <article class="message"><div class="message-body">Assalomu alaykum. Ariza hujjatlarini yubordim.</div><div class="message-meta">14:21</div></article>
+            <article class="message message--mine"><div class="message-quote">Ariza hujjatlarini yubordim.</div><div class="message-body">Rahmat, hujjatlarni ko‘rib chiqaman.</div><div class="message-state">14:24 · O‘qildi</div></article>
+            <article class="message"><div class="attachment attachment--pdf"><span class="attachment__icon" aria-hidden="true"><i class="ph ph-file-pdf"></i></span><button class="attachment__download" aria-label="membership-document.pdf faylini yuklab olish"><span class="attachment__name">membership-document.pdf</span><i class="ph ph-download-simple" aria-hidden="true"></i></button></div><div class="message-meta">14:28</div></article>
+          </div>
+          <div><div class="reply-banner">Javob: Ariza hujjatlarini yubordim.</div><div class="typing-status">Admin yozmoqda…</div></div>
+          <form class="composer"><label class="btn btn--secondary file-trigger" aria-label="Fayl biriktirish"><i class="ph ph-paperclip"></i><input type="file"></label><label><span class="u-visually-hidden">Xabar matni</span><textarea class="collab-textarea" placeholder="Xabar yozing…"></textarea></label><button class="btn btn--primary" type="button"><i class="ph ph-paper-plane-tilt"></i><span>Yuborish</span></button></form>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="../../js/admin-navigation.js?v=20260825-alberuni"></script>
+  <script src="../../js/pacta-foundation.js?v=20260825-alberuni"></script>
+  <script>window.NgoAdminNavigation.mount({role:'super_admin',full_name:'NGO API Admin'});</script>
+</body>
+</html>

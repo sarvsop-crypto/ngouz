@@ -10,26 +10,25 @@
   <meta name="robots" content="noindex, nofollow" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" integrity="sha384-6p9AefaqUhEVheRlj1mpAkbngHXy9mbYMrIdcIt4Jlc9lOLIablJq3bBsLOjGwZ7" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/pacta-tokens.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-dashboard.page.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-sidebar.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-topbar.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-notifications.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-app.css?v=20260730logoutdesign">
-  <link rel="stylesheet" href="css/pacta-foundation.css?v=20260628banner">
-  <link rel="stylesheet" href="css/pacta-admin-premium.css?v=20260709colorfix">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/pacta-tokens.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-icons.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-dashboard.page.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-sidebar.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-topbar.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-notifications.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-app.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-foundation.css?v=20260825-alberuni">
   <script src="js/errlog.js" defer></script>
   <script src="js/i18n.js" defer></script>
   <style>
     .commission-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin-top: 18px; }
     .protocol-layout { display: grid; grid-template-columns: minmax(340px, 420px) minmax(0, 1fr); gap: 16px; margin-top: 18px; align-items: start; }
-    [hidden] { display: none !important; }
-    .protocol-layout[hidden], .protocol-panel[hidden] { display: none !important; }
+    [hidden] { display: none; }
+    .protocol-layout[hidden], .protocol-panel[hidden] { display: none; }
     .protocol-layout > .protocol-panel:last-child { grid-column: 1 / -1; }
     .protocol-toolbar { grid-column: 1 / -1; display: flex; justify-content: flex-end; }
-    .advanced-panel.is-hidden { display: none !important; }
+    .advanced-panel.is-hidden { display: none; }
     .protocol-panel { min-width: 0; background: var(--grey-0); border: 1px solid var(--grey-100); border-radius: 10px; overflow: hidden; }
     .protocol-panel__head { padding: 16px 18px; border-bottom: 1px solid var(--grey-100); display: flex; align-items: center; justify-content: space-between; gap: 12px; }
     .protocol-panel__head h2, .protocol-panel__head h3 { margin: 0; font-size: 18px; color: var(--grey-900); }
@@ -87,18 +86,10 @@
     .protocol-card__meta div { min-width: 0; border-radius: 8px; background: var(--grey-25); padding: 8px; }
     .protocol-card__meta span { display: block; color: var(--grey-500); font-size: 11px; font-weight: 700; text-transform: uppercase; margin-bottom: 3px; }
     .protocol-card__meta strong { display: block; color: var(--grey-900); font-size: 13px; overflow-wrap: anywhere; }
-    .signature-modal { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(15, 23, 42, .45); }
-    .signature-modal[aria-hidden="false"] { display: flex; }
-    .signature-card { width: min(680px, 100%); background: #fff; border-radius: 10px; box-shadow: 0 24px 80px rgba(0,0,0,.24); overflow: hidden; }
-    .signature-card__head, .signature-card__foot { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; border-bottom: 1px solid var(--grey-100); }
-    .signature-card__foot { border-top: 1px solid var(--grey-100); border-bottom: 0; }
-    .signature-card__head h2 { margin: 0; font-size: 18px; }
-    .signature-card__body { padding: 18px; display: grid; gap: 12px; }
+    .commission-dialog .modal__body { display: grid; gap: 12px; }
     .signature-canvas-wrap { border: 1px solid var(--grey-200); border-radius: 10px; background: #fff; overflow: hidden; touch-action: none; }
     #signatureCanvas { display: block; width: 100%; height: 220px; cursor: crosshair; }
     .signature-hint { margin: 0; color: var(--grey-500); font-size: 13px; line-height: 1.5; }
-    .commission-modal { position: fixed; inset: 0; z-index: 80; display: none; align-items: center; justify-content: center; padding: 18px; background: rgba(15, 23, 42, .45); }
-    .commission-modal[aria-hidden="false"] { display: flex; }
     .verify-card { margin-top: 18px; background: #f7fbff; border: 1px solid #d7e7f7; border-radius: 10px; padding: 16px; }
     button.sidebar__logo { border: 0; cursor: pointer; font: inherit; }
     button.sidebar__logo:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
@@ -121,19 +112,6 @@
       .protocol-layout > .protocol-panel:last-child { grid-column: auto; }
     }
     @media (max-width: 640px) {
-      .layout,
-      .main {
-        width: 100%;
-        max-width: 100vw;
-        min-width: 0;
-        overflow-x: hidden;
-      }
-      .main {
-        padding-inline: 12px;
-      }
-      .main__header,
-      .topbar,
-      .table-section,
       .protocol-panel,
       .protocol-layout,
       .commission-grid,
@@ -145,8 +123,8 @@
       .sign-actions {
         min-width: 0;
       }
-      .main__btns, .workflow-actions, .sign-actions { width: 100%; }
-      .main__btns .btn, .workflow-actions .btn, .sign-actions .btn { width: 100%; white-space: normal; }
+      .workflow-actions, .sign-actions { width: 100%; }
+      .workflow-actions .btn, .sign-actions .btn { width: 100%; white-space: normal; }
       .protocol-card__top { display: grid; }
       .protocol-card__meta { grid-template-columns: 1fr; }
       .candidate-search { display: grid; }
@@ -297,13 +275,13 @@
     </section>
   </main>
 </div>
-<div class="signature-modal" id="signatureModal" aria-hidden="true">
-  <form class="signature-card" id="signatureForm" role="dialog" aria-modal="true" aria-labelledby="signatureTitle">
-    <div class="signature-card__head">
-      <h2 id="signatureTitle">Bayonnomani qo'lda imzolash</h2>
-      <button type="button" class="btn btn--secondary btn--sm" id="signatureClose" aria-label="Yopish">×</button>
+<div class="modal-overlay" id="signatureModal" role="dialog" aria-modal="true" aria-labelledby="signatureTitle" aria-hidden="true" hidden inert>
+  <form class="modal commission-dialog" id="signatureForm">
+    <div class="modal__head">
+      <h2 class="modal__title" id="signatureTitle">Bayonnomani qo'lda imzolash</h2>
+      <button type="button" class="modal__close" id="signatureClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
-    <div class="signature-card__body">
+    <div class="modal__body">
       <p class="signature-hint" id="signatureProtocolText">Tanlangan bayonnoma: —</p>
       <div class="signature-canvas-wrap">
         <canvas id="signatureCanvas" width="900" height="300"></canvas>
@@ -311,7 +289,7 @@
       <p class="signature-hint">Sichqoncha yoki telefon ekrani orqali imzo chizing. Saqlanganda imzo rasmi bayonnoma imzosi sifatida yoziladi.</p>
       <p class="va-error" id="signatureError" role="alert" style="color:var(--error-600);margin:0;"></p>
     </div>
-    <div class="signature-card__foot">
+    <div class="modal__footer">
       <button type="button" class="btn btn--secondary" id="signatureClear">Tozalash</button>
       <span></span>
       <button type="button" class="btn btn--secondary" id="signatureCancel">Bekor qilish</button>
@@ -320,13 +298,13 @@
   </form>
 </div>
 <div class="cms-toast" id="cmsToast" role="status" aria-live="polite"></div>
-<div class="commission-modal" id="protocolModal" aria-hidden="true">
-  <form class="signature-card protocol-form" id="protocolForm" role="dialog" aria-modal="true" aria-labelledby="protocolModalTitle" novalidate>
-    <div class="signature-card__head">
-      <h2 id="protocolModalTitle">Yangi bayonnoma</h2>
-      <button type="button" class="btn btn--secondary btn--sm" id="protocolClose" aria-label="Yopish">×</button>
+<div class="modal-overlay" id="protocolModal" role="dialog" aria-modal="true" aria-labelledby="protocolModalTitle" aria-hidden="true" hidden inert>
+  <form class="modal commission-dialog" id="protocolForm" novalidate>
+    <div class="modal__head">
+      <h2 class="modal__title" id="protocolModalTitle">Yangi bayonnoma</h2>
+      <button type="button" class="modal__close" id="protocolClose" aria-label="Yopish"><i class="ph ph-x" aria-hidden="true"></i></button>
     </div>
-    <div class="signature-card__body">
+    <div class="modal__body protocol-form">
       <label>Bayonnoma raqami
         <input type="text" id="protocolNumber" placeholder="Masalan: TOP-500-2026-01">
       </label>
@@ -340,20 +318,20 @@
       <p class="signature-hint" id="protocolStatus" role="status" aria-live="polite"></p>
       <p class="va-error" id="protocolError" role="alert" style="color:var(--error-600);margin:0;"></p>
     </div>
-    <div class="signature-card__foot">
+    <div class="modal__footer">
       <span></span>
       <button type="button" class="btn btn--secondary" id="protocolCancel">Bekor qilish</button>
       <button type="submit" class="btn btn--primary" id="protocolSubmit">Yaratish</button>
     </div>
   </form>
 </div>
-<script src="js/pacta-foundation.js?v=20260802-admin-identity-mobile"></script>
+<script src="js/pacta-foundation.js?v=20260825-alberuni"></script>
 <script src="js/api-client.js?v=20260801-cookie-auth"></script>
 <script>
-  window.NGO_ADMIN_AUTH = { allowedRoles: ['super_admin', 'commission'] };
+  window.NGO_ADMIN_AUTH = { allowedRoles: ['commission'], fallbackPage: 'admin-commission' };
 </script>
-<script src="js/admin-navigation.js?v=20260802" defer></script><script src="js/admin-boot.js?v=20260802-admin-identity" defer></script>
-<script src="js/pacta-app.js?v=20260730logoutdesign"></script>
+<script src="js/admin-navigation.js?v=20260825-alberuni" defer></script><script src="js/admin-boot.js?v=20260802-admin-identity" defer></script>
+<script src="js/admin-modal.js?v=20260825-alberuni" defer></script><script src="js/pacta-app.js?v=20260825-alberuni"></script>
 <script>
 (function () {
   var protocols = [];
@@ -1046,7 +1024,7 @@
     }).finally(function () { setButtonPending(btn, false); });
   });
   var protocolModal = document.getElementById('protocolModal');
-  function closeProtocolModal() { protocolModal.setAttribute('aria-hidden', 'true'); setText('protocolError', ''); setText('protocolStatus', ''); }
+  function closeProtocolModal() { window.AdminModal.close('protocolModal'); setText('protocolError', ''); setText('protocolStatus', ''); }
   document.getElementById('newProtocolBtn').addEventListener('click', function () {
     if (!canManage()) { toast('Yangi bayonnoma yaratish huquqi yo‘q.', 'warning'); return; }
     document.getElementById('protocolNumber').value = '';
@@ -1054,7 +1032,7 @@
     document.getElementById('protocolTitle').value = '';
     setText('protocolStatus', '');
     setText('protocolError', '');
-    protocolModal.setAttribute('aria-hidden', 'false');
+    window.AdminModal.open('protocolModal', this);
   });
   document.getElementById('protocolClose').addEventListener('click', closeProtocolModal);
   document.getElementById('protocolCancel').addEventListener('click', closeProtocolModal);
@@ -1164,9 +1142,9 @@
     clearSignature();
     setText('signatureProtocolText', 'Tanlangan bayonnoma: ' + (selectedProtocol && selectedProtocol.number ? selectedProtocol.number : '#' + selectedId));
     setText('signatureError', '');
-    sigModal.setAttribute('aria-hidden', 'false');
+    window.AdminModal.open('signatureModal', document.getElementById('manualSignBtn'));
   }
-  function closeSignature() { sigModal.setAttribute('aria-hidden', 'true'); }
+  function closeSignature() { window.AdminModal.close('signatureModal'); }
   document.getElementById('manualSignBtn').addEventListener('click', openSignature);
   document.getElementById('signatureClose').addEventListener('click', closeSignature);
   document.getElementById('signatureCancel').addEventListener('click', closeSignature);

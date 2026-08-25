@@ -17,16 +17,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://ngo-api-proxy.sarvsop.workers.dev" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css" integrity="sha384-6p9AefaqUhEVheRlj1mpAkbngHXy9mbYMrIdcIt4Jlc9lOLIablJq3bBsLOjGwZ7" crossorigin="anonymous">
-  <link rel="stylesheet" href="css/pacta-tokens.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-contracts.page.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-sidebar.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-topbar.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-notifications.css?v=20260605">
-  <link rel="stylesheet" href="css/pacta-app.css?v=20260802-hidden">
-  <link rel="stylesheet" href="css/pacta-foundation.css?v=20260628banner">
-  <link rel="stylesheet" href="css/pacta-modal.css?v=20260605">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/pacta-tokens.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-icons.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-contracts.page.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-sidebar.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-topbar.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-notifications.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-app.css?v=20260825-alberuni">
+  <link rel="stylesheet" href="css/pacta-foundation.css?v=20260825-alberuni">
   <style>
     /* ── Super Admin card ── */
     .superadmin-card {
@@ -152,7 +151,7 @@
     .modal-tab-panel.is-active { display: block; }
   </style>
 <script src="js/errlog.js" defer></script>
-<script src="js/admin-modal.js" defer></script>
+<script src="js/admin-modal.js?v=20260825-alberuni" defer></script>
 <link rel="manifest" href="/manifest.webmanifest" />
 <script src="js/sw-register.js" defer></script>
 <script src="js/i18n.js" defer></script>
@@ -537,11 +536,11 @@
     </div>
   </div>
 
-  <script src="js/pacta-app.js"></script>
-  <script src="js/pacta-foundation.js?v=20260802-admin-identity-mobile"></script>
+  <script src="js/pacta-app.js?v=20260825-alberuni"></script>
+  <script src="js/pacta-foundation.js?v=20260825-alberuni"></script>
   <script src="js/pacta-notifications.js"></script>
   <script src="js/api-client.js?v=20260801-cookie-auth"></script>
-  <script src="js/admin-navigation.js?v=20260802" defer></script><script src="js/admin-boot.js?v=20260802-admin-identity" defer></script>
+  <script src="js/admin-navigation.js?v=20260825-alberuni" defer></script><script src="js/admin-boot.js?v=20260802-admin-identity" defer></script>
   <script>
   (function () {
     var users = [];
@@ -552,13 +551,6 @@
     var ROLE_BADGE = { 'super_admin': 'warning', 'regional_admin': 'info', 'portal_moderator': 'neutral', 'member_manager': 'neutral', 'member_user': 'neutral' };
 
     function esc(s) { return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
-
-    function openModal(id) {
-      if (window.AdminModal) window.AdminModal.open(id);
-    }
-    function closeModal(id) {
-      if (window.AdminModal) window.AdminModal.close(id);
-    }
 
     var toastEl;
     function toast(msg, type) {
@@ -673,12 +665,11 @@
       document.getElementById('u-password').value = '';
       var firstTab = document.getElementById('tab-info-btn');
       if (firstTab) firstTab.click();
-      openModal('userModal');
+      window.AdminModal.open('userModal');
     });
 
-    document.getElementById('userModalClose').addEventListener('click', function () { closeModal('userModal'); });
-    document.getElementById('userModalCancel').addEventListener('click', function () { closeModal('userModal'); });
-    document.getElementById('userModal').addEventListener('click', function (e) { if (e.target === this) closeModal('userModal'); });
+    document.getElementById('userModalClose').addEventListener('click', function () { window.AdminModal.close('userModal'); });
+    document.getElementById('userModalCancel').addEventListener('click', function () { window.AdminModal.close('userModal'); });
 
     document.getElementById('userModalSave').addEventListener('click', function () {
       var first = document.getElementById('u-firstname').value.trim();
@@ -730,7 +721,7 @@
         role: 'regional_admin',
         region_code: regionCode
       }).then(function () {
-        closeModal('userModal');
+        window.AdminModal.close('userModal');
         toast('Yangi foydalanuvchi qo\'shildi', 'success');
         reload();
         btn.disabled = false;
@@ -766,11 +757,11 @@
       document.getElementById('resetPw-new').value = '';
       document.getElementById('resetPw-confirm').value = '';
       showResetPwError('');
-      openModal('resetPwModal');
+      window.AdminModal.open('resetPwModal');
       setTimeout(function () { try { document.getElementById('resetPw-new').focus(); } catch (_) {} }, 60);
     };
     document.getElementById('resetPwSaveBtn').addEventListener('click', function () {
-      if (!resetPwId) { closeModal('resetPwModal'); return; }
+      if (!resetPwId) { window.AdminModal.close('resetPwModal'); return; }
       var nw = document.getElementById('resetPw-new').value;
       var cf = document.getElementById('resetPw-confirm').value;
       if (!nw || nw.length < 12) { showResetPwError('Parol kamida 12 ta belgidan iborat bo\'lishi kerak.'); return; }
@@ -789,7 +780,7 @@
           document.getElementById('resetPw-new').value = '';
           document.getElementById('resetPw-confirm').value = '';
           resetPwId = null;
-          closeModal('resetPwModal');
+          window.AdminModal.close('resetPwModal');
         })
         .catch(function (err) {
           showResetPwError('Xatolik: ' + ((err && err.message) || 'noma\'lum'));
@@ -806,11 +797,10 @@
       deleteId = id;
       var user = users.find(function (u) { return parseInt(u.id, 10) === id; });
       document.getElementById('deleteUserName').textContent = user ? user.full_name : '#' + id;
-      openModal('deleteUserModal');
+      window.AdminModal.open('deleteUserModal');
     };
-    document.getElementById('deleteUserModal').addEventListener('click', function (e) { if (e.target === this) closeModal('deleteUserModal'); });
     document.querySelectorAll('#deleteUserModal [data-modal-close]').forEach(function (btn) {
-      btn.addEventListener('click', function () { closeModal('deleteUserModal'); });
+      btn.addEventListener('click', function () { window.AdminModal.close('deleteUserModal'); });
     });
     document.getElementById('confirmDeleteUserBtn').addEventListener('click', function () {
       if (!deleteId) return;
@@ -821,7 +811,7 @@
       var delModal = document.getElementById('deleteUserModal');
       if (delModal) delModal.setAttribute('aria-busy', 'true');
       NgoApi.del('/admin/users/' + deleteId)
-        .then(function () { deleteId = null; closeModal('deleteUserModal'); toast('Hisob o\'chirildi', 'info'); reload(); })
+        .then(function () { deleteId = null; window.AdminModal.close('deleteUserModal'); toast('Hisob o\'chirildi', 'info'); reload(); })
         .catch(function (err) { toast('O\'chirishda xatolik: ' + ((err && err.message) || 'noma\'lum'), 'error'); })
         .then(function () {
           btn.disabled = false; btn.innerHTML = delLabel;
@@ -859,7 +849,7 @@
         NgoApi.post('/auth/change-password', { current_password: cur, new_password: nw })
           .then(function () {
             toast('Parol muvaffaqiyatli yangilandi!', 'success');
-            closeModal('changePwModal');
+            window.AdminModal.close('changePwModal');
             document.getElementById('cp-current').value = '';
             document.getElementById('cp-new').value = '';
             document.getElementById('cp-confirm').value = '';

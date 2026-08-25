@@ -2,7 +2,7 @@
 
 (function injectLogoutModal() {
   var html =
-    '<div class="modal-overlay" id="logoutModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="logoutModalTitle">' +
+    '<div class="modal-overlay" id="logoutModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="logoutModalTitle" hidden inert>' +
       '<div class="modal modal--logout">' +
         '<div class="modal__header">' +
           '<h2 class="modal__title" id="logoutModalTitle" data-i18n="common.logout.title">Tizimdan chiqish</h2>' +
@@ -31,6 +31,7 @@
       // language switches are covered by the loader's apply(document)).
       var m = document.getElementById('logoutModal');
       if (m && window.ngoI18n && typeof window.ngoI18n.apply === 'function') window.ngoI18n.apply(m);
+      if (window.AdminModal && typeof window.AdminModal.decorate === 'function') window.AdminModal.decorate();
     }
   }
 
@@ -42,163 +43,12 @@
 })();
 
 document.addEventListener('DOMContentLoaded', function () {
-  var activeModal = null;
-  var lastFocusedElement = null;
-
-  function getFocusableElements(root) {
-    if (!root) return [];
-    return Array.prototype.slice.call(
-      root.querySelectorAll('a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])')
-    ).filter(function (el) {
-      return !el.hasAttribute('hidden') && el.getAttribute('aria-hidden') !== 'true';
-    });
-  }
-
-  function lockModalFocus(overlay, event) {
-    if (!overlay || event.key !== 'Tab') return;
-    var focusables = getFocusableElements(overlay);
-    if (!focusables.length) return;
-
-    var first = focusables[0];
-    var last = focusables[focusables.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  }
-
-  // Sync aria-expanded on every trigger that points at this overlay.
-  // The aria-haspopup="dialog" + aria-controls pairing was set up in
-  // the iter-104 init pass; the missing piece was aria-expanded
-  // toggling on open/close so screen readers announce "expanded" /
-  // "collapsed" on the trigger.
-  function setTriggersExpanded(overlayId, expanded) {
-    if (!overlayId) return;
-    var sel = '[data-modal-open="' + overlayId + '"], [aria-controls="' + overlayId + '"]';
-    document.querySelectorAll(sel).forEach(function (t) {
-      t.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-    });
-  }
-
-  function openModal(id, triggerEl) {
-    var overlay = document.getElementById(id);
-    if (!overlay) return;
-
-    if (activeModal && activeModal !== overlay) {
-      closeModal(activeModal);
-    }
-
-    lastFocusedElement = triggerEl || document.activeElement;
-    overlay.classList.add('is-open');
-    overlay.setAttribute('aria-hidden', 'false');
-    // Body-only overflow:hidden left iOS Safari and any browser
-    // where <html> is the scrolling element able to scroll the page
-    // behind the modal. The .is-modal-open class on <html> covers
-    // both elements via pacta-foundation.css.
-    document.documentElement.classList.add('is-modal-open');
-    document.body.style.overflow = 'hidden';
-    activeModal = overlay;
-    setTriggersExpanded(id, true);
-
-    var focusables = getFocusableElements(overlay);
-    if (focusables.length) focusables[0].focus();
-  }
-
-  function closeModal(target) {
-    var overlay = typeof target === 'string' ? document.getElementById(target) : target;
-    if (!overlay) return;
-
-    overlay.classList.remove('is-open');
-    overlay.setAttribute('aria-hidden', 'true');
-    setTriggersExpanded(overlay.id, false);
-
-    if (!document.querySelector('.modal-overlay.is-open')) {
-      document.documentElement.classList.remove('is-modal-open');
-      document.body.style.overflow = '';
-      activeModal = null;
-      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function'
-          && document.contains(lastFocusedElement)) {
-        lastFocusedElement.focus();
-      } else {
-        // Opener was removed from the DOM (e.g., a table row re-rendered
-        // after a successful PATCH). Without a fallback, focus stays in
-        // the now-hidden modal and keyboard users get stranded. Land on
-        // the main landmark so Tab continues from somewhere sensible.
-        var mainEl = document.getElementById('main-content') || document.querySelector('main');
-        if (mainEl) {
-          if (!mainEl.hasAttribute('tabindex')) mainEl.setAttribute('tabindex', '-1');
-          try { mainEl.focus({ preventScroll: true }); } catch (e) { try { mainEl.focus(); } catch (_) {} }
-        }
-      }
-      lastFocusedElement = null;
-    }
-  }
-
-  // Event delegation — admin pages build [data-modal-open] / [data-
-  // modal-close] buttons via innerHTML AFTER page load (admin-cms.js
-  // populates table rows, etc.). Per-element listeners attached on
-  // initial load missed those late-rendered buttons, so the modals
-  // silently never opened. A single document-level click delegate
-  // catches both initial and late-bound buttons.
-  document.addEventListener('click', function (e) {
-    var openBtn = e.target.closest && e.target.closest('[data-modal-open]');
-    if (openBtn) {
-      openModal(openBtn.getAttribute('data-modal-open'), openBtn);
-      return;
-    }
-    var closeBtn = e.target.closest && e.target.closest('[data-modal-close]');
-    if (closeBtn) {
-      // Two patterns supported:
-      //   <button data-modal-close>          → closest .modal-overlay
-      //   <button data-modal-close="theId">  → look up by id (used
-      //     by .modal-without-.modal-overlay markup, e.g. cabinet
-      //     uploadReportModal where the close button never had a
-      //     .modal-overlay ancestor and the original code silently
-      //     no-op'd on click).
-      var explicitId = closeBtn.getAttribute('data-modal-close');
-      var overlay = explicitId
-        ? document.getElementById(explicitId)
-        : closeBtn.closest('.modal-overlay');
-      if (overlay) closeModal(overlay);
-    }
-  });
-
-  document.querySelectorAll('.modal-overlay').forEach(function (overlay) {
-    overlay.setAttribute('aria-hidden', overlay.classList.contains('is-open') ? 'false' : 'true');
-    overlay.addEventListener('click', function (e) {
-      if (e.target === overlay) closeModal(overlay);
-    });
-  });
-
-  // Tag every modal-trigger with the right ARIA so screen readers
-  // announce them as dialog openers, not generic buttons. Idempotent
-  // — only sets attributes that are missing.
-  document.querySelectorAll('[data-modal-open]').forEach(function (btn) {
-    var targetId = btn.getAttribute('data-modal-open');
-    if (!btn.hasAttribute('aria-haspopup')) btn.setAttribute('aria-haspopup', 'dialog');
-    if (targetId && !btn.hasAttribute('aria-controls')) btn.setAttribute('aria-controls', targetId);
-    if (!btn.hasAttribute('aria-expanded')) btn.setAttribute('aria-expanded', 'false');
-  });
-
-  document.addEventListener('keydown', function (e) {
-    if (activeModal) {
-      lockModalFocus(activeModal, e);
-    }
-    if (e.key === 'Escape') {
-      if (activeModal) {
-        closeModal(activeModal);
-      }
-      if (openMenu) {
-        closeCurrentMenu(true);
-      }
-    }
-  });
-
   var openMenu = null;
   var menuIdCounter = 0;
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && openMenu) closeCurrentMenu(true);
+  });
 
   function getMenuItems(menu) {
     if (!menu) return [];
@@ -346,10 +196,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var IS_CABINET = location.pathname.indexOf('/cabinet/') === 0;
   document.querySelectorAll('.logout').forEach(function (link) {
     if (IS_CABINET) return;
-    // Decorate the logout link as a dialog opener so SR users hear
-    // "expanded/collapsed" + "has popup, dialog" instead of a plain
-    // link. setTriggersExpanded only matches [data-modal-open=...],
-    // so add the attrs here once on init.
+    // Decorate the logout link as a dialog opener so screen-reader users
+    // hear its expanded state and dialog relationship.
     if (!link.hasAttribute('aria-haspopup')) link.setAttribute('aria-haspopup', 'dialog');
     if (!link.hasAttribute('aria-controls')) link.setAttribute('aria-controls', 'logoutModal');
     if (!link.hasAttribute('aria-expanded')) link.setAttribute('aria-expanded', 'false');
@@ -373,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function () {
           }
         };
       }
-      openModal('logoutModal', link);
+      if (window.AdminModal) window.AdminModal.open('logoutModal', link);
     });
   });
 
@@ -476,29 +324,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }
   });
-
-  // --- Table row filtering inside <section class="table-section"> ---
-  if (!document.getElementById('pacta-table-empty-style')) {
-    var style = document.createElement('style');
-    style.id = 'pacta-table-empty-style';
-    style.textContent =
-      '.table__empty-row td{padding:36px 18px;text-align:center;color:var(--grey-400,#9ca3af);font-size:13px;}' +
-      '.table__empty-row td i{margin-right:6px;font-size:16px;vertical-align:middle;}';
-    document.head.appendChild(style);
-  }
-
-  // --- Client-side form validation (opt-in via data-validate on <form>) ---
-  if (!document.getElementById('pacta-form-error-style')) {
-    var formStyle = document.createElement('style');
-    formStyle.id = 'pacta-form-error-style';
-    formStyle.textContent =
-      '.is-invalid{border-color:#dc2626 !important;background-color:#fef2f2 !important;}' +
-      '.field-error{color:#dc2626;font-size:12px;margin-top:4px;display:block;line-height:1.4;}' +
-      '.field-error::before{content:"\\26A0";margin-right:4px;}' +
-      '.form-success{background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d;padding:12px 16px;border-radius:8px;margin-bottom:14px;font-size:14px;}' +
-      '.form-success::before{content:"\\2713";font-weight:700;margin-right:6px;}';
-    document.head.appendChild(formStyle);
-  }
 
   function clearFieldError(field) {
     field.classList.remove('is-invalid');

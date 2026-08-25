@@ -69,6 +69,7 @@
     setTimeout(function () {
       var f = getFocusable(el);
       try { (f[0] || el).focus(); } catch (e) { /* swallow */ }
+      el.dispatchEvent(new CustomEvent('adminmodal:opened', { detail: { id: id } }));
     }, 30);
   }
 
@@ -106,6 +107,7 @@
         try { mainEl.focus({ preventScroll: true }); } catch (e) { try { mainEl.focus(); } catch (_) {} }
       }
     }
+    if (el) el.dispatchEvent(new CustomEvent('adminmodal:closed', { detail: { id: id } }));
   }
 
   document.addEventListener('keydown', function (e) {
@@ -132,6 +134,18 @@
 
   // Click outside the inner .modal panel closes the topmost dialog.
   document.addEventListener('click', function (e) {
+    var openBtn = e.target.closest && e.target.closest('[data-modal-open]');
+    if (openBtn) {
+      open(openBtn.getAttribute('data-modal-open'), openBtn);
+      return;
+    }
+    var closeBtn = e.target.closest && e.target.closest('[data-modal-close]');
+    if (closeBtn) {
+      var explicitId = closeBtn.getAttribute('data-modal-close');
+      var overlay = explicitId ? document.getElementById(explicitId) : closeBtn.closest('.modal-overlay');
+      if (overlay && overlay.id) close(overlay.id);
+      return;
+    }
     var top = topmost();
     if (!top) return;
     var el = document.getElementById(top.id);
@@ -162,5 +176,5 @@
     decorateTriggers();
   }
 
-  window.AdminModal = { open: open, close: close };
+  window.AdminModal = { open: open, close: close, decorate: decorateTriggers };
 })();

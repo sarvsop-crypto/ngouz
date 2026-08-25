@@ -4,8 +4,8 @@
 
   var ADMIN = ['super_admin'];
   var OPERATIONS = ['super_admin', 'regional_admin'];
-  var COMMISSION = ['super_admin', 'commission'];
-  var LEADER = ['super_admin', 'leader'];
+  var COMMISSION = ['commission'];
+  var LEADER = ['leader'];
   var ALL_SHELL_ROLES = ['super_admin', 'regional_admin', 'commission', 'leader'];
 
   var sections = [
@@ -26,6 +26,7 @@
       item('serviceRequests', 'admin-service-requests', 'wrench', "Xizmat so'rovlari", 'admin.nav.serviceRequests', OPERATIONS),
       item('corruptionReports', 'admin-corruption-reports', 'shield-warning', 'Korrupsiya murojaatlari', 'admin.nav.corruptionReports', OPERATIONS),
       item('feedback', 'admin-feedback', 'chat-dots', 'Qayta aloqa', 'admin.nav.feedback', OPERATIONS),
+      item('scientificAppeals', 'admin-murojaat', 'graduation-cap', 'Ilmiy daraja murojaatlari', 'admin.nav.scientificAppeals', OPERATIONS),
       item('passwordReset', 'admin-password-reset-requests', 'key', "Parol tiklash so'rovlari", 'admin.nav.passwordResetReq', ADMIN)
     ]},
     { key: 'content', label: 'KONTENT', items: [
@@ -105,9 +106,14 @@
     var root = document.querySelector('[data-admin-navigation]');
     if (!root || !user || ALL_SHELL_ROLES.indexOf(user.role) === -1) return;
     var page = currentPage();
-    var body = '<div class="sidebar__header"><div class="u-inline-stack"><div class="sidebar__logo u-logo-badge">N</div>'
-      + '<span class="sidebar__title" data-i18n="admin.brand">O\'zNNTMA Admin</span></div>'
-      + '<button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Yon panelni yopish" aria-expanded="true">&lsaquo;</button></div>'
+    var homeRoute = user.role === 'commission' ? 'admin-commission'
+      : user.role === 'leader' ? 'admin-leader-signing' : 'admin-dashboard';
+    var homeLabel = user.role === 'commission' ? 'Komissiya ish maydoniga qaytish'
+      : user.role === 'leader' ? 'Rahbar ish maydoniga qaytish' : 'Boshqaruv paneliga qaytish';
+    var body = '<div class="sidebar__header"><a class="sidebar__brand" href="' + homeRoute + '" aria-label="' + homeLabel + '">'
+      + '<span class="sidebar__logo">N</span><span class="sidebar__title" data-i18n="admin.brand">O\'zNNTMA Admin</span></a>'
+      + '<button type="button" class="sidebar__collapse" id="sidebarToggle" aria-label="Yon panelni yopish" aria-expanded="true" title="Yon panelni yopish">'
+      + '<i class="ph ph-arrow-left" aria-hidden="true"></i></button></div>'
       + '<div class="sidebar__search" id="sidebarSearchTrigger"><span class="sidebar__nav-icon" aria-hidden="true"><i class="ph ph-magnifying-glass" aria-hidden="true"></i></span>'
       + '<input type="search" enterkeyhint="search" aria-label="Menyudan qidirish" placeholder="Qidirish"></div>'
       + '<nav class="sidebar__nav" aria-label="Admin menyusi">';
