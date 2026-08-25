@@ -154,3 +154,10 @@ test('commission and leader workspaces are role-isolated in source and direct ac
   assert.doesNotMatch(commission, /allowedRoles:\s*\[[^\]]*super_admin/);
   assert.doesNotMatch(leader, /allowedRoles:\s*\[[^\]]*super_admin/);
 });
+
+test('commission boot cannot bind removed shell controls before loading its queue', async () => {
+  const commission = await source('admin-commission.html');
+  assert.doesNotMatch(commission, /commissionRefreshLogo/);
+  assert.match(commission, /document\.getElementById\('refreshCommission'\)\.addEventListener/);
+  assert.match(commission, /load\(\);/);
+});
