@@ -161,3 +161,22 @@ test('commission boot cannot bind removed shell controls before loading its queu
   assert.match(commission, /document\.getElementById\('refreshCommission'\)\.addEventListener/);
   assert.match(commission, /load\(\);/);
 });
+
+test('task markup and renderer keep one matching attachment contract', async () => {
+  const html = await source('admin-tasks.html');
+  const js = await source('js/admin-tasks.js');
+  for (const id of ['taskFiles', 'taskSelectedFiles', 'taskDiscussionFiles', 'taskDiscussionSelectedFiles']) {
+    assert.equal((html.match(new RegExp(`id="${id}"`, 'g')) || []).length, 1, `${id} must exist exactly once`);
+    assert.match(js, new RegExp(`['"]${id}['"]`), `${id} must be consumed by the renderer`);
+  }
+  assert.match(js, /NgoApi\.upload\('\/admin\/collaboration\/upload'/);
+  assert.match(js, /client_task_id/);
+  assert.match(js, /client_message_id/);
+  assert.match(js, /attachment_paths/);
+  assert.doesNotMatch(js, /NgoApi\.randomId/);
+  assert.doesNotMatch(js, /\/admin\/tasks\/labels/);
+  for (const obsoleteId of ['taskAssignees', 'taskWatchers', 'taskLabels', 'taskPriority', 'taskProgress']) {
+    assert.doesNotMatch(html, new RegExp(`id="${obsoleteId}"`), `${obsoleteId} must not return`);
+    assert.doesNotMatch(js, new RegExp(`['"]${obsoleteId}['"]`), `${obsoleteId} must not be queried`);
+  }
+});
